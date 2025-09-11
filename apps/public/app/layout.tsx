@@ -6,7 +6,7 @@ import Footer from '../../../packages/components/footer/Footer';
 import { getClient } from '../../../packages/services/clientServices';
 import './globals.css';
 import { homeMetadata } from './pageMetadata';
-import I18nInitializer from '../../../packages/components/i18nInitializer/I18nInitializer';
+import I18nInitializer from '../../../packages/contexts/i18nInitializer/I18nInitializer';
 import { CookiesProvider } from '../../../packages/contexts/CookiesContext';
 import CookieBanner from '../../../packages/components/cookieBanner/CookieBanner';
 import GAScript from '../../../packages/utils/cookies/GAScript';

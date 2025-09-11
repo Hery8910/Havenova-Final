@@ -1,0 +1,1 @@
+//# sourceMappingURL=OfferCard.d.ts.map

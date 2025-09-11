@@ -1,26 +1,20 @@
-// tsconfig.base.json
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "allowJs": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "incremental": true,
-    "isolatedModules": true,
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["packages/components/*"],
-      "@contexts/*": ["packages/contexts/*"],
-      "@hooks/*": ["packages/hooks/*"],
-      "@services/*": ["packages/services/*"],
-      "@types/*": ["packages/types/*"],
-      "@utils/*": ["packages/utils/*"]
-    }
+      "@havenova/components/*": ["packages/components/*"],
+      "@havenova/contexts/*": ["packages/contexts/*"],
+      "@havenova/services/*": ["packages/services/*"],
+      "@havenova/types/*": ["packages/types/*"],
+      "@havenova/utils/*": ["packages/utils/*"]
+    },
+    "types": ["react", "react-dom"]
   }
 }

@@ -1,7 +1,7 @@
 // components/I18nInitializer.tsx
 'use client';
 import { useEffect, useState } from 'react';
-import { I18nProvider } from '../../contexts/I18nContext';
+import { I18nProvider } from '../I18nContext';
 import deTexts from '../../../apps/public/public/i18n/de.json';
 import enTexts from '../../../apps/public/public/i18n/en.json';
 

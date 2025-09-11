@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@havenova/contexts/*", "@havenova/services/*", "@havenova/utils/*", "next/*"]
+      }
+    ]
+  }
+}

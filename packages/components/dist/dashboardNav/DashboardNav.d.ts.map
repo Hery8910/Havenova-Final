@@ -1,0 +1,1 @@
+{"version":3,"file":"DashboardNav.d.ts","sourceRoot":"","sources":["../../dashboardNav/DashboardNav.tsx"],"names":[],"mappings":"AAGA,UAAU,iBAAiB;IACzB,IAAI,EAAE,MAAM,EAAE,CAAC;IACf,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,CAAC,GAAG,EAAE,MAAM,KAAK,IAAI,CAAC;CACjC;AAED,eAAO,MAAM,YAAY,GAAI,8BAA8B,iBAAiB,4CAc3E,CAAC"}

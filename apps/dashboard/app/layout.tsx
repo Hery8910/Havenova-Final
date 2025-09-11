@@ -11,7 +11,7 @@ import { RxActivityLog } from 'react-icons/rx';
 import { ImBlog } from 'react-icons/im';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { BiSolidOffer } from 'react-icons/bi';
-import I18nInitializer from '../../../packages/components/i18nInitializer/I18nInitializer';
+import I18nInitializer from '../../../packages/contexts/i18nInitializer/I18nInitializer';
 import { ClientProvider } from '../../../packages/contexts/ClientContext';
 import { getClient } from '../../../packages/services/clientServices';
 import { DashboardProvider } from '../../../packages/contexts/UserContext';

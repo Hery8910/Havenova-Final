@@ -1,7 +1,7 @@
 {
   "name": "@havenova/types",
   "version": "1.0.0",
-  "main": "",
-  "types": "",
-  "private": true
+  "private": true,
+  "types": "index.ts",
+  "main": "index.ts"
 }
