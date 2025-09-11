@@ -1,4 +1,4 @@
-.main {
+/* .main {
     width: 600px;
     height: 350px;
     position: relative;
@@ -193,7 +193,6 @@
     padding-left: 20px;
   }
   
-  /* Chrome, Safari, Edge, Opera */
   .input[type="number"]::-webkit-outer-spin-button,
   .input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -246,4 +245,4 @@
     transform: translateX(24px);
     background-color: white;
   }
-  
+   */

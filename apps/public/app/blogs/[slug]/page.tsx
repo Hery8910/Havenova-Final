@@ -1,10 +1,10 @@
 import { BlogFromDB } from '../../../../../packages/types/blog';
 import api from '../../../../../packages/services/api';
-import BlogContent from '../../../../../packages/components/blog/blogContent/BlogContent';
+// import BlogContent from '../../../../../packages/components/blog/blogContent/BlogContent';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { PageProps } from '../../../../../packages/types/page';
-import CommentForm from '../../../../../packages/components/blog/commentForm/CommentForm';
+// import CommentForm from '../../../../../packages/components/blog/commentForm/CommentForm';
 
 // Generar metadata dinámico basado en el contenido del post
 export async function generateMetadata({ params }: PageProps<{ slug: string }>): Promise<Metadata> {
@@ -43,8 +43,9 @@ export default async function BlogPage({ params }: PageProps<{ slug: string }>) 
 
     return (
       <main>
-        <BlogContent post={post} />
-        <CommentForm blogId={post._id} isDashboard={false} />
+        <p>Hola</p>
+        {/* <BlogContent post={post} /> */}
+        {/* <CommentForm blogId={post._id} isDashboard={false} /> */}
       </main>
     );
   } catch (error: any) {

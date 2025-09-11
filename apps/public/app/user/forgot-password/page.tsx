@@ -3,8 +3,8 @@ import { Suspense, useState } from 'react';
 import styles from './page.module.css';
 import { useClient } from '../../../../../packages/contexts/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/I18nContext';
-import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
+// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
+// import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
 import { forgotPassword } from '../../../../../packages/services/userService';
 
 export interface ForgotPasswordData {
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <section className={styles.section}>
-        <main className={styles.main}>
+        {/* <main className={styles.main}>
           <header className={`${styles.header} card`}>
             <h1 className={styles.h1}>{forgotPasswordText?.title}</h1>
             <p>{forgotPasswordText?.info}</p>
@@ -107,7 +107,7 @@ const ForgotPassword = () => {
             description={alert.description}
             onClose={() => setAlert(null)}
           />
-        )}
+        )} */}
       </section>
     </Suspense>
   );

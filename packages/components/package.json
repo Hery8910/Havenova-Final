@@ -1,7 +1,17 @@
 {
   "name": "@havenova/components",
   "version": "1.0.0",
-  "main": "",
-  "types": "",
-  "private": true
+  "private": true,
+  "main": "index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
 }

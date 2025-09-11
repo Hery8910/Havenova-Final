@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import BlogTable from '../../../../packages/components/blog/blogTable/BlogTable';
+// import BlogTable from '../../../../packages/components/blog/blogTable/BlogTable';
 import styles from './page.module.css';
 import { BlogFromDB } from '../../../../packages/types/blog';
 import { Suspense } from 'react';
@@ -11,7 +11,7 @@ import {
   getPublishedBlogs,
   getPendingBlogs,
 } from '../../../../packages/services/blogServices';
-import CreateBlogForm from '../../../../packages/components/blog/createBlogForm/CreateBlogForm';
+// import CreateBlogForm from '../../../../packages/components/blog/createBlogForm/CreateBlogForm';
 import { useClient } from '../../../../packages/contexts/ClientContext';
 
 const LIST_OPTIONS = [
@@ -107,7 +107,7 @@ const Blog = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <aside className={styles.aside}>
           <button
             className={`${styles.button} ${open && styles.button_active}`}
@@ -156,7 +156,7 @@ const Blog = () => {
         />
       ) : (
         <CreateBlogForm blogs={blogs} />
-      )}
+      )} */}
     </main>
   );
 };

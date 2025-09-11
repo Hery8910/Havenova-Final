@@ -5,8 +5,8 @@ import { useUser } from '../../../../../packages/contexts/UserContext';
 import { useClient } from '../../../../../packages/contexts/ClientContext';
 import { useRouter } from 'next/navigation';
 import { useI18n } from '../../../../../packages/contexts/I18nContext';
-import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
+// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
+import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
 import { resetPassword } from '../../../../../packages/services/userService';
 import { useSearchParams } from 'next/navigation';
 
@@ -116,7 +116,7 @@ const ResetPassword = () => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <section className={styles.section}>
-        <main className={styles.main}>
+        {/* <main className={styles.main}>
           <header className={`${styles.header} card`}>
             <h1 className={styles.h1}>{resetPasswordText?.title}</h1>
             <p>{resetPasswordText?.info}</p>
@@ -136,7 +136,7 @@ const ResetPassword = () => {
             description={alert.description}
             onClose={() => setAlert(null)}
           />
-        )}
+        )} */}
       </section>
     </Suspense>
   );

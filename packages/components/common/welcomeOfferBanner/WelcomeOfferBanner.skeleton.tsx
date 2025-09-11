@@ -1,6 +1,6 @@
 // src/components/WelcomeOfferBanner.skeleton.tsx
 import React from 'react';
-import styles from './page.module.css';
+import styles from './WelcomeOfferBanner.module.css';
 
 const SkeletonWelcomeOfferBanner: React.FC = () => {
   return (

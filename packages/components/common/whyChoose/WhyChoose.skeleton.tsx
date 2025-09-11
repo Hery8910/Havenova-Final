@@ -1,5 +1,5 @@
 // src/components/WhyChoose.skeleton.tsx
-import styles from './page.module.css';
+import styles from './WhyChoose.module.css';
 
 export default function SkeletonWhyChoose() {
   const items = Array.from({ length: 4 });

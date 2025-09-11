@@ -1,7 +1,7 @@
 // app/layout.tsx (RootLayout)
 import { DashboardProvider } from '../../../packages/contexts/UserContext';
 import { ClientProvider } from '../../../packages/contexts/ClientContext';
-import Navbar from '../../../packages/components/navbar/Navbar';
+// import Navbar from '../../../packages/components/navbar/Navbar';
 import Footer from '../../../packages/components/footer/Footer';
 import { getClient } from '../../../packages/services/clientServices';
 import './globals.css';
@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <CookiesProvider>
               <I18nInitializer>
                 <CookieBanner />
-                <Navbar />
+                {/* <Navbar /> */}
                 {children}
                 <Footer />
                 <GAScript />

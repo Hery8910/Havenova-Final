@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { getAllOffers } from '../../../../packages/services/offers';
 import styles from './page.module.css';
 import { Offer, OfferDB } from '../../../../packages/types/offers';
-import OfferForm from '../../../../packages/components/offerForm/OfferForm';
-import { OfferList } from '../../../../packages/components/offerList/OfferList';
+// import OfferForm from '../../../../packages/components/offerForm/OfferForm';
+// import { OfferList } from '../../../../packages/components/offerList/OfferList';
 
 const OfferDashboard: React.FC = () => {
   const [offers, setOffers] = useState<OfferDB[]>([]);
@@ -37,7 +37,7 @@ const OfferDashboard: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <h2 className={styles.h2}>Manage Offers</h2>
         <aside className={styles.aside}>
           <button
@@ -66,7 +66,7 @@ const OfferDashboard: React.FC = () => {
         />
       ) : (
         <OfferList offers={offers} dashboard handleEdit={handleEdit} />
-      )}
+      )} */}
     </main>
   );
 };

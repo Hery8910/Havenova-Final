@@ -1,5 +1,5 @@
 // src/components/ServicesPreview.skeleton.tsx
-import styles from './page.module.css';
+import styles from './ServicesPreview.module.css';
 
 export default function SkeletonServicesPreview() {
   const items = Array.from({ length: 6 });

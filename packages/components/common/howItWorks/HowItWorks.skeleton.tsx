@@ -1,5 +1,5 @@
 // src/components/WorkFlow.skeleton.tsx
-import styles from './page.module.css';
+import styles from './HowItWorks.module.css';
 
 const lines = Array.from({ length: 3 });
 

@@ -67,9 +67,9 @@ interface UserContextProps {
   setUser: (user: User) => void;
   refreshUser: (onSessionExpired?: () => void) => Promise<void>;
   logout: () => void;
-  addRequestToUser: (newRequest: ServiceRequestItem) => void;
-  removeRequestFromUser: (id: string) => void;
-  clearAllRequests: () => void;
+  // addRequestToUser: (newRequest: ServiceRequestItem) => void;
+  // removeRequestFromUser: (id: string) => void;
+  // clearAllRequests: () => void;
   updateUserLanguage: (lang: string) => Promise<void>;
   updateUserTheme: (theme: 'light' | 'dark') => Promise<void>;
   registerSessionCallback: (cb: () => void) => void;
@@ -238,54 +238,54 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     saveUserToStorage(guest);
   }, [clientId]);
 
-  const addRequestToUser = useCallback(
-    (newRequest: ServiceRequestItem) => {
-      const requestWithId = { ...newRequest, id: newRequest.id || uuidv4() };
-      setUser((prev) => {
-        const base = prev ?? {
-          ...initialGuestUser,
-          clientId,
-          profileImage: getPersistentGuestAvatar(),
-        };
-        const updated: User = { ...base, requests: [...(base.requests ?? []), requestWithId] };
-        saveUserToStorage(updated);
-        return updated;
-      });
-    },
-    [clientId]
-  );
+  // const addRequestToUser = useCallback(
+  //   (newRequest: ServiceRequestItem) => {
+  //     const requestWithId = { ...newRequest, id: newRequest.id || uuidv4() };
+  //     setUser((prev) => {
+  //       const base = prev ?? {
+  //         ...initialGuestUser,
+  //         clientId,
+  //         profileImage: getPersistentGuestAvatar(),
+  //       };
+  //       const updated: User = { ...base, requests: [...(base.requests ?? []), requestWithId] };
+  //       saveUserToStorage(updated);
+  //       return updated;
+  //     });
+  //   },
+  //   [clientId]
+  // );
 
-  const removeRequestFromUser = useCallback(
-    (id: string) => {
-      setUser((prev) => {
-        const base = prev ?? {
-          ...initialGuestUser,
-          clientId,
-          profileImage: getPersistentGuestAvatar(),
-        };
-        const updated: User = {
-          ...base,
-          requests: (base.requests ?? []).filter((r) => r.id !== id),
-        };
-        saveUserToStorage(updated);
-        return updated;
-      });
-    },
-    [clientId]
-  );
+  // const removeRequestFromUser = useCallback(
+  //   (id: string) => {
+  //     setUser((prev) => {
+  //       const base = prev ?? {
+  //         ...initialGuestUser,
+  //         clientId,
+  //         profileImage: getPersistentGuestAvatar(),
+  //       };
+  //       const updated: User = {
+  //         ...base,
+  //         requests: (base.requests ?? []).filter((r) => r.id !== id),
+  //       };
+  //       saveUserToStorage(updated);
+  //       return updated;
+  //     });
+  //   },
+  //   [clientId]
+  // );
 
-  const clearAllRequests = useCallback(() => {
-    setUser((prev) => {
-      const base = prev ?? {
-        ...initialGuestUser,
-        clientId,
-        profileImage: getPersistentGuestAvatar(),
-      };
-      const updated: User = { ...base, requests: [] };
-      saveUserToStorage(updated);
-      return updated;
-    });
-  }, [clientId]);
+  // const clearAllRequests = useCallback(() => {
+  //   setUser((prev) => {
+  //     const base = prev ?? {
+  //       ...initialGuestUser,
+  //       clientId,
+  //       profileImage: getPersistentGuestAvatar(),
+  //     };
+  //     const updated: User = { ...base, requests: [] };
+  //     saveUserToStorage(updated);
+  //     return updated;
+  //   });
+  // }, [clientId]);
 
   if (loading) return null;
 
@@ -297,9 +297,9 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         setUser,
         refreshUser,
         logout,
-        addRequestToUser,
-        removeRequestFromUser,
-        clearAllRequests,
+        // addRequestToUser,
+        // removeRequestFromUser,
+        // clearAllRequests,
         updateUserLanguage,
         updateUserTheme,
         registerSessionCallback,

@@ -1,6 +1,6 @@
 // app/dashboard/layout.tsx
 import React from 'react';
-import Sidebar from '../../../packages/components/sidebar/Sidebar';
+// import Sidebar from '../../../packages/components/sidebar/Sidebar';
 
 import { MdDashboard } from 'react-icons/md';
 import { FaFolder } from 'react-icons/fa6';
@@ -13,14 +13,13 @@ import { IoSettingsSharp } from 'react-icons/io5';
 import { BiSolidOffer } from 'react-icons/bi';
 import I18nInitializer from '../../../packages/components/i18nInitializer/I18nInitializer';
 import { ClientProvider } from '../../../packages/contexts/ClientContext';
-import Loading from '../../../packages/components/loading/page';
 import { getClient } from '../../../packages/services/clientServices';
 import { DashboardProvider } from '../../../packages/contexts/UserContext';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const domain: string = 'havenova.de';
   const client = await getClient(domain);
-  if (!client) return <Loading />;
+  // if (!client) return <Loadin />;
   const items = [
     { label: 'Dashboard', href: '/dashboard', icon: <MdDashboard /> },
     { label: 'Requests', href: '/dashboard/requests', icon: <FaFolder /> },
@@ -53,7 +52,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <ClientProvider initialClient={client}>
           <DashboardProvider>
             <I18nInitializer>
-              <Sidebar items={items} context="admin-dashboard" />
+              {/* <Sidebar items={items} context="admin-dashboard" /> */}
               {children}
             </I18nInitializer>
           </DashboardProvider>

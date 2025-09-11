@@ -3,7 +3,7 @@ import { useUser } from '../../../packages/contexts/UserContext';
 import { Suspense, useEffect, useState } from 'react';
 
 import { useClient } from '../../../packages/contexts/ClientContext';
-import { AlertPopup } from '../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../packages/components/alertPopup/AlertPopup';
 import { useI18n } from '../../../packages/contexts/I18nContext';
 
 import HomeHero from '../../../packages/components/pages/home/homeHero/HomeHero';

@@ -11,8 +11,8 @@ import { ServiceRequestItem } from '../../../../../packages/types/services';
 import { saveUserToStorage } from '../../../../../packages/utils/guestUserStorage';
 import { useClient } from '../../../../../packages/contexts/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/I18nContext';
-import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
+// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
+import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
 
 export interface LoginData {
   title: string;
@@ -91,7 +91,7 @@ const Login = () => {
 
   return (
     <section className={styles.section}>
-      <main className={styles.main}>
+      {/* <main className={styles.main}>
         <header className={`${styles.header} card`}>
           <h1 className={styles.h1}>{login?.title}</h1>
           <aside className={styles.aside}>
@@ -124,7 +124,7 @@ const Login = () => {
           description={alert.description}
           onClose={() => setAlert(null)}
         />
-      )}
+      )} */}
     </section>
   );
 };

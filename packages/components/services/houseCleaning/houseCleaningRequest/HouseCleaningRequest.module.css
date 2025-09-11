@@ -1,4 +1,4 @@
-.ul {
+/* .ul {
   width: 100%;
   list-style: none;
 }
@@ -6,10 +6,10 @@
   width: 100%;
   height: 120px;
   margin: 8px auto;
-  background-image: url("/svg/backgroundCard.svg");
+  background-image: url('/svg/backgroundCard.svg');
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   padding: 16px;
-overflow: hidden;
+  overflow: hidden;
 }
 
 .div {
@@ -47,7 +47,6 @@ overflow: hidden;
   background-color: transparent;
   border: 3px solid #e65353;
 }
-/* hover effect on button width */
 .button:hover {
   width: 100px;
   border-radius: 8px;
@@ -56,4 +55,4 @@ overflow: hidden;
 .delete {
   color: #f5440f;
 }
-
+ */

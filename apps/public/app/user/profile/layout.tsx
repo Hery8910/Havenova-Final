@@ -1,6 +1,6 @@
 // app/profile/layout.tsx
 import React, { ReactNode } from 'react';
-import Sidebar from '../../../../../packages/components/sidebar/Sidebar';
+// import Sidebar from '../../../../../packages/components/sidebar/Sidebar';
 import styles from './layout.module.css';
 import { Metadata } from 'next';
 
@@ -32,7 +32,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
   ];
   return (
     <main className={styles.layout}>
-      <Sidebar items={userProfileNavItems} context="user-profile" />
+      {/* <Sidebar items={userProfileNavItems} context="user-profile" /> */}
       <section className={styles.content}>{children}</section>
     </main>
   );

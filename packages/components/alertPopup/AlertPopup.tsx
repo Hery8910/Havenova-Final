@@ -11,7 +11,7 @@ interface AlertPopupProps {
   onClose?: () => void;
 }
 
-export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClose }) => {
+const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClose }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   // ✅ Soporte para cerrar con Escape
@@ -101,3 +101,5 @@ export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description
     </section>
   );
 };
+
+export default AlertPopup;

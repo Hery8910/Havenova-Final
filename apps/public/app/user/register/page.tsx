@@ -4,10 +4,10 @@ import { registerUser } from '../../../../../packages/services/userService';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import Link from 'next/link';
-import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
+// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
 import { useClient } from '../../../../../packages/contexts/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/I18nContext';
-import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
 
 export interface RegisterData {
   tilte: string;
@@ -132,7 +132,7 @@ const Register = () => {
 
   return (
     <section className={styles.section}>
-      <main className={styles.main}>
+      {/* <main className={styles.main}>
         <header className={`${styles.header} card`}>
           <article className={styles.article}>
             <h1 className={styles.h1}>{register?.tilte}</h1>
@@ -170,7 +170,7 @@ const Register = () => {
           description={alert.description}
           onClose={() => setAlert(null)}
         />
-      )}
+      )} */}
     </section>
   );
 };

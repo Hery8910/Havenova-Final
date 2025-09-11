@@ -1,5 +1,5 @@
 // src/components/HomeHero.skeleton.tsx
-import styles from './page.module.css';
+import styles from './HomeHero.module.css';
 
 const HomeHeroSkeleton = () => {
   return (

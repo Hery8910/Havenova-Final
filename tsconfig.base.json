@@ -1,3 +1,4 @@
+// tsconfig.base.json
 {
   "compilerOptions": {
     "target": "esnext",
@@ -8,6 +9,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "isolatedModules": true,
     "paths": {
       "@components/*": ["packages/components/*"],
       "@contexts/*": ["packages/contexts/*"],

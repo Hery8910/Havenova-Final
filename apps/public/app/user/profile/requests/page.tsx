@@ -1,8 +1,7 @@
 'use client';
-import React, { useState } from 'react';
-import { ServiceOrder } from '../../../../../../packages/types/services';
+import React from 'react';
 import styles from './page.module.css';
-import RequestTable from '../../../../../../packages/components/user/requestTable/RequestTable';
+// import RequestTable from '../../../../../../packages/components/user/requestTable/RequestTable';
 
 // 👉 Ejemplo de órdenes (mock)
 // const mockOrders: ServiceOrder[] = [
@@ -69,7 +68,7 @@ import RequestTable from '../../../../../../packages/components/user/requestTabl
 // ];
 
 export default function RequestTableWithFilters() {
-  const [statusFilter, setStatusFilter] = useState<string | 'all'>('all');
+  // const [statusFilter, setStatusFilter] = useState<string | 'all'>('all');
 
   // const filtered =
   //   statusFilter === "all"
@@ -78,7 +77,7 @@ export default function RequestTableWithFilters() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.controls}>
+      {/* <div className={styles.controls}>
         <label>
           Estado:
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
@@ -88,7 +87,7 @@ export default function RequestTableWithFilters() {
             <option value="cancelled">Cancelled</option>
           </select>
         </label>
-      </div>
+      </div> */}
       {/* <RequestTable orders={filtered} /> */}
     </div>
   );

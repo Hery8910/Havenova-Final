@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { useUser } from '../../../../../packages/contexts/UserContext';
 import { useClient } from '../../../../../packages/contexts/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/I18nContext';
-import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
 
 import styles from './page.module.css';
 import { resendVerificationEmail } from '../../../../../packages/services/userService';
 import MessageBox from '../../../../../packages/components/messageBox/MessageBox';
-import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
+// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
 import { VerifyEmailPayload } from '../../../../../packages/types/User';
 
 export interface VerifyEmailData {
@@ -145,7 +145,7 @@ const VerifyEmail = () => {
 
   return (
     <main className={styles.main}>
-      <section className={styles.section}>
+      {/* <section className={styles.section}>
         <header className={styles.header}>
           <h1 className={styles.h1}>{verifyEmail.title}</h1>
         </header>
@@ -171,7 +171,7 @@ const VerifyEmail = () => {
           description={alert.description}
           onClose={() => setAlert(null)}
         />
-      )}
+      )} */}
     </main>
   );
 };

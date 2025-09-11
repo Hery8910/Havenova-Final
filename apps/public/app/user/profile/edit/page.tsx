@@ -6,11 +6,11 @@ import { updateUser } from '../../../../../../packages/services/userService';
 import styles from './page.module.css';
 import { useClient } from '../../../../../../packages/contexts/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/I18nContext';
-import UserContactForm from '../../../../../../packages/components/Form/UserContactForm';
+// import UserContactForm from '../../../../../../packages/components/Form/UserContactForm';
 import { useRouter } from 'next/navigation';
-import ChangePassword from '../../../../../../packages/components/user/changePassword/ChangePassword';
-import AvatarSelector from '../../../../../../packages/components/user/avatarSelector/AvatarSelector';
-import { AlertPopup } from '../../../../../../packages/components/alertPopup/AlertPopup';
+// import ChangePassword from '../../../../../../packages/components/user/changePassword/ChangePassword';
+// import AvatarSelector from '../../../../../../packages/components/user/avatarSelector/AvatarSelector';
+import AlertPopup from '../../../../../../packages/components/alertPopup/AlertPopup';
 
 export interface EditData {
   title: string;
@@ -88,7 +88,7 @@ export default function Edit() {
   if (!user) return <p>Loading...</p>;
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <h3>{edit.title}</h3>
         <p>{edit.description}</p>
       </header>
@@ -109,7 +109,7 @@ export default function Edit() {
           description={alert.description}
           onClose={() => setAlert(null)}
         />
-      )}
+      )} */}
     </main>
   );
 }
