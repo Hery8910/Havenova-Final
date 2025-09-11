@@ -1,0 +1,16 @@
+.not_found {
+  text-align: center;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+}
+@media (min-width: 768px) {
+  .not_found_image {
+    width: 350px;
+    height: 350px;
+  }
+}

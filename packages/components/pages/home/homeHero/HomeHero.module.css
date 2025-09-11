@@ -1,0 +1,186 @@
+/* ===== Base: mobile first ===== */
+
+.section {
+  width: 100dvw;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 64px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fondo decorativo */
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% center;
+  z-index: -1;
+}
+
+/* Overlay gris para skeleton */
+.fakeBackground {
+  position: absolute;
+  inset: 0;
+  background-color: #eee;
+  z-index: -1;
+}
+
+/* Contenido */
+.main {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1700px;
+  padding: 30dvh 5dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.bgWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.backgroundImage {
+  object-fit: cover;
+  object-position: 45% center;
+}
+
+.aside {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.p {
+  position: absolute;
+  bottom: 24px;
+  right: 0;
+  font-weight: 700;
+  font-size: 5rem;
+  color: rgb(90, 90, 90);
+}
+
+/* Tipografía */
+.h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: rgb(141, 141, 141);
+  line-height: 1.1;
+}
+
+.h1Line {
+  display: block;
+}
+
+.description {
+  max-width: 40ch; /* legibilidad */
+  margin-bottom: 32px;
+  color: rgb(141, 141, 141);
+  text-wrap: balance;
+}
+
+/* ===== Skeleton blocks ===== */
+
+.skeletonText {
+  width: min(40ch, 80vw);
+  height: 32px;
+  border-radius: 8px;
+  background: #e6e6e6;
+  margin-block: 8px;
+}
+
+.skeletonCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #e6e6e6;
+  margin-left: 16px;
+}
+
+.skeletonSubtitle {
+  width: min(45ch, 85vw);
+  height: 16px;
+  border-radius: 8px;
+  background: #e6e6e6;
+  margin: 12px 0 24px;
+}
+
+.skeletonButton {
+  width: 180px;
+  height: 44px;
+  border-radius: 999px;
+  background: #e1e1e1;
+}
+
+/* ===== Shimmer reutilizable + reduce-motion ===== */
+
+.animShimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animShimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Respeta la preferencia del usuario en TODAS las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .animShimmer::after {
+    animation: none;
+  }
+}
+
+/* ===== Tablets ===== */
+@media (min-width: 481px) {
+  .main {
+    padding: 30dvh 5dvw;
+  }
+}
+
+/* ===== Tablets grandes / landscape ===== */
+@media (min-width: 768px) {
+  .backgroundImage {
+    object-position: 40% center;
+  }
+  .aside {
+    margin-bottom: 0;
+  }
+  .p {
+    position: unset;
+    font-size: 9rem;
+    color: rgb(90, 90, 90);
+  }
+}
+
+/* ===== Utilidad A11y (ocultar visualmente, accesible para SR) ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 1px 1px);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}

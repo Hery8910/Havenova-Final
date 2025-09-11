@@ -1,0 +1,136 @@
+.main {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 48px;
+  overflow-x: visible;
+  margin-bottom: 100px;
+}
+.section {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  padding: 32px;
+  border-bottom: 1px solid var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+}
+.section:last-child {
+  border: none;
+}
+.h3 {
+  color: var(--text-secondary);
+}
+.h4 {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.header_p {
+  font-weight: 700;
+}
+.ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.link {
+  color: var(--brand-primary);
+  text-decoration: underline;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: clamp(16px, 3vw, 20px);
+  transition: color 0.3s ease-in-out;
+}
+.link:hover {
+  color: var(--color-info);
+}
+.purpose_tbody {
+  border: 1px solid var(--text-secondary);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+.purpose_li {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.purpose_tr {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  width: 100%;
+}
+.purpose_tr:first-child {
+  border-bottom: 1px solid var(--text-secondary);
+}
+.purpose_th {
+  padding: 8px;
+  border-right: 1px solid var(--text-secondary);
+}
+.purpose_td {
+  padding: 8px;
+}
+.table {
+  margin: 0 auto;
+  border: 1px solid var(--text-secondary);
+  border-radius: 4px;
+}
+.tr {
+  width: auto;
+  display: grid;
+  text-align: left;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--text-secondary);
+}
+.tr:last-child {
+  border: none;
+}
+.th {
+  border-bottom: 1px solid var(--text-secondary);
+}
+.th,
+.td {
+  font-size: clamp(16px, 3vw, 20px);
+  padding: 8px;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--text-secondary);
+}
+.th:last-child,
+.td:last-child {
+  border-right: none;
+}
+.aside {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.contact_ul {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.contact_tbody {
+  display: flex;
+  flex-direction: column;
+}
+.contact_li {
+  display: flex;
+  flex-direction: column;
+}
+.contact_tr {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  width: 100%;
+}
+.contact_th,
+.contact_td {
+  font-size: clamp(16px, 3vw, 20px);
+  padding: 8px;
+}

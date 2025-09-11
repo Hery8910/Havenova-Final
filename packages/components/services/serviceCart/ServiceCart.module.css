@@ -1,0 +1,52 @@
+.main {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header,
+.checkout {
+  width: 100%;
+  background-image: url('/svg/backgroundCard.svg');
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-radius: 8px 8px 0 0;
+  font-size: clamp(14px, 3vw, 18px);
+  color: #333;
+  text-align: center;
+  padding: 8px 24px;
+}
+
+.section {
+  width: 100%;
+  margin: 0;
+}
+.checkout {
+  margin: 0;
+  border-radius: 0 0 8px 8px;
+  padding: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+.submit {
+  border: none;
+  background-color: #2c6aefe5;
+  color: var(--font-color-white);
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  font-size: clamp(14px, 3vw, 18px);
+}
+.submit:hover {
+  transform: scale(110%);
+}
+

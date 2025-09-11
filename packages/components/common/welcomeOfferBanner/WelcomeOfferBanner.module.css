@@ -1,0 +1,108 @@
+/* Base: mobile first */
+
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5dvw;
+}
+
+.main {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  text-shadow: var(--text-shadow);
+}
+
+.image {
+  filter: drop-shadow(0px 0px 8px #3f3f3f);
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Laptops */
+@media (min-width: 1025px) {
+  .section {
+    flex-direction: row;
+    gap: 64px;
+  }
+  .image {
+    width: 450px;
+    height: 450px;
+  }
+}
+
+/* ===== Skeleton Base ===== */
+.skeletonCard {
+  min-height: 300px;
+}
+
+.skeletonText {
+  width: min(40ch, 80vw);
+  height: 28px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: #e0e0e0;
+}
+
+.skeletonTextSm {
+  width: min(50ch, 85vw);
+  height: 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #e0e0e0;
+}
+
+.skeletonButton {
+  width: 160px;
+  height: 40px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: #e1e1e1;
+}
+
+.skelMedia {
+  width: 300px;
+  height: 300px;
+  border-radius: 12px;
+  background: #e0e0e0;
+}
+@media (min-width: 1025px) {
+  .skelMedia {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+/* ===== Shimmer reutilizable + reduce-motion ===== */
+.animShimmer {
+  position: relative;
+  overflow: hidden;
+}
+.animShimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animShimmer::after {
+    animation: none;
+  }
+}

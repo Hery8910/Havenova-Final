@@ -1,0 +1,104 @@
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+.input_section,
+.image_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+.input_section {
+  border: 2px dashed #6b6a6aa2;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 16px;
+  transition: all 0.3s ease-in-out;
+  max-width: 300px;
+}
+.section_active {
+  border: 2px dashed #2c6aef;
+}
+.image_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image_left,
+.image_top,
+.image_right {
+  z-index: 2;
+  filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.7));
+  transition: all 0.3s ease-in-out;
+}
+.image_left {
+  transform: rotateX(20deg) translateX(20px);
+}
+.image_right {
+  z-index: 1;
+  transform: rotateX(20deg) translateX(-20px);
+}
+.image_left_active {
+  transform: rotateX(-20deg) translateX(10px) rotateZ(-20deg);
+}
+.image_right_active {
+ transform: rotateX(20deg) translateX(-10px) rotateZ(20deg);
+}
+.section_div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.deleteButton {
+  font-size: clamp(18px, 3vw, 22px);
+  color: #888686;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+/* hover effect on button width */
+.deleteButton:hover {
+  color: #e65353;
+  transform: scale(105%);
+}
+
+  .upload_button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: #424344ad;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #6c6e70d8;;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+    font-size: clamp(14px, 3vw, 18px);
+    cursor: pointer;
+    color: #f9f9f9;
+
+  }
+  .upload_button:hover {
+    background: #2c6aefe5;
+    border: 1px solid #2c6aefaf;
+    color: var(--font-color-white);
+  }
+  .p {
+    text-align: center;
+  }

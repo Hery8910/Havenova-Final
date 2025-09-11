@@ -1,0 +1,135 @@
+.section {
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+.article {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.aside {
+  position: absolute;
+  width: 110%;
+  display: flex;
+  justify-content: space-between;
+  left: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+.button {
+  cursor: pointer;
+  font-size: 64px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+.button:hover {
+  transform: scale(110%);
+}
+.ul {
+  width: 90dvw;
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: auto;
+  padding: 36px 0;
+  gap: 16px;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 2%,
+    black 5%,
+    black 90%,
+    transparent 95%
+  );
+}
+.li {
+  width: 250px;
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .section {
+    margin: 250px auto;
+  }
+  .header {
+    width: 100%;
+    position: relative;
+    align-items: flex-start;
+  }
+  .image {
+    filter: drop-shadow(0px 8px 8px rgba(3, 41, 41, 0.8));
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: -200px;
+    width: 300px;
+    height: 300px;
+  }
+  .div {
+    width: 500px;
+  }
+  .ul {
+    padding-left: 36px;
+    gap: 24px;
+  }
+  .li {
+    width: 350px;
+  }
+}
+@media (min-width: 1024px) {
+  .header {
+    position: initial;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+  .image {
+    position: initial;
+    width: 400px;
+    height: 400px;
+  }
+  .ul {
+    padding-left: 50px;
+  }
+  .li {
+    width: 300px;
+  }
+}
+@media (min-width: 1200px) {
+  .image {
+    width: 400px;
+    height: 400px;
+  }
+  .ul {
+    padding-left: 50px;
+  }
+  .li {
+    width: 300px;
+  }
+}

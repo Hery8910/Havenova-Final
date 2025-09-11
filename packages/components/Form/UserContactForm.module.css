@@ -1,0 +1,36 @@
+.input {
+  padding: 8px 16px;
+  border-radius: 4px;
+  min-width: 300px;
+  font-size: clamp(16px, 3vw, 20px);
+  border: 1px solid var(--text-secondary);
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+.input::placeholder {
+  color: var(--text-secondary);
+}
+
+.div {
+  position: relative;
+}
+.show {
+  position: absolute;
+  right: 16px;
+  top: 0;
+  bottom: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--text-secondary);
+}
+.wrapper {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+

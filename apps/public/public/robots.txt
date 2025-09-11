@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /user
+Disallow: /checkout
+Disallow: /dashboard
+
+# Host
+Host: https://havenova.de
+
+# Sitemaps
+Sitemap: https://havenova.de/sitemap.xml

@@ -1,0 +1,201 @@
+/* ============================
+   VARIABLES GLOBALES - LIGHT MODE
+============================ */
+:root {
+  /* Brand Colors */
+  --brand-primary: #0768c9;
+  --brand-secondary: #09515a;
+  --brand-accent: #8be8cb;
+
+  /* Backgrounds & Text */
+  --bg-primary: #cbdcee;
+  --bg-secondary: #cadcdf;
+  --bg-accent: #d9ece6;
+
+  --text-primary: #424242;
+  --text-secondary: #616161;
+
+  --bg-card: #0768c983;
+
+  --shadow: 0px 4px 8px #1313139d;
+  --text-shadow: 0 4px 8px rgba(75, 75, 75, 0.575);
+
+  /* Font */
+  --font-family-main: 'Inter', sans-serif;
+  --font-size-base: 16px;
+
+  /* Status Colors */
+  --color-success: #053d12ff;
+  --bg-success: #35b4537c;
+
+  --color-error: #53050dff;
+  --bg-error: #da4a58a9;
+
+  --color-warning: #ffc107;
+  --bg-warning: #fff3cd;
+
+  --color-info: #20525a;
+  --bg-info: #d1ecf1;
+}
+
+/* ============================
+   DARK MODE (ACTIVADO POR data-theme)
+============================ */
+[data-theme='dark'] {
+  /* Brand Colors */
+  --brand-primary: #0768c9;
+  --brand-secondary: #09515a;
+  --brand-accent: #8be8cb;
+
+  /* Backgrounds & Text */
+  --bg-primary: #031d36;
+  --bg-secondary: #05373d;
+  --bg-accent: #1e302c;
+
+  --text-primary: #dad9d9;
+  --text-secondary: #c7bdbd;
+
+  --bg-card: #022a3094;
+
+  --shadow: 0px 4px 8px #1313139d;
+  --text-shadow: 0 4px 8px rgba(22, 22, 22, 0.822);
+
+  /* Status Colors */
+  --color-success: #28d07a;
+  --bg-success: #163b2ab3;
+
+  --color-error: #ff6b6b;
+  --bg-error: #3d1a1ab3;
+
+  --color-warning: #ffc107;
+  --bg-warning: #4a3b00b3;
+
+  --color-info: #2690a5;
+  --bg-info: #1a2e3db3;
+}
+
+/* ============================
+   BASE Y TIPOGRAFÍA
+============================ */
+
+*,
+:root,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family-main);
+  color: var(--text-primary);
+  background: radial-gradient(
+    circle at 50% 100%,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 60%,
+    var(--bg-accent) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* ============================
+   TITULOS Y TEXTOS
+============================ */
+h1 {
+  font-size: clamp(28px, 5vw, 50px);
+  font-weight: 700;
+}
+h2 {
+  font-size: clamp(24px, 4.5vw, 42px);
+}
+h3 {
+  font-size: clamp(20px, 4vw, 36px);
+}
+h4 {
+  font-weight: 400;
+  font-size: clamp(18px, 3.5vw, 26px);
+}
+p {
+  font-size: clamp(16px, 3vw, 20px);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 1px 1px); /* compat */
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+/* ============================
+   COMPONENTES REUTILIZABLES
+============================ */
+.button,
+.button_invert,
+.button_close {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-weight: 700;
+  font-size: clamp(14px, 3vw, 18px);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 2px solid var(--brand-primary);
+  background: var(--brand-primary);
+  box-shadow: 0px 4px 8px #1313135b;
+  color: var(--bg-primary);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.button_invert {
+  background-color: transparent;
+  color: var(--brand-primary);
+}
+.button_close {
+  padding: 0;
+  margin: 0;
+  font-size: clamp(20px, 4vw, 36px);
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--color-error);
+}
+.button:active {
+  transform: scale(0.9);
+}
+
+.card {
+  padding: 16px;
+  background: var(--bg-card);
+  background: linear-gradient(149deg, var(--bg-card) 0%, var(--brand-secondary) 100%);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.quote {
+  color: var(--color-error);
+  font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+  font-style: italic;
+}
+
+/* ============================
+   LAYOUT GENERAL
+============================ */

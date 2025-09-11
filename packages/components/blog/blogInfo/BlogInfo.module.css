@@ -1,0 +1,105 @@
+.section {
+  width: 100%;
+  height: max-content;
+}
+.header,
+.info_section {
+  background: rgba(185, 189, 193, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(185, 189, 193, 0.18);
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.info_section {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 32px;
+}
+.section_header,
+.article {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.main {
+  margin: 0 auto;
+}
+.h3 {
+  margin-top: 32px;
+}
+.article {
+  flex-direction: column;
+  margin-bottom: 64px;
+}
+.ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid rgba(185, 189, 193, 0.18);
+  border-top: none;
+}
+.header_p {
+  max-width: 600px;
+}
+.li {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid rgba(185, 189, 193, 0.18);
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+.close,
+.button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #989a9bb7;
+  border: 1px solid #a7a8a8;
+  color: #272525;
+  transition: all 0.2s ease-in-out;
+  width: fit-content;
+  font-weight: 700;
+  font-size: clamp(14px, 3vw, 18px);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: #ff4546;
+  border: 1px solid #ff7272;
+  color: var(--font-color-white);
+}
+.button:hover {
+  background: #2c6aefe5;
+  border: 1px solid #2c6aefaf;
+  color: var(--font-color-white);
+}
+.comment {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 64px;
+  margin-top: 64px;
+  margin-bottom: 32px;
+  overflow: auto;
+  scrollbar-width: none;
+}

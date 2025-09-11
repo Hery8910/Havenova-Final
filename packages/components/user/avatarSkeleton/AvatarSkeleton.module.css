@@ -1,0 +1,22 @@
+.section {
+  margin: 0;
+  position: relative;
+}
+.button {
+  color: rgb(212, 212, 212);
+  background: rgba(48, 48, 48, 0.59);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(17, 17, 17, 0.623);
+  backdrop-filter: blur(8.1px);
+  border: 1px solid rgba(68, 68, 68, 0.671);
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 4px;
+  padding-right: 16px;
+  border-radius: 50px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}

@@ -1,0 +1,124 @@
+.section1 {
+  margin: 64px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.h3 {
+  color: var(--text-secondary);
+}
+.p {
+  margin: 32px auto;
+  text-align: center;
+  max-width: 800px;
+  font-size: clamp(18px, 3.5vw, 26px);
+}
+.ul {
+  margin: 64px auto;
+  width: auto;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+}
+
+.li {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 300px;
+  height: fit-content;
+}
+.header_li {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.name_div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+.rating_div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 8px;
+}
+.profil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 24px 8px 8px;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.image {
+  filter: drop-shadow(0px 0px 16px rgba(3, 41, 41, 0.8));
+}
+.profileImage {
+  border-radius: 50%;
+  padding: 4px;
+  border: 2px solid var(--text-secondary);
+}
+/* @media (min-width: 1024px) {
+  .main {
+    display: flex;
+    justify-content: center;
+  }
+  .header {
+    margin-bottom: 64px;
+    flex-direction: row;
+    justify-content: flex-start;
+    position: relative;
+  }
+  .article {
+    width: 500px;
+  }
+  .image {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    right: 0;
+    bottom: -100px;
+    z-index: 3;
+  }
+  .ul {
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    margin-bottom: 128px;
+  }
+  .image {
+    right: 64px;
+  }
+  .ul {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 425px) {
+  .li {
+    width: 300px;
+  }
+} */

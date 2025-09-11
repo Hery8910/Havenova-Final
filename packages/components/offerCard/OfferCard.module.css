@@ -1,0 +1,115 @@
+/* Main Card Layout */
+.main,
+.details_main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: rgb(36, 36, 36);
+}
+.header, .details_header {
+  border-radius: 8px;
+  border: 1px solid var(--brand-secondary);
+  background-color: var(--brand-secondary);
+  box-shadow:
+    var(--shadow-light),
+    inset var(--shadow-light);
+}
+/* Image mask for fade at bottom */
+.image,
+.details_image {
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  border-radius: 8px;
+}
+
+/* Article animation classes for react-transition-group (slide in from right) */
+/* Article base, estático */
+.article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+  gap: 16px;
+  max-width: 500px;
+  color: var(--text-primary);
+  border: 1px solid var(--brand-secondary);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: var(--shadow-light);
+  z-index: -3;
+  /* NO opacity ni transform aquí */
+}
+
+/* Transición: entrada */
+.articleEnter {
+  opacity: 0;
+  transform: translateX(-160px);
+}
+.articleEnterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Transición: salida */
+.articleExit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.articleExitActive {
+  opacity: 0;
+  transform: translateX(-160px);
+  transition:
+    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header and aside */
+.header,
+.details_header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+.aside {
+  padding: 16px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Buttons Row */
+.div {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 16px;
+  margin-top: 32px;
+}
+
+/* Headings */
+.h4,
+.details_h3 {
+  font-weight: 700;
+}
+
+/* List for Offer Details */
+.ul {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.li {
+  padding: 8px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

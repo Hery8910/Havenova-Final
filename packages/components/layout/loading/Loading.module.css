@@ -1,0 +1,51 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  height: 100vh;
+  text-align: center;
+}
+
+.ul {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+  list-style: none;
+}
+
+.dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: var(--brand-primary);
+  animation: bounce 1.4s ease-in-out infinite;
+  box-shadow: var(--shadow);
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.dot:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.loadingText {
+  font-size: 1.25rem;
+  color: #666;
+  animation: blink 1.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

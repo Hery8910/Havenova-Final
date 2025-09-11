@@ -1,0 +1,102 @@
+.section {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.ul {
+  list-style: none;
+  width: 100%;
+}
+.li,
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+.li {
+  width: 100%;
+}
+.main {
+  align-items: center;
+  justify-content: center;
+}
+.image {
+  border-radius: 8px;
+}
+.article {
+  width: 100%;
+  max-width: 500px;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.aside {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.details,
+.link {
+  font-weight: 700;
+  color: rgba(245, 255, 250, 0.651);
+  background: rgba(185, 189, 193, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(185, 189, 193, 0.18);
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.link {
+  background-color: rgba(185, 189, 193, 0.836);
+  color: rgba(30, 31, 30, 0.897);
+}
+.link:hover,
+.details:hover {
+  background-color: #2c6aefaf;
+  color: #f9f9f9;
+}
+.edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 700;
+  color: #888686;
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.edit:hover {
+  color: #2c6aefaf;
+}
+.delete_button {
+  padding: 16px;
+  font-size: clamp(16px, 3vw, 20px);
+  color: #888686;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+/* hover effect on button width */
+.delete_button:hover {
+  color: #e65353;
+  transform: scale(105%);
+}

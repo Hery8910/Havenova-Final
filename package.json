@@ -1,0 +1,16 @@
+{
+  "name": "havenova",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:public": "pnpm --filter public dev",
+    "dev:dashboard": "pnpm --filter dashboard dev",
+    "build": "pnpm --filter public build && pnpm --filter dashboard build",
+    "lint": "pnpm --recursive lint"
+  }
+}

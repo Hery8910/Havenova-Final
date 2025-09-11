@@ -1,0 +1,101 @@
+.main {
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/svg/user-background.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-card);
+  background: radial-gradient(
+    circle,
+    var(--bg-card) 0%,
+    var(--bg-gradient) 100%
+  );
+  border-radius: 8px;
+  box-shadow: var(--shadow-dark);
+}
+.header {
+  max-width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  padding: 32px 64px 32px 32px;
+  background-image: url("/images/Subheading.png");
+  background-position: bottom;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.37);
+}
+.form {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  gap: 32px;
+}
+.article {
+  padding: 200px 32px 32px 32px;
+  max-width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.link {
+  max-width: 350px;
+  font-size: clamp(16px, 3vw, 20px);
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.3s ease-in-out;
+}
+.link:hover {
+  color: var(--brand-primary);
+}
+.input {
+  padding: 8px 16px;
+  border-radius: 8px;
+  min-width: 300px;
+  font-size: clamp(16px, 3vw, 20px);
+  border: 1px solid var(--text-secondary);
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+.input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* @media (max-width: 768px) {
+  .main {
+    background-size: 55%;
+    background-position: 100% 0%;
+  }
+  .section {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 360px) {
+  .main {
+    background-size: 70%;
+    background-position: 50% 0%;
+}
+} */

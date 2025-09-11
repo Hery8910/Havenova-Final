@@ -1,0 +1,151 @@
+{
+  "pages": {
+    "home": {
+      "components": [
+        "HeroSection",
+        "BenefitsSection",
+        "HowItWorksSection",
+        "ServicesPreview",
+        "ReviewsSection",
+        "FAQSection",
+        "BlogPreview",
+        "ContactSection",
+        "Footer"
+      ]
+    },
+    "about": {
+      "components": [
+        "HeroSection",
+        "WhoWeAre",
+        "MissionVision",
+        "WhyChooseUs",
+        "MeetTheTeam",
+        "Testimonials",
+        "FinalCTA",
+        "Footer"
+      ]
+    },
+    "services": {
+      "components": [
+        "ServiceList",
+        "ServicePageHeader",
+        "ServiceDetails",
+        "ServiceBenefits",
+        "ServiceCTA",
+        "Footer"
+      ]
+    },
+    "blog": {
+      "components": [
+        "BlogHeader",
+        "BlogList",
+        "BlogCategories",
+        "FeaturedPosts",
+        "Footer"
+      ]
+    },
+    "faq": {
+      "components": ["FAQHeader", "FAQList", "ContactCTA", "Footer"]
+    },
+    "reviews": {
+      "components": [
+        "ReviewsHeader",
+        "ReviewList",
+        "GoogleReviews",
+        "MyHammerReviews",
+        "LeaveAReviewCTA",
+        "Footer"
+      ]
+    },
+    "contact": {
+      "components": [
+        "ContactHeader",
+        "ContactForm",
+        "CompanyInfo",
+        "Map",
+        "Footer"
+      ]
+    },
+    "user": {
+      "components": [
+        "LoginForm",
+        "RegisterForm",
+        "ProfileCompletion",
+        "Dashboard",
+        "UserRequests",
+        "UserReviews",
+        "Settings",
+        "Logout"
+      ]
+    },
+    "legal": {
+      "components": [
+        "PrivacyPolicy",
+        "CookiePolicy",
+        "TermsOfService",
+        "Footer"
+      ]
+    }
+  },
+  "components": {
+    "global": [
+      "Navbar",
+      "Footer",
+      "Button",
+      "Card",
+      "Modal",
+      "Form",
+      "Input",
+      "Textarea",
+      "Dropdown",
+      "LoadingSpinner"
+    ],
+    "home": [
+      "HeroSection",
+      "BenefitsSection",
+      "HowItWorksSection",
+      "ServicesPreview",
+      "ReviewsSection",
+      "FAQSection",
+      "BlogPreview",
+      "ContactSection"
+    ],
+    "about": [
+      "HeroSection",
+      "WhoWeAre",
+      "MissionVision",
+      "WhyChooseUs",
+      "MeetTheTeam",
+      "Testimonials",
+      "FinalCTA"
+    ],
+    "services": [
+      "ServiceList",
+      "ServicePageHeader",
+      "ServiceDetails",
+      "ServiceBenefits",
+      "ServiceCTA"
+    ],
+    "blog": ["BlogHeader", "BlogList", "BlogCategories", "FeaturedPosts"],
+    "faq": ["FAQHeader", "FAQList", "ContactCTA"],
+    "reviews": [
+      "ReviewsHeader",
+      "ReviewList",
+      "GoogleReviews",
+      "MyHammerReviews",
+      "LeaveAReviewCTA"
+    ],
+    "contact": ["ContactHeader", "ContactForm", "CompanyInfo", "Map"],
+    "user": [
+      "LoginForm",
+      "RegisterForm",
+      "ProfileCompletion",
+      "Dashboard",
+      "UserRequests",
+      "UserReviews",
+      "Settings",
+      "Logout"
+    ],
+    "legal": ["PrivacyPolicy", "CookiePolicy", "TermsOfService"]
+  }
+}

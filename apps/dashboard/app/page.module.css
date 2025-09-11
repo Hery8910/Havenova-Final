@@ -1,0 +1,30 @@
+.main {
+  margin: 100px auto;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  gap: 8px;
+  width: 100%;
+  max-width: 1600px;
+  color: var(--text-primary);
+  height: 85dvh;
+  background-color: var(--brand-primary);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.308);
+  backdrop-filter: blur(9px);
+}
+
+.section {
+  margin: 0;
+  width: 100%;
+  background-color: var(--bg-main);
+  background: linear-gradient(0deg, var(--bg-gradient) 0%, var(--bg-main) 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.308);
+  backdrop-filter: blur(9px);
+}
+
+/* .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */

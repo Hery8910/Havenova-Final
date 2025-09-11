@@ -1,0 +1,761 @@
+
+{
+  "_id": { "$oid": "68665c03c231befb4c6f6bd0" },
+  "companyName": "Havenova",
+  "domain": "havenova.de",
+  "email": "info@havenova.de",
+  "phone": "+49 17670917803",
+  "address": "Stollberger Strasse 43, 12627 Berlin",
+  "branding": {
+    "light": {
+      "primaryColor": "#4D9DE0",
+      "secondaryColor": "#E15554",
+      "accentColor": "#E1BC29",
+      "backgroundColor": "#F8F9FB",
+      "textColorPrimary": "#222",
+      "textColorSecondary": "#7B7B7B",
+      "textColorInverted": "#fff",
+      "colorSuccess": "#22c55e",
+      "colorError": "#ef4444",
+      "colorWarning": "#eab308",
+      "colorInfo": "#3b82f6",
+      "bgSuccess": "#ecfdf5",
+      "bgError": "#fef2f2",
+      "bgWarning": "#fefce8",
+      "bgInfo": "#eff6ff",
+      "backgroundGradient": "#4d9de038"
+    },
+    "dark": {
+      "primaryColor": "#4D9DE0",
+      "secondaryColor": "#E15554",
+      "accentColor": "#E1BC29",
+      "backgroundColor": "#181B20",
+      "textColorPrimary": "#fff",
+      "textColorSecondary": "#bcbcbc",
+      "textColorInverted": "#222",
+      "colorSuccess": "#22c55e",
+      "colorError": "#ef4444",
+      "colorWarning": "#eab308",
+      "colorInfo": "#3b82f6",
+      "bgSuccess": "#166534",
+      "bgError": "#7f1d1d",
+      "bgWarning": "#78350f",
+      "bgInfo": "#1e40af",
+      "backgroundGradient": "#4d9de038"
+    }
+  },
+  "images": {
+    "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751007003/bbblurry_4_l9igjt.svg"
+  },
+  "logos": {
+    "main": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/2_d7eysv.webp",
+    "mainDark": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/1_siqxxe.webp",
+    "alt": "/assets/havenova-logo-alt.svg",
+    "favicon": "/assets/favicon.ico"
+  },
+  "typography": {
+    "fontFamily": "Roboto",
+    "isGoogleFont": true,
+    "googleFontUrl": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+    "weights": ["400", "700"],
+    "secondaryFontFamily": "Montserrat"
+  },
+  "serviceZone": {
+    "type": "circle",
+    "center": {
+      "lat": { "$numberDouble": "52.532" },
+      "lng": { "$numberDouble": "13.424" }
+    },
+    "radius": { "$numberInt": "8000" },
+    "coordinates": []
+  },
+  "schedule": {
+    "monday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "tuesday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "wednesday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "thursday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "friday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "saturday": {
+      "start": "10:00",
+      "end": "16:00"
+    },
+    "sunday": { "start": "", "end": "" }
+  },
+  "texts": {
+    "de": {
+      "navigation": [
+        {
+          "label": "Leistungen",
+          "href": "#services"
+        },
+        {
+          "label": "So funktioniert’s",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Mitgliedschaft",
+          "href": "#membership"
+        },
+        { "label": "Blog", "href": "#blog" },
+        { "label": "Kontakt", "href": "#contact" }
+      ],
+      "home": {
+        "hero": {
+          "headline1": "Professionelle Hauswartung",
+          "headline2": "Reinigungsservice in Berlin",
+          "subtitle": "Schnelle, zuverlässige und vertrauenswürdige Dienstleistungen für Ihr Zuhause oder Büro.",
+          "cta": {
+            "label": "Jetzt Service anfragen",
+            "href": "/services"
+          },
+          "image": {
+            "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750932957/warm-cozy-interior-living-room-space-with-copy-space-black-commode-vase-with-dried-flowers_s1gbix.webp",
+            "alt": "Gemütliches Wohnzimmer mit Kommode und Trockenblumen."
+          }
+        },
+        "benefits": {
+          "title": "Warum Havenova wählen?",
+          "items": [
+            {
+              "title": "Qualifiziertes Personal",
+              "description": "Unser Team ist erfahren, geschult und geprüft."
+            },
+            {
+              "title": "Schnelle Reaktion",
+              "description": "Buchen Sie heute und erhalten Sie den Service innerhalb von 24–48 Stunden."
+            },
+            {
+              "title": "Garantierte Qualität",
+              "description": "Wir stellen sicher, dass jede Arbeit höchsten Standards entspricht."
+            }
+          ],
+          "image": {
+            "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/2150576450_w3ezpl.webp",
+            "alt": "Bauausrüstung und Baupläne"
+          }
+        },
+        "howItWorks": {
+          "title": "So funktioniert’s",
+          "subtitle": "Nahtlos, transparent und zuverlässig",
+          "description": "Bei Havenova machen wir die Buchung eines Handwerkers einfach und stressfrei...",
+          "steps": [
+            {
+              "title": "Service anfragen",
+              "description": "Übermitteln Sie Ihre Daten online oder telefonisch.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/639_eq1uxp.webp",
+                "alt": "Serviceanfrage ausfüllen"
+              }
+            },
+            {
+              "title": "Angebot erhalten",
+              "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/2373_w9dcc3.webp",
+                "alt": "Angebot erhalten"
+              }
+            },
+            {
+              "title": "Service erhalten",
+              "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/3147_y3qeps.webp",
+                "alt": "Fachkraft bei der Arbeit"
+              }
+            }
+          ],
+          "cta": {
+            "label": "Unsere Leistungen entdecken",
+            "href": "/user/register"
+          }
+        },
+        "services": {
+          "title": "Unsere Leistungen",
+          "items": [
+            {
+              "title": "Küchenmontage",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/kitchen-furniture_8052817_c8q7bu.webp",
+                "alt": "Symbol Küchenmontage"
+              }
+            },
+            {
+              "title": "Hausservice",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/home-renovation_10726215_uingrs.webp",
+                "alt": "Symbol Hausservice"
+              }
+            },
+            {
+              "title": "Fensterreinigung",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927434/window-cleaning_16872519_aghok7.webp",
+                "alt": "Symbol Fensterreinigung"
+              }
+            },
+            {
+              "title": "Wohnungsreinigung",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/cleaning_3475522_hyzxc6.webp",
+                "alt": "Symbol Wohnungsreinigung"
+              }
+            },
+            {
+              "title": "Möbelmontage",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/furniture-assembly_shu6wd.webp",
+                "alt": "Symbol Möbelmontage"
+              }
+            },
+            {
+              "title": "Küchenreinigung",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/washing-plates_16430273_slliqf.webp",
+                "alt": "Symbol Küchenreinigung"
+              }
+            }
+          ],
+          "cta": {
+            "label": "Alle Leistungen ansehen",
+            "href": "/services"
+          }
+        },
+        "testimonials": {
+          "title": "Vertrauenswürdig von Berliner Haushalten.",
+          "subTitle": "Sehen Sie, was unsere Kunden sagen.",
+          "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
+          "items": [
+            {
+              "text": "Havenova hat meinen Umzug so einfach und stressfrei gemacht.",
+              "author": "Anna",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8_cudvoc.svg",
+                "alt": "Kundenavatar Anna"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Sternebewertung"
+              }
+            },
+            {
+              "text": "Professionell, freundlich und zuverlässig! Sehr empfehlenswerter Reinigungsservice.",
+              "author": "Markus",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg",
+                "alt": "Kundenavatar Markus"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Sternebewertung"
+              }
+            },
+            {
+              "text": "Endlich habe ich einen Dienstleister gefunden, dem ich mein Zuhause anvertrauen kann.",
+              "author": "Sophie",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1_fdqyy8.svg",
+                "alt": "Kundenavatar Sophie"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Sternebewertung"
+              }
+            }
+          ],
+          "cta": {
+            "label": "Bewertung abgeben",
+            "href": "/review"
+          }
+        },
+        "faq": {
+          "title": "Häufig gestellte Fragen",
+          "items": [
+            {
+              "question": "Welche Services bietet Havenova an?",
+              "answer": "Havenova bietet Reinigung, Reparaturen, Wartung und Umzugshilfe in Berlin."
+            },
+            {
+              "question": "Wie schnell kann ich einen Service buchen?",
+              "answer": "Meist vereinbaren wir einen Termin innerhalb von 24–48 Stunden nach Ihrer Anfrage."
+            },
+            {
+              "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
+              "answer": "Ja, unser gesamtes Team ist geschult und vollständig versichert."
+            },
+            {
+              "question": "Gibt es Rabatte für Mitglieder?",
+              "answer": "Ja, Mitglieder erhalten exklusive Rabatte und Vorteile."
+            }
+          ],
+          "cta": {
+            "label": "Kontakt Support",
+            "href": "/contact",
+            "description": "Kontaktieren Sie unser Team für maßgeschneiderte Unterstützung.",
+            "title": "Benötigen Sie weitere Hilfe?"
+          }
+        },
+        "blog": {
+          "title": "Neuigkeiten aus unserem Blog",
+          "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
+          "cta": {
+            "title": "Bleiben Sie informiert:",
+            "subtitle": "Tipps, Ratgeber und Updates für Ihr Zuhause. Abonnieren Sie unseren Newsletter und verpassen Sie keinen Tipp!",
+            "label": "Abonnieren"
+          }
+        }
+      },
+      "footer": {
+        "contact": [
+          {
+            "data": "contact@havenova.de",
+            "image": "/images/email.webp"
+          },
+          {
+            "data": "+49 176 7091 7803",
+            "image": "/images/phone.webp"
+          },
+          {
+            "data": "Stollberger Str.43, 12627 Berlin",
+            "image": "/images/navigation.webp"
+          },
+          {
+            "label": "Mo-Fr",
+            "data": "08:00-17:00 Uhr"
+          },
+          {
+            "label": "Sa",
+            "data": "08:00-14:00 Uhr"
+          }
+        ],
+        "havenova": [
+          {
+            "label": "Uber Uns",
+            "href": "/about"
+          },
+          {
+            "label": "Kontakt",
+            "href": "/contact"
+          },
+          { "label": "F&A", "href": "/q&a" },
+          {
+            "label": "Rezensionen",
+            "href": "/reviews"
+          },
+          { "label": "Blog", "href": "/blog" },
+          {
+            "label": "Unsere Leistungen",
+            "href": "/service"
+          }
+        ],
+        "services": [
+          {
+            "label": "Möbelmontage",
+            "href": "/services/furniture-assembly"
+          },
+          {
+            "label": "Küchenmontage",
+            "href": "/services/kitchen-assembly"
+          },
+          {
+            "label": "Heimservice",
+            "href": "/services/home-service"
+          },
+          {
+            "label": "House Cleaning",
+            "href": "/services/house-cleaning"
+          },
+          {
+            "label": "Hausreinigung",
+            "href": "/services/kitchen-cleaning"
+          },
+          {
+            "label": "Fensterreinigung",
+            "href": "/services/windows-cleaning"
+          }
+        ],
+        "legal": [
+          {
+            "label": "Datenschutzrichtlinie",
+            "href": "/privacy-policy"
+          },
+          {
+            "label": "Cookie-Richtlinie",
+            "href": "/cookie-policy"
+          },
+          {
+            "label": "Nutzungsbedingungen",
+            "href": "/terms-of-service"
+          }
+        ],
+        "social": [
+          {
+            "label": "Facebook",
+            "href": "https://facebook.com/havenova"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://instagram.com/havenova"
+          },
+          {
+            "label": "LinkedIn",
+            "href": "https://linkedin.com/company/havenova"
+          }
+        ],
+        "cta": "Diese digitale Plattform wurde von Maped Solutions entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
+      }
+    },
+    "en": {
+      "navigation": [
+        {
+          "label": "Services",
+          "href": "#services"
+        },
+        {
+          "label": "How it Works",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Membership",
+          "href": "#membership"
+        },
+        { "label": "Blog", "href": "#blog" },
+        { "label": "Contact", "href": "#contact" }
+      ],
+      "home": {
+        "hero": {
+          "headline1": "Professional Home Maintenance",
+          "headline2": "Cleaning Service in Berlin",
+          "subtitle": "Fast, reliable, and trusted services for your home or office.",
+          "cta": {
+            "label": "Request Your Service Now",
+            "href": "/services"
+          },
+          "image": {
+            "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750932957/warm-cozy-interior-living-room-space-with-copy-space-black-commode-vase-with-dried-flowers_s1gbix.webp",
+            "alt": "Warm cozy interior living room space with copy space black commode vase with dried flowers."
+          }
+        },
+        "benefits": {
+          "title": "Why Choose Havenova?",
+          "items": [
+            {
+              "title": "Skilled Staff",
+              "description": "Our team is experienced, trained, and background-checked."
+            },
+            {
+              "title": "Fast Response",
+              "description": "Book today and get service within 24–48 hours."
+            },
+            {
+              "title": "Guaranteed Quality",
+              "description": "We ensure every job meets the highest standards."
+            }
+          ],
+          "image": {
+            "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/2150576450_w3ezpl.webp",
+            "alt": "Construction equipment and construction plans"
+          }
+        },
+        "howItWorks": {
+          "title": "How It Works",
+          "subtitle": "Seamless, Transparent, and Reliable",
+          "description": "At Havenova, we make booking a handyman service simple and stress-free...",
+          "steps": [
+            {
+              "title": "Request a Service",
+              "description": "Submit your details online or by phone.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/639_eq1uxp.webp",
+                "alt": "Filling a service request"
+              }
+            },
+            {
+              "title": "Receive a Quote",
+              "description": "We review your needs and send a personalized offer.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/2373_w9dcc3.webp",
+                "alt": "Receiving a quote"
+              }
+            },
+            {
+              "title": "Get the Job Done",
+              "description": "Our professionals complete the service at your chosen time.",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/3147_y3qeps.webp",
+                "alt": "Service professional working"
+              }
+            }
+          ],
+          "cta": {
+            "label": "Explore Our Services",
+            "href": "/user/register"
+          }
+        },
+        "services": {
+          "title": "Our Services",
+          "items": [
+            {
+              "title": "Kitchen Assembly",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/kitchen-furniture_8052817_c8q7bu.webp",
+                "alt": "Kitchen Assembly icon"
+              }
+            },
+            {
+              "title": "Home Service",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/home-renovation_10726215_uingrs.webp",
+                "alt": "Home Service icon"
+              }
+            },
+            {
+              "title": "Windows Cleaning",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927434/window-cleaning_16872519_aghok7.webp",
+                "alt": "Windows Cleaning icon"
+              }
+            },
+            {
+              "title": "House Cleaning",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/cleaning_3475522_hyzxc6.webp",
+                "alt": "House Cleaning icon"
+              }
+            },
+            {
+              "title": "Furniture Assembly",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/furniture-assembly_shu6wd.webp",
+                "alt": "Furniture Assembly icon"
+              }
+            },
+            {
+              "title": "Kitchen Cleaning",
+              "image": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/washing-plates_16430273_slliqf.webp",
+                "alt": "Kitchen Cleaning icon"
+              }
+            }
+          ],
+          "cta": {
+            "label": "See All Services",
+            "href": "/services"
+          }
+        },
+        "testimonials": {
+          "title": "Trusted by Berlin homeowners.",
+          "subTitle": "See what our customers say.",
+          "description": "At Havenova, we continuously strive to improve our services. Your feedback helps us enhance the customer experience and provide better solutions.",
+          "items": [
+            {
+              "text": "Havenova made moving into my new apartment so easy and stress-free.",
+              "author": "Anna",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8_cudvoc.svg",
+                "alt": "Kitchen Assembly icon"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Kitchen Assembly icon"
+              }
+            },
+            {
+              "text": "Professional, friendly, and reliable! Highly recommend their cleaning services.",
+              "author": "Markus",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg",
+                "alt": "Kitchen Assembly icon"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Kitchen Assembly icon"
+              }
+            },
+            {
+              "text": "Finally found a company I can trust for all my home needs.",
+              "author": "Sophie",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1_fdqyy8.svg",
+                "alt": "Kitchen Assembly icon"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Kitchen Assembly icon"
+              }
+            },
+            {
+              "text": "Finally found a company I can trust for all my home needs.",
+              "author": "Sophie",
+              "profileImage": {
+                "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-5_xh96x5.svg",
+                "alt": "Kitchen Assembly icon"
+              },
+              "starImage": {
+                "src": "/images/stars.webp",
+                "alt": "Kitchen Assembly icon"
+              }
+            }
+          ],
+          "cta": {
+            "label": "Leave a review",
+            "href": "/review"
+          }
+        },
+        "faq": {
+          "title": "Frequently Asked Questions",
+          "items": [
+            {
+              "question": "What types of services does Havenova offer?",
+              "answer": "Havenova provides cleaning, repairs, maintenance, and moving assistance in Berlin."
+            },
+            {
+              "question": "How quickly can I book a service?",
+              "answer": "We usually schedule visits within 24–48 hours after your request."
+            },
+            {
+              "question": "Are your team members qualified and insured?",
+              "answer": "Yes, all staff are trained and fully insured."
+            },
+            {
+              "question": "Do you offer membership discounts?",
+              "answer": "Yes, our members receive exclusive discounts and benefits."
+            }
+          ],
+          "cta": {
+            "label": "Contact Support",
+            "href": "/contact",
+            "description": "Contact our team for tailored support.",
+            "title": "Need more help?"
+          }
+        },
+        "blog": {
+          "title": "Latest from Our Blog",
+          "subTitle": "News & insights for your home",
+          "cta": {
+            "title": "Stay Informed:",
+            "subtitle": "Tips, Guides, and Updates for Your Home Subscribe to Our Newsletter and Never Miss a Home Tip!",
+            "label": "Subscribe"
+          }
+        }
+      },
+      "footer": {
+        "contact": [
+          {
+            "data": "contact@havenova.de",
+            "image": "/images/email.webp"
+          },
+          {
+            "data": "+49 176 7091 7803",
+            "image": "/images/phone.webp"
+          },
+          {
+            "data": "Stollberger Str.43, 12627 Berlin",
+            "image": "/images/navigation.webp"
+          },
+          {
+            "label": "Mo-Fr",
+            "data": "08:00-17:00 Uhr"
+          },
+          {
+            "label": "Sa",
+            "data": "08:00-14:00 Uhr"
+          }
+        ],
+        "havenova": [
+          { "label": "About", "href": "/about" },
+          {
+            "label": "Contact",
+            "href": "/contact"
+          },
+          { "label": "Q&A", "href": "/q&a" },
+          {
+            "label": "Reviews",
+            "href": "/reviews"
+          },
+          { "label": "Blog", "href": "/blog" },
+          {
+            "label": "Our Services",
+            "href": "/service"
+          }
+        ],
+        "services": [
+          {
+            "label": "Furniture Assembly",
+            "href": "/services/furniture-assembly"
+          },
+          {
+            "label": "Kitchen Assembly",
+            "href": "/services/kitchen-assembly"
+          },
+          {
+            "label": "Home Service",
+            "href": "/services/home-service"
+          },
+          {
+            "label": "House Cleaning",
+            "href": "/services/house-cleaning"
+          },
+          {
+            "label": "Kitchen Cleaning",
+            "href": "/services/kitchen-cleaning"
+          },
+          {
+            "label": "Windows Cleaning",
+            "href": "/services/windows-cleaning"
+          }
+        ],
+        "legal": [
+          {
+            "label": "Privacy Policy",
+            "href": "/privacy-policy"
+          },
+          {
+            "label": "Cookies Policy",
+            "href": "/cookie-policy"
+          },
+          {
+            "label": "Terms of Service",
+            "href": "/terms-of-service"
+          }
+        ],
+        "social": [
+          {
+            "label": "Facebook",
+            "href": "https://facebook.com/havenova"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://instagram.com/havenova"
+          },
+          {
+            "label": "LinkedIn",
+            "href": "https://linkedin.com/company/havenova"
+          }
+        ],
+        "cta": "This digital platform was designed and developed by Maped Solutions, with the goal of delivering modern, efficient, and tailored solutions for service-based businesses."
+      }
+    }
+  },
+  "createdAt": {
+    "$date": { "$numberLong": "1751286841956" }
+  },
+  "updatedAt": {
+    "$date": { "$numberLong": "1751286841956" }
+  },
+  "__v": { "$numberInt": "0" }
+}
