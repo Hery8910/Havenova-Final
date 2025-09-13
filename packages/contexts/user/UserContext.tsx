@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ServiceRequest, ServiceRequestItem } from '../../types/services';
+import { ServiceRequest, ServiceRequestItem } from '../../types/services/servicesTypes';
 import { User } from '../../types/User';
 import { useClient } from '../client/ClientContext';
 import { getUser, updateUser } from '../../services/userService';

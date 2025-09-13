@@ -1,6 +1,6 @@
 'use client';
 
-import { BlogPost } from '../../../types/blog';
+import { BlogPost } from '../../../types/blog/blogTypes';
 import Image from 'next/image';
 import styles from './BlogCard.module.css';
 import { IoIosArrowForward } from 'react-icons/io';

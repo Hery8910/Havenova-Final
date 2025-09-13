@@ -1,15 +1,15 @@
-import api from './api';
-import { ApiResponse } from '../types/api';
+import api from './api/api';
+import { ApiResponse } from '../types/api/apiTypes';
 import {
-  ForgotPasswordPayload,
   LoginPayload,
   RegisterPayload,
+  ForgotPasswordPayload,
   ResetPasswordPayload,
   ChangePasswordPayload,
   UpdateUserPayload,
   User,
   VerifyEmailPayload,
-} from '../types/User';
+} from '../types';
 
 // REGISTER
 export const registerUser = async (payload: RegisterPayload): Promise<ApiResponse<User>> => {

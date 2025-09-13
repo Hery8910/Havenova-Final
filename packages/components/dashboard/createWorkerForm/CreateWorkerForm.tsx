@@ -7,7 +7,7 @@ import { useClient } from '../../../contexts/client/ClientContext';
 import { useI18n } from '../../../contexts/i18n/I18nContext';
 import { AlertPopup } from '../../alertPopup/AlertPopup';
 import { createWorker } from '../../../services/worker';
-import { CreateWorkerPayload } from '../../../types/worker';
+import { CreateWorkerPayload } from '../../../types/worker/workerTypes';
 
 type FormState = Omit<CreateWorkerPayload, 'clientId'>;
 

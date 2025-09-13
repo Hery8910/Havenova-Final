@@ -1,6 +1,6 @@
 'use client';
 // import BlogList from '../../../../packages/components/blog/blogList/BlogList';
-import { BlogFromDB } from '../../../../packages/types/blog';
+import { BlogFromDB } from '../../../../packages/types/blog/blogTypes';
 import { getAllBlogs } from '../../../../packages/services/blogServices';
 import { useEffect, useState } from 'react';
 import { useClient } from '../../../../packages/contexts/client/ClientContext';

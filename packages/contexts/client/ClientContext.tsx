@@ -1,10 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import api from '../../services/api';
+import api from '../../services/api/api';
 import { usePathname } from 'next/navigation';
-import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM';
-import { ClientConfig, ClientContextProps } from '../../types/client';
+import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM/applyBrandingToDOM';
+import { ClientConfig, ClientContextProps } from '../../types/client/clientTypes';
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 

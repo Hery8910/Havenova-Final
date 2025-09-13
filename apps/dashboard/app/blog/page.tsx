@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 // import BlogTable from '../../../../packages/components/blog/blogTable/BlogTable';
 import styles from './page.module.css';
-import { BlogFromDB } from '../../../../packages/types/blog';
+import { BlogFromDB } from '../../../../packages/types/blog/blogTypes';
 import { Suspense } from 'react';
 import BlogTableSkeleton from '../../../../packages/components/blog/blogTableSkeleton/BlogTableSkeleton';
 import {

@@ -1,9 +1,9 @@
-import { BlogFromDB } from '../../../../../packages/types/blog';
-import api from '../../../../../packages/services/api';
+import { BlogFromDB } from '../../../../../packages/types/blog/blogTypes';
+import api from '../../../../../packages/services/api/api';
 // import BlogContent from '../../../../../packages/components/blog/blogContent/BlogContent';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { PageProps } from '../../../../../packages/types/page';
+import { PageProps } from '../../../../../packages/types/page/pageTypes';
 // import CommentForm from '../../../../../packages/components/blog/commentForm/CommentForm';
 
 // Generar metadata dinámico basado en el contenido del post

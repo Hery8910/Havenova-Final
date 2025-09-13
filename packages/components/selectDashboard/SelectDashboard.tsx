@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './SelectDashboard.module.css';
 import { IoIosArrowBack } from 'react-icons/io';
-import { OfferType } from '../../types/offers';
+import { OfferType } from '../../types/offers/offersTypes';
 
 const offerOptions = [
   { name: 'Service Discount', value: 'SERVICE_DISCOUNT' },

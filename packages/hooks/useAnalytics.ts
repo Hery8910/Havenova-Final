@@ -3,7 +3,11 @@
 
 import { useCallback, useMemo } from 'react';
 import { useCookies } from '../contexts/cookies/CookiesContext';
-import { ANALYTICS_EVENTS, AnalyticsEventName, AnalyticsParams } from '../utils/analyticsEvents';
+import {
+  ANALYTICS_EVENTS,
+  AnalyticsEventName,
+  AnalyticsParams,
+} from '../utils/analiticsEvents/analyticsEvents';
 
 // Pequeño guard para saber si gtag está listo
 function isGtagReady(): boolean {

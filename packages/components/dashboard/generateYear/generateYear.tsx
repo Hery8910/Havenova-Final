@@ -1,5 +1,11 @@
-import isHoliday from '../../../utils/dashboardValidators';
-import { Schedules, WorkDaySettings, Calendar, Day, Month } from '../../../types/calendar';
+import isHoliday from '../../../utils/validators/dashboardValidators/dashboardValidators';
+import {
+  Schedules,
+  WorkDaySettings,
+  Calendar,
+  Day,
+  Month,
+} from '../../../types/calendar/calendarTypes';
 
 const generateYear = (
   clientId: string,

@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { CookiePrefs, COOKIE_POLICY_VERSION } from '../../types/cookies';
+import { CookiePrefs, COOKIE_POLICY_VERSION } from '../../types/cookies/cookiesTypes';
 import {
   cleanupAnalyticsCookies,
   defaultPrefs,
@@ -11,7 +11,7 @@ import {
   saveCookiePrefs,
   savePrefsToLocalStorage,
   shouldRePrompt,
-} from '../../utils/cookies/cookieStorage';
+} from '../../utils/cookies/cookieStorage/cookieStorage';
 
 type CookiesContextValue = {
   /** Preferencias actuales */

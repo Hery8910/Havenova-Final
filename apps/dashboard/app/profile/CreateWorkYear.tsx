@@ -2,7 +2,7 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 import styles from './CreateWorkYear.module.css';
 import generateYear from '../../../../packages/components/dashboard/generateYear/generateYear';
-import { Schedules, WorkDaySettings } from '../../../../packages/types/calendar';
+import { Schedules, WorkDaySettings } from '../../../../packages/types/calendar/calendarTypes';
 import { Router } from 'next/router';
 import {
   createCalendar,

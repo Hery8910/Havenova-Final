@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useClient } from '../../contexts/client/ClientContext';
-import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM';
+import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM/applyBrandingToDOM';
 import styles from './ThemeToggler.module.css';
 import { useUser } from '../../contexts/user/UserContext';
 import Image from 'next/image';

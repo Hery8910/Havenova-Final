@@ -1,16 +1,17 @@
 // app/layout.tsx (RootLayout)
 import { DashboardProvider } from '../../../packages/contexts/user/UserContext';
 import { ClientProvider } from '../../../packages/contexts/client/ClientContext';
-// import Navbar from '../../../packages/components/navbar/Navbar';
-import Footer from '../../../packages/components/footer/Footer';
-import { getClient } from '../../../packages/services/clientServices';
+import { NavbarContainer, NavbarSkeleton } from '@/packages/components/navbar';
+import { CookieBannerContainer } from '@/packages/components/cookieBanner';
+import { FooterContainer } from '@/packages/components/footer/FooterContainer';
+import { getClient } from '../../../packages/services/client';
 import './globals.css';
 import { homeMetadata } from './pageMetadata';
 import I18nInitializer from '../../../packages/contexts/i18n/I18nInitializer';
 import { CookiesProvider } from '../../../packages/contexts/cookies/CookiesContext';
-import CookieBanner from '../../../packages/components/cookieBanner/CookieBanner';
-import GAScript from '../../../packages/utils/cookies/GAScript';
 import Loading from '../../../packages/components/layout/loading/Loading';
+import { SiGoogleappsscript } from 'react-icons/si';
+import { Suspense } from 'react';
 
 export const metadata = homeMetadata;
 
@@ -40,11 +41,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <DashboardProvider>
             <CookiesProvider>
               <I18nInitializer>
-                <CookieBanner />
-                {/* <Navbar /> */}
+                <CookieBannerContainer />
+                <NavbarContainer />
                 {children}
-                <Footer />
-                <GAScript />
+                <FooterContainer />
+                <SiGoogleappsscript />
               </I18nInitializer>
             </CookiesProvider>
           </DashboardProvider>

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllOffers } from '../../../../packages/services/offers';
 import styles from './page.module.css';
-import { Offer, OfferDB } from '../../../../packages/types/offers';
+import { Offer, OfferDB } from '../../../../packages/types/offers/offersTypes';
 // import OfferForm from '../../../../packages/components/offerForm/OfferForm';
 // import { OfferList } from '../../../../packages/components/offerList/OfferList';
 

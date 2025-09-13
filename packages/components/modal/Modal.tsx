@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Modal.module.css';
-import { IframeProps } from '../../types/blog';
+import { IframeProps } from '../../types/blog/blogTypes';
 
 interface ModalProps {
   show: boolean;

@@ -1,6 +1,6 @@
-import { ApiResponse } from '../types/api';
-import { CreateWorkerPayload } from '../types/worker';
-import api from './api';
+import { ApiResponse } from '../types/api/apiTypes';
+import { CreateWorkerPayload } from '../types/worker/workerTypes';
+import api from './api/api';
 
 export const createWorker = async (
   payload: CreateWorkerPayload
