@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useCookies } from '../../contexts/CookiesContext';
-import { useI18n } from '../../contexts/I18nContext';
+import { useCookies } from '../../contexts/cookies/CookiesContext';
+import { useI18n } from '../../contexts/i18n/I18nContext';
 import styles from './CookieBanner.module.css';
 import { IoIosClose } from 'react-icons/io';
 

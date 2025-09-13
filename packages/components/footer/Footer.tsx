@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useI18n } from '../../contexts/I18nContext';
-import { useCookies } from '../../contexts/CookiesContext';
+import { useI18n } from '../../contexts/i18n/I18nContext';
+import { useCookies } from '../../contexts/cookies/CookiesContext';
 
 interface ContactItem {
   label: string;

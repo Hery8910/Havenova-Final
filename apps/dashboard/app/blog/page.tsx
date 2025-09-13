@@ -12,7 +12,7 @@ import {
   getPendingBlogs,
 } from '../../../../packages/services/blogServices';
 // import CreateBlogForm from '../../../../packages/components/blog/createBlogForm/CreateBlogForm';
-import { useClient } from '../../../../packages/contexts/ClientContext';
+import { useClient } from '../../../../packages/contexts/client/ClientContext';
 
 const LIST_OPTIONS = [
   { key: 'all', label: 'All' },

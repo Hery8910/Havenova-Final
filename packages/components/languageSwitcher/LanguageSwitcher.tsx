@@ -1,5 +1,5 @@
-import { useUser } from '../../contexts/UserContext';
-import { useI18n } from '../../contexts/I18nContext';
+import { useUser } from '../../contexts/user/UserContext';
+import { useI18n } from '../../contexts/i18n/I18nContext';
 import styles from './LanguageSwitcher.module.css';
 import { IoLanguage } from 'react-icons/io5';
 

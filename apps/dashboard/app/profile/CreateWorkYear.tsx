@@ -9,8 +9,8 @@ import {
   getCalendarAdmin,
   getCalendarGuest,
 } from '../../../../packages/services/calendar';
-import { useClient } from '../../../../packages/contexts/ClientContext';
-import { useUser } from '../../../../packages/contexts/UserContext';
+import { useClient } from '../../../../packages/contexts/client/ClientContext';
+import { useUser } from '../../../../packages/contexts/user/UserContext';
 import Calendar from '../../../../packages/components/dashboard/calender/Calendar';
 
 interface CalendarData {

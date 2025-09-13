@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useClient } from '../../contexts/ClientContext';
+import { useClient } from '../../contexts/client/ClientContext';
 import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM';
 import styles from './ThemeToggler.module.css';
-import { useUser } from '../../contexts/UserContext';
+import { useUser } from '../../contexts/user/UserContext';
 import Image from 'next/image';
 
 const ThemeToggler = () => {

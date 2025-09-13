@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useCookies } from '../../contexts/CookiesContext';
+import { useCookies } from '../../contexts/cookies/CookiesContext';
 
 declare global {
   interface Window {

@@ -1,7 +1,11 @@
 {
-  "name": "@havenova/hooks",
-  "version": "1.0.0",
-  "main": "",
-  "types": "",
-  "private": true
+  "extends": "../../tsconfig.base.json",
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
 }

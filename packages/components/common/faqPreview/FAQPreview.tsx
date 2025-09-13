@@ -1,6 +1,6 @@
 'use client';
 import styles from './FAQPreview.module.css';
-import { useI18n } from '../../../contexts/I18nContext';
+import { useI18n } from '../../../contexts/i18n/I18nContext';
 import { useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
 import Link from 'next/link';

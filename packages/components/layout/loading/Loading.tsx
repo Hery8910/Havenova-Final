@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Loading.module.css';
 import Image from 'next/image';
-import { useI18n } from '../../../contexts/I18nContext';
-import { useUser } from '../../../contexts/UserContext';
+import { useI18n } from '../../../contexts/i18n/I18nContext';
+import { useUser } from '../../../contexts/user/UserContext';
 
 export default function Loading() {
   const { user } = useUser();

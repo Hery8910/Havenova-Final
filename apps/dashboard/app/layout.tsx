@@ -11,10 +11,10 @@ import { RxActivityLog } from 'react-icons/rx';
 import { ImBlog } from 'react-icons/im';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { BiSolidOffer } from 'react-icons/bi';
-import I18nInitializer from '../../../packages/contexts/i18nInitializer/I18nInitializer';
-import { ClientProvider } from '../../../packages/contexts/ClientContext';
+import I18nInitializer from '../../../packages/contexts/i18n/I18nInitializer';
+import { ClientProvider } from '../../../packages/contexts/client/ClientContext';
 import { getClient } from '../../../packages/services/clientServices';
-import { DashboardProvider } from '../../../packages/contexts/UserContext';
+import { DashboardProvider } from '../../../packages/contexts/user/UserContext';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const domain: string = 'havenova.de';

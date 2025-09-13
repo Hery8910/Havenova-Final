@@ -8,9 +8,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:public": "pnpm --filter public dev",
-    "dev:dashboard": "pnpm --filter dashboard dev",
-    "build": "pnpm --filter public build && pnpm --filter dashboard build",
+    "dev": "pnpm -r --parallel dev",
+    "dev:client": "pnpm --filter @havenova/client dev",
+    "dev:dashboard": "pnpm --filter @havenova/dashboard dev",
+    "build": "pnpm --filter @havenova/client build && pnpm --filter @havenova/dashboard build",
     "lint": "pnpm --recursive lint",
     "check:types": "tsc --noEmit"
   },

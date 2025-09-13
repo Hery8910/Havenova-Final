@@ -1,9 +1,9 @@
 'use client';
 import styles from './Values.module.css';
-import { useI18n } from '../../../contexts/I18nContext';
+import { useI18n } from '../../../contexts/i18n/I18nContext';
 
 import Image from 'next/image';
-import { useUser } from '../../../contexts/UserContext';
+import { useUser } from '../../../contexts/user/UserContext';
 import { useEffect, useState } from 'react';
 
 export interface ValuesItems {
