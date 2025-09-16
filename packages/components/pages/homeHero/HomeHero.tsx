@@ -2,23 +2,25 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './HomeHero.module.css';
+import { Button } from '../../common';
+import { ButtonProps } from '../../common/button/Button';
 
 export interface HomeHeroProps {
   headline1: string;
   headline2: string;
   subtitle: string;
-  cta: { label: string; href: string };
+  button: ButtonProps;
   image: string;
-  priorityOnFirstViewport?: boolean;
+  onClick: () => void;
 }
 
 const HomeHero: React.FC<HomeHeroProps> = ({
   headline1,
   headline2,
   subtitle,
-  cta,
+  button,
   image,
-  priorityOnFirstViewport = true,
+  onClick,
 }) => {
   return (
     <section className={styles.section} aria-labelledby="home-hero-title">
@@ -26,13 +28,13 @@ const HomeHero: React.FC<HomeHeroProps> = ({
       <div className={styles.bgWrapper}>
         <Image
           src={image}
-          alt="" // decorativo
+          alt="" // decorative
           fill
           sizes="100vw"
-          priority={priorityOnFirstViewport}
-          fetchPriority={priorityOnFirstViewport ? 'high' : 'auto'}
+          priority={true}
+          fetchPriority="auto"
           className={styles.backgroundImage}
-          quality={75} // opcional: ajusta si lo necesitas
+          quality={75}
         />
       </div>
 
@@ -50,10 +52,7 @@ const HomeHero: React.FC<HomeHeroProps> = ({
         </aside>
 
         <p className={styles.description}>{subtitle}</p>
-
-        <Link href={cta.href} className="button" aria-label={`${cta.label} – gehe zu ${cta.href}`}>
-          {cta.label}
-        </Link>
+        <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
       </div>
     </section>
   );

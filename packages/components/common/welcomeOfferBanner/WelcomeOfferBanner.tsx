@@ -1,26 +1,26 @@
 // src/components/WelcomeOfferBanner.tsx
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './WelcomeOfferBanner.module.css';
+import Button, { ButtonProps } from '../button/Button';
 
 export interface OfferBannerContent {
   header: string;
   description: string;
-  cta: { label: string; href: string };
+  button: ButtonProps;
   image: {
     src: string;
     alt: string;
   };
-  priorityOnFirstViewport?: boolean;
+  onClick: () => void;
 }
 
 const WelcomeOfferBanner: React.FC<OfferBannerContent> = ({
   header,
   description,
-  cta,
+  button,
   image,
-  priorityOnFirstViewport = false,
+  onClick,
 }) => {
   return (
     <section
@@ -36,8 +36,8 @@ const WelcomeOfferBanner: React.FC<OfferBannerContent> = ({
           width={500}
           height={500}
           sizes="(min-width: 1025px) 450px, 300px"
-          priority={priorityOnFirstViewport}
-          fetchPriority={priorityOnFirstViewport ? 'high' : 'auto'}
+          priority={true}
+          fetchPriority="auto"
         />
       </figure>
 
@@ -48,9 +48,7 @@ const WelcomeOfferBanner: React.FC<OfferBannerContent> = ({
         <p id="offer-banner-desc" className={styles.p}>
           {description}
         </p>
-        <Link href={cta.href} className="button" aria-label={`${cta.label} – gehe zu ${cta.href}`}>
-          {cta.label}
-        </Link>
+        <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
       </div>
     </section>
   );

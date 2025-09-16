@@ -1,5 +1,4 @@
 // src/components/WhyChoose.tsx
-import React from 'react';
 import styles from './WhyChoose.module.css';
 import Image from 'next/image';
 

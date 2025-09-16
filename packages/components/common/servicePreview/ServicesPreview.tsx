@@ -1,8 +1,7 @@
 // src/components/ServicesPreview.tsx
-import React from 'react';
 import styles from './ServicesPreview.module.css';
 import Image from 'next/image';
-import Link from 'next/link';
+import Button, { ButtonProps } from '../button/Button';
 
 export interface ServicesPreviewItems {
   title: string;
@@ -13,7 +12,8 @@ export interface ServicesPreviewData {
   subtitle: string;
   description: string;
   items: ServicesPreviewItems[];
-  cta: { label: string; href: string };
+  button: ButtonProps;
+  onClick: () => void;
   theme: 'light' | 'dark';
 }
 
@@ -22,7 +22,8 @@ const ServicesPreview: React.FC<ServicesPreviewData> = ({
   subtitle,
   description,
   items,
-  cta,
+  button,
+  onClick,
   theme,
 }) => {
   const bgSrc =
@@ -71,9 +72,7 @@ const ServicesPreview: React.FC<ServicesPreviewData> = ({
 
       <p className={styles.p}>{description}</p>
 
-      <Link href={cta.href} className="button" aria-label={`${cta.label} – gehe zu ${cta.href}`}>
-        {cta.label}
-      </Link>
+      <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
     </section>
   );
 };

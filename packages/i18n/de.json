@@ -5,9 +5,10 @@
         "headline1": "Hauswartung",
         "headline2": "Wohnungsreinigung",
         "subtitle": "Schnelle, zuverlässige und professionelle Hauswartung und Reinigung in Berlin. Entdecken Sie alle unsere Leistungen im Überblick.",
-        "cta": {
-          "label": "Unsere Leistungen ansehen",
-          "href": "/services"
+        "button": {
+          "cta": "Unsere Leistungen ansehen",
+          "variant": "solid",
+          "icon": "forward"
         },
         "image": "/images/pages/home-page/home-hero-background-lg.webp"
       }
@@ -673,9 +674,10 @@
       "welcomeOfferBanner": {
         "header": "Willkommen bei Havenova!",
         "description": "Erstelle dein Konto und erhalte 10 % Rabatt auf deine erste Anfrage über die App. Eine Registrierung ist erforderlich, um deine Aufträge zu verwalten und exklusive Angebote zu erhalten.",
-        "cta": {
-          "label": "Konto erstellen",
-          "href": "/user/register"
+        "button": {
+          "cta": "Konto erstellen",
+          "variant": "solid",
+          "icon": "forward"
         },
         "image": {
           "src": "/images/components/welcome-offer-banner-lg.webp",
@@ -686,9 +688,10 @@
         "title": "So funktioniert’s",
         "subtitle": "Nahtlos, transparent und zuverlässig",
         "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
-        "cta": {
-          "label": "Mehr über uns erfahren",
-          "href": "/about"
+        "button": {
+          "cta": "Mehr über uns erfahren",
+          "variant": "solid",
+          "icon": "forward"
         },
         "steps": [
           {
@@ -759,9 +762,10 @@
             }
           }
         ],
-        "cta": {
-          "label": "Alle Leistungen ansehen",
-          "href": "/services"
+        "button": {
+          "cta": "Alle Leistungen ansehen",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
       "whyChoose": {
@@ -1045,10 +1049,26 @@
     "cookieBanner": {
       "title": "Cookies auf dieser Website",
       "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
-      "acceptAll": "Alle akzeptieren",
-      "rejectAll": "Nur notwendige",
-      "save": "Auswahl speichern",
-      "close": "Schließen",
+      "acceptAll": {
+        "cta": "Alle akzeptieren",
+        "variant": "outline",
+        "icon": "confirm"
+      },
+      "rejectAll": {
+        "cta": "Nur notwendige",
+        "variant": "outline",
+        "icon": "cancel"
+      },
+      "save": {
+        "cta": "Auswahl speichern",
+        "variant": "outline",
+        "icon": "confirm"
+      },
+      "close": {
+        "cta": "",
+        "variant": "outline",
+        "icon": "close"
+      },
       "enableStats": "Statistik-Cookies aktivieren"
     },
     "user": {
@@ -1187,18 +1207,24 @@
     }
   },
   "footer": {
+    "headers": {
+      "services": "Leistungen",
+      "about": "Havenova",
+      "contact": "Kontakt",
+      "legal": "Legal"
+    },
     "contact": [
       {
         "data": "contact@havenova.de",
-        "image": "/images/email.webp"
+        "image": "/svg/email.svg"
       },
       {
         "data": "+49 176 7091 7803",
-        "image": "/images/phone.webp"
+        "image": "/svg/phone.svg"
       },
       {
         "data": "Stollberger Str.43, 12627 Berlin",
-        "image": "/images/navigation.webp"
+        "image": "/svg/address.svg"
       },
       {
         "label": "Mo-Fr",
@@ -1283,7 +1309,10 @@
         "href": "https://linkedin.com/company/havenova"
       }
     ],
-    "cta": "Diese digitale Plattform wurde von Maped Solutions entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
+    "cta": {
+      "title": "Unterstützt von Maped Solutions",
+      "description": "Diese digitale Plattform wurde entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
+    }
   },
   "message": {
     "verifyEmail": {

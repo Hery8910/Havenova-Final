@@ -10,8 +10,6 @@ import { homeMetadata } from './pageMetadata';
 import I18nInitializer from '../../../packages/contexts/i18n/I18nInitializer';
 import { CookiesProvider } from '../../../packages/contexts/cookies/CookiesContext';
 import Loading from '../../../packages/components/layout/loading/Loading';
-import { SiGoogleappsscript } from 'react-icons/si';
-import { Suspense } from 'react';
 
 export const metadata = homeMetadata;
 
@@ -26,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* PWA manifest */}
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#002442" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
         {/* Apple icon */}
@@ -45,7 +43,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <NavbarContainer />
                 {children}
                 <FooterContainer />
-                <SiGoogleappsscript />
               </I18nInitializer>
             </CookiesProvider>
           </DashboardProvider>

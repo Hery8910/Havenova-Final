@@ -1,0 +1,126 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  box-shadow: var(--shadow);
+  border-radius: 6px;
+  border: 3px solid var(--button-text);
+  position: relative;
+}
+.button svg {
+  filter: drop-shadow(2px 0 4px #1d1d1d);
+}
+/* Variantes */
+.solid {
+  background: var(--brand-primary);
+  background: linear-gradient(116deg, var(--brand-primary) 0%, var(--button-gradient) 100%);
+  color: var(--button-text);
+  border: 3px solid var(--brand-primary);
+}
+.solid_forward:hover,
+.solid_confirm:hover,
+.solid_open:hover {
+  border: 3px solid var(--color-success);
+  background: transparent;
+  transform: translateY(-2px);
+}
+.outline_forward:hover,
+.outline_confirm:hover,
+.outline_open:hover {
+  border: 3px solid var(--color-success);
+  transform: translateY(-2px);
+}
+
+.solid_back:hover,
+.solid_cancel:hover,
+.solid_close:hover {
+  border: 3px solid var(--color-error);
+  background-color: transparent;
+  transform: translateY(-2px);
+}
+.outline_back:hover,
+.outline_cancel:hover,
+.outline_close:hover {
+  border: 3px solid var(--color-error);
+  transform: translateY(-2px);
+}
+
+.outline {
+  background: transparent;
+  color: var(--button-text);
+}
+
+/* Estado deshabilitado */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icono */
+.icon {
+  position: absolute;
+  right: -2px;
+  top: -3px;
+  font-size: clamp(16px, 3vw, 18px);
+  padding: 13px 10px 13px 12px;
+  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 4px 4px 0;
+}
+.forward,
+.confirm,
+.open {
+  background-color: var(--color-success);
+}
+.back,
+.cancel,
+.close {
+  background-color: var(--color-error);
+}
+
+.text {
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  padding: 8px 48px 8px 12px;
+  font-size: clamp(16px, 3vw, 18px);
+  font-weight: 700;
+  text-shadow: var(--text-shadow);
+}
+
+.skeleton {
+  background: var(--bg-secondary);
+  color: transparent;
+  border: none;
+  pointer-events: none;
+  animation: pulse 1.5s infinite;
+}
+
+.iconSkeleton {
+  width: 1.2rem;
+  height: 1.2rem;
+  background: var(--bg-accent);
+  border-radius: 4px;
+}
+
+.textSkeleton {
+  width: 80px;
+  height: 1rem;
+  background: var(--bg-accent);
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

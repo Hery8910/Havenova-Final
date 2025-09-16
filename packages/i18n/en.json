@@ -5,9 +5,10 @@
         "headline1": "Property Maintenance",
         "headline2": "Cleaning Service",
         "subtitle": "Fast, reliable and professional property maintenance and cleaning in Berlin. Discover all our services tailored to your needs.",
-        "cta": {
-          "label": "View Our Services",
-          "href": "/services"
+        "button": {
+          "cta": "View Our Services",
+          "variant": "solid",
+          "icon": "forward"
         },
         "image": "/images/pages/home-page/home-hero-background-lg.webp"
       }
@@ -672,9 +673,10 @@
       "welcomeOfferBanner": {
         "header": "Welcome to Havenova!",
         "description": "Create your account and get 10% off your first request made through the app. Registration is required to manage your bookings and access exclusive offers.",
-        "cta": {
-          "label": "Create account",
-          "href": "/user/register"
+        "button": {
+          "cta": "Create account",
+          "variant": "solid",
+          "icon": "forward"
         },
         "image": {
           "src": "/images/components/welcome-offer-banner-lg.webp",
@@ -685,9 +687,10 @@
         "title": "How it works",
         "subtitle": "Seamless, transparent, and reliable",
         "description": "Our process is designed to make your life easier. Submit your request in just a few steps, receive a personalized offer, and get professional help exactly when you need it. We value communication, reliability, and flexibility in every service we provide.",
-        "cta": {
-          "label": "Learn more about us",
-          "href": "/about"
+        "button": {
+          "cta": "Learn more about us",
+          "variant": "solid",
+          "icon": "forward"
         },
         "steps": [
           {
@@ -759,9 +762,10 @@
             }
           }
         ],
-        "cta": {
-          "label": "View All Services",
-          "href": "/services"
+        "button": {
+          "cta": "View All Services",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
       "whyChoose": {
@@ -1045,10 +1049,26 @@
     "cookieBanner": {
       "title": "Cookies on this website",
       "description": "We use essential cookies to ensure the website functions properly. With your permission, we also use analytics cookies to monitor site usage and improve user experience. We do not collect data for advertising or profiling.",
-      "acceptAll": "Accept all",
-      "rejectAll": "Only necessary",
-      "save": "Save selection",
-      "close": "Close",
+      "acceptAll": {
+        "cta": "Accept all",
+        "variant": "outline",
+        "icon": "confirm"
+      },
+      "rejectAll": {
+        "cta": "Only necessary",
+        "variant": "outline",
+        "icon": "cancel"
+      },
+      "save": {
+        "cta": "Save selection",
+        "variant": "outline",
+        "icon": "confirm"
+      },
+      "close": {
+        "cta": "",
+        "variant": "outline",
+        "icon": "close"
+      },
       "enableStats": "Enable analytics cookies"
     },
     "user": {
@@ -1187,26 +1207,32 @@
     }
   },
   "footer": {
+    "headers": {
+      "services": "Services",
+      "about": "Havenova",
+      "contact": "Contact",
+      "legal": "Legal"
+    },
     "contact": [
       {
         "data": "contact@havenova.de",
-        "image": "/images/email.webp"
+        "image": "/svg/email.svg"
       },
       {
         "data": "+49 176 7091 7803",
-        "image": "/images/phone.webp"
+        "image": "/svg/phone.svg"
       },
       {
         "data": "Stollberger Str.43, 12627 Berlin",
-        "image": "/images/navigation.webp"
+        "image": "/svg/address.svg"
       },
       {
         "label": "Mo-Fr",
-        "data": "08:00-17:00"
+        "data": "08:00-17:00 Uhr"
       },
       {
         "label": "Sa",
-        "data": "08:00-14:00"
+        "data": "08:00-14:00 Uhr"
       }
     ],
     "havenova": [
@@ -1283,7 +1309,10 @@
         "href": "https://linkedin.com/company/havenova"
       }
     ],
-    "cta": "This digital platform was designed and developed by Maped Solutions to provide modern, efficient, and tailored solutions for service companies."
+    "cta": {
+      "title": "Powered by Maped Solutions",
+      "description": "This digital platform was designed and developed to provide modern, efficient, and tailored solutions for service companies."
+    }
   },
   "message": {
     "verifyEmail": {

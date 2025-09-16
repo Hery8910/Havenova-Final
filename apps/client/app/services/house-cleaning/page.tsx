@@ -1,4 +1,4 @@
-import Hero from '../../../../../packages/components/pages/home/homeHero/HomeHero';
+import Hero from '../../../../../packages/components/pages/homeHero/HomeHero';
 // import ServiceCart from '../../../../../packages/components/services/serviceCart/ServiceCart';
 import Reviews from '../../../../../packages/components/common/testimonials/testimonialsPreview/Testimonials';
 // import BlogList from "../../../components/blog/blogList/page";

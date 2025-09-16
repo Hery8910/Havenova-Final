@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './HowItWorks.module.css';
+import Button, { ButtonProps } from '../button/Button';
 
 export interface HowItWorksStep {
   title: string;
@@ -17,13 +18,18 @@ export interface HowItWorksData {
   subtitle: string;
   description: string;
   steps: HowItWorksStep[];
-  cta: {
-    label: string;
-    href: string;
-  };
+  button: ButtonProps;
+  onClick: () => void;
 }
 
-const HowItWorks: React.FC<HowItWorksData> = ({ title, subtitle, description, steps, cta }) => {
+const HowItWorks: React.FC<HowItWorksData> = ({
+  title,
+  subtitle,
+  description,
+  steps,
+  button,
+  onClick,
+}) => {
   return (
     <section className={styles.section} aria-labelledby="howitworks-title">
       <header className={styles.header}>
@@ -60,9 +66,7 @@ const HowItWorks: React.FC<HowItWorksData> = ({ title, subtitle, description, st
 
       <p className={styles.p}>{description}</p>
 
-      <Link href={cta.href} className="button" aria-label={`${cta.label} – How it works`}>
-        {cta.label}
-      </Link>
+      <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
     </section>
   );
 };

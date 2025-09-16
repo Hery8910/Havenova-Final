@@ -1,13 +1,16 @@
 import { IoIosClose } from 'react-icons/io';
 import styles from './CookieBanner.module.css';
+import { Button } from '../common';
+import { ButtonProps } from '../common/button/Button';
+
 
 export interface CookieBannerTexts {
   title: string;
   description: string;
-  acceptAll: string;
-  rejectAll: string;
-  save: string;
-  close: string;
+  acceptAll: ButtonProps;
+  rejectAll: ButtonProps;
+  save: ButtonProps;
+  close: ButtonProps;
   enableStats: string;
 }
 
@@ -31,7 +34,7 @@ export function CookieBannerView({
   onClose,
 }: CookieBannerViewProps) {
   return (
-    <main className={`${styles.wrapper} card`}>
+    <section className={`${styles.wrapper} card`}>
       <section
         className={`${styles.banner} card`}
         role="dialog"
@@ -61,23 +64,36 @@ export function CookieBannerView({
             </div>
 
             <div className={styles.div}>
-              <button className="button_invert" onClick={onSave} aria-label={texts.save}>
-                {texts.save}
-              </button>
-              <button className="button_invert" onClick={onReject} aria-label={texts.rejectAll}>
-                {texts.rejectAll}
-              </button>
-              <button className="button" onClick={onAccept} aria-label={texts.acceptAll}>
-                {texts.acceptAll}
-              </button>
+              <Button
+                cta={texts.rejectAll.cta}
+                variant={texts.rejectAll.variant}
+                icon={texts.rejectAll.icon}
+                onClick={onReject}
+              />
+
+              <Button
+                cta={texts.save.cta}
+                variant={texts.save.variant}
+                icon={texts.save.icon}
+                onClick={onSave}
+              />
+
+              <Button
+                cta={texts.acceptAll.cta}
+                variant={texts.acceptAll.variant}
+                icon={texts.acceptAll.icon}
+                onClick={onAccept}
+              />
             </div>
           </aside>
         </article>
-
-        <button className="button_close" onClick={onClose} aria-label={texts.close}>
-          <IoIosClose />
-        </button>
+        <Button
+          cta={texts.close.cta}
+          variant={texts.close.variant}
+          icon={texts.close.icon}
+          onClick={onClose}
+        />
       </section>
-    </main>
+    </section>
   );
 }

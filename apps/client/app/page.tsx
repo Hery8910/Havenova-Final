@@ -6,8 +6,9 @@ import { useClient } from '../../../packages/contexts/client/ClientContext';
 import AlertPopup from '../../../packages/components/alertPopup/AlertPopup';
 import { useI18n } from '../../../packages/contexts/i18n/I18nContext';
 
-import HomeHero from '../../../packages/components/pages/home/homeHero/HomeHero';
-import WelcomeOfferBanner from '../../../packages/components/common/welcomeOfferBanner/WelcomeOfferBanner';
+import HomeHero from '../../../packages/components/pages/homeHero/HomeHero';
+import WelcomeOfferBanner from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner';
+import WelcomeOfferBannerSkeleton from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner.skeleton';
 import HowItWorks from '../../../packages/components/common/howItWorks/HowItWorks';
 import WhyChoose from '../../../packages/components/common/whyChoose/WhyChoose';
 import FAQPreview from '../../../packages/components/common/faqPreview/FAQPreview';
@@ -15,16 +16,23 @@ import TestimonialsPreview from '../../../packages/components/common/testimonial
 import ServicesPreview from '../../../packages/components/common/servicePreview/ServicesPreview';
 import FinalCTA from '../../../packages/components/common/finalCTA/FinalCTA';
 import Loading from '../../../packages/components/layout/loading/Loading';
-import HomeHeroSkeleton from '../../../packages/components/pages/home/homeHero/HomeHero.skeleton';
-import SkeletonWelcomeOfferBanner from '../../../packages/components/common/welcomeOfferBanner/WelcomeOfferBanner.skeleton';
+import HomeHeroSkeleton from '../../../packages/components/pages/homeHero/HomeHero.skeleton';
 import SkeletonHowItWorks from '../../../packages/components/common/howItWorks/HowItWorks.skeleton';
 import SkeletonServicesPreview from '../../../packages/components/common/servicePreview/ServicesPreview.skeleton';
 import SkeletonWhyChoose from '../../../packages/components/common/whyChoose/WhyChoose.skeleton';
+import { useRouter } from 'next/navigation';
+import {
+  HowItWorksSkeleton,
+  ServicesPreviewSkeleton,
+  WhyChooseSkeleton,
+} from '../../../packages/components/common';
+
+export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | 'faq' | 'ctaFinal';
 
 export default function Home() {
   const { client, loading } = useClient();
   const { registerSessionCallback, user } = useUser();
-
+  const router = useRouter();
   const { texts } = useI18n();
   const homeHeroTexts = texts.pages.home.hero;
   const howItWorksTexts = texts.components.common.howItWorks;
@@ -65,34 +73,67 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [texts]);
 
+  const handleNavigation = (section: HomeCtaCase) => {
+    switch (section) {
+      case 'hero':
+        router.push('/services');
+        break;
+      case 'offer':
+        router.push('/user/register');
+        break;
+      case 'about':
+        router.push('/about');
+        break;
+      case 'services':
+        router.push('/services');
+        break;
+      case 'review':
+        router.push('/reviews');
+        break;
+      case 'faq':
+        router.push('/faq');
+        break;
+      case 'ctaFinal':
+        router.push('/services');
+        break;
+      default:
+        console.warn(`No redirect defined for ${section}`);
+    }
+  };
+
   if (!client || loading || !user) return <Loading />;
 
   return (
     <main>
-      <Suspense fallback={<HomeHeroSkeleton />}>
-        <HomeHero {...homeHeroTexts} />
-      </Suspense>
+      {homeHeroTexts ? (
+        <HomeHero {...homeHeroTexts} onClick={() => handleNavigation('hero')} />
+      ) : (
+        <HomeHeroSkeleton />
+      )}
 
-      {/* test */}
-      {/* <Suspense fallback={<SkeletonWhyChoose />}>
-        {showHero ? <WhyChoose {...whyChooseTexts} /> : <SkeletonServicesPreview />}
-      </Suspense> */}
+      {welcomeOfferTexts ? (
+        <WelcomeOfferBanner {...welcomeOfferTexts} onClick={() => handleNavigation('offer')} />
+      ) : (
+        <WelcomeOfferBannerSkeleton />
+      )}
 
-      <Suspense fallback={<SkeletonWelcomeOfferBanner />}>
-        <WelcomeOfferBanner {...welcomeOfferTexts} />
-      </Suspense>
+      {howItWorksTexts ? (
+        <HowItWorks {...howItWorksTexts} onClick={() => handleNavigation('about')} />
+      ) : (
+        <HowItWorksSkeleton />
+      )}
 
-      <Suspense fallback={<SkeletonHowItWorks />}>
-        <HowItWorks {...howItWorksTexts} />
-      </Suspense>
+      {servicesPreviewTexts ? (
+        <ServicesPreview
+          {...servicesPreviewTexts}
+          theme={user?.theme ?? 'light'}
+          onClick={() => handleNavigation('about')}
+        />
+      ) : (
+        <ServicesPreviewSkeleton />
+      )}
 
-      <Suspense fallback={<SkeletonServicesPreview />}>
-        <ServicesPreview {...servicesPreviewTexts} theme={user?.theme ?? 'light'} />
-      </Suspense>
-
-      <Suspense fallback={<SkeletonWhyChoose />}>
-        <WhyChoose {...whyChooseTexts} />
-      </Suspense>
+      {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
 
       <TestimonialsPreview {...testimonialsTexts} mobile={isMobile} />
       <FAQPreview {...faqPreviewTexts} />

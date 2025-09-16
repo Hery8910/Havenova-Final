@@ -1,11 +1,11 @@
 {
-  "name": "public",
+  "name": "Havenova",
   "short_name": "Havenova",
   "description": "Ihr Traumhaus beginnt mit uns",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#cadcdf",
-  "theme_color": "#043535",
+  "theme_color": "#09515a",
   "orientation": "portrait",
   "icons": [
     {

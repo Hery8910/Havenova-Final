@@ -3,3 +3,4 @@ export * from './navbar';
 export * from './user';
 export * from './cookieBanner';
 export * from './footer';
+export * from './pages';

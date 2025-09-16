@@ -27,11 +27,11 @@ export interface GbpReview {
 // Modelo UI normalizado para tu componente Testimonials
 export interface TestimonialItem {
   id: string;
-  author: string; // "Anónimo" si isAnonymous
+  author: string;
   avatarUrl?: string;
-  rating: number; // 1..5
+  rating: number;
   text: string;
-  date: string; // formateada para UI
+  date: string;
   reply?: { text: string; date?: string };
 }
 
@@ -52,9 +52,8 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   cta,
   mobile,
 }) => {
-  const num = mobile ? 4 : 6;
   return (
-    <section className={styles.section1} aria-labelledby="testimonials-title">
+    <section className={styles.section} aria-labelledby="testimonials-title">
       <header>
         <h2 id="testimonials-title">{title}</h2>
         <h3 className={styles.h3} id="testimonials-subtitle">
@@ -62,32 +61,32 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         </h3>
       </header>
       <ul className={styles.ul}>
-        {items.slice(0, num).map((item) => (
+        {items.slice(0, 6).map((item) => (
           <li className={`${styles.li} card`} key={item.id}>
             <header className={styles.header_li} aria-label={`Rezension von ${item.author}`}>
               <div className={styles.name_div}>
-                <time className={styles.section} dateTime={new Date(item.date).toISOString()}>
+                <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
                   Bewertet am {new Date(item.date).toLocaleDateString()}
                 </time>
-                <h4 className={styles.section}>{item.author}</h4>
+                <h4 className={styles.h4}>{item.author}</h4>
               </div>
               <div className={styles.rating_div}>
                 <ReviewStars rating={item.rating} />
-                <p className={styles.section}>{item.rating}/5</p>
+                <p>{item.rating}/5</p>
               </div>
             </header>
-            <p className={styles.section}>{item.text}</p>
+            <p className={styles.p}>{item.text}</p>
             {item.reply && (
-              <footer className={styles.section}>
-                <p className={styles.section}>Antwort</p>
-                <p className={styles.section}>{item.reply.text}</p>
+              <footer className={styles.footer}>
+                <p>Antwort</p>
+                <p className={styles.p}>{item.reply.text}</p>
               </footer>
             )}
           </li>
         ))}
       </ul>
-      <aside className={styles.section}>
-        <p className={styles.section}>{description}</p>
+      <aside className={styles.aside}>
+        <p className={styles.p}>{description}</p>
         <Link href={cta.href} className="button" aria-label={`${cta.label} – gehe zu ${cta.href}`}>
           {cta.label}
         </Link>

@@ -26,7 +26,7 @@ export function I18nProvider({
     if (storedLang && storedLang !== language) {
       setLanguage(storedLang);
     }
-  }, [initialLanguage, language]);
+  }, [initialLanguage]);
 
   // Actualiza idioma y textos cuando cambia `language`
   useEffect(() => {

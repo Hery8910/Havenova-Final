@@ -8,17 +8,30 @@
   --brand-accent: #8be8cb;
 
   /* Backgrounds & Text */
-  --bg-primary: #cbdcee;
-  --bg-secondary: #cadcdf;
-  --bg-accent: #d9ece6;
+  --bg-1: #b7fff7;
+  --bg-2: #b7fef8;
+  --bg-3: #b8fdfa;
+  --bg-4: #b8fcfb;
+  --bg-5: #b9fbfc;
+  --bg-6: #baf9fd;
+  --bg-7: #bbf8fd;
+  --bg-8: #bcf7fe;
+  --bg-9: #bdf6fe;
+  --bg-10: #bef5ff;
+  --bg-11: #c0f3ff;
+  --bg-12: #c1f2ff;
 
   --text-primary: #424242;
   --text-secondary: #616161;
 
+  --text-light: #dad9d9;
+  --text-dark: #424242;
+
   --bg-card: #0768c983;
+  --button-accent: #afd6fc;
 
   --shadow: 0px 4px 8px #1313139d;
-  --text-shadow: 0 4px 8px rgba(75, 75, 75, 0.575);
+  --text-shadow: 2px 2px 4px rgb(136, 136, 136);
 
   /* Font */
   --font-family-main: 'Inter', sans-serif;
@@ -48,20 +61,34 @@
   --brand-accent: #8be8cb;
 
   /* Backgrounds & Text */
-  --bg-primary: #031d36;
-  --bg-secondary: #05373d;
-  --bg-accent: #1e302c;
+  --bg-1: #032950;
+  --bg-2: #00294c;
+  --bg-3: #002948;
+  --bg-4: #002944;
+  --bg-5: #002840;
+  --bg-6: #00273b;
+  --bg-7: #002737;
+  --bg-8: #002633;
+  --bg-9: #002530;
+  --bg-10: #00242c;
+  --bg-11: #012228;
+  --bg-12: #042125;
 
   --text-primary: #dad9d9;
   --text-secondary: #c7bdbd;
+  --text-light: #dad9d9;
+  --text-dark: #424242;
 
   --bg-card: #022a3094;
 
+  --button-gradient: #054586;
+  --button-text: #b7e2ff;
+
   --shadow: 0px 4px 8px #1313139d;
-  --text-shadow: 0 4px 8px rgba(22, 22, 22, 0.822);
+  --text-shadow: 2px 2px 4px rgb(75, 75, 75);
 
   /* Status Colors */
-  --color-success: #28d07a;
+  --color-success: #20ac64;
   --bg-success: #163b2ab3;
 
   --color-error: #ff6b6b;
@@ -86,6 +113,7 @@ html {
   box-sizing: border-box;
 }
 body {
+  width: 100vw;
   overflow-x: hidden;
   margin: 0 auto;
   display: flex;
@@ -95,11 +123,21 @@ body {
   font-family: var(--font-family-main);
   color: var(--text-primary);
   background: radial-gradient(
-    circle at 50% 100%,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 60%,
-    var(--bg-accent) 100%
+    circle at 40% 110%,
+    var(--bg-1),
+    var(--bg-2),
+    var(--bg-3),
+    var(--bg-4),
+    var(--bg-5),
+    var(--bg-6),
+    var(--bg-7),
+    var(--bg-8),
+    var(--bg-9),
+    var(--bg-10),
+    var(--bg-11),
+    var(--bg-12)
   );
+
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -159,7 +197,7 @@ a {
   border-radius: 4px;
   border: 2px solid var(--brand-primary);
   background: var(--brand-primary);
-  box-shadow: 0px 4px 8px #1313135b;
+  box-shadow: var(--shadow);
   color: var(--bg-primary);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -184,7 +222,6 @@ a {
 .card {
   padding: 16px;
   background: var(--bg-card);
-  background: linear-gradient(149deg, var(--bg-card) 0%, var(--brand-secondary) 100%);
   backdrop-filter: blur(8px);
   border-radius: 8px;
   box-shadow: var(--shadow);

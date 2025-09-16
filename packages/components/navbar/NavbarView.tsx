@@ -64,9 +64,9 @@ export function NavbarView({
 
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return !isMobile ? '/svg/logos/logo-small-light.svg' : '/svg/logos/logo-light.svg';
+      return isMobile ? '/images/logos/logo-small-dark.webp' : '/images/logos/logo-dark.webp';
     } else {
-      return !isMobile ? '/svg/logos/logo-small-dark.svg' : '/svg/logos/logo-dark.svg';
+      return isMobile ? '/images/logos/logo-small-light.webp' : '/images/logos/logo-light.webp';
     }
   };
 
@@ -78,8 +78,8 @@ export function NavbarView({
             className={styles.logo}
             src={getLogoSrc()}
             alt="Havenova Logo"
-            width={!isMobile ? 40 : 200}
-            height={!isMobile ? 40 : 50}
+            width={isMobile ? 40 : 200}
+            height={isMobile ? 40 : 50}
             priority
           />
         </Link>
@@ -110,11 +110,15 @@ export function NavbarView({
       >
         {/* Services */}
         <li className={styles.main_li} role="none">
-          <h4 className={styles.h4}>{navbarConfig?.headers?.services}</h4>
+          <h3 className={styles.h3}>{navbarConfig?.headers?.services}</h3>
           <ul className={styles.li_ul} role="menu" aria-label="Services">
             {navbarConfig?.services.map((link) => (
               <li className={styles.li} role="none" key={link.label}>
-                <button role="menuitem" onClick={() => onNavigate(link.href)} className={styles.p}>
+                <button
+                  role="menuitem"
+                  onClick={() => onNavigate(link.href)}
+                  className={styles.item}
+                >
                   {link.image && (
                     <Image
                       className={styles.image}
@@ -134,11 +138,15 @@ export function NavbarView({
 
         {/* About */}
         <li className={styles.main_li} role="none">
-          <h4 className={styles.h4}>{navbarConfig?.headers?.about}</h4>
+          <h3 className={styles.h3}>{navbarConfig?.headers?.about}</h3>
           <ul className={styles.li_ul} role="menu" aria-label="About">
             {navbarConfig?.about.map((link) => (
               <li className={styles.li} role="none" key={link.label}>
-                <button role="menuitem" onClick={() => onNavigate(link.href)} className={styles.p}>
+                <button
+                  role="menuitem"
+                  onClick={() => onNavigate(link.href)}
+                  className={styles.item}
+                >
                   {link.label}
                 </button>
               </li>
@@ -148,11 +156,11 @@ export function NavbarView({
 
         {/* Profile */}
         <li className={styles.main_li} role="none">
-          <h4 className={styles.h4}>{navbarConfig?.headers?.profile}</h4>
+          <h3 className={styles.h3}>{navbarConfig?.headers?.profile}</h3>
           <ul className={styles.li_ul} role="menu" aria-label="Profile">
             {isMobile && (
               <li key="prefer" className={styles.li} role="none">
-                <div role="menuitem" className={styles.p}>
+                <div role="menuitem" className={styles.item}>
                   <ThemeToggler />
                   <LanguageSwitcher />
                 </div>
@@ -164,7 +172,7 @@ export function NavbarView({
                   <button
                     role="menuitem"
                     onClick={() => onNavigate(link.href)}
-                    className={styles.p}
+                    className={styles.item}
                   >
                     {link.label}
                   </button>

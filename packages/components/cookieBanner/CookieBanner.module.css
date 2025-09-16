@@ -5,6 +5,7 @@
   bottom: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 10;
@@ -16,9 +17,10 @@
   flex-direction: column-reverse;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 16px;
+  padding: 32px;
 }
 .article {
+  padding: 64px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -35,12 +37,13 @@
 .switch_div {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
   gap: 16px;
 }
 .switch_div {
+  flex-direction: row;
   justify-content: space-between;
 }
 .controls {
