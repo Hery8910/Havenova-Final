@@ -936,39 +936,54 @@
             "date": "2024-12-31"
           }
         ],
-        "cta": {
-          "label": "Mehr Bewertungen",
-          "href": "/reviews"
+        "button": {
+          "cta": "Mehr Bewertungen",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
       "faq": {
         "title": "Häufig gestellte Fragen",
         "items": [
           {
-            "question": "Welche Services bietet Havenova an?",
-            "answer": "Havenova bietet Reinigung, Reparaturen, Wartung und Umzugshilfe in Berlin."
+            "question": "Welche Dienstleistungen bietet Havenova an?",
+            "answer": "Havenova bietet ein breites Spektrum an Haus- und Gebäudeservices in Berlin an, darunter professionelle Reinigung, kleine Reparaturen, regelmäßige Wartung sowie Unterstützung beim Umzug oder Möbelaufbau. Unser Ziel ist es, zuverlässige und flexible Unterstützung sowohl für Privathaushalte als auch für Unternehmen zu leisten, damit Sie sich auf das Wesentliche konzentrieren können, während wir den Rest übernehmen."
           },
           {
             "question": "Wie schnell kann ich einen Service buchen?",
-            "answer": "Meist vereinbaren wir einen Termin innerhalb von 24–48 Stunden nach Ihrer Anfrage."
+            "answer": "Die meisten Dienstleistungen können innerhalb von 24–48 Stunden nach Eingang Ihrer Anfrage terminiert werden. Sobald Sie Ihre Daten über unsere Plattform eingeben, prüft unser Team diese und bestätigt einen Termin, der am besten zu Ihnen passt. In dringenden Fällen versuchen wir stets, die schnellstmögliche Lösung zu finden."
           },
           {
             "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
-            "answer": "Ja, unser gesamtes Team ist geschult und vollständig versichert."
+            "answer": "Ja, alle unsere Teammitglieder und Partnerunternehmen werden sorgfältig ausgewählt, geschult und sind vollständig versichert. So stellen wir sicher, dass die Arbeiten stets professionell und sicher durchgeführt werden. Für spezielle Aufgaben wie Elektro- oder Malerarbeiten arbeiten wir mit bewährten Fachkräften zusammen, sodass Sie immer die passende Expertise erhalten."
           },
           {
             "question": "Gibt es Rabatte für Mitglieder?",
-            "answer": "Ja, Mitglieder erhalten exklusive Rabatte und Vorteile."
+            "answer": "Ja, Havenova-Mitglieder genießen exklusive Vorteile wie bis zu 20 % Rabatt auf Dienstleistungen, kürzere Reaktionszeiten und einen jährlichen Wohnungs-Check. Die Mitgliedschaft ist darauf ausgelegt, Ihnen über das ganze Jahr hinweg mehr Sicherheit und Mehrwert zu bieten."
           }
         ],
         "cta": {
-          "label": "Kontakt Support",
-          "href": "/contact",
-          "description": "Kontaktieren Sie unser Team für maßgeschneiderte Unterstützung.",
-          "title": "Benötigen Sie weitere Hilfe?"
+          "title": "Haben Sie noch weitere Fragen?",
+          "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+        },
+        "button": {
+          "cta": "Alle FAQs ansehen",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
-      "finalCta": {}
+      "finalCta": {
+        "headline": "Bereit, Ihre Haussservices zu vereinfachen?",
+        "subheadline": "Buchen Sie noch heute einen Service und erhalten Sie innerhalb von 24–48 Stunden professionelle Unterstützung. Unser erfahrenes Team übernimmt Reinigung, Reparaturen und Wartung, damit Sie sich auf das Wesentliche konzentrieren können.",
+        "button": {
+          "cta": "Jetzt buchen",
+          "href": "/services",
+          "variant": "solid",
+          "icon": "forward"
+        },
+        "image":"/images/final-cta.webp"
+            
+      }
     },
     "navbar": {
       "headers": {

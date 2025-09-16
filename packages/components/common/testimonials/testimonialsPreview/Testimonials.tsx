@@ -1,7 +1,7 @@
 // src/components/Testimonials.tsx
-import Link from 'next/link';
 import ReviewStars from '../reviewStars/ReviewStars';
 import styles from './Testimonials.module.css';
+import Button, { ButtonProps } from '../../button/Button';
 
 // Raw desde la API (subset útil)
 export type StarRating = 'ONE' | 'TWO' | 'THREE' | 'FOUR' | 'FIVE' | 'STAR_RATING_UNSPECIFIED';
@@ -40,8 +40,9 @@ export interface TestimonialsProps {
   subtitle: string;
   description: string;
   items: TestimonialItem[];
-  cta: { label: string; href: string };
   mobile: boolean;
+  button: ButtonProps;
+  onClick: () => void;
 }
 
 const Testimonials: React.FC<TestimonialsProps> = ({
@@ -49,47 +50,48 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   subtitle,
   description,
   items,
-  cta,
-  mobile,
+  button,
+  onClick,
 }) => {
   return (
     <section className={styles.section} aria-labelledby="testimonials-title">
-      <header>
+      <header className={styles.header}>
         <h2 id="testimonials-title">{title}</h2>
         <h3 className={styles.h3} id="testimonials-subtitle">
           {subtitle}
         </h3>
       </header>
-      <ul className={styles.ul}>
-        {items.slice(0, 6).map((item) => (
-          <li className={`${styles.li} card`} key={item.id}>
-            <header className={styles.header_li} aria-label={`Rezension von ${item.author}`}>
-              <div className={styles.name_div}>
-                <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
-                  Bewertet am {new Date(item.date).toLocaleDateString()}
-                </time>
-                <h4 className={styles.h4}>{item.author}</h4>
-              </div>
-              <div className={styles.rating_div}>
-                <ReviewStars rating={item.rating} />
-                <p>{item.rating}/5</p>
-              </div>
-            </header>
-            <p className={styles.p}>{item.text}</p>
-            {item.reply && (
-              <footer className={styles.footer}>
-                <p>Antwort</p>
-                <p className={styles.p}>{item.reply.text}</p>
-              </footer>
-            )}
-          </li>
-        ))}
-      </ul>
+      <article className={styles.wrapper}>
+        <ul className={styles.ul}>
+          {items.slice(0, 6).map((item) => (
+            <li className={`${styles.li} card`} key={item.id}>
+              <header className={styles.header_li} aria-label={`Rezension von ${item.author}`}>
+                <div className={styles.name_div}>
+                  <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
+                    Bewertet am {new Date(item.date).toLocaleDateString()}
+                  </time>
+                  <h4 className={styles.h4}>{item.author}</h4>
+                </div>
+                <div className={styles.rating_div}>
+                  <ReviewStars rating={item.rating} />
+                  <p>{item.rating}/5</p>
+                </div>
+              </header>
+              <p className={styles.p}>{item.text}</p>
+              {item.reply && (
+                <footer className={styles.footer}>
+                  <p>Antwort</p>
+                  <p className={styles.p}>{item.reply.text}</p>
+                </footer>
+              )}
+            </li>
+          ))}
+        </ul>
+      </article>
       <aside className={styles.aside}>
         <p className={styles.p}>{description}</p>
-        <Link href={cta.href} className="button" aria-label={`${cta.label} – gehe zu ${cta.href}`}>
-          {cta.label}
-        </Link>
+
+        <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
       </aside>
     </section>
   );

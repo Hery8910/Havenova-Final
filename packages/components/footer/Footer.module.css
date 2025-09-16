@@ -1,5 +1,7 @@
 .footer {
   width: 100%;
+  max-width: 100dvw;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;

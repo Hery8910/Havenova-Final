@@ -1,67 +1,49 @@
-'use client';
+// src/components/FAQPreview.tsx
 import styles from './FAQPreview.module.css';
-import { useI18n } from '../../../contexts/i18n/I18nContext';
-import { useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
 import Link from 'next/link';
+import { CTAItem, FAQPreviewItems } from './FAQPreviewWrapper';
+import Button, { ButtonProps } from '../button/Button';
 
-interface FAQPreviewItem {
-  question: string;
-  answer: string;
-}
-
-interface FAQPreviewProps {
+export interface FAQPreviewProps {
   title: string;
-  items: FAQPreviewItem[];
-  cta: {
-    label: string;
-    href: string;
-    title: string;
-    description: string;
-  };
+  items: FAQPreviewItems[];
+  cta: CTAItem;
+  button: ButtonProps;
+  onClick: () => void;
+  openIndex: number | null;
+  onToggle: (index: number) => void;
 }
-const FAQPreview: React.FC = () => {
-  const [open, setOpen] = useState<number | null>(null);
 
-  const handleClick = (index: number) => {
-    setOpen((prev) => (prev === index ? null : index));
-  };
-  const { texts } = useI18n();
-  const faq: FAQPreviewProps | undefined = texts?.pages?.home?.faq;
-
-  if (!faq) {
-    return (
-      <section className={styles.section}>
-        <div
-          className={styles.skeleton}
-          style={{ width: '100%', height: 504, background: '#eee' }}
-        />
-      </section>
-    );
-  }
-
+const FAQPreview: React.FC<FAQPreviewProps> = ({
+  title,
+  items,
+  cta,
+  button,
+  onClick,
+  openIndex,
+  onToggle,
+}) => {
   return (
     <section className={styles.section}>
       <header>
-        <h2>{faq.title}</h2>
+        <h2>{title}</h2>
       </header>
       <ul className={styles.ul}>
-        {faq.items.map((question, index) => (
-          <li key={index} className={styles.li} onClick={() => handleClick(index)}>
+        {items.map((question, index) => (
+          <li key={index} className={styles.li} onClick={() => onToggle(index)}>
             <h4 className={styles.h4}>
               {question.question}
-              <LuPlus className={`${styles.icon} ${open === index ? styles.open : ''}`} />
+              <LuPlus className={`${styles.icon} ${openIndex === index ? styles.open : ''}`} />
             </h4>
-            {open === index && <p className={styles.p}>{question.answer}</p>}
+            {openIndex === index && <p className={styles.p}>{question.answer}</p>}
           </li>
         ))}
       </ul>
       <aside className={styles.aside}>
-        <h2>{faq.cta.title}</h2>
-        <h4 className={styles.description}>{faq.cta.description}</h4>
-        <Link href={faq.cta.href} className="button">
-          {faq.cta.label}
-        </Link>
+        <h2>{cta.title}</h2>
+        <h4 className={styles.description}>{cta.description}</h4>
+        <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
       </aside>
     </section>
   );

@@ -936,9 +936,10 @@
             "date": "2024-12-31"
           }
         ],
-        "cta": {
-          "label": "More reviews",
-          "href": "/reviews"
+        "button": {
+          "cta": "More reviews",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
       "faq": {
@@ -946,29 +947,42 @@
         "items": [
           {
             "question": "What services does Havenova offer?",
-            "answer": "Havenova provides cleaning, repairs, maintenance, and moving assistance in Berlin."
+            "answer": "Havenova offers a wide range of home and property services in Berlin, including professional cleaning, small repairs, regular maintenance, and assistance with moving or furniture assembly. Our goal is to provide reliable and flexible support for both private households and businesses, so you can focus on what matters most while we take care of the rest."
           },
           {
             "question": "How quickly can I book a service?",
-            "answer": "We typically schedule appointments within 24–48 hours of your request."
+            "answer": "Most services can be scheduled within 24–48 hours after we receive your request. Once you submit your details through our platform, our team reviews them and confirms an appointment that works best for you. For urgent cases, we always try to find the fastest possible solution."
           },
           {
             "question": "Are your employees qualified and insured?",
-            "answer": "Yes, our entire team is trained and fully insured."
+            "answer": "Yes, all our team members and partner contractors are carefully selected, trained, and fully insured. This ensures that the work is carried out safely and professionally. We also work with trusted specialists for tasks such as electrical or painting work, so you always get the right expertise."
           },
           {
             "question": "Are there discounts for members?",
-            "answer": "Yes, members receive exclusive discounts and benefits."
+            "answer": "Yes, Havenova members enjoy exclusive benefits such as up to 20% discounts on services, faster response times, and an annual apartment check-up. Membership is designed to give you more value and peace of mind throughout the year."
           }
         ],
         "cta": {
-          "label": "Contact Support",
-          "href": "/contact",
-          "description": "Contact our team for tailored support.",
-          "title": "Need more help?"
+          "title": "Still have questions?",
+          "description": "Find more detailed answers on our FAQ page or get in touch if your question is not listed."
+        },
+        "button": {
+          "cta": "View all FAQs",
+          "variant": "solid",
+          "icon": "forward"
         }
       },
-      "finalCta": {}
+      "finalCta": {
+        "headline": "Ready to simplify your home services?",
+        "subheadline": "Book a service today and enjoy professional support within 24–48 hours. Our trusted team takes care of cleaning, repairs, and maintenance so you can focus on what matters most.",
+        "button": {
+          "cta": "Book Now",
+          "href": "/services",
+          "variant": "solid",
+          "icon": "forward"
+        },
+        "image": "/images/final-cta.webp"
+      }
     },
     "navbar": {
       "headers": {

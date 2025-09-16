@@ -1,14 +1,14 @@
 /* ===== Base: mobile first ===== */
 
 .section {
-  width: 100dvw;
+  max-width: 100%;
   min-height: 100dvh;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 64px auto;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Fondo decorativo */

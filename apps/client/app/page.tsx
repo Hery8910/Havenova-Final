@@ -11,19 +11,19 @@ import WelcomeOfferBanner from '@/packages/components/common/welcomeOfferBanner/
 import WelcomeOfferBannerSkeleton from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner.skeleton';
 import HowItWorks from '../../../packages/components/common/howItWorks/HowItWorks';
 import WhyChoose from '../../../packages/components/common/whyChoose/WhyChoose';
-import FAQPreview from '../../../packages/components/common/faqPreview/FAQPreview';
-import TestimonialsPreview from '../../../packages/components/common/testimonials/testimonialsPreview/Testimonials';
 import ServicesPreview from '../../../packages/components/common/servicePreview/ServicesPreview';
 import FinalCTA from '../../../packages/components/common/finalCTA/FinalCTA';
 import Loading from '../../../packages/components/layout/loading/Loading';
 import HomeHeroSkeleton from '../../../packages/components/pages/homeHero/HomeHero.skeleton';
-import SkeletonHowItWorks from '../../../packages/components/common/howItWorks/HowItWorks.skeleton';
-import SkeletonServicesPreview from '../../../packages/components/common/servicePreview/ServicesPreview.skeleton';
-import SkeletonWhyChoose from '../../../packages/components/common/whyChoose/WhyChoose.skeleton';
 import { useRouter } from 'next/navigation';
 import {
+  FAQPreviewSkeleton,
+  FAQPreviewWrapper,
+  FinalCTASkeleton,
   HowItWorksSkeleton,
   ServicesPreviewSkeleton,
+  Testimonials,
+  TestimonialsSkeleton,
   WhyChooseSkeleton,
 } from '../../../packages/components/common';
 
@@ -135,9 +135,15 @@ export default function Home() {
 
       {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
 
-      <TestimonialsPreview {...testimonialsTexts} mobile={isMobile} />
-      <FAQPreview {...faqPreviewTexts} />
-      <FinalCTA {...finalCtaTexts} />
+      {testimonialsTexts ? <Testimonials {...testimonialsTexts} /> : <TestimonialsSkeleton />}
+
+      {faqPreviewTexts ? (
+        <FAQPreviewWrapper {...faqPreviewTexts} onClick={() => handleNavigation('faq')} />
+      ) : (
+        <FAQPreviewSkeleton />
+      )}
+
+      {finalCtaTexts ? <FinalCTA {...finalCtaTexts} /> : <FinalCTASkeleton />}
 
       {alert && (
         <AlertPopup

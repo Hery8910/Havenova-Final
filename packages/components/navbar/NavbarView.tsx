@@ -101,73 +101,46 @@ export function NavbarView({
           </button>
         </aside>
       </header>
+      <article className={`${styles.wrapper} ${menuOpen ? styles.open : styles.close}`}>
+        <ul
+          id="navbar-sections"
+          role="menubar"
+          onMouseLeave={onCloseMenu}
+          className={styles.nav_main}
+        >
+          {/* Services */}
+          <li className={styles.main_li} role="none">
+            <h3 className={styles.h3}>{navbarConfig?.headers?.services}</h3>
+            <ul className={styles.li_ul} role="menu" aria-label="Services">
+              {navbarConfig?.services.map((link) => (
+                <li className={styles.li} role="none" key={link.label}>
+                  <button
+                    role="menuitem"
+                    onClick={() => onNavigate(link.href)}
+                    className={styles.item}
+                  >
+                    {link.image && (
+                      <Image
+                        className={styles.image}
+                        src={link.image}
+                        alt={link.alt || link.label}
+                        width={35}
+                        height={35}
+                        priority
+                      />
+                    )}
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </li>
 
-      <ul
-        id="navbar-sections"
-        role="menubar"
-        onMouseLeave={onCloseMenu}
-        className={`${styles.nav_main} ${menuOpen ? styles.open : styles.close}`}
-      >
-        {/* Services */}
-        <li className={styles.main_li} role="none">
-          <h3 className={styles.h3}>{navbarConfig?.headers?.services}</h3>
-          <ul className={styles.li_ul} role="menu" aria-label="Services">
-            {navbarConfig?.services.map((link) => (
-              <li className={styles.li} role="none" key={link.label}>
-                <button
-                  role="menuitem"
-                  onClick={() => onNavigate(link.href)}
-                  className={styles.item}
-                >
-                  {link.image && (
-                    <Image
-                      className={styles.image}
-                      src={link.image}
-                      alt={link.alt || link.label}
-                      width={35}
-                      height={35}
-                      priority
-                    />
-                  )}
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </li>
-
-        {/* About */}
-        <li className={styles.main_li} role="none">
-          <h3 className={styles.h3}>{navbarConfig?.headers?.about}</h3>
-          <ul className={styles.li_ul} role="menu" aria-label="About">
-            {navbarConfig?.about.map((link) => (
-              <li className={styles.li} role="none" key={link.label}>
-                <button
-                  role="menuitem"
-                  onClick={() => onNavigate(link.href)}
-                  className={styles.item}
-                >
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </li>
-
-        {/* Profile */}
-        <li className={styles.main_li} role="none">
-          <h3 className={styles.h3}>{navbarConfig?.headers?.profile}</h3>
-          <ul className={styles.li_ul} role="menu" aria-label="Profile">
-            {isMobile && (
-              <li key="prefer" className={styles.li} role="none">
-                <div role="menuitem" className={styles.item}>
-                  <ThemeToggler />
-                  <LanguageSwitcher />
-                </div>
-              </li>
-            )}
-            {user?.role === 'guest' ? (
-              navbarConfig?.register.map((link) => (
+          {/* About */}
+          <li className={styles.main_li} role="none">
+            <h3 className={styles.h3}>{navbarConfig?.headers?.about}</h3>
+            <ul className={styles.li_ul} role="menu" aria-label="About">
+              {navbarConfig?.about.map((link) => (
                 <li className={styles.li} role="none" key={link.label}>
                   <button
                     role="menuitem"
@@ -177,17 +150,45 @@ export function NavbarView({
                     {link.label}
                   </button>
                 </li>
-              ))
-            ) : (
-              <li role="none">
-                <div role="menuitem">
-                  <AvatarContainer />
-                </div>
-              </li>
-            )}
-          </ul>
-        </li>
-      </ul>
+              ))}
+            </ul>
+          </li>
+
+          {/* Profile */}
+          <li className={styles.main_li} role="none">
+            <h3 className={styles.h3}>{navbarConfig?.headers?.profile}</h3>
+            <ul className={styles.li_ul} role="menu" aria-label="Profile">
+              {isMobile && (
+                <li key="prefer" className={styles.li} role="none">
+                  <div role="menuitem" className={styles.item}>
+                    <ThemeToggler />
+                    <LanguageSwitcher />
+                  </div>
+                </li>
+              )}
+              {user?.role === 'guest' ? (
+                navbarConfig?.register.map((link) => (
+                  <li className={styles.li} role="none" key={link.label}>
+                    <button
+                      role="menuitem"
+                      onClick={() => onNavigate(link.href)}
+                      className={styles.item}
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))
+              ) : (
+                <li role="none">
+                  <div role="menuitem">
+                    <AvatarContainer />
+                  </div>
+                </li>
+              )}
+            </ul>
+          </li>
+        </ul>
+      </article>
     </nav>
   );
 }

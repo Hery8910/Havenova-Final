@@ -1,43 +1,36 @@
-import Link from 'next/link';
 import styles from './FinalCTA.module.css';
+import Button, { ButtonProps } from '../button/Button';
+import Image from 'next/image';
 
-export interface FinalCTAData {
-  headline1: string;
-  headline2: string;
-  subtitle: string;
-  badge: string;
-  cta: { label: string; href: string };
-  image: { src: string; alt: string };
+export interface FinalCTAProps {
+  headline: string;
+  subheadline: string;
+  button: ButtonProps;
+  image: string;
+  onClick: () => void;
 }
-const FinalCTA: React.FC = () => {
-  // const finalCta: FinalCTAData | undefined = texts?.pages?.home?.hero;
 
-  // if (!hero) {
-  //   return (
-  //     <section className={styles.section}>
-  //       <div
-  //         className={styles.skeleton}
-  //         style={{ width: '100%', height: 504, background: '#eee' }}
-  //       />
-  //     </section>
-  //   );
-  // }
-
+const FinalCTA: React.FC<FinalCTAProps> = ({ headline, subheadline, button, image, onClick }) => {
   return (
-    <section className={styles.section}>
-      <main className={styles.main}>
-        <aside className={styles.aside}>
-          {/* <div className={styles.div}>
-            <h1 className={styles.h1}>{hero.headline1}</h1>
-            <h1 className={styles.h1}>{hero.headline2}</h1>
-          </div> */}
-          <p className={styles.p}>&</p>
-        </aside>
-        {/* <p className={styles.description}>{hero.subtitle}</p>
-        <Link href={hero.cta.href} className="button">
-          {hero.cta.label}
-        </Link> */}
-      </main>
+    <section className={styles.section} aria-labelledby="final-cta-headline">
+      <article className={styles.article}>
+        <header className={styles.header}>
+          <h2 id="final-cta-headline" className={styles.headline}>
+            {headline}
+          </h2>
+          <p className={styles.subheadline}>{subheadline}</p>
+          <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
+        </header>
+        <Image
+          className={styles.image}
+          src={image}
+          alt=""
+          width={500}
+          height={500}
+          loading="lazy"
+          decoding="async"
+        />
+      </article>
     </section>
   );
 };
