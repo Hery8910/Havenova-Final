@@ -4,3 +4,4 @@ export * from './cookies';
 export * from './guestUserStorage';
 export * from './serviceRequest';
 export * from './validators';
+export * from './alertType';

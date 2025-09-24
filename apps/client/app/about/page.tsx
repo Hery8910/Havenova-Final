@@ -1,46 +1,77 @@
+'use client';
 import React from 'react';
+import { useIsMobile } from '../../../../packages/hooks';
 import styles from './page.module.css';
-// import { AboutPageTexts } from '../../../../packages/types/pages/about';
-// import { useI18n } from '../../../../packages/contexts/I18nContext';
-// import Values from '../../../../packages/components/common/values/Values';
+import AboutHero from '@/packages/components/pages/aboutHero/AboutHero';
+import AboutHeroSkeleton from '@/packages/components/pages/aboutHero/AboutHero.skeleton';
+import { useI18n } from '../../../../packages/contexts/i18n/I18nContext';
+import {
+  ServicesPreview,
+  ServicesPreviewSkeleton,
+  Story,
+  StorySkeleton,
+  Testimonials,
+  TestimonialsSkeleton,
+  Values,
+  ValuesSkeleton,
+  WhyChoose,
+  WhyChooseSkeleton,
+} from '../../../../packages/components/common';
+import { useUser } from '../../../../packages/contexts/user/UserContext';
+import { useRouter } from 'next/navigation';
+
+type CtaCase = 'services' | 'review';
 
 export default function AboutPage() {
-  // const { texts } = useI18n();
-  // const { hero, story, finalCta }: AboutPageTexts = texts.pages.about;
+  const { texts } = useI18n();
+  const { user } = useUser();
+  const router = useRouter();
+  const isMobile = useIsMobile(1024);
+  const aboutHeroTexts = texts.pages.about.hero;
+  const storyTexts = texts.components.common.story;
+  const valuesTexts = texts.components.common.values;
+  const whyChooseTexts = texts.components.common.whyChoose;
+  const servicesPreviewTexts = texts.components.common.servicesPreview;
+  const testimonialsTexts = texts.components.common.testimonials;
 
+  const handleNavigation = (section: CtaCase) => {
+    switch (section) {
+      case 'review':
+        router.push('/reviews');
+        break;
+
+      case 'services':
+        router.push('/services');
+        break;
+      default:
+        console.warn(`No redirect defined for ${section}`);
+    }
+  };
   return (
     <main className={styles.container}>
-      <p>About</p>
-      {/* AboutHero */}
-      {/* <section className={styles.hero}>
-        <div className={styles.heroText}>
-          <h1>{hero.headline1}</h1>
-          <h3>{hero.headline2}</h3>
-          <p>
-            <strong>{hero.subtitle}</strong>
-          </p>
-        </div>
-      </section> */}
+      {aboutHeroTexts ? <AboutHero {...aboutHeroTexts} /> : <AboutHeroSkeleton />}
 
-      {/* AboutStory */}
-      {/* <section className={styles.story}>
-        <h3 className={styles.h3}>{story.title}</h3>
-        {story.paragraphs.map((paragraph, idx) => (
-          <p key={idx}>{paragraph}</p>
-        ))}
-      </section> */}
+      {storyTexts ? <Story {...storyTexts} /> : <StorySkeleton />}
 
-      {/* Values */}
-      {/* <Values /> */}
+      {valuesTexts ? (
+        <Values {...valuesTexts} theme={user?.theme ?? 'light'} isMobile={isMobile} />
+      ) : (
+        <ValuesSkeleton />
+      )}
 
-      {/* AboutDifferentiators */}
-      {/* <WhyChoose /> */}
+      {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
 
-      {/* Servicios */}
-      {/* <Service /> */}
+      {servicesPreviewTexts ? (
+        <ServicesPreview
+          {...servicesPreviewTexts}
+          theme={user?.theme ?? 'light'}
+          onClick={() => handleNavigation('services')}
+        />
+      ) : (
+        <ServicesPreviewSkeleton />
+      )}
 
-      {/* Testimonios */}
-      {/* <Reviews /> */}
+      {testimonialsTexts ? <Testimonials {...testimonialsTexts} /> : <TestimonialsSkeleton />}
 
       {/* Blog */}
     </main>

@@ -7,7 +7,7 @@ import Link from 'next/link';
 // import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
 import { useClient } from '../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
-import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../../../packages/components/alert/alertPopup/AlertPopup';
 
 export interface RegisterData {
   tilte: string;

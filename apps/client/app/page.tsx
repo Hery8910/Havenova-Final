@@ -1,12 +1,12 @@
 'use client';
 import { useUser } from '../../../packages/contexts/user/UserContext';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useClient } from '../../../packages/contexts/client/ClientContext';
-import AlertPopup from '../../../packages/components/alertPopup/AlertPopup';
+import { AlertWrapper } from '../../../packages/components/alert';
 import { useI18n } from '../../../packages/contexts/i18n/I18nContext';
 
-import HomeHero from '../../../packages/components/pages/homeHero/HomeHero';
+import HomeHero from '@/packages/components/pages/homeHero/HomeHero';
 import WelcomeOfferBanner from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner';
 import WelcomeOfferBannerSkeleton from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner.skeleton';
 import HowItWorks from '../../../packages/components/common/howItWorks/HowItWorks';
@@ -17,8 +17,8 @@ import Loading from '../../../packages/components/layout/loading/Loading';
 import HomeHeroSkeleton from '../../../packages/components/pages/homeHero/HomeHero.skeleton';
 import { useRouter } from 'next/navigation';
 import {
-  FAQPreviewSkeleton,
-  FAQPreviewWrapper,
+  FAQSection,
+  FAQSectionSkeleton,
   FinalCTASkeleton,
   HowItWorksSkeleton,
   ServicesPreviewSkeleton,
@@ -46,7 +46,7 @@ export default function Home() {
   const popups = texts.popups;
   const [isMobile, setIsMobile] = useState(false);
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    status: number;
     title: string;
     description: string;
   } | null>(null);
@@ -64,7 +64,7 @@ export default function Home() {
   useEffect(() => {
     registerSessionCallback(() => {
       setAlert({
-        type: 'error',
+        status: 401,
         title: popups?.SESSION_EXPIRED?.title || 'Session expired',
         description:
           popups?.SESSION_EXPIRED?.description || 'Your session has expired. Please log in again.',
@@ -138,21 +138,14 @@ export default function Home() {
       {testimonialsTexts ? <Testimonials {...testimonialsTexts} /> : <TestimonialsSkeleton />}
 
       {faqPreviewTexts ? (
-        <FAQPreviewWrapper {...faqPreviewTexts} onClick={() => handleNavigation('faq')} />
+        <FAQSection {...faqPreviewTexts} onClick={() => handleNavigation('faq')} />
       ) : (
-        <FAQPreviewSkeleton />
+        <FAQSectionSkeleton />
       )}
 
       {finalCtaTexts ? <FinalCTA {...finalCtaTexts} /> : <FinalCTASkeleton />}
 
-      {alert && (
-        <AlertPopup
-          type={alert.type}
-          title={alert.title}
-          description={alert.description}
-          onClose={() => setAlert(null)}
-        />
-      )}
+      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 }

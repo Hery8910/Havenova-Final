@@ -66,7 +66,10 @@ export function FooterView({ footer, onOpenCookies }: FooterViewProps) {
         </Link>
 
         <ul className={styles.header_ul} aria-label="Contact information">
-          <h3 className={styles.h3}>{footer?.headers?.contact}</h3>
+          <li>
+            {' '}
+            <h3 className={styles.h3}>{footer?.headers?.contact}</h3>
+          </li>
           {footer.contact.map((elem, index) => (
             <li key={index} className={styles.contact_li}>
               {elem.image ? (

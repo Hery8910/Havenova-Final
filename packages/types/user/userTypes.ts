@@ -71,3 +71,9 @@ export interface ResetPasswordPayload {
 export interface GetUserPayload {
   clientId: string;
 }
+export interface FaqMessageData {
+  name: string;
+  email: string;
+  message: string;
+  clientId: string;
+}

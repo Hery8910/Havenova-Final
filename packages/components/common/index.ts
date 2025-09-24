@@ -4,5 +4,7 @@ export * from './howItWorks';
 export * from './servicePreview';
 export * from './whyChoose';
 export * from './testimonials';
-export * from './faqPreview';
+export * from './faq';
 export * from './finalCTA';
+export * from './story';
+export * from './values';

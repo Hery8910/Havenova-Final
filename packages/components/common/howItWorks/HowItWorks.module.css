@@ -1,6 +1,7 @@
 .section {
   max-width: 100%;
   margin: 64px 5dvw;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;

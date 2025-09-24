@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 5vw;
+  padding: 16px 5vw;
 }
 .header,
 .aside {
@@ -67,10 +67,12 @@
   gap: 8px;
 }
 .rating_div {
+  padding: 16px 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   gap: 8px;
 }
 .profil {

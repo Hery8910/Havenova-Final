@@ -9,6 +9,7 @@ import {
   UpdateUserPayload,
   User,
   VerifyEmailPayload,
+  FaqMessageData,
 } from '../types';
 
 // REGISTER
@@ -74,4 +75,9 @@ export const resendVerificationEmail = async (
 ): Promise<ApiResponse<null>> => {
   const response = await api.post<ApiResponse<null>>('/api/users/resend-verification', { payload });
   return response.data;
+};
+
+export const sendFaqMessage = async (data: FaqMessageData) => {
+  const response = await api.post('/api/faq/message', data);
+  return response.data; // { success: boolean, code: string, message: string }
 };

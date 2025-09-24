@@ -6,8 +6,6 @@
   border: none;
   box-shadow: var(--shadow);
   border-radius: 6px;
-  border: 3px solid var(--button-text);
-  position: relative;
 }
 .button svg {
   filter: drop-shadow(2px 0 4px #1d1d1d);
@@ -15,7 +13,7 @@
 /* Variantes */
 .solid {
   background: var(--brand-primary);
-  background: linear-gradient(116deg, var(--brand-primary) 0%, var(--button-gradient) 100%);
+  background: linear-gradient(0deg, var(--brand-primary) 0%, var(--button-gradient) 100%);
   color: var(--button-text);
   border: 3px solid var(--brand-primary);
 }
@@ -60,35 +58,19 @@
 
 /* Icono */
 .icon {
-  position: absolute;
-  right: -4px;
-  top: -3px;
+  padding: 8px 12px;
   font-size: clamp(16px, 3vw, 18px);
-  padding: 13px 10px 13px 12px;
-  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0 4px 4px 0;
-}
-.forward,
-.confirm,
-.open {
-  background-color: var(--color-success);
-}
-.back,
-.cancel,
-.close {
-  background-color: var(--color-error);
 }
 
 .text {
   border-right: none;
   border-radius: 6px 0 0 6px;
-  padding: 8px 48px 8px 12px;
+  padding: 8px 12px;
   font-size: clamp(16px, 3vw, 18px);
   font-weight: 700;
-  text-shadow: var(--text-shadow);
 }
 
 .skeleton {

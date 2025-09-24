@@ -23,32 +23,33 @@
 
   --text-primary: #424242;
   --text-secondary: #616161;
-
   --text-light: #dad9d9;
   --text-dark: #424242;
 
-  --bg-card: #0768c983;
-  --button-accent: #afd6fc;
+  --bg-card: #dbfaff98;
+
+  --button-gradient: #054586;
+  --button-text: #b7e2ff;
 
   --shadow: 0px 4px 8px #1313139d;
-  --text-shadow: 2px 2px 4px rgb(136, 136, 136);
+  --text-shadow: 2px 2px 4px rgb(199, 199, 199);
 
   /* Font */
   --font-family-main: 'Inter', sans-serif;
   --font-size-base: 16px;
 
   /* Status Colors */
-  --color-success: #053d12ff;
-  --bg-success: #35b4537c;
+  --color-success: #48aa44;
+  --bg-success: #47aa4460;
 
-  --color-error: #53050dff;
-  --bg-error: #da4a58a9;
+  --color-error: #e6492d;
+  --bg-error: #e6492d60;
 
-  --color-warning: #ffc107;
-  --bg-warning: #fff3cd;
+  --color-warning: #f6ab2f;
+  --bg-warning: #f6ab2f60;
 
-  --color-info: #20525a;
-  --bg-info: #d1ecf1;
+  --color-info: #2690a5;
+  --bg-info: #2690a560;
 }
 
 /* ============================
@@ -79,7 +80,7 @@
   --text-light: #dad9d9;
   --text-dark: #424242;
 
-  --bg-card: #022a3094;
+  --bg-card: #022a30bd;
 
   --button-gradient: #054586;
   --button-text: #b7e2ff;
@@ -88,17 +89,6 @@
   --text-shadow: 2px 2px 4px rgb(75, 75, 75);
 
   /* Status Colors */
-  --color-success: #20ac64;
-  --bg-success: #163b2ab3;
-
-  --color-error: #ff6b6b;
-  --bg-error: #3d1a1ab3;
-
-  --color-warning: #ffc107;
-  --bg-warning: #4a3b00b3;
-
-  --color-info: #2690a5;
-  --bg-info: #1a2e3db3;
 }
 
 /* ============================

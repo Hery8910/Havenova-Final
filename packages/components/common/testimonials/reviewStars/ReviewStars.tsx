@@ -1,5 +1,4 @@
 // src/components/ReviewStars.tsx
-import React from 'react';
 import styles from './ReviewStars.module.css';
 
 export interface ReviewStarsProps {

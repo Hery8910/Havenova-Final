@@ -10,49 +10,19 @@
           "variant": "solid",
           "icon": "forward"
         },
-        "image": "/images/pages/home-page/home-hero-background-lg.webp"
+        "image": "/images/pages/home-hero.webp"
       }
     },
     "about": {
       "hero": {
         "headline1": "Über Uns",
         "headline2": "Engagiert für Qualität und Transparenz",
-        "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Innovation.",
+        "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Lösungen.",
         "image": {
-          "src": "/images/about-hero.png",
-          "alt": "Team bei der Reinigungsarbeit"
+          "src": "/images/pages/about-hero.webp"
         }
       },
-      "story": {
-        "title": "Ein junges Unternehmen mit klarer Vision",
-        "paragraphs": [
-          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
-          "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
-          "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
-          "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
-        ]
-      },
-      "values": {
-        "title": "Unsere Werte",
-        "list": [
-          {
-            "label": "Transparenz",
-            "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung."
-          },
-          {
-            "label": "Qualität",
-            "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität."
-          },
-          {
-            "label": "Innovation",
-            "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung."
-          },
-          {
-            "label": "Empathie",
-            "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis."
-          }
-        ]
-      },
+
       "services": {
         "title": "Unsere Leistungen",
         "description": "Wir bieten eine Vielzahl von Reinigungs- und Wartungsdiensten an, damit Ihr Zuhause stets in bestem Zustand bleibt.",
@@ -74,6 +44,100 @@
           "url": "/services"
         }
       }
+    },
+    "faq": {
+      "faqHero": {
+        "headline1": "Häufig gestellte Fragen",
+        "headline2": "Alles, was Sie über Havenova wissen müssen",
+        "subtitle": "Hier finden Sie Antworten auf die am häufigsten gestellten Fragen zu unseren Services, Buchungen und Zahlungsmethoden. Sollte Ihre Frage nicht dabei sein, steht Ihnen unser Support-Team jederzeit zur Verfügung.",
+        "image": "/images/pages/faq-hero.webp"
+      },
+      "items": [
+        {
+          "title": "Allgemeine Fragen",
+          "items": [
+            {
+              "question": "Was ist Havenova und wie funktioniert die Plattform?",
+              "answer": "Havenova ist eine digitale Plattform für Haus- und Gebäudeservices in Berlin. Kunden können Dienstleistungen wie Reinigung, Reparaturen oder Möbelaufbau direkt online anfragen, Angebote vergleichen und Termine buchen."
+            },
+            {
+              "question": "Muss ich ein Konto erstellen, um einen Service zu buchen?",
+              "answer": "Nein, Sie können Dienstleistungen auch ohne Konto buchen. Wenn Sie jedoch ein Konto anlegen, profitieren Sie von Vorteilen wie gespeicherten Adressen, Rabattaktionen und einer Übersicht über Ihre bisherigen Aufträge."
+            },
+            {
+              "question": "Wie unterscheiden sich Ihre Services von anderen Anbietern?",
+              "answer": "Wir legen besonderen Wert auf Transparenz, Flexibilität und zuverlässigen Kundenservice. Unsere Dienstleistungen sind individuell anpassbar, und wir arbeiten mit qualifizierten Fachkräften, die versichert und überprüft sind."
+            },
+            {
+              "question": "Wie erreiche ich den Kundensupport?",
+              "answer": "Unser Support-Team ist werktags von 9:00 bis 18:00 Uhr per E-Mail oder Telefon erreichbar. Mitglieder genießen zudem bevorzugten Support mit kürzeren Reaktionszeiten."
+            }
+          ]
+        },
+        {
+          "title": "Buchung & Ablauf",
+          "items": [
+            {
+              "question": "Wie läuft eine typische Buchung ab?",
+              "answer": "Sie wählen den gewünschten Service auf unserer Website aus, geben die Details an und senden die Anfrage ab. Unser Team prüft die Informationen und bestätigt Ihnen den Termin oder erstellt ein individuelles Angebot."
+            },
+            {
+              "question": "Kann ich Termine kurzfristig buchen?",
+              "answer": "Ja, viele Dienstleistungen können innerhalb von 24–48 Stunden durchgeführt werden. Für besonders dringende Fälle versuchen wir stets, die schnellstmögliche Lösung zu finden."
+            },
+            {
+              "question": "Kann ich meine Buchung stornieren oder ändern?",
+              "answer": "Ja, Änderungen und Stornierungen sind bis zu 24 Stunden vor dem Termin kostenlos möglich. Bei kurzfristigeren Absagen behalten wir uns vor, eine Stornogebühr zu berechnen."
+            },
+            {
+              "question": "Erhalte ich eine Bestätigung meiner Buchung?",
+              "answer": "Ja, nach jeder Anfrage und Terminbestätigung erhalten Sie eine E-Mail mit allen relevanten Informationen sowie eine Übersicht in Ihrem Kundenbereich."
+            }
+          ]
+        },
+        {
+          "title": "Preise & Bezahlung",
+          "items": [
+            {
+              "question": "Wie werden die Preise berechnet?",
+              "answer": "Unsere Preise richten sich nach Art, Dauer und Umfang der Dienstleistung. Für Standardservices bieten wir transparente Pauschalen, während individuelle Aufträge ein angepasstes Angebot erfordern."
+            },
+            {
+              "question": "Welche Zahlungsmethoden akzeptieren Sie?",
+              "answer": "Wir akzeptieren gängige Zahlungsmethoden wie Kreditkarte, PayPal und SEPA-Lastschrift. Bei Stammkunden ist auch die Zahlung auf Rechnung möglich."
+            },
+            {
+              "question": "Gibt es zusätzliche Kosten?",
+              "answer": "Nein, alle Kosten werden vor der Buchung transparent ausgewiesen. Sollten im Laufe des Auftrags zusätzliche Arbeiten nötig sein, stimmen wir diese zuerst mit Ihnen ab."
+            },
+            {
+              "question": "Erhalte ich eine Rechnung?",
+              "answer": "Ja, nach Abschluss jeder Dienstleistung erhalten Sie automatisch eine digitale Rechnung per E-Mail, die auch im Kundenbereich heruntergeladen werden kann."
+            }
+          ]
+        },
+        {
+          "title": "Qualität & Sicherheit",
+          "items": [
+            {
+              "question": "Sind Ihre Mitarbeiter versichert?",
+              "answer": "Ja, alle unsere Mitarbeiter und Partner sind umfassend versichert. Schäden, die während eines Auftrags entstehen, sind durch unsere Haftpflichtversicherung abgedeckt."
+            },
+            {
+              "question": "Wie stellen Sie die Qualität sicher?",
+              "answer": "Wir wählen unsere Mitarbeiter sorgfältig aus, schulen sie regelmäßig und arbeiten eng mit unseren Kunden zusammen, um Feedback einzuholen und kontinuierlich Verbesserungen umzusetzen."
+            },
+            {
+              "question": "Arbeiten Sie auch mit externen Fachkräften?",
+              "answer": "Ja, für spezialisierte Arbeiten wie Elektrik, Sanitär oder Malerarbeiten arbeiten wir mit geprüften Fachbetrieben zusammen, um Ihnen höchste Qualität und Sicherheit zu garantieren."
+            },
+            {
+              "question": "Was passiert, wenn ich mit dem Service unzufrieden bin?",
+              "answer": "Ihre Zufriedenheit hat für uns höchste Priorität. Sollten Sie einmal unzufrieden sein, kontaktieren Sie uns bitte umgehend. Wir prüfen den Fall und finden gemeinsam eine Lösung, sei es Nachbesserung oder Rückerstattung."
+            }
+          ]
+        }
+      ]
     },
     "blog": {
       "title": "Neuigkeiten aus unserem Blog",
@@ -768,6 +832,15 @@
           "icon": "forward"
         }
       },
+      "story": {
+        "title": "Ein junges Unternehmen mit klarer Vision",
+        "paragraphs": [
+          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
+          "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
+          "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
+          "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
+        ]
+      },
       "whyChoose": {
         "title": "Why Choose Havenova?",
         "description": "At Havenova, we combine traditional services with modern transparency. Our goal is to make the entire process – from request to completion – as simple, reliable, and customer-focused as possible. The following points highlight what sets us apart from others.",
@@ -942,6 +1015,27 @@
           "icon": "forward"
         }
       },
+      "values": {
+        "title": "Unsere Werte",
+        "list": [
+          {
+            "label": "Transparenz",
+            "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung."
+          },
+          {
+            "label": "Qualität",
+            "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität."
+          },
+          {
+            "label": "Innovation",
+            "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung."
+          },
+          {
+            "label": "Empathie",
+            "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis."
+          }
+        ]
+      },
       "faq": {
         "title": "Häufig gestellte Fragen",
         "items": [
@@ -981,8 +1075,7 @@
           "variant": "solid",
           "icon": "forward"
         },
-        "image":"/images/final-cta.webp"
-            
+        "image": "/images/final-cta.webp"
       }
     },
     "navbar": {
@@ -1032,7 +1125,7 @@
       "about": [
         { "label": "Über uns", "href": "/about" },
         { "label": "Kontakt", "href": "/contact" },
-        { "label": "Fragen & Antworten", "href": "/q&a" },
+        { "label": "Fragen & Antworten", "href": "/faq" },
         { "label": "Bewertungen", "href": "/reviews" },
         { "label": "Blog", "href": "/blogs" },
         { "label": "Unsere Leistungen", "href": "/services" }
@@ -1061,6 +1154,51 @@
         }
       ]
     },
+    "form": {
+      "error": {
+        "name": {
+          "required": "Name ist erforderlich.",
+          "invalid": "Name muss mit einem Großbuchstaben beginnen."
+        },
+        "email": {
+          "required": "E-Mail ist erforderlich.",
+          "invalid": "Ungültiges E-Mail-Format."
+        },
+        "phone": {
+          "required": "Telefonnummer ist erforderlich.",
+          "invalid": "Ungültige Telefonnummer."
+        },
+        "password": {
+          "required": "Passwort ist erforderlich.",
+          "tooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
+          "missingUppercase": "Passwort benötigt einen Großbuchstaben.",
+          "missingNumber": "Passwort benötigt eine Zahl.",
+          "missingSymbol": "Passwort benötigt ein Sonderzeichen."
+        },
+        "address": {
+          "required": "Adresse ist erforderlich.",
+          "invalid": "Ungültiges Adressformat."
+        },
+        "serviceAddress": {
+          "required": "Serviceadresse ist erforderlich.",
+          "invalid": "Ungültiges Format der Serviceadresse."
+        },
+        "message": {
+          "required": "Nachricht ist erforderlich",
+          "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
+          "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
+        }
+      },
+      "buttonLabel": {
+        "register": "Registrieren",
+        "login": "Einloggen",
+        "edit": "Änderungen speichern",
+        "changePassword": "Passwort speichern",
+        "forgotPassword": "Link zum Zurücksetzen senden",
+        "resetPassword": "Passwort speichern",
+        "contact": "Nachricht senden"
+      }
+    },
     "cookieBanner": {
       "title": "Cookies auf dieser Website",
       "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
@@ -1085,26 +1223,6 @@
         "icon": "close"
       },
       "enableStats": "Statistik-Cookies aktivieren"
-    },
-    "user": {
-      "register": {
-        "button": "Registrieren"
-      },
-      "login": {
-        "button": "Einloggen"
-      },
-      "edit": {
-        "button": "Änderungen speichern"
-      },
-      "changePassword": {
-        "button": "Passwort speichern"
-      },
-      "forgotPassword": {
-        "button": "Link zum Zurücksetzen senden"
-      },
-      "resetPassword": {
-        "button": "Passwort speichern"
-      }
     },
     "services": {
       "furnitureAssembly": {
@@ -1337,37 +1455,6 @@
       "missingClient": "Kundeninformationen fehlen."
     }
   },
-  "error": {
-    "userForm": {
-      "name": {
-        "required": "Name ist erforderlich.",
-        "invalid": "Name muss mit einem Großbuchstaben beginnen."
-      },
-      "email": {
-        "required": "E-Mail ist erforderlich.",
-        "invalid": "Ungültiges E-Mail-Format."
-      },
-      "phone": {
-        "required": "Telefonnummer ist erforderlich.",
-        "invalid": "Ungültige Telefonnummer."
-      },
-      "password": {
-        "required": "Passwort ist erforderlich.",
-        "tooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
-        "missingUppercase": "Passwort benötigt einen Großbuchstaben.",
-        "missingNumber": "Passwort benötigt eine Zahl.",
-        "missingSymbol": "Passwort benötigt ein Sonderzeichen."
-      },
-      "address": {
-        "required": "Adresse ist erforderlich.",
-        "invalid": "Ungültiges Adressformat."
-      },
-      "serviceAddress": {
-        "required": "Serviceadresse ist erforderlich.",
-        "invalid": "Ungültiges Format der Serviceadresse."
-      }
-    }
-  },
   "popups": {
     "CLIENT_MISSING_CLIENT_ID": {
       "title": "Hoppla, etwas fehlt!",
@@ -1552,6 +1639,35 @@
     "WORKER_CREATE_FAILED": {
       "title": "Erstellung fehlgeschlagen",
       "description": "Beim Erstellen des Mitarbeiters ist ein unerwarteter Fehler aufgetreten."
+    },
+
+    "CONTACT_MESSAGE_CREATED": {
+      "title": "Nachricht erstellt",
+      "description": "Ihre Kontaktanfrage wurde erfolgreich übermittelt. Bitte bestätigen Sie Ihre E-Mail-Adresse, um fortzufahren."
+    },
+    "CONTACT_VERIFIED": {
+      "title": "E-Mail bestätigt",
+      "description": "Ihre E-Mail-Adresse wurde erfolgreich verifiziert. Wir werden Ihre Anfrage so schnell wie möglich bearbeiten."
+    },
+    "CONTACT_MESSAGE_RESPONDED": {
+      "title": "Nachricht beantwortet",
+      "description": "Ihre Anfrage wurde von unserem Team beantwortet. Bitte prüfen Sie Ihr Postfach oder das Dashboard für Details."
+    },
+    "CONTACT_VERIFICATION_INVALID": {
+      "title": "Ungültige Verifizierung",
+      "description": "Der Verifizierungslink ist ungültig oder abgelaufen. Bitte fordern Sie eine neue Bestätigung an."
+    },
+    "CONTACT_CREATE_FAILED": {
+      "title": "Fehler beim Erstellen",
+      "description": "Beim Erstellen Ihrer Kontaktanfrage ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "CONTACT_VERIFY_FAILED": {
+      "title": "Verifizierung fehlgeschlagen",
+      "description": "Beim Verifizieren Ihrer E-Mail ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "CONTACT_RESPONSE_FAILED": {
+      "title": "Antwort fehlgeschlagen",
+      "description": "Beim Speichern Ihrer Antwort ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut."
     },
 
     "GLOBAL_INTERNAL_ERROR": {

@@ -1,38 +1,12 @@
 .container {
   width: 100dvw;
-  margin: 70px auto;
+  margin: 60px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 64px;
   overflow-x: visible;
-}
-.hero {
-  min-width: 100dvw;
-  max-width: 2000px;
-  height: 800px;
-  background-image: url('/images/aboutPage/aboutHero.jpg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 64px;
-}
-.heroText {
-  margin-right: 200px;
-  max-width: 600px;
-  color: #616161;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.heroImage {
-  flex: 1;
 }
 .h3 {
   color: var(--text-secondary);

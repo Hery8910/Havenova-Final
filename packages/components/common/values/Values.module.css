@@ -1,37 +1,47 @@
 .section {
-  padding: 150px 0;
+  padding: 100px 5dvw;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  background: conic-gradient(
+    from 0.25turn at 70% 30%,
+    #f69c3cb7,
+    10deg,
+    #09515a00,
+    350deg,
+    #09515a00
+  );
 }
+
 .header {
   text-align: center;
 }
+
 .ul {
-  margin: 100px auto;
+  width: 100%;
   max-width: 1200px;
+  margin: 50px auto;
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: center;
-  gap: 64px;
+  gap: 16px;
 }
-
+.li:first-child,
+.li:nth-child(3) {
+  align-self: flex-start;
+}
 .li {
   max-width: 450px;
   width: 100%;
   display: grid;
-  grid-template-columns: 100px 1fr;
-  grid-template-rows: 100px 1fr;
-}
-.li:nth-child(2),
-.li:nth-child(4) {
-  margin-top: 40px;
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: 70px 1fr;
+  align-items: baseline;
+  justify-content: flex-start;
 }
 .num,
 .li_h2,
@@ -42,6 +52,7 @@
   justify-content: flex-start;
   border-radius: 16px;
 }
+
 .num {
   justify-content: flex-end;
   border: 2px solid var(--brand-secondary);
@@ -50,10 +61,12 @@
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
+
 .li_h2 {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
 }
+
 .li_p {
   border: 2px solid var(--brand-secondary);
   background-color: var(--bg-card);
@@ -61,4 +74,35 @@
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   height: fit-content;
+}
+
+/* Skeleton */
+.skeletonLine {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  border-radius: 6px;
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+@media (min-width: 768px) {
+  .li {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: 80px 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .ul {
+    gap: 32px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 }

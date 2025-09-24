@@ -4,10 +4,27 @@
   margin: 100px auto;
   background: #063940;
   background: linear-gradient(
-    137deg,
-    rgb(5, 47, 53) 0%,
-    rgb(7, 62, 70) 59%,
-    rgb(15, 137, 153) 100%
+    135deg,
+    #052f35ff,
+    #06343aff,
+    #063840ff,
+    #073d45ff,
+    #07424aff,
+    #08474fff,
+    #084b55ff,
+    #09505aff,
+    #09555fff,
+    #0a5a64ff,
+    #0a5e6aff,
+    #0b636fff,
+    #0b6874ff,
+    #0c6d79ff,
+    #0c717fff,
+    #0d7684ff,
+    #0d7b89ff,
+    #0e808eff,
+    #0e8494ff,
+    #0f8999ff
   );
   box-shadow: var(--shadow);
 }
@@ -33,7 +50,7 @@
   bottom: 0;
   right: -100px;
   display: none;
-  filter: drop-shadow(0 0 8px #3b3b3b);
+  filter: drop-shadow(0 0 4px #3b3b3b);
 }
 
 /* Skeleton base */

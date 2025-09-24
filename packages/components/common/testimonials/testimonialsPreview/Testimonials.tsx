@@ -63,18 +63,15 @@ const Testimonials: React.FC<TestimonialsProps> = ({
       </header>
       <article className={styles.wrapper}>
         <ul className={styles.ul}>
-          {items.slice(0, 6).map((item) => (
+          {items.slice(0, 4).map((item) => (
             <li className={`${styles.li} card`} key={item.id}>
               <header className={styles.header_li} aria-label={`Rezension von ${item.author}`}>
-                <div className={styles.name_div}>
-                  <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
-                    Bewertet am {new Date(item.date).toLocaleDateString()}
-                  </time>
-                  <h4 className={styles.h4}>{item.author}</h4>
-                </div>
+                <h4 className={styles.h4}>{item.author}</h4>
                 <div className={styles.rating_div}>
                   <ReviewStars rating={item.rating} />
-                  <p>{item.rating}/5</p>
+                  <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
+                    {new Date(item.date).toLocaleDateString()}
+                  </time>
                 </div>
               </header>
               <p className={styles.p}>{item.text}</p>

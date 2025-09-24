@@ -1,4 +1,4 @@
-export interface RegisterFormData {
+export interface FormData {
   name: string;
   email: string;
   password: string;
@@ -6,7 +6,8 @@ export interface RegisterFormData {
   profileImage: string;
   phone: string;
   language: string;
-  theme: string;
+  theme: 'light' | 'dark';
+  message: string;
   clientId: string;
 }
 
@@ -38,27 +39,34 @@ export interface formErrorProps {
     required: string;
     invalid: string;
   };
+  message: {
+    required: string;
+    tooShort: string;
+    tooLong: string;
+  };
 }
-export type UserFormMode =
-  | "register"
-  | "login"
-  | "edit"
-  | "forgotPassword"
-  | "resetPassword";
+export type FormMode =
+  | 'register'
+  | 'login'
+  | 'edit'
+  | 'forgotPassword'
+  | 'resetPassword'
+  | 'contact';
 
-export type UserFormField =
-  | "name"
-  | "email"
-  | "password"
-  | "address"
-  | "profileImage"
-  | "phone"
-  | "language"
-  | "theme"
-  | "clientId";
-  
+export type FormField =
+  | 'name'
+  | 'email'
+  | 'password'
+  | 'address'
+  | 'profileImage'
+  | 'phone'
+  | 'language'
+  | 'theme'
+  | 'message'
+  | 'clientId';
+
 export interface UserContactFormProps {
-  fields: UserFormField[];
-  onSubmit: (data: RegisterFormData) => Promise<void> | void;
-  mode: UserFormMode;
+  fields: FormField[];
+  onSubmit: (data: FormData) => Promise<void> | void;
+  mode: FormMode;
 }

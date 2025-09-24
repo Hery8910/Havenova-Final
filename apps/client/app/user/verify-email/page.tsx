@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from '../../../../../packages/contexts/user/UserContext';
 import { useClient } from '../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
-import AlertPopup from '../../../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../../../packages/components/alert/alertPopup/AlertPopup';
 
 import styles from './page.module.css';
 import { resendVerificationEmail } from '../../../../../packages/services/userService';

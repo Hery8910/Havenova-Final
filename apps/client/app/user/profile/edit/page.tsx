@@ -10,7 +10,7 @@ import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
 import { useRouter } from 'next/navigation';
 // import ChangePassword from '../../../../../../packages/components/user/changePassword/ChangePassword';
 // import AvatarSelector from '../../../../../../packages/components/user/avatarSelector/AvatarSelector';
-import AlertPopup from '../../../../../../packages/components/alertPopup/AlertPopup';
+import AlertPopup from '../../../../../../packages/components/alert/alertPopup/AlertPopup';
 
 export interface EditData {
   title: string;

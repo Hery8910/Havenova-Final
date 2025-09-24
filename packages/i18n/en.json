@@ -10,49 +10,19 @@
           "variant": "solid",
           "icon": "forward"
         },
-        "image": "/images/pages/home-page/home-hero-background-lg.webp"
+        "image": "/images/pages/home-hero.webp"
       }
     },
     "about": {
       "hero": {
         "headline1": "About Us",
         "headline2": "Committed to quality and transparency",
-        "subtitle": "Havenova is a young company in Berlin providing home cleaning and maintenance services, focused on customer satisfaction and digital innovation.",
+        "subtitle": "Havenova is a young company in Berlin providing home cleaning and maintenance services, focused on customer satisfaction and digital solutions.",
         "image": {
-          "src": "/images/aboutPage/AboutHero.jpg",
-          "alt": "Team performing cleaning service"
+          "src": "/images/pages/about-hero.webp"
         }
       },
-      "story": {
-        "title": "A Young Company with a Clear Vision",
-        "paragraphs": [
-          "Havenova was founded in 2023 with a clear idea: to offer home cleaning and maintenance services in Berlin with the customer at the center.",
-          "From the beginning, the company has worked to stand out by focusing on customer experience and maintaining clear and professional communication at every stage of the service.",
-          "In its first years, Havenova has actively participated in the development of this digital platform together with Maped Solutions. This tool was created to simplify service requests, improve communication, and offer full transparency to users.",
-          "Our focus remains the same: to improve every day, adapt to the needs of our clients, and continue developing digital solutions that benefit both customers and companies in the sector."
-        ]
-      },
-      "values": {
-        "title": "Our Values",
-        "list": [
-          {
-            "label": "Transparency",
-            "description": "We believe in clear and honest communication at every stage – from inquiry to execution."
-          },
-          {
-            "label": "Quality",
-            "description": "We deliver meticulous work with attention to detail and a strong commitment to professionalism."
-          },
-          {
-            "label": "Innovation",
-            "description": "We actively contribute to the development of digital tools to enhance the customer experience."
-          },
-          {
-            "label": "Empathy",
-            "description": "We foster professional yet human relationships with our clients, characterized by respect and understanding."
-          }
-        ]
-      },
+
       "services": {
         "title": "What We Offer",
         "description": "We provide a wide range of cleaning and home maintenance services to keep your home in great condition.",
@@ -74,6 +44,100 @@
           "url": "/services"
         }
       }
+    },
+    "faq": {
+      "faqHero": {
+        "headline1": "Frequently Asked Questions",
+        "headline2": "Everything you need to know about Havenova",
+        "subtitle": "Here you’ll find answers to the most common questions about our services, bookings, and payment options. If your question isn’t listed, our support team is always ready to help.",
+        "image": "/images/pages/faqPage/faq-hero.jpg"
+      },
+      "items": [
+        {
+          "title": "General Questions",
+          "items": [
+            {
+              "question": "What is Havenova and how does the platform work?",
+              "answer": "Havenova is a digital platform for home and building services in Berlin. Customers can request services such as cleaning, repairs, or furniture assembly online, compare offers, and book appointments directly."
+            },
+            {
+              "question": "Do I need to create an account to book a service?",
+              "answer": "No, you can book services without creating an account. However, having an account gives you benefits such as saved addresses, access to discount promotions, and an overview of your previous bookings."
+            },
+            {
+              "question": "How are your services different from other providers?",
+              "answer": "We focus on transparency, flexibility, and reliable customer service. Our services are fully customizable, and we work with qualified professionals who are insured and carefully vetted."
+            },
+            {
+              "question": "How can I contact customer support?",
+              "answer": "Our support team is available Monday to Friday from 9:00 to 18:00 by email or phone. Members also benefit from priority support with shorter response times."
+            }
+          ]
+        },
+        {
+          "title": "Booking & Process",
+          "items": [
+            {
+              "question": "What is the typical booking process?",
+              "answer": "You choose the service you need on our website, provide the details, and submit your request. Our team reviews the information and confirms the appointment or prepares a custom offer for you."
+            },
+            {
+              "question": "Can I book services at short notice?",
+              "answer": "Yes, many services can be provided within 24–48 hours. For urgent cases, we always do our best to find the fastest possible solution."
+            },
+            {
+              "question": "Can I cancel or change my booking?",
+              "answer": "Yes, changes and cancellations are free up to 24 hours before the appointment. For later cancellations, a cancellation fee may apply."
+            },
+            {
+              "question": "Will I receive a booking confirmation?",
+              "answer": "Yes, after every request and confirmed appointment you will receive an email with all relevant details, and you can also view it in your customer dashboard."
+            }
+          ]
+        },
+        {
+          "title": "Pricing & Payment",
+          "items": [
+            {
+              "question": "How are prices calculated?",
+              "answer": "Our prices depend on the type, duration, and scope of the service. For standard services, we offer transparent flat rates, while individual jobs require a tailored offer."
+            },
+            {
+              "question": "Which payment methods do you accept?",
+              "answer": "We accept major payment methods including credit card, PayPal, and SEPA direct debit. For regular customers, payment by invoice is also possible."
+            },
+            {
+              "question": "Are there any hidden costs?",
+              "answer": "No, all costs are shown transparently before booking. If additional work is needed during the job, we will always discuss it with you first."
+            },
+            {
+              "question": "Do I receive an invoice?",
+              "answer": "Yes, after every completed service you will automatically receive a digital invoice by email, which is also available for download in your customer dashboard."
+            }
+          ]
+        },
+        {
+          "title": "Quality & Safety",
+          "items": [
+            {
+              "question": "Are your employees insured?",
+              "answer": "Yes, all of our employees and partners are fully insured. Any damage that may occur during a service is covered by our liability insurance."
+            },
+            {
+              "question": "How do you ensure service quality?",
+              "answer": "We carefully select our staff, provide them with regular training, and collect customer feedback to continuously improve our services."
+            },
+            {
+              "question": "Do you work with external specialists?",
+              "answer": "Yes, for specialized tasks such as electrical work, plumbing, or painting, we cooperate with certified professionals to ensure the highest quality and safety standards."
+            },
+            {
+              "question": "What happens if I am not satisfied with the service?",
+              "answer": "Your satisfaction is our top priority. If you are unhappy with a service, please contact us immediately. We will review the case and find a solution together, whether that means rework or a refund."
+            }
+          ]
+        }
+      ]
     },
     "blog": {
       "title": "Latest from our Blog",
@@ -768,6 +832,15 @@
           "icon": "forward"
         }
       },
+      "story": {
+        "title": "A Young Company with a Clear Vision",
+        "paragraphs": [
+          "Havenova was founded in 2023 with a clear idea: to offer home cleaning and maintenance services in Berlin with the customer at the center.",
+          "From the beginning, the company has worked to stand out by focusing on customer experience and maintaining clear and professional communication at every stage of the service.",
+          "In its first years, Havenova has actively participated in the development of this digital platform together with Maped Solutions. This tool was created to simplify service requests, improve communication, and offer full transparency to users.",
+          "Our focus remains the same: to improve every day, adapt to the needs of our clients, and continue developing digital solutions that benefit both customers and companies in the sector."
+        ]
+      },
       "whyChoose": {
         "title": "Why Choose Havenova?",
         "description": "At Havenova, we combine traditional services with modern transparency. Our goal is to make the entire process – from request to completion – as simple, reliable, and customer-focused as possible. The following points highlight what sets us apart from others.",
@@ -942,6 +1015,27 @@
           "icon": "forward"
         }
       },
+      "values": {
+        "title": "Our Values",
+        "list": [
+          {
+            "label": "Transparency",
+            "description": "We believe in clear and honest communication at every stage – from inquiry to execution."
+          },
+          {
+            "label": "Quality",
+            "description": "We deliver meticulous work with attention to detail and a strong commitment to professionalism."
+          },
+          {
+            "label": "Innovation",
+            "description": "We actively contribute to the development of digital tools to enhance the customer experience."
+          },
+          {
+            "label": "Empathy",
+            "description": "We foster professional yet human relationships with our clients, characterized by respect and understanding."
+          }
+        ]
+      },
       "faq": {
         "title": "Frequently Asked Questions",
         "items": [
@@ -1031,7 +1125,7 @@
       "about": [
         { "label": "About Us", "href": "/about" },
         { "label": "Contact", "href": "/contact" },
-        { "label": "Q&A", "href": "/q&a" },
+        { "label": "Q&A", "href": "/faq" },
         { "label": "Reviews", "href": "/reviews" },
         { "label": "Blog", "href": "/blogs" },
         { "label": "Our Services", "href": "/services" }
@@ -1085,24 +1179,49 @@
       },
       "enableStats": "Enable analytics cookies"
     },
-    "user": {
-      "register": {
-        "button": "Register"
+    "form": {
+      "error": {
+        "name": {
+          "required": "Name is required.",
+          "invalid": "Name must start with a capital letter."
+        },
+        "email": {
+          "required": "Email is required.",
+          "invalid": "Invalid email format."
+        },
+        "phone": {
+          "required": "Phone number is required.",
+          "invalid": "Invalid phone number."
+        },
+        "password": {
+          "required": "Password is required.",
+          "tooShort": "Password must be at least 8 characters.",
+          "missingUppercase": "Password needs an uppercase letter.",
+          "missingNumber": "Password needs a number.",
+          "missingSymbol": "Password needs a special character."
+        },
+        "address": {
+          "required": "Address is required.",
+          "invalid": "Invalid address format."
+        },
+        "serviceAddress": {
+          "required": "Service address is required.",
+          "invalid": "Invalid service address format."
+        },
+        "message": {
+          "required": "Message is required",
+          "tooShort": "Message must be at least 10 characters",
+          "tooLong": "Message must not exceed 1000 characters"
+        }
       },
-      "login": {
-        "button": "Log in"
-      },
-      "edit": {
-        "button": "Save Changes"
-      },
-      "changePassword": {
-        "button": "Save password"
-      },
-      "forgotPassword": {
-        "button": "Send reset link"
-      },
-      "resetPassword": {
-        "button": "Save password"
+      "buttonLabel": {
+        "register": "Register",
+        "login": "Log in",
+        "edit": "Save Changes",
+        "changePassword": "Save password",
+        "forgotPassword": "Send reset link",
+        "resetPassword": "Save password",
+        "contact": "Send message"
       }
     },
     "services": {
@@ -1336,37 +1455,6 @@
       "missingClient": "Client information missing."
     }
   },
-  "error": {
-    "userForm": {
-      "name": {
-        "required": "Name is required.",
-        "invalid": "Name must start with a capital letter."
-      },
-      "email": {
-        "required": "Email is required.",
-        "invalid": "Invalid email format."
-      },
-      "phone": {
-        "required": "Phone number is required.",
-        "invalid": "Invalid phone number."
-      },
-      "password": {
-        "required": "Password is required.",
-        "tooShort": "Password must be at least 8 characters.",
-        "missingUppercase": "Password needs an uppercase letter.",
-        "missingNumber": "Password needs a number.",
-        "missingSymbol": "Password needs a special character."
-      },
-      "address": {
-        "required": "Address is required.",
-        "invalid": "Invalid address format."
-      },
-      "serviceAddress": {
-        "required": "Service address is required.",
-        "invalid": "Invalid service address format."
-      }
-    }
-  },
   "popups": {
     "CLIENT_MISSING_CLIENT_ID": {
       "title": "Oops, something is missing!",
@@ -1551,6 +1639,35 @@
     "WORKER_CREATE_FAILED": {
       "title": "Creation failed",
       "description": "An unexpected error occurred while creating the worker."
+    },
+
+    "CONTACT_MESSAGE_CREATED": {
+      "title": "Message created",
+      "description": "Your contact request has been submitted successfully. Please verify your email address to proceed."
+    },
+    "CONTACT_VERIFIED": {
+      "title": "Email verified",
+      "description": "Your email address has been successfully verified. We will process your request as soon as possible."
+    },
+    "CONTACT_MESSAGE_RESPONDED": {
+      "title": "Message responded",
+      "description": "Your inquiry has been answered by our team. Please check your inbox or dashboard for details."
+    },
+    "CONTACT_VERIFICATION_INVALID": {
+      "title": "Invalid verification",
+      "description": "The verification link is invalid or has expired. Please request a new confirmation."
+    },
+    "CONTACT_CREATE_FAILED": {
+      "title": "Creation failed",
+      "description": "An error occurred while creating your contact request. Please try again."
+    },
+    "CONTACT_VERIFY_FAILED": {
+      "title": "Verification failed",
+      "description": "An error occurred while verifying your email. Please try again."
+    },
+    "CONTACT_RESPONSE_FAILED": {
+      "title": "Response failed",
+      "description": "An error occurred while saving your response. Please try again later."
     },
 
     "GLOBAL_INTERNAL_ERROR": {

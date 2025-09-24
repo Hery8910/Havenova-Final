@@ -1,0 +1,33 @@
+.story {
+  width: 100%;
+  max-width: 750px;
+  padding: 0 5dvw;
+  margin: 64px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+@media (min-width: 1440px) {
+  .story {
+    max-width: 1000px;
+  }
+}
+
+/* Skeleton */
+.skeletonLine {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  border-radius: 6px;
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styles from './CreateWorkerForm.module.css';
 import { useClient } from '../../../contexts/client/ClientContext';
 import { useI18n } from '../../../contexts/i18n/I18nContext';
-import { AlertPopup } from '../../alertPopup/AlertPopup';
+import { AlertPopup } from '../../alert/alertPopup/AlertPopup';
 import { createWorker } from '../../../services/worker';
 import { CreateWorkerPayload } from '../../../types/worker/workerTypes';
 
