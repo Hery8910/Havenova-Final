@@ -75,5 +75,6 @@ export interface FaqMessageData {
   name: string;
   email: string;
   message: string;
+  language: string;
   clientId: string;
 }

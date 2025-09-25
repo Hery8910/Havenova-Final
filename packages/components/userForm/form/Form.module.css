@@ -1,7 +1,12 @@
+.form {
+  width: 100%;
+  max-width: 500px;
+}
 .input {
   padding: 8px 16px;
   border-radius: 4px;
   min-width: 300px;
+  width: 100%;
   font-size: clamp(16px, 3vw, 20px);
   border: 1px solid var(--text-secondary);
   background-color: transparent;
@@ -9,6 +14,7 @@
 }
 .input::placeholder {
   color: var(--text-secondary);
+  font-family: var(--font-family-main);
 }
 
 .div {
@@ -26,6 +32,7 @@
   color: var(--text-secondary);
 }
 .wrapper {
+  width: 100%;
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
@@ -33,4 +40,3 @@
   align-items: flex-start;
   gap: 8px;
 }
-

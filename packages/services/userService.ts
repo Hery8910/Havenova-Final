@@ -77,7 +77,7 @@ export const resendVerificationEmail = async (
   return response.data;
 };
 
-export const sendFaqMessage = async (data: FaqMessageData) => {
-  const response = await api.post('/api/faq/message', data);
+export const sendContactMessage = async (payload: FaqMessageData) => {
+  const response = await api.post('/api/contact', { payload });
   return response.data; // { success: boolean, code: string, message: string }
 };

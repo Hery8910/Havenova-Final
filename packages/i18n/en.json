@@ -17,10 +17,7 @@
       "hero": {
         "headline1": "About Us",
         "headline2": "Committed to quality and transparency",
-        "subtitle": "Havenova is a young company in Berlin providing home cleaning and maintenance services, focused on customer satisfaction and digital solutions.",
-        "image": {
-          "src": "/images/pages/about-hero.webp"
-        }
+        "subtitle": "Havenova is a young company in Berlin providing home cleaning and maintenance services, focused on customer satisfaction and digital solutions."
       },
 
       "services": {
@@ -52,7 +49,7 @@
         "subtitle": "Here you’ll find answers to the most common questions about our services, bookings, and payment options. If your question isn’t listed, our support team is always ready to help.",
         "image": "/images/pages/faqPage/faq-hero.jpg"
       },
-      "items": [
+      "questions": [
         {
           "title": "General Questions",
           "items": [
@@ -137,7 +134,12 @@
             }
           ]
         }
-      ]
+      ],
+      "contactSection": {
+        "heading": "Didn’t find your answer?",
+        "description": "Send us your question and we’ll get back to you as soon as possible.",
+        "buttonLabel": "Send question"
+      }
     },
     "blog": {
       "title": "Latest from our Blog",
@@ -146,6 +148,17 @@
         "title": "Stay Informed:",
         "subtitle": "Tips, guides, and updates for your home. Subscribe to our newsletter and never miss an update!",
         "label": "Subscribe"
+      },
+      "contact": {
+        "hero": {
+          "headline1": "Get in Touch",
+          "headline2": "We are here to help you",
+          "subtitle": "Do you have questions about our services or need assistance? Fill out the form or use the contact details below — our team will get back to you as soon as possible."
+        },
+        "contactSection": {
+          "heading": "Write us a message",
+          "description": "Fill out the form below with your details and message. We will review your request and get back to you as soon as possible."
+        }
       }
     },
     "user": {
@@ -1214,14 +1227,50 @@
           "tooLong": "Message must not exceed 1000 characters"
         }
       },
-      "buttonLabel": {
-        "register": "Register",
-        "login": "Log in",
-        "edit": "Save Changes",
-        "changePassword": "Save password",
-        "forgotPassword": "Send reset link",
-        "resetPassword": "Save password",
-        "contact": "Send message"
+      "button": {
+        "register": {
+          "cta": "Register",
+          "variant": "solid",
+          "icon": "register"
+        },
+        "login": {
+          "cta": "Log in",
+          "variant": "solid",
+          "icon": "login"
+        },
+        "edit": {
+          "cta": "Save Changes",
+          "variant": "solid",
+          "icon": "edit"
+        },
+        "changePassword": {
+          "cta": "Save password",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "forgotPassword": {
+          "cta": "Send reset link",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "resetPassword": {
+          "cta": "Save password",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "contact": {
+          "cta": "Send message",
+          "variant": "solid",
+          "icon": "contact"
+        }
+      },
+      "placeholders": {
+        "name": "Full name",
+        "email": "Email address",
+        "password": "Password",
+        "address": "Address",
+        "phone": "Phone number",
+        "message": "Your question or message"
       }
     },
     "services": {
@@ -1679,42 +1728,56 @@
       "description": "Your session has expired. Please log in again to continue."
     }
   },
-  "contact": {
+  "contactInfo": {
     "title": "Contact",
-    "items": [
-      {
-        "label": "Controller",
-        "name": {
-          "label": "Name",
-          "value": "Havenova"
-        },
-        "phone": {
-          "label": "Phone",
-          "value": "+49 176 7091 7803"
-        },
-        "address": { "label": "Address", "value": "Stollberger Str.43, 12627 Berlin" },
-        "email": {
-          "label": "Email",
-          "value": "contact@havenova.de"
-        }
+    "havenova": {
+      "label": "Controller",
+      "name": {
+        "label": "Name",
+        "value": "Havenova",
+        "description": "Your dream home begins with us"
       },
-      {
-        "label": "Technical support",
-        "name": {
-          "label": "Name",
-          "value": "Maped Solutions"
-        },
-        "phone": {
-          "label": "Phone",
-          "value": "+49 177 7312 606"
-        },
-        "address": { "label": "Address", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
-        "email": {
-          "label": "Email",
-          "value": "contact@mapedsolutions.de"
-        }
+      "phone": {
+        "label": "Phone",
+        "value": "+49 176 7091 7803",
+        "image": "/svg/phone.svg"
+      },
+      "address": {
+        "label": "Address",
+        "value": "Stollberger Str.43, 12627 Berlin",
+        "image": "/svg/address.svg",
+        "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
+      },
+      "email": {
+        "label": "Email",
+        "value": "contact@havenova.de",
+        "image": "/svg/email.svg"
+      },
+      "weekHours": {
+        "label": "Mo-Fr",
+        "value": "08:00-17:00 Uhr"
+      },
+      "weekendHours": {
+        "label": "Sa",
+        "value": "08:00-14:00 Uhr"
       }
-    ],
+    },
+    "maped": {
+      "label": "Technical support",
+      "name": {
+        "label": "Name",
+        "value": "Maped Solutions"
+      },
+      "phone": {
+        "label": "Phone",
+        "value": "+49 177 7312 606"
+      },
+      "address": { "label": "Address", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
+      "email": {
+        "label": "Email",
+        "value": "contact@mapedsolutions.de"
+      }
+    },
     "cta": {
       "label": "Go to Contact",
       "href": "/contact"

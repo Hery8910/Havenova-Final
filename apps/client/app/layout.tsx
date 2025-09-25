@@ -10,12 +10,14 @@ import { homeMetadata } from './pageMetadata';
 import I18nInitializer from '../../../packages/contexts/i18n/I18nInitializer';
 import { CookiesProvider } from '../../../packages/contexts/cookies/CookiesContext';
 import Loading from '../../../packages/components/layout/loading/Loading';
+import { Inter, Poppins } from 'next/font/google';
 
 export const metadata = homeMetadata;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const domain: string = 'havenova.de';
   const client = await getClient(domain);
+
   if (!client) return <Loading />;
 
   return (

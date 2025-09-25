@@ -12,7 +12,7 @@
   width: 100%;
   height: auto;
   border: 1px solid var(--text-primary);
-  padding: 8px 32px;
+  padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
   display: flex;
@@ -25,9 +25,11 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
 }
 .icon {
+  font-size: clamp(18px, 3.5vw, 26px);
   transition: all 0.3s ease-in-out;
 }
 .icon.open {

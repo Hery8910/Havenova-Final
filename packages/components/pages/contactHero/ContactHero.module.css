@@ -1,5 +1,7 @@
 .hero {
+  margin-bottom: 100px;
   min-width: 100dvw;
+  max-height: 60dvh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -42,7 +44,7 @@
 
 @media (min-width: 768px) {
   .hero {
-    background-image: url('/images/pages/about-hero.webp');
+    background-image: url('/images/pages/contact-hero.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -58,6 +60,7 @@
 @media (min-width: 1024px) {
   .hero {
     margin: 0 auto;
+    margin-bottom: 100px;
     height: 80dvh;
   }
   .heroText {
@@ -67,9 +70,6 @@
 }
 
 @media (min-width: 1440px) {
-  .hero {
-    height: 90dvh;
-  }
   .heroText {
     margin: 0 auto;
     width: 100%;

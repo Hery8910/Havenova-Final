@@ -12,16 +12,25 @@ import {
 } from '../../../utils/validators/userFormValidator';
 import { FormData, FormField } from '../../../types/userForm';
 import { useI18n } from '../../../contexts/i18n';
+import { ButtonProps } from '../../common/button/Button';
 
 interface WrapperProps {
   fields: FormField[];
   onSubmit: (data: Partial<FormData>) => void;
-  submitLabel: string;
+  button: ButtonProps;
 }
-
-export default function FormWrapper({ fields, onSubmit, submitLabel }: WrapperProps) {
+export interface PlaceholdersProps {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  message: string;
+}
+export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) {
   const { texts } = useI18n();
   const formError = texts.components.form.error;
+  const placeholderText: PlaceholdersProps = texts.components.form.placeholders;
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -100,7 +109,8 @@ export default function FormWrapper({ fields, onSubmit, submitLabel }: WrapperPr
       onBlur={handleBlur}
       onTogglePassword={() => setShowPassword((prev) => !prev)}
       onSubmit={handleSubmit}
-      submitLabel={submitLabel}
+      button={button}
+      placeholder={placeholderText}
     />
   );
 }

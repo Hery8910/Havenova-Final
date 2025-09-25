@@ -8,3 +8,5 @@ export * from './faq';
 export * from './finalCTA';
 export * from './story';
 export * from './values';
+export * from './contactSection';
+export * from './contactInfo';

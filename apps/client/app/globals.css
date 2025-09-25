@@ -1,6 +1,4 @@
-/* ============================
-   VARIABLES GLOBALES - LIGHT MODE
-============================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 :root {
   /* Brand Colors */
   --brand-primary: #0768c9;
@@ -35,7 +33,7 @@
   --text-shadow: 2px 2px 4px rgb(199, 199, 199);
 
   /* Font */
-  --font-family-main: 'Inter', sans-serif;
+  --font-family-main: 'Poppins', 'Inter', sans-serif;
   --font-size-base: 16px;
 
   /* Status Colors */
@@ -147,6 +145,7 @@ h1 {
   font-weight: 700;
 }
 h2 {
+  font-weight: 500;
   font-size: clamp(24px, 4.5vw, 42px);
 }
 h3 {

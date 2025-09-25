@@ -1,6 +1,6 @@
 'use client';
 import { FAQHero, FAQHeroSkeleton } from '@/packages/components/pages/faqHero';
-import { FAQList, FAQListSkeleton } from '@/packages/components/common';
+import { ContactSection, FAQList, FAQListSkeleton } from '@/packages/components/common';
 import { FormWrapper } from '@/packages/components/userForm/formWrapper';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
@@ -8,18 +8,24 @@ import { useClient } from '../../../../packages/contexts/client/ClientContext';
 import { useUser } from '../../../../packages/contexts/user/UserContext';
 import { useState } from 'react';
 import { FaqMessageData } from '../../../../packages/types';
-import { sendFaqMessage } from '../../../../packages/services/userService';
+import { sendContactMessage } from '../../../../packages/services/userService';
 import { AlertWrapper } from '../../../../packages/components/alert';
 
 const QuestionsAnswers = () => {
   const { texts } = useI18n();
   const { client } = useClient();
   const { user } = useUser();
-  const [alert, setAlert] = useState<any | null>(null);
+  const [alert, setAlert] = useState<{
+    status: number;
+    title: string;
+    description: string;
+  } | null>(null);
+
   const popups = texts.popups;
-  const faqListTexts = texts.pages.faq.items;
+  const faqListTexts = texts.pages.faq.questions;
   const faqHeroTexts = texts.pages.faq.faqHero;
   const formText = texts.components.form;
+  const contactTexts = texts.pages.faq.contactSection;
 
   const handleSubmit = async (data: Partial<FaqMessageData>) => {
     try {
@@ -28,7 +34,7 @@ const QuestionsAnswers = () => {
         setAlert({
           status: 500,
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          message: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
+          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
         });
         return;
       }
@@ -37,17 +43,19 @@ const QuestionsAnswers = () => {
         name: data.name || user?.name || '',
         email: data.email || user?.email || '',
         message: data.message || '',
+        language: user.language || 'de',
         clientId: client._id,
       };
+      console.log(payload);
 
-      const response = await sendFaqMessage(payload);
+      const response = await sendContactMessage(payload);
 
       if (response.success) {
         const popupData = popups?.[response.code] || {};
         setAlert({
           status: 200,
           title: popupData.title || popups.FAQ_MESSAGE_SUCCESS.title,
-          message: popupData.description || response.message,
+          description: popupData.description || response.message,
         });
       }
     } catch (error: any) {
@@ -57,7 +65,7 @@ const QuestionsAnswers = () => {
         setAlert({
           status: error.response.status,
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          message:
+          description:
             popupData.description ||
             error.response.data.message ||
             popups.GLOBAL_INTERNAL_ERROR.description,
@@ -66,7 +74,7 @@ const QuestionsAnswers = () => {
         setAlert({
           status: 500,
           title: popups.GLOBAL_INTERNAL_ERROR.title,
-          message: popups.GLOBAL_INTERNAL_ERROR.description,
+          description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
     }
@@ -80,10 +88,10 @@ const QuestionsAnswers = () => {
 
       {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
 
-      <FormWrapper
-        fields={['name', 'email', 'message']}
-        onSubmit={handleSubmit}
-        submitLabel={formText.buttonLabel.contact}
+      <ContactSection
+        texts={contactTexts}
+        handleSubmit={handleSubmit}
+        button={formText.button.contact}
       />
     </main>
   );

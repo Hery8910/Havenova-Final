@@ -2,6 +2,8 @@ import styles from './Form.module.css';
 import MessageBox from '../../messageBox/MessageBox';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { FormData } from '../../../types/userForm';
+import Button, { ButtonProps } from '../../common/button/Button';
+import { PlaceholdersProps } from '../formWrapper/FormWrapper';
 
 interface UserContactFormProps {
   fields: (keyof FormData | 'message')[];
@@ -13,7 +15,8 @@ interface UserContactFormProps {
   onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onTogglePassword: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  submitLabel: string;
+  button: ButtonProps;
+  placeholder: PlaceholdersProps;
 }
 
 const Form: React.FC<UserContactFormProps> = ({
@@ -26,17 +29,19 @@ const Form: React.FC<UserContactFormProps> = ({
   onBlur,
   onTogglePassword,
   onSubmit,
-  submitLabel,
+  button,
+  placeholder,
 }) => {
+
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form}>
       {fields.includes('name') && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder={placeholder.name}
             value={formData.name || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -52,7 +57,7 @@ const Form: React.FC<UserContactFormProps> = ({
             className={styles.input}
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder={placeholder.email}
             value={formData.email || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -69,7 +74,7 @@ const Form: React.FC<UserContactFormProps> = ({
               className={styles.input}
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Password"
+              placeholder={placeholder.password}
               value={formData.password || ''}
               onChange={onChange}
               onBlur={onBlur}
@@ -90,7 +95,7 @@ const Form: React.FC<UserContactFormProps> = ({
             className={styles.input}
             type="text"
             name="address"
-            placeholder="Address"
+            placeholder={placeholder.address}
             value={formData.address || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -107,7 +112,7 @@ const Form: React.FC<UserContactFormProps> = ({
             className={styles.input}
             type="tel"
             name="phone"
-            placeholder="Phone +49 123456789"
+            placeholder={placeholder.phone}
             value={formData.phone || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -121,7 +126,7 @@ const Form: React.FC<UserContactFormProps> = ({
           <textarea
             className={styles.input}
             name="message"
-            placeholder="Your question or message"
+            placeholder={placeholder.message}
             value={formData.message || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -132,9 +137,8 @@ const Form: React.FC<UserContactFormProps> = ({
           )}
         </div>
       )}
-      <button type="submit" className="button">
-        {submitLabel}
-      </button>
+
+      <Button type="submit" cta={button.cta} icon={button.icon} onClick={() => onSubmit} />
     </form>
   );
 };

@@ -143,7 +143,11 @@ export default function Home() {
         <FAQSectionSkeleton />
       )}
 
-      {finalCtaTexts ? <FinalCTA {...finalCtaTexts} /> : <FinalCTASkeleton />}
+      {finalCtaTexts ? (
+        <FinalCTA {...finalCtaTexts} onClick={() => handleNavigation('services')} />
+      ) : (
+        <FinalCTASkeleton />
+      )}
 
       {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>

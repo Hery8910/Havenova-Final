@@ -10,6 +10,8 @@ import {
   FaDownload,
   FaEdit,
 } from 'react-icons/fa';
+import { MdOutlineAppRegistration, MdOutlineContactSupport, MdPassword } from 'react-icons/md';
+import { MdLogin } from 'react-icons/md';
 
 export interface ButtonProps {
   cta: string;
@@ -23,7 +25,11 @@ export interface ButtonProps {
     | 'close'
     | 'upload'
     | 'download'
-    | 'edit';
+    | 'edit'
+    | 'register'
+    | 'login'
+    | 'password'
+    | 'contact';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
@@ -40,6 +46,10 @@ const icons: Record<string, JSX.Element> = {
   upload: <FaUpload />,
   download: <FaDownload />,
   edit: <FaEdit />,
+  register: <MdOutlineAppRegistration />,
+  login: <MdLogin />,
+  password: <MdPassword />,
+  contact: <MdOutlineContactSupport />,
 };
 
 const Button: React.FC<ButtonProps> = ({

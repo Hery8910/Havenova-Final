@@ -17,10 +17,7 @@
       "hero": {
         "headline1": "Über Uns",
         "headline2": "Engagiert für Qualität und Transparenz",
-        "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Lösungen.",
-        "image": {
-          "src": "/images/pages/about-hero.webp"
-        }
+        "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Lösungen."
       },
 
       "services": {
@@ -52,7 +49,7 @@
         "subtitle": "Hier finden Sie Antworten auf die am häufigsten gestellten Fragen zu unseren Services, Buchungen und Zahlungsmethoden. Sollte Ihre Frage nicht dabei sein, steht Ihnen unser Support-Team jederzeit zur Verfügung.",
         "image": "/images/pages/faq-hero.webp"
       },
-      "items": [
+      "questions": [
         {
           "title": "Allgemeine Fragen",
           "items": [
@@ -137,7 +134,23 @@
             }
           ]
         }
-      ]
+      ],
+      "contactSection": {
+        "heading": "Antwort nicht gefunden?",
+        "description": "Senden Sie uns Ihre Frage und wir melden uns so schnell wie möglich.",
+        "buttonLabel": "Frage senden"
+      }
+    },
+    "contact": {
+      "hero": {
+        "headline1": "Kontakt aufnehmen",
+        "headline2": "Wir sind für Sie da",
+        "subtitle": "Haben Sie Fragen zu unseren Dienstleistungen oder benötigen Sie Unterstützung? Füllen Sie das Formular aus oder nutzen Sie die untenstehenden Kontaktdaten – unser Team wird sich schnellstmöglich bei Ihnen melden."
+      },
+      "contactSection": {
+        "heading": "Schreiben Sie uns eine Nachricht",
+        "description": "Füllen Sie das untenstehende Formular mit Ihren Angaben und Ihrer Nachricht aus. Wir prüfen Ihre Anfrage und melden uns so schnell wie möglich bei Ihnen."
+      }
     },
     "blog": {
       "title": "Neuigkeiten aus unserem Blog",
@@ -1189,14 +1202,50 @@
           "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
         }
       },
-      "buttonLabel": {
-        "register": "Registrieren",
-        "login": "Einloggen",
-        "edit": "Änderungen speichern",
-        "changePassword": "Passwort speichern",
-        "forgotPassword": "Link zum Zurücksetzen senden",
-        "resetPassword": "Passwort speichern",
-        "contact": "Nachricht senden"
+      "button": {
+        "register": {
+          "cta": "Registrieren",
+          "variant": "solid",
+          "icon": "register"
+        },
+        "login": {
+          "cta": "Einloggen",
+          "variant": "solid",
+          "icon": "register"
+        },
+        "edit": {
+          "cta": "Änderungen speichern",
+          "variant": "solid",
+          "icon": "edit"
+        },
+        "changePassword": {
+          "cta": "Passwort speichern",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "forgotPassword": {
+          "cta": "Link zum Zurücksetzen senden",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "resetPassword": {
+          "cta": "Passwort speichern",
+          "variant": "solid",
+          "icon": "password"
+        },
+        "contact": {
+          "cta": "Nachricht senden",
+          "variant": "solid",
+          "icon": "contact"
+        }
+      },
+      "placeholders": {
+        "name": "Vollständiger Name",
+        "email": "E-Mail-Adresse",
+        "password": "Passwort",
+        "address": "Adresse",
+        "phone": "Telefonnummer",
+        "message": "Ihre Frage oder Nachricht"
       }
     },
     "cookieBanner": {
@@ -1679,42 +1728,56 @@
       "description": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an, um fortzufahren."
     }
   },
-  "contact": {
+  "contactInfo": {
     "title": "Kontakt",
-    "items": [
-      {
-        "label": "Regler",
-        "name": {
-          "label": "Name",
-          "value": "Havenova"
-        },
-        "phone": {
-          "label": "Telefon",
-          "value": "+49 176 7091 7803"
-        },
-        "address": { "label": "Addresse", "value": "Stollberger Str.43, 12627 Berlin" },
-        "email": {
-          "label": "E-Mail",
-          "value": "contact@havenova.de"
-        }
+    "havenova": {
+      "label": "Regler",
+      "name": {
+        "label": "Name",
+        "value": "Havenova",
+        "description": "Ihr Traumhaus beggint mit uns"
       },
-      {
-        "label": "Technische Unterstützung",
-        "name": {
-          "label": "Name",
-          "value": "Maped Solutions"
-        },
-        "phone": {
-          "label": "Telefon",
-          "value": "+49 177 7312 606"
-        },
-        "address": { "label": "Addresse", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
-        "email": {
-          "label": "E-Mail",
-          "value": "contact@mapedsolutions.de"
-        }
+      "phone": {
+        "label": "Telefon",
+        "value": "+49 176 7091 7803",
+        "image": "/svg/phone.svg"
+      },
+      "address": {
+        "label": "Addresse",
+        "value": "Stollberger Str.43, 12627 Berlin",
+        "image": "/svg/address.svg",
+        "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
+      },
+      "email": {
+        "label": "E-Mail",
+        "value": "contact@havenova.de",
+        "image": "/svg/email.svg"
+      },
+      "weekHours": {
+        "label": "Mo-Fr",
+        "value": "08:00-17:00 Uhr"
+      },
+      "weekendHours": {
+        "label": "Sa",
+        "value": "08:00-14:00 Uhr"
       }
-    ],
+    },
+    "maped": {
+      "label": "Technische Unterstützung",
+      "name": {
+        "label": "Name",
+        "value": "Maped Solutions"
+      },
+      "phone": {
+        "label": "Telefon",
+        "value": "+49 177 7312 606"
+      },
+      "address": { "label": "Addresse", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
+      "email": {
+        "label": "E-Mail",
+        "value": "contact@mapedsolutions.de"
+      }
+    },
     "cta": {
       "label": "Zum Kontaktformular",
       "href": "/contact"

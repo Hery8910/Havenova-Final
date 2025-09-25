@@ -20,7 +20,9 @@ const FAQPreview: React.FC<FAQPreviewProps> = ({ items, openIndex, onToggle }) =
         <li key={index} className={styles.li} onClick={() => onToggle(index)}>
           <h4 className={styles.h4}>
             {question.question}
-            <LuPlus className={`${styles.icon} ${openIndex === index ? styles.open : ''}`} />
+            <span>
+              <LuPlus className={`${styles.icon} ${openIndex === index ? styles.open : ''}`} />
+            </span>
           </h4>
           {openIndex === index && <p className={styles.p}>{question.answer}</p>}
         </li>
