@@ -32,9 +32,8 @@ const Form: React.FC<UserContactFormProps> = ({
   button,
   placeholder,
 }) => {
-
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={onSubmit}>
       {fields.includes('name') && (
         <div className={styles.wrapper}>
           <input
@@ -138,7 +137,7 @@ const Form: React.FC<UserContactFormProps> = ({
         </div>
       )}
 
-      <Button type="submit" cta={button.cta} icon={button.icon} onClick={() => onSubmit} />
+      <Button type="submit" cta={button.cta} icon={button.icon} />
     </form>
   );
 };

@@ -1,4 +1,5 @@
 // app/layout.tsx (RootLayout)
+import './globals.css';
 import { DashboardProvider } from '../../../packages/contexts/user/UserContext';
 import { ClientProvider } from '../../../packages/contexts/client/ClientContext';
 import { NavbarContainer, NavbarSkeleton } from '@/packages/components/navbar';
@@ -9,8 +10,20 @@ import './globals.css';
 import { homeMetadata } from './pageMetadata';
 import I18nInitializer from '../../../packages/contexts/i18n/I18nInitializer';
 import { CookiesProvider } from '../../../packages/contexts/cookies/CookiesContext';
-import Loading from '../../../packages/components/layout/loading/Loading';
-import { Inter, Poppins } from 'next/font/google';
+import Loading from '../../../packages/components/loading/Loading';
+import { Poppins, Roboto } from 'next/font/google';
+
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-family-heading',
+});
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-family-body',
+});
 
 export const metadata = homeMetadata;
 
@@ -18,10 +31,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const domain: string = 'havenova.de';
   const client = await getClient(domain);
 
-  if (!client) return <Loading />;
-
   return (
-    <html lang="de" data-theme="light">
+    <html lang="de" data-theme="light" className={`${poppins.variable} ${roboto.variable}`}>
       <head>
         {/* PWA manifest */}
         <link rel="manifest" href="/site.webmanifest" />

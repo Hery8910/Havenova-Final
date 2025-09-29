@@ -32,7 +32,7 @@ export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) 
   const formError = texts.components.form.error;
   const placeholderText: PlaceholdersProps = texts.components.form.placeholders;
 
-  const [formData, setFormData] = useState<FormData>({
+  const initialFormData: FormData = {
     name: '',
     email: '',
     password: '',
@@ -43,7 +43,8 @@ export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) 
     theme: 'light',
     clientId: '',
     message: '',
-  });
+  };
+  const [formData, setFormData] = useState<FormData>(initialFormData);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -96,6 +97,10 @@ export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) 
 
     if (Object.values(newErrors).some(Boolean)) return;
     onSubmit(fields.reduce((acc, f) => ({ ...acc, [f]: formData[f] }), {}));
+
+    setFormData(initialFormData);
+    setErrors({});
+    setTouched({});
   };
 
   return (

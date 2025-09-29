@@ -1,13 +1,20 @@
 .loadingContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
-  height: 100vh;
-  text-align: center;
 }
-
 .ul {
   display: flex;
   gap: 16px;
@@ -16,9 +23,9 @@
 }
 
 .dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
   background-color: var(--brand-primary);
   animation: bounce 1.4s ease-in-out infinite;
   box-shadow: var(--shadow);

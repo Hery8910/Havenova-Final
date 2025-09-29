@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { IoIosClose } from 'react-icons/io';
 import styles from './AlertPopup.module.css';
 import { AlertType } from '../../../utils/alertType';
+import { Button } from '../../common';
 
 interface AlertPopupProps {
   type: AlertType;
@@ -39,9 +40,15 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClo
       aria-labelledby="alert-title"
       aria-describedby="alert-description"
       tabIndex={-1}
-      className={styles.section}
+      className={`${styles.section} card`}
     >
-      <div className={styles.wraper}>
+      <div
+        className={styles.wraper}
+        style={{
+          background: bgColorMap[type],
+          border: `1px solid ${colorMap[type]}`,
+        }}
+      >
         <Image
           src={imageMap[type]}
           priority
@@ -51,24 +58,14 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClo
           className={styles.image}
           style={{ background: colorMap[type] }}
         />
-        <aside
-          style={{
-            background: bgColorMap[type],
-            border: `1px solid ${colorMap[type]}`,
-          }}
-          className={styles.main}
-        >
-          {onClose && (
-            <button className={styles.button} onClick={onClose} aria-label="Close alert">
-              <IoIosClose />
-            </button>
-          )}
+        <aside className={styles.main}>
           <article className={styles.article}>
             <h4 style={{ color: colorMap[type] }} id="alert-title">
               <strong>{title}</strong>
             </h4>
-            <p id="alert-description">{description}</p>
+            {onClose && <Button variant="outline" cta="" icon="close" onClick={onClose} />}
           </article>
+          <p id="alert-description">{description}</p>
         </aside>
       </div>
     </section>

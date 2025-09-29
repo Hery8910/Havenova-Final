@@ -47,7 +47,7 @@
         "headline1": "Frequently Asked Questions",
         "headline2": "Everything you need to know about Havenova",
         "subtitle": "Here you’ll find answers to the most common questions about our services, bookings, and payment options. If your question isn’t listed, our support team is always ready to help.",
-        "image": "/images/pages/faqPage/faq-hero.jpg"
+        "image": "/images/pages/faq-hero.webp"
       },
       "questions": [
         {
@@ -139,6 +139,17 @@
         "heading": "Didn’t find your answer?",
         "description": "Send us your question and we’ll get back to you as soon as possible.",
         "buttonLabel": "Send question"
+      }
+    },
+    "contact": {
+      "hero": {
+        "headline1": "Get in Touch",
+        "headline2": "We are here for you",
+        "subtitle": "Do you have questions about our services or need support? Fill out the form or use the contact details below – our team will get back to you as soon as possible."
+      },
+      "contactSection": {
+        "heading": "Write us a message",
+        "description": "Fill out the form below with your details and message. We will review your request and get back to you as soon as possible."
       }
     },
     "blog": {
@@ -1172,18 +1183,13 @@
       "description": "We use essential cookies to ensure the website functions properly. With your permission, we also use analytics cookies to monitor site usage and improve user experience. We do not collect data for advertising or profiling.",
       "acceptAll": {
         "cta": "Accept all",
-        "variant": "outline",
+        "variant": "solid",
         "icon": "confirm"
       },
       "rejectAll": {
         "cta": "Only necessary",
         "variant": "outline",
         "icon": "cancel"
-      },
-      "save": {
-        "cta": "Save selection",
-        "variant": "outline",
-        "icon": "confirm"
       },
       "close": {
         "cta": "",
@@ -1739,19 +1745,16 @@
       },
       "phone": {
         "label": "Phone",
-        "value": "+49 176 7091 7803",
-        "image": "/svg/phone.svg"
+        "value": "+49 176 7091 7803"
       },
       "address": {
         "label": "Address",
         "value": "Stollberger Str.43, 12627 Berlin",
-        "image": "/svg/address.svg",
         "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
       },
       "email": {
         "label": "Email",
-        "value": "contact@havenova.de",
-        "image": "/svg/email.svg"
+        "value": "contact@havenova.de"
       },
       "weekHours": {
         "label": "Mo-Fr",

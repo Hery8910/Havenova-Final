@@ -20,39 +20,24 @@
   padding: 32px;
 }
 .article {
-  padding: 64px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 8px;
+  gap: 16px;
+  color: var(--text-secondary);
 }
 .title {
   margin-top: 0;
-  font-weight: 600;
-}
-
-.div,
-.switch_div {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 16px;
-}
-.switch_div {
-  flex-direction: row;
-  justify-content: space-between;
 }
 .controls {
   margin-top: 16px;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 64px;
   align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
 }
 .label {
   font-weight: 700;

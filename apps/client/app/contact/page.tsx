@@ -13,21 +13,25 @@ import {
   FinalCTASkeleton,
 } from '../../../../packages/components/common';
 import { AlertWrapper } from '../../../../packages/components/alert';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaqMessageData } from '../../../../packages/types';
 import { useClient } from '../../../../packages/contexts/client/ClientContext';
 import { sendContactMessage } from '../../../../packages/services/userService';
+import Loading from '../../../../packages/components/loading/Loading';
 
 export default function Contact() {
   const { texts } = useI18n();
   const { user } = useUser();
   const { client } = useClient();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const theme = user?.theme || 'light';
+  const [isMobile, setIsMobile] = useState(false);
 
   const popups = texts.popups;
   const contactHeroTexts = texts.pages.contact.hero;
   const contactTexts = texts.pages.contact.contactSection;
-  const contactInfo = texts.contactInfo.havenova;
+  const contactInfo = texts.contactInfo;
   const formText = texts.components.form;
   const faqPreviewTexts = texts.components.common.faq;
   const finalCtaTexts = texts.components.common.finalCta;
@@ -38,7 +42,18 @@ export default function Contact() {
     description: string;
   } | null>(null);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleSubmit = async (data: Partial<FaqMessageData>) => {
+    setLoading(true);
+
     try {
       if (!client?._id) {
         const popupData = popups?.INTERNAL_ERROR || {};
@@ -57,7 +72,6 @@ export default function Contact() {
         language: user.language || 'de',
         clientId: client._id,
       };
-      console.log(payload);
 
       const response = await sendContactMessage(payload);
 
@@ -88,6 +102,8 @@ export default function Contact() {
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,12 +111,16 @@ export default function Contact() {
     <main>
       {contactHeroTexts ? <ContactHero {...contactHeroTexts} /> : <ContactHeroSkeleton />}
 
+      {loading && <Loading theme={user.theme || 'light'} />}
+      {!loading && alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
+
       <ContactSection
         texts={contactTexts}
         handleSubmit={handleSubmit}
         button={formText.button.contact}
       />
-      <ContactInfo {...contactInfo} />
+
+      <ContactInfo {...contactInfo} theme={theme} isMobile={isMobile} />
 
       {faqPreviewTexts ? (
         <FAQSection {...faqPreviewTexts} onClick={() => router.push('/faq')} />
@@ -113,7 +133,6 @@ export default function Contact() {
       ) : (
         <FinalCTASkeleton />
       )}
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 }

@@ -1253,18 +1253,13 @@
       "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
       "acceptAll": {
         "cta": "Alle akzeptieren",
-        "variant": "outline",
+        "variant": "solid",
         "icon": "confirm"
       },
       "rejectAll": {
         "cta": "Nur notwendige",
         "variant": "outline",
         "icon": "cancel"
-      },
-      "save": {
-        "cta": "Auswahl speichern",
-        "variant": "outline",
-        "icon": "confirm"
       },
       "close": {
         "cta": "",
@@ -1739,19 +1734,16 @@
       },
       "phone": {
         "label": "Telefon",
-        "value": "+49 176 7091 7803",
-        "image": "/svg/phone.svg"
+        "value": "+49 176 7091 7803"
       },
       "address": {
         "label": "Addresse",
         "value": "Stollberger Str.43, 12627 Berlin",
-        "image": "/svg/address.svg",
         "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
       },
       "email": {
         "label": "E-Mail",
-        "value": "contact@havenova.de",
-        "image": "/svg/email.svg"
+        "value": "contact@havenova.de"
       },
       "weekHours": {
         "label": "Mo-Fr",

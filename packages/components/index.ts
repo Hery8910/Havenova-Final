@@ -6,3 +6,4 @@ export * from './pages';
 export * from './alert';
 export * from './messageBox';
 export * from './userForm';
+export * from './loading';

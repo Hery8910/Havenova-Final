@@ -1,6 +1,5 @@
 import styles from './Button.module.css';
 
-// Importa solo los íconos que necesitas
 import {
   FaChevronLeft,
   FaChevronRight,

@@ -64,9 +64,9 @@ export function NavbarView({
 
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return isMobile ? '/images/logos/logo-small-dark.webp' : '/images/logos/logo-dark.webp';
+      return isMobile ? '/svg/logos/logo-small-dark.svg' : '/svg/logos/logo-dark.svg';
     } else {
-      return isMobile ? '/images/logos/logo-small-light.webp' : '/images/logos/logo-light.webp';
+      return isMobile ? '/svg/logos/logo-small-light.svg' : '/svg/logos/logo-light.svg';
     }
   };
 

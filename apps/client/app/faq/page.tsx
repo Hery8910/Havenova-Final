@@ -10,11 +10,13 @@ import { useState } from 'react';
 import { FaqMessageData } from '../../../../packages/types';
 import { sendContactMessage } from '../../../../packages/services/userService';
 import { AlertWrapper } from '../../../../packages/components/alert';
+import Loading from '../../../../packages/components/loading/Loading';
 
 const QuestionsAnswers = () => {
   const { texts } = useI18n();
   const { client } = useClient();
   const { user } = useUser();
+  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<{
     status: number;
     title: string;
@@ -28,6 +30,8 @@ const QuestionsAnswers = () => {
   const contactTexts = texts.pages.faq.contactSection;
 
   const handleSubmit = async (data: Partial<FaqMessageData>) => {
+    setLoading(true);
+
     try {
       if (!client?._id) {
         const popupData = popups?.INTERNAL_ERROR || {};
@@ -46,7 +50,6 @@ const QuestionsAnswers = () => {
         language: user.language || 'de',
         clientId: client._id,
       };
-      console.log(payload);
 
       const response = await sendContactMessage(payload);
 
@@ -77,6 +80,8 @@ const QuestionsAnswers = () => {
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,13 +91,13 @@ const QuestionsAnswers = () => {
 
       {faqListTexts ? <FAQList categories={faqListTexts} /> : <FAQListSkeleton />}
 
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
-
       <ContactSection
         texts={contactTexts}
         handleSubmit={handleSubmit}
         button={formText.button.contact}
       />
+      {loading && <Loading theme={user.theme || 'light'} />}
+      {!loading && alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 };

@@ -6,6 +6,8 @@ import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
+import { FinalCTA, FinalCTASkeleton } from '../../../../../packages/components/common';
+import { useRouter } from 'next/navigation';
 
 export interface TermsOfServicePageTexts {
   hero: {
@@ -48,11 +50,6 @@ export interface TermsOfServicePageTexts {
     body: string;
     meta: { lastUpdated: string };
   };
-  contact: {
-    title: string;
-    items: { label: string; title: string; value: string }[];
-    cta: { label: string; href: string };
-  };
   legalReferences: {
     title: string;
     items: { label: string; href: string }[];
@@ -74,8 +71,10 @@ export interface ContactTexts {
 export default function TermsOfServicePage() {
   const { client } = useClient();
   const { texts } = useI18n();
+  const router = useRouter();
+
   const terms: TermsOfServicePageTexts = texts?.pages?.legal?.terms;
-  const contact: ContactTexts = texts?.contact;
+  const finalCtaTexts = texts.components.common.finalCta;
 
   if (!client || !terms) return null;
 
@@ -158,41 +157,6 @@ export default function TermsOfServicePage() {
         <p>{terms.liability.body}</p>
       </section>
 
-      {/* Contacto */}
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{contact.title}</h3>
-        <ul className={styles.contact_ul}>
-          {contact.items.map((item, i) => (
-            <li className={styles.contact_li} key={i}>
-              <h4 className={styles.h4}>{item.label}</h4>
-              <table>
-                <tbody className={styles.contact_tbody}>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th}>{item.name.label}</th>
-                    <td className={styles.contact_td}>{item.name.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th}>{item.phone.label}</th>
-                    <td className={styles.contact_td}>{item.phone.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th}>{item.address.label}</th>
-                    <td className={styles.contact_td}>{item.address.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th}>{item.email.label}</th>
-                    <td className={styles.contact_td}>{item.email.value}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </li>
-          ))}
-        </ul>
-        <Link className={styles.link} href={contact.cta.href}>
-          {contact.cta.label} <IoIosLink />
-        </Link>
-      </section>
-
       {/* Cambios */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{terms.changes.title}</h3>
@@ -223,6 +187,12 @@ export default function TermsOfServicePage() {
           ))}
         </ul>
       </section>
+
+      {finalCtaTexts ? (
+        <FinalCTA {...finalCtaTexts} onClick={() => router.push('/services')} />
+      ) : (
+        <FinalCTASkeleton />
+      )}
     </main>
   );
 }

@@ -13,7 +13,7 @@ import HowItWorks from '../../../packages/components/common/howItWorks/HowItWork
 import WhyChoose from '../../../packages/components/common/whyChoose/WhyChoose';
 import ServicesPreview from '../../../packages/components/common/servicePreview/ServicesPreview';
 import FinalCTA from '../../../packages/components/common/finalCTA/FinalCTA';
-import Loading from '../../../packages/components/layout/loading/Loading';
+import Loading from '../../../packages/components/loading/Loading';
 import HomeHeroSkeleton from '../../../packages/components/pages/homeHero/HomeHero.skeleton';
 import { useRouter } from 'next/navigation';
 import {
@@ -101,7 +101,7 @@ export default function Home() {
     }
   };
 
-  if (!client || loading || !user) return <Loading />;
+  if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
 
   return (
     <main>

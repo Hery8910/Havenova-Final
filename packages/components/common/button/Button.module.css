@@ -48,6 +48,17 @@
 .outline {
   background: transparent;
   color: var(--button-text);
+  border: 3px solid var(--brand-primary);
+}
+.outline_close {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--button-text);
+}
+.outline_close:hover {
+  border: none;
+  color: var(--color-error);
 }
 
 /* Estado deshabilitado */

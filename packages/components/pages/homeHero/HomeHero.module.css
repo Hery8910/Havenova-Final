@@ -1,14 +1,16 @@
 /* ===== Base: mobile first ===== */
 
 .section {
+  padding: 0 5dvw;
   max-width: 100%;
   min-height: 100dvh;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 64px auto;
+  margin: 48px auto;
   position: relative;
   overflow-x: hidden;
+  color: var(--text-light);
 }
 
 /* Fondo decorativo */
@@ -17,9 +19,11 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  max-height: 80dvh;
   object-fit: cover;
-  object-position: 45% center;
+  object-position: 55% center;
   z-index: -1;
+  opacity: 0.6;
 }
 
 /* Overlay gris para skeleton */
@@ -34,8 +38,8 @@
 .main {
   margin: 0 auto;
   width: 100%;
-  max-width: 1700px;
-  padding: 30dvh 5dvw;
+  max-width: 1500px;
+  padding: 20dvh 5dvw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -46,44 +50,42 @@
   inset: 0;
   z-index: -1;
 }
-.backgroundImage {
-  object-fit: cover;
-  object-position: 45% center;
-}
 
 .aside {
+  width: 100%;
+  max-width: 450px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 32px;
+}
+.headline1 {
   position: relative;
 }
-
-.p {
+.headline1,
+.headline2 {
+  font-weight: 600;
+}
+.and {
+  font-family: var(--font-family-body);
   position: absolute;
-  bottom: 24px;
-  right: 0;
-  font-weight: 700;
-  font-size: 5rem;
-  color: rgb(90, 90, 90);
+  right: -72px;
+  bottom: -24px;
+  font-weight: 500;
+  font-size: 6rem;
 }
 
 /* Tipografía */
 .h1 {
   margin: 0;
-  font-size: clamp(2rem, 6vw, 4rem);
-  color: rgb(141, 141, 141);
-  line-height: 1.1;
-}
-
-.h1Line {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 600;
   display: block;
 }
 
 .description {
   max-width: 40ch; /* legibilidad */
   margin-bottom: 32px;
-  color: rgb(141, 141, 141);
   text-wrap: balance;
 }
 
@@ -159,15 +161,19 @@
 /* ===== Tablets grandes / landscape ===== */
 @media (min-width: 768px) {
   .backgroundImage {
-    object-position: 40% center;
+    object-position: 70% center;
   }
   .aside {
     margin-bottom: 0;
   }
-  .p {
-    position: unset;
-    font-size: 9rem;
-    color: rgb(90, 90, 90);
+}
+@media (min-width: 1024px) {
+  .backgroundImage {
+    max-height: 90dvh;
+    opacity: 0.8;
+  }
+  .aside {
+    max-width: 500px;
   }
 }
 

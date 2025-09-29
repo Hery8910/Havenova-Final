@@ -40,15 +40,13 @@ const HomeHero: React.FC<HomeHeroProps> = ({
 
       <div className={styles.main}>
         <aside className={styles.aside}>
-          <div className={styles.div}>
-            <h1 id="home-hero-title" className={styles.h1}>
-              <span className={styles.h1Line}>{headline1}</span>
-              <span className={styles.h1Line}>{headline2}</span>
-            </h1>
-          </div>
-          <p className={styles.p} aria-hidden="true">
-            &
-          </p>
+          <h1 id="home-hero-title">
+            <span className={styles.headline1}>
+              {headline1}
+              <span className={styles.and}>&</span>
+            </span>
+            <span className={styles.headline2}>{headline2}</span>
+          </h1>
         </aside>
 
         <p className={styles.description}>{subtitle}</p>

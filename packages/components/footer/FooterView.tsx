@@ -57,7 +57,7 @@ export function FooterView({ footer, onOpenCookies }: FooterViewProps) {
         <Link className={styles.logo} href="/" aria-label="Go to homepage">
           <Image
             className={styles.logo}
-            src="/images/logos/logo-dark.webp"
+            src="/svg/logos/logo-dark.svg"
             alt="Havenova Logo"
             width={200}
             height={50}

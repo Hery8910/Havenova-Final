@@ -6,6 +6,8 @@ import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
+import { FinalCTA, FinalCTASkeleton } from '../../../../../packages/components/common';
+import { useRouter } from 'next/navigation';
 
 export interface PrivacyPageTexts {
   hero: {
@@ -74,11 +76,6 @@ export interface PrivacyPageTexts {
   };
   retention: { title: string; body: string };
   internationalTransfers: { title: string; body: string };
-  contact: {
-    title: string;
-    items: { label: string; title: string; value: string }[];
-    cta: { label: string; href: string };
-  };
   changes: {
     title: string;
     body: string;
@@ -104,8 +101,9 @@ export interface ContactTexts {
 export default function PrivacyPolicyPage() {
   const { client } = useClient();
   const { texts } = useI18n();
+  const router = useRouter();
   const privacy: PrivacyPageTexts = texts?.pages?.legal.privacy;
-  const contact: ContactTexts = texts?.contact;
+  const finalCtaTexts = texts.components.common.finalCta;
 
   if (!client) return null;
 
@@ -282,48 +280,6 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className={styles.section}>
-        <h3 className={styles.h3}>{contact.title}</h3>
-        <ul className={styles.contact_ul}>
-          {contact.items.map((item, i) => (
-            <li className={styles.contact_li} key={i}>
-              <h4 className={styles.h4}>{item.label}</h4>
-              <table>
-                <tbody className={styles.contact_tbody}>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th} scope="row">
-                      {item.name.label}
-                    </th>
-                    <td className={styles.contact_td}>{item.name.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th} scope="row">
-                      {item.phone.label}
-                    </th>
-                    <td className={styles.contact_td}>{item.phone.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th} scope="row">
-                      {item.address.label}
-                    </th>
-                    <td className={styles.contact_td}>{item.address.value}</td>
-                  </tr>
-                  <tr className={styles.contact_tr}>
-                    <th className={styles.contact_th} scope="row">
-                      {item.email.label}
-                    </th>
-                    <td className={styles.contact_td}>{item.email.value}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </li>
-          ))}
-        </ul>
-        <Link className={styles.link} href={contact.cta.href}>
-          {contact.cta.label} <IoIosLink />
-        </Link>
-      </section>
-
-      <section className={styles.section}>
         <h3 className={styles.h3}>{privacy.changes.title}</h3>
         <p>{privacy.changes.body}</p>
         <aside className={styles.aside}>
@@ -351,6 +307,12 @@ export default function PrivacyPolicyPage() {
           ))}
         </ul>
       </section>
+
+      {finalCtaTexts ? (
+        <FinalCTA {...finalCtaTexts} onClick={() => router.push('/services')} />
+      ) : (
+        <FinalCTASkeleton />
+      )}
     </main>
   );
 }

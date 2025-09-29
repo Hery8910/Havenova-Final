@@ -1,5 +1,7 @@
-import Image from 'next/image';
 import styles from './ContactInfo.module.css';
+import { MdOutlineEmail } from 'react-icons/md';
+import { FiPhone } from 'react-icons/fi';
+import { LuMapPin } from 'react-icons/lu';
 
 interface NameItem {
   label: string;
@@ -32,61 +34,41 @@ interface weekendItem {
 }
 
 export interface ContactInfoProps {
-  name: NameItem;
-  phone: PhoneItem;
-  email: EmailItem;
-  address: AddressItem;
-  weekHours: weekItem;
-  weekendHours: weekendItem;
+  title: string;
+  havenova: {
+    name: NameItem;
+    phone: PhoneItem;
+    email: EmailItem;
+    address: AddressItem;
+    weekHours: weekItem;
+    weekendHours: weekendItem;
+  };
+  theme: 'dark' | 'light';
+  isMobile: boolean;
 }
 
 const ContactInfo: React.FC<ContactInfoProps> = ({
-  name,
-  phone,
-  address,
-  email,
-  weekHours,
-  weekendHours,
+  title,
+  havenova: { phone, address, email, weekHours, weekendHours },
 }) => {
   return (
     <section className={styles.section} role="region" aria-labelledby="company-contact-heading">
-      <header className={styles.header}>
-        <h2 id="company-contact-heading">{name.value}</h2>
-        <h4>{name.description}</h4>
-      </header>
+      <h2 id="company-contact-heading">{title}</h2>
       <ul className={styles.list}>
         <li className={styles.item}>
-          <Image
-            className={styles.image}
-            src={email.image}
-            alt={`${email.label} icon`}
-            width={25}
-            height={25}
-          />
+          <MdOutlineEmail />
           <a href={`mailto:${email.value}`} aria-label={`Send email to ${email.value}`}>
             {email.value}
           </a>
         </li>
         <li className={styles.item}>
-          <Image
-            className={styles.image}
-            src={phone.image}
-            alt={`${phone.label} icon`}
-            width={25}
-            height={25}
-          />
+          <FiPhone />
           <a href={`tel:${phone.value}`} aria-label={`Call ${phone.value}`}>
             {phone.value}
           </a>
         </li>
         <li className={styles.item}>
-          <Image
-            className={styles.image}
-            src={address.image}
-            alt={`${address.label} icon`}
-            width={25}
-            height={25}
-          />
+          <LuMapPin />
           <a
             href={address.mapUrl}
             target="_blank"
