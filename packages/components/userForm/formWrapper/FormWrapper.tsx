@@ -14,11 +14,13 @@ import { FormData, FormField } from '../../../types/userForm';
 import { useI18n } from '../../../contexts/i18n';
 import { ButtonProps } from '../../common/button/Button';
 
-interface WrapperProps {
-  fields: FormField[];
-  onSubmit: (data: Partial<FormData>) => void;
+interface WrapperProps<T extends Record<string, any>> {
+  fields: (keyof T)[];
+  onSubmit: (data: T) => void | Promise<void>;
   button: ButtonProps;
+  initialValues: T;
 }
+
 export interface PlaceholdersProps {
   name: string;
   email: string;
@@ -27,24 +29,17 @@ export interface PlaceholdersProps {
   phone: string;
   message: string;
 }
-export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) {
+export default function FormWrapper<T extends Record<string, any>>({
+  fields,
+  onSubmit,
+  button,
+  initialValues,
+}: WrapperProps<T>) {
   const { texts } = useI18n();
   const formError = texts.components.form.error;
   const placeholderText: PlaceholdersProps = texts.components.form.placeholders;
 
-  const initialFormData: FormData = {
-    name: '',
-    email: '',
-    password: '',
-    address: '',
-    phone: '',
-    profileImage: '',
-    language: 'de',
-    theme: 'light',
-    clientId: '',
-    message: '',
-  };
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<T>(initialValues);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -70,6 +65,13 @@ export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) 
     return '';
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const err = getValidationError(name, value);
+    setErrors((prev) => ({ ...prev, [name]: err }));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -78,27 +80,22 @@ export default function FormWrapper({ fields, onSubmit, button }: WrapperProps) 
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-    const err = getValidationError(name, value);
-    setErrors((prev) => ({ ...prev, [name]: err }));
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
+
     fields.forEach((field) => {
-      const value = formData[field] as string;
-      const err = getValidationError(field, value);
-      if (err) newErrors[field] = err;
+      const value = String(formData[field] ?? '');
+      const err = getValidationError(field as string, value);
+      if (err) newErrors[field as string] = err;
     });
+
     setErrors(newErrors);
 
     if (Object.values(newErrors).some(Boolean)) return;
-    onSubmit(fields.reduce((acc, f) => ({ ...acc, [f]: formData[f] }), {}));
+    onSubmit(formData); // ✅ aquí ya es de tipo T
 
-    setFormData(initialFormData);
+    setFormData(initialValues);
     setErrors({});
     setTouched({});
   };

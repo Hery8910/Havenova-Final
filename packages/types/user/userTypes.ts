@@ -44,6 +44,7 @@ export interface AvatarSelectorPayload {
 }
 export interface UpdateUserPayload {
   name?: string;
+  email: string;
   address?: string;
   phone?: string;
   profileImage?: string;

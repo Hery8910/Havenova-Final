@@ -753,6 +753,29 @@
             }
           ]
         }
+      },
+      "imprint": {
+        "hero": {
+          "headline1": "Imprint",
+          "headline2": "Information pursuant to § 5 TMG",
+          "subtitle": "This page contains the legally required information about the provider of this website."
+        },
+        "responsibleSection": {
+          "heading": "Responsible for Content pursuant to § 55 Abs. 2 RStV",
+          "description": "The person responsible for the content of this website is:"
+        },
+        "taxSection": {
+          "heading": "VAT ID",
+          "descriptionNoId": "No VAT identification number available / not required."
+        },
+        "liabilitySection": {
+          "heading": "Disclaimer",
+          "text": "Despite careful content control, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content."
+        },
+        "odrSection": {
+          "heading": "Online Dispute Resolution (ODR)",
+          "text": "The European Commission provides a platform for online dispute resolution (ODR): [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWe are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
+        }
       }
     }
   },
@@ -1481,6 +1504,10 @@
       {
         "label": "Terms of Service",
         "href": "/legal/terms-of-service"
+      },
+      {
+        "label": "Imprint",
+        "href": "/legal/imprint"
       }
     ],
     "social": [

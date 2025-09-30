@@ -10,7 +10,7 @@
 .heroText {
   width: 100%;
   max-width: 1700px;
-  padding: 0 5dvw;
+  padding: 64px 5dvw;
   color: #474747;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
 @media (min-width: 768px) {
   .hero {
     background-image: url('/images/pages/about-hero.webp');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -58,7 +58,6 @@
 @media (min-width: 1024px) {
   .hero {
     margin: 0 auto;
-    height: 80dvh;
   }
   .heroText {
     justify-content: flex-end;
@@ -66,14 +65,15 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1200px) {
   .hero {
     height: 90dvh;
+    background-size: cover;
   }
   .heroText {
     margin: 0 auto;
     width: 100%;
-    max-width: 1700px;
-    padding-left: 850px;
+    max-width: 1200px;
+    padding-left: 450px;
   }
 }

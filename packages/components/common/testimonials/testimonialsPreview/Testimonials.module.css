@@ -1,12 +1,16 @@
 .section {
   max-width: 100%;
   overflow: hidden;
-  margin: 64px auto;
+  margin: 200px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 16px 5vw;
+  background-image: url('/svg/background/testimonials-background.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 .header,
 .aside {

@@ -40,7 +40,7 @@ const HomeHero: React.FC<HomeHeroProps> = ({
 
       <div className={styles.main}>
         <aside className={styles.aside}>
-          <h1 id="home-hero-title">
+          <h1 className={styles.h1} id="home-hero-title">
             <span className={styles.headline1}>
               {headline1}
               <span className={styles.and}>&</span>

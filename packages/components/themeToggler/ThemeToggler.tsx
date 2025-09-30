@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useClient } from '../../contexts/client/ClientContext';
 import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM/applyBrandingToDOM';
 import styles from './ThemeToggler.module.css';
@@ -11,7 +11,7 @@ const ThemeToggler = () => {
   const { client } = useClient();
 
   // Usar el theme global del usuario, no local
-  const theme = user?.theme || 'light';
+  const theme: 'dark' | 'light' = user?.theme || 'light';
 
   useEffect(() => {
     // Cada vez que cambia el theme, actualiza el DOM y branding

@@ -19,6 +19,7 @@ type CookiesContextValue = {
   /** Mostrar banner */
   showBanner: boolean;
   /** Aceptar todo (necesarias + estadísticas) */
+  loading: boolean;
   acceptAll: () => void;
   /** Rechazar todo excepto necesarias */
   rejectAll: () => void;
@@ -35,6 +36,7 @@ const CookiesContext = createContext<CookiesContextValue | null>(null);
 export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [prefs, setPrefs] = useState<CookiePrefs>(defaultPrefs());
   const [showBanner, setShowBanner] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   // Carga inicial desde cookie/localStorage
   useEffect(() => {
@@ -52,6 +54,7 @@ export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children })
       setPrefs(def);
       setShowBanner(true); // 👈 forzar que se muestre
     }
+    setLoading(false);
   }, []);
 
   // Persistencia combinada
@@ -122,13 +125,14 @@ export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children })
     () => ({
       prefs,
       showBanner,
+      loading,
       acceptAll,
       rejectAll,
       saveSelection,
       openManager,
       closeBanner,
     }),
-    [prefs, showBanner, acceptAll, rejectAll, saveSelection, openManager, closeBanner]
+    [prefs, showBanner, loading, acceptAll, rejectAll, saveSelection, openManager, closeBanner]
   );
 
   return <CookiesContext.Provider value={value}>{children}</CookiesContext.Provider>;

@@ -743,6 +743,29 @@
             }
           ]
         }
+      },
+      "imprint": {
+        "hero": {
+          "headline1": "Impressum",
+          "headline2": "Angaben gemäß § 5 TMG",
+          "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
+        },
+        "responsibleSection": {
+          "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
+          "description": "Verantwortlich für die Inhalte dieser Seite ist:"
+        },
+        "taxSection": {
+          "heading": "Umsatzsteuer-ID",
+          "descriptionNoId": "Keine Umsatzsteuer-Identifikationsnummer vorhanden / nicht erforderlich."
+        },
+        "liabilitySection": {
+          "heading": "Haftungsausschluss",
+          "text": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+        },
+        "odrSection": {
+          "heading": "Online-Streitbeilegung (OS)",
+          "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+        }
       }
     }
   },
@@ -1470,6 +1493,10 @@
       {
         "label": "Nutzungsbedingungen",
         "href": "/legal/terms-of-service"
+      },
+      {
+        "label": "Impresum",
+        "href": "/legal/imprint"
       }
     ],
     "social": [

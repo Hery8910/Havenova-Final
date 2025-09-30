@@ -1,3 +1,4 @@
+import { FaqMessageData } from '../../../types';
 import { FormWrapper } from '../../userForm';
 import { ButtonProps } from '../button/Button';
 import styles from './ContactSection.module.css';
@@ -21,7 +22,18 @@ const ContactSection: React.FC<ContactSectionProps> = ({ texts, handleSubmit, bu
         <p>{texts.description}</p>
       </header>
 
-      <FormWrapper fields={['name', 'email', 'message']} onSubmit={handleSubmit} button={button} />
+      <FormWrapper<FaqMessageData>
+        fields={['name', 'email', 'message']}
+        onSubmit={handleSubmit}
+        button={button}
+        initialValues={{
+          name: '',
+          email: '',
+          message: '',
+          language: '',
+          clientId: '',
+        }}
+      />
     </section>
   );
 };

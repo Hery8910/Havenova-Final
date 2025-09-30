@@ -1,28 +1,37 @@
-import { useUser } from '../../contexts/user/UserContext';
-import { useI18n } from '../../contexts/i18n/I18nContext';
+'use client';
 import styles from './LanguageSwitcher.module.css';
 import { IoLanguage } from 'react-icons/io5';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function LanguageSwitcher() {
-  const { setLanguage, language } = useI18n();
-  const { updateUserLanguage, user } = useUser();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const handleChange = async (lang: string) => {
-    setLanguage(lang);
-    await updateUserLanguage(lang);
-  };
+  const currentLang = pathname.split('/')[1] as 'de' | 'en';
+
+  function switchLang(newLang: 'de' | 'en') {
+    // 1. Guardar cookie
+    Cookies.set('lang', newLang, { path: '/', expires: 365 });
+
+    // 2. Cambiar la URL actual
+    const parts = pathname.split('/');
+    parts[1] = newLang; // reemplaza el slug del idioma
+    router.push(parts.join('/'));
+  }
 
   return (
-    <nav>
-      {language === 'en' ? (
-        <button className={styles.button} onClick={() => handleChange('de')}>
-          <IoLanguage /> <p>De</p>
+    <section>
+      {currentLang === 'en' ? (
+        <button className={styles.button} onClick={() => switchLang('de')}>
+          <IoLanguage /> De
         </button>
       ) : (
-        <button className={styles.button} onClick={() => handleChange('en')}>
-          <IoLanguage /> <p>En</p>
+        <button className={styles.button} onClick={() => switchLang('en')}>
+          <IoLanguage /> En
         </button>
       )}
-    </nav>
+    </section>
   );
 }

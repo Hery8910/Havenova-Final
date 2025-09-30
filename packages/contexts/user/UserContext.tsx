@@ -9,9 +9,9 @@ import React, {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ServiceRequest, ServiceRequestItem } from '../../types/services/servicesTypes';
-import { User } from '../../types/User';
 import { useClient } from '../client/ClientContext';
 import { getUser, updateUser } from '../../services/userService';
+import { User } from '@havenova/types';
 
 // --- Local Storage keys ---
 const USER_KEY = 'havenova_user';
@@ -183,7 +183,6 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const updateUserLanguage = useCallback(
     async (newLang: string) => {
-      // Invitado → solo local
       if (!user || user.role === 'guest' || !user.isLogged) {
         const next = { ...(user ?? initialGuestUser), language: newLang, clientId };
         setUser(next);
@@ -191,9 +190,12 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         return;
       }
 
-      // Autenticado → backend + local
       try {
-        const response = await updateUser({ clientId, language: newLang });
+        const response = await updateUser({
+          clientId,
+          email: user.email, // 👈 agrega el email
+          language: newLang,
+        });
         const updated = response.data as User;
         const next = { ...updated, isLogged: true };
         setUser(next);
@@ -213,8 +215,13 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         saveUserToStorage(next);
         return;
       }
+
       try {
-        const response = await updateUser({ clientId, theme: newTheme });
+        const response = await updateUser({
+          clientId,
+          email: user.email,
+          theme: newTheme,
+        });
         const updated = response.data as User;
         const next = { ...updated, isLogged: true };
         setUser(next);

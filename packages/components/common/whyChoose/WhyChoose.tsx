@@ -44,7 +44,7 @@ const WhyChoose: React.FC<WhyChooseProps> = ({ title, description, points }) => 
                 sizes="80px"
               />
             </figure>
-            <h3 className={styles.h3}>{point.title}</h3>
+            <h4 className={styles.h3}>{point.title}</h4>
           </li>
         ))}
       </ul>

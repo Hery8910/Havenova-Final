@@ -7,3 +7,5 @@ export * from './alert';
 export * from './messageBox';
 export * from './userForm';
 export * from './loading';
+export * from './languageSwitcher';
+export * from './themeToggler';

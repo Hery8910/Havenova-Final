@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@havenova/contexts/user';
 import { useI18n } from '@havenova/contexts/i18n';
+import { href } from '@havenova/utils/navigation';
+import { useLang } from '@havenova/hooks/useLang';
 import { NavbarView } from './NavbarView';
 import { NavbarConfig } from './NavbarView';
 import { NavbarSkeleton } from './Navbar.skeleton';
@@ -11,6 +13,7 @@ export function NavbarContainer() {
   const { user } = useUser();
   const { texts } = useI18n();
   const router = useRouter();
+  const lang = useLang();
 
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,8 +30,8 @@ export function NavbarContainer() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleNavigate = (href: string) => {
-    router.push(href);
+  const handleNavigate = (path: string) => {
+    router.push(href(lang, path));
     setMenuOpen(false);
   };
 

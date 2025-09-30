@@ -37,7 +37,7 @@
 /* Contenido */
 .main {
   margin: 0 auto;
-  width: 100%;
+  width: 90dvw;
   max-width: 1500px;
   padding: 20dvh 5dvw;
   display: flex;
@@ -78,7 +78,7 @@
 /* Tipografía */
 .h1 {
   margin: 0;
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(30px, 5vw, 56px);
   font-weight: 600;
   display: block;
 }
@@ -173,7 +173,7 @@
     opacity: 0.8;
   }
   .aside {
-    max-width: 500px;
+    max-width: 600px;
   }
 }
 

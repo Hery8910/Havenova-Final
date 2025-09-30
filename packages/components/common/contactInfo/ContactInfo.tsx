@@ -43,8 +43,6 @@ export interface ContactInfoProps {
     weekHours: weekItem;
     weekendHours: weekendItem;
   };
-  theme: 'dark' | 'light';
-  isMobile: boolean;
 }
 
 const ContactInfo: React.FC<ContactInfoProps> = ({

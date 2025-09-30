@@ -2,10 +2,29 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": [".", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", ".next", "dist", "build"],
-  "plugins": [{ "name": "next" }]
+  "include": [
+    ".",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "dist",
+    "build"
+  ],
+  "plugins": [
+    {
+      "name": "next"
+    }
+  ]
 }

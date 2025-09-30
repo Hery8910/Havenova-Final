@@ -1,13 +1,12 @@
 import styles from './Form.module.css';
 import MessageBox from '../../messageBox/MessageBox';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
-import { FormData } from '../../../types/userForm';
 import Button, { ButtonProps } from '../../common/button/Button';
 import { PlaceholdersProps } from '../formWrapper/FormWrapper';
 
-interface UserContactFormProps {
-  fields: (keyof FormData | 'message')[];
-  formData: FormData;
+interface GenericFormProps<T extends Record<string, any>> {
+  fields: (keyof T)[];
+  formData: T;
   errors: Record<string, string>;
   touched: Record<string, boolean>;
   showPassword: boolean;
@@ -19,7 +18,7 @@ interface UserContactFormProps {
   placeholder: PlaceholdersProps;
 }
 
-const Form: React.FC<UserContactFormProps> = ({
+export default function Form<T extends Record<string, any>>({
   fields,
   formData,
   errors,
@@ -31,7 +30,7 @@ const Form: React.FC<UserContactFormProps> = ({
   onSubmit,
   button,
   placeholder,
-}) => {
+}: GenericFormProps<T>) {
   return (
     <form className={styles.form} onSubmit={onSubmit}>
       {fields.includes('name') && (
@@ -77,6 +76,7 @@ const Form: React.FC<UserContactFormProps> = ({
               value={formData.password || ''}
               onChange={onChange}
               onBlur={onBlur}
+              autoComplete="off"
               required
             />
             <button className={styles.show} type="button" onClick={onTogglePassword}>
@@ -140,6 +140,4 @@ const Form: React.FC<UserContactFormProps> = ({
       <Button type="submit" cta={button.cta} icon={button.icon} />
     </form>
   );
-};
-
-export default Form;
+}

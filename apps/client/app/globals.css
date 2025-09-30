@@ -279,7 +279,7 @@ a {
     var(--bg-card-2),
     var(--bg-card-3)
   );
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--bg-card-1);
   border-radius: 8px;
   box-shadow: var(--shadow);

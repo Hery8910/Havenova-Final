@@ -20,38 +20,11 @@ export function I18nProvider({
   const [language, setLanguage] = useState<Locale>(initialLanguage);
   const [texts, setTexts] = useState(resources[initialLanguage] || {});
 
-  // Detecta idioma inicial desde localStorage
   useEffect(() => {
-    const storedLang = (localStorage.getItem('havenova_lang') as Locale) || initialLanguage;
-    if (storedLang && storedLang !== language) {
-      setLanguage(storedLang);
-    }
-  }, [initialLanguage]);
-
-  // Actualiza idioma y textos cuando cambia `language`
-  useEffect(() => {
-    localStorage.setItem('havenova_lang', language);
-    document.cookie = `lang=${language}; path=/;`;
-
     if (resources[language]) {
       setTexts(resources[language]);
-    } else {
-      console.warn(`⚠️ I18nProvider: No texts found for language "${language}"`);
     }
   }, [language]);
-
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'havenova_lang' && event.newValue) {
-        const value = event.newValue as string;
-        if (value === 'de' || value === 'en') {
-          setLanguage(value); // ✅ ahora TS sabe que es un Locale
-        }
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
   return (
     <I18nContext.Provider value={{ language, setLanguage, texts }}>{children}</I18nContext.Provider>

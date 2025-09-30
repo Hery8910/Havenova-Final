@@ -28,9 +28,9 @@ const Values: React.FC<ValuesData> = ({ title, list, theme, isMobile }) => {
       <ul className={styles.ul} aria-label="Core company values">
         {list.map((item, idx) => (
           <li className={styles.li} key={idx}>
-            <h3 className={styles.num}>0{idx + 1}.</h3>
+            <h3 className={`${styles.num} card`}>0{idx + 1}.</h3>
             <h3 className={styles.li_h2}>{item.label}</h3>
-            <p className={styles.li_p}>{item.description}</p>
+            <p className={`${styles.li_p} card`}>{item.description}</p>
           </li>
         ))}
       </ul>
