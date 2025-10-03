@@ -1,0 +1,13 @@
+.section {
+  margin: 100px auto;
+  padding: 0 5dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  background-image: url('/svg/background/testimonials-background.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

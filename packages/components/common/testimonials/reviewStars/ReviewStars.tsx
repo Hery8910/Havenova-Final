@@ -11,8 +11,8 @@ const ReviewStars: React.FC<ReviewStarsProps> = ({ rating }) => {
   const percentage = (clampedRating / totalStars) * 100;
 
   return (
-    <div
-      className={styles.div_stars}
+    <section
+      className={styles.section_stars}
       role="img"
       aria-label={`Valoración: ${clampedRating} de 5 estrellas`}
     >
@@ -29,7 +29,7 @@ const ReviewStars: React.FC<ReviewStarsProps> = ({ rating }) => {
           <Star key={`yellow-${index}`} className={styles.svg_yellow} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

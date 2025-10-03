@@ -23,8 +23,8 @@ const QuestionsAnswers = () => {
   } | null>(null);
 
   const popups = texts.popups;
-  const faqListTexts = texts.pages.faq.questions;
   const faqHeroTexts = texts.pages.faq.faqHero;
+  const faqListTexts = texts.pages.faq.questions;
   const formText = texts.components.form;
   const contactTexts = texts.pages.faq.contactSection;
 

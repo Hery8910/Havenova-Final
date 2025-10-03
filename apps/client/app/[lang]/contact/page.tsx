@@ -17,8 +17,9 @@ import { FaqMessageData } from '@/packages/types';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { sendContactMessage } from '@/packages/services/userService';
 import Loading from '@/packages/components/loading/Loading';
-import { useLang } from '../../../../../packages/hooks';
-import { href } from '../../../../../packages/utils/navigation';
+import { useLang } from '@/packages/hooks';
+import { href } from '@/packages/utils/navigation';
+import { Map } from '@/packages/components/map/Map';
 
 export default function Contact() {
   const { texts } = useI18n();
@@ -125,6 +126,8 @@ export default function Contact() {
       />
 
       <ContactInfo {...contactInfo} />
+
+      <Map {...contactInfo.mapSection} />
 
       {faqPreviewTexts ? (
         <FAQSection {...faqPreviewTexts} onClick={() => router.push(href(lang, '/faq'))} />

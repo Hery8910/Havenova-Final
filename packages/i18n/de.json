@@ -152,6 +152,68 @@
         "description": "Füllen Sie das untenstehende Formular mit Ihren Angaben und Ihrer Nachricht aus. Wir prüfen Ihre Anfrage und melden uns so schnell wie möglich bei Ihnen."
       }
     },
+    "reviews": {
+      "hero": {
+        "headline1": "Das sagen unsere Kunden",
+        "headline2": "Echte Meinungen, echte Erfahrungen",
+        "subtitle": "Alle Bewertungen stammen aus anerkannten Plattformen wie Google und MyHammer – für maximale Transparenz und Vertrauen.",
+        "image": "/images/pages/reviews-hero.png",
+        "button": {
+          "cta": "Bewertung auf Google schreiben",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      },
+      "summary": {
+        "heading": "Unsere Gesamtbewertung",
+        "description": "Derzeit zeigen wir die Bewertungen, die wir über MyHammer gesammelt haben. Schritt für Schritt verlagern wir alle neuen Bewertungen auf Google, um noch mehr Transparenz und Vertrauen zu schaffen.",
+        "average": "Durchschnittliche Bewertung",
+        "averageRating": 4.9,
+        "totalReviews": 57
+      },
+      "list": {
+        "heading": "Bewertungen",
+        "button": {
+          "cta": "Mehr laden",
+          "variant": "solid",
+          "icon": "download"
+        }
+      },
+      "faq": {
+        "title": "Frequently Asked Questions about Reviews",
+        "items": [
+          {
+            "question": "Where can I leave a review?",
+            "answer": "New reviews can be submitted directly through our Google Business profile. Just follow the link 'Write a review on Google'."
+          },
+          {
+            "question": "What happens to the older reviews from MyHammer?",
+            "answer": "We continue to display our previous reviews from MyHammer here on our website. Going forward, all new reviews will be collected exclusively via Google."
+          },
+          {
+            "question": "Can I edit or delete my review afterwards?",
+            "answer": "Yes. Reviews on Google can be edited or deleted at any time through your own Google account."
+          },
+          {
+            "question": "How do you ensure the authenticity of reviews?",
+            "answer": "By using Google Business, only users with an active Google account can leave reviews. This ensures that all reviews are genuine."
+          },
+          {
+            "question": "Are negative reviews also published?",
+            "answer": "Yes. We believe in transparency and publish all reviews – whether positive or negative."
+          }
+        ],
+        "cta": {
+          "title": "Haben Sie noch weitere Fragen?",
+          "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+        },
+        "button": {
+          "cta": "Alle FAQs ansehen",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      }
+    },
     "blog": {
       "title": "Neuigkeiten aus unserem Blog",
       "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
@@ -1404,6 +1466,152 @@
           }
         }
       ]
+    },
+    "reviews": {
+      "averageRating": 4.9,
+      "totalReviews": 57,
+      "reviews": [
+        {
+          "author": "MyHammer-Kunde aus Berlin",
+          "date": "19. Dez 2024",
+          "rating": 5,
+          "service": "Kleine Handwerks- und Montageleistungen: Ausbessern; Sanitäre Installationen",
+          "comment": "Sehr effizient und nett, jederzeit wieder gerne!"
+        },
+        {
+          "author": "MyHammer-Kunde aus Wriezen",
+          "date": "12. Dez 2024",
+          "rating": 5,
+          "service": "Fertigküche: Montage mit Geräten",
+          "comment": "Hasan und sein Kollege haben bei meiner Enkeltochter einen Küchenblock aufgebaut und alle E-Geräte ordnungsgemäß angeschlossen. Sehr zufrieden mit der Arbeit. Am selben Tag erledigt, sehr freundlich und vielseitig. Sehr zu empfehlen."
+        },
+        {
+          "author": "Jonas Woelffer, Berlin",
+          "date": "12. Dez 2024",
+          "rating": 5,
+          "service": "Fertigküche: Zweizeilig; Montage mit Geräten",
+          "comment": "Super Arbeit! Sehr kompetent, verlässlich und korrekt. Immer wieder sehr gerne!"
+        },
+        {
+          "author": "MyHammer-Kunde",
+          "date": "11. Dez 2024",
+          "rating": 5,
+          "service": "Reparaturarbeiten",
+          "comment": "Sehr gute Kommunikation, schnell und sauber erledigt."
+        },
+        {
+          "author": "Sven, Berlin",
+          "date": "8. Dez 2024",
+          "rating": 5,
+          "service": "Möbelmontage",
+          "comment": "Pünktlich, zuverlässig und freundlich. Jederzeit wieder!"
+        },
+        {
+          "author": "MyHammer-Kunde aus Potsdam",
+          "date": "4. Dez 2024",
+          "rating": 4,
+          "service": "Küchenmontage",
+          "comment": "Arbeit in Ordnung, aber kleine Verzögerung beim Termin."
+        },
+        {
+          "author": "Stefanie, Berlin",
+          "date": "1. Dez 2024",
+          "rating": 5,
+          "service": "Möbelmontage: Kleiderschrank",
+          "comment": "Sehr zuverlässig, gute Kommunikation und saubere Arbeit. Jederzeit wieder!"
+        },
+        {
+          "author": "Ali, Berlin",
+          "date": "28. Nov 2024",
+          "rating": 5,
+          "service": "Möbelmontage",
+          "comment": "Alles super gelaufen, sehr freundlich und hilfsbereit. Absolute Empfehlung."
+        },
+        {
+          "author": "Nico, Berlin",
+          "date": "22. Nov 2024",
+          "rating": 5,
+          "service": "Handwerksarbeiten",
+          "comment": "Sehr freundlich, pünktlich und gute Arbeit. Kann ich weiterempfehlen."
+        },
+        {
+          "author": "MyHammer-Kunde",
+          "date": "20. Nov 2024",
+          "rating": 5,
+          "service": "Küchenmontage",
+          "comment": "Alles wie vereinbart, sauber und schnell ausgeführt."
+        },
+        {
+          "author": "Sabine, Berlin",
+          "date": "17. Nov 2024",
+          "rating": 5,
+          "service": "Möbelmontage",
+          "comment": "Sehr gute Arbeit, schnell und professionell. Vielen Dank!"
+        },
+        {
+          "author": "MyHammer-Kunde",
+          "date": "14. Nov 2024",
+          "rating": 5,
+          "service": "Reparaturarbeiten",
+          "comment": "Sehr gute Kommunikation und schnelle Hilfe. Gerne wieder."
+        },
+        {
+          "author": "Thomas, Berlin",
+          "date": "10. Nov 2024",
+          "rating": 5,
+          "service": "Fertigküche: Montage",
+          "comment": "Sehr professionelle Arbeit, freundlich und kompetent. Kann ich nur empfehlen."
+        },
+        {
+          "author": "Katrin, Berlin",
+          "date": "6. Nov 2024",
+          "rating": 4,
+          "service": "Möbelmontage",
+          "comment": "Arbeit war gut, kleine Verzögerung beim Aufbau, aber insgesamt zufrieden."
+        },
+        {
+          "author": "Michael, Berlin",
+          "date": "3. Nov 2024",
+          "rating": 5,
+          "service": "Möbelmontage",
+          "comment": "Sehr gute Arbeit, schnell und freundlich. Jederzeit wieder."
+        },
+        {
+          "author": "MyHammer-Kunde",
+          "date": "30. Okt 2024",
+          "rating": 5,
+          "service": "Handwerksarbeiten",
+          "comment": "Alles top erledigt, sehr zufrieden."
+        },
+        {
+          "author": "Elena, Berlin",
+          "date": "28. Okt 2024",
+          "rating": 5,
+          "service": "Küchenmontage",
+          "comment": "Sehr freundlicher Kontakt, Arbeit einwandfrei und zuverlässig. Sehr empfehlenswert!"
+        },
+        {
+          "author": "MyHammer-Kunde",
+          "date": "24. Okt 2024",
+          "rating": 5,
+          "service": "Möbelmontage",
+          "comment": "Alles bestens, sehr gute Arbeit. Vielen Dank!"
+        },
+        {
+          "author": "Frank, Berlin",
+          "date": "27. Dez 2024",
+          "rating": 5,
+          "service": "Kleine Handwerks- und Montageleistungen: Küchenzeile mit Hängeschränken",
+          "comment": "Reinigungsmeister würde ich eine 10 geben, Da es die nicht gibt gebe ich volle Punktzahl 5 Sterne Sehr pünktlich, angenehme Kommunikation bei Kontaktaufnahme und bei der Ausführung des Auftrag. Sehr sauber und schnell gearbeitet. Jungs macht weiter so !!! Kann ich mit guten Gewissen weiter empfehlen. Merci für die tolle Arbeit :)"
+        },
+        {
+          "author": "Apu, Berlin",
+          "date": "23. Dez 2024",
+          "rating": 5,
+          "service": "Auf- und Abbau von Fertigmöbeln und Fertigteilen: 3 Möbelstücke",
+          "comment": "Reinigungsmeister hat bei uns diverse Möbel aufgebaut. Die Kommunikation war angenehm und unproblematisch. Er hat die Arbeit zur vollen Zufriedenheit erledigt. Gerne wieder!"
+        }
+      ]
     }
   },
   "footer": {
@@ -1752,6 +1960,11 @@
   },
   "contactInfo": {
     "title": "Kontakt",
+    "mapSection": {
+      "title": "Unsere Adresse",
+      "subtitle": "Besuchen Sie uns vor Ort oder nutzen Sie die Karte, um unsere genaue Lage zu finden.",
+      "address": "Stollberger Str.43, 12627 Berlin"
+    },
     "havenova": {
       "label": "Regler",
       "name": {

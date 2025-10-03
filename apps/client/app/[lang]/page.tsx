@@ -43,6 +43,7 @@ export default function Home() {
   const servicesPreviewTexts = texts.components.common.servicesPreview;
   const whyChooseTexts = texts.components.common.whyChoose;
   const testimonialsTexts = texts.components.common.testimonials;
+  const reviewsLists = texts.components.reviews.reviews;
   const faqPreviewTexts = texts.components.common.faq;
   const welcomeOfferTexts = texts.components.common.welcomeOfferBanner;
   const finalCtaTexts = texts.components.common.finalCta;
@@ -139,7 +140,11 @@ export default function Home() {
 
       {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
 
-      {testimonialsTexts ? <Testimonials {...testimonialsTexts} /> : <TestimonialsSkeleton />}
+      {testimonialsTexts ? (
+        <Testimonials {...testimonialsTexts} items={reviewsLists} />
+      ) : (
+        <TestimonialsSkeleton />
+      )}
 
       {faqPreviewTexts ? (
         <FAQSection {...faqPreviewTexts} onClick={() => handleNavigation('faq')} />

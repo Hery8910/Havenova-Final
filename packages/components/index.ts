@@ -9,3 +9,4 @@ export * from './userForm';
 export * from './loading';
 export * from './languageSwitcher';
 export * from './themeToggler';
+export * from './map';

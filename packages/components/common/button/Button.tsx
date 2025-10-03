@@ -9,6 +9,7 @@ import {
   FaDownload,
   FaEdit,
 } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
 import { MdOutlineAppRegistration, MdOutlineContactSupport, MdPassword } from 'react-icons/md';
 import { MdLogin } from 'react-icons/md';
 
@@ -43,7 +44,7 @@ const icons: Record<string, JSX.Element> = {
   open: <FaChevronRight />, // puedes elegir otro si prefieres
   close: <FaTimes />,
   upload: <FaUpload />,
-  download: <FaDownload />,
+  download: <FiDownload />,
   edit: <FaEdit />,
   register: <MdOutlineAppRegistration />,
   login: <MdLogin />,

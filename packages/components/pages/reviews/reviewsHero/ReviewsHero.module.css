@@ -1,0 +1,128 @@
+.section {
+  width: 100%;
+  padding: 64px 5dvw;
+  margin: 48px auto;
+  background: #063940;
+  background: linear-gradient(
+    135deg,
+    #052f35ff,
+    #06343aff,
+    #063840ff,
+    #073d45ff,
+    #07424aff,
+    #08474fff,
+    #084b55ff,
+    #09505aff,
+    #09555fff,
+    #0a5a64ff,
+    #0a5e6aff,
+    #0b636fff,
+    #0b6874ff,
+    #0c6d79ff,
+    #0c717fff,
+    #0d7684ff,
+    #0d7b89ff,
+    #0e808eff,
+    #0e8494ff,
+    #0f8999ff
+  );
+  box-shadow: var(--shadow);
+}
+.wrapper {
+  perspective: 550px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  align-items: center;
+}
+.header {
+  color: var(--text-secondary);
+  padding: 32px 0;
+  max-width: 750px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+}
+.h2 {
+  font-weight: 500;
+  font-size: clamp(20px, 3.5vw, 28px);
+}
+.description {
+  max-width: 500px;
+}
+.image {
+  width: 90dvw;
+  max-width: 600px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px #2b2b2b);
+  transform: rotateX(0deg) rotateY(5deg);
+  transform-style: preserve-3d;
+}
+/* Skeleton base */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-100) 25%,
+    var(--surface-200) 37%,
+    var(--surface-100) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400% 0;
+  }
+  100% {
+    background-position: 400% 0;
+  }
+}
+
+/* Skeleton variants */
+.skeletonHeadline {
+  width: 60%;
+  height: 36px;
+  margin-bottom: 12px;
+}
+
+.skeletonSubheadline {
+  width: 80%;
+  max-width: 550px;
+  height: 20px;
+  margin-bottom: 16px;
+}
+
+/* Botón */
+.skeletonButton {
+  width: 200px;
+  height: 48px;
+  border-radius: 24px;
+}
+/* Imagen en skeleton */
+.skeletonImage {
+  display: none;
+  border-radius: 50%;
+}
+
+@media (min-width: 1024px) {
+  .skeletonImage {
+    display: block;
+    width: 250px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

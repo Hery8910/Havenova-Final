@@ -2,6 +2,8 @@
 import ReviewStars from '../reviewStars/ReviewStars';
 import styles from './Testimonials.module.css';
 import Button, { ButtonProps } from '../../button/Button';
+import { ReviewsList } from '../../../pages';
+import { ReviewsListlItem } from '../../../pages/reviews/reviewsList/ReviewsList';
 
 // Raw desde la API (subset útil)
 export type StarRating = 'ONE' | 'TWO' | 'THREE' | 'FOUR' | 'FIVE' | 'STAR_RATING_UNSPECIFIED';
@@ -24,22 +26,11 @@ export interface GbpReview {
   };
 }
 
-// Modelo UI normalizado para tu componente Testimonials
-export interface TestimonialItem {
-  id: string;
-  author: string;
-  avatarUrl?: string;
-  rating: number;
-  text: string;
-  date: string;
-  reply?: { text: string; date?: string };
-}
-
 export interface TestimonialsProps {
   title: string;
   subtitle: string;
   description: string;
-  items: TestimonialItem[];
+  items: ReviewsListlItem[];
   mobile: boolean;
   button: ButtonProps;
   onClick: () => void;
@@ -62,32 +53,10 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         </h3>
       </header>
       <article className={styles.wrapper}>
-        <ul className={styles.ul}>
-          {items.slice(0, 4).map((item) => (
-            <li className={`${styles.li} card`} key={item.id}>
-              <header className={styles.header_li} aria-label={`Rezension von ${item.author}`}>
-                <h4 className={styles.h4}>{item.author}</h4>
-                <div className={styles.rating_div}>
-                  <ReviewStars rating={item.rating} />
-                  <time className={styles.time} dateTime={new Date(item.date).toISOString()}>
-                    {new Date(item.date).toLocaleDateString()}
-                  </time>
-                </div>
-              </header>
-              <p className={styles.p}>{item.text}</p>
-              {item.reply && (
-                <footer className={styles.footer}>
-                  <p>Antwort</p>
-                  <p className={styles.p}>{item.reply.text}</p>
-                </footer>
-              )}
-            </li>
-          ))}
-        </ul>
+        <ReviewsList items={items} itemsNum={4} />
       </article>
       <aside className={styles.aside}>
         <p className={styles.p}>{description}</p>
-
         <Button cta={button.cta} variant={button.variant} icon={button.icon} onClick={onClick} />
       </aside>
     </section>
