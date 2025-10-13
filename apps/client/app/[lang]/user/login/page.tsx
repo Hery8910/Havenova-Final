@@ -36,6 +36,7 @@ const Login = () => {
   const popups = texts.popups;
   const formText = texts.components.form;
   const login: LoginData = texts?.pages?.user.login;
+
   const [alert, setAlert] = useState<{
     status: number;
     title: string;
@@ -103,41 +104,30 @@ const Login = () => {
   };
 
   return (
-    <section className={styles.section}>
-      <main className={styles.main}>
-        <header className={`${styles.header} card`}>
-          <h1 className={styles.h1}>{login?.title}</h1>
-          <aside className={styles.aside}>
-            <div>
-              <p className={styles.header_p}>{login?.cta.title}</p>
-              <Link className={styles.link} href={login?.cta.url}>
-                {login?.cta.label}
-              </Link>
-            </div>
-            <div>
-              <p className={styles.header_p}>{login?.forgotPassword.title}</p>
-              <Link className={styles.link} href={login?.forgotPassword.url}>
-                {login?.forgotPassword.label}
-              </Link>
-            </div>
-          </aside>
-        </header>
-        <aside className={styles.aside_form}>
-          <FormWrapper<LoginPayload>
-            fields={['email', 'password']}
-            onSubmit={handleLogin}
-            button={formText.button.login}
-            initialValues={{
-              clientId: '',
-              email: '',
-              password: '',
-            }}
-          />
+    <main className={styles.main}>
+      <h1 className={styles.h1}>{login.title}</h1>
+      <section className={`${styles.section} card`}>
+        <FormWrapper<LoginPayload>
+          fields={['email', 'password']}
+          onSubmit={handleLogin}
+          button={formText.button.login}
+          showForgotPassword
+          initialValues={{
+            clientId: '',
+            email: '',
+            password: '',
+          }}
+        />
+        <aside className={styles.aside}>
+          <p className={styles.p}>{login.cta.title}</p>
+          <Link className={styles.link} href={login.cta.url}>
+            {login.cta.label}
+          </Link>
         </aside>
-      </main>
+      </section>
       {loading && !redirecting && <Loading theme={user?.theme || 'light'} />}
       {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
-    </section>
+    </main>
   );
 };
 

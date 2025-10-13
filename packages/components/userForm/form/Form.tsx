@@ -3,8 +3,10 @@ import MessageBox from '../../messageBox/MessageBox';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import Button, { ButtonProps } from '../../common/button/Button';
 import { PlaceholdersProps } from '../formWrapper/FormWrapper';
+import { User } from '../../../types';
 
 interface GenericFormProps<T extends Record<string, any>> {
+  user: User | null;
   fields: (keyof T)[];
   formData: T;
   errors: Record<string, string>;
@@ -13,12 +15,15 @@ interface GenericFormProps<T extends Record<string, any>> {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onTogglePassword: () => void;
+  forgotPassword: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   button: ButtonProps;
+  showForgotPassword?: boolean;
   placeholder: PlaceholdersProps;
 }
 
 export default function Form<T extends Record<string, any>>({
+  user,
   fields,
   formData,
   errors,
@@ -27,8 +32,10 @@ export default function Form<T extends Record<string, any>>({
   onChange,
   onBlur,
   onTogglePassword,
+  forgotPassword,
   onSubmit,
   button,
+  showForgotPassword,
   placeholder,
 }: GenericFormProps<T>) {
   return (
@@ -40,7 +47,7 @@ export default function Form<T extends Record<string, any>>({
             type="text"
             name="name"
             placeholder={placeholder.name}
-            value={formData.name || ''}
+            value={formData.name}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="name"
@@ -56,7 +63,7 @@ export default function Form<T extends Record<string, any>>({
             type="email"
             name="email"
             placeholder={placeholder.email}
-            value={formData.email || ''}
+            value={formData.email}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="email"
@@ -67,6 +74,11 @@ export default function Form<T extends Record<string, any>>({
       )}
       {fields.includes('password') && (
         <div className={styles.wrapper}>
+          {showForgotPassword && (
+            <button className={styles.forgotPassword} type="button" onClick={forgotPassword}>
+              {placeholder.forgotPassword}
+            </button>
+          )}
           <div className={styles.div}>
             <input
               className={styles.input}
@@ -95,7 +107,7 @@ export default function Form<T extends Record<string, any>>({
             type="text"
             name="address"
             placeholder={placeholder.address}
-            value={formData.address || ''}
+            value={formData.address}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="address"
@@ -112,7 +124,7 @@ export default function Form<T extends Record<string, any>>({
             type="tel"
             name="phone"
             placeholder={placeholder.phone}
-            value={formData.phone || ''}
+            value={formData.phone}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="tel"

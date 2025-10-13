@@ -10,8 +10,8 @@ import {
   ServicesPreviewSkeleton,
   Story,
   StorySkeleton,
-  Testimonials,
-  TestimonialsSkeleton,
+  ReviewsSection,
+  ReviewsSectionSkeleton,
   Values,
   ValuesSkeleton,
   WhyChoose,
@@ -32,7 +32,8 @@ export default function AboutPage() {
   const valuesTexts = texts.components.common.values;
   const whyChooseTexts = texts.components.common.whyChoose;
   const servicesPreviewTexts = texts.components.common.servicesPreview;
-  const testimonialsTexts = texts.components.common.testimonials;
+  const reviewsSectionTexts = texts.components.common.reviewsSection;
+  const reviewsLists = texts.components.reviews.reviews;
 
   const handleNavigation = (section: CtaCase) => {
     switch (section) {
@@ -71,7 +72,11 @@ export default function AboutPage() {
         <ServicesPreviewSkeleton />
       )}
 
-      {testimonialsTexts ? <Testimonials {...testimonialsTexts} /> : <TestimonialsSkeleton />}
+      {reviewsSectionTexts ? (
+        <ReviewsSection {...reviewsSectionTexts} items={reviewsLists} />
+      ) : (
+        <ReviewsSectionSkeleton />
+      )}
 
       {/* Blog */}
     </main>

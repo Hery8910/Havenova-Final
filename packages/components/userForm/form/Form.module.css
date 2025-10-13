@@ -1,6 +1,10 @@
 .form {
   width: 100%;
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .input {
   padding: 8px 16px;
@@ -18,6 +22,7 @@
 }
 
 .div {
+  width: 100%;
   position: relative;
 }
 .show {
@@ -31,9 +36,20 @@
   font-size: clamp(16px, 3vw, 20px);
   color: var(--text-secondary);
 }
+.forgotPassword {
+  border: none;
+  background-color: transparent;
+  align-self: flex-end;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.forgotPassword:hover {
+  color: var(--brand-primary);
+}
 .wrapper {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -44,7 +44,16 @@
   border: 3px solid var(--color-error);
   transform: translateY(-2px);
 }
-
+.borderless {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+  transition: all 0.3s ease-in-out;
+}
+.borderless:hover {
+  color: var(--brand-primary);
+}
 .outline {
   background: transparent;
   color: var(--button-text);

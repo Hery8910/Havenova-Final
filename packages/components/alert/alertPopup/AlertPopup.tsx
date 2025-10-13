@@ -21,14 +21,14 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClo
 
   const colorMap = {
     success: 'var(--color-success)',
-    error: 'var(--color-alert)',
+    error: 'var(--color-error)',
     warning: 'var(--color-warning)',
     info: 'var(--color-info)',
   };
 
   const bgColorMap = {
     success: 'var(--bg-success)',
-    error: 'var(--bg-alert)',
+    error: 'var(--bg-error)',
     warning: 'var(--bg-warning)',
     info: 'var(--bg-info)',
   };

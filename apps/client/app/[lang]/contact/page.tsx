@@ -2,7 +2,7 @@
 import { useI18n } from '@/packages/contexts/i18n';
 import { useUser } from '@/packages/contexts/user/UserContext';
 import { ContactHero, ContactHeroSkeleton } from '@/packages/components/pages/contactHero';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ContactInfo,
   ContactSection,
@@ -30,6 +30,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const theme = user?.theme || 'light';
   const [isMobile, setIsMobile] = useState(false);
+  const searchParams = useSearchParams();
 
   const popups = texts.popups;
   const contactHeroTexts = texts.pages.contact.hero;
@@ -48,9 +49,30 @@ export default function Contact() {
   if (!user) return null;
 
   useEffect(() => {
+    const status = searchParams.get('status');
+    const code = searchParams.get('code');
+    const http = Number(searchParams.get('http'));
+
+    if (status && code) {
+      const popupData = texts.popups?.[code] || {};
+      setAlert({
+        status: http || (status === 'success' ? 200 : 400),
+        title: popupData.title || (status === 'success' ? 'Success' : 'Error'),
+        description: popupData.description || '',
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 3000);
+      // limpiar la URL
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -58,7 +80,6 @@ export default function Contact() {
 
   const handleSubmit = async (data: Partial<FaqMessageData>) => {
     setLoading(true);
-
     try {
       if (!client?._id) {
         const popupData = popups?.INTERNAL_ERROR || {};
@@ -70,12 +91,15 @@ export default function Contact() {
         return;
       }
 
+      const originPath = typeof window !== 'undefined' ? window.location.pathname : '';
+
       const payload: FaqMessageData = {
         name: data.name || user?.name || '',
         email: data.email || user?.email || '',
         message: data.message || '',
         language: user.language || 'de',
         clientId: client._id,
+        originPath,
       };
 
       const response = await sendContactMessage(payload);
@@ -88,6 +112,9 @@ export default function Contact() {
           description: popupData.description || response.message,
         });
       }
+      setTimeout(() => {
+        setAlert(null);
+      }, 3000);
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorKey = error.response.data.errorCode;

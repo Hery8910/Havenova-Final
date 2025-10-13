@@ -1,7 +1,7 @@
 // src/components/TestimonialsSkeleton.tsx
-import styles from './Testimonials.module.css';
+import styles from './ReviewsSection.module.css';
 
-const TestimonialsSkeleton = () => {
+const ReviewsSectionSkeleton = () => {
   return (
     <section className={styles.section} aria-labelledby="testimonials-title">
       <header className={styles.header}>
@@ -38,4 +38,4 @@ const TestimonialsSkeleton = () => {
   );
 };
 
-export default TestimonialsSkeleton;
+export default ReviewsSectionSkeleton;

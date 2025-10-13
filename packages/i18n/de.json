@@ -214,6 +214,74 @@
         }
       }
     },
+    "services": {
+      "hero": {
+        "headline1": "Professionelle Reinigungs- und Hausmeisterdienste",
+        "headline2": "Zuverlässig. Transparent. Persönlich.",
+        "subtitle": "Ob Reinigung, Möbelmontage oder kleine Reparaturen – wir kümmern uns um Ihr Zuhause und Ihr Geschäft mit Sorgfalt und Erfahrung. Wählen Sie den passenden Service und lehnen Sie sich entspannt zurück.",
+        "image": "/images/pages/services-hero.jpg"
+      },
+      "servicesSection": {
+        "heading": "Unsere Dienstleistungen",
+        "description": "Wir bieten ein breites Spektrum an professionellen Reinigungs- und Handwerksdiensten für Privathaushalte und Unternehmen. Wählen Sie den passenden Service und erhalten Sie ein unverbindliches Angebot.",
+        "button": {
+          "cta": "Alle Leistungen ansehen",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      },
+      "howItWorks": {
+        "heading": "So funktioniert unser Service",
+        "steps": [
+          {
+            "title": "1. Anfrage senden",
+            "description": "Wählen Sie den gewünschten Service und füllen Sie das Anfrageformular mit allen relevanten Informationen aus. Sie können den Termin, die Art der Arbeit und eventuelle Besonderheiten direkt angeben."
+          },
+          {
+            "title": "2. Prüfung und Rückmeldung",
+            "description": "Unser Team prüft Ihre Anfrage sorgfältig und meldet sich bei Ihnen, um offene Fragen zu klären oder ein unverbindliches Angebot zu unterbreiten. So stellen wir sicher, dass Sie genau den Service erhalten, den Sie benötigen."
+          },
+          {
+            "title": "3. Terminbestätigung",
+            "description": "Nach Ihrer Zustimmung vereinbaren wir einen passenden Termin. Sie erhalten eine Bestätigung mit allen Details – schnell, transparent und zuverlässig."
+          },
+          {
+            "title": "4. Ausführung des Auftrags",
+            "description": "Unser Team kommt pünktlich zum vereinbarten Zeitpunkt und führt die Arbeiten professionell und gründlich durch. Nach Abschluss können Sie das Ergebnis direkt bewerten und Feedback hinterlassen."
+          }
+        ]
+      },
+      "faq": {
+        "title": "Häufig gestellte Fragen zu unseren Dienstleistungen",
+        "items": [
+          {
+            "question": "Wie kann ich einen Service anfragen?",
+            "answer": "Sie können den gewünschten Service direkt über das Formular auf unserer Website anfragen. Geben Sie einfach alle relevanten Details an – unser Team meldet sich mit einem Angebot oder Terminvorschlag."
+          },
+          {
+            "question": "Wie wird der Preis für den Service berechnet?",
+            "answer": "Jeder Auftrag wird individuell bewertet. Der Preis hängt von Art, Umfang und Aufwand des gewünschten Services ab. Nach Ihrer Anfrage erhalten Sie ein transparentes, unverbindliches Angebot."
+          },
+          {
+            "question": "Bringt Ihr Team das benötigte Material und Werkzeug mit?",
+            "answer": "Ja, unser Team bringt in der Regel alle notwendigen Materialien und Werkzeuge mit. Wenn Sie spezielle Wünsche haben, können Sie diese im Anfrageformular angeben."
+          },
+          {
+            "question": "Kann ich einen Termin verschieben oder absagen?",
+            "answer": "Natürlich. Sie können Ihren Termin bis 24 Stunden vorher kostenlos verschieben oder stornieren. Danach können Gebühren anfallen, da die Planung bereits erfolgt ist."
+          }
+        ],
+        "cta": {
+          "title": "Haben Sie noch weitere Fragen?",
+          "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+        },
+        "button": {
+          "cta": "Alle FAQs ansehen",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      }
+    },
     "blog": {
       "title": "Neuigkeiten aus unserem Blog",
       "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
@@ -229,35 +297,17 @@
         "description": "Erstellen Sie ein Konto, um Ihre Anfragen zu verwalten und Ihre Vorteile zu erkunden.",
         "cta": {
           "title": "Sie haben bereits ein Konto?",
-          "label": "Gehen Sie zu Anmelden",
+          "label": "Zu Anmelden",
           "url": "/user/login"
-        },
-
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Illustration aus Berlin"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Registrieren"
+        }
       },
       "login": {
-        "tilte": "Willkommen zurück",
+        "title": "Willkommen zurück",
         "cta": {
           "title": "Sie haben noch kein Konto?",
-          "label": "Gehen Sie zu Register",
+          "label": "Zu Anmeldung",
           "url": "/user/register"
-        },
-        "forgotPassword": {
-          "title": "Passwort vergessen?",
-          "label": "Passwort zurücksetzen",
-          "url": "/user/forgot-password"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Anmelden"
+        }
       },
       "edit": {
         "title": "Bearbeiten",
@@ -882,54 +932,6 @@
           }
         ]
       },
-      "servicesPreview": {
-        "title": "Unsere Leistungen",
-        "subtitle": "Maßgeschneiderte Dienstleistungen für Ihr Zuhause",
-        "description": "Von Möbelmontage bis zur gründlichen Reinigung – wir bieten zuverlässige Lösungen für jede Situation. Entdecken Sie, wie wir helfen können.",
-        "items": [
-          {
-            "title": "Küchenmontage",
-            "image": {
-              "src": "/svg/kitchen-assembly.svg"
-            }
-          },
-          {
-            "title": "Hausservice",
-            "image": {
-              "src": "/svg/home-service.svg"
-            }
-          },
-          {
-            "title": "Fensterreinigung",
-            "image": {
-              "src": "/svg/windows-cleaning.svg"
-            }
-          },
-          {
-            "title": "Wohnungsreinigung",
-            "image": {
-              "src": "/svg/house-cleaning.svg"
-            }
-          },
-          {
-            "title": "Möbelmontage",
-            "image": {
-              "src": "/svg/furniture-assembly.svg"
-            }
-          },
-          {
-            "title": "Küchenreinigung",
-            "image": {
-              "src": "/svg/kitchen-cleaning.svg"
-            }
-          }
-        ],
-        "button": {
-          "cta": "Alle Leistungen ansehen",
-          "variant": "solid",
-          "icon": "forward"
-        }
-      },
       "story": {
         "title": "Ein junges Unternehmen mit klarer Vision",
         "paragraphs": [
@@ -969,144 +971,10 @@
           }
         ]
       },
-      "testimonials": {
+      "reviewsSection": {
         "title": "Vertrauenswürdig von Berliner Haushalten.",
         "subtitle": "Sehen Sie, was unsere Kunden sagen.",
         "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
-        "items": [
-          {
-            "id": "mh-2025-04-25-kleinmachnow-1",
-            "author": "MyHammer-Kunde aus Kleinmachnow",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "So wie besprochen. Pünktlich. Schnell. Preis ok. Gerne wieder. Dank dir nochmal!!",
-            "date": "2025-04-25"
-          },
-          {
-            "id": "mh-2025-04-12-kittel",
-            "author": "Kittel, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Hassan ist der perfekte Handwerker, hilfsbereit, kreativ, findet immer eine Lösung und macht seine Arbeit sehr gut! ...",
-            "date": "2025-04-12"
-          },
-          {
-            "id": "mh-2025-03-27-berlin-1",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Alles prima",
-            "date": "2025-03-27"
-          },
-          {
-            "id": "mh-2025-03-20-berlin-2",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr schnelle Auftragsannahme und Ausführung. Möglichkeiten wurden abgesprochen; sehr gute Ausführung. Vielen Dank! Gerne wieder.",
-            "date": "2025-03-20"
-          },
-          {
-            "id": "mh-2025-03-17-berlin-3",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Der Auftrag wurde sehr zeitnah und ordentlich ausgeführt. Kommunikation einwandfrei, sofort reagiert. Sehr empfehlenswert!",
-            "date": "2025-03-17"
-          },
-          {
-            "id": "mh-2025-03-10-berlin-4",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr freundlich und zuverlässig. Arbeiten schnell und zu meiner Zufriedenheit erledigt.",
-            "date": "2025-03-10"
-          },
-          {
-            "id": "mh-2025-02-06-berlin-1star",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 1,
-            "text": "Sehr enttäuscht ... (lange Beschwerde über Verspätung, Material, Werkzeuge, Abbruch der Arbeiten).",
-            "date": "2025-02-06",
-            "reply": {
-              "text": "Es tut uns leid, dass Sie unzufrieden waren. Unsere Vereinbarung umfasste Zimmer+Flur sowie Laminat (ohne Materialien und ohne Türen). Spätere Änderungen wurden hinzugefügt. Wir bemühen uns stets um bestmögliche Arbeit und stehen für Klärungen bereit.",
-              "date": "2025-02-21"
-            }
-          },
-          {
-            "id": "mh-2025-02-01-sabine",
-            "author": "Sabine, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Super schnelle Antwort und Termin, sehr freundlich und zuverlässig. Für alles eine Lösung! Top, wir sind begeistert.",
-            "date": "2025-02-01"
-          },
-          {
-            "id": "mh-2025-01-30-berlin-5",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Top-Leistung. Kurzfristige Terminvereinbarung, pünktlich, zuverlässig, professionell, freundlich. Bei Bedarf gerne wieder.",
-            "date": "2025-01-30"
-          },
-          {
-            "id": "mh-2025-01-26-berlin-6",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Schneller Termin. Saubere Arbeit. Gerne wieder.",
-            "date": "2025-01-26"
-          },
-          {
-            "id": "mh-2025-01-23-berlin-7",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr zufrieden mit der Umsetzung. Ersatzarmatur direkt besorgt und schnell eingebaut. Alles problemlos.",
-            "date": "2025-01-23"
-          },
-          {
-            "id": "mh-2025-01-21-berlin-8",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Alles super. Gerne wieder.",
-            "date": "2025-01-21"
-          },
-          {
-            "id": "mh-2025-01-19-mashu",
-            "author": "Mashu, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sauber gearbeitet, höflich und pünktlich. Auf jeden Fall weiterzuempfehlen.",
-            "date": "2025-01-19"
-          },
-          {
-            "id": "mh-2025-01-16-sarah-ullrich",
-            "author": "Sarah Ullrich, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr schnelle Verfügbarkeit, kompetent, sympathisch! Preis-Leistung ok, Kommunikation super!",
-            "date": "2025-01-16"
-          },
-          {
-            "id": "mh-2025-01-04-berlin-9",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Zuverlässig und sehr freundlich.",
-            "date": "2025-01-04"
-          },
-          {
-            "id": "mh-2024-12-31-kristina",
-            "author": "Kristina, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr freundlich, schnell und zuverlässig. Wasserhahn & Filter super installiert. Sehr zu empfehlen.",
-            "date": "2024-12-31"
-          }
-        ],
         "button": {
           "cta": "Mehr Bewertungen",
           "variant": "solid",
@@ -1309,7 +1177,7 @@
           "icon": "password"
         },
         "forgotPassword": {
-          "cta": "Link zum Zurücksetzen senden",
+          "cta": "Zurücksetzen",
           "variant": "solid",
           "icon": "password"
         },
@@ -1322,12 +1190,18 @@
           "cta": "Nachricht senden",
           "variant": "solid",
           "icon": "contact"
+        },
+        "resendEmail": {
+          "cta": "E-Mail erneut senden",
+          "variant": "solid",
+          "icon": "resendEmail"
         }
       },
       "placeholders": {
         "name": "Vollständiger Name",
         "email": "E-Mail-Adresse",
         "password": "Passwort",
+        "forgotPassword": "Passwort vergessen?",
         "address": "Adresse",
         "phone": "Telefonnummer",
         "message": "Ihre Frage oder Nachricht"
@@ -1428,7 +1302,45 @@
           "garden_chair": "Gartenstuhl",
           "plant_shelf": "Pflanzenregal"
         }
-      }
+      },
+      "servicesList": [
+        {
+          "title": "Wohnungsreinigung",
+          "description": "Gründliche Reinigung für Wohnungen, Häuser und Büros. Ideal für regelmäßige Pflege oder einmalige Grundreinigung.",
+          "icon": "house-cleaning",
+          "cta": "Mehr erfahren"
+        },
+        {
+          "title": "Hausmeisterservice",
+          "description": "Zuverlässige Wartung und Betreuung Ihrer Immobilie – von kleinen Reparaturen bis zur Objektpflege.",
+          "icon": "home-service",
+          "cta": "Mehr erfahren"
+        },
+        {
+          "title": "Möbelmontage",
+          "description": "Schneller und fachgerechter Aufbau von Möbeln aller Art – sicher, präzise und stressfrei.",
+          "icon": "furniture-assembly",
+          "cta": "Mehr erfahren"
+        },
+        {
+          "title": "Küchenmontage",
+          "description": "Professionelle Montage kompletter Küchen, inklusive Arbeitsplatten, Geräteanschluss und Anpassungen vor Ort.",
+          "icon": "kitchen-assembly",
+          "cta": "Mehr erfahren"
+        },
+        {
+          "title": "Fensterreinigung",
+          "description": "Streifenfreie Sauberkeit für Fenster, Glasflächen und Wintergärten – innen und außen.",
+          "icon": "windows-cleaning",
+          "cta": "Mehr erfahren"
+        },
+        {
+          "title": "Küchenreinigung",
+          "description": "Gründliche und hygienische Reinigung Ihrer gesamten Küche – inklusive aller Elektrogeräte.",
+          "icon": "kitchen-cleaning",
+          "cta": "Mehr erfahren"
+        }
+      ]
     },
     "values": {
       "title": "Unsere Werte",
@@ -1732,6 +1644,10 @@
       "verified": "E-Mail erfolgreich bestätigt.",
       "missingEmail": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
       "missingClient": "Kundeninformationen fehlen."
+    },
+    "accessDenied": {
+      "title": "Hoppla, etwas fehlt!",
+      "description": "Der Zugriff auf diese Seite ist eingeschränkt. Sie verfügen nicht über die erforderlichen Berechtigungen."
     }
   },
   "popups": {
@@ -1923,6 +1839,10 @@
     "CONTACT_MESSAGE_CREATED": {
       "title": "Nachricht erstellt",
       "description": "Ihre Kontaktanfrage wurde erfolgreich übermittelt. Bitte bestätigen Sie Ihre E-Mail-Adresse, um fortzufahren."
+    },
+    "CONTACT_MESSAGE_RECEIVED": {
+      "title": "Nachricht empfangen",
+      "description": "Ihre Nachricht wurde erfolgreich übermittelt. Unser Team wird sich so bald wie möglich mit Ihnen in Verbindung setzen."
     },
     "CONTACT_VERIFIED": {
       "title": "E-Mail bestätigt",

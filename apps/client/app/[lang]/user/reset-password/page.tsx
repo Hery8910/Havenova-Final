@@ -1,144 +1,172 @@
 'use client';
-import { Suspense, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
-import { useUser } from '../../../../../../packages/contexts/user/UserContext';
-import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
-import { useRouter } from 'next/navigation';
-import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
-// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-import AlertPopup from '../../../../../../packages/components/alert/alertPopup/AlertPopup';
-import { resetPassword } from '../../../../../../packages/services/userService';
-import { useSearchParams } from 'next/navigation';
+
+import { useUser } from '@/packages/contexts/user/UserContext';
+import { useClient } from '@/packages/contexts/client/ClientContext';
+import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { resetPasswordConfirm } from '@/packages/services/userService';
+
+import { FormWrapper } from '@/packages/components/userForm';
+import { AlertWrapper } from '@/packages/components/alert';
+import Loading from '@/packages/components/loading/Loading';
 
 export interface ResetPasswordData {
   title: string;
   info: string;
   button: string;
 }
+export interface accessDeniedText {
+  title: string;
+  description: string;
+}
 
 interface ResetPasswordFormData {
-  email: string;
-  clientId: string;
   password: string;
 }
 
 const ResetPassword = () => {
+  const { user, setUser } = useUser();
   const { client } = useClient();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+
   const { texts } = useI18n();
+  const formText = texts.components.form;
   const popups = texts.popups;
-  const resetPasswordText: ResetPasswordData = texts?.pages?.user.resetPasswordText;
+  const accessDenied: accessDeniedText = texts.message.accessDenied;
+  const resetPasswordText: ResetPasswordData = texts.pages.user.resetPasswordText;
+
+  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    status: number;
     title: string;
     description: string;
   } | null>(null);
 
-  const handleResetPassword = async (formData: ResetPasswordFormData) => {
+  const token = searchParams.get('token');
+  const status = searchParams.get('status');
+  const code = searchParams.get('code');
+  const http = Number(searchParams.get('http')) || 200;
+
+  useEffect(() => {
+    if (!token) {
+      setAlert({
+        status: 403,
+        title: accessDenied.title,
+        description: accessDenied.description,
+      });
+      setTimeout(() => router.push('/'), 3000);
+      return;
+    }
+
+    if (status === 'error') {
+      const popupData = popups?.[code || 'GLOBAL_INTERNAL_ERROR'] || {};
+      setAlert({
+        status: http || 400,
+        title: popupData.title || 'Error',
+        description:
+          popupData.description ||
+          texts.popups.GLOBAL_INTERNAL_ERROR.description ||
+          'Invalid or expired link.',
+      });
+      setTimeout(() => router.push('/'), 3000);
+    }
+  }, [token, status, code, http, popups, router, texts.popups]);
+
+  const handleResetPassword = async (data: ResetPasswordFormData) => {
+    setLoading(true);
     try {
-      if (!token) {
+      if (!token || !client?._id) {
         setAlert({
-          type: 'error',
-          title:
-            popups.USER_VERIFY_INVALID_OR_EXPIRED_TOKEN.title ||
-            'Ungültiger oder abgelaufener Link.',
-          description:
-            popups.USER_VERIFY_INVALID_OR_EXPIRED_TOKEN.description ||
-            'Dein Bestätigungslink ist ungültig oder abgelaufen. Bitte fordere eine neue Bestätigungs-E-Mail an.',
+          status: 400,
+          title: popups.GLOBAL_INTERNAL_ERROR.title,
+          description: 'Missing data or invalid link.',
         });
         return;
       }
-      if (!client?._id) {
+
+      if (!data.password) {
         setAlert({
-          type: 'error',
-          title: popups.GLOBAL_INTERNAL_ERROR.title || 'Unerwarteter Fehler.',
-          description:
-            popups.GLOBAL_INTERNAL_ERROR.description ||
-            'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.',
-        });
-        return;
-      }
-      if (!formData.password) {
-        setAlert({
-          type: 'error',
-          title: popups.USER_EDIT_EMPTY_NEW_PASSWORD.title || 'Neues Passwort fehlt.',
-          description:
-            popups.USER_EDIT_EMPTY_NEW_PASSWORD.description ||
-            'Bitte geben Sie ein neues Passwort ein, um Ihr Konto zu aktualisieren.',
+          status: 400,
+          title: popups.USER_EDIT_EMPTY_NEW_PASSWORD.title,
+          description: popups.USER_EDIT_EMPTY_NEW_PASSWORD.description,
         });
         return;
       }
 
       const payload = {
-        ...formData,
-        token,
+        token, // 🔑 viene de la URL
+        newPassword: data.password,
+        clientId: client._id,
       };
-      const response = await resetPassword(payload);
-      if (response.success) {
+
+      const response = await resetPasswordConfirm(payload);
+
+      if (response.success && response.user) {
+        // ✅ Actualizar el contexto del usuario logueado automáticamente
+        setUser({
+          ...response.user,
+          isLogged: true,
+        });
+
         const popupData = popups?.[response.code] || {};
         setAlert({
-          type: 'success',
-          title: popupData.title || popups.USER_EDIT_USER_UPDATE_SUCCESS.title,
-          description: popupData.description || popups.USER_EDIT_USER_UPDATE_SUCCESS.description,
+          status: 200,
+          title: popupData.title || popups.USER_PASSWORD_RESET_SUCCESS.title,
+          description: popupData.description || popups.USER_PASSWORD_RESET_SUCCESS.description,
         });
+
         setTimeout(() => {
           setAlert(null);
           router.push('/');
         }, 3000);
       }
     } catch (error: any) {
-      if (error.response && error.response.data) {
+      console.error('❌ Error resetting password:', error);
+      if (error.response?.data) {
         const errorKey = error.response.data.errorCode;
         const popupData = popups?.[errorKey] || {};
         setAlert({
-          type: 'error',
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title || 'Unerwarteter Fehler.',
+          status: error.response.status,
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
           description:
             popupData.description ||
             error.response.data.message ||
-            popups.GLOBAL_INTERNAL_ERROR.description ||
-            'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.',
+            popups.GLOBAL_INTERNAL_ERROR.description,
         });
       } else {
         setAlert({
-          type: 'error',
-          title: popups.GLOBAL_INTERNAL_ERROR.title || 'Unerwarteter Fehler.',
-          description:
-            popups.GLOBAL_INTERNAL_ERROR.description ||
-            'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.',
+          status: 500,
+          title: popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <section className={styles.section}>
-        {/* <main className={styles.main}>
-          <header className={`${styles.header} card`}>
-            <h1 className={styles.h1}>{resetPasswordText?.title}</h1>
-            <p>{resetPasswordText?.info}</p>
-          </header>
-          <aside className={styles.aside_form}>
-            <UserContactForm
-              fields={['password', 'clientId', 'email']}
-              onSubmit={handleResetPassword}
-              mode="resetPassword"
-            />
-          </aside>
-        </main>
-        {alert && (
-          <AlertPopup
-            type={alert.type}
-            title={alert.title}
-            description={alert.description}
-            onClose={() => setAlert(null)}
-          />
-        )} */}
+    <main className={styles.main}>
+      <header className={styles.header}>
+        <h1 className={styles.h1}>{resetPasswordText.title}</h1>
+        <p className={styles.p}>* {resetPasswordText.info}</p>
+      </header>
+
+      <section className={`${styles.section} card`}>
+        <FormWrapper<ResetPasswordFormData>
+          fields={['password']}
+          onSubmit={handleResetPassword}
+          button={formText.button.resetPassword}
+          initialValues={{ password: '' }}
+        />
       </section>
-    </Suspense>
+
+      {loading && <Loading theme={user?.theme || 'light'} />}
+      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
+    </main>
   );
 };
 

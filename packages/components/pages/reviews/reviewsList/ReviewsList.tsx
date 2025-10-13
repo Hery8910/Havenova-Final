@@ -1,6 +1,6 @@
 // src/components/Testimonials.tsx
 
-import { ReviewStars } from '../../../common/testimonials/reviewStars';
+import { ReviewStars } from '../../../common/reviews/reviewStars';
 import styles from './ReviewsList.module.css';
 
 export interface ReviewsListlItem {

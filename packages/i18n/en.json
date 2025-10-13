@@ -214,6 +214,74 @@
         }
       }
     },
+    "services": {
+      "hero": {
+        "headline1": "Professional Cleaning and Maintenance Services",
+        "headline2": "Reliable. Transparent. Personal.",
+        "subtitle": "Whether it’s cleaning, furniture assembly or small repairs – we take care of your home and business with care and expertise. Choose the right service and relax while we handle the rest.",
+        "image": "/images/pages/services-hero.jpg"
+      },
+      "servicesSection": {
+        "heading": "Our Services",
+        "description": "We provide a wide range of professional cleaning and maintenance services for homes and businesses. Choose the service that fits your needs and receive a non-binding quote.",
+        "button": {
+          "cta": "View All Services",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      },
+      "howItWorks": {
+        "heading": "How our service works",
+        "steps": [
+          {
+            "title": "1. Submit your request",
+            "description": "Select the service you need and fill out the request form with all relevant details. You can specify the date, type of work, and any special requirements directly in the form."
+          },
+          {
+            "title": "2. Review and response",
+            "description": "Our team carefully reviews your request and contacts you to clarify details or provide a non-binding quote. This ensures that you receive exactly the service you need."
+          },
+          {
+            "title": "3. Appointment confirmation",
+            "description": "Once you accept our offer, we’ll schedule an appointment that suits you best. You’ll receive a confirmation with all the necessary information – quick, transparent and reliable."
+          },
+          {
+            "title": "4. Service execution",
+            "description": "Our team arrives on time and carries out the work professionally and thoroughly. After completion, you can review the result and leave your feedback."
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently asked questions about our services",
+        "items": [
+          {
+            "question": "How can I request a service?",
+            "answer": "You can request any of our services directly through the form on our website. Simply provide all relevant details – our team will contact you with a quote or appointment suggestion."
+          },
+          {
+            "question": "How is the service price calculated?",
+            "answer": "Each request is evaluated individually. The price depends on the type, scope and effort required for the service. After submitting your request, you’ll receive a transparent, non-binding quote."
+          },
+          {
+            "question": "Does your team bring the necessary materials and tools?",
+            "answer": "Yes, our team usually provides all required materials and tools. If you have specific preferences, you can mention them directly in the request form."
+          },
+          {
+            "question": "Can I reschedule or cancel an appointment?",
+            "answer": "Of course. You can reschedule or cancel your appointment free of charge up to 24 hours in advance. After that, a small fee may apply as the work has already been scheduled."
+          }
+        ],
+        "cta": {
+          "title": "Still have questions?",
+          "description": "Find more detailed answers on our FAQ page or get in touch if your question is not listed."
+        },
+        "button": {
+          "cta": "View all FAQs",
+          "variant": "solid",
+          "icon": "forward"
+        }
+      }
+    },
     "blog": {
       "title": "Latest from our Blog",
       "subTitle": "News & Insights for Your Home",
@@ -240,34 +308,17 @@
         "description": "Create an account to manage your requests and explore your benefits.",
         "cta": {
           "title": "Already have an account?",
-          "label": "Go to Login",
+          "label": "Login",
           "url": "/user/login"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+        }
       },
       "login": {
-        "tilte": "Welcome Back",
+        "title": "Welcome Back",
         "cta": {
           "title": "Don't have an account yet?",
-          "label": "Go to Register",
+          "label": "Sign Up",
           "url": "/user/register"
-        },
-        "forgotPassword": {
-          "title": "Forgot Password?",
-          "label": "Reset your password",
-          "url": "/user/forgot-password"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+        }
       },
       "edit": {
         "title": "Edit",
@@ -892,55 +943,6 @@
           }
         ]
       },
-      "servicesPreview": {
-        "title": "Our Services",
-        "subtitle": "Tailored solutions for your home",
-        "description": "From furniture assembly to deep cleaning – we deliver reliable services for every situation. Discover how we can help you today.",
-
-        "items": [
-          {
-            "title": "Kitchen Assembly",
-            "image": {
-              "src": "/svg/kitchen-assembly.svg"
-            }
-          },
-          {
-            "title": "Home Services",
-            "image": {
-              "src": "/svg/home-service.svg"
-            }
-          },
-          {
-            "title": "Window Cleaning",
-            "image": {
-              "src": "/svg/windows-cleaning.svg"
-            }
-          },
-          {
-            "title": "Apartment Cleaning",
-            "image": {
-              "src": "/svg/house-cleaning.svg"
-            }
-          },
-          {
-            "title": "Furniture Assembly",
-            "image": {
-              "src": "/svg/furniture-assembly.svg"
-            }
-          },
-          {
-            "title": "Kitchen Cleaning",
-            "image": {
-              "src": "/svg/kitchen-cleaning.svg"
-            }
-          }
-        ],
-        "button": {
-          "cta": "View All Services",
-          "variant": "solid",
-          "icon": "forward"
-        }
-      },
       "story": {
         "title": "A Young Company with a Clear Vision",
         "paragraphs": [
@@ -980,142 +982,10 @@
           }
         ]
       },
-      "testimonials": {
+      "reviewsSection": {
         "title": "Trusted by Berlin households.",
         "subtitle": "See what our customers are saying.",
         "description": "At Havenova, we continually strive to improve our services. Your feedback helps us develop better solutions and enhance our offerings.",
-        "items": [
-          {
-            "author": "MyHammer-Kunde aus Kleinmachnow",
-            "rating": 5,
-            "text": "So wie besprochen. Pünktlich. Schnell. Preis ok. Gerne wieder. Dank dir nochmal!!",
-            "date": "2025-04-25"
-          },
-          {
-            "id": "mh-2025-04-12-kittel",
-            "author": "Kittel, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Hassan ist der perfekte Handwerker, hilfsbereit, kreativ, findet immer eine Lösung und macht seine Arbeit sehr gut! ...",
-            "date": "2025-04-12"
-          },
-          {
-            "id": "mh-2025-03-27-berlin-1",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Alles prima",
-            "date": "2025-03-27"
-          },
-          {
-            "id": "mh-2025-03-20-berlin-2",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr schnelle Auftragsannahme und Ausführung. Möglichkeiten wurden abgesprochen; sehr gute Ausführung. Vielen Dank! Gerne wieder.",
-            "date": "2025-03-20"
-          },
-          {
-            "id": "mh-2025-03-17-berlin-3",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Der Auftrag wurde sehr zeitnah und ordentlich ausgeführt. Kommunikation einwandfrei, sofort reagiert. Sehr empfehlenswert!",
-            "date": "2025-03-17"
-          },
-          {
-            "id": "mh-2025-03-10-berlin-4",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr freundlich und zuverlässig. Arbeiten schnell und zu meiner Zufriedenheit erledigt.",
-            "date": "2025-03-10"
-          },
-          {
-            "id": "mh-2025-02-06-berlin-1star",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 1,
-            "text": "Sehr enttäuscht ... (lange Beschwerde über Verspätung, Material, Werkzeuge, Abbruch der Arbeiten).",
-            "date": "2025-02-06",
-            "reply": {
-              "text": "Es tut uns leid, dass Sie unzufrieden waren. Unsere Vereinbarung umfasste Zimmer+Flur sowie Laminat (ohne Materialien und ohne Türen). Spätere Änderungen wurden hinzugefügt. Wir bemühen uns stets um bestmögliche Arbeit und stehen für Klärungen bereit.",
-              "date": "2025-02-21"
-            }
-          },
-          {
-            "id": "mh-2025-02-01-sabine",
-            "author": "Sabine, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Super schnelle Antwort und Termin, sehr freundlich und zuverlässig. Für alles eine Lösung! Top, wir sind begeistert.",
-            "date": "2025-02-01"
-          },
-          {
-            "id": "mh-2025-01-30-berlin-5",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Top-Leistung. Kurzfristige Terminvereinbarung, pünktlich, zuverlässig, professionell, freundlich. Bei Bedarf gerne wieder.",
-            "date": "2025-01-30"
-          },
-          {
-            "id": "mh-2025-01-26-berlin-6",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Schneller Termin. Saubere Arbeit. Gerne wieder.",
-            "date": "2025-01-26"
-          },
-          {
-            "id": "mh-2025-01-23-berlin-7",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr zufrieden mit der Umsetzung. Ersatzarmatur direkt besorgt und schnell eingebaut. Alles problemlos.",
-            "date": "2025-01-23"
-          },
-          {
-            "id": "mh-2025-01-21-berlin-8",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Alles super. Gerne wieder.",
-            "date": "2025-01-21"
-          },
-          {
-            "id": "mh-2025-01-19-mashu",
-            "author": "Mashu, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sauber gearbeitet, höflich und pünktlich. Auf jeden Fall weiterzuempfehlen.",
-            "date": "2025-01-19"
-          },
-          {
-            "id": "mh-2025-01-16-sarah-ullrich",
-            "author": "Sarah Ullrich, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr schnelle Verfügbarkeit, kompetent, sympathisch! Preis-Leistung ok, Kommunikation super!",
-            "date": "2025-01-16"
-          },
-          {
-            "id": "mh-2025-01-04-berlin-9",
-            "author": "MyHammer-Kunde aus Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Zuverlässig und sehr freundlich.",
-            "date": "2025-01-04"
-          },
-          {
-            "id": "mh-2024-12-31-kristina",
-            "author": "Kristina, Berlin",
-            "avatarUrl": null,
-            "rating": 5,
-            "text": "Sehr freundlich, schnell und zuverlässig. Wasserhahn & Filter super installiert. Sehr zu empfehlen.",
-            "date": "2024-12-31"
-          }
-        ],
         "button": {
           "cta": "More reviews",
           "variant": "solid",
@@ -1338,7 +1208,7 @@
           "icon": "password"
         },
         "forgotPassword": {
-          "cta": "Send reset link",
+          "cta": "Reset",
           "variant": "solid",
           "icon": "password"
         },
@@ -1351,12 +1221,18 @@
           "cta": "Send message",
           "variant": "solid",
           "icon": "contact"
+        },
+        "resendEmail": {
+          "cta": "Resend email",
+          "variant": "solid",
+          "icon": "resendEmail"
         }
       },
       "placeholders": {
         "name": "Full name",
         "email": "Email address",
         "password": "Password",
+        "forgotPassword": "Forgot Password?",
         "address": "Address",
         "phone": "Phone number",
         "message": "Your question or message"
@@ -1437,7 +1313,45 @@
           "garden_chair": "Garden Chair",
           "plant_shelf": "Plant Shelf"
         }
-      }
+      },
+      "servicesList": [
+        {
+          "title": "Home Cleaning",
+          "description": "Thorough cleaning for apartments, houses, and offices – ideal for regular maintenance or deep cleaning.",
+          "icon": "house-cleaning",
+          "cta": "Learn more"
+        },
+        {
+          "title": "Property Maintenance",
+          "description": "Reliable upkeep and care of your property – from small repairs to complete facility maintenance.",
+          "icon": "home-service",
+          "cta": "Learn more"
+        },
+        {
+          "title": "Furniture Assembly",
+          "description": "Fast and professional assembly of all types of furniture – safe, precise, and stress-free.",
+          "icon": "furniture-assembly",
+          "cta": "Learn more"
+        },
+        {
+          "title": "Kitchen Assembly",
+          "description": "Professional installation of complete kitchens, including countertops, appliance connection, and on-site adjustments.",
+          "icon": "kitchen-assembly",
+          "cta": "Learn more"
+        },
+        {
+          "title": "Window Cleaning",
+          "description": "Streak-free cleaning for windows, glass surfaces, and conservatories – inside and out.",
+          "icon": "windows-cleaning",
+          "cta": "Learn more"
+        },
+        {
+          "title": "Kitchen Cleaning",
+          "description": "Thorough and hygienic deep cleaning of your entire kitchen – including all appliances.",
+          "icon": "kitchen-cleaning",
+          "cta": "Learn more"
+        }
+      ]
     },
     "values": {
       "title": "Our Core Values",
@@ -1741,6 +1655,10 @@
       "verified": "Email successfully verified.",
       "missingEmail": "Please enter your email.",
       "missingClient": "Client information missing."
+    },
+    "accessDenied": {
+      "title": "Oops, something is missing!",
+      "description": "Access to this page is restricted.You do not have the required permissions."
     }
   },
   "popups": {
@@ -1932,6 +1850,10 @@
     "CONTACT_MESSAGE_CREATED": {
       "title": "Message created",
       "description": "Your contact request has been submitted successfully. Please verify your email address to proceed."
+    },
+    "CONTACT_MESSAGE_RECEIVED": {
+      "title": "Message received",
+      "description": "Your message has been successfully delivered. Our team will get back to you as soon as possible."
     },
     "CONTACT_VERIFIED": {
       "title": "Email verified",

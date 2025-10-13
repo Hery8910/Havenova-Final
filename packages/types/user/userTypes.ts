@@ -1,3 +1,4 @@
+import { IoLanguage } from 'react-icons/io5';
 import { ServiceRequest } from '../services';
 
 // src/types/User.ts
@@ -23,8 +24,10 @@ export interface RegisterPayload {
   email: string;
   password: string;
   address: string;
-  profileImage: string;
   phone: string;
+  profileImage: string;
+  language: string;
+  theme: 'light' | 'dark';
   clientId: string;
 }
 export interface LoginPayload {
@@ -64,8 +67,7 @@ export interface ForgotPasswordPayload {
   language?: string;
 }
 export interface ResetPasswordPayload {
-  email: string;
-  token: string;
+  authToken: string | null;
   password: string;
   clientId: string;
 }
@@ -78,4 +80,5 @@ export interface FaqMessageData {
   message: string;
   language: string;
   clientId: string;
+  originPath: string;
 }

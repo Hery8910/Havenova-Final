@@ -13,21 +13,19 @@ import WelcomeOfferBanner from '@/packages/components/common/welcomeOfferBanner/
 import WelcomeOfferBannerSkeleton from '@/packages/components/common/welcomeOfferBanner/WelcomeOfferBanner.skeleton';
 import HowItWorks from '@/packages/components/common/howItWorks/HowItWorks';
 import WhyChoose from '@/packages/components/common/whyChoose/WhyChoose';
-import ServicesPreview from '@/packages/components/common/servicePreview/ServicesPreview';
 import FinalCTA from '@/packages/components/common/finalCTA/FinalCTA';
 import Loading from '@/packages/components/loading/Loading';
 import HomeHeroSkeleton from '@/packages/components/pages/homeHero/HomeHero.skeleton';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   FAQSection,
   FAQSectionSkeleton,
   FinalCTASkeleton,
   HowItWorksSkeleton,
-  ServicesPreviewSkeleton,
-  Testimonials,
-  TestimonialsSkeleton,
-  WhyChooseSkeleton,
+  ReviewsSection,
+  ReviewsSectionSkeleton,
 } from '@/packages/components/common';
+import { ServicesSection } from '@/packages/components/pages';
 
 export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | 'faq' | 'ctaFinal';
 
@@ -37,12 +35,14 @@ export default function Home() {
   const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
+  const searchParams = useSearchParams();
 
   const homeHeroTexts = texts.pages.home.hero;
   const howItWorksTexts = texts.components.common.howItWorks;
-  const servicesPreviewTexts = texts.components.common.servicesPreview;
+  const servicesSectionTexts = texts.pages.services.servicesSection;
+  const servicesList = texts.components.services.servicesList;
   const whyChooseTexts = texts.components.common.whyChoose;
-  const testimonialsTexts = texts.components.common.testimonials;
+  const reviewsSectionTexts = texts.components.common.reviewsSection;
   const reviewsLists = texts.components.reviews.reviews;
   const faqPreviewTexts = texts.components.common.faq;
   const welcomeOfferTexts = texts.components.common.welcomeOfferBanner;
@@ -55,6 +55,26 @@ export default function Home() {
     title: string;
     description: string;
   } | null>(null);
+
+  useEffect(() => {
+    const status = searchParams.get('status');
+    const code = searchParams.get('code');
+    const http = Number(searchParams.get('http'));
+
+    if (status && code) {
+      const popupData = texts.popups?.[code] || {};
+      setAlert({
+        status: http || (status === 'success' ? 200 : 400),
+        title: popupData.title || (status === 'success' ? 'Success' : 'Error'),
+        description: popupData.description || '',
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 3000);
+      // limpiar la URL
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -106,6 +126,10 @@ export default function Home() {
     }
   };
 
+  const handleItemClick = (service: string) => {
+    router.push(href(lang, `/services/${service}`));
+  };
+
   if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
 
   return (
@@ -116,10 +140,8 @@ export default function Home() {
         <HomeHeroSkeleton />
       )}
 
-      {welcomeOfferTexts ? (
+      {welcomeOfferTexts && user.role === 'guest' && (
         <WelcomeOfferBanner {...welcomeOfferTexts} onClick={() => handleNavigation('offer')} />
-      ) : (
-        <WelcomeOfferBannerSkeleton />
       )}
 
       {howItWorksTexts ? (
@@ -128,22 +150,21 @@ export default function Home() {
         <HowItWorksSkeleton />
       )}
 
-      {servicesPreviewTexts ? (
-        <ServicesPreview
-          {...servicesPreviewTexts}
-          theme={user?.theme ?? 'light'}
-          onClick={() => handleNavigation('about')}
-        />
-      ) : (
-        <ServicesPreviewSkeleton />
-      )}
+      <ServicesSection
+        services={false}
+        {...servicesSectionTexts}
+        items={servicesList}
+        theme={user.theme}
+        handleItemClick={handleItemClick}
+        handleCTAClick={() => handleNavigation('services')}
+      />
 
-      {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
+      <WhyChoose {...whyChooseTexts} />
 
-      {testimonialsTexts ? (
-        <Testimonials {...testimonialsTexts} items={reviewsLists} />
+      {reviewsSectionTexts ? (
+        <ReviewsSection {...reviewsSectionTexts} items={reviewsLists} />
       ) : (
-        <TestimonialsSkeleton />
+        <ReviewsSectionSkeleton />
       )}
 
       {faqPreviewTexts ? (

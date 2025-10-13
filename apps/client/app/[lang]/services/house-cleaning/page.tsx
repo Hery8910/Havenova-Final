@@ -1,6 +1,6 @@
 import Hero from '../../../../../../packages/components/pages/homeHero/HomeHero';
 // import ServiceCart from '../../../../../packages/components/services/serviceCart/ServiceCart';
-import Reviews from '../../../../../../packages/components/common/testimonials/testimonialsPreview/Testimonials';
+import Reviews from '../../../../../../packages/components/common/reviews/reviewsSection/ReviewsSection';
 // import BlogList from "../../../components/blog/blogList/page";
 
 import styles from './page.module.css';

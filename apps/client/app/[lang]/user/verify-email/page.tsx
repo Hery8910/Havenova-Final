@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useUser } from '../../../../../../packages/contexts/user/UserContext';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
@@ -8,114 +8,117 @@ import AlertPopup from '../../../../../../packages/components/alert/alertPopup/A
 
 import styles from './page.module.css';
 import { resendVerificationEmail } from '../../../../../../packages/services/userService';
-import MessageBox from '../../../../../../packages/components/messageBox/MessageBox';
-// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-import { VerifyEmailPayload } from '../../../../../packages/types/User';
+import { VerifyEmailPayload } from '../../../../../../packages/types';
+import { useLang } from '../../../../../../packages/hooks';
+import { href } from '../../../../../../packages/utils/navigation';
+import { FormWrapper } from '../../../../../../packages/components/userForm';
+import Loading from '../../../../../../packages/components/loading/Loading';
+import { AlertWrapper } from '../../../../../../packages/components/alert';
 
 export interface VerifyEmailData {
   title: string;
   info: string;
-  input: { button: string; placeholder: string; info: string };
 }
 
 const VerifyEmail = () => {
-  const { user, setUser } = useUser();
+  const { user, refreshUser } = useUser();
   const { client } = useClient();
-  const [open, setOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const lang = useLang();
+
+  const status = searchParams.get('status');
+  const code = searchParams.get('code');
+  const http = Number(searchParams.get('http')) || 200;
 
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
-  const messages = texts.message.verifyEmail;
+  const formText = texts.components.form;
   const verifyEmail: VerifyEmailData = texts?.pages?.user.verifyEmail;
+
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    status: number;
     title: string;
     description: string;
   } | null>(null);
 
-  const [message, setMessage] = useState<{
-    message: string;
-    className: 'error' | 'info' | 'success';
-  }>({ message: messages.alreadySend, className: 'success' });
-
   useEffect(() => {
-    const verifyUser = async () => {
-      try {
-        if (!user?.isVerified) return;
+    if (!status) return;
 
-        const popupData = popups?.USER_ALREADY_VERIFIED || {};
-        setOpen(false);
-        setAlert({
-          type: 'success',
-          title: popupData.title || 'Benutzer bereits bestätigt',
-          description:
-            popupData.description ||
-            'Deine E-Mail war bereits bestätigt. Du bist jetzt eingeloggt und kannst Havenova uneingeschränkt verwenden.',
-        });
+    if (status === 'error') {
+      const popupData = popups?.[code || 'GLOBAL_INTERNAL_ERROR'] || {};
+      setAlert({
+        status: http || 400,
+        title: popupData.title || 'Error',
+        description:
+          popupData.description ||
+          texts.popups.GLOBAL_INTERNAL_ERROR.description ||
+          'Invalid or expired link.',
+      });
+      setTimeout(() => router.push('/'), 3000);
+      return;
+    }
 
-        // NUEVO: lógica condicional por rol
-        const redirectPath = user.role === 'worker' ? '/user/profile/edit' : '/';
+    // ✅ Solo para status=success
+    const popupData = popups?.[code || 'USER_REGISTER_SUCCESS'] || {};
+    setAlert({
+      status: http || 200,
+      title: popupData.title || texts.popups.USER_REGISTER_SUCCESS.title,
+      description:
+        popupData.description ||
+        texts.popups.USER_REGISTER_SUCCESS.description ||
+        'Bitte überprüfen Sie Ihre E-Mails, um Ihre Adresse zu bestätigen und Ihr Konto zu aktivieren.',
+    });
 
-        setTimeout(() => router.push(redirectPath), 3000);
-      } catch (error: any) {
-        const popupData = popups?.INTERNAL_ERROR || {};
-        setAlert({
-          type: 'error',
-          title: popupData.title || 'Unerwarteter Fehler',
-          description:
-            popupData.description ||
-            'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.',
-        });
+    setTimeout(async () => {
+      setAlert(null);
+      if (!user?.isVerified) {
+        await refreshUser(); // 👈 actualiza el contexto solo si aún no está verificado
       }
-    };
+      router.push(href(lang, '/'));
+    }, 3000);
+  }, [status, code, http, user?.isVerified]);
 
-    verifyUser();
-  }, [
-    router,
-    setUser,
-    user?.isVerified,
-    user?.role,
-    popups?.INTERNAL_ERROR,
-    popups?.USER_ALREADY_VERIFIED,
-  ]);
-
-  const handleResendEmail = async (formData: VerifyEmailPayload) => {
+  const handleResendEmail = async (data: VerifyEmailPayload) => {
+    setLoading(true);
     try {
       if (!client?._id) {
         const popupData = popups?.INTERNAL_ERROR || {};
         setAlert({
-          type: 'error',
-          title: popupData.title || 'Unerwarteter Fehler',
-          description:
-            popupData.description ||
-            'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.',
+          status: 500,
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
         });
         return;
       }
-      if (!formData.email || !formData.language || !formData.clientId) {
+
+      if (!data.email || !data.language || !data.clientId) {
         return;
       }
-      const response = await resendVerificationEmail(formData);
+
+      const payload: VerifyEmailPayload = {
+        email: data.email || user?.email || '',
+        language: user?.language || 'de',
+        clientId: client._id,
+      };
+
+      const response = await resendVerificationEmail(payload);
+
       if (response.success) {
         const popupData = popups?.[response.code] || {};
         setAlert({
-          type: 'success',
-          title: popupData.title || 'Bestätigungs-E-Mail neue gesendet',
-          description:
-            popupData.description ||
-            'Eine neue Bestätigungs-E-Mail wurde an deine Adresse gesendet. Bitte überprüfe dein Postfach.',
+          status: 200,
+          title: popupData.title || popups.EMAIL_VERIFICATION_RESENT.title,
+          description: popupData.description || response.message,
         });
       }
-      setTimeout(() => {
-        router.push('/user/verify-email');
-      }, 3000);
     } catch (error: any) {
       if (error.response && error.response.data) {
-        const errorKey = error.response.data.errorCode || error.response.data.code;
+        const errorKey = error.response.data.errorCode;
         const popupData = popups?.[errorKey] || {};
         setAlert({
-          type: 'error',
+          status: error.response.status,
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
           description:
             popupData.description ||
@@ -124,54 +127,36 @@ const VerifyEmail = () => {
         });
       } else {
         setAlert({
-          type: 'error',
+          status: 500,
           title: popups.GLOBAL_INTERNAL_ERROR.title,
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (!verifyEmail) {
-    return (
-      <section className={styles.section}>
-        <div
-          className={styles.skeleton}
-          style={{ width: '100%', height: 504, background: '#eee' }}
-        />
-      </section>
-    );
-  }
-
   return (
     <main className={styles.main}>
-      {/* <section className={styles.section}>
-        <header className={styles.header}>
-          <h1 className={styles.h1}>{verifyEmail.title}</h1>
-        </header>
-        {!open ? (
-          <article className={styles.article}>
-            <MessageBox message={message.message} className={message.className} />
-            <button onClick={() => setOpen(true)} className={styles.link} type="button">
-              {verifyEmail.info}
-            </button>
-          </article>
-        ) : (
-          <UserContactForm
-            fields={['email', 'language', 'clientId']}
-            onSubmit={handleResendEmail}
-            mode="register"
-          />
-        )}
-      </section>
-      {alert && (
-        <AlertPopup
-          type={alert.type}
-          title={alert.title}
-          description={alert.description}
-          onClose={() => setAlert(null)}
+      <header className={styles.header}>
+        <h1 className={styles.h1}>{verifyEmail.title}</h1>
+        <p className={styles.p}>* {verifyEmail.info}</p>
+      </header>
+      <section className={`${styles.section} card`}>
+        <FormWrapper<VerifyEmailPayload>
+          fields={['email']}
+          onSubmit={handleResendEmail}
+          button={formText.button.resendEmail}
+          initialValues={{
+            clientId: '',
+            email: '',
+            language: '',
+          }}
         />
-      )} */}
+      </section>
+      {loading && <Loading theme={user?.theme || 'light'} />}
+      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 };

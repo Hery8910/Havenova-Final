@@ -51,7 +51,7 @@ const Profile = () => {
 
   return (
     <section className={styles.section}>
-      {/* <header className={styles.header}>
+      <header className={styles.header}>
         <h3 className={styles.h1}>
           {profile.greeting} {user.name}
         </h3>
@@ -110,7 +110,7 @@ const Profile = () => {
             </tr>
           </tbody>
         </table>
-      </main> */}
+      </main>
     </section>
   );
 };

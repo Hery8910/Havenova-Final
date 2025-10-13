@@ -32,6 +32,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ texts, handleSubmit, bu
           message: '',
           language: '',
           clientId: '',
+          originPath: '',
         }}
       />
     </section>

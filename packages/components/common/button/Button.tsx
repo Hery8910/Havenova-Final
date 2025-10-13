@@ -1,21 +1,18 @@
 import styles from './Button.module.css';
 
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaCheck,
-  FaTimes,
-  FaUpload,
-  FaDownload,
-  FaEdit,
-} from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaCheck, FaTimes, FaUpload, FaEdit } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
-import { MdOutlineAppRegistration, MdOutlineContactSupport, MdPassword } from 'react-icons/md';
+import {
+  MdOutlineAppRegistration,
+  MdOutlineContactSupport,
+  MdOutlineMarkEmailRead,
+  MdPassword,
+} from 'react-icons/md';
 import { MdLogin } from 'react-icons/md';
 
 export interface ButtonProps {
   cta: string;
-  variant?: 'solid' | 'outline';
+  variant?: 'solid' | 'outline' | 'borderless';
   icon:
     | 'forward'
     | 'back'
@@ -41,7 +38,7 @@ const icons: Record<string, JSX.Element> = {
   back: <FaChevronLeft />,
   confirm: <FaCheck />,
   cancel: <FaTimes />,
-  open: <FaChevronRight />, // puedes elegir otro si prefieres
+  open: <FaChevronRight />,
   close: <FaTimes />,
   upload: <FaUpload />,
   download: <FiDownload />,
@@ -50,6 +47,7 @@ const icons: Record<string, JSX.Element> = {
   login: <MdLogin />,
   password: <MdPassword />,
   contact: <MdOutlineContactSupport />,
+  resendEmail: <MdOutlineMarkEmailRead />,
 };
 
 const Button: React.FC<ButtonProps> = ({

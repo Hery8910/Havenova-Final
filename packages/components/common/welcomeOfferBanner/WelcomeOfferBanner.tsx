@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './WelcomeOfferBanner.module.css';
 import Button, { ButtonProps } from '../button/Button';
+import { WelcomeOfferBannerSkeleton } from '.';
 
 export interface OfferBannerContent {
   header: string;
@@ -22,6 +23,7 @@ const WelcomeOfferBanner: React.FC<OfferBannerContent> = ({
   image,
   onClick,
 }) => {
+  if (!header || !description) return <WelcomeOfferBannerSkeleton />;
   return (
     <section
       className={styles.section}

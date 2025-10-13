@@ -3,9 +3,12 @@ import { Suspense, useState } from 'react';
 import styles from './page.module.css';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
-// import UserContactForm from '../../../../../packages/components/Form/UserContactForm';
-// import { AlertPopup } from '../../../../../packages/components/alertPopup/AlertPopup';
 import { forgotPassword } from '../../../../../../packages/services/userService';
+import { useLang } from '../../../../../../packages/hooks';
+import { useUser } from '../../../../../../packages/contexts/user';
+import { FormWrapper } from '../../../../../../packages/components/userForm';
+import Loading from '../../../../../../packages/components/loading/Loading';
+import { AlertWrapper } from '../../../../../../packages/components/alert';
 
 export interface ForgotPasswordData {
   title: string;
@@ -20,43 +23,51 @@ interface ForgotPasswordFormData {
 }
 
 const ForgotPassword = () => {
+  const { user } = useUser();
   const { client } = useClient();
   const { texts } = useI18n();
+  const [loading, setLoading] = useState(false);
+  const lang = useLang();
+
   const popups = texts.popups;
+  const formText = texts.components.form;
   const forgotPasswordText: ForgotPasswordData = texts?.pages?.user.forgotPasswordText;
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    status: number;
     title: string;
     description: string;
   } | null>(null);
 
-  const handleForgotPassword = async (formData: ForgotPasswordFormData) => {
+  const handleForgotPassword = async (data: ForgotPasswordFormData) => {
+    setLoading(true);
+
     try {
       if (!client?._id) {
+        const popupData = popups?.INTERNAL_ERROR || {};
         setAlert({
-          type: 'error',
-          title: popups.CLIENT_MISSING_CLIENT_ID.title || 'Hoppla, etwas fehlt!',
-          description:
-            popups.CLIENT_MISSING_CLIENT_ID.description ||
-            'Wir konnten Ihre Registrierung nicht verarbeiten, da einige Informationen fehlen. Bitte laden Sie die Seite neu oder kontaktieren Sie den Support.',
+          status: 500,
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
         });
         return;
       }
-      if (!formData.email) {
-        setAlert({
-          type: 'error',
-          title: popups.USER_FORGOT_PASSWORD_EMPTY_EMAIL.title || 'E-Mail erforderlich',
-          description:
-            popups.USER_FORGOT_PASSWORD_EMPTY_EMAIL.description ||
-            'Bitte geben Sie Ihre E-Mail-Adresse ein, um das Zurücksetzen des Passworts zu starten.',
-        });
+
+      if (!data.email || !data.language || !data.clientId) {
         return;
       }
-      const response = await forgotPassword(formData);
+
+      const payload: ForgotPasswordFormData = {
+        email: data.email || user?.email || '',
+        language: user?.language || 'de',
+        clientId: client._id,
+      };
+
+      const response = await forgotPassword(payload);
+
       if (response.success) {
         const popupData = popups?.[response.code] || {};
         setAlert({
-          type: 'success',
+          status: 200,
           title: popupData.title || popups.USER_FORGOT_PASSWORD_EMAIL_SENDED.title,
           description:
             popupData.description || popups.USER_FORGOT_PASSWORD_EMAIL_SENDED.description,
@@ -67,7 +78,7 @@ const ForgotPassword = () => {
         const errorKey = error.response.data.errorCode;
         const popupData = popups?.[errorKey] || {};
         setAlert({
-          type: 'error',
+          status: error.response.status,
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
           description:
             popupData.description ||
@@ -76,40 +87,37 @@ const ForgotPassword = () => {
         });
       } else {
         setAlert({
-          type: 'error',
+          status: 500,
           title: popups.GLOBAL_INTERNAL_ERROR.title,
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <section className={styles.section}>
-        {/* <main className={styles.main}>
-          <header className={`${styles.header} card`}>
-            <h1 className={styles.h1}>{forgotPasswordText?.title}</h1>
-            <p>{forgotPasswordText?.info}</p>
-          </header>
-          <aside className={styles.aside_form}>
-            <UserContactForm
-              fields={['email', 'clientId', 'language']}
-              onSubmit={handleForgotPassword}
-              mode="forgotPassword"
-            />
-          </aside>
-        </main>
-        {alert && (
-          <AlertPopup
-            type={alert.type}
-            title={alert.title}
-            description={alert.description}
-            onClose={() => setAlert(null)}
-          />
-        )} */}
+    <main className={styles.main}>
+      <header className={styles.header}>
+        <h1 className={styles.h1}>{forgotPasswordText.title}</h1>
+        <p className={styles.p}>* {forgotPasswordText.info}</p>
+      </header>
+      <section className={`${styles.section} card`}>
+        <FormWrapper<ForgotPasswordFormData>
+          fields={['email']}
+          onSubmit={handleForgotPassword}
+          button={formText.button.forgotPassword}
+          initialValues={{
+            clientId: '',
+            email: '',
+            language: '',
+          }}
+        />
       </section>
-    </Suspense>
+      {loading && <Loading theme={user?.theme || 'light'} />}
+      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
+    </main>
   );
 };
 

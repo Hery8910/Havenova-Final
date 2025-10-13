@@ -1,6 +1,5 @@
 // src/components/Testimonials.tsx
-import ReviewStars from '../reviewStars/ReviewStars';
-import styles from './Testimonials.module.css';
+import styles from './ReviewsSection.module.css';
 import Button, { ButtonProps } from '../../button/Button';
 import { ReviewsList } from '../../../pages';
 import { ReviewsListlItem } from '../../../pages/reviews/reviewsList/ReviewsList';
@@ -26,7 +25,7 @@ export interface GbpReview {
   };
 }
 
-export interface TestimonialsProps {
+export interface ReviewsSectionProps {
   title: string;
   subtitle: string;
   description: string;
@@ -36,7 +35,7 @@ export interface TestimonialsProps {
   onClick: () => void;
 }
 
-const Testimonials: React.FC<TestimonialsProps> = ({
+const ReviewsSection: React.FC<ReviewsSectionProps> = ({
   title,
   subtitle,
   description,
@@ -63,4 +62,4 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   );
 };
 
-export default Testimonials;
+export default ReviewsSection;

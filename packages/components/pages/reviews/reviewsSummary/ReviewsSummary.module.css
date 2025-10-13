@@ -6,7 +6,9 @@
   justify-content: space-around;
   align-items: center;
 }
-.header {
+.header,
+.aside {
+  width: 100%;
   max-width: 550px;
   display: flex;
   flex-direction: column;
@@ -15,6 +17,7 @@
   gap: 16px;
 }
 .wrapper {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;

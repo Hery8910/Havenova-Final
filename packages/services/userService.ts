@@ -50,6 +50,16 @@ export const resetPassword = async (payload: ResetPasswordPayload): Promise<ApiR
   return response.data;
 };
 
+// RESET PASSWORD CONFIRM
+export const resetPasswordConfirm = async (payload: {
+  token: string;
+  newPassword: string;
+  clientId: string;
+}) => {
+  const response = await api.post('/api/users/reset-password-confirm', payload);
+  return response.data;
+};
+
 // LOGOUT
 export const logoutUser = async (): Promise<ApiResponse<null>> => {
   const response = await api.post<ApiResponse<null>>(
@@ -73,7 +83,7 @@ export const getUser = async (clientId: string): Promise<ApiResponse<User>> => {
 export const resendVerificationEmail = async (
   payload: VerifyEmailPayload
 ): Promise<ApiResponse<null>> => {
-  const response = await api.post<ApiResponse<null>>('/api/users/resend-verification', { payload });
+  const response = await api.post<ApiResponse<null>>('/api/users/resend-verification', payload);
   return response.data;
 };
 

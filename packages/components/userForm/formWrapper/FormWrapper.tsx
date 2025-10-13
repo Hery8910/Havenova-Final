@@ -13,11 +13,19 @@ import {
 import { FormData, FormField } from '../../../types/userForm';
 import { useI18n } from '../../../contexts/i18n';
 import { ButtonProps } from '../../common/button/Button';
+import { useRouter } from 'next/navigation';
+import { useLang } from '../../../hooks/useLang';
+import { href } from '../../../utils/navigation';
+import { useUser } from '../../../contexts/user';
+import { User } from '../../../types';
+import { useClient } from '../../../contexts/client/ClientContext';
+import { useEffect } from 'react';
 
 interface WrapperProps<T extends Record<string, any>> {
   fields: (keyof T)[];
   onSubmit: (data: T) => void | Promise<void>;
   button: ButtonProps;
+  showForgotPassword?: boolean;
   initialValues: T;
 }
 
@@ -25,6 +33,7 @@ export interface PlaceholdersProps {
   name: string;
   email: string;
   password: string;
+  forgotPassword: string;
   address: string;
   phone: string;
   message: string;
@@ -33,10 +42,17 @@ export default function FormWrapper<T extends Record<string, any>>({
   fields,
   onSubmit,
   button,
+  showForgotPassword,
   initialValues,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
+  const { user } = useUser();
+  const { client } = useClient();
+  const router = useRouter();
+  const lang = useLang();
+
   const formError = texts.components.form.error;
+  const forgotPassword = texts.components.form.forgotPassword;
   const placeholderText: PlaceholdersProps = texts.components.form.placeholders;
 
   const [formData, setFormData] = useState<T>(initialValues);
@@ -44,6 +60,18 @@ export default function FormWrapper<T extends Record<string, any>>({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      name: user?.name || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      address: user?.address || '',
+      clientId: client?._id || '',
+      language: user?.language || 'de',
+    }));
+  }, [user?.email, user?.language, client?._id]);
 
   const validators: Record<string, (value: string) => string[]> = {
     name: validateName,
@@ -80,6 +108,9 @@ export default function FormWrapper<T extends Record<string, any>>({
     }
   };
 
+  const handleForgotPassword = () => {
+    router.push(href(lang, '/user/forgot-password'));
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
@@ -95,13 +126,22 @@ export default function FormWrapper<T extends Record<string, any>>({
     if (Object.values(newErrors).some(Boolean)) return;
     onSubmit(formData); // ✅ aquí ya es de tipo T
 
-    setFormData(initialValues);
+    setFormData({
+      ...initialValues,
+      name: user?.name || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      address: user?.address || '',
+      clientId: client?._id || '',
+      language: user?.language || 'de',
+    } as T);
     setErrors({});
     setTouched({});
   };
 
   return (
     <Form
+      user={user}
       fields={fields}
       formData={formData}
       errors={errors}
@@ -110,8 +150,10 @@ export default function FormWrapper<T extends Record<string, any>>({
       onChange={handleChange}
       onBlur={handleBlur}
       onTogglePassword={() => setShowPassword((prev) => !prev)}
+      forgotPassword={handleForgotPassword}
       onSubmit={handleSubmit}
       button={button}
+      showForgotPassword={showForgotPassword}
       placeholder={placeholderText}
     />
   );

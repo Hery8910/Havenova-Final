@@ -1,4 +1,5 @@
 // src/components/WhyChoose.tsx
+import { WhyChooseSkeleton } from '.';
 import styles from './WhyChoose.module.css';
 import Image from 'next/image';
 
@@ -14,6 +15,8 @@ export interface WhyChooseProps {
 }
 
 const WhyChoose: React.FC<WhyChooseProps> = ({ title, description, points }) => {
+  if (!title || !description || !points) return <WhyChooseSkeleton />;
+
   return (
     <section
       className={styles.section}

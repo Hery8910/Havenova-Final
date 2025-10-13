@@ -1,5 +1,5 @@
 // src/components/HomeHero.tsx
-import { ReviewStars } from '../../../common/testimonials/reviewStars';
+import { ReviewStars } from '../../../common/reviews/reviewStars';
 import styles from './ReviewsSummary.module.css';
 
 export interface ReviewsSummaryProps {
