@@ -19,7 +19,7 @@ export function NavbarContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const theme = user?.theme || 'light';
-  const navbarConfig: NavbarConfig | undefined = texts?.components?.navbar;
+  const navbarConfig: NavbarConfig = texts?.components?.navbar;
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,7 +35,7 @@ export function NavbarContainer() {
     setMenuOpen(false);
   };
 
-  if (!navbarConfig) return <NavbarSkeleton />;
+  if (!navbarConfig || !user) return <NavbarSkeleton />;
 
   return (
     <NavbarView

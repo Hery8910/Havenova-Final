@@ -312,7 +312,9 @@
       "edit": {
         "title": "Bearbeiten",
         "description": "Halten Sie Ihre Angaben aktuell, um einen reibungslosen Service zu gewährleisten.",
-        "subheading": "Persönliche Informationen"
+        "theme": { "title": "Seitenauftritt", "theme": "Aussehen", "lang": "Sprache" },
+        "personalInfo": "Persönliche Informationen",
+        "password": "Passwort"
       },
       "forgotPasswordText": {
         "title": "Setze dein Passwort zurück",
@@ -1247,8 +1249,16 @@
             "wall": "An der Wand montiert?",
             "comment": "Hinterlassen Sie uns einen Kommentar"
           },
-          "back_button": "Zurück",
-          "submit": "Einreichen"
+          "back_button": {
+            "cta": "Zurück",
+            "variant": "borderless",
+            "icon": "back"
+          },
+          "submit_button": {
+            "cta": "Einreichen",
+            "variant": "solid",
+            "icon": "confirm"
+          }
         },
         "steps": {
           "1": {

@@ -5,6 +5,7 @@ import ThemeToggler from '../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import styles from './Navbar.module.css';
 import { AvatarContainer } from '../user';
+import { User } from '../../types';
 
 // Tipos base
 export interface BaseNavItem {
@@ -40,7 +41,7 @@ export interface NavbarConfig {
 }
 
 export interface NavbarViewProps {
-  user: { role: ProfileAuth; theme: 'light' | 'dark' } | null;
+  user: User;
   navbarConfig?: NavbarConfig;
   theme: 'light' | 'dark';
   isMobile: boolean;

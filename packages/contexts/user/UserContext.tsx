@@ -193,7 +193,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
       try {
         const response = await updateUser({
           clientId,
-          email: user.email, // 👈 agrega el email
+          email: user.email,
           language: newLang,
         });
         const updated = response.data as User;

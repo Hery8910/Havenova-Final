@@ -12,6 +12,22 @@ export const saveRequestItemToStorage = (item: ServiceRequestItem) => {
   }
 };
 
+export const updateRequestItemInStorage = (id: string, updatedItem: ServiceRequestItem) => {
+  try {
+    const stored = localStorage.getItem('service_request_items');
+    if (!stored) return;
+
+    const items: ServiceRequestItem[] = JSON.parse(stored);
+    const index = items.findIndex((item) => item.id === id);
+    if (index === -1) return;
+
+    items[index] = updatedItem;
+    localStorage.setItem('service_request_items', JSON.stringify(items));
+  } catch (err) {
+    console.error('❌ Error updating item in storage:', err);
+  }
+};
+
 export const getRequestItemsFromStorage = (): ServiceRequestItem[] => {
   try {
     const stored = localStorage.getItem('service_request_items');
@@ -30,18 +46,19 @@ export const getRequestsByType = <T extends ServiceRequestItem>(
   return all.filter((req): req is T => req.serviceType === type);
 };
 
-export const removeRequestItemFromStorage = (index: number) => {
+export const removeRequestItemFromStorage = (id: string) => {
   try {
     const stored = localStorage.getItem('service_request_items');
     if (!stored) return;
 
-    const items = JSON.parse(stored);
+    const items: ServiceRequestItem[] = JSON.parse(stored);
     if (!Array.isArray(items)) return;
 
-    const updated = items.filter((_, i) => i !== index);
+    const updated = items.filter((item) => item.id !== id);
+
     localStorage.setItem('service_request_items', JSON.stringify(updated));
   } catch (err) {
-    console.error('❌ Error removing item from storage', err);
+    console.error('❌ Error removing item from storage by id:', err);
   }
 };
 

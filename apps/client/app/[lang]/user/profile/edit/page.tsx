@@ -6,16 +6,25 @@ import { updateUser } from '../../../../../../../packages/services/userService';
 import styles from './page.module.css';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
-// import UserContactForm from '../../../../../../packages/components/Form/UserContactForm';
-import { useRouter } from 'next/navigation';
-// import ChangePassword from '../../../../../../packages/components/user/changePassword/ChangePassword';
-// import AvatarSelector from '../../../../../../packages/components/user/avatarSelector/AvatarSelector';
 import AlertPopup from '../../../../../../../packages/components/alert/alertPopup/AlertPopup';
+import { FormWrapper } from '../../../../../../../packages/components/userForm';
+import { UpdateUserPayload } from '../../../../../../../packages/types';
+import { useRouter } from 'next/navigation';
+import ThemeToggler from '../../../../../../../packages/components/themeToggler/ThemeToggler';
+import LanguageSwitcher from '../../../../../../../packages/components/languageSwitcher/LanguageSwitcher';
 
+export interface ThemeData {
+  title: string;
+  theme: string;
+  lang: string;
+}
 export interface EditData {
   title: string;
   description: string;
   subheading: string;
+  theme: ThemeData;
+  personalInfo: string;
+  password: string;
 }
 interface EditFormData {
   name: string;
@@ -34,15 +43,17 @@ export default function Edit() {
   const { texts } = useI18n();
   const popups = texts.popups;
   const edit: EditData = texts?.pages?.user.edit;
+  const formText = texts.components.form;
+
   const [alert, setAlert] = useState<{
     type: 'success' | 'error';
     title: string;
     description: string;
   } | null>(null);
 
-  const handleEdit = async (formData: EditFormData) => {
+  const handleEdit = async (data: UpdateUserPayload) => {
     try {
-      if (!formData.name || !formData.address || !formData.phone || !formData.clientId) {
+      if (!data.name || !data.address || !data.phone || !data.clientId) {
         setAlert({
           type: 'error',
           title: popups.GLOBAL_INTERNAL_ERROR.title,
@@ -50,7 +61,7 @@ export default function Edit() {
         });
         return;
       }
-      const response = await updateUser(formData);
+      const response = await updateUser(data);
       if (response.success) {
         const popupData = popups?.[response.code] || {};
         setAlert({
@@ -87,19 +98,39 @@ export default function Edit() {
 
   if (!user) return <p>Loading...</p>;
   return (
-    <main className={styles.main}>
-      {/* <header className={styles.header}>
+    <section className={`${styles.section} card`}>
+      <header className={styles.header}>
         <h3>{edit.title}</h3>
         <p>{edit.description}</p>
       </header>
       <article className={styles.article}>
-        <h4 className={styles.h4}>{edit.subheading}</h4>
-        <AvatarSelector />
-        <ChangePassword />
-        <UserContactForm
-          fields={['name', 'address', 'email', 'phone', 'clientId']}
+        <h4 className={styles.h4}>{edit.theme.title}</h4>
+        <aside>
+          <div>
+            <p>{edit.theme.theme}</p>
+            <ThemeToggler />
+          </div>
+          <div>
+            <p>{edit.theme.lang}</p>
+            <LanguageSwitcher />
+          </div>
+        </aside>
+      </article>
+      <article className={styles.article}>
+        <h4 className={styles.h4}>{edit.personalInfo}</h4>
+        <FormWrapper<UpdateUserPayload>
+          fields={['name', 'address', 'phone', 'clientId']}
           onSubmit={handleEdit}
-          mode="edit"
+          button={formText.button.edit}
+          showForgotPassword
+          initialValues={{
+            name: '',
+            address: '',
+            phone: '',
+            theme: user.theme,
+            language: user.language,
+            clientId: '',
+          }}
         />
       </article>
       {alert && (
@@ -109,7 +140,7 @@ export default function Edit() {
           description={alert.description}
           onClose={() => setAlert(null)}
         />
-      )} */}
-    </main>
+      )}
+    </section>
   );
 }

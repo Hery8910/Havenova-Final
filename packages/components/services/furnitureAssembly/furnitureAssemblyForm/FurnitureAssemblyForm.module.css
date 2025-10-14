@@ -1,22 +1,20 @@
 .main {
-  margin: 70px auto;
-  margin-bottom: 200px;
+  margin: 150px auto;
   max-width: 1200px;
   width: 100%;
-  height: 350px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 .main_header {
-  max-width: 400px;
-  padding-left: 64px;
+  max-width: 450px;
+  height: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 16px;
+  color: var(--text-secondary);
 }
 .header_aside {
   border-radius: 50px;
@@ -29,9 +27,6 @@
   color: var(--brand-secondary);
 }
 .ul_main {
-  position: absolute;
-  top: 0px;
-  right: 100px;
   width: 400px;
   height: 600px;
   display: flex;
@@ -39,10 +34,6 @@
   justify-content: space-between;
   align-items: center;
   list-style: none;
-  background: var(--brand-primary);
-  background: linear-gradient(0deg, var(--brand-accent) 0%, var(--brand-primary) 80%);
-  box-shadow: var(--shadow-dark);
-  border-radius: 16px;
   color: var(--text-secundary);
   padding: 32px;
 }
@@ -93,11 +84,13 @@
 .header_p {
   padding: 8px 16px;
   border-radius: 50px;
-  background-color: var(--bg-card);
+  background-color: var(--bg-card-1);
   color: var(--text-secondary);
+  font-weight: 500;
 }
 .h4 {
-  font-weight: 700;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .aside {
@@ -120,7 +113,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: 16px;
 }
 
@@ -140,6 +133,7 @@
   outline: none;
   font-weight: 400;
   font-size: clamp(14px, 3vw, 18px);
+  color: var(--text-secondary);
 }
 .input::placeholder {
   color: inherit;
@@ -150,8 +144,9 @@
   justify-content: center;
 }
 .counter_p {
-  border-top: 1px solid var(--bg-card);
-  border-bottom: 1px solid var(--bg-card);
+  border-top: 1px solid var(--bg-card-1);
+  border-bottom: 1px solid var(--bg-card-1);
+  color: var(--text-secondary);
   width: 40px;
   height: 32px;
   display: flex;
@@ -160,8 +155,9 @@
 }
 .add_button,
 .rest_button {
-  background: var(--bg-card);
-  border: 1px solid var(--bg-card);
+  border: 1px solid var(--bg-card-1);
+  background-color: var(--bg-card-3);
+  color: var(--text-secondary);
   border-radius: 4px 0 0 4px;
   width: 40px;
   height: 32px;
@@ -175,9 +171,9 @@
   text-align: left;
   min-width: 100%;
   min-height: 100px;
-  border: 1px solid var(--bg-card);
-  background-color: var(--bg-card);
-  color: var(--text-primary);
+  border: 1px solid var(--bg-card-1);
+  background-color: var(--bg-card-3);
+  color: var(--text-secondary);
   border-radius: 8px;
   padding: 8px;
   height: 60px;
@@ -185,7 +181,7 @@
   font-size: clamp(14px, 3vw, 18px);
 }
 .textarea::placeholder {
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 .button_div {
   width: 100%;
@@ -209,6 +205,7 @@
 }
 
 .label {
+  color: var(--text-secondary);
   font-weight: 400;
   font-size: clamp(14px, 3vw, 18px);
 }
@@ -261,10 +258,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--brand-accent);
+  background-color: var(--bg-card-3);
   transition: 0.4s;
   border-radius: 28px;
-  border: 1px solid var(--brand-accent);
+  border: 1px solid var(--bg-card-1);
 }
 
 .slider:before {
@@ -281,11 +278,11 @@
 }
 
 .switch input:checked + .slider {
-  background-color: var(--brand-primary);
-  border: 1px solid var(--brand-secondary);
+  background-color: var(--bg-card-3);
+  border: 1px solid var(--bg-card-1);
 }
 
 .switch input:checked + .slider:before {
   transform: translateX(24px);
-  background-color: var(--brand-secondary);
+  background-color: var(--brand-primary);
 }

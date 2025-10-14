@@ -50,67 +50,65 @@ const Profile = () => {
   if (user.role === 'guest') return null;
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} card`}>
       <header className={styles.header}>
-        <h3 className={styles.h1}>
+        <h1 className={styles.h1}>
           {profile.greeting} {user.name}
-        </h3>
+        </h1>
         <p className={styles.header_p}>{profile.manageAccount}</p>
       </header>
-      <main className={styles.main}>
-        <article className={styles.article}>
-          <Image
-            src={user.profileImage}
-            alt="Profile"
-            width={100}
-            height={100}
-            className={styles.image}
-          />
-          <div className={styles.div}>
-            <h3>{user.name}</h3>
-            <h4>
-              {profile.memberSince} {new Date(user.createdAt).toLocaleDateString()}
-            </h4>
-            <p
-              className={styles.verified_p}
-              style={!user.isVerified ? { color: '#fa4903' } : { color: '#00ad34' }}
-            >
-              {user.isVerified ? profile.verified : profile.notVerified}
-              <TbPointFilled />
-            </p>
-          </div>
-        </article>
-        <table className={styles.table}>
-          <tbody className={styles.tbody}>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.name}</th>
-              <td className={styles.td}>{user.name}</td>
-            </tr>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.address}</th>
-              <td className={styles.td}>{user.address}</td>
-            </tr>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.phone}</th>
-              <td className={styles.td}>{user.phone}</td>
-            </tr>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.email}</th>
-              <td className={styles.td}>{user.email}</td>
-            </tr>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.theme.title}</th>
-              <td className={styles.td}>
-                {user.theme === 'light' ? profile.theme.light : profile.theme.dark}
-              </td>
-            </tr>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{profile.language.title}</th>
-              <td className={styles.td}>{profile.language.lang}</td>
-            </tr>
-          </tbody>
-        </table>
-      </main>
+      <article className={styles.article}>
+        <Image
+          src={user.profileImage}
+          alt="Profile"
+          width={70}
+          height={70}
+          className={styles.image}
+        />
+        <div className={styles.div}>
+          <h2 className={styles.h2}>{user.name}</h2>
+          <h4 className={styles.h4}>
+            {profile.memberSince} {new Date(user.createdAt).toLocaleDateString()}
+          </h4>
+          <p
+            className={styles.verified_p}
+            style={!user.isVerified ? { color: '#fa4903' } : { color: '#00ad34' }}
+          >
+            {user.isVerified ? profile.verified : profile.notVerified}
+            <TbPointFilled />
+          </p>
+        </div>
+      </article>
+      <table className={styles.table}>
+        <tbody className={styles.tbody}>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.name}</th>
+            <td className={styles.td}>{user.name}</td>
+          </tr>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.address}</th>
+            <td className={styles.td}>{user.address}</td>
+          </tr>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.phone}</th>
+            <td className={styles.td}>{user.phone}</td>
+          </tr>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.email}</th>
+            <td className={styles.td}>{user.email}</td>
+          </tr>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.theme.title}</th>
+            <td className={styles.td}>
+              {user.theme === 'light' ? profile.theme.light : profile.theme.dark}
+            </td>
+          </tr>
+          <tr className={styles.tr}>
+            <th className={styles.th}>{profile.language.title}</th>
+            <td className={styles.td}>{profile.language.lang}</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   );
 };

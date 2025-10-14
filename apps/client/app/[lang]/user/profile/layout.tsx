@@ -31,7 +31,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
   return (
     <main className={styles.layout}>
       <Sidebar items={userProfileNavItems} context="user-profile" />
-      <section className={styles.content}>{children}</section>
+      {children}
     </main>
   );
 }

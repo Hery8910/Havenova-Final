@@ -12,6 +12,7 @@ import { useI18n } from '../../contexts/i18n';
 import { useUser } from '../../contexts/user';
 import { Loading } from '../loading';
 import { AlertWrapper } from '../alert';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 export interface NavItem {
   label: string;
@@ -27,6 +28,7 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
   const { user } = useUser();
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
@@ -41,7 +43,8 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 800);
+      setIsMobile(window.innerWidth <= 1024);
+      setIsOpen(window.innerWidth <= 1024);
     };
 
     handleResize();
@@ -63,7 +66,7 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
         });
         setTimeout(() => {
           setAlert(null);
-          router.push('/'); // Redirige a home o donde prefieras
+          router.push('/');
         }, 3000);
       } else {
         setAlert({
@@ -73,7 +76,6 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
         });
       }
     } catch (error) {
-      console.error(error);
       setAlert({
         status: 500,
         title: popups.GLOBAL_INTERNAL_ERROR.title,
@@ -85,14 +87,25 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
   };
 
   return (
-    <nav className={`${styles.nav} ${isMobile ? `${styles.mobile}` : ''}`}>
+    <nav className={`${styles.nav} ${isOpen ? `${styles.close}` : `${styles.open}`} card`}>
+      <button
+        className={styles.open_button}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          setIsMobile(!isMobile);
+        }}
+      >
+        {isMobile ? <IoIosArrowForward /> : <IoIosArrowBack />}
+      </button>
       <ul className={styles.ul}>
         {items.map(({ label, href, icon }) => (
           <li key={href} className={styles.li}>
             <Link
               key={href}
               href={href}
-              className={`${styles.link} ${pathname === href ? styles.active : ''}`}
+              className={`${styles.link} ${
+                isMobile ? `${styles.link_close}` : `${styles.link_open}`
+              } ${pathname === `/${user?.language}${href}` ? styles.active : ''}`}
             >
               {icon} {!isMobile && <p>{label}</p>}
             </Link>
@@ -102,8 +115,13 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
       <ul className={styles.ul}>
         <li className={styles.link}>{/* <SupportModal context={context} /> */}</li>
         <li className={styles.link}>
-          <button className={styles.logout} onClick={handleLogout}>
-            <LuLogOut /> Logout
+          <button
+            className={`${styles.button} ${
+              isMobile ? `${styles.link_close}` : `${styles.link_open}`
+            }`}
+            onClick={handleLogout}
+          >
+            <LuLogOut /> {!isMobile && <p>Logout</p>}
           </button>
         </li>
       </ul>

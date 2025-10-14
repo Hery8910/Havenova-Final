@@ -46,30 +46,36 @@ export interface ServiceRequest {
 // --------------------------------------
 // Definición de cada tipo de servicio
 // --------------------------------------
+export interface FurnitureAssemblyDetails {
+  id: string;
+  title: string;
+  icon: ServiceIcon;
+  notes?: string;
+  type: string /*  */;
+  location: string;
+  quantity: number;
+  position: 'floor' | 'wall';
+  width?: string;
+  height?: string;
+  depth?: string;
+  doors?: number;
+  drawers?: number;
+}
 export interface FurnitureAssemblyRequest {
   id: string;
   serviceType: 'furniture-assembly';
   price: number;
   estimatedDuration: number;
   icon: ServiceIcon;
-  details: BaseServiceDetails & {
-    type: string;
-    location: string;
-    quantity: number;
-    position: string;
-    width?: string;
-    height?: string;
-    depth?: string;
-    doors?: number;
-    drawers?: number;
-    notes?: string;
-  };
+  details: FurnitureAssemblyDetails;
 }
 
 export interface KitchenAssemblyRequest {
+  id: string;
   serviceType: 'kitchen-assembly';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     length: number;
     lowerCabinets: number;
@@ -86,9 +92,11 @@ export interface KitchenAssemblyRequest {
 }
 
 export interface KitchenCleaningRequest {
+  id: string;
   serviceType: 'kitchen-cleaning';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     appliances: string[];
     size: number;
@@ -96,9 +104,11 @@ export interface KitchenCleaningRequest {
 }
 
 export interface HouseCleaningRequest {
+  id: string;
   serviceType: 'house-cleaning';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     surface: number;
     livingRoom: number;
@@ -111,9 +121,11 @@ export interface HouseCleaningRequest {
 }
 
 export interface WindowCleaningRequest {
+  id: string;
   serviceType: 'window-cleaning';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     windows: number;
     doors: number;
@@ -122,9 +134,11 @@ export interface WindowCleaningRequest {
 }
 
 export interface HouseServiceRequest {
+  id: string;
   serviceType: 'house-service';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     label: string;
     category: string;

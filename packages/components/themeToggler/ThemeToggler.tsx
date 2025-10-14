@@ -14,7 +14,6 @@ const ThemeToggler = () => {
   const theme: 'dark' | 'light' = user?.theme || 'light';
 
   useEffect(() => {
-    // Cada vez que cambia el theme, actualiza el DOM y branding
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     if (client?.branding?.[theme]) {

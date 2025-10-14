@@ -323,7 +323,9 @@
       "edit": {
         "title": "Edit",
         "description": "Keep your details up to date to ensure a seamless service experience.",
-        "subheading": "Personal information"
+        "theme": { "title": "Appearance", "theme": "Theme", "lang": "Language" },
+        "personalInfo": "Personal information",
+        "password": "Password"
       },
       "forgotPasswordText": {
         "title": "Reset your password",
@@ -1258,17 +1260,25 @@
             "wall": "Mounted on wall?",
             "comment": "Leave us a comment"
           },
-          "back_button": "Back",
-          "submit": "Submit"
+          "back_button": {
+            "cta": "Back",
+            "variant": "borderless",
+            "icon": "back"
+          },
+          "submit_button": {
+            "cta": "Submit",
+            "variant": "solid",
+            "icon": "confirm"
+          }
         },
         "steps": {
           "1": {
-            "title": "Choose the location",
+            "title": "Choose location",
             "description": "Select the room where the furniture will be assembled.",
             "step": "Location"
           },
           "2": {
-            "title": "Choose the furniture",
+            "title": "Choose furniture",
             "description": "Select the type of furniture to be assembled.",
             "step": "Furniture"
           },
