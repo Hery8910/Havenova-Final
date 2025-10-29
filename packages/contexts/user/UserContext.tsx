@@ -10,7 +10,7 @@ import React, {
 import { v4 as uuidv4 } from 'uuid';
 import { ServiceRequest, ServiceRequestItem } from '../../types/services/servicesTypes';
 import { useClient } from '../client/ClientContext';
-import { getUser, updateUser } from '../../services/userService';
+import { getUser, updateUser } from '../../services/user/userService';
 import { User } from '@havenova/types';
 
 // --- Local Storage keys ---
@@ -36,8 +36,6 @@ function getUserFromStorage(): User | null {
   try {
     const parsed = JSON.parse(data) as User;
     if (parsed?.createdAt) parsed.createdAt = new Date(parsed.createdAt);
-    // Asegura defaults en migraciones antiguas
-    if (typeof parsed.isLogged !== 'boolean') parsed.isLogged = parsed.role !== 'guest';
     if (!Array.isArray(parsed.requests)) parsed.requests = [];
     return parsed;
   } catch {
@@ -97,7 +95,7 @@ const initialGuestUser: User = {
   theme: 'light',
   requests: [],
   createdAt: new Date(),
-  isLogged: false,
+  inviteUsed: false,
 };
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
@@ -137,7 +135,6 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
           const finalUser: User = {
             ...remoteUser,
             requests: mergedRequests,
-            isLogged: true, // 👈 autenticado
             clientId: remoteUser.clientId || clientId,
             profileImage: remoteUser.profileImage || getPersistentGuestAvatar(),
           };
@@ -162,7 +159,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         saveUserToStorage(fallback);
 
         // Si *antes* estaba logeado y ahora 401/403, notifica expiración
-        const wasLoggedIn = !!localUser && localUser.isLogged && localUser.role !== 'guest';
+        const wasLoggedIn = !!localUser && localUser.role !== 'guest';
         if (wasLoggedIn && (error?.response?.status === 401 || error?.response?.status === 403)) {
           if (onSessionExpired) {
             onSessionExpired();
@@ -183,7 +180,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const updateUserLanguage = useCallback(
     async (newLang: string) => {
-      if (!user || user.role === 'guest' || !user.isLogged) {
+      if (!user || user.role === 'guest') {
         const next = { ...(user ?? initialGuestUser), language: newLang, clientId };
         setUser(next);
         saveUserToStorage(next);
@@ -209,7 +206,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const updateUserTheme = useCallback(
     async (newTheme: 'light' | 'dark') => {
-      if (!user || user.role === 'guest' || !user.isLogged) {
+      if (!user || user.role === 'guest') {
         const next = { ...(user ?? initialGuestUser), theme: newTheme, clientId };
         setUser(next);
         saveUserToStorage(next);

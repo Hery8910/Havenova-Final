@@ -22,6 +22,7 @@
       "@havenova/contexts/*": ["packages/contexts/*"],
       "@havenova/hooks/*": ["packages/hooks/*"],
       "@havenova/services/*": ["packages/services/*"],
+      "@havenova/types/*": ["packages/types/*"],
       "@havenova/utils/*": ["packages/utils/*"],
       "@havenova/i18n": ["packages/i18n/index.ts"],
       "@havenova/i18n/*": ["packages/i18n/*"]

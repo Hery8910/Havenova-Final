@@ -13,17 +13,12 @@ export type ServiceType =
   | 'furniture-assembly'
   | 'window-cleaning';
 
-export type ServiceIcon = {
-  src: string;
-  alt: string;
-};
-
 // --------------------------------------
 // Base para todos los detalles de servicio
 // --------------------------------------
 export interface BaseServiceDetails {
   title: string;
-  icon: ServiceIcon;
+  icon: string;
   notes?: string;
 }
 
@@ -47,9 +42,8 @@ export interface ServiceRequest {
 // Definición de cada tipo de servicio
 // --------------------------------------
 export interface FurnitureAssemblyDetails {
-  id: string;
   title: string;
-  icon: ServiceIcon;
+  icon: string;
   notes?: string;
   type: string /*  */;
   location: string;
@@ -66,7 +60,7 @@ export interface FurnitureAssemblyRequest {
   serviceType: 'furniture-assembly';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: FurnitureAssemblyDetails;
 }
 
@@ -75,7 +69,7 @@ export interface KitchenAssemblyRequest {
   serviceType: 'kitchen-assembly';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: BaseServiceDetails & {
     length: number;
     lowerCabinets: number;
@@ -96,7 +90,7 @@ export interface KitchenCleaningRequest {
   serviceType: 'kitchen-cleaning';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: BaseServiceDetails & {
     appliances: string[];
     size: number;
@@ -108,7 +102,7 @@ export interface HouseCleaningRequest {
   serviceType: 'house-cleaning';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: BaseServiceDetails & {
     surface: number;
     livingRoom: number;
@@ -125,7 +119,7 @@ export interface WindowCleaningRequest {
   serviceType: 'window-cleaning';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: BaseServiceDetails & {
     windows: number;
     doors: number;
@@ -138,7 +132,7 @@ export interface HouseServiceRequest {
   serviceType: 'house-service';
   price: number;
   estimatedDuration: number;
-  icon: ServiceIcon;
+  icon: string;
   details: BaseServiceDetails & {
     label: string;
     category: string;

@@ -3,7 +3,7 @@ import { Suspense, useState } from 'react';
 import styles from './page.module.css';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
-import { forgotPassword } from '../../../../../../packages/services/userService';
+import { forgotPassword } from '../../../../../../packages/services/user/userService';
 import { useLang } from '../../../../../../packages/hooks';
 import { useUser } from '../../../../../../packages/contexts/user';
 import { FormWrapper } from '../../../../../../packages/components/userForm';

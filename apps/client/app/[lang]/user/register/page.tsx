@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { registerUser } from '../../../../../../packages/services/userService';
+import { registerUser } from '../../../../../../packages/services/user/userService';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import Link from 'next/link';
@@ -75,6 +75,7 @@ const Register = () => {
         phone: data.phone || '',
         profileImage: data.profileImage || user?.profileImage,
         language: data.language || user?.language,
+        inviteUsed: false,
         theme: data.theme || user?.theme,
         clientId: client._id,
       };
@@ -164,6 +165,7 @@ const Register = () => {
             phone: '',
             profileImage: '',
             language: '',
+            inviteUsed: false,
             theme: 'light',
             clientId: '',
           }}

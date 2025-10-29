@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { FurnitureAssemblyDetails, ServiceIcon, ServiceRequestItem } from '../../../types/services';
+import { FurnitureAssemblyDetails, ServiceRequestItem } from '../../../types/services';
 import FurnitureAssemblyRequestView from '../furnitureAssembly/FurnitureAssemblyRequestView/FurnitureAssemblyRequestView';
 // import WindowCleaningRequest from '../windowsCleaning/windowsCleaningRequest/WindowCleaningRequest';
 // import HouseCleaningRequest from '../houseCleaning/houseCleaningRequest/HouseCleaningRequest';
@@ -11,9 +11,10 @@ interface Props {
   type: ServiceRequestItem['serviceType'];
   requests: ServiceRequestItem[];
   onRemove: (id: string) => void;
+  reloadRequests: () => void;
 }
 
-const ServiceRenderer = ({ type, requests, onRemove }: Props) => {
+const ServiceRenderer = ({ type, requests, onRemove, reloadRequests }: Props) => {
   switch (type) {
     // case 'kitchen-cleaning': {
     //   const filtered = requests.filter(
@@ -66,11 +67,17 @@ const ServiceRenderer = ({ type, requests, onRemove }: Props) => {
           serviceType: 'furniture-assembly';
           price: number;
           estimatedDuration: number;
-          icon: ServiceIcon;
+          icon: string;
           details: FurnitureAssemblyDetails;
         } => req.serviceType === 'furniture-assembly'
       );
-      return <FurnitureAssemblyRequestView requests={filtered} onClick={onRemove} />;
+      return (
+        <FurnitureAssemblyRequestView
+          requests={filtered}
+          onClick={onRemove}
+          reloadRequests={reloadRequests}
+        />
+      );
     }
     // case 'window-cleaning': {
     //   const filtered = requests.filter(

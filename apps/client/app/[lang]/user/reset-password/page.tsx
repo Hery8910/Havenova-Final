@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import { useUser } from '@/packages/contexts/user/UserContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { resetPasswordConfirm } from '@/packages/services/userService';
+import { resetPasswordConfirm } from '@/packages/services/user/userService';
 
 import { FormWrapper } from '@/packages/components/userForm';
 import { AlertWrapper } from '@/packages/components/alert';

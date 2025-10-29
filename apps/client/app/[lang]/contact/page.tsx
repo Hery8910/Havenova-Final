@@ -15,7 +15,7 @@ import { AlertWrapper } from '@/packages/components/alert';
 import { useEffect, useState } from 'react';
 import { FaqMessageData } from '@/packages/types';
 import { useClient } from '@/packages/contexts/client/ClientContext';
-import { sendContactMessage } from '@/packages/services/userService';
+import { sendContactMessage } from '@/packages/services/user/userService';
 import Loading from '@/packages/components/loading/Loading';
 import { useLang } from '@/packages/hooks';
 import { href } from '@/packages/utils/navigation';

@@ -1,0 +1,78 @@
+{
+  "companyName": "Berlin Cleaners",
+  "domain": "berlincleaners.de",
+  "email": "info@berlincleaners.de",
+  "phone": "+49 1761234567",
+  "address": "Alexanderplatz 1, Berlin",
+  "language": "de",
+
+  "logos": {
+    "main": "https://cdn.example.com/logos/berlin-cleaners-light.png",
+    "mainDark": "https://cdn.example.com/logos/berlin-cleaners-dark.png",
+    "small": "https://cdn.example.com/logos/berlin-cleaners-small.png",
+    "smallDark": "https://cdn.example.com/logos/berlin-cleaners-small-dark.png",
+    "favicon": "https://cdn.example.com/logos/favicon.png",
+    "faviconDark": "https://cdn.example.com/logos/favicon-dark.png"
+  },
+
+  "images": {
+    "backgroundImage": "https://cdn.example.com/bg/bg-pattern.svg",
+    "emailHeader": "https://cdn.example.com/email/header.png"
+  },
+
+  "pages": {
+    "contact": "https://berlincleaners.de/contact",
+    "faq": "https://berlincleaners.de/faq",
+    "legal": {
+      "privacy": "https://berlincleaners.de/legal/privacy-policy",
+      "cookie": "https://berlincleaners.de/legal/cookie-policy",
+      "terms": "https://berlincleaners.de/legal/terms-of-service",
+      "impresum": "https://berlincleaners.de/legal/impresum"
+    }
+  },
+
+  "branding": {
+    "light": {
+      "primaryColor": "#0d6efd",
+      "secondaryColor": "#198754",
+      "accentColor": "#ffc107",
+      "textColorPrimary": "#212529",
+      "textColorSecondary": "#495057",
+      "background1": "#f8f9fa",
+      "background2": "#ffffff"
+    },
+    "dark": {
+      "primaryColor": "#0d6efd",
+      "secondaryColor": "#198754",
+      "accentColor": "#ffc107",
+      "textColorPrimary": "#f8f9fa",
+      "textColorSecondary": "#dee2e6",
+      "background1": "#121212",
+      "background2": "#1e1e1e"
+    }
+  },
+
+  "typography": {
+    "fontFamily": "Roboto",
+    "secondaryFontFamily": "Montserrat",
+    "isGoogleFont": true,
+    "googleFontUrl": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+    "weights": ["400", "700"]
+  },
+
+  "serviceZone": {
+    "type": "circle",
+    "center": { "lat": 52.532, "lng": 13.424 },
+    "radius": 8000
+  },
+
+  "schedule": {
+    "monday": { "start": "09:00", "end": "18:00" },
+    "tuesday": { "start": "09:00", "end": "18:00" },
+    "wednesday": { "start": "09:00", "end": "18:00" },
+    "thursday": { "start": "09:00", "end": "18:00" },
+    "friday": { "start": "09:00", "end": "18:00" },
+    "saturday": { "start": "10:00", "end": "16:00" },
+    "sunday": { "start": "", "end": "" }
+  }
+}

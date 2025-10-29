@@ -12,47 +12,35 @@ import {
 import ServiceRenderer from '../serviceRenderer/ServiceRenderer';
 import { useUser } from '../../../contexts/user';
 import { ServiceRequestItem } from '../../../types';
+import { ServicesRequestList } from '../servicesRequestList';
 
 const ServiceCart = () => {
   const { user } = useUser();
-  const [requests, setRequests] = useState<ServiceRequestItem[]>([]);
+  // const [requests, setRequests] = useState<ServiceRequestItem[]>([]);
 
-  // 🔹 Cargar solicitudes desde localStorage
-  const loadRequests = useCallback(() => {
-    const items = getRequestItemsFromStorage();
-    setRequests(items);
-  }, []);
+  // // 🔹 Cargar solicitudes desde localStorage
+  // const loadRequests = useCallback(() => {
+  //   const items = getRequestItemsFromStorage();
+  //   setRequests(items);
+  // }, []);
 
-  useEffect(() => {
-    loadRequests();
-  }, [loadRequests]);
+  // useEffect(() => {
+  //   loadRequests();
+  // }, [loadRequests]);
 
-  // 🔹 Eliminar solicitud y refrescar el estado
-  const handleRemove = useCallback(
-    (id: string) => {
-      removeRequestItemFromStorage(id);
-      loadRequests();
-    },
-    [loadRequests]
-  );
+  // // 🔹 Eliminar solicitud y refrescar el estado
+  // const handleRemove = useCallback(
+  //   (id: string) => {
+  //     removeRequestItemFromStorage(id);
+  //     loadRequests();
+  //   },
+  //   [loadRequests]
+  // );
 
-  // 🔹 Agrupar por tipo de servicio
-  const types = Array.from(new Set(requests.map((r) => r.serviceType)));
+  // // 🔹 Agrupar por tipo de servicio
+  // const types = Array.from(new Set(requests.map((r) => r.serviceType)));
 
   if (!user) return null;
-
-  if (requests.length === 0) {
-    return (
-      <main className={styles.main}>
-        <header className={styles.header}>
-          <h3>Your Service Cart</h3>
-        </header>
-        <section className={styles.section}>
-          <p className={styles.p}>No service requests.</p>
-        </section>
-      </main>
-    );
-  }
 
   return (
     <main className={styles.main}>
@@ -66,23 +54,7 @@ const ServiceCart = () => {
           height={30}
         />
       </header>
-
-      {/* 🔹 Renderizar cada grupo de servicios */}
-      <ul>
-        {types.map((type) => {
-          const filtered = getRequestsByType(requests, type);
-          return (
-            <li className={styles.li} key={type}>
-              <ServiceRenderer
-                key={type}
-                type={type}
-                requests={filtered}
-                onRemove={handleRemove} // 👈 pasamos la función para refrescar
-              />
-            </li>
-          );
-        })}
-      </ul>
+      <ServicesRequestList />
       <section className={styles.checkout}>
         <Link href="/checkout">
           <button className={styles.submit}>Checkout</button>

@@ -7,7 +7,7 @@ import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useUser } from '@/packages/contexts/user/UserContext';
 import { useEffect, useState } from 'react';
 import { FaqMessageData } from '@/packages/types';
-import { sendContactMessage } from '@/packages/services/userService';
+import { sendContactMessage } from '@/packages/services/user/userService';
 import { AlertWrapper } from '@/packages/components/alert';
 import Loading from '@/packages/components/loading/Loading';
 import { useSearchParams } from 'next/navigation';

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
-import { logoutUser } from '../../services/userService';
+import { logoutUser } from '../../services/user/userService';
 import { MdLogout } from 'react-icons/md';
 
 import { LuLogOut } from 'react-icons/lu';
@@ -87,7 +87,7 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
   };
 
   return (
-    <nav className={`${styles.nav} ${isOpen ? `${styles.close}` : `${styles.open}`} card`}>
+    <section className={`${styles.nav} ${isOpen ? `${styles.close}` : `${styles.open}`}`}>
       <button
         className={styles.open_button}
         onClick={() => {
@@ -127,6 +127,6 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
       </ul>
       {loading && <Loading theme={user?.theme || 'light'} />}
       {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
-    </nav>
+    </section>
   );
 }

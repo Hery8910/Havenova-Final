@@ -1,42 +1,39 @@
-import isHoliday from '../../../utils/validators/dashboardValidators/dashboardValidators';
+// src/utils/calendar/generateYear.ts
+import { isHoliday } from '@/packages/utils/validators/dashboardValidators/dashboardValidators';
 import {
   Schedules,
   WorkDaySettings,
   Calendar,
   Day,
   Month,
+  Schedule,
 } from '../../../types/calendar/calendarTypes';
 
-const generateYear = (
+export const generateYear = (
   clientId: string,
   year: number,
   schedules: Schedules,
   blockHolidays: boolean,
-  workDaySettings: WorkDaySettings,
-  available: boolean
+  workDaySettings: WorkDaySettings
 ): Calendar => {
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
   const months: Month[] = [];
 
-  function getLocalFormattedDate(dateObj: Date): string {
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Sumar 1 y agregar ceros a la izquierda
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+  const dayKeys: { [key: number]: keyof Schedules } = {
+    0: 'sunday',
+    1: 'monday',
+    2: 'tuesday',
+    3: 'wednesday',
+    4: 'thursday',
+    5: 'friday',
+    6: 'saturday',
+  };
+
+  const getLocalFormattedDate = (dateObj: Date): string => {
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const d = String(dateObj.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  };
 
   for (let month = 0; month < 12; month++) {
     const days: Day[] = [];
@@ -44,46 +41,28 @@ const generateYear = (
 
     for (let day = 1; day <= numDays; day++) {
       const dateObj = new Date(year, month, day);
-      const dayOfWeek = dateObj.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
+      const weekday = dateObj.getDay(); // 0: Sunday ... 6: Saturday
+      const key = dayKeys[weekday];
+      const isWorkday = workDaySettings[key];
+      const daySchedule = isWorkday ? schedules[key] ?? null : null;
 
-      const dayKeys: { [key: number]: keyof Schedules } = {
-        0: 'sunday',
-        1: 'monday',
-        2: 'tuesday',
-        3: 'wednesday',
-        4: 'thursday',
-        5: 'friday',
-        6: 'saturday',
-      };
-
-      const dayKey = dayKeys[dayOfWeek];
-      const isWorkDay = workDaySettings[dayKey];
-      const daySchedule = isWorkDay ? schedules[dayKey] : null;
-
-      const formatter = new Intl.DateTimeFormat('en-US', { weekday: 'long' });
-      const formattedDay = formatter.format(dateObj);
       const formattedDate = getLocalFormattedDate(dateObj);
-      const isHolidayFlag = isHoliday(dateObj);
+      const holiday = isHoliday(dateObj);
+      const blocked = blockHolidays && holiday;
 
       days.push({
-        dayName: formattedDay,
         date: formattedDate,
+        weekday,
+        isWorkday,
+        blocked,
+        reason: blocked ? 'holiday' : undefined,
         schedule: daySchedule,
-        workDay: isWorkDay,
-        available: available,
-        blocked: blockHolidays && isHolidayFlag,
-        holiday: isHolidayFlag,
         requests: [],
       });
     }
 
-    months.push({
-      month: monthNames[month],
-      days: days,
-    });
+    months.push({ month: month + 1, days });
   }
 
   return { clientId, year, months };
 };
-
-export default generateYear;

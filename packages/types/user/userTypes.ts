@@ -13,7 +13,7 @@ export interface User {
   phone: string;
   isVerified: boolean;
   role: string;
-  isLogged: boolean;
+  inviteUsed: boolean;
   language: string;
   theme: 'light' | 'dark';
   requests: ServiceRequest[];
@@ -27,6 +27,7 @@ export interface RegisterPayload {
   phone: string;
   profileImage: string;
   language: string;
+  inviteUsed: boolean;
   theme: 'light' | 'dark';
   clientId: string;
 }

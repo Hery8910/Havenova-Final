@@ -1,35 +1,21 @@
 'use client';
 import React, { useState, FormEvent, useEffect } from 'react';
 import styles from './CreateWorkYear.module.css';
-import generateYear from '../../../../packages/components/dashboard/generateYear/generateYear';
-import { Schedules, WorkDaySettings } from '../../../../packages/types/calendar/calendarTypes';
-import { Router } from 'next/router';
-import {
-  createCalendar,
-  getCalendarAdmin,
-  getCalendarGuest,
-} from '../../../../packages/services/calendar';
+import { createCalendar, getCalendarAdmin } from '../../../../packages/services/calendar';
 import { useClient } from '../../../../packages/contexts/client/ClientContext';
 import { useUser } from '../../../../packages/contexts/user/UserContext';
-import Calendar from '../../../../packages/components/dashboard/calender/Calendar';
+import { Calendar } from '@/packages/components/dashboard/calendar';
+import { Schedules, WorkDaySettings } from '../../../../packages/types/calendar/calendarTypes';
 
-interface CalendarData {
-  year: number;
-  months: {
-    month: string;
-    days: {
-      date: string;
-      available: boolean;
-    }[];
-  }[];
-}
+import { getCityHolidays } from '@/packages/utils/validators/dashboardValidators/dashboardValidators';
+import type { BlockedDate } from '@/packages/services/calendar';
 
 const defaultSchedules: Schedules = {
   monday: { start: '08:00', end: '16:00' },
   tuesday: { start: '08:00', end: '16:00' },
   wednesday: { start: '08:00', end: '16:00' },
   thursday: { start: '08:00', end: '16:00' },
-  friday: { start: '08:00', end: '14:00' },
+  friday: { start: '08:00', end: '16:00' },
   saturday: { start: '08:00', end: '14:00' },
   sunday: { start: '08:00', end: '14:00' },
 };
@@ -46,75 +32,85 @@ const defaultWorkDaySettings: WorkDaySettings = {
 
 const CreateWorkYear: React.FC = () => {
   const { client } = useClient();
-  const clientId = client?._id;
-
   const { user } = useUser();
+  const clientId = client?._id;
   const today = new Date();
-  const [currentYear, setCurrentYear] = useState<number>(today.getFullYear());
-  const [year, setYear] = useState<number>(new Date().getFullYear());
+
+  const [year, setYear] = useState<number>(today.getFullYear());
   const [blockHolidays, setBlockHolidays] = useState<boolean>(false);
   const [schedules, setSchedules] = useState<Schedules>(defaultSchedules);
   const [workDaySettings, setWorkDaySettings] = useState<WorkDaySettings>(defaultWorkDaySettings);
-  const [available, setAvailable] = useState<boolean>(true);
   const [message, setMessage] = useState('');
-  const [calendar, setCalendar] = useState<{ [year: number]: CalendarData }>({});
-
-  useEffect(() => {
-    const fetchCurrentYear = async () => {
-      if (clientId)
-        try {
-          const response = await getCalendarAdmin(currentYear, clientId);
-          setCalendar({ [response.data.year]: response.data });
-        } catch (error) {
-          console.error('Error fetching calendar:', error);
-        }
-    };
-    fetchCurrentYear();
-  }, [currentYear, user?.role, clientId]);
+  const [calendar, setCalendar] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleScheduleChange = (day: keyof Schedules, field: 'start' | 'end', value: string) => {
     setSchedules((prev) => ({
       ...prev,
-      [day]: {
-        ...prev[day],
-        [field]: value,
-      },
+      [day]: { ...prev[day], [field]: value },
     }));
   };
 
   const handleWorkDayChange = (day: keyof WorkDaySettings, value: boolean) => {
-    setWorkDaySettings((prev) => ({
-      ...prev,
-      [day]: value,
-    }));
+    setWorkDaySettings((prev) => ({ ...prev, [day]: value }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user || !clientId) return;
+    if (!user || !clientId) {
+      setMessage('Missing user or client info');
+      return;
+    }
 
-    const newYear = generateYear(
-      clientId,
-      year,
-      schedules,
-      blockHolidays,
-      workDaySettings,
-      available
-    );
-    // Send the 'calendar' object to your backend via fetch or axios
+    setLoading(true);
+    setMessage('');
+
+    // Construimos el horario base (solo días activos)
+    const baseWeekSchedule: any = {};
+    Object.entries(workDaySettings).forEach(([day, active]) => {
+      if (active && schedules[day as keyof Schedules]) {
+        baseWeekSchedule[day] = schedules[day as keyof Schedules];
+      }
+    });
+
+    // Calculamos días feriados si blockHolidays está activo
+    const blockedDates: BlockedDate[] = blockHolidays
+      ? getCityHolidays(year, 'berlin') // o más adelante, client.city
+      : [];
+
     try {
-      const response = await createCalendar(newYear, clientId);
-      setCalendar(response);
-      setMessage(response.message);
-      setTimeout(() => {
-        setMessage('');
-      }, 3000);
+      const response = await createCalendar({
+        clientId,
+        year,
+        baseWeekSchedule,
+        blockedDates,
+        overwriteIfExists: false,
+      });
+
+      setCalendar(response.data);
+      setMessage(`✅ Calendar for ${year} created successfully`);
     } catch (error: any) {
-      setMessage(error.message);
+      setMessage(error.message || '❌ Error creating calendar');
+    } finally {
+      setLoading(false);
+      setTimeout(() => setMessage(''), 4000);
     }
   };
 
-  // Array to iterate through days of the week
+  /** Mock temporal para calcular feriados locales */
+  const getHolidaysForYear = (year: number): string[] => {
+    const holidays: string[] = [];
+    const check = (month: number, day: number) =>
+      `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    // Feriados comunes en Alemania
+    holidays.push(check(1, 1)); // Año Nuevo
+    holidays.push(check(5, 1)); // Día del trabajo
+    holidays.push(check(10, 3)); // Día de la unidad
+    holidays.push(check(12, 25)); // Navidad
+    holidays.push(check(12, 26)); // 2º día de Navidad
+    return holidays;
+  };
+
   const daysOfWeek: (keyof Schedules)[] = [
     'monday',
     'tuesday',
@@ -128,6 +124,7 @@ const CreateWorkYear: React.FC = () => {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <h3>Create Work Year</h3>
         <p>{message}</p>
         <div>
           <label htmlFor="year">Year:</label>
@@ -140,18 +137,19 @@ const CreateWorkYear: React.FC = () => {
             max={2040}
           />
         </div>
+
         {daysOfWeek.map((day) => (
           <div key={day}>
             <label>{day.charAt(0).toUpperCase() + day.slice(1)}</label>
             <input
               type="time"
-              value={schedules[day].start}
+              value={schedules[day]?.start || ''}
               onChange={(e) => handleScheduleChange(day, 'start', e.target.value)}
               placeholder="Start"
             />
             <input
               type="time"
-              value={schedules[day].end}
+              value={schedules[day]?.end || ''}
               onChange={(e) => handleScheduleChange(day, 'end', e.target.value)}
               placeholder="End"
             />
@@ -165,6 +163,7 @@ const CreateWorkYear: React.FC = () => {
             </label>
           </div>
         ))}
+
         <div>
           <label>
             <input
@@ -175,15 +174,15 @@ const CreateWorkYear: React.FC = () => {
             Automatically Block Holidays
           </label>
         </div>
-        <button type="submit">Create Work Days</button>
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Creating...' : 'Create Work Days'}
+        </button>
       </form>
-      <Calendar calendars={calendar} />
+
+      {calendar && <Calendar calendars={calendar} />}
     </>
   );
 };
-
-// Function to generate the calendar for the given year
-
-// Example function to detect holidays (customize with your holiday data)
 
 export default CreateWorkYear;

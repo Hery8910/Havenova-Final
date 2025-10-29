@@ -7,7 +7,7 @@ import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
 import AlertPopup from '../../../../../../packages/components/alert/alertPopup/AlertPopup';
 
 import styles from './page.module.css';
-import { resendVerificationEmail } from '../../../../../../packages/services/userService';
+import { resendVerificationEmail } from '../../../../../../packages/services/user/userService';
 import { VerifyEmailPayload } from '../../../../../../packages/types';
 import { useLang } from '../../../../../../packages/hooks';
 import { href } from '../../../../../../packages/utils/navigation';

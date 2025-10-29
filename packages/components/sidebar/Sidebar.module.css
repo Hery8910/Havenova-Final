@@ -4,10 +4,13 @@
   flex-direction: column;
   justify-content: space-between;
   color: inherit;
-  height: -webkit-fill-available;
-  max-height: 80dvh;
-  position: sticky;
+  height: 100%;
   padding: 8px 0 32px;
+  background: rgba(7, 104, 201, 0.52);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(7, 104, 201, 0.3);
 }
 .open {
   position: absolute;

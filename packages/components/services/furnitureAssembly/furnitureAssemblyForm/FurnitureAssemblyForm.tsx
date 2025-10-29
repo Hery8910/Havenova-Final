@@ -13,30 +13,9 @@ import { useUser } from '../../../../contexts/user';
 import { Button } from '../../../common';
 import { Loading } from '../../../loading';
 import { AlertWrapper } from '../../../alert';
-import {
-  BaseServiceDetails,
-  FurnitureAssemblyDetails,
-  FurnitureAssemblyRequest,
-  ServiceIcon,
-  ServiceRequestItem,
-} from '../../../../types';
+import { FurnitureAssemblyDetails, FurnitureAssemblyRequest } from '../../../../types';
 import { useEffect } from 'react';
 
-// export interface FurnitureAssemblyDetailsForm {
-//   id: string;
-//   title: string;
-//   icon: ServiceIcon;
-//   notes?: string;
-//   type: string /*  */;
-//   location: string;
-//   quantity: number;
-//   position: 'floor' | 'wall';
-//   width?: string;
-//   height?: string;
-//   depth?: string;
-//   doors?: number;
-//   drawers?: number;
-// }
 export interface furnitureServiceInput {
   width: boolean;
   height: boolean;
@@ -46,26 +25,20 @@ export interface furnitureServiceInput {
   wall: boolean;
 }
 interface Props {
-  request?: FurnitureAssemblyDetails;
-  setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
+  request?: FurnitureAssemblyRequest;
+  setEdit?: React.Dispatch<React.SetStateAction<boolean>> | (() => void);
+  onUpdated?: () => void;
 }
 
-const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
+const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
   const furnitureTypes = [
     {
       location: 'bedroom',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/bedroom.webp',
-        alt: 'Schlafzimmer Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/bedroom.webp',
       furniture: [
         {
           id: 'wardrobe',
-          label: 'wardrobe',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/wardrobe.webp',
-            alt: 'Kleiderschrank Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/wardrobe.webp',
           input: {
             width: true,
             height: true,
@@ -77,11 +50,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'bed_frame',
-          label: 'bed_frame',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/bed_frame.webp',
-            alt: 'Bettgestell Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/bed_frame.webp',
           input: {
             width: true,
             height: false,
@@ -93,56 +62,33 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'dresser',
-          label: 'dresser',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/dresser.webp',
-            alt: 'Kommode Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/dresser.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'nightstand',
-          label: 'nightstand',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/nightstand.webp',
-            alt: 'Nachttisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/nightstand.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'bookshelf',
-          label: 'bookshelf',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/bookshelf.webp',
-            alt: 'Bücherregal Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
       ],
     },
     {
       location: 'living_room',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/living_room.webp',
-        alt: 'Wohnzimmer Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/living_room.webp',
       furniture: [
         {
           id: 'tv_unit',
-          label: 'tv_unit',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/tv_unit.webp',
-            alt: 'TV-Möbel Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/tv_unit.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'coffee_table',
-          label: 'coffee_table',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/coffee_table.webp',
-            alt: 'Couchtisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/coffee_table.webp',
           input: {
             width: true,
             height: true,
@@ -154,74 +100,44 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'bookshelf',
-          label: 'bookshelf',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/bookshelf.webp',
-            alt: 'Bücherregal Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'display_cabinet',
-          label: 'display_cabinet',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/display_cabinet.webp',
-            alt: 'Vitrine Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/display_cabinet.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
       ],
     },
     {
       location: 'bathroom',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/bathroom.webp',
-        alt: 'Badezimmer Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/bathroom.webp',
       furniture: [
         {
           id: 'bathroom_cabinet',
-          label: 'bathroom_cabinet',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/bathroom_cabinet.webp',
-            alt: 'Badezimmerschrank Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/bathroom_cabinet.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'mirror_cabinet',
-          label: 'mirror_cabinet',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/mirror_cabinet.webp',
-            alt: 'Spiegelschrank Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/mirror_cabinet.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'shelf_unit',
-          label: 'shelf_unit',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/shelf_unit.webp',
-            alt: 'Regaleinheit Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/shelf_unit.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
       ],
     },
     {
       location: 'kitchen',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/kitchen.webp',
-        alt: 'Küche Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/kitchen.webp',
       furniture: [
         {
           id: 'dining_table',
-          label: 'dining_table',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/dining_table.webp',
-            alt: 'Esstisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/dining_table.webp',
           input: {
             width: true,
             height: true,
@@ -233,11 +149,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'dining_chair',
-          label: 'dining_chair',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/dining_chair.webp',
-            alt: 'Essstuhl Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/dining_chair.webp',
           input: {
             width: false,
             height: false,
@@ -249,11 +161,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'kitchen_island',
-          label: 'kitchen_island',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/kitchen_island.webp',
-            alt: 'Kücheninsel Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/kitchen_island.webp',
           input: {
             width: true,
             height: true,
@@ -265,38 +173,23 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'kitchen_cabinet',
-          label: 'kitchen_cabinet',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/kitchen_cabinet.webp',
-            alt: 'Küchenschrank Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/kitchen_cabinet.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
       ],
     },
     {
       location: 'office',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/office.webp',
-        alt: 'Büro Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/office.webp',
       furniture: [
         {
           id: 'desk',
-          label: 'desk',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/desk.webp',
-            alt: 'Schreibtisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/desk.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'office_chair',
-          label: 'office_chair',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/office_chair.webp',
-            alt: 'Bürostuhl Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/office_chair.webp',
           input: {
             width: false,
             height: false,
@@ -308,56 +201,33 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'filing_cabinet',
-          label: 'filing_cabinet',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/filing_cabinet.webp',
-            alt: 'Aktenschrank Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/filing_cabinet.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'bookshelf',
-          label: 'bookshelf',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/bookshelf.webp',
-            alt: 'Bücherregal Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
       ],
     },
     {
       location: 'hallway',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/hallway.webp',
-        alt: 'Flur Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/hallway.webp',
       furniture: [
         {
           id: 'shoe_rack',
-          label: 'shoe_rack',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/shoe_rack.webp',
-            alt: 'Schuhregal Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/shoe_rack.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'coat_rack',
-          label: 'coat_rack',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/coat_rack.webp',
-            alt: 'Garderobe Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/coat_rack.webp',
           input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
         },
         {
           id: 'console_table',
-          label: 'console_table',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/console_table.webp',
-            alt: 'Konsolentisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/console_table.webp',
           input: {
             width: true,
             height: true,
@@ -371,18 +241,11 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
     },
     {
       location: 'balcony',
-      icon: {
-        src: '/images/components/services/furnitureAssembly/balcony.webp',
-        alt: 'Balkon Symbol',
-      },
+      icon: '/images/components/services/furnitureAssembly/balcony.webp',
       furniture: [
         {
           id: 'outdoor_table',
-          label: 'outdoor_table',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/outdoor_table.webp',
-            alt: 'Gartentisch Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/outdoor_table.webp',
           input: {
             width: true,
             height: true,
@@ -394,11 +257,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'garden_chair',
-          label: 'garden_chair',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/garden_chair.webp',
-            alt: 'Gartenstuhl Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/garden_chair.webp',
           input: {
             width: false,
             height: false,
@@ -410,11 +269,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         },
         {
           id: 'plant_shelf',
-          label: 'plant_shelf',
-          icon: {
-            src: '/images/components/services/furnitureAssembly/plant_shelf.webp',
-            alt: 'Pflanzenregal Symbol',
-          },
+          icon: '/images/components/services/furnitureAssembly/plant_shelf.webp',
           input: {
             width: true,
             height: true,
@@ -433,7 +288,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
   const { user, refreshUser } = useUser();
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [icon, setIcon] = useState<ServiceIcon>({ src: '', alt: '' });
+  const [icon, setIcon] = useState<string>('');
   const [input, setInput] = useState<furnitureServiceInput>({
     width: true,
     height: true,
@@ -450,39 +305,38 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
   } | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FurnitureAssemblyDetails>(() => ({
-    id: request?.id || '',
-    title: request?.title || '',
-    icon: request?.icon || { src: '', alt: '' },
-    type: request?.type || '',
-    location: request?.location || '',
-    quantity: request?.quantity || 1,
-    position: request?.position || 'floor',
-    width: request?.width || '',
-    height: request?.height || '',
-    depth: request?.depth || '',
-    doors: request?.doors || 0,
-    drawers: request?.drawers || 0,
-    notes: request?.notes || '',
+    title: request?.details.title || '',
+    icon: request?.details.icon || '',
+    type: request?.details.type || '',
+    location: request?.details.location || '',
+    quantity: request?.details.quantity || 1,
+    position: request?.details.position || 'floor',
+    width: request?.details.width || '',
+    height: request?.details.height || '',
+    depth: request?.details.depth || '',
+    doors: request?.details.doors || 0,
+    drawers: request?.details.drawers || 0,
+    notes: request?.details.notes || '',
   }));
 
   useEffect(() => {
     if (request) {
-      setSelectedItem(request?.type);
-      setSelectedLocation(request?.location);
+      setSelectedItem(request?.details.type);
+      setSelectedLocation(request?.details.location);
+      setCurrentStep(3);
       setFormData({
-        id: request?.id,
-        title: request?.title,
-        icon: request?.icon,
-        type: request?.type,
-        location: request?.location,
-        quantity: request?.quantity,
-        position: request?.position,
-        width: request?.width,
-        height: request?.height,
-        depth: request?.depth,
-        doors: request?.doors,
-        drawers: request?.drawers,
-        notes: request?.notes,
+        title: request?.details.title,
+        icon: request?.details.icon,
+        type: request?.details.type,
+        location: request?.details.location,
+        quantity: request?.details.quantity,
+        position: request?.details.position,
+        width: request?.details.width,
+        height: request?.details.height,
+        depth: request?.details.depth,
+        doors: request?.details.doors,
+        drawers: request?.details.drawers,
+        notes: request?.details.notes,
       });
     }
   }, [request]);
@@ -493,15 +347,15 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
 
   const activeGroup = furnitureTypes.find((group) => group.location === selectedLocation);
 
-  const handleClick = (label: string, icon: ServiceIcon, input: furnitureServiceInput) => {
-    setSelectedItem(label);
+  const handleClick = (id: string, icon: string, input: furnitureServiceInput) => {
+    setSelectedItem(id);
     setInput(input);
     setIcon(icon);
     setFormData((prev) => ({
       ...prev,
       title: 'Furniture Assembly',
       icon,
-      type: label,
+      type: id,
       location: selectedLocation,
       position: 'floor',
       quantity: 1, // ✅ como número
@@ -516,10 +370,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         ...prev,
         [name]: typedValue,
         title: 'Furniture Assembly',
-        icon: {
-          src: icon.src,
-          alt: icon.alt,
-        },
+        icon: icon,
         type: selectedItem,
         location: selectedLocation,
       }));
@@ -567,6 +418,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
           description: 'Your service request was successfully updated.',
         });
         if (setEdit) setEdit(false);
+        if (onUpdated) onUpdated();
       } else {
         saveRequestItemToStorage(newRequest);
         setAlert({
@@ -577,9 +429,8 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         setSelectedItem('');
         setSelectedLocation('');
         setFormData({
-          id: '',
           title: '',
-          icon: { src: '', alt: '' },
+          icon: '',
           type: '',
           location: '',
           quantity: 1,
@@ -603,26 +454,28 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
 
   return (
     <section className={styles.main}>
-      <header className={styles.main_header}>
-        <aside className={styles.header_aside}>
-          <Image
-            className={styles.location_image}
-            src={furnitureAssembly.form.header.img.src}
-            priority={true}
-            alt={furnitureAssembly.form.header.img.alt}
-            width={35}
-            height={35}
-          />
-          <p>{furnitureAssembly.form.header.title}</p>
-        </aside>
-        <h2>{furnitureAssembly.steps[currentStep].title}</h2>
-        <p>{furnitureAssembly.steps[currentStep].description}</p>
-      </header>
+      {!request && (
+        <header className={styles.main_header}>
+          <aside className={styles.header_aside}>
+            <Image
+              className={styles.location_image}
+              src={furnitureAssembly.form.header.img.src}
+              priority={true}
+              alt={furnitureAssembly.form.header.img.alt}
+              width={35}
+              height={35}
+            />
+            <p>{furnitureAssembly.form.header.title}</p>
+          </aside>
+          <h2>{furnitureAssembly.steps[currentStep].title}</h2>
+          <p>{furnitureAssembly.steps[currentStep].description}</p>
+        </header>
+      )}
       <ul className={`${styles.ul_main} card`}>
         {!selectedLocation && (
           <li className={styles.li}>
             <header className={styles.li_header}>
-              <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
+              <h4 className={styles.h4}>{furnitureAssembly.steps[`step${currentStep}`].step}</h4>
               <p className={styles.header_p}>1/3</p>
             </header>
             <ul className={styles.ul}>
@@ -637,9 +490,9 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
                 >
                   <Image
                     className={styles.location_image}
-                    src={group.icon.src}
+                    src={group.icon}
                     priority={true}
-                    alt={group.icon.alt}
+                    alt=""
                     width={35}
                     height={35}
                   />
@@ -652,7 +505,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         {selectedLocation && !selectedItem && (
           <li className={styles.li}>
             <header className={styles.li_header}>
-              <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
+              <h4 className={styles.h4}>{furnitureAssembly.steps[`step${currentStep}`].step}</h4>
               <p className={styles.header_p}>2/3</p>
             </header>
             {activeGroup && (
@@ -661,20 +514,20 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
                   <li
                     key={item.id}
                     onClick={() => {
-                      handleClick(item.label, item.icon, item.input);
+                      handleClick(item.id, item.icon, item.input);
                       setCurrentStep(currentStep + 1);
                     }}
                     className={styles.location_button}
                   >
                     <Image
                       className={styles.li_image}
-                      src={item.icon.src}
+                      src={item.icon}
                       priority={true}
-                      alt={item.icon.alt}
+                      alt=""
                       width={35}
                       height={35}
                     />
-                    <p className={styles.location_p}>{furnitureAssembly.furniture[item.label]}</p>
+                    <p className={styles.location_p}>{furnitureAssembly.furniture[item.id]}</p>
                   </li>
                 ))}
               </ul>
@@ -693,7 +546,7 @@ const FurnitureAssemblyForm = ({ request, setEdit }: Props) => {
         {selectedLocation && selectedItem && (
           <li className={styles.li}>
             <header className={styles.li_header}>
-              <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
+              <h4 className={styles.h4}>{furnitureAssembly.steps[`step${currentStep}`].step}</h4>
               <p className={styles.header_p}>3/3</p>
             </header>
 

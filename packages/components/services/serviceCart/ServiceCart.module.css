@@ -1,4 +1,4 @@
-/* .main {
+.main {
   width: 100%;
   max-width: 500px;
   display: flex;
@@ -49,4 +49,3 @@
 .submit:hover {
   transform: scale(110%);
 }
- */

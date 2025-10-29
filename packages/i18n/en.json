@@ -1272,23 +1272,24 @@
           }
         },
         "steps": {
-          "1": {
+          "step1": {
             "title": "Choose location",
             "description": "Select the room where the furniture will be assembled.",
             "step": "Location"
           },
-          "2": {
+          "step2": {
             "title": "Choose furniture",
             "description": "Select the type of furniture to be assembled.",
             "step": "Furniture"
           },
-          "3": {
+          "step3": {
             "title": "Furniture details",
             "description": "Provide dimensions or any special instructions for assembly.",
             "step": "Details"
           }
         },
         "locations": {
+          "title": "Location",
           "bedroom": "Bedroom",
           "living_room": "Living Room",
           "bathroom": "Bathroom",
@@ -1298,6 +1299,7 @@
           "balcony": "Balcony / Outdoor"
         },
         "furniture": {
+          "title": "Furniture kind",
           "wardrobe": "Wardrobe",
           "bed_frame": "Bed Frame",
           "dresser": "Dresser",

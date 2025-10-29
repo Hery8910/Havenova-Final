@@ -11,3 +11,4 @@ export * from './languageSwitcher';
 export * from './themeToggler';
 export * from './map';
 export * from './sidebar';
+export * from './dashboard';

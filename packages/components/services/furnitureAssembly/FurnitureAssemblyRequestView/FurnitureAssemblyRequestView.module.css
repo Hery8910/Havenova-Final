@@ -1,14 +1,50 @@
 .ul {
   width: 100%;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
-.li {
+.li,
+.header_li {
   width: 100%;
-  margin: 8px auto;
-  background-image: url('/svg/backgroundCard.svg');
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  padding: 16px;
-  overflow: hidden;
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 16px;
+}
+.header_li {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--text-secondary);
+}
+.header {
+  color: var(--text-secondary);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-secondary);
+  font-size: clamp(16px, 3vw, 20px);
+}
+.table td {
+  text-align: end;
+}
+.edit_button {
+  border: none;
+  background-color: transparent;
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .div {
@@ -18,12 +54,7 @@
   align-items: flex-start;
   gap: 8px;
 }
-.first_div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
+
 .main {
   width: 100%;
   display: flex;

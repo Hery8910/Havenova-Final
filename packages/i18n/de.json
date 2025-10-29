@@ -1261,23 +1261,24 @@
           }
         },
         "steps": {
-          "1": {
+          "step1": {
             "title": "Wählen Sie den Standort",
             "description": "Wählen Sie den Raum aus, in dem sich das Möbelstück befindet.",
             "step": "Standort"
           },
-          "2": {
+          "step2": {
             "title": "Wählen Sie das Möbelstück",
             "description": "Wählen Sie die Art des Möbelstücks, das montiert werden soll.",
             "step": "Möbelstück"
           },
-          "3": {
+          "step3": {
             "title": "Details des Möbelstücks",
             "description": "Geben Sie Maße oder besondere Hinweise für die Montage an.",
             "step": "Details"
           }
         },
         "locations": {
+          "title": "Standort",
           "bedroom": "Schlafzimmer",
           "living_room": "Wohnzimmer",
           "bathroom": "Badezimmer",
@@ -1287,6 +1288,7 @@
           "balcony": "Balkon / Außenbereich"
         },
         "furniture": {
+          "title": "Art der Möbel",
           "wardrobe": "Kleiderschrank",
           "bed_frame": "Bettgestell",
           "dresser": "Kommode",

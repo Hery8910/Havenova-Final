@@ -1,6 +1,3 @@
-/* ============================
-   VARIABLES GLOBALES - LIGHT MODE
-============================ */
 :root {
   /* Brand Colors */
   --brand-primary: #0768c9;
@@ -8,34 +5,65 @@
   --brand-accent: #8be8cb;
 
   /* Backgrounds & Text */
-  --bg-primary: #cbdcee;
-  --bg-secondary: #cadcdf;
-  --bg-accent: #d9ece6;
+
+  --bg-1: #c8eef9ff;
+  --bg-2: #c9eef8ff;
+  --bg-3: #caedf7ff;
+  --bg-4: #cbedf6ff;
+  --bg-5: #ccecf5ff;
+  --bg-6: #cdecf4ff;
+  --bg-7: #ceebf3ff;
+  --bg-8: #cfeaf2ff;
+  --bg-9: #d0eaf1ff;
+  --bg-10: #d2e9efff;
+  --bg-11: #d3e9eeff;
+  --bg-12: #d4e8edff;
+  --bg-13: #d5e7ecff;
+  --bg-14: #d6e7ebff;
+  --bg-15: #d7e6eaff;
+  --bg-16: #d8e6e9ff;
+  --bg-17: #d9e5e8ff;
+  --bg-18: #dae5e7ff;
+  --bg-19: #dbe4e6ff;
+  --bg-20: #dde3e5ff;
+  --bg-21: #dee3e4ff;
+  --bg-22: #dfe2e3ff;
+  --bg-23: #e3e8e9ff;
+  --bg-24: #e4e8e9ff;
+  --bg-25: #e6e7e8ff;
+  --bg-26: #e7e7e7ff;
 
   --text-primary: #424242;
   --text-secondary: #616161;
+  --text-light: #dad9d9;
+  --text-dark: #383838;
 
-  --bg-card: #0768c983;
+  --bg-card-1: rgba(200, 238, 249, 0.6);
+  --bg-card-2: rgba(213, 231, 236, 0.6);
+  --bg-card-3: rgba(231, 231, 231, 0.6);
 
-  --shadow: 0px 4px 8px #1313139d;
-  --text-shadow: 0 4px 8px rgba(75, 75, 75, 0.575);
+  --button-gradient: #054586;
+  --button-text: #b7e2ff;
+
+  --shadow: 0px 4px 12px #1313139c;
+  --text-shadow: 2px 2px 4px rgb(199, 199, 199);
 
   /* Font */
-  --font-family-main: 'Inter', sans-serif;
+  --font-family-main: 'Poppins', 'Inter', sans-serif;
   --font-size-base: 16px;
 
   /* Status Colors */
-  --color-success: #053d12ff;
-  --bg-success: #35b4537c;
+  --color-success: #48aa44;
+  --bg-success: #47aa4460;
 
-  --color-error: #53050dff;
-  --bg-error: #da4a58a9;
+  --color-error: #e6492d;
+  --bg-error: #e6492d60;
 
-  --color-warning: #ffc107;
-  --bg-warning: #fff3cd;
+  --color-warning: #f6ab2f;
+  --bg-warning: #f6ab2f60;
 
-  --color-info: #20525a;
-  --bg-info: #d1ecf1;
+  --color-info: #2690a5;
+  --bg-info: #2690a560;
 }
 
 /* ============================
@@ -48,30 +76,49 @@
   --brand-accent: #8be8cb;
 
   /* Backgrounds & Text */
-  --bg-primary: #031d36;
-  --bg-secondary: #05373d;
-  --bg-accent: #1e302c;
+  --bg-1: #043260ff;
+  --bg-2: #04315eff;
+  --bg-3: #04305bff;
+  --bg-4: #042f59ff;
+  --bg-5: #042e56ff;
+  --bg-6: #042d54ff;
+  --bg-7: #042c51ff;
+  --bg-8: #042b4fff;
+  --bg-9: #032a4cff;
+  --bg-10: #03294aff;
+  --bg-11: #032847ff;
+  --bg-12: #032745ff;
+  --bg-13: #032642ff;
+  --bg-14: #032540ff;
+  --bg-15: #03243dff;
+  --bg-16: #03233bff;
+  --bg-17: #032238ff;
+  --bg-18: #032136ff;
+  --bg-19: #032033ff;
+  --bg-20: #031f31ff;
+  --bg-21: #031e2eff;
+  --bg-22: #031d2cff;
+  --bg-23: #021c29ff;
+  --bg-24: #021b27ff;
+  --bg-25: #021a24ff;
+  --bg-26: #021922ff;
 
   --text-primary: #dad9d9;
-  --text-secondary: #c7bdbd;
+  --text-secondary: #949494;
+  --text-light: #dad9d9;
+  --text-dark: #424242;
 
-  --bg-card: #022a3094;
+  --bg-card-1: rgba(4, 50, 96, 0.6);
+  --bg-card-2: rgba(3, 38, 66, 0.6);
+  --bg-card-3: rgba(2, 25, 34, 0.6);
 
-  --shadow: 0px 4px 8px #1313139d;
-  --text-shadow: 0 4px 8px rgba(22, 22, 22, 0.822);
+  --button-gradient: #054586;
+  --button-text: #b7e2ff;
+
+  --shadow: 0px 4px 12px #131313c7;
+  --text-shadow: 2px 2px 4px rgb(75, 75, 75);
 
   /* Status Colors */
-  --color-success: #28d07a;
-  --bg-success: #163b2ab3;
-
-  --color-error: #ff6b6b;
-  --bg-error: #3d1a1ab3;
-
-  --color-warning: #ffc107;
-  --bg-warning: #4a3b00b3;
-
-  --color-info: #2690a5;
-  --bg-info: #1a2e3db3;
 }
 
 /* ============================
@@ -86,6 +133,8 @@ html {
   box-sizing: border-box;
 }
 body {
+  font-family: var(--font-family-body);
+  max-width: 100dvw;
   overflow-x: hidden;
   margin: 0 auto;
   display: flex;
@@ -95,38 +144,77 @@ body {
   font-family: var(--font-family-main);
   color: var(--text-primary);
   background: radial-gradient(
-    circle at 50% 100%,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 60%,
-    var(--bg-accent) 100%
+    circle at 50% 110%,
+    var(--bg-1),
+    var(--bg-2),
+    var(--bg-3),
+    var(--bg-4),
+    var(--bg-5),
+    var(--bg-6),
+    var(--bg-7),
+    var(--bg-8),
+    var(--bg-9),
+    var(--bg-10),
+    var(--bg-11),
+    var(--bg-12),
+    var(--bg-13),
+    var(--bg-14),
+    var(--bg-15),
+    var(--bg-16),
+    var(--bg-17),
+    var(--bg-18),
+    var(--bg-19),
+    var(--bg-20),
+    var(--bg-21),
+    var(--bg-22),
+    var(--bg-23),
+    var(--bg-24),
+    var(--bg-25),
+    var(--bg-26)
   );
+
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
 }
+main {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100dvw;
+}
 
 /* ============================
    TITULOS Y TEXTOS
 ============================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  font-weight: 500;
+}
 h1 {
-  font-size: clamp(28px, 5vw, 50px);
-  font-weight: 700;
+  font-size: clamp(30px, 5vw, 56px);
 }
 h2 {
-  font-size: clamp(24px, 4.5vw, 42px);
+  font-size: clamp(27px, 4.5vw, 48px);
 }
 h3 {
-  font-size: clamp(20px, 4vw, 36px);
+  font-size: clamp(23px, 4.5vw, 36px);
+  color: var(--text-secondary);
 }
 h4 {
-  font-weight: 400;
-  font-size: clamp(18px, 3.5vw, 26px);
+  font-size: clamp(20px, 3.5vw, 28px);
 }
 p {
   font-size: clamp(16px, 3vw, 20px);
+  font-family: var(--font-family-body);
 }
 a {
+  font-family: var(--font-family-body);
   color: inherit;
   text-decoration: none;
 }
@@ -159,7 +247,7 @@ a {
   border-radius: 4px;
   border: 2px solid var(--brand-primary);
   background: var(--brand-primary);
-  box-shadow: 0px 4px 8px #1313135b;
+  box-shadow: var(--shadow);
   color: var(--bg-primary);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -183,9 +271,14 @@ a {
 
 .card {
   padding: 16px;
-  background: var(--bg-card);
-  background: linear-gradient(149deg, var(--bg-card) 0%, var(--brand-secondary) 100%);
-  backdrop-filter: blur(8px);
+  background: radial-gradient(
+    circle at 70% 110%,
+    var(--bg-card-1),
+    var(--bg-card-2),
+    var(--bg-card-3)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--bg-card-1);
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
