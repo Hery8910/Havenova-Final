@@ -3,14 +3,14 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { AlertPopup, AlertPopupSkeleton } from '../alertPopup';
 import { getAlertType } from '../../../utils/alertType';
 
-interface BackendResponse {
+interface ResponseText {
   status: number;
   title: string;
   description: string;
 }
 
 interface AlertWrapperProps {
-  response: BackendResponse | null;
+  response: ResponseText | null;
   onClose?: () => void;
 }
 

@@ -5,3 +5,4 @@ export * from './client';
 export * from './offers';
 export * from './workRequest';
 export * from './user';
+export * from './service';

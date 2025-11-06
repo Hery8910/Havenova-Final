@@ -1,43 +1,30 @@
-'use client';
-import React from 'react';
 import styles from './ConfirmationAlert.module.css';
-// import Lottie from "lottie-react";
 
-interface ConfirmationAlertProps {
+export interface ConfirmationAlertTexts {
   title: string;
-  message: string;
-  animationData?: object;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  extraClass?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+  description: string;
+  confirmLabel: string;
+  cancelLabel: string;
+}
+export interface ConfirmationAlertProps {
+  response: ConfirmationAlertTexts | null;
+  onConfirm?: () => void;
+  onCancel?: () => void;
 }
 
-const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
-  title,
-  message,
-  animationData,
-  confirmLabel = 'Confirm',
-  cancelLabel = 'Cancel',
-  extraClass = '',
-  onConfirm,
-  onCancel,
-}) => {
+const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({ response, onConfirm, onCancel }) => {
+  if (!response) return null;
   return (
     <main className={styles.section_main}>
       <article className={styles.section_article}>
-        <h4 className={styles.title}>{title}</h4>
-        <p className={styles.message}>{message}</p>
+        <h4 className={styles.title}>{response.title}</h4>
+        <p className={styles.description}>{response.description}</p>
         <div className={styles.button_group}>
           <button className={styles.cancel_button} onClick={onCancel}>
-            {cancelLabel}
+            {response.cancelLabel}
           </button>
-          <button
-            className={extraClass ? styles[`${extraClass}_button`] : styles.confirm_button}
-            onClick={onConfirm}
-          >
-            {confirmLabel}
+          <button className={styles.confirm_button} onClick={onConfirm}>
+            {response.confirmLabel}
           </button>
         </div>
       </article>

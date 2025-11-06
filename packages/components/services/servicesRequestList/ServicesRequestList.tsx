@@ -1,56 +1,28 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from 'react';
 import styles from './ServicesRequestList.module.css';
-import {
-  getRequestItemsFromStorage,
-  getRequestsByType,
-  removeRequestItemFromStorage,
-} from '../../../utils/serviceRequest';
+import { useServiceCart } from '../../../contexts/serviceCart/ServiceCartContext';
+import { getRequestsByType } from '../../../utils/serviceRequest';
 import ServiceRenderer from '../serviceRenderer/ServiceRenderer';
-import { useUser } from '../../../contexts/user';
-import { ServiceRequestItem } from '../../../types';
 
 const ServicesRequestList = () => {
-  const { user } = useUser();
-  const [requests, setRequests] = useState<ServiceRequestItem[]>([]);
+  const { items, removeItem, reload } = useServiceCart();
 
-  // 🔹 Cargar solicitudes desde localStorage
-  const loadRequests = useCallback(() => {
-    const items = getRequestItemsFromStorage();
-    setRequests(items);
-  }, []);
-
-  useEffect(() => {
-    loadRequests();
-  }, [loadRequests]);
-
-  // 🔹 Eliminar solicitud y refrescar el estado
-  const handleRemove = useCallback(
-    (id: string) => {
-      removeRequestItemFromStorage(id);
-      loadRequests();
-    },
-    [loadRequests]
-  );
-
-  // 🔹 Agrupar por tipo de servicio
-  const types = Array.from(new Set(requests.map((r) => r.serviceType)));
+  const types = Array.from(new Set(items.map((r) => r.serviceType)));
 
   return (
     <ul className={styles.ul}>
       {types.map((type) => {
-        const filtered = getRequestsByType(requests, type);
+        const filtered = getRequestsByType(items, type);
         return (
           <li className={styles.li} key={type}>
             <ServiceRenderer
               key={type}
               type={type}
               requests={filtered}
-              onRemove={handleRemove}
-              reloadRequests={loadRequests}
+              onRemove={removeItem}
+              reloadRequests={reload}
             />
           </li>
         );
@@ -58,5 +30,4 @@ const ServicesRequestList = () => {
     </ul>
   );
 };
-
 export default ServicesRequestList;

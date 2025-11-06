@@ -1,5 +1,9 @@
 .section {
   width: 100%;
+  height: -webkit-fill-available;
+}
+.wrapper {
+  padding: 32px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

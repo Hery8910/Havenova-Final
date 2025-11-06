@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  height: -webkit-fill-available;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 4px;
+  padding: 0 0 0 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.submitted {
+  background-color: var(--status-submitted-bg);
+}
+.accepted {
+  background-color: var(--status-accepted-bg);
+}
+.in-progress {
+  background-color: var(--status-in-progress-bg);
+}
+.completed {
+  background-color: var(--status-completed-bg);
+}
+.cancelled {
+  background-color: var(--status-cancelled-bg);
+}
+.section {
+  width: 100%;
+  height: -webkit-fill-available;
+}

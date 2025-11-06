@@ -9,7 +9,7 @@ import {
   clearAllRequestItemsFromStorage,
 } from '@/packages/utils/serviceRequest';
 import { Button } from '@/packages/components/common';
-import { ServiceCart, ServicesRequestList } from '@/packages/components/services';
+import { ServicesRequestList } from '@/packages/components/services/servicesRequestList';
 import Image from 'next/image';
 import { useUser } from '@/packages/contexts/user';
 import { useI18n } from '@/packages/contexts/i18n';
@@ -35,58 +35,8 @@ export interface CalendarData {
 }
 
 const CheckoutPage = () => {
-  const sample = {
-    year: 2025,
-    role: 'INSPECTOR',
-    serviceType: 'inspection',
-    months: [
-      {
-        month: 10,
-        blockedSlots: [
-          {
-            date: '2025-10-10',
-            start: '08:00',
-            end: '12:00',
-            reason: 'holiday',
-          },
-          {
-            date: '2025-10-17',
-            start: '09:00',
-            end: '15:30',
-            reason: 'no_available_workers',
-          },
-          {
-            date: '2025-10-22',
-            start: '08:00',
-            end: '17:00',
-            reason: 'maintenance',
-          },
-        ],
-      },
-      {
-        month: 11,
-        blockedSlots: [
-          {
-            date: '2025-11-03',
-            start: '13:00',
-            end: '17:00',
-            reason: 'no_available_workers',
-          },
-          {
-            date: '2025-11-15',
-            start: '08:00',
-            end: '18:00',
-            reason: 'vacation',
-          },
-        ],
-      },
-    ],
-  };
-
   const { user } = useUser();
   const { client } = useClient();
-  const clientId = client?._id;
-
   const { texts } = useI18n();
 
   const checkoutTexts = texts?.pages?.checkout || {

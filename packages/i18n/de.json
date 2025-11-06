@@ -1230,7 +1230,33 @@
       "enableStats": "Statistik-Cookies aktivieren"
     },
     "services": {
+      "howItWorks": {
+        "title": "So funktioniert es",
+        "steps": [
+          {
+            "title": "Service anfragen",
+            "description": "Füllen Sie das Formular mit den Details Ihres Auftrags aus. Wir prüfen Ihre Anfrage und bereiten ein persönliches Angebot vor."
+          },
+          {
+            "title": "Erste Besichtigung planen",
+            "description": "Ein Mitarbeiter kontaktiert Sie, um einen passenden Termin für die erste Besichtigung oder Beratung zu vereinbaren."
+          },
+          {
+            "title": "Termin für die Arbeit bestätigen",
+            "description": "Nach der Besichtigung erhalten Sie das endgültige Angebot. Sobald Sie bestätigen, wird der Arbeitstermin festgelegt."
+          },
+          {
+            "title": "Service durchführen",
+            "description": "Unser Team führt die Arbeit zuverlässig und professionell aus. Nach Abschluss erhalten Sie eine Rechnung und können Feedback geben."
+          }
+        ]
+      },
       "furnitureAssembly": {
+        "header": {
+          "title": "Möbelmontage",
+          "subtitle": "Professionell, schnell und stressfrei",
+          "description": "Unsere Experten übernehmen den kompletten Aufbau Ihrer Möbel – von der Anlieferung bis zur Endmontage. Buchen Sie Ihren Termin einfach online und genießen Sie Ihren fertig eingerichteten Raum ohne Aufwand."
+        },
         "form": {
           "header": {
             "title": "Möbelmontage",
@@ -1246,7 +1272,8 @@
             "depth": "Tiefe",
             "doors": "Anzahl der Türen",
             "drawers": "Anzahl der Schubladen",
-            "wall": "An der Wand montiert?",
+            "wall": { "title": "An der Wand montiert?", "wall": "Yes", "floor": "No" },
+            "details": "Zusätzliche Details",
             "comment": "Hinterlassen Sie uns einen Kommentar"
           },
           "back_button": {
@@ -1258,25 +1285,55 @@
             "cta": "Einreichen",
             "variant": "solid",
             "icon": "confirm"
+          },
+          "alerts": {
+            "confirmation": {
+              "title": {
+                "create": "Serviceanfrage gespeichert",
+                "edit": "Serviceanfrage aktualisiert"
+              },
+              "description": {
+                "create": "Ihre Serviceanfrage wurde erfolgreich hinzugefügt. Sie können direkt zur Kasse gehen oder weitere Services erkunden.",
+                "edit": "Ihre Anfrage wurde erfolgreich aktualisiert."
+              },
+              "confirm": "Zur Kasse gehen",
+              "cancel": "Weiter stöbern"
+            },
+            "error": {
+              "invalid": {
+                "title": "Ungültige Daten",
+                "description": "Einige Felder enthalten ungültige oder unvollständige Informationen. Bitte überprüfen Sie das Formular und versuchen Sie es erneut."
+              },
+              "unexpected": {
+                "title": "Unerwarteter Fehler",
+                "description": "Beim Speichern Ihrer Anfrage ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
+              }
+            }
           }
         },
-        "steps": {
-          "step1": {
+        "view": {
+          "title": "Details des Möbelstücks",
+          "openButton": { "open": "Mehr", "close": "Weniger" },
+          "editButton": "Edit",
+          "step": "Details"
+        },
+        "steps": [
+          {
             "title": "Wählen Sie den Standort",
             "description": "Wählen Sie den Raum aus, in dem sich das Möbelstück befindet.",
             "step": "Standort"
           },
-          "step2": {
+          {
             "title": "Wählen Sie das Möbelstück",
             "description": "Wählen Sie die Art des Möbelstücks, das montiert werden soll.",
             "step": "Möbelstück"
           },
-          "step3": {
+          {
             "title": "Details des Möbelstücks",
             "description": "Geben Sie Maße oder besondere Hinweise für die Montage an.",
             "step": "Details"
           }
-        },
+        ],
         "locations": {
           "title": "Standort",
           "bedroom": "Schlafzimmer",
@@ -1314,6 +1371,14 @@
           "garden_chair": "Gartenstuhl",
           "plant_shelf": "Pflanzenregal"
         }
+      },
+      "cart": {
+        "iconAlt": "Warenkorb-Symbol",
+        "open": "Öffnen Sie den Servicewagen",
+        "close": "Warenkorb schließen",
+        "empty": "Ihr Warenkorb ist leer",
+        "title": "Ihre Dienstleistungen",
+        "checkout": "Zur Kasse"
       },
       "servicesList": [
         {
@@ -1536,6 +1601,40 @@
           "comment": "Reinigungsmeister hat bei uns diverse Möbel aufgebaut. Die Kommunikation war angenehm und unproblematisch. Er hat die Arbeit zur vollen Zufriedenheit erledigt. Gerne wieder!"
         }
       ]
+    },
+    "dashboard": {
+      "pages": {
+        "requests": {
+          "requestsList": {
+            "title": "Anfragen",
+            "empty": "Keine Anfragen gefunden",
+            "button": "Weitere Details"
+          },
+          "requestDetails": {
+            "button": {
+              "cta": "Confirm Changes",
+              "variant": "solid",
+              "icon": "confirm"
+            }
+          },
+          "requestStatus": {
+            "submitted": "Eingereicht",
+            "accepted": "Akzeptiert",
+            "inProgress": "In Bearbeitung",
+            "completed": "Abgeschlossen",
+            "cancelled": "Storniert"
+          },
+          "service": {
+            "furniture-assembly": "Möbelmontage",
+            "kitchen-cleaning": "Küchenreinigung",
+            "house-cleaning": "Wohnungsreinigung",
+            "window-cleaning": "Fensterreinigung",
+            "house-service": "Hausservice",
+            "kitchen-assembly": "Küchenmontage",
+            "inspection": "Inspektion"
+          }
+        }
+      }
     }
   },
   "footer": {

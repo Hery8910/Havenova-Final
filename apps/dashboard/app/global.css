@@ -64,6 +64,26 @@
 
   --color-info: #2690a5;
   --bg-info: #2690a560;
+
+  /* Submitted */
+  --status-submitted-color: #e3f2fd;
+  --status-submitted-bg: #0d47a1;
+
+  /* Accepted */
+  --status-accepted-color: #e8f5e9;
+  --status-accepted-bg: #1b5e20;
+
+  /* In Progress */
+  --status-in-progress-color: #fff3e0;
+  --status-in-submitted-bg: #e65100;
+
+  /* Completed */
+  --status-completed-color: #e0f7fa;
+  --status-completed-bg: #006064;
+
+  /* Cancelled */
+  --status-cancelled-color: #ffebee;
+  --status-cancelled-bg: #b71c1c;
 }
 
 /* ============================
@@ -117,8 +137,6 @@
 
   --shadow: 0px 4px 12px #131313c7;
   --text-shadow: 2px 2px 4px rgb(75, 75, 75);
-
-  /* Status Colors */
 }
 
 /* ============================

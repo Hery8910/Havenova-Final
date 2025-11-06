@@ -1,0 +1,39 @@
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.status svg {
+  width: 16px;
+  height: 16px;
+}
+.submitted {
+  background-color: var(--status-submitted-bg);
+  color: var(--status-submitted-color);
+}
+
+.accepted {
+  background-color: var(--status-accepted-bg);
+  color: var(--status-accepted-color);
+}
+
+.in-progress {
+  background-color: var(--status-in-progress-bg);
+  color: var(--status-in-progress-color);
+}
+
+.completed {
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed-color);
+}
+
+.cancelled {
+  background-color: var(--status-cancelled-bg);
+  color: var(--status-cancelled-color);
+}

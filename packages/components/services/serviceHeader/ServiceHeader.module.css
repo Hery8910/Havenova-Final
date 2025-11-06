@@ -1,0 +1,19 @@
+.header {
+  width: 100%;
+  padding: 200px 0 100px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 16px;
+}
+.title {
+  font-weight: 600;
+}
+.subtitle {
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+.description {
+  max-width: 400px;
+  color: var(--text-secondary);
+}

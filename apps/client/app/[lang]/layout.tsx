@@ -7,7 +7,9 @@ import { CookieBannerContainer } from '@/packages/components/cookieBanner';
 import { FooterContainer } from '@/packages/components/footer/FooterContainer';
 import { getClient } from '@/packages/services/client';
 import { CookiesProvider } from '@/packages/contexts/cookies/CookiesContext';
-import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
+import { I18nProvider } from '@/packages/contexts/';
+import { ServiceCartProvider } from '@/packages/contexts/serviceCart';
+import { ServiceCart } from '@/packages/components/services/serviceCart';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 import { getPageMetadata } from '@/packages/utils/metadata';
@@ -57,10 +59,13 @@ export default async function LangLayout({
           <DashboardProvider>
             <CookiesProvider>
               <I18nProvider initialLanguage={params.lang}>
-                <CookieBannerContainer />
-                <NavbarContainer />
-                {children}
-                <FooterContainer />
+                <ServiceCartProvider>
+                  <CookieBannerContainer />
+                  <NavbarContainer />
+                  {children}
+                  <ServiceCart />
+                  <FooterContainer />
+                </ServiceCartProvider>
               </I18nProvider>
             </CookiesProvider>
           </DashboardProvider>

@@ -1241,7 +1241,33 @@
       }
     },
     "services": {
+      "howItWorks": {
+        "title": "How It Works",
+        "steps": [
+          {
+            "title": "Request your service",
+            "description": "Fill out the form with the details of your request. We’ll review it and prepare a personalized offer for you."
+          },
+          {
+            "title": "Schedule the first visit",
+            "description": "A team member will contact you to arrange a convenient time for the first inspection or consultation."
+          },
+          {
+            "title": "Confirm the work appointment",
+            "description": "After the inspection, you’ll receive the final offer. Once confirmed, the work date will be scheduled."
+          },
+          {
+            "title": "Service completed",
+            "description": "Our team performs the work professionally and efficiently. You’ll receive an invoice and can share your feedback."
+          }
+        ]
+      },
       "furnitureAssembly": {
+        "header": {
+          "title": "Furniture Assembly",
+          "subtitle": "Professional, fast and stress-free",
+          "description": "Our experts handle the complete assembly of your furniture – from delivery to final setup. Book your appointment online and enjoy your newly arranged space effortlessly."
+        },
         "form": {
           "header": {
             "title": "Furniture Assembly",
@@ -1257,7 +1283,8 @@
             "depth": "Depth",
             "doors": "Number of Doors",
             "drawers": "Number of Drawers",
-            "wall": "Mounted on wall?",
+            "wall": { "title": "Mounted on wall?", "wall": "Yes", "floor": "No" },
+            "details": "Extra details",
             "comment": "Leave us a comment"
           },
           "back_button": {
@@ -1269,25 +1296,55 @@
             "cta": "Submit",
             "variant": "solid",
             "icon": "confirm"
+          },
+          "alerts": {
+            "confirmation": {
+              "title": {
+                "create": "Service request saved",
+                "edit": "Service request updated"
+              },
+              "description": {
+                "create": "Your service request has been added successfully. You can go directly to checkout or continue exploring other services.",
+                "edit": "Your request has been updated successfully."
+              },
+              "confirm": "Go to Checkout",
+              "cancel": "Continue browsing"
+            },
+            "error": {
+              "invalid": {
+                "title": "Invalid data",
+                "description": "Some fields contain invalid or incomplete information. Please review the form and try again."
+              },
+              "unexpected": {
+                "title": "Unexpected error",
+                "description": "An unexpected error occurred while saving your request. Please try again later or contact support."
+              }
+            }
           }
         },
-        "steps": {
-          "step1": {
+        "view": {
+          "title": "Furniture details",
+          "openButton": { "open": "More", "close": "Less" },
+          "editButton": "Edit",
+          "step": "Details"
+        },
+        "steps": [
+          {
             "title": "Choose location",
             "description": "Select the room where the furniture will be assembled.",
             "step": "Location"
           },
-          "step2": {
+          {
             "title": "Choose furniture",
             "description": "Select the type of furniture to be assembled.",
             "step": "Furniture"
           },
-          "step3": {
+          {
             "title": "Furniture details",
             "description": "Provide dimensions or any special instructions for assembly.",
             "step": "Details"
           }
-        },
+        ],
         "locations": {
           "title": "Location",
           "bedroom": "Bedroom",
@@ -1325,6 +1382,14 @@
           "garden_chair": "Garden Chair",
           "plant_shelf": "Plant Shelf"
         }
+      },
+      "cart": {
+        "iconAlt": "Shopping cart icon",
+        "open": "Open service cart",
+        "close": "Close cart",
+        "empty": "Your cart is empty",
+        "title": "Your Services",
+        "checkout": "Go to Checkout"
       },
       "servicesList": [
         {
@@ -1547,6 +1612,40 @@
           "comment": "Reinigungsmeister hat bei uns diverse Möbel aufgebaut. Die Kommunikation war angenehm und unproblematisch. Er hat die Arbeit zur vollen Zufriedenheit erledigt. Gerne wieder!"
         }
       ]
+    },
+    "dashboard": {
+      "pages": {
+        "requests": {
+          "requestsList": {
+            "title": "Requests",
+            "empty": "No requests found",
+            "button": "More details"
+          },
+          "requestDetails": {
+            "button": {
+              "cta": "Änderungen bestätigen",
+              "variant": "solid",
+              "icon": "confirm"
+            }
+          },
+          "requestStatus": {
+            "submitted": "Submitted",
+            "accepted": "Accepted",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+          },
+          "service": {
+            "furniture-assembly": "Möbelmontage",
+            "kitchen-cleaning": "Küchenreinigung",
+            "house-cleaning": "Wohnungsreinigung",
+            "window-cleaning": "Fensterreinigung",
+            "house-service": "Hausservice",
+            "kitchen-assembly": "Küchenmontage",
+            "inspection": "Inspektion"
+          }
+        }
+      }
     }
   },
   "footer": {

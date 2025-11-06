@@ -4,12 +4,14 @@ import { useEffect, useState, useCallback } from 'react';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useUser } from '@/packages/contexts/user/UserContext';
 import {
+  getWorkRequestById,
   getWorkRequests,
   RequestFilters,
   WorkRequestSummary,
 } from '@/packages/services/workRequest';
 import { RequestsToolbar } from '@/packages/components/dashboard/pages/requests/requestsToolbar';
-import { RequestTable } from '@/packages/components/dashboard/pages/requests/requestsTable';
+import { WorkRequestDetail } from '@/packages/components/dashboard/pages/requests/workRequestDetail';
+import { RequestList } from '@/packages/components/dashboard/pages/requests/requestsList';
 import styles from './page.module.css';
 import { FaFolder } from 'react-icons/fa';
 
@@ -30,6 +32,18 @@ export default function Requests() {
     date: '',
     search: '',
   });
+  const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
+
+  const handleSelectRequest = async (id: string) => {
+    try {
+      const data = await getWorkRequestById(id);
+      setSelectedRequest(data);
+      console.log('🟢 Selected request:', data);
+      // Aquí luego puedes abrir un modal o panel lateral con esos detalles
+    } catch (error) {
+      console.error('Error fetching work request details:', error);
+    }
+  };
 
   const fetchWorkRequests = useCallback(async () => {
     if (!client?._id) return;
@@ -77,13 +91,23 @@ export default function Requests() {
 
   return (
     <section className={styles.section}>
-      <header className={styles.header}>
-        <FaFolder />
-        <h3>Work Requests</h3>
-      </header>
+      {!selectedRequest ? (
+        <div className={styles.wrapper}>
+          <header className={styles.header}>
+            <FaFolder />
+            <h3>Work Requests</h3>
+          </header>
 
-      <RequestsToolbar filters={filters} onChange={handleFilterChange} />
-      <RequestTable data={requests} loading={loading} />
+          <RequestsToolbar filters={filters} onChange={handleFilterChange} />
+          <RequestList data={requests} loading={loading} onSelect={handleSelectRequest} />
+        </div>
+      ) : (
+        <WorkRequestDetail
+          request={selectedRequest}
+          onClose={() => setSelectedRequest(null)}
+          onUpdated={fetchWorkRequests} // refresca la tabla
+        />
+      )}
     </section>
   );
 }

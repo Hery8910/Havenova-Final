@@ -1,0 +1,122 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 4px;
+  padding: 0 0 0 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.submitted {
+  background-color: var(--status-submitted-bg);
+}
+.accepted {
+  background-color: var(--status-accepted-bg);
+}
+.in-progress {
+  background-color: var(--status-in-progress-bg);
+}
+.completed {
+  background-color: var(--status-completed-bg);
+}
+.cancelled {
+  background-color: var(--status-cancelled-bg);
+}
+.card:hover {
+  background: var(--bg-card-2);
+  transform: translateY(-2px);
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 4px;
+}
+.left {
+  width: 100%;
+  margin-left: 10px;
+  border-radius: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.left h4 {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  list-style: none;
+}
+
+.article {
+  width: 100%;
+  height: -webkit-fill-available;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.date {
+  color: var(--text-secondary);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.status svg {
+  width: 16px;
+  height: 16px;
+}
+
+.button {
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background: var(--bg-card-3);
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .right {
+    align-items: flex-start;
+  }
+
+  .button {
+    align-self: flex-end;
+  }
+}

@@ -138,7 +138,7 @@ const Calendar: React.FC = () => {
         </button>
         <p>
           {new Date(currentYear, currentMonth - 1).toLocaleString('default', {
-            month: 'long',
+            month: 'short',
             year: 'numeric',
           })}
         </p>

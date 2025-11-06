@@ -208,6 +208,7 @@ h3 {
 }
 h4 {
   font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--text-secondary);
 }
 p {
   font-size: clamp(16px, 3vw, 20px);
