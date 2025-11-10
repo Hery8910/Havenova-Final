@@ -105,7 +105,7 @@
 
   --text-primary: #dad9d9;
   --text-secondary: #949494;
-  --text-light: #dad9d9;
+  --text-light: hsl(0, 1%, 85%);
   --text-dark: #424242;
 
   --bg-card-1: rgba(4, 50, 96, 0.6);

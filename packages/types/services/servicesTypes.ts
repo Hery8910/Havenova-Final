@@ -22,6 +22,7 @@ export interface BaseServiceDetails {
   title: string;
   icon: string;
   notes?: string;
+  images?: string[];
 }
 
 // --------------------------------------

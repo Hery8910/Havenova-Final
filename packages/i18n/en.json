@@ -1287,16 +1287,9 @@
             "details": "Extra details",
             "comment": "Leave us a comment"
           },
-          "back_button": {
-            "cta": "Back",
-            "variant": "borderless",
-            "icon": "back"
-          },
-          "submit_button": {
-            "cta": "Submit",
-            "variant": "solid",
-            "icon": "confirm"
-          },
+          "back_button": "Back",
+          "submit_button": "Submit",
+          "save_botton": "Save",
           "alerts": {
             "confirmation": {
               "title": {
@@ -1308,7 +1301,8 @@
                 "edit": "Your request has been updated successfully."
               },
               "confirm": "Go to Checkout",
-              "cancel": "Continue browsing"
+              "cancel": "Continue browsing",
+              "close": "Close"
             },
             "error": {
               "invalid": {
@@ -1326,7 +1320,14 @@
           "title": "Furniture details",
           "openButton": { "open": "More", "close": "Less" },
           "editButton": "Edit",
-          "step": "Details"
+          "deleteButton": "Delete",
+          "step": "Details",
+          "deleteConfirm": {
+            "title": "Delete service?",
+            "description": "Are you sure you want to remove this service? This action cannot be undone.",
+            "confirm": "Yes, delete",
+            "cancel": "Cancel"
+          }
         },
         "steps": [
           {

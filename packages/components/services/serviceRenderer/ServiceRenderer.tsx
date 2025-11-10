@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
-import { FurnitureAssemblyDetails, ServiceRequestItem } from '../../../types/services';
+import { ServiceRequestItem } from '../../../types/services';
 import FurnitureAssemblyRequestView from '../furnitureAssembly/FurnitureAssemblyRequestView/FurnitureAssemblyRequestView';
+import { FurnitureAssemblyDetails } from '../furnitureAssembly/furnitureAssemblyForm/furnitureAssembly.types';
 // import WindowCleaningRequest from '../windowsCleaning/windowsCleaningRequest/WindowCleaningRequest';
 // import HouseCleaningRequest from '../houseCleaning/houseCleaningRequest/HouseCleaningRequest';
 // import KitchenAssemblyRequest from '../kitchenAssembly/kitchenAssemblyRequest/KitchenAssemblyRequest';

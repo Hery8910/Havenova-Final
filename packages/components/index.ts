@@ -12,4 +12,4 @@ export * from './themeToggler';
 export * from './map';
 export * from './sidebar';
 export * from './dashboard';
-export * from './confirmationAlert';
+export * from './imageUploader';

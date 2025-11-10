@@ -8,6 +8,7 @@ import { FooterContainer } from '@/packages/components/footer/FooterContainer';
 import { getClient } from '@/packages/services/client';
 import { CookiesProvider } from '@/packages/contexts/cookies/CookiesContext';
 import { I18nProvider } from '@/packages/contexts/';
+import { AlertProvider } from '@/packages/contexts/';
 import { ServiceCartProvider } from '@/packages/contexts/serviceCart';
 import { ServiceCart } from '@/packages/components/services/serviceCart';
 import { Poppins, Roboto } from 'next/font/google';
@@ -60,11 +61,13 @@ export default async function LangLayout({
             <CookiesProvider>
               <I18nProvider initialLanguage={params.lang}>
                 <ServiceCartProvider>
-                  <CookieBannerContainer />
-                  <NavbarContainer />
-                  {children}
-                  <ServiceCart />
-                  <FooterContainer />
+                  <AlertProvider>
+                    <CookieBannerContainer />
+                    <NavbarContainer />
+                    {children}
+                    <ServiceCart />
+                    <FooterContainer />
+                  </AlertProvider>
                 </ServiceCartProvider>
               </I18nProvider>
             </CookiesProvider>

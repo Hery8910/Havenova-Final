@@ -2,16 +2,26 @@ import Image from 'next/image';
 import { IoIosClose } from 'react-icons/io';
 import styles from './AlertPopup.module.css';
 import { AlertType } from '../../../utils/alertType';
-import { Button } from '../../common';
 
-interface AlertPopupProps {
+export interface AlertPopupProps {
   type: AlertType;
   title: string;
   description: string;
-  onClose?: () => void;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  onConfirm?: () => void;
+  onCancel?: () => void;
 }
 
-const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClose }) => {
+const AlertPopup: React.FC<AlertPopupProps> = ({
+  type,
+  title,
+  description,
+  confirmLabel,
+  cancelLabel,
+  onConfirm,
+  onCancel,
+}) => {
   const imageMap = {
     success: '/svg/alert/success.svg',
     error: '/svg/alert/error.svg',
@@ -33,10 +43,12 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClo
     info: 'var(--bg-info)',
   };
 
+  const hasConfirm = !!onConfirm && !!confirmLabel;
+
   return (
     <section
-      role="alert"
-      aria-live="assertive"
+      role={hasConfirm ? 'dialog' : 'alertdialog'}
+      aria-modal="true"
       aria-labelledby="alert-title"
       aria-describedby="alert-description"
       tabIndex={-1}
@@ -52,21 +64,44 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClo
         <Image
           src={imageMap[type]}
           priority
-          alt={`${type} image`}
+          alt={`${type} icon`}
           width={100}
           height={100}
           className={styles.image}
           style={{ background: colorMap[type] }}
         />
-        <aside className={styles.main}>
-          <article className={styles.article}>
-            <h4 style={{ color: colorMap[type] }} id="alert-title">
-              <strong>{title}</strong>
-            </h4>
-            {onClose && <Button variant="outline" cta="" icon="close" onClick={onClose} />}
-          </article>
-          <p id="alert-description">{description}</p>
-        </aside>
+
+        <h4 style={{ color: colorMap[type] }} id="alert-title">
+          <strong>{title}</strong>
+        </h4>
+
+        <p id="alert-description">{description}</p>
+
+        <div className={styles.button_group}>
+          <button
+            className={styles.cancel_button}
+            onClick={onCancel}
+            style={{
+              borderColor: colorMap[type],
+              color: colorMap[type],
+              backgroundColor: 'transparent',
+            }}
+          >
+            {cancelLabel || 'Cancel'}
+          </button>
+          {hasConfirm && (
+            <button
+              className={styles.confirm_button}
+              onClick={onConfirm}
+              style={{
+                borderColor: colorMap[type],
+                backgroundColor: colorMap[type],
+              }}
+            >
+              {confirmLabel}
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );

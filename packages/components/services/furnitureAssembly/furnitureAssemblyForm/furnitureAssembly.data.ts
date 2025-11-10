@@ -22,11 +22,11 @@ export const furnitureTypes: {
 }[] = [
   {
     location: 'bedroom',
-    icon: '/images/components/services/furnitureAssembly/bedroom.webp',
+    icon: '/svg/components/furnitureAssembly/bed_frame.svg',
     furniture: [
       {
         id: 'wardrobe',
-        icon: '/images/components/services/furnitureAssembly/wardrobe.webp',
+        icon: '/svg/components/furnitureAssembly/wardrobe.svg',
         input: {
           width: true,
           height: true,
@@ -38,7 +38,7 @@ export const furnitureTypes: {
       },
       {
         id: 'bed_frame',
-        icon: '/images/components/services/furnitureAssembly/bed_frame.webp',
+        icon: '/svg/components/furnitureAssembly/bed_frame.svg',
         input: {
           width: true,
           height: false,
@@ -50,33 +50,33 @@ export const furnitureTypes: {
       },
       {
         id: 'dresser',
-        icon: '/images/components/services/furnitureAssembly/dresser.webp',
+        icon: '/svg/components/furnitureAssembly/dresser.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'nightstand',
-        icon: '/images/components/services/furnitureAssembly/nightstand.webp',
+        icon: '/svg/components/furnitureAssembly/nightstand.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'bookshelf',
-        icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
+        icon: '/svg/components/furnitureAssembly/bookshelf.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
     ],
   },
   {
     location: 'living_room',
-    icon: '/images/components/services/furnitureAssembly/living_room.webp',
+    icon: '/svg/components/furnitureAssembly/living_room.svg',
     furniture: [
       {
         id: 'tv_unit',
-        icon: '/images/components/services/furnitureAssembly/tv_unit.webp',
+        icon: '/svg/components/furnitureAssembly/tv_unit.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'coffee_table',
-        icon: '/images/components/services/furnitureAssembly/coffee_table.webp',
+        icon: '/svg/components/furnitureAssembly/coffee_table.svg',
         input: {
           width: true,
           height: true,
@@ -88,44 +88,44 @@ export const furnitureTypes: {
       },
       {
         id: 'bookshelf',
-        icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
+        icon: '/svg/components/furnitureAssembly/bookshelf.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'display_cabinet',
-        icon: '/images/components/services/furnitureAssembly/display_cabinet.webp',
+        icon: '/svg/components/furnitureAssembly/display_cabinet.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
     ],
   },
   {
     location: 'bathroom',
-    icon: '/images/components/services/furnitureAssembly/bathroom.webp',
+    icon: '/svg/components/furnitureAssembly/bathroom.svg',
     furniture: [
       {
         id: 'bathroom_cabinet',
-        icon: '/images/components/services/furnitureAssembly/bathroom_cabinet.webp',
+        icon: '/svg/components/furnitureAssembly/bathroom_cabinet.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'mirror_cabinet',
-        icon: '/images/components/services/furnitureAssembly/mirror_cabinet.webp',
+        icon: '/svg/components/furnitureAssembly/mirror_cabinet.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'shelf_unit',
-        icon: '/images/components/services/furnitureAssembly/shelf_unit.webp',
+        icon: '/svg/components/furnitureAssembly/shelf_unit.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
     ],
   },
   {
     location: 'kitchen',
-    icon: '/images/components/services/furnitureAssembly/kitchen.webp',
+    icon: '/svg/components/furnitureAssembly/kitchen.svg',
     furniture: [
       {
         id: 'dining_table',
-        icon: '/images/components/services/furnitureAssembly/dining_table.webp',
+        icon: '/svg/components/furnitureAssembly/dining_table.svg',
         input: {
           width: true,
           height: true,
@@ -137,7 +137,7 @@ export const furnitureTypes: {
       },
       {
         id: 'dining_chair',
-        icon: '/images/components/services/furnitureAssembly/dining_chair.webp',
+        icon: '/svg/components/furnitureAssembly/dining_chair.svg',
         input: {
           width: false,
           height: false,
@@ -149,7 +149,7 @@ export const furnitureTypes: {
       },
       {
         id: 'kitchen_island',
-        icon: '/images/components/services/furnitureAssembly/kitchen_island.webp',
+        icon: '/svg/components/furnitureAssembly/kitchen_island.svg',
         input: {
           width: true,
           height: true,
@@ -161,23 +161,23 @@ export const furnitureTypes: {
       },
       {
         id: 'kitchen_cabinet',
-        icon: '/images/components/services/furnitureAssembly/kitchen_cabinet.webp',
+        icon: '/svg/components/furnitureAssembly/kitchen_cabinet.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
     ],
   },
   {
     location: 'office',
-    icon: '/images/components/services/furnitureAssembly/office.webp',
+    icon: '/svg/components/furnitureAssembly/office.svg',
     furniture: [
       {
         id: 'desk',
-        icon: '/images/components/services/furnitureAssembly/desk.webp',
+        icon: '/svg/components/furnitureAssembly/desk.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'office_chair',
-        icon: '/images/components/services/furnitureAssembly/office_chair.webp',
+        icon: '/svg/components/furnitureAssembly/office_chair.svg',
         input: {
           width: false,
           height: false,
@@ -189,33 +189,33 @@ export const furnitureTypes: {
       },
       {
         id: 'filing_cabinet',
-        icon: '/images/components/services/furnitureAssembly/filing_cabinet.webp',
+        icon: '/svg/components/furnitureAssembly/filing_cabinet.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'bookshelf',
-        icon: '/images/components/services/furnitureAssembly/bookshelf.webp',
+        icon: '/svg/components/furnitureAssembly/bookshelf.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
     ],
   },
   {
     location: 'hallway',
-    icon: '/images/components/services/furnitureAssembly/hallway.webp',
+    icon: '/svg/components/furnitureAssembly/hallway.svg',
     furniture: [
       {
         id: 'shoe_rack',
-        icon: '/images/components/services/furnitureAssembly/shoe_rack.webp',
+        icon: '/svg/components/furnitureAssembly/shoe_rack.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'coat_rack',
-        icon: '/images/components/services/furnitureAssembly/coat_rack.webp',
+        icon: '/svg/components/furnitureAssembly/coat_rack.svg',
         input: { width: true, height: true, depth: true, doors: true, drawers: true, wall: true },
       },
       {
         id: 'console_table',
-        icon: '/images/components/services/furnitureAssembly/console_table.webp',
+        icon: '/svg/components/furnitureAssembly/console_table.svg',
         input: {
           width: true,
           height: true,
@@ -229,11 +229,11 @@ export const furnitureTypes: {
   },
   {
     location: 'balcony',
-    icon: '/images/components/services/furnitureAssembly/balcony.webp',
+    icon: '/svg/components/furnitureAssembly/balcony.svg',
     furniture: [
       {
         id: 'outdoor_table',
-        icon: '/images/components/services/furnitureAssembly/outdoor_table.webp',
+        icon: '/svg/components/furnitureAssembly/outdoor_table.svg',
         input: {
           width: true,
           height: true,
@@ -245,7 +245,7 @@ export const furnitureTypes: {
       },
       {
         id: 'garden_chair',
-        icon: '/images/components/services/furnitureAssembly/garden_chair.webp',
+        icon: '/svg/components/furnitureAssembly/garden_chair.svg',
         input: {
           width: false,
           height: false,
@@ -257,7 +257,7 @@ export const furnitureTypes: {
       },
       {
         id: 'plant_shelf',
-        icon: '/images/components/services/furnitureAssembly/plant_shelf.webp',
+        icon: '/svg/components/furnitureAssembly/plant_shelf.svg',
         input: {
           width: true,
           height: true,
@@ -270,3 +270,23 @@ export const furnitureTypes: {
     ],
   },
 ];
+
+export const getServiceInputSchema = (
+  serviceGroups: any[],
+  location: string,
+  type: string
+): FurnitureServiceInput => {
+  const group = serviceGroups.find((g) => g.location === location);
+  const item = group?.furniture?.find((f: any) => f.id === type);
+
+  return (
+    item?.input || {
+      width: false,
+      height: false,
+      depth: false,
+      doors: false,
+      drawers: false,
+      wall: false,
+    }
+  );
+};

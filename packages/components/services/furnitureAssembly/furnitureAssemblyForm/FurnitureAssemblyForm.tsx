@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './FurnitureAssemblyForm.module.css';
 import Image from 'next/image';
-import { furnitureTypes, initialFormData } from './furnitureAssembly.data';
+import { furnitureTypes, getServiceInputSchema, initialFormData } from './furnitureAssembly.data';
 import {
   saveRequestItemToStorage,
   updateRequestItemInStorage,
@@ -18,14 +18,13 @@ import {
   FurnitureAssemblyRequest,
   FurnitureServiceInput,
 } from './furnitureAssembly.types';
-import { IoIosArrowBack } from 'react-icons/io';
-import { AlertWrapper } from '../../../alert';
-import ConfirmationAlert, {
-  ConfirmationAlertTexts,
-} from '../../../confirmationAlert/ConfirmationAlert';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useGlobalAlert } from '@havenova/contexts/alert/AlertContext';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../hooks/useLang';
 import { href } from '../../../../utils/navigation';
+import { ImageUploader } from '../../../imageUploader';
+import { useClient } from '../../../../contexts/client/ClientContext';
 
 interface Props {
   request?: FurnitureAssemblyRequest;
@@ -34,6 +33,8 @@ interface Props {
 }
 
 const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
+  const { client } = useClient();
+  const clientId = client?._id;
   const { texts } = useI18n();
   const furnitureAssembly = texts?.components?.services?.furnitureAssembly;
   const { error: errorTexts, confirmation: confirmationTexts } =
@@ -42,11 +43,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
   const lang = useLang();
   const { reload } = useServiceCart();
 
-  const [confirmation, setConfirmation] = useState<ConfirmationAlertTexts | null>(null);
-
-  const [alert, setAlert] = useState<{ status: number; title: string; description: string } | null>(
-    null
-  );
+  const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
 
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -70,6 +67,13 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
       setSelectedLocation(request.details.location);
       setCurrentStep(2);
       setFormData(request.details);
+
+      const schema = getServiceInputSchema(
+        furnitureTypes,
+        request.details.location,
+        request.details.type
+      );
+      setInput(schema); // ✅ input ahora tiene tipado seguro
     }
   }, [request]);
 
@@ -108,6 +112,15 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
     });
   };
 
+  const handleImagesChange = (urls: string[]) => {
+    console.log(formData);
+
+    setFormData((prev) => ({
+      ...prev,
+      images: urls, // ✅ se guardan las URLs locales
+    }));
+  };
+
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
     if (currentStep === 1) setSelectedLocation('');
@@ -116,12 +129,17 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const error = validateFurnitureForm(formData, input);
     if (error) {
-      setAlert({
-        status: 400,
-        title: errorTexts.invalid.title,
-        description: errorTexts.invalid.description,
+      showError({
+        response: {
+          status: 400,
+          title: errorTexts.invalid.title,
+          description: errorTexts.invalid.description,
+          cancelLabel: confirmationTexts.close,
+        },
+        onCancel: closeAlert,
       });
       return;
     }
@@ -137,24 +155,41 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
 
     try {
       if (request?.id) {
+        // 🔹 Caso edición
         updateRequestItemInStorage(request.id, newRequest);
         reload();
-        setAlert({
-          status: 200,
-          title: confirmationTexts.title.edit,
-          description: errorTexts.description.edit,
+        showSuccess({
+          response: {
+            status: 200,
+            title: confirmationTexts.title.edit,
+            description: confirmationTexts.description.edit,
+            cancelLabel: confirmationTexts.close,
+          },
+          onCancel: () => {
+            setEdit?.(false);
+            closeAlert();
+            onUpdated?.();
+          },
         });
-        setEdit?.(false);
-        onUpdated?.();
       } else {
+        // 🔹 Caso creación
         saveRequestItemToStorage(newRequest);
         reload();
-        setConfirmation({
-          title: confirmationTexts.title.create,
-          description: confirmationTexts.description.create,
-          confirmLabel: confirmationTexts.confirm,
-          cancelLabel: confirmationTexts.cancel,
+        showConfirm({
+          response: {
+            status: 200,
+            title: confirmationTexts.title.create,
+            description: confirmationTexts.description.create,
+            confirmLabel: confirmationTexts.confirm,
+            cancelLabel: confirmationTexts.cancel,
+          },
+          onConfirm: () => {
+            closeAlert();
+            router.push(href(lang, '/checkout'));
+          },
+          onCancel: closeAlert,
         });
+
         setSelectedItem('');
         setSelectedLocation('');
         setFormData(initialFormData);
@@ -162,11 +197,14 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
       }
     } catch (err) {
       console.error(err);
-
-      setAlert({
-        status: 500,
-        title: errorTexts.unexpected.title,
-        description: errorTexts.unexpected.description,
+      showError({
+        response: {
+          status: 500,
+          title: errorTexts.unexpected.title,
+          description: errorTexts.unexpected.description,
+          cancelLabel: confirmationTexts.close,
+        },
+        onCancel: closeAlert,
       });
     }
   };
@@ -176,15 +214,17 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
   return (
     <section className={styles.section}>
       <header className={styles.header}>
+        <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
         <div className={styles.header_div}>
           <p className={styles.header_p}>{currentStep + 1}/3</p>
-          {selectedLocation && (
-            <button className={styles.back_button} onClick={handleBack}>
-              <IoIosArrowBack /> {furnitureAssembly.form.back_button.cta}
-            </button>
-          )}
+          <button
+            className={`${styles.back_button} ${!selectedLocation ? styles.hidden_button : ''}`}
+            onClick={selectedLocation ? handleBack : undefined}
+            disabled={!selectedLocation}
+          >
+            <IoIosArrowBack /> {furnitureAssembly.form.back_button}
+          </button>
         </div>
-        <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
       </header>
 
       <ul className={styles.ul_main}>
@@ -196,16 +236,15 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
                 <li
                   key={group.location}
                   onClick={() => handleSelect(group.location)}
-                  className={styles.location_button}
+                  className={styles.location_li}
                 >
-                  <Image
-                    src={group.icon}
-                    alt=""
-                    width={35}
-                    height={35}
-                    className={styles.location_image}
-                  />
-                  <p className={styles.location_p}>{furnitureAssembly.locations[group.location]}</p>
+                  <div className={styles.location_div}>
+                    <Image src={group.icon} alt="" width={40} height={40} className={styles.icon} />
+                    <p className={styles.location_p}>
+                      {furnitureAssembly.locations[group.location]}
+                    </p>
+                  </div>
+                  <IoIosArrowForward className={styles.arrow} />
                 </li>
               ))}
             </ul>
@@ -220,16 +259,13 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
                 <li
                   key={item.id}
                   onClick={() => handleClick(item.id, item.icon, item.input)}
-                  className={styles.location_button}
+                  className={styles.location_li}
                 >
-                  <Image
-                    src={item.icon}
-                    alt=""
-                    width={35}
-                    height={35}
-                    className={styles.li_image}
-                  />
-                  <p className={styles.location_p}>{furnitureAssembly.furniture[item.id]}</p>
+                  <div className={styles.location_div}>
+                    <Image src={item.icon} alt="" width={40} height={40} className={styles.icon} />
+                    <p className={styles.location_p}>{furnitureAssembly.furniture[item.id]}</p>
+                  </div>
+                  <IoIosArrowForward className={styles.arrow} />
                 </li>
               ))}
             </ul>
@@ -244,11 +280,19 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
               <div className={styles.form_div}>
                 <label className={styles.label}>{furnitureAssembly.form.input.quantity}</label>
                 <div className={styles.counter}>
-                  <button type="button" onClick={() => handleAdjust('quantity', 'subtract')}>
+                  <button
+                    className={styles.rest_button}
+                    type="button"
+                    onClick={() => handleAdjust('quantity', 'subtract')}
+                  >
                     -
                   </button>
-                  <p>{formData.quantity}</p>
-                  <button type="button" onClick={() => handleAdjust('quantity', 'add')}>
+                  <p className={styles.counter_p}>{formData.quantity}</p>
+                  <button
+                    className={styles.add_button}
+                    type="button"
+                    onClick={() => handleAdjust('quantity', 'add')}
+                  >
                     +
                   </button>
                 </div>
@@ -258,45 +302,70 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
               {input.width && (
                 <div className={styles.form_div}>
                   <label className={styles.label}>{furnitureAssembly.form.input.width}</label>
-                  <input
-                    type="number"
-                    name="width"
-                    value={formData.width || ''}
-                    onChange={handleChange}
-                  />
+                  <div className={styles.input_div}>
+                    <input
+                      className={styles.input}
+                      type="number"
+                      name="width"
+                      value={formData.width || ''}
+                      onChange={handleChange}
+                      placeholder="0"
+                    />
+                    <p>cm</p>
+                  </div>
                 </div>
               )}
               {input.height && (
                 <div className={styles.form_div}>
                   <label className={styles.label}>{furnitureAssembly.form.input.height}</label>
-                  <input
-                    type="number"
-                    name="height"
-                    value={formData.height || ''}
-                    onChange={handleChange}
-                  />
+                  <div className={styles.input_div}>
+                    <input
+                      className={styles.input}
+                      type="number"
+                      name="height"
+                      value={formData.height || ''}
+                      onChange={handleChange}
+                      placeholder="0"
+                    />
+                    <p>cm</p>
+                  </div>
                 </div>
               )}
+
               {input.depth && (
                 <div className={styles.form_div}>
                   <label className={styles.label}>{furnitureAssembly.form.input.depth}</label>
-                  <input
-                    type="number"
-                    name="depth"
-                    value={formData.depth || ''}
-                    onChange={handleChange}
-                  />
+                  <div className={styles.input_div}>
+                    <input
+                      className={styles.input}
+                      type="number"
+                      name="depth"
+                      value={formData.depth || ''}
+                      onChange={handleChange}
+                      placeholder="0"
+                    />
+                    <p>cm</p>
+                  </div>
                 </div>
               )}
+
               {input.doors && (
                 <div className={styles.form_div}>
-                  <label>{furnitureAssembly.form.input.doors}</label>
+                  <label className={styles.label}>{furnitureAssembly.form.input.doors}</label>
                   <div className={styles.counter}>
-                    <button type="button" onClick={() => handleAdjust('doors', 'subtract')}>
+                    <button
+                      className={styles.rest_button}
+                      type="button"
+                      onClick={() => handleAdjust('doors', 'subtract')}
+                    >
                       -
                     </button>
-                    <p>{formData.doors}</p>
-                    <button type="button" onClick={() => handleAdjust('doors', 'add')}>
+                    <p className={styles.counter_p}>{formData.doors}</p>
+                    <button
+                      className={styles.add_button}
+                      type="button"
+                      onClick={() => handleAdjust('doors', 'add')}
+                    >
                       +
                     </button>
                   </div>
@@ -304,13 +373,21 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
               )}
               {input.drawers && (
                 <div className={styles.form_div}>
-                  <label>{furnitureAssembly.form.input.drawers}</label>
+                  <label className={styles.label}>{furnitureAssembly.form.input.drawers}</label>
                   <div className={styles.counter}>
-                    <button type="button" onClick={() => handleAdjust('drawers', 'subtract')}>
+                    <button
+                      className={styles.rest_button}
+                      type="button"
+                      onClick={() => handleAdjust('drawers', 'subtract')}
+                    >
                       -
                     </button>
-                    <p>{formData.drawers}</p>
-                    <button type="button" onClick={() => handleAdjust('drawers', 'add')}>
+                    <p className={styles.counter_p}>{formData.drawers}</p>
+                    <button
+                      className={styles.add_button}
+                      type="button"
+                      onClick={() => handleAdjust('drawers', 'add')}
+                    >
                       +
                     </button>
                   </div>
@@ -318,7 +395,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
               )}
               {input.wall && (
                 <div className={styles.form_div}>
-                  <label>{furnitureAssembly.form.input.wall.title}</label>
+                  <label className={styles.label}>{furnitureAssembly.form.input.wall.title}</label>
                   <label className={styles.switch}>
                     <input
                       type="checkbox"
@@ -342,20 +419,23 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
                 placeholder={furnitureAssembly.form.input.comment}
                 className={styles.textarea}
               />
-              <Button {...furnitureAssembly.form.submit_button} type="submit" />
+              {clientId && (
+                <ImageUploader
+                  clientId={clientId}
+                  category="furniture"
+                  service="assembly"
+                  onImagesChange={handleImagesChange}
+                />
+              )}
+              <button type="submit" className={styles.submit_button}>
+                {request
+                  ? furnitureAssembly.form.save_botton
+                  : furnitureAssembly.form.submit_button}
+              </button>
             </form>
           </li>
         )}
       </ul>
-
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
-      {confirmation && (
-        <ConfirmationAlert
-          response={confirmation}
-          onConfirm={() => router.push(href(lang, '/checkout'))}
-          onCancel={() => setConfirmation(null)}
-        />
-      )}
     </section>
   );
 };

@@ -5,11 +5,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 .li {
-  padding: 8px;
-  margin-bottom: 8px;
   border-radius: 4px;
   border: 1px solid var(--text-secondary);
 }
@@ -66,19 +64,34 @@
 .table td {
   text-align: end;
 }
-.open_button {
-  border: none;
+.open_button,
+.delete_button {
   font-size: clamp(16px, 3vw, 20px);
-  color: var(--text-secondary);
   cursor: pointer;
   padding: 4px 16px;
-  background-color: var(--bg-card-3);
   border-radius: 4px;
   transition: all 0.3s ease-in-out;
+}
+.open_button {
+  border: 2px solid var(--bg-card-3);
+  color: var(--text-secondary);
+  background-color: var(--bg-card-3);
+}
+.delete_button {
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--text-secondary);
+  border: 2px solid var(--text-secondary);
+  background-color: transparent;
 }
 .open_button:hover {
   transform: translateY(-4px);
   color: var(--text-primary);
+  box-shadow: var(--shadow);
+}
+.delete_button:hover {
+  transform: translateY(-4px);
+  color: var(--color-error);
+  border: 2px solid var(--color-error);
   box-shadow: var(--shadow);
 }
 .span {
@@ -88,42 +101,9 @@
   gap: 8px;
 }
 
-.div {
+.buttons {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.main {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
-.button {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 35px;
-  height: 35px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition-duration: 0.3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: transparent;
-  border: 3px solid #e65353;
-}
-/* hover effect on button width */
-.button:hover {
-  width: 100px;
-  border-radius: 8px;
-  transition-duration: 0.3s;
-}
-.delete {
-  color: #f5440f;
+  align-items: center;
+  gap: 8px;
 }

@@ -1276,16 +1276,9 @@
             "details": "Zusätzliche Details",
             "comment": "Hinterlassen Sie uns einen Kommentar"
           },
-          "back_button": {
-            "cta": "Zurück",
-            "variant": "borderless",
-            "icon": "back"
-          },
-          "submit_button": {
-            "cta": "Einreichen",
-            "variant": "solid",
-            "icon": "confirm"
-          },
+          "back_button": "Zurück",
+          "submit_button": "Einreichen",
+          "save_botton": "Speichern",
           "alerts": {
             "confirmation": {
               "title": {
@@ -1297,7 +1290,8 @@
                 "edit": "Ihre Anfrage wurde erfolgreich aktualisiert."
               },
               "confirm": "Zur Kasse gehen",
-              "cancel": "Weiter stöbern"
+              "cancel": "Weiter stöbern",
+              "close": "Close"
             },
             "error": {
               "invalid": {
@@ -1315,7 +1309,14 @@
           "title": "Details des Möbelstücks",
           "openButton": { "open": "Mehr", "close": "Weniger" },
           "editButton": "Edit",
-          "step": "Details"
+          "deleteButton": "Löschen",
+          "step": "Details",
+          "deleteConfirm": {
+            "title": "Dienst löschen?",
+            "description": "Möchten Sie diesen Service wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "confirm": "Ja, löschen",
+            "cancel": "Abbrechen"
+          }
         },
         "steps": [
           {

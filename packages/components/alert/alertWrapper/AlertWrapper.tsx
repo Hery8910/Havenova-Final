@@ -1,27 +1,26 @@
+// packages/components/alert/alertWrapper/AlertWrapper.tsx
 'use client';
 import React, { useRef, useEffect, useCallback } from 'react';
 import { AlertPopup, AlertPopupSkeleton } from '../alertPopup';
 import { getAlertType } from '../../../utils/alertType';
+import type { AlertPopupProps } from '../alertPopup/AlertPopup';
 
-interface ResponseText {
-  status: number;
-  title: string;
-  description: string;
-}
+type AlertResponse = Omit<AlertPopupProps, 'type' | 'onConfirm' | 'onCancel'> & { status: number };
 
 interface AlertWrapperProps {
-  response: ResponseText | null;
-  onClose?: () => void;
+  response: AlertResponse | null;
+  onCancel: () => void;
+  onConfirm?: () => void;
 }
 
-export default function AlertWrapper({ response, onClose }: AlertWrapperProps) {
+export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWrapperProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && onClose) onClose();
+      if (e.key === 'Escape') onCancel();
     },
-    [onClose]
+    [onCancel]
   );
 
   useEffect(() => {
@@ -36,14 +35,25 @@ export default function AlertWrapper({ response, onClose }: AlertWrapperProps) {
   if (!response) return <AlertPopupSkeleton />;
 
   const type = getAlertType(response.status);
+  const hasConfirm = !!onConfirm && !!response.confirmLabel;
 
   return (
-    <div ref={containerRef} tabIndex={-1}>
+    <div
+      ref={containerRef}
+      tabIndex={-1}
+      role={hasConfirm ? 'dialog' : 'alertdialog'}
+      aria-modal="true"
+      aria-labelledby="alert-title"
+      aria-describedby="alert-description"
+    >
       <AlertPopup
         type={type}
         title={response.title}
         description={response.description}
-        onClose={onClose}
+        cancelLabel={response.cancelLabel}
+        confirmLabel={response.confirmLabel}
+        onCancel={onCancel}
+        onConfirm={onConfirm}
       />
     </div>
   );
