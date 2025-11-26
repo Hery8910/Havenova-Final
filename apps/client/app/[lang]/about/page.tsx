@@ -1,278 +1,90 @@
-// 'use client';
-// import React from 'react';
-// import { useIsMobile, useLang } from '@/packages/hooks';
-// import styles from './page.module.css';
-// import AboutHero from '@/packages/components/pages/aboutHero/AboutHero';
-// import AboutHeroSkeleton from '@/packages/components/pages/aboutHero/AboutHero.skeleton';
-// import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-// import {
-//   Story,
-//   StorySkeleton,
-//   ReviewsSection,
-//   ReviewsSectionSkeleton,
-//   Values,
-//   ValuesSkeleton,
-//   WhyChoose,
-//   WhyChooseSkeleton,
-// } from '@/packages/components/common';
-// import { useUser } from '@/packages/contexts/user/UserContext';
-// import { useRouter } from 'next/navigation';
-// import { ServicesSection } from '../../../../../packages/components/pages';
-// import { href } from '../../../../../packages/utils/navigation';
-
-// type CtaCase = 'services' | 'review';
-
-// export default function AboutPage() {
-//   const { texts } = useI18n();
-//   const { user } = useUser();
-//   const router = useRouter();
-//   const lang = useLang();
-//   const isMobile = useIsMobile(1024);
-//   const aboutHeroTexts = texts.pages.about.hero;
-//   const storyTexts = texts.components.common.story;
-//   const valuesTexts = texts.components.common.values;
-//   const whyChooseTexts = texts.components.common.whyChoose;
-//   const servicesSectionTexts = texts.pages.services.servicesSection;
-//   const servicesList = texts.components.services.servicesList;
-//   const reviewsSectionTexts = texts.components.common.reviewsSection;
-//   const reviewsLists = texts.components.reviews.reviews;
-
-//   const handleNavigation = (section: CtaCase) => {
-//     switch (section) {
-//       case 'review':
-//         router.push(href(lang, '/reviews'));
-//         break;
-
-//       case 'services':
-//         router.push('/services');
-//         break;
-//       default:
-//         console.warn(`No redirect defined for ${section}`);
-//     }
-//   };
-
-//   const handleItemClick = (service: string) => {
-//     router.push(href(lang, `/services/${service}`));
-//   };
-
-//   return (
-//     <main className={styles.container}>
-//       {aboutHeroTexts ? <AboutHero {...aboutHeroTexts} /> : <AboutHeroSkeleton />}
-
-//       {storyTexts ? <Story {...storyTexts} /> : <StorySkeleton />}
-
-//       {valuesTexts ? (
-//         <Values {...valuesTexts} theme={user?.theme ?? 'light'} isMobile={isMobile} />
-//       ) : (
-//         <ValuesSkeleton />
-//       )}
-
-//       {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
-
-//       <ServicesSection
-//         services={false}
-//         {...servicesSectionTexts}
-//         items={servicesList}
-//         theme={user?.theme}
-//         handleItemClick={handleItemClick}
-//         handleCTAClick={() => handleNavigation('services')}
-//       />
-
-//       {reviewsSectionTexts ? (
-//         <ReviewsSection {...reviewsSectionTexts} items={reviewsLists} />
-//       ) : (
-//         <ReviewsSectionSkeleton />
-//       )}
-
-//       {/* Blog */}
-//     </main>
-//   );
-// }
 'use client';
-import React, { useState, FormEvent, useEffect } from 'react';
-// import styles from './CreateWorkYear.module.css';
-import { createCalendar } from '@/packages/services/calendar';
-import { useClient } from '@/packages/contexts/client/ClientContext';
+import React from 'react';
+import { useIsMobile, useLang } from '@/packages/hooks';
+import styles from './page.module.css';
+import AboutHero from '@/packages/components/pages/aboutHero/AboutHero';
+import AboutHeroSkeleton from '@/packages/components/pages/aboutHero/AboutHero.skeleton';
+import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import {
+  Story,
+  StorySkeleton,
+  ReviewsSection,
+  ReviewsSectionSkeleton,
+  Values,
+  ValuesSkeleton,
+  WhyChoose,
+  WhyChooseSkeleton,
+} from '@/packages/components/common';
 import { useUser } from '@/packages/contexts/user/UserContext';
-import { Calendar } from '@/packages/components/dashboard/calendar';
-import { Schedules, WorkDaySettings } from '@/packages/types/calendar/calendarTypes';
+import { useRouter } from 'next/navigation';
+import { ServicesSection } from '../../../../../packages/components/pages';
+import { href } from '../../../../../packages/utils/navigation';
 
-import { getCityHolidays } from '@/packages/utils/validators/dashboardValidators/dashboardValidators';
-import type { BlockedDate } from '@/packages/services/calendar';
+type CtaCase = 'services' | 'review';
 
-const defaultSchedules: Schedules = {
-  monday: { start: '08:00', end: '16:00' },
-  tuesday: { start: '08:00', end: '16:00' },
-  wednesday: { start: '08:00', end: '16:00' },
-  thursday: { start: '08:00', end: '16:00' },
-  friday: { start: '08:00', end: '16:00' },
-  saturday: { start: '08:00', end: '14:00' },
-  sunday: { start: '08:00', end: '14:00' },
-};
-
-const defaultWorkDaySettings: WorkDaySettings = {
-  monday: true,
-  tuesday: true,
-  wednesday: true,
-  thursday: true,
-  friday: true,
-  saturday: false,
-  sunday: false,
-};
-
-const CreateWorkYear: React.FC = () => {
-  const { client } = useClient();
+export default function AboutPage() {
+  const { texts } = useI18n();
   const { user } = useUser();
-  const clientId = client?._id;
-  const today = new Date();
+  const router = useRouter();
+  const lang = useLang();
+  const isMobile = useIsMobile(1024);
+  const aboutHeroTexts = texts.pages.about.hero;
+  const storyTexts = texts.components.common.story;
+  const valuesTexts = texts.components.common.values;
+  const whyChooseTexts = texts.components.common.whyChoose;
+  const servicesSectionTexts = texts.pages.services.servicesSection;
+  const servicesList = texts.components.services.servicesList;
+  const reviewsSectionTexts = texts.components.common.reviewsSection;
+  const reviewsLists = texts.components.reviews.reviews;
 
-  const [year, setYear] = useState<number>(today.getFullYear());
-  const [blockHolidays, setBlockHolidays] = useState<boolean>(false);
-  const [schedules, setSchedules] = useState<Schedules>(defaultSchedules);
-  const [workDaySettings, setWorkDaySettings] = useState<WorkDaySettings>(defaultWorkDaySettings);
-  const [message, setMessage] = useState('');
-  const [calendar, setCalendar] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const handleNavigation = (section: CtaCase) => {
+    switch (section) {
+      case 'review':
+        router.push(href(lang, '/reviews'));
+        break;
 
-  const handleScheduleChange = (day: keyof Schedules, field: 'start' | 'end', value: string) => {
-    setSchedules((prev) => ({
-      ...prev,
-      [day]: { ...prev[day], [field]: value },
-    }));
-  };
-
-  const handleWorkDayChange = (day: keyof WorkDaySettings, value: boolean) => {
-    setWorkDaySettings((prev) => ({ ...prev, [day]: value }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!user || !clientId) {
-      setMessage('Missing user or client info');
-      return;
-    }
-
-    setLoading(true);
-    setMessage('');
-
-    // Construimos el horario base (solo días activos)
-    const baseWeekSchedule: any = {};
-    Object.entries(workDaySettings).forEach(([day, active]) => {
-      if (active && schedules[day as keyof Schedules]) {
-        baseWeekSchedule[day] = schedules[day as keyof Schedules];
-      }
-    });
-
-    // Calculamos días feriados si blockHolidays está activo
-    const blockedDates: BlockedDate[] = blockHolidays
-      ? getCityHolidays(year, 'berlin') // o más adelante, client.city
-      : [];
-
-    try {
-      const response = await createCalendar({
-        clientId,
-        year,
-        baseWeekSchedule,
-        blockedDates,
-        overwriteIfExists: false,
-      });
-
-      setCalendar(response.data);
-      setMessage(`✅ Calendar for ${year} created successfully`);
-    } catch (error: any) {
-      setMessage(error.message || '❌ Error creating calendar');
-    } finally {
-      setLoading(false);
-      setTimeout(() => setMessage(''), 4000);
+      case 'services':
+        router.push('/services');
+        break;
+      default:
+        console.warn(`No redirect defined for ${section}`);
     }
   };
 
-  /** Mock temporal para calcular feriados locales */
-  const getHolidaysForYear = (year: number): string[] => {
-    const holidays: string[] = [];
-    const check = (month: number, day: number) =>
-      `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    // Feriados comunes en Alemania
-    holidays.push(check(1, 1)); // Año Nuevo
-    holidays.push(check(5, 1)); // Día del trabajo
-    holidays.push(check(10, 3)); // Día de la unidad
-    holidays.push(check(12, 25)); // Navidad
-    holidays.push(check(12, 26)); // 2º día de Navidad
-    return holidays;
+  const handleItemClick = (service: string) => {
+    router.push(href(lang, `/services/${service}`));
   };
-
-  const daysOfWeek: (keyof Schedules)[] = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-    'sunday',
-  ];
 
   return (
-    <>
-      <form style={{ margin: '150px' }} onSubmit={handleSubmit}>
-        <h3>Create Work Year</h3>
-        <p>{message}</p>
-        <div>
-          <label htmlFor="year">Year:</label>
-          <input
-            type="number"
-            id="year"
-            value={year}
-            onChange={(e) => setYear(parseInt(e.target.value))}
-            min={2025}
-            max={2040}
-          />
-        </div>
+    <main className={styles.container}>
+      {aboutHeroTexts ? <AboutHero {...aboutHeroTexts} /> : <AboutHeroSkeleton />}
 
-        {daysOfWeek.map((day) => (
-          <div key={day}>
-            <label>{day.charAt(0).toUpperCase() + day.slice(1)}</label>
-            <input
-              type="time"
-              value={schedules[day]?.start || ''}
-              onChange={(e) => handleScheduleChange(day, 'start', e.target.value)}
-              placeholder="Start"
-            />
-            <input
-              type="time"
-              value={schedules[day]?.end || ''}
-              onChange={(e) => handleScheduleChange(day, 'end', e.target.value)}
-              placeholder="End"
-            />
-            <label>
-              <input
-                type="checkbox"
-                checked={workDaySettings[day]}
-                onChange={(e) => handleWorkDayChange(day, e.target.checked)}
-              />
-              Work Day
-            </label>
-          </div>
-        ))}
+      {storyTexts ? <Story {...storyTexts} /> : <StorySkeleton />}
 
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={blockHolidays}
-              onChange={(e) => setBlockHolidays(e.target.checked)}
-            />
-            Automatically Block Holidays
-          </label>
-        </div>
+      {valuesTexts ? (
+        <Values {...valuesTexts} theme={user?.theme ?? 'light'} isMobile={isMobile} />
+      ) : (
+        <ValuesSkeleton />
+      )}
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Creating...' : 'Create Work Days'}
-        </button>
-      </form>
+      {whyChooseTexts ? <WhyChoose {...whyChooseTexts} /> : <WhyChooseSkeleton />}
 
-      {calendar && <Calendar calendars={calendar} />}
-    </>
+      <ServicesSection
+        services={false}
+        {...servicesSectionTexts}
+        items={servicesList}
+        theme={user?.theme}
+        handleItemClick={handleItemClick}
+        handleCTAClick={() => handleNavigation('services')}
+      />
+
+      {reviewsSectionTexts ? (
+        <ReviewsSection {...reviewsSectionTexts} items={reviewsLists} />
+      ) : (
+        <ReviewsSectionSkeleton />
+      )}
+
+      {/* Blog */}
+    </main>
   );
-};
-
-export default CreateWorkYear;
+}

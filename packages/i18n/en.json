@@ -231,23 +231,23 @@
         }
       },
       "howItWorks": {
-        "heading": "How our service works",
+        "heading": "How to request a service",
         "steps": [
           {
-            "title": "1. Submit your request",
-            "description": "Select the service you need and fill out the request form with all relevant details. You can specify the date, type of work, and any special requirements directly in the form."
+            "title": "Complete the service form",
+            "description": "Choose the service you need and provide key details like furniture type, location, or notes."
           },
           {
-            "title": "2. Review and response",
-            "description": "Our team carefully reviews your request and contacts you to clarify details or provide a non-binding quote. This ensures that you receive exactly the service you need."
+            "title": "Select your preferred date",
+            "description": "Pick the date that suits you best and check our availability directly in the form."
           },
           {
-            "title": "3. Appointment confirmation",
-            "description": "Once you accept our offer, we’ll schedule an appointment that suits you best. You’ll receive a confirmation with all the necessary information – quick, transparent and reliable."
+            "title": "Review and confirm",
+            "description": "Check all details before sending to ensure your information and chosen date are correct."
           },
           {
-            "title": "4. Service execution",
-            "description": "Our team arrives on time and carries out the work professionally and thoroughly. After completion, you can review the result and leave your feedback."
+            "title": "Submit your request",
+            "description": "Send your request. Our team will review it and contact you to confirm or adjust the appointment."
           }
         ]
       },
@@ -280,6 +280,19 @@
           "variant": "solid",
           "icon": "forward"
         }
+      }
+    },
+    "checkout": {
+      "header": {
+        "heading": "Finalize your request",
+        "description": "Please review your selected services and choose the date for your first visit before submitting."
+      },
+      "denied": {
+        "heading": "Access restricted",
+        "description": "This page is only available for logged-in users with an active service request. You’ll be redirected to the home page in",
+        "redirecting": "Redirecting in",
+        "seconds": "seconds",
+        "alt": "Warning icon"
       }
     },
     "blog": {
@@ -1186,6 +1199,9 @@
           "required": "Message is required",
           "tooShort": "Message must be at least 10 characters",
           "tooLong": "Message must not exceed 1000 characters"
+        },
+        "tosAccepted": {
+          "required": "You must accept the terms and conditions"
         }
       },
       "button": {
@@ -1230,14 +1246,24 @@
           "icon": "resendEmail"
         }
       },
-      "placeholders": {
+      "labels": {
         "name": "Full name",
         "email": "Email address",
         "password": "Password",
         "forgotPassword": "Forgot Password?",
+        "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
+        "tos": "I have read and accept the Terms of Service and the Privacy Policy.",
         "address": "Address",
         "phone": "Phone number",
-        "message": "Your question or message"
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "e.g. John Doe",
+        "email": "e.g. john.doe@example.com",
+        "password": "At least 8 characters",
+        "address": "e.g. Main Street 12, 12345 London",
+        "phone": "e.g. +44 7911 123456",
+        "message": "Your question or message..."
       }
     },
     "services": {
@@ -1771,9 +1797,19 @@
     "accessDenied": {
       "title": "Oops, something is missing!",
       "description": "Access to this page is restricted.You do not have the required permissions."
+    },
+    "logout": {
+      "title": "Successfully logged out",
+      "description": "You have been logged out of your account.",
+      "close": "Close",
+      "errorTexts": {
+        "title": "Logout failed",
+        "description": "An error occurred while logging out. Please try again."
+      }
     }
   },
   "popups": {
+    "button": { "close": "Close" },
     "CLIENT_MISSING_CLIENT_ID": {
       "title": "Oops, something is missing!",
       "description": "We couldn't process your registration because some information was missing. Please reload the page or contact support."
@@ -1803,29 +1839,29 @@
       "description": "We couldn't find the client information. Please check the registration link or contact support if the problem persists."
     },
 
-    "USER_REGISTER_USER_ALREADY_EXISTS": {
-      "title": "User Already Registered",
-      "description": "An account with this email already exists. Please log in, or use a different email address to register."
-    },
-    "USER_REGISTER_EMAIL_INVALID": {
-      "title": "Invalid Email",
-      "description": "Please enter a valid email address to continue with registration."
-    },
-    "USER_REGISTER_PASSWORD_INVALID": {
-      "title": "Weak Password",
-      "description": "Your password must be at least 8 characters long. Please try again with a stronger password."
-    },
-    "USER_REGISTER_NAME_INVALID": {
-      "title": "Name Required",
-      "description": "Please enter your name to complete your registration."
-    },
-    "USER_REGISTER_INVALID_DATA": {
-      "title": "Invalid Data",
-      "description": "Some registration details were incorrect. Please review your information and try again."
-    },
     "USER_REGISTER_SUCCESS": {
       "title": "Registration Successful!",
       "description": "Please check your email to verify your address and activate your account."
+    },
+    "USER_ALREADY_EXISTS": {
+      "title": "User Already Registered",
+      "description": "An account with this email already exists. Please log in, or use a different email address to register."
+    },
+    "USER_NAME_INVALID": {
+      "title": "Name Required",
+      "description": "Please enter your name to complete your registration."
+    },
+    "USER_EMAIL_INVALID": {
+      "title": "Invalid Email",
+      "description": "Please enter a valid email address to continue with registration."
+    },
+    "USER_EMAIL_EMPTY": {
+      "title": "Email required",
+      "description": "Please enter your email address to start the password reset process."
+    },
+    "USER_PASSWORD_EMPTY": {
+      "title": "Missing new password",
+      "description": "Please provide a new password to update your account."
     },
 
     "USER_LOGIN_USER_NOT_FOUND": {
@@ -1853,19 +1889,11 @@
       "description": "You have been logged out. See you next time!"
     },
 
-    "USER_FORGOT_PASSWORD_EMPTY_EMAIL": {
-      "title": "Email required",
-      "description": "Please enter your email address to start the password reset process."
-    },
     "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
       "title": "Email sent",
       "description": "An email with a link to reset your password has been sent to your address. Please check your inbox and follow the instructions."
     },
 
-    "USER_EDIT_EMPTY_NEW_PASSWORD": {
-      "title": "Missing new password",
-      "description": "Please provide a new password to update your account."
-    },
     "USER_EDIT_USER_UPDATE_SUCCESS": {
       "title": "Profile Updated",
       "description": "Your changes have been saved successfully."

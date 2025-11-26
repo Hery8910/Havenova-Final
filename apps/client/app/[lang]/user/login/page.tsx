@@ -105,7 +105,15 @@ const Login = () => {
 
   return (
     <main className={styles.main}>
-      <h1 className={styles.h1}>{login.title}</h1>
+      <header>
+        <h1 className={styles.h1}>{login.title}</h1>
+        <aside className={styles.aside}>
+          <p className={styles.p}>{login.cta.title}</p>
+          <Link className={styles.link} href={login.cta.url}>
+            {login.cta.label}
+          </Link>
+        </aside>
+      </header>
       <section className={`${styles.section} card`}>
         <FormWrapper<LoginPayload>
           fields={['email', 'password']}
@@ -118,15 +126,8 @@ const Login = () => {
             password: '',
           }}
         />
-        <aside className={styles.aside}>
-          <p className={styles.p}>{login.cta.title}</p>
-          <Link className={styles.link} href={login.cta.url}>
-            {login.cta.label}
-          </Link>
-        </aside>
       </section>
       {loading && !redirecting && <Loading theme={user?.theme || 'light'} />}
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 };

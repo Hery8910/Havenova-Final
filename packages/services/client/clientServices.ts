@@ -1,9 +1,10 @@
 // services/clientServices.ts
 
-import { ClientConfig } from '../../types/client/clientTypes';
+import { ClientPublicConfig } from '../../types/client/clientTypes';
 import api from '../api/api';
 
-export async function getClient(domain: string): Promise<ClientConfig> {
-  const { data } = await api.get(`/api/clients/by-domain/${domain}`);
-  return data as ClientConfig;
+export async function getClient(domain: string): Promise<ClientPublicConfig> {
+  const { data } = await api.get(`/api/clients/public/${domain}`);
+
+  return data.data as ClientPublicConfig;
 }

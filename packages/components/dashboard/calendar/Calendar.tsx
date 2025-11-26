@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import styles from './Calendar.module.css';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import {
@@ -8,13 +8,15 @@ import {
   BlockedSlot,
   generateDefaultSlots,
 } from '@/packages/utils/calendar/calendarUtils';
-import { getCalendarAvailability } from '@/packages/services/calendar';
 import { CalendarDayPopup } from '../calendarDayPopup';
-import { useClient } from '../../../contexts/client/ClientContext';
+import { CalendarData } from '../../../types';
 
-const Calendar: React.FC = () => {
-  const { client } = useClient();
-  const clientId = client?._id;
+interface CalendarProps {
+  calendarData: CalendarData | null;
+  onSelectDate: (date: string, slot: { start: string; end: string; available: boolean }) => void;
+}
+
+const Calendar: React.FC<CalendarProps> = ({ calendarData, onSelectDate }) => {
   const today = new Date();
 
   const [selectedDay, setSelectedDay] = useState<CalendarDay | null>(null);
@@ -44,34 +46,8 @@ const Calendar: React.FC = () => {
     [monthsCache]
   );
 
-  // --- Obtener datos reales del backend ---
-  useEffect(() => {
-    if (!clientId) return;
-
-    const fetchMonth = async () => {
-      const key = `${currentYear}-${currentMonth}`;
-      try {
-        const res = await getCalendarAvailability({
-          clientId,
-          year: currentYear,
-          month: currentMonth,
-        });
-
-        const backendMonth = res.months.find((m: any) => m.month === currentMonth);
-        const blockedSlots = backendMonth?.blockedSlots || [];
-
-        // Generar el mes con los bloqueos recibidos
-        const days = generateMonthDays(currentYear, currentMonth, blockedSlots);
-        const newMonth = { month: currentMonth, year: currentYear, days };
-
-        setMonthsCache((prev) => ({ ...prev, [key]: newMonth }));
-      } catch (err) {
-        console.warn('No se pudo actualizar mes:', err);
-      }
-    };
-
-    fetchMonth();
-  }, [clientId, currentYear, currentMonth]);
+  const backendMonth = calendarData?.months?.find((m: any) => m.month === currentMonth);
+  const blockedSlots = backendMonth?.blockedSlots || [];
 
   // --- Calcular mes actual (desde cache o generar vacío) ---
   const currentMonthData = useMemo(() => {
@@ -124,12 +100,6 @@ const Calendar: React.FC = () => {
     }
   };
 
-  // --- Click en un día ---
-  const handleDayClick = (day: CalendarDay) => {
-    if (day.blocked) return;
-    setSelectedDay(day);
-  };
-
   return (
     <section className={styles.section}>
       <header className={`${styles.header} card`}>
@@ -168,7 +138,7 @@ const Calendar: React.FC = () => {
                   className={`${styles.cell} ${
                     !day ? styles.empty : day.blocked ? styles.blocked : styles.available
                   }`}
-                  onClick={() => day && handleDayClick(day)}
+                  onClick={() => day && !day.blocked && setSelectedDay(day)}
                 >
                   {day ? day.day : ''}
                 </td>
@@ -183,7 +153,10 @@ const Calendar: React.FC = () => {
           date={selectedDay.date}
           slots={selectedDay.slots || generateDefaultSlots(selectedDay)}
           onClose={() => setSelectedDay(null)}
-          onSelectSlot={(slot) => console.log('🕒 Slot seleccionado:', slot)}
+          onSelectSlot={(slot) => {
+            onSelectDate(selectedDay.date, slot);
+            setSelectedDay(null);
+          }}
         />
       )}
     </section>

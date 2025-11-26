@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './FurnitureAssemblyForm.module.css';
 import Image from 'next/image';
@@ -12,7 +12,6 @@ import {
 import { validateFurnitureForm } from '@havenova/utils/validators/servicesValidators';
 import { useI18n } from '@havenova/contexts/i18n';
 import { useServiceCart } from '@havenova/contexts/serviceCart/ServiceCartContext';
-import { Button } from '../../../common';
 import {
   FurnitureAssemblyDetails,
   FurnitureAssemblyRequest,
@@ -44,6 +43,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
   const { reload } = useServiceCart();
 
   const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
+  const [requestId, setRequestId] = useState<string>(request?.id || uuidv4());
 
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -112,14 +112,12 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
     });
   };
 
-  const handleImagesChange = (urls: string[]) => {
-    console.log(formData);
-
+  const handleImagesChange = useCallback((urls: string[]) => {
     setFormData((prev) => ({
       ...prev,
-      images: urls, // ✅ se guardan las URLs locales
+      images: urls,
     }));
-  };
+  }, []);
 
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
@@ -145,7 +143,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
     }
 
     const newRequest: FurnitureAssemblyRequest = {
-      id: request?.id || uuidv4(),
+      id: requestId,
       serviceType: 'furniture-assembly',
       price: 0,
       estimatedDuration: 0,
@@ -191,6 +189,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
         });
 
         setSelectedItem('');
+        setRequestId('');
         setSelectedLocation('');
         setFormData(initialFormData);
         setCurrentStep(0);
@@ -214,17 +213,17 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
   return (
     <section className={styles.section}>
       <header className={styles.header}>
-        <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
         <div className={styles.header_div}>
           <p className={styles.header_p}>{currentStep + 1}/3</p>
-          <button
-            className={`${styles.back_button} ${!selectedLocation ? styles.hidden_button : ''}`}
-            onClick={selectedLocation ? handleBack : undefined}
-            disabled={!selectedLocation}
-          >
-            <IoIosArrowBack /> {furnitureAssembly.form.back_button}
-          </button>
+          <h4 className={styles.h4}>{furnitureAssembly.steps[currentStep].step}</h4>
         </div>
+        <button
+          className={`${styles.back_button} ${!selectedLocation ? styles.hidden_button : ''}`}
+          onClick={selectedLocation ? handleBack : undefined}
+          disabled={!selectedLocation}
+        >
+          <IoIosArrowBack /> {furnitureAssembly.form.back_button}
+        </button>
       </header>
 
       <ul className={styles.ul_main}>
@@ -244,7 +243,7 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
                       {furnitureAssembly.locations[group.location]}
                     </p>
                   </div>
-                  <IoIosArrowForward className={styles.arrow} />
+                  {/* <IoIosArrowForward className={styles.arrow} /> */}
                 </li>
               ))}
             </ul>
@@ -277,161 +276,181 @@ const FurnitureAssemblyForm = ({ request, setEdit, onUpdated }: Props) => {
           <li className={styles.li}>
             <form className={styles.form} onSubmit={handleSubmit}>
               {/* Cantidad */}
-              <div className={styles.form_div}>
-                <label className={styles.label}>{furnitureAssembly.form.input.quantity}</label>
-                <div className={styles.counter}>
-                  <button
-                    className={styles.rest_button}
-                    type="button"
-                    onClick={() => handleAdjust('quantity', 'subtract')}
-                  >
-                    -
-                  </button>
-                  <p className={styles.counter_p}>{formData.quantity}</p>
-                  <button
-                    className={styles.add_button}
-                    type="button"
-                    onClick={() => handleAdjust('quantity', 'add')}
-                  >
-                    +
+              <div className={styles.details_div}>
+                <div className={styles.form_div}>
+                  <label className={styles.label}>{furnitureAssembly.form.input.quantity}</label>
+                  <div className={styles.counter}>
+                    <button
+                      className={styles.rest_button}
+                      type="button"
+                      onClick={() => handleAdjust('quantity', 'subtract')}
+                    >
+                      -
+                    </button>
+                    <p className={styles.counter_p}>{formData.quantity}</p>
+                    <button
+                      className={styles.add_button}
+                      type="button"
+                      onClick={() => handleAdjust('quantity', 'add')}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                {/* Medidas, detalles, etc */}
+                {input.width && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>{furnitureAssembly.form.input.width}</label>
+                    <div className={styles.input_div}>
+                      <input
+                        className={styles.input}
+                        type="number"
+                        name="width"
+                        value={formData.width || ''}
+                        onChange={handleChange}
+                        placeholder="0"
+                      />
+                      <p>cm</p>
+                    </div>
+                  </div>
+                )}
+                {input.height && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>{furnitureAssembly.form.input.height}</label>
+                    <div className={styles.input_div}>
+                      <input
+                        className={styles.input}
+                        type="number"
+                        name="height"
+                        value={formData.height || ''}
+                        onChange={handleChange}
+                        placeholder="0"
+                      />
+                      <p>cm</p>
+                    </div>
+                  </div>
+                )}
+
+                {input.depth && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>{furnitureAssembly.form.input.depth}</label>
+                    <div className={styles.input_div}>
+                      <input
+                        className={styles.input}
+                        type="number"
+                        name="depth"
+                        value={formData.depth || ''}
+                        onChange={handleChange}
+                        placeholder="0"
+                      />
+                      <p>cm</p>
+                    </div>
+                  </div>
+                )}
+
+                {input.doors && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>{furnitureAssembly.form.input.doors}</label>
+                    <div className={styles.counter}>
+                      <button
+                        className={styles.rest_button}
+                        type="button"
+                        onClick={() => handleAdjust('doors', 'subtract')}
+                      >
+                        -
+                      </button>
+                      <p className={styles.counter_p}>{formData.doors}</p>
+                      <button
+                        className={styles.add_button}
+                        type="button"
+                        onClick={() => handleAdjust('doors', 'add')}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {input.drawers && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>{furnitureAssembly.form.input.drawers}</label>
+                    <div className={styles.counter}>
+                      <button
+                        className={styles.rest_button}
+                        type="button"
+                        onClick={() => handleAdjust('drawers', 'subtract')}
+                      >
+                        -
+                      </button>
+                      <p className={styles.counter_p}>{formData.drawers}</p>
+                      <button
+                        className={styles.add_button}
+                        type="button"
+                        onClick={() => handleAdjust('drawers', 'add')}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {input.wall && (
+                  <div className={styles.form_div}>
+                    <label className={styles.label}>
+                      {furnitureAssembly.form.input.wall.title}
+                    </label>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        checked={formData.position === 'wall'}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            position: e.target.checked ? 'wall' : 'floor',
+                          }))
+                        }
+                      />
+                      <span className={styles.slider}></span>
+                    </label>
+                  </div>
+                )}
+                <div className={styles.textarea_div}>
+                  <label className={styles.label}>Mas detalles</label>
+                  <textarea
+                    name="notes"
+                    value={formData.notes || ''}
+                    onChange={handleChange}
+                    placeholder={furnitureAssembly.form.input.comment}
+                    className={styles.textarea}
+                  />
+                </div>
+              </div>
+              <div className={styles.more_div}>
+                {clientId && (
+                  <ImageUploader
+                    clientId={clientId}
+                    category="furniture"
+                    service="assembly"
+                    requestId={requestId}
+                    onImagesChange={handleImagesChange}
+                  />
+                )}
+                <div className={styles.buttons_div}>
+                  {request && (
+                    <button
+                      type="button"
+                      className={styles.cancel_button}
+                      onClick={() => setEdit?.(false)}
+                    >
+                      Cancel
+                    </button>
+                  )}
+                  <button type="submit" className={styles.submit_button}>
+                    {request
+                      ? furnitureAssembly.form.save_botton
+                      : furnitureAssembly.form.submit_button}
                   </button>
                 </div>
               </div>
-
-              {/* Medidas, detalles, etc */}
-              {input.width && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.width}</label>
-                  <div className={styles.input_div}>
-                    <input
-                      className={styles.input}
-                      type="number"
-                      name="width"
-                      value={formData.width || ''}
-                      onChange={handleChange}
-                      placeholder="0"
-                    />
-                    <p>cm</p>
-                  </div>
-                </div>
-              )}
-              {input.height && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.height}</label>
-                  <div className={styles.input_div}>
-                    <input
-                      className={styles.input}
-                      type="number"
-                      name="height"
-                      value={formData.height || ''}
-                      onChange={handleChange}
-                      placeholder="0"
-                    />
-                    <p>cm</p>
-                  </div>
-                </div>
-              )}
-
-              {input.depth && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.depth}</label>
-                  <div className={styles.input_div}>
-                    <input
-                      className={styles.input}
-                      type="number"
-                      name="depth"
-                      value={formData.depth || ''}
-                      onChange={handleChange}
-                      placeholder="0"
-                    />
-                    <p>cm</p>
-                  </div>
-                </div>
-              )}
-
-              {input.doors && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.doors}</label>
-                  <div className={styles.counter}>
-                    <button
-                      className={styles.rest_button}
-                      type="button"
-                      onClick={() => handleAdjust('doors', 'subtract')}
-                    >
-                      -
-                    </button>
-                    <p className={styles.counter_p}>{formData.doors}</p>
-                    <button
-                      className={styles.add_button}
-                      type="button"
-                      onClick={() => handleAdjust('doors', 'add')}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              )}
-              {input.drawers && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.drawers}</label>
-                  <div className={styles.counter}>
-                    <button
-                      className={styles.rest_button}
-                      type="button"
-                      onClick={() => handleAdjust('drawers', 'subtract')}
-                    >
-                      -
-                    </button>
-                    <p className={styles.counter_p}>{formData.drawers}</p>
-                    <button
-                      className={styles.add_button}
-                      type="button"
-                      onClick={() => handleAdjust('drawers', 'add')}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              )}
-              {input.wall && (
-                <div className={styles.form_div}>
-                  <label className={styles.label}>{furnitureAssembly.form.input.wall.title}</label>
-                  <label className={styles.switch}>
-                    <input
-                      type="checkbox"
-                      checked={formData.position === 'wall'}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          position: e.target.checked ? 'wall' : 'floor',
-                        }))
-                      }
-                    />
-                    <span className={styles.slider}></span>
-                  </label>
-                </div>
-              )}
-
-              <textarea
-                name="notes"
-                value={formData.notes || ''}
-                onChange={handleChange}
-                placeholder={furnitureAssembly.form.input.comment}
-                className={styles.textarea}
-              />
-              {clientId && (
-                <ImageUploader
-                  clientId={clientId}
-                  category="furniture"
-                  service="assembly"
-                  onImagesChange={handleImagesChange}
-                />
-              )}
-              <button type="submit" className={styles.submit_button}>
-                {request
-                  ? furnitureAssembly.form.save_botton
-                  : furnitureAssembly.form.submit_button}
-              </button>
             </form>
           </li>
         )}

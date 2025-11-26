@@ -1,7 +1,7 @@
 import styles from './HowItWorks.module.css';
 import { IconType } from 'react-icons';
-import { FaClipboardList, FaCalendarCheck, FaTools, FaHandshake } from 'react-icons/fa';
-
+import { FaClipboardList, FaCalendarCheck, FaTools } from 'react-icons/fa';
+import { RiMailSendLine } from 'react-icons/ri';
 interface Step {
   title: string;
   description: string;
@@ -13,7 +13,7 @@ interface HowItWorksProps {
 }
 
 const HowItWorks: React.FC<HowItWorksProps> = ({ title, steps }) => {
-  const icons = [FaClipboardList, FaCalendarCheck, FaTools, FaHandshake];
+  const icons = [FaClipboardList, FaCalendarCheck, FaTools, RiMailSendLine];
 
   return (
     <section className={styles.section}>

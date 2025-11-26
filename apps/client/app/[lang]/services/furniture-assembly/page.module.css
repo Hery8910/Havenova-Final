@@ -4,18 +4,24 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  /* background-image: url('/svg/user-background.svg');
-  background-position: center;
-  background-size: cover;
-  overflow: visible; */
 }
 
 .section {
+  margin: 150px auto;
   width: 100%;
-  height: 100%;
-  margin: 100px auto;
+  max-width: 1500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.wrapper {
+  padding: 0;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 8px;
+}
 .ul {
   list-style: none;
 }

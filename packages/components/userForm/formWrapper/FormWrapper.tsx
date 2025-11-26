@@ -9,27 +9,27 @@ import {
   validatePassword,
   validateAddress,
   validateMessage,
+  validateTosAccepted,
 } from '../../../utils/validators/userFormValidator';
-import { FormData, FormField } from '../../../types/userForm';
 import { useI18n } from '../../../contexts/i18n';
 import { ButtonProps } from '../../common/button/Button';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../hooks/useLang';
 import { href } from '../../../utils/navigation';
 import { useUser } from '../../../contexts/user';
-import { User } from '../../../types';
 import { useClient } from '../../../contexts/client/ClientContext';
 import { useEffect } from 'react';
 
 interface WrapperProps<T extends Record<string, any>> {
-  fields: (keyof T)[];
+  fields: string[];
   onSubmit: (data: T) => void | Promise<void>;
   button: ButtonProps;
   showForgotPassword?: boolean;
+  showHintPassword?: boolean;
   initialValues: T;
 }
 
-export interface PlaceholdersProps {
+export interface PlaceholdersTextProps {
   name: string;
   email: string;
   password: string;
@@ -38,11 +38,25 @@ export interface PlaceholdersProps {
   phone: string;
   message: string;
 }
+
+export interface LabelsTextProps {
+  name: string;
+  email: string;
+  password: string;
+  forgotPassword: string;
+  passwordHint: string;
+  tos: string;
+  address: string;
+  phone: string;
+  message: string;
+}
+
 export default function FormWrapper<T extends Record<string, any>>({
   fields,
   onSubmit,
   button,
   showForgotPassword,
+  showHintPassword,
   initialValues,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
@@ -53,7 +67,8 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   const formError = texts.components.form.error;
   const forgotPassword = texts.components.form.forgotPassword;
-  const placeholderText: PlaceholdersProps = texts.components.form.placeholders;
+  const placeholderText: PlaceholdersTextProps = texts.components.form.placeholders;
+  const labelText: LabelsTextProps = texts.components.form.labels;
 
   const [formData, setFormData] = useState<T>(initialValues);
 
@@ -64,22 +79,23 @@ export default function FormWrapper<T extends Record<string, any>>({
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      name: user?.name || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
-      address: user?.address || '',
       clientId: client?._id || '',
       language: user?.language || 'de',
+      name: user?.userProfile?.name ?? prev.name,
+      email: user?.email ?? prev.email,
+      phone: user?.userProfile?.phone ?? prev.phone,
+      address: user?.userProfile?.address ?? prev.address,
     }));
   }, [user?.email, user?.language, client?._id]);
 
-  const validators: Record<string, (value: string) => string[]> = {
+  const validators: Record<string, (value: any) => string[]> = {
     name: validateName,
     email: validateEmail,
     phone: validatePhone,
     password: validatePassword,
     address: validateAddress,
     message: validateMessage,
+    tosAccepted: validateTosAccepted,
   };
 
   const getValidationError = (name: string, value: string) => {
@@ -101,8 +117,18 @@ export default function FormWrapper<T extends Record<string, any>>({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const target = e.target;
+
+    const { name, type } = target;
+
+    const value =
+      type === 'checkbox' && target instanceof HTMLInputElement ? target.checked : target.value;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -111,27 +137,29 @@ export default function FormWrapper<T extends Record<string, any>>({
   const handleForgotPassword = () => {
     router.push(href(lang, '/user/forgot-password'));
   };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
     fields.forEach((field) => {
-      const value = String(formData[field] ?? '');
+      const value = formData[field];
       const err = getValidationError(field as string, value);
       if (err) newErrors[field as string] = err;
     });
 
     setErrors(newErrors);
+    console.log(newErrors);
 
     if (Object.values(newErrors).some(Boolean)) return;
     onSubmit(formData); // ✅ aquí ya es de tipo T
 
     setFormData({
       ...initialValues,
-      name: user?.name || '',
+      name: user?.userProfile?.name || '',
       email: user?.email || '',
-      phone: user?.phone || '',
-      address: user?.address || '',
+      phone: user?.userProfile?.phone || '',
+      address: user?.userProfile?.address || '',
       clientId: client?._id || '',
       language: user?.language || 'de',
     } as T);
@@ -154,7 +182,9 @@ export default function FormWrapper<T extends Record<string, any>>({
       onSubmit={handleSubmit}
       button={button}
       showForgotPassword={showForgotPassword}
+      showHintPassword={showHintPassword}
       placeholder={placeholderText}
+      labels={labelText}
     />
   );
 }

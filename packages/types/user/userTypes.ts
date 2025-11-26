@@ -1,84 +1,99 @@
-import { IoLanguage } from 'react-icons/io5';
-import { ServiceRequest } from '../services';
+// src/types/user/userTypes.ts
 
-// src/types/User.ts
-export interface User {
+import { CookiePrefs } from '../cookies';
+
+export interface BaseAuthUser {
+  userId: string;
   clientId: string;
-  _id: string;
-  name: string;
   email: string;
-  password: string;
-  address: string;
-  profileImage: string;
-  phone: string;
   isVerified: boolean;
-  role: string;
-  inviteUsed: boolean;
+  role: 'guest' | 'user' | 'worker' | 'admin';
   language: string;
   theme: 'light' | 'dark';
-  requests: ServiceRequest[];
-  createdAt: Date;
 }
+
+export interface UserClientProfile {
+  name?: string;
+  address?: string;
+  phone?: string;
+  profileImage?: string;
+}
+
+export interface WorkerProfile extends UserClientProfile {
+  skills?: string[];
+  zones?: string[];
+  availability?: any;
+}
+export interface FrontendUser extends BaseAuthUser {
+  userProfile?: UserClientProfile;
+  workerProfile?: WorkerProfile;
+  isLogged: boolean;
+}
+
+// Payloads para el frontend
 export interface RegisterPayload {
   name: string;
   email: string;
   password: string;
-  address: string;
-  phone: string;
-  profileImage: string;
   language: string;
-  inviteUsed: boolean;
-  theme: 'light' | 'dark';
   clientId: string;
+  tosAccepted: boolean;
+  cookiePrefs?: CookiePrefs;
 }
+
 export interface LoginPayload {
+  clientId: string;
   email: string;
   password: string;
-  clientId: string;
 }
-export interface VerifyEmailPayload {
-  email: string;
-  language: string;
+
+export interface UpdateUserProfilePayload {
   clientId: string;
-}
-export interface AvatarSelectorPayload {
-  email: string;
-  profileImage: string;
-  clientId: string;
-}
-export interface UpdateUserPayload {
+  role: 'guest' | 'user' | 'worker' | 'admin';
   name?: string;
   address?: string;
   phone?: string;
-  email?: string;
+  language?: string;
   theme?: 'light' | 'dark';
-  language?: string;
-  clientId: string;
 }
+
 export interface ChangePasswordPayload {
-  email: string;
-  password: string;
+  userId: string;
+  clientId: string;
+  currentPassword: string;
   newPassword: string;
-  clientId: string;
 }
+
 export interface ForgotPasswordPayload {
-  email: string;
   clientId: string;
+  email: string;
   language?: string;
 }
+
 export interface ResetPasswordPayload {
-  authToken: string | null;
-  password: string;
-  clientId: string;
+  token: string;
+  newPassword: string;
 }
-export interface GetUserPayload {
+
+export interface VerifyEmailPayload {
+  userId: string;
   clientId: string;
+  email: string;
+  language?: string;
 }
-export interface FaqMessageData {
+
+export interface ResendVerificationEmailPayload {
+  clientId: string;
+  email: string;
+  language?: string;
+}
+
+export interface ContactMessageData {
+  userId: string;
+  clientId: string;
   name: string;
   email: string;
   message: string;
   language: string;
-  clientId: string;
   originPath: string;
 }

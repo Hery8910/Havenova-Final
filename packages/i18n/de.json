@@ -231,23 +231,23 @@
         }
       },
       "howItWorks": {
-        "heading": "So funktioniert unser Service",
+        "heading": "So funktioniert Ihre Serviceanfrage",
         "steps": [
           {
-            "title": "1. Anfrage senden",
-            "description": "Wählen Sie den gewünschten Service und füllen Sie das Anfrageformular mit allen relevanten Informationen aus. Sie können den Termin, die Art der Arbeit und eventuelle Besonderheiten direkt angeben."
+            "title": "Serviceformular ausfüllen",
+            "description": "Wählen Sie den gewünschten Service und geben Sie die wichtigsten Details an, z. B. Möbeltyp oder Standort."
           },
           {
-            "title": "2. Prüfung und Rückmeldung",
-            "description": "Unser Team prüft Ihre Anfrage sorgfältig und meldet sich bei Ihnen, um offene Fragen zu klären oder ein unverbindliches Angebot zu unterbreiten. So stellen wir sicher, dass Sie genau den Service erhalten, den Sie benötigen."
+            "title": "Termin auswählen",
+            "description": "Wählen Sie den Termin, der Ihnen am besten passt, und prüfen Sie direkt unsere Verfügbarkeit."
           },
           {
-            "title": "3. Terminbestätigung",
-            "description": "Nach Ihrer Zustimmung vereinbaren wir einen passenden Termin. Sie erhalten eine Bestätigung mit allen Details – schnell, transparent und zuverlässig."
+            "title": "Prüfen und bestätigen",
+            "description": "Kontrollieren Sie alle Angaben, um sicherzustellen, dass Ihre Informationen und der Termin korrekt sind."
           },
           {
-            "title": "4. Ausführung des Auftrags",
-            "description": "Unser Team kommt pünktlich zum vereinbarten Zeitpunkt und führt die Arbeiten professionell und gründlich durch. Nach Abschluss können Sie das Ergebnis direkt bewerten und Feedback hinterlassen."
+            "title": "Anfrage absenden",
+            "description": "Senden Sie Ihre Anfrage. Unser Team prüft die Angaben und meldet sich zur Bestätigung oder Anpassung."
           }
         ]
       },
@@ -280,6 +280,19 @@
           "variant": "solid",
           "icon": "forward"
         }
+      }
+    },
+    "checkout": {
+      "header": {
+        "heading": "Abschluss Ihrer Anfrage",
+        "description": "Bitte überprüfen Sie Ihre ausgewählten Dienstleistungen und wählen Sie das Datum für den ersten Besuch, bevor Sie fortfahren."
+      },
+      "denied": {
+        "heading": "Zugriff verweigert",
+        "description": "Diese Seite ist nur für eingeloggte Benutzer mit einer aktiven Serviceanfrage verfügbar. Sie werden in",
+        "redirecting": "Weiterleitung in",
+        "seconds": "Sekunden.",
+        "alt": "Warnsymbol"
       }
     },
     "blog": {
@@ -1155,6 +1168,9 @@
           "required": "Nachricht ist erforderlich",
           "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
           "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
+        },
+        "tosAccepted": {
+          "required": "Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren."
         }
       },
       "button": {
@@ -1199,14 +1215,24 @@
           "icon": "resendEmail"
         }
       },
-      "placeholders": {
+      "labels": {
         "name": "Vollständiger Name",
         "email": "E-Mail-Adresse",
         "password": "Passwort",
         "forgotPassword": "Passwort vergessen?",
+        "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
+        "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
         "address": "Adresse",
         "phone": "Telefonnummer",
-        "message": "Ihre Frage oder Nachricht"
+        "message": "Nachricht"
+      },
+      "placeholders": {
+        "name": "z. B. Max Mustermann",
+        "email": "z. B. mustermann@example.com",
+        "password": "Mind. 8 Zeichen",
+        "address": "z. B. Musterstraße 12, 12345 Berlin",
+        "phone": "z. B. 0157 12345678",
+        "message": "Ihre Frage oder Nachricht..."
       }
     },
     "cookieBanner": {
@@ -1760,9 +1786,19 @@
     "accessDenied": {
       "title": "Hoppla, etwas fehlt!",
       "description": "Der Zugriff auf diese Seite ist eingeschränkt. Sie verfügen nicht über die erforderlichen Berechtigungen."
+    },
+    "logout": {
+      "title": "Abmeldung erfolgreich",
+      "description": "Du wurdest erfolgreich von deinem Konto abgemeldet.",
+      "close": "Schließen",
+      "errorTexts": {
+        "title": "Abmeldung fehlgeschlagen",
+        "description": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut."
+      }
     }
   },
   "popups": {
+    "button": { "close": "Schließen" },
     "CLIENT_MISSING_CLIENT_ID": {
       "title": "Hoppla, etwas fehlt!",
       "description": "Wir konnten Ihre Registrierung nicht verarbeiten, da einige Informationen fehlen. Bitte laden Sie die Seite neu oder kontaktieren Sie den Support."
@@ -1792,31 +1828,35 @@
       "description": "Wir konnten die Kundeninformationen nicht finden. Bitte überprüfen Sie den Registrierungslink oder kontaktieren Sie den Support, falls das Problem weiterhin besteht."
     },
 
-    "USER_REGISTER_USER_ALREADY_EXISTS": {
-      "title": "Benutzer bereits registriert",
-      "description": "Ein Konto mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich an oder verwenden Sie eine andere E-Mail-Adresse zur Registrierung."
-    },
-    "USER_REGISTER_EMAIL_INVALID": {
-      "title": "Ungültige E-Mail",
-      "description": "Bitte geben Sie eine gültige E-Mail-Adresse ein, um die Registrierung fortzusetzen."
-    },
-    "USER_REGISTER_PASSWORD_INVALID": {
-      "title": "Schwaches Passwort",
-      "description": "Ihr Passwort muss mindestens 8 Zeichen lang sein. Bitte verwenden Sie ein stärkeres Passwort."
-    },
-    "USER_REGISTER_NAME_INVALID": {
-      "title": "Name erforderlich",
-      "description": "Bitte geben Sie Ihren Namen ein, um die Registrierung abzuschließen."
-    },
-    "USER_REGISTER_INVALID_DATA": {
-      "title": "Ungültige Daten",
-      "description": "Einige Registrierungsdaten waren nicht korrekt. Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut."
-    },
     "USER_REGISTER_SUCCESS": {
       "title": "Registrierung erfolgreich!",
       "description": "Bitte überprüfen Sie Ihre E-Mails, um Ihre Adresse zu bestätigen und Ihr Konto zu aktivieren."
     },
+    "USER_ALREADY_EXISTS": {
+      "title": "Benutzer bereits registriert",
+      "description": "Ein Konto mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich an oder verwenden Sie eine andere E-Mail-Adresse zur Registrierung."
+    },
+    "USER_NAME_INVALID": {
+      "title": "Name erforderlich",
+      "description": "Bitte geben Sie Ihren Namen ein, um die Registrierung abzuschließen."
+    },
+    "USER_EMAIL_INVALID": {
+      "title": "Ungültige E-Mail",
+      "description": "Bitte geben Sie eine gültige E-Mail-Adresse ein, um die Registrierung fortzusetzen."
+    },
+    "USER_EMAIL_EMPTY": {
+      "title": "E-Mail erforderlich",
+      "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, um das Zurücksetzen des Passworts zu starten."
+    },
+    "USER_PASSWORD_EMPTY": {
+      "title": "Neues Passwort fehlt.",
+      "description": "Bitte geben Sie ein neues Passwort ein, um Ihr Konto zu aktualisieren."
+    },
 
+    "USER_PASSWORD_EMAIL_SENDED": {
+      "title": "E-Mail gesendet",
+      "description": "Eine E-Mail mit einem Link zum Zurücksetzen Ihres Passworts wurde an Ihre Adresse gesendet. Bitte überprüfen Sie Ihr Postfach und folgen Sie den Anweisungen."
+    },
     "USER_LOGIN_USER_NOT_FOUND": {
       "title": "Benutzer nicht gefunden.",
       "description": "Wir konnten keinen Benutzer mit dieser E-Mail und diesem Kunden finden. Bitte überprüfe deine Angaben oder registriere dich zuerst."
@@ -1842,19 +1882,6 @@
       "description": "Sie wurden abgemeldet. Bis zum nächsten Mal!"
     },
 
-    "USER_FORGOT_PASSWORD_EMPTY_EMAIL": {
-      "title": "E-Mail erforderlich",
-      "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, um das Zurücksetzen des Passworts zu starten."
-    },
-    "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
-      "title": "E-Mail gesendet",
-      "description": "Eine E-Mail mit einem Link zum Zurücksetzen Ihres Passworts wurde an Ihre Adresse gesendet. Bitte überprüfen Sie Ihr Postfach und folgen Sie den Anweisungen."
-    },
-
-    "USER_EDIT_EMPTY_NEW_PASSWORD": {
-      "title": "Neues Passwort fehlt.",
-      "description": "Bitte geben Sie ein neues Passwort ein, um Ihr Konto zu aktualisieren."
-    },
     "USER_EDIT_USER_UPDATE_SUCCESS": {
       "title": "Profil aktualisiert",
       "description": "Ihre Änderungen wurden erfolgreich gespeichert."

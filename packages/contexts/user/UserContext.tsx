@@ -1,298 +1,306 @@
+// src/contexts/user/UserContext.tsx
 'use client';
+
 import React, {
   createContext,
   useContext,
   useState,
-  ReactNode,
   useEffect,
   useCallback,
+  ReactNode,
+  useRef,
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { ServiceRequest, ServiceRequestItem } from '../../types/services/servicesTypes';
+
 import { useClient } from '../client/ClientContext';
-import { getUser, updateUser } from '../../services/user/userService';
-import { User } from '@havenova/types';
+import { getUserClient, logoutUser as apiLogoutUser } from '../../services/user/userService';
 
-// --- Local Storage keys ---
-const USER_KEY = 'havenova_user';
-const GUEST_AVATAR_KEY = 'guest_avatar';
+import {
+  saveUserToStorage,
+  getUserFromStorage,
+  loadProfileByRoles,
+  updateProfileByRoles,
+} from '../../utils/user/userUtils';
 
-// --- Utils ---
-function getPersistentGuestAvatar(): string {
-  if (typeof window === 'undefined') return '/svg/user.svg';
-  const saved = localStorage.getItem(GUEST_AVATAR_KEY);
-  if (saved) return saved;
-  localStorage.setItem(GUEST_AVATAR_KEY, '/svg/user.svg');
-  return '/svg/user.svg';
-}
+import { FrontendUser, UpdateUserProfilePayload } from '../../types/user/userTypes';
+import { useGlobalAlert } from '../alert';
+import { useI18n } from '../i18n';
 
-function saveUserToStorage(user: User) {
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-}
-
-function getUserFromStorage(): User | null {
-  const data = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
-  if (!data) return null;
-  try {
-    const parsed = JSON.parse(data) as User;
-    if (parsed?.createdAt) parsed.createdAt = new Date(parsed.createdAt);
-    if (!Array.isArray(parsed.requests)) parsed.requests = [];
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-function clearUserFromStorage() {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem(USER_KEY);
-  // No borres el avatar persistente si no quieres perder el ícono del invitado
-}
-
-// 🔎 Ayuda a unir requests locales con las del backend sin duplicar ids
-function mergeRequests(local: ServiceRequest[], remote: ServiceRequest[]) {
-  const map = new Map<string, ServiceRequest>();
-  [...remote, ...local].forEach((r) => {
-    map.set(r.id, r);
-  });
-  return Array.from(map.values());
-}
-
-// --- Context types ---
 interface UserContextProps {
-  user: User | null;
+  user: FrontendUser | null;
   loading: boolean;
-  setUser: (user: User) => void;
+
+  setUser: (u: FrontendUser | null) => void;
   refreshUser: (onSessionExpired?: () => void) => Promise<void>;
-  logout: () => void;
-  // addRequestToUser: (newRequest: ServiceRequestItem) => void;
-  // removeRequestFromUser: (id: string) => void;
-  // clearAllRequests: () => void;
+  logout: () => Promise<void>;
+
+  updateUserProfile: (patch: Partial<UpdateUserProfilePayload>) => Promise<void>;
   updateUserLanguage: (lang: string) => Promise<void>;
   updateUserTheme: (theme: 'light' | 'dark') => Promise<void>;
+
   registerSessionCallback: (cb: () => void) => void;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-interface DashboardProviderProps {
+interface Props {
   children: ReactNode;
 }
 
-// 👇 IMPORTA tu initialGuestUser real. Lo dejo inline para claridad:
-const initialGuestUser: User = {
-  _id: '',
-  clientId: '',
-  name: '',
-  email: '',
-  password: '',
-  address: '',
-  profileImage: '',
-  phone: '',
-  isVerified: false,
-  role: 'guest',
-  language: 'de',
-  theme: 'light',
-  requests: [],
-  createdAt: new Date(),
-  inviteUsed: false,
-};
-
-export const DashboardProvider = ({ children }: DashboardProviderProps) => {
+export const UserProvider = ({ children }: Props) => {
   const { client } = useClient();
   const clientId = client?._id || '';
-  const [user, setUser] = useState<User | null>(null);
+
+  const { texts } = useI18n();
+  const logoutTexts = texts?.message?.logout;
+
+  const { showError, showSuccess, closeAlert } = useGlobalAlert();
+
+  const [user, setUser] = useState<FrontendUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const sessionCallbackRef = React.useRef<(() => void) | null>(null);
 
-  // Carga inicial
-  useEffect(() => {
-    if (!clientId) return;
-    refreshUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientId]);
+  // 🔥 FIX: prevenir lectura de localStorage antes de hidratar
+  const [isClientReady, setIsClientReady] = useState(false);
 
-  // Persistencia automática
-  useEffect(() => {
-    if (user) saveUserToStorage(user);
-  }, [user]);
+  const sessionCallbackRef = useRef<(() => void) | null>(null);
 
-  // --- REFRESH USER ---
-  const refreshUser = useCallback(
-    async (onSessionExpired?: () => void) => {
-      setLoading(true);
-      const localUser = getUserFromStorage();
-
-      try {
-        const response = await getUser(clientId);
-        if (response.data) {
-          const remoteUser: User = response.data;
-
-          // Merge requests: conserva las locales si no existen en backend aún
-          const localRequests = localUser?.requests ?? [];
-          const mergedRequests = mergeRequests(localRequests, remoteUser?.requests ?? []);
-
-          const finalUser: User = {
-            ...remoteUser,
-            requests: mergedRequests,
-            clientId: remoteUser.clientId || clientId,
-            profileImage: remoteUser.profileImage || getPersistentGuestAvatar(),
-          };
-
-          setUser(finalUser);
-          saveUserToStorage(finalUser);
-        }
-      } catch (error: any) {
-        // Sin sesión válida → invitado
-        const guestBase = {
-          ...initialGuestUser,
-          clientId,
-          profileImage: getPersistentGuestAvatar(),
-        };
-
-        // Pero intenta mantener un invitado previamente guardado (para no perder solicitudes del carrito)
-        const fallback = localUser
-          ? { ...guestBase, ...localUser, isLogged: false, role: 'guest' as const }
-          : guestBase;
-
-        setUser(fallback);
-        saveUserToStorage(fallback);
-
-        // Si *antes* estaba logeado y ahora 401/403, notifica expiración
-        const wasLoggedIn = !!localUser && localUser.role !== 'guest';
-        if (wasLoggedIn && (error?.response?.status === 401 || error?.response?.status === 403)) {
-          if (onSessionExpired) {
-            onSessionExpired();
-          } else {
-            sessionCallbackRef.current?.();
-          }
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
+  //------------------------------------------------------------------
+  //  ✔ GUEST FACTORY
+  //------------------------------------------------------------------
+  const createGuest = useCallback(
+    (
+      preferredLanguage?: string,
+      preferredTheme?: 'light' | 'dark',
+      previousUser?: FrontendUser | null
+    ): FrontendUser => ({
+      userId: '',
+      clientId,
+      email: '',
+      isVerified: false,
+      role: 'guest',
+      language: preferredLanguage ?? previousUser?.language ?? 'de',
+      theme: preferredTheme ?? previousUser?.theme ?? 'light',
+      isLogged: false,
+    }),
     [clientId]
   );
 
+  //------------------------------------------------------------------
+  //  1. Cliente listo → marcar Estado para permitir localStorage
+  //------------------------------------------------------------------
+  useEffect(() => {
+    setIsClientReady(true);
+  }, []);
+
+  //------------------------------------------------------------------
+  //  2. CARGA LOCAL INICIAL (solo cuando cliente está listo)
+  //------------------------------------------------------------------
+  useEffect(() => {
+    if (!isClientReady) return;
+
+    const stored = getUserFromStorage();
+
+    if (stored) {
+      setUser(stored);
+    } else {
+      const guest = createGuest(undefined, undefined, null);
+      setUser(guest);
+      saveUserToStorage(guest);
+    }
+
+    setLoading(false);
+  }, [isClientReady, createGuest]);
+
+  //------------------------------------------------------------------
+  //  3. REFRESCAR user DESDE BACKEND SOLO UNA VEZ (no por idioma)
+  //------------------------------------------------------------------
+  useEffect(() => {
+    if (!clientId) return;
+    if (!user) return;
+
+    if (user.role !== 'guest') {
+      refreshUser();
+    }
+    // Se ejecuta una sola vez: cuando user está cargado y tiene rol válido
+  }, [user?.role]);
+
+  //------------------------------------------------------------------
+  //  4. PERSISTIR USER SIEMPRE
+  //------------------------------------------------------------------
+  useEffect(() => {
+    if (!isClientReady) return;
+    saveUserToStorage(user);
+  }, [user, isClientReady]);
+
+  //------------------------------------------------------------------
+  //  REFRESH USER DESDE BACKEND
+  //------------------------------------------------------------------
+  const refreshUser = useCallback(
+    async (onSessionExpired?: () => void) => {
+      if (!clientId) return;
+      if (user?.role === 'guest') return; // No refrescar guest
+
+      try {
+        const response = await getUserClient(clientId);
+        const authUser = response.data;
+
+        if (!authUser || !authUser.userId) {
+          throw new Error('Invalid auth user payload');
+        }
+
+        const profile = await loadProfileByRoles(authUser.role, clientId);
+
+        const baseUser: FrontendUser = {
+          ...authUser,
+          ...profile,
+          isLogged: true,
+        };
+
+        setUser((prev) => {
+          const merged: FrontendUser = {
+            ...baseUser,
+            language: prev?.language ?? baseUser.language,
+            theme: prev?.theme ?? baseUser.theme,
+          };
+          saveUserToStorage(merged);
+          return merged;
+        });
+      } catch (err: any) {
+        const status = err?.response?.status;
+        const stored = getUserFromStorage();
+
+        if (stored && (status === 401 || status === 403)) {
+          saveUserToStorage(null);
+          setUser(null);
+
+          if (onSessionExpired) onSessionExpired();
+          else sessionCallbackRef.current?.();
+
+          const guest = createGuest(stored.language, stored.theme, stored);
+          setUser(guest);
+          saveUserToStorage(guest);
+        } else {
+          if (stored) {
+            setUser(stored);
+            return;
+          }
+
+          const guest = createGuest(undefined, undefined, null);
+          setUser(guest);
+          saveUserToStorage(guest);
+        }
+      }
+    },
+    [clientId, user, createGuest]
+  );
+
+  //------------------------------------------------------------------
+  //  UPDATE PROFILE
+  //------------------------------------------------------------------
+  const updateUserProfile = useCallback(
+    async (patch: Partial<UpdateUserProfilePayload>) => {
+      if (!clientId) return;
+
+      const isGuest = user?.role === 'guest';
+
+      // Guest → solo actualizar local
+      if (!user || isGuest) {
+        setUser((prev) => {
+          const base = prev ?? createGuest(patch.language, patch.theme, null);
+
+          const updated: FrontendUser = {
+            ...base,
+            language: patch.language ?? base.language,
+            theme: patch.theme ?? base.theme,
+          };
+
+          saveUserToStorage(updated);
+          return updated;
+        });
+        return;
+      }
+
+      // Usuario logeado
+      try {
+        const payload: UpdateUserProfilePayload = {
+          clientId,
+          role: user.role,
+          ...patch,
+        };
+
+        const profileData = await updateProfileByRoles(payload);
+
+        const finalUser: FrontendUser = {
+          ...user,
+          ...profileData,
+          language: patch.language ?? user.language,
+          theme: patch.theme ?? user.theme,
+          isLogged: true,
+        };
+
+        setUser(finalUser);
+        saveUserToStorage(finalUser);
+      } catch (err) {
+        console.error('Failed to update user profile:', err);
+      }
+    },
+    [user, clientId, createGuest]
+  );
+
+  //------------------------------------------------------------------
+  //  SHORTCUTS
+  //------------------------------------------------------------------
+  const updateUserLanguage = useCallback(
+    (lang: string) => updateUserProfile({ language: lang }),
+    [updateUserProfile]
+  );
+
+  const updateUserTheme = useCallback(
+    (theme: 'light' | 'dark') => updateUserProfile({ theme }),
+    [updateUserProfile]
+  );
+
+  //------------------------------------------------------------------
+  //  LOGOUT
+  //------------------------------------------------------------------
+  const logout = useCallback(async () => {
+    try {
+      await apiLogoutUser();
+      showSuccess({
+        response: {
+          status: 200,
+          title: logoutTexts.title,
+          description: logoutTexts.description,
+          cancelLabel: logoutTexts.close,
+        },
+      });
+    } catch (error) {
+      showError({
+        response: {
+          status: 400,
+          title: logoutTexts.errorTexts.title,
+          description: logoutTexts.errorTexts.description,
+          cancelLabel: logoutTexts.close,
+        },
+        onCancel: closeAlert,
+      });
+    } finally {
+      const guest = createGuest(user?.language, user?.theme, user);
+      setUser(guest);
+      saveUserToStorage(guest);
+    }
+  }, [createGuest, showError, showSuccess, closeAlert, logoutTexts, user]);
+
+  //------------------------------------------------------------------
   const registerSessionCallback = useCallback((cb: () => void) => {
     sessionCallbackRef.current = cb;
   }, []);
 
-  const updateUserLanguage = useCallback(
-    async (newLang: string) => {
-      if (!user || user.role === 'guest') {
-        const next = { ...(user ?? initialGuestUser), language: newLang, clientId };
-        setUser(next);
-        saveUserToStorage(next);
-        return;
-      }
+  //------------------------------------------------------------------
+  //  NO RENDERIZAR hasta que localStorage esté listo
+  //------------------------------------------------------------------
+  if (!isClientReady || loading) return null;
 
-      try {
-        const response = await updateUser({
-          clientId,
-          email: user.email,
-          language: newLang,
-        });
-        const updated = response.data as User;
-        const next = { ...updated, isLogged: true };
-        setUser(next);
-        saveUserToStorage(next);
-      } catch (err) {
-        console.error('Failed to update user language:', err);
-      }
-    },
-    [user, clientId]
-  );
-
-  const updateUserTheme = useCallback(
-    async (newTheme: 'light' | 'dark') => {
-      if (!user || user.role === 'guest') {
-        const next = { ...(user ?? initialGuestUser), theme: newTheme, clientId };
-        setUser(next);
-        saveUserToStorage(next);
-        return;
-      }
-
-      try {
-        const response = await updateUser({
-          clientId,
-          email: user.email,
-          theme: newTheme,
-        });
-        const updated = response.data as User;
-        const next = { ...updated, isLogged: true };
-        setUser(next);
-        saveUserToStorage(next);
-      } catch (err) {
-        console.error('Failed to update user theme:', err);
-      }
-    },
-    [user, clientId]
-  );
-
-  const logout = useCallback(() => {
-    // Ideal: llamar a /api/users/logout para borrar cookie httpOnly en server
-    clearUserFromStorage();
-    const guest = {
-      ...initialGuestUser,
-      clientId,
-      profileImage: getPersistentGuestAvatar(),
-    };
-    setUser(guest);
-    saveUserToStorage(guest);
-  }, [clientId]);
-
-  // const addRequestToUser = useCallback(
-  //   (newRequest: ServiceRequestItem) => {
-  //     const requestWithId = { ...newRequest, id: newRequest.id || uuidv4() };
-  //     setUser((prev) => {
-  //       const base = prev ?? {
-  //         ...initialGuestUser,
-  //         clientId,
-  //         profileImage: getPersistentGuestAvatar(),
-  //       };
-  //       const updated: User = { ...base, requests: [...(base.requests ?? []), requestWithId] };
-  //       saveUserToStorage(updated);
-  //       return updated;
-  //     });
-  //   },
-  //   [clientId]
-  // );
-
-  // const removeRequestFromUser = useCallback(
-  //   (id: string) => {
-  //     setUser((prev) => {
-  //       const base = prev ?? {
-  //         ...initialGuestUser,
-  //         clientId,
-  //         profileImage: getPersistentGuestAvatar(),
-  //       };
-  //       const updated: User = {
-  //         ...base,
-  //         requests: (base.requests ?? []).filter((r) => r.id !== id),
-  //       };
-  //       saveUserToStorage(updated);
-  //       return updated;
-  //     });
-  //   },
-  //   [clientId]
-  // );
-
-  // const clearAllRequests = useCallback(() => {
-  //   setUser((prev) => {
-  //     const base = prev ?? {
-  //       ...initialGuestUser,
-  //       clientId,
-  //       profileImage: getPersistentGuestAvatar(),
-  //     };
-  //     const updated: User = { ...base, requests: [] };
-  //     saveUserToStorage(updated);
-  //     return updated;
-  //   });
-  // }, [clientId]);
-
-  if (loading) return null;
-
+  //------------------------------------------------------------------
   return (
     <UserContext.Provider
       value={{
@@ -301,9 +309,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         setUser,
         refreshUser,
         logout,
-        // addRequestToUser,
-        // removeRequestFromUser,
-        // clearAllRequests,
+        updateUserProfile,
         updateUserLanguage,
         updateUserTheme,
         registerSessionCallback,
@@ -314,9 +320,8 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   );
 };
 
-// Custom hook
 export const useUser = () => {
   const ctx = useContext(UserContext);
-  if (!ctx) throw new Error('useUser must be used within a DashboardProvider');
+  if (!ctx) throw new Error('useUser must be used within a UserProvider');
   return ctx;
 };

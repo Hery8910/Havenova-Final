@@ -8,7 +8,7 @@ import FurnitureAssemblyForm from '@/packages/components/services/furnitureAssem
 const FurnitureAssemblyPage = () => {
   const { texts } = useI18n();
   const header = texts?.components?.services?.furnitureAssembly.header;
-  const howItWorks = texts?.components?.services?.howItWorks;
+  const howItWorks = texts?.pages?.services?.howItWorks;
 
   return (
     <main className={styles.main}>
@@ -17,10 +17,11 @@ const FurnitureAssemblyPage = () => {
         subtitle={header.subtitle}
         description={header.description}
       />
-      <HowItWorks title={howItWorks.title} steps={howItWorks.steps} />
-
       <section className={styles.section}>
-        <FurnitureAssemblyForm />
+        <HowItWorks title={howItWorks.title} steps={howItWorks.steps} />
+        <div className={`${styles.wrapper} card`}>
+          <FurnitureAssemblyForm />
+        </div>
       </section>
       {/* <ServiceCart /> */}
       {/* <Reviews /> */}

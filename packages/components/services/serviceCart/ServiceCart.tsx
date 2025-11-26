@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import styles from './ServiceCart.module.css';
 import { useServiceCart } from '../../../contexts/serviceCart/ServiceCartContext';
 import { ServicesRequestList } from '../servicesRequestList';
@@ -27,7 +25,7 @@ const ServiceCart = () => {
   const pathWithoutLang = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
 
   // 🔹 Rutas que deben ocultar el carrito
-  const EXCLUDED_PATTERNS = ['/checkout', '/usuario', '/legal'];
+  const EXCLUDED_PATTERNS = ['/checkout', '/user', '/legal'];
   const shouldHide = EXCLUDED_PATTERNS.some((pattern) => pathWithoutLang.startsWith(pattern));
 
   if (shouldHide) return null;

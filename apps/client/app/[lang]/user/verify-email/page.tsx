@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import { useUser } from '../../../../../../packages/contexts/user/UserContext';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
-import AlertPopup from '../../../../../../packages/components/alert/alertPopup/AlertPopup';
 
 import styles from './page.module.css';
 import { resendVerificationEmail } from '../../../../../../packages/services/user/userService';
-import { VerifyEmailPayload } from '../../../../../../packages/types';
+import {
+  ResendVerificationEmailPayload,
+  VerifyEmailPayload,
+} from '../../../../../../packages/types';
 import { useLang } from '../../../../../../packages/hooks';
 import { href } from '../../../../../../packages/utils/navigation';
 import { FormWrapper } from '../../../../../../packages/components/userForm';
@@ -80,7 +82,7 @@ const VerifyEmail = () => {
     }, 3000);
   }, [status, code, http, user?.isVerified]);
 
-  const handleResendEmail = async (data: VerifyEmailPayload) => {
+  const handleResendEmail = async (data: ResendVerificationEmailPayload) => {
     setLoading(true);
     try {
       if (!client?._id) {
@@ -97,7 +99,7 @@ const VerifyEmail = () => {
         return;
       }
 
-      const payload: VerifyEmailPayload = {
+      const payload: ResendVerificationEmailPayload = {
         email: data.email || user?.email || '',
         language: user?.language || 'de',
         clientId: client._id,
@@ -144,7 +146,7 @@ const VerifyEmail = () => {
         <p className={styles.p}>* {verifyEmail.info}</p>
       </header>
       <section className={`${styles.section} card`}>
-        <FormWrapper<VerifyEmailPayload>
+        <FormWrapper<ResendVerificationEmailPayload>
           fields={['email']}
           onSubmit={handleResendEmail}
           button={formText.button.resendEmail}
@@ -156,7 +158,6 @@ const VerifyEmail = () => {
         />
       </section>
       {loading && <Loading theme={user?.theme || 'light'} />}
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 };

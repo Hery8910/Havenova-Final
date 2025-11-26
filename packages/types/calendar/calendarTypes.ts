@@ -28,7 +28,7 @@ export interface Month {
   days: Day[];
 }
 
-export interface Calendar {
+export interface CalendarData {
   clientId: string;
   year: number;
   months: Month[];
@@ -60,7 +60,7 @@ export interface CalendarError {
 
 export interface CalendarResponse {
   success: boolean;
-  data?: Calendar;
+  data?: CalendarData;
   message?: string;
   error?: string;
 }

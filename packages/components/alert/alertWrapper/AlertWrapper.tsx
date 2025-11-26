@@ -38,23 +38,14 @@ export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWra
   const hasConfirm = !!onConfirm && !!response.confirmLabel;
 
   return (
-    <div
-      ref={containerRef}
-      tabIndex={-1}
-      role={hasConfirm ? 'dialog' : 'alertdialog'}
-      aria-modal="true"
-      aria-labelledby="alert-title"
-      aria-describedby="alert-description"
-    >
-      <AlertPopup
-        type={type}
-        title={response.title}
-        description={response.description}
-        cancelLabel={response.cancelLabel}
-        confirmLabel={response.confirmLabel}
-        onCancel={onCancel}
-        onConfirm={onConfirm}
-      />
-    </div>
+    <AlertPopup
+      type={type}
+      title={response.title}
+      description={response.description}
+      cancelLabel={response.cancelLabel}
+      confirmLabel={response.confirmLabel}
+      onCancel={onCancel}
+      onConfirm={onConfirm}
+    />
   );
 }

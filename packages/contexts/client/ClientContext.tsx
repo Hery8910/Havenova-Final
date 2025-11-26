@@ -1,10 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import api from '../../services/api/api';
-import { usePathname } from 'next/navigation';
-import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM/applyBrandingToDOM';
-import { ClientConfig, ClientContextProps } from '../../types/client/clientTypes';
+import { ClientPublicConfig, ClientContextProps } from '../../types/client/clientTypes';
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -13,31 +10,10 @@ export function ClientProvider({
   initialClient,
 }: {
   children: ReactNode;
-  initialClient: ClientConfig;
+  initialClient: ClientPublicConfig | null;
 }) {
-  const [client, setClient] = useState<ClientConfig | null>(initialClient);
-  const [loading, setLoading] = useState(true);
-
-  //   const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-  const hostname = 'havenova.de';
-
-  useEffect(() => {
-    const fetchClient = async () => {
-      try {
-        const { data } = await api.get(`/api/clients/by-domain/${hostname}`);
-        if (data?.client.branding && data?.client.typography) {
-          applyBrandingToDOM(data.client.branding, data.client.typography);
-        }
-
-        setClient(data.client);
-      } catch (err) {
-        console.error('Error loading client config:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchClient();
-  }, [hostname]);
+  const [client] = useState<ClientPublicConfig | null>(initialClient);
+  const [loading] = useState(false);
 
   return <ClientContext.Provider value={{ client, loading }}>{children}</ClientContext.Provider>;
 }

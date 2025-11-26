@@ -6,6 +6,11 @@
   justify-content: flex-start;
   align-items: flex-end;
 }
+.label {
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--text-secondary);
+  font-weight: 700;
+}
 .input {
   padding: 8px 16px;
   border-radius: 4px;
@@ -17,10 +22,17 @@
   color: var(--text-secondary);
 }
 .input::placeholder {
+  font-size: clamp(14px, 3vw, 18px);
   color: var(--text-secondary);
   font-family: var(--font-family-main);
+  font-style: italic;
 }
-
+.article {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .div {
   width: 100%;
   position: relative;
@@ -39,10 +51,11 @@
 .forgotPassword {
   border: none;
   background-color: transparent;
-  align-self: flex-end;
-  color: inherit;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  font-size: clamp(14px, 3vw, 18px);
+  font-style: italic;
 }
 .forgotPassword:hover {
   color: var(--brand-primary);
@@ -55,4 +68,87 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 8px;
+}
+.checkboxWrapper {
+  margin-bottom: 32px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 🔹 Ocultamos el checkbox real, pero accesible */
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 🔹 Estilo del cuadrado */
+.customCheckbox {
+  width: 24px;
+  height: 20px;
+  border: 2px solid var(--text-secondary);
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 🔹 El check (antes invisible) */
+.customCheckbox::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 14px;
+  border-right: 4px solid var(--brand-primary);
+  border-bottom: 4px solid var(--brand-primary);
+  transform: rotate(45deg) scale(0);
+  top: -4px;
+  left: 7px;
+  transition: transform 0.2s ease-in-out;
+  opacity: 0;
+}
+
+/* 🔹 Cuando está marcado */
+.checkboxInput:checked + .customCheckbox {
+  background-color: transparent;
+  border-color: var(--brand-primary);
+}
+
+.checkboxInput:checked + .customCheckbox::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
+
+/* 🔹 Texto */
+.checkboxText {
+  color: var(--text-secondary);
+  font-size: clamp(14px, 3vw, 18px);
+}
+
+.button {
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 700;
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  border: none;
+  box-shadow: var(--shadow);
+  border-radius: 6px;
+  background: var(--brand-primary);
+  background: linear-gradient(0deg, var(--brand-primary) 0%, var(--button-gradient) 100%);
+  color: var(--button-text);
+  border: 3px solid var(--brand-primary);
+}
+.button:hover {
+  transform: translateY(-2px);
 }

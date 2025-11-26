@@ -1,3 +1,5 @@
+// src/services/user/userService.ts
+
 import api from '../api/api';
 import { ApiResponse } from '../../types/api/apiTypes';
 import {
@@ -6,57 +8,98 @@ import {
   ForgotPasswordPayload,
   ResetPasswordPayload,
   ChangePasswordPayload,
-  UpdateUserPayload,
-  User,
+  UpdateUserProfilePayload,
+  FrontendUser,
   VerifyEmailPayload,
-  FaqMessageData,
-} from '../../types';
+  ContactMessageData,
+  BaseAuthUser,
+  ResendVerificationEmailPayload,
+} from '../../types/user/userTypes';
 
 // REGISTER
-export const registerUser = async (payload: RegisterPayload): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/register', payload);
+export const registerUser = async (payload: RegisterPayload): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>('/api/users/register', payload);
   return response.data;
 };
 
 // LOGIN
-export const loginUser = async (payload: LoginPayload): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/login', payload);
+export const loginUser = async (payload: LoginPayload): Promise<ApiResponse<FrontendUser>> => {
+  const response = await api.post<ApiResponse<FrontendUser>>('/api/users/login', payload, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
-// UPDATE USER
-export const updateUser = async (payload: UpdateUserPayload): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/update-user', payload);
+// GET USER-CLIENT (User + AuthUser fusionado para el cliente actual)
+export const getUserClient = async (clientId: string): Promise<ApiResponse<BaseAuthUser>> => {
+  const response = await api.get<ApiResponse<BaseAuthUser>>(
+    `/api/users/profile?clientId=${clientId}`,
+    { withCredentials: true }
+  );
   return response.data;
 };
 
-// UPDATE PASSWORD
-export const chagePassword = async (payload: ChangePasswordPayload): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/update-password', payload);
+// GET USER-CLIENT-PROFILE (User + AuthUser fusionado para el cliente actual)
+export const getUserClientProfile = async (
+  clientId: string
+): Promise<ApiResponse<FrontendUser>> => {
+  const response = await api.get<ApiResponse<FrontendUser>>(
+    `/api/users/profile?clientId=${clientId}`,
+    { withCredentials: true }
+  );
+  return response.data;
+};
+
+// GET USER-CLIENT-WORKER (User + AuthUser fusionado para el cliente actual)
+export const getUserClientWorker = async (clientId: string): Promise<ApiResponse<FrontendUser>> => {
+  const response = await api.get<ApiResponse<FrontendUser>>(
+    `/api/users/profile?clientId=${clientId}`,
+    { withCredentials: true }
+  );
+  return response.data;
+};
+
+// UPDATE USER-CLIENT-PROFILE (nombre, dirección, teléfono, idioma, tema, etc.)
+export const updateUserClientProfile = async (
+  payload: UpdateUserProfilePayload
+): Promise<ApiResponse<FrontendUser>> => {
+  const response = await api.patch<ApiResponse<FrontendUser>>('/api/users/profile', payload, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+// UPDATE USER-CLIENT-WORKER (nombre, dirección, teléfono, idioma, tema, etc.)
+export const updateUserClientWorker = async (
+  payload: UpdateUserProfilePayload
+): Promise<ApiResponse<FrontendUser>> => {
+  const response = await api.patch<ApiResponse<FrontendUser>>('/api/users/profile', payload, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+// CHANGE PASSWORD
+export const changePassword = async (
+  payload: ChangePasswordPayload
+): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>('/api/users/change-password', payload, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
 // FORGOT PASSWORD
 export const forgotPassword = async (
   payload: ForgotPasswordPayload
-): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/forgot-password', payload);
+): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>('/api/users/forgot-password', payload);
   return response.data;
 };
 
-// RESET PASSWORD
-export const resetPassword = async (payload: ResetPasswordPayload): Promise<ApiResponse<User>> => {
-  const response = await api.post<ApiResponse<User>>('/api/users/reset-password', payload);
-  return response.data;
-};
-
-// RESET PASSWORD CONFIRM
-export const resetPasswordConfirm = async (payload: {
-  token: string;
-  newPassword: string;
-  clientId: string;
-}) => {
-  const response = await api.post('/api/users/reset-password-confirm', payload);
+// RESET PASSWORD (a partir del token enviado por email)
+export const resetPassword = async (payload: ResetPasswordPayload): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>('/api/users/reset-password', payload);
   return response.data;
 };
 
@@ -72,22 +115,18 @@ export const logoutUser = async (): Promise<ApiResponse<null>> => {
   return response.data;
 };
 
-// GET USER PROFILE
-export const getUser = async (clientId: string): Promise<ApiResponse<User>> => {
-  let url = `/api/users/profile?clientId=${clientId}`;
-  const response = await api.get<ApiResponse<User>>(url);
-  return response.data;
-};
-
 // RESEND VERIFICATION
 export const resendVerificationEmail = async (
-  payload: VerifyEmailPayload
+  payload: ResendVerificationEmailPayload
 ): Promise<ApiResponse<null>> => {
   const response = await api.post<ApiResponse<null>>('/api/users/resend-verification', payload);
   return response.data;
 };
 
-export const sendContactMessage = async (payload: FaqMessageData): Promise<ApiResponse<null>> => {
-  const response = await api.post('/api/contact', payload);
+// CONTACT MESSAGE
+export const sendContactMessage = async (
+  payload: ContactMessageData
+): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>('/api/contact', payload);
   return response.data;
 };

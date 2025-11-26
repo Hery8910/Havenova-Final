@@ -264,7 +264,7 @@ export const furnitureTypes: {
           depth: true,
           doors: false,
           drawers: false,
-          wall: false,
+          wall: true,
         },
       },
     ],

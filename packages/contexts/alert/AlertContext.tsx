@@ -2,6 +2,7 @@
 import React, { createContext, useContext } from 'react';
 import { useAlertBase } from './useAlert';
 import { AlertWrapper } from '@havenova/components/alert/alertWrapper';
+import { createPortal } from 'react-dom';
 
 const AlertContext = createContext<ReturnType<typeof useAlertBase> | null>(null);
 
@@ -10,14 +11,16 @@ export function AlertProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AlertContext.Provider value={alert}>
-      {alert.alert && (
-        <AlertWrapper
-          response={alert.alert.response}
-          onCancel={alert.alert.onCancel}
-          onConfirm={alert.alert.onConfirm}
-        />
-      )}
       {children}
+      {alert.alert &&
+        createPortal(
+          <AlertWrapper
+            response={alert.alert.response}
+            onCancel={alert.alert.onCancel}
+            onConfirm={alert.alert.onConfirm}
+          />,
+          document.body
+        )}
     </AlertContext.Provider>
   );
 }

@@ -1,30 +1,22 @@
 'use client';
 import { useEffect } from 'react';
-import { useClient } from '../../contexts/client/ClientContext';
-import { applyBrandingToDOM } from '../../utils/applyBrandingToDOM/applyBrandingToDOM';
-import styles from './ThemeToggler.module.css';
 import { useUser } from '../../contexts/user/UserContext';
+import styles from './ThemeToggler.module.css';
 import Image from 'next/image';
 
 const ThemeToggler = () => {
   const { user, updateUserTheme } = useUser();
-  const { client } = useClient();
 
-  // Usar el theme global del usuario, no local
   const theme: 'dark' | 'light' = user?.theme || 'light';
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-    if (client?.branding?.[theme]) {
-      applyBrandingToDOM(client.branding[theme], client.typography);
-    }
-  }, [theme, client?.branding, client?.typography]);
+  }, [theme]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    updateUserTheme(newTheme as 'light' | 'dark');
-    // NO SETEES el useState local ni el DOM aquí, eso se hará en el useEffect de arriba al actualizar el contexto
+    updateUserTheme(newTheme);
   };
 
   return (

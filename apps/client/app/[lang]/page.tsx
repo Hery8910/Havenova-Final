@@ -16,7 +16,7 @@ import WhyChoose from '@/packages/components/common/whyChoose/WhyChoose';
 import FinalCTA from '@/packages/components/common/finalCTA/FinalCTA';
 import Loading from '@/packages/components/loading/Loading';
 import HomeHeroSkeleton from '@/packages/components/pages/homeHero/HomeHero.skeleton';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   FAQSection,
   FAQSectionSkeleton,
@@ -31,11 +31,12 @@ export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | '
 
 export default function Home() {
   const { client, loading } = useClient();
-  const { registerSessionCallback, user } = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
-  const searchParams = useSearchParams();
+
+  if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
 
   const homeHeroTexts = texts.pages.home.hero;
   const howItWorksTexts = texts.components.common.howItWorks;
@@ -45,36 +46,10 @@ export default function Home() {
   const reviewsSectionTexts = texts.components.common.reviewsSection;
   const reviewsLists = texts.components.reviews.reviews;
   const faqPreviewTexts = texts.components.common.faq;
-  const welcomeOfferTexts = texts.components.common.welcomeOfferBanner;
   const finalCtaTexts = texts.components.common.finalCta;
 
   const popups = texts.popups;
   const [isMobile, setIsMobile] = useState(false);
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const status = searchParams.get('status');
-    const code = searchParams.get('code');
-    const http = Number(searchParams.get('http'));
-
-    if (status && code) {
-      const popupData = texts.popups?.[code] || {};
-      setAlert({
-        status: http || (status === 'success' ? 200 : 400),
-        title: popupData.title || (status === 'success' ? 'Success' : 'Error'),
-        description: popupData.description || '',
-      });
-      setTimeout(() => {
-        setAlert(null);
-      }, 3000);
-      // limpiar la URL
-      window.history.replaceState(null, '', window.location.pathname);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,18 +60,6 @@ export default function Home() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  useEffect(() => {
-    registerSessionCallback(() => {
-      setAlert({
-        status: 401,
-        title: popups?.SESSION_EXPIRED?.title || 'Session expired',
-        description:
-          popups?.SESSION_EXPIRED?.description || 'Your session has expired. Please log in again.',
-      });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [texts]);
 
   const handleNavigation = (section: HomeCtaCase) => {
     switch (section) {
@@ -130,18 +93,12 @@ export default function Home() {
     router.push(href(lang, `/services/${service}`));
   };
 
-  if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
-
   return (
     <main>
       {homeHeroTexts ? (
         <HomeHero {...homeHeroTexts} onClick={() => handleNavigation('hero')} />
       ) : (
         <HomeHeroSkeleton />
-      )}
-
-      {welcomeOfferTexts && user.role === 'guest' && (
-        <WelcomeOfferBanner {...welcomeOfferTexts} onClick={() => handleNavigation('offer')} />
       )}
 
       {howItWorksTexts ? (
@@ -154,7 +111,7 @@ export default function Home() {
         services={false}
         {...servicesSectionTexts}
         items={servicesList}
-        theme={user.theme}
+        theme={user?.theme}
         handleItemClick={handleItemClick}
         handleCTAClick={() => handleNavigation('services')}
       />
@@ -178,8 +135,6 @@ export default function Home() {
       ) : (
         <FinalCTASkeleton />
       )}
-
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 }

@@ -56,3 +56,9 @@ export const validateMessage = (message: string): string[] => {
   }
   return errors;
 };
+
+export const validateTosAccepted = (value: boolean) => {
+  if (!value) return ['required'];
+
+  return [];
+};

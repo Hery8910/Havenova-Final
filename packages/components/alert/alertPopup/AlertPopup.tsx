@@ -55,9 +55,9 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
       className={`${styles.section} card`}
     >
       <div
-        className={styles.wraper}
+        className={`${styles.wraper} card`}
         style={{
-          background: bgColorMap[type],
+          backgroundColor: bgColorMap[type],
           border: `1px solid ${colorMap[type]}`,
         }}
       >
@@ -70,38 +70,39 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
           className={styles.image}
           style={{ background: colorMap[type] }}
         />
+        <article className={styles.article}>
+          <h4 style={{ color: colorMap[type] }} id="alert-title">
+            <strong>{title}</strong>
+          </h4>
 
-        <h4 style={{ color: colorMap[type] }} id="alert-title">
-          <strong>{title}</strong>
-        </h4>
+          <p id="alert-description">{description}</p>
 
-        <p id="alert-description">{description}</p>
-
-        <div className={styles.button_group}>
-          <button
-            className={styles.cancel_button}
-            onClick={onCancel}
-            style={{
-              borderColor: colorMap[type],
-              color: colorMap[type],
-              backgroundColor: 'transparent',
-            }}
-          >
-            {cancelLabel || 'Cancel'}
-          </button>
-          {hasConfirm && (
+          <div className={styles.button_group}>
             <button
-              className={styles.confirm_button}
-              onClick={onConfirm}
+              className={styles.cancel_button}
+              onClick={onCancel}
               style={{
                 borderColor: colorMap[type],
-                backgroundColor: colorMap[type],
+                color: colorMap[type],
+                backgroundColor: 'transparent',
               }}
             >
-              {confirmLabel}
+              {cancelLabel || 'Cancel'}
             </button>
-          )}
-        </div>
+            {hasConfirm && (
+              <button
+                className={styles.confirm_button}
+                onClick={onConfirm}
+                style={{
+                  borderColor: colorMap[type],
+                  backgroundColor: colorMap[type],
+                }}
+              >
+                {confirmLabel}
+              </button>
+            )}
+          </div>
+        </article>
       </div>
     </section>
   );

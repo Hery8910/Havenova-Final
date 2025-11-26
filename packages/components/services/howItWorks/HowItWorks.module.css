@@ -1,4 +1,6 @@
 .section {
+  width: 100%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,24 +35,24 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 4px;
+  gap: 6px;
 }
 .aside {
   color: var(--text-primary);
   align-items: center;
   justify-content: space-between;
-  padding: 4px 0;
   height: -webkit-fill-available;
 }
 .icon {
+  color: var(--text-secondary);
   font-size: clamp(23px, 4.5vw, 36px);
 }
 .span {
-  height: 70%;
+  height: 60%;
   border: 1px solid var(--text-secondary);
 }
 .stepTitle {
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 .stepDescription {
   color: var(--text-secondary);
