@@ -1,7 +1,7 @@
 import '../../global.css';
 import styles from './layout.module.css';
 import { ClientProvider } from '@/packages/contexts/client/ClientContext';
-import { DashboardProvider, useUser } from '@/packages/contexts/user/UserContext';
+import { DashboardProvider, useUser } from '@/packages/contexts/profile/ProfileContext';
 import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
 import { getClient } from '@/packages/services/client';
 import { Poppins, Roboto } from 'next/font/google';

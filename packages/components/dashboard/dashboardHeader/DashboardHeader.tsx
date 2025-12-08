@@ -4,7 +4,7 @@ import { User } from '../../../types';
 import LanguageSwitcher from '../../languageSwitcher/LanguageSwitcher';
 import ThemeToggler from '../../themeToggler/ThemeToggler';
 import styles from './DashboardHeader.module.css';
-import { useUser } from '../../../contexts/user';
+import { useUser } from '../../../contexts/profile';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../hooks/useLang';
 import { href } from '../../../utils/navigation';

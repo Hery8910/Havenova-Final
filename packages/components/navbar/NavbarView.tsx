@@ -5,7 +5,7 @@ import ThemeToggler from '../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import styles from './Navbar.module.css';
 import { AvatarContainer } from '../user';
-import { User } from '../../types';
+import { AuthUser, UserClientProfile } from '../../types';
 
 // Tipos base
 export interface BaseNavItem {
@@ -20,10 +20,9 @@ export interface IconNavItem extends BaseNavItem {
 
 export type ServiceNavItem = IconNavItem;
 export interface SimpleNavItem extends BaseNavItem {}
-export type ProfileAuth = 'guest' | 'user' | 'admin';
 
 export interface ProfileNavItem extends IconNavItem {
-  auth: ProfileAuth;
+  auth: string;
 }
 
 export type HeadersItem = {
@@ -41,7 +40,8 @@ export interface NavbarConfig {
 }
 
 export interface NavbarViewProps {
-  user: User;
+  profile: UserClientProfile;
+  auth: AuthUser;
   navbarConfig?: NavbarConfig;
   theme: 'light' | 'dark';
   isMobile: boolean;
@@ -52,7 +52,8 @@ export interface NavbarViewProps {
 }
 
 export function NavbarView({
-  user,
+  profile,
+  auth,
   navbarConfig,
   theme,
   isMobile,
@@ -61,7 +62,7 @@ export function NavbarView({
   onNavigate,
   onCloseMenu,
 }: NavbarViewProps) {
-  if (!user) return null;
+  if (!profile) return null;
 
   const getLogoSrc = () => {
     if (theme === 'dark') {
@@ -167,7 +168,7 @@ export function NavbarView({
                   </div>
                 </li>
               )}
-              {user?.role === 'guest' ? (
+              {auth?.role === 'guest' ? (
                 navbarConfig?.register.map((link) => (
                   <li className={styles.li} role="none" key={link.label}>
                     <button

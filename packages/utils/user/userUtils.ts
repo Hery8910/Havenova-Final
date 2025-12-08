@@ -31,22 +31,21 @@ export function getUserFromStorage(): FrontendUser | null {
 }
 
 export async function loadProfileByRoles(role: BaseAuthUser['role'], clientId: string) {
-  let profileData: any = {};
-
   if (role === 'user') {
-    const res = await getUserClientProfile(clientId);
-    profileData = { userProfile: res.data };
+    console.log('Se disparo el user');
+
+    // const backendUser = getUserClientProfile(clientId);
+    // return backendUser;
   }
 
   if (role === 'worker') {
-    const res = await getUserClientWorker(clientId);
-    profileData = { ...profileData, workerProfile: res.data };
+    console.log('Se disparo el worker');
+
+    // const backendUser = getUserClientWorker(clientId);
+    // return backendUser;
   }
 
-  // Si en algún momento quieres que admin tenga perfil especial:
-  // if (role === 'admin') { ... }
-
-  return profileData;
+  throw new Error('Unsupported role');
 }
 
 export async function updateProfileByRoles(payload: UpdateUserProfilePayload) {
@@ -61,8 +60,6 @@ export async function updateProfileByRoles(payload: UpdateUserProfilePayload) {
     const res = await updateUserClientWorker(payload);
     profileData = { ...profileData, workerProfile: res.data };
   }
-
-  // admin -> decidir si reutiliza worker o tiene endpoint propio
 
   return profileData;
 }

@@ -15,7 +15,7 @@ import {
   WhyChoose,
   WhyChooseSkeleton,
 } from '@/packages/components/common';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useProfile } from '@/packages/contexts/profile/ProfileContext';
 import { useRouter } from 'next/navigation';
 import { ServicesSection } from '../../../../../packages/components/pages';
 import { href } from '../../../../../packages/utils/navigation';
@@ -24,7 +24,7 @@ type CtaCase = 'services' | 'review';
 
 export default function AboutPage() {
   const { texts } = useI18n();
-  const { user } = useUser();
+  const { profile } = useProfile();
   const router = useRouter();
   const lang = useLang();
   const isMobile = useIsMobile(1024);
@@ -62,7 +62,7 @@ export default function AboutPage() {
       {storyTexts ? <Story {...storyTexts} /> : <StorySkeleton />}
 
       {valuesTexts ? (
-        <Values {...valuesTexts} theme={user?.theme ?? 'light'} isMobile={isMobile} />
+        <Values {...valuesTexts} theme={profile?.theme ?? 'light'} isMobile={isMobile} />
       ) : (
         <ValuesSkeleton />
       )}
@@ -73,7 +73,7 @@ export default function AboutPage() {
         services={false}
         {...servicesSectionTexts}
         items={servicesList}
-        theme={user?.theme}
+        theme={profile?.theme}
         handleItemClick={handleItemClick}
         handleCTAClick={() => handleNavigation('services')}
       />

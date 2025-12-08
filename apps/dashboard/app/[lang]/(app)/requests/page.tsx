@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import {
   getWorkRequestById,
   getWorkRequests,

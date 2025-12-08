@@ -46,6 +46,7 @@ export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWra
       confirmLabel={response.confirmLabel}
       onCancel={onCancel}
       onConfirm={onConfirm}
+      loading={response.loading}
     />
   );
 }

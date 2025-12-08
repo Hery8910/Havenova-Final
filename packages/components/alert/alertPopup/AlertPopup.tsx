@@ -1,5 +1,5 @@
+'use client';
 import Image from 'next/image';
-import { IoIosClose } from 'react-icons/io';
 import styles from './AlertPopup.module.css';
 import { AlertType } from '../../../utils/alertType';
 
@@ -11,9 +11,10 @@ export interface AlertPopupProps {
   cancelLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
+  loading?: boolean; // 👈 nuevo
 }
 
-const AlertPopup: React.FC<AlertPopupProps> = ({
+export default function AlertPopup({
   type,
   title,
   description,
@@ -21,7 +22,8 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
   cancelLabel,
   onConfirm,
   onCancel,
-}) => {
+  loading,
+}: AlertPopupProps) {
   const imageMap = {
     success: '/svg/alert/success.svg',
     error: '/svg/alert/error.svg',
@@ -36,14 +38,16 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
     info: 'var(--color-info)',
   };
 
-  const bgColorMap = {
+  const bgMap = {
     success: 'var(--bg-success)',
     error: 'var(--bg-error)',
     warning: 'var(--bg-warning)',
     info: 'var(--bg-info)',
   };
 
-  const hasConfirm = !!onConfirm && !!confirmLabel;
+  const glowColor = colorMap[type];
+
+  const hasConfirm = !loading && !!onConfirm && !!confirmLabel;
 
   return (
     <section
@@ -52,60 +56,59 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
       aria-labelledby="alert-title"
       aria-describedby="alert-description"
       tabIndex={-1}
-      className={`${styles.section} card`}
+      className={styles.section}
     >
       <div
-        className={`${styles.wraper} card`}
-        style={{
-          backgroundColor: bgColorMap[type],
-          border: `1px solid ${colorMap[type]}`,
-        }}
+        className={styles.modal}
+        style={{ borderColor: glowColor, backgroundColor: bgMap[type] }}
       >
-        <Image
-          src={imageMap[type]}
-          priority
-          alt={`${type} icon`}
-          width={100}
-          height={100}
-          className={styles.image}
-          style={{ background: colorMap[type] }}
-        />
-        <article className={styles.article}>
-          <h4 style={{ color: colorMap[type] }} id="alert-title">
+        <div className={styles.iconContainer}>
+          {loading ? (
+            <div className={styles.spinner} />
+          ) : (
+            <Image
+              src={imageMap[type]}
+              alt={`${type} icon`}
+              width={90}
+              height={90}
+              className={styles.icon}
+              style={{ boxShadow: `0 0 12px ${glowColor}` }}
+            />
+          )}
+        </div>
+
+        <article className={styles.textBlock}>
+          <h4 id="alert-title" style={{ color: glowColor }}>
             <strong>{title}</strong>
           </h4>
-
           <p id="alert-description">{description}</p>
 
-          <div className={styles.button_group}>
-            <button
-              className={styles.cancel_button}
-              onClick={onCancel}
-              style={{
-                borderColor: colorMap[type],
-                color: colorMap[type],
-                backgroundColor: 'transparent',
-              }}
-            >
-              {cancelLabel || 'Cancel'}
-            </button>
-            {hasConfirm && (
+          {!loading && (
+            <div className={styles.buttonGroup}>
               <button
-                className={styles.confirm_button}
-                onClick={onConfirm}
-                style={{
-                  borderColor: colorMap[type],
-                  backgroundColor: colorMap[type],
-                }}
+                className={styles.cancel}
+                onClick={onCancel}
+                style={{ borderColor: glowColor, color: glowColor }}
               >
-                {confirmLabel}
+                {cancelLabel || 'Cancelar'}
               </button>
-            )}
-          </div>
+
+              {hasConfirm && (
+                <button
+                  className={styles.confirm}
+                  onClick={onConfirm}
+                  style={{
+                    backgroundColor: glowColor,
+                    borderColor: glowColor,
+                  }}
+                >
+                  {confirmLabel}
+                </button>
+              )}
+            </div>
+          )}
         </article>
       </div>
     </section>
   );
-};
-
-export default AlertPopup;
+}

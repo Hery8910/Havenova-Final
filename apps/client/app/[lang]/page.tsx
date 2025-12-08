@@ -1,9 +1,8 @@
 'use client';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useProfile } from '@/packages/contexts/profile/ProfileContext';
 import { useEffect, useState } from 'react';
 
 import { useClient } from '@/packages/contexts/client/ClientContext';
-import { AlertWrapper } from '@/packages/components/alert';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { useLang } from '@/packages/hooks/useLang';
 import { href } from '@/packages/utils/navigation';
@@ -26,17 +25,20 @@ import {
   ReviewsSectionSkeleton,
 } from '@/packages/components/common';
 import { ServicesSection } from '@/packages/components/pages';
+import { useAuth } from '../../../../packages/contexts';
 
 export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | 'faq' | 'ctaFinal';
 
 export default function Home() {
   const { client, loading } = useClient();
-  const { user } = useUser();
+  const { profile } = useProfile();
   const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
+  const { auth } = useAuth();
 
-  if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
+  if (!client || loading || !profile) return <Loading theme={profile?.theme ?? 'dark'} />;
+  console.log('profile:', profile, 'auth', auth);
 
   const homeHeroTexts = texts.pages.home.hero;
   const howItWorksTexts = texts.components.common.howItWorks;
@@ -111,7 +113,7 @@ export default function Home() {
         services={false}
         {...servicesSectionTexts}
         items={servicesList}
-        theme={user?.theme}
+        theme={profile?.theme}
         handleItemClick={handleItemClick}
         handleCTAClick={() => handleNavigation('services')}
       />

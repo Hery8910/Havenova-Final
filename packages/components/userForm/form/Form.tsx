@@ -1,14 +1,14 @@
 //form.tsx
 
 import styles from './Form.module.css';
-import MessageBox from '../../messageBox/MessageBox';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { ButtonProps } from '../../common/button/Button';
 import { LabelsTextProps, PlaceholdersTextProps } from '../formWrapper/FormWrapper';
-import { FrontendUser } from '../../../types';
+import { AuthUser, UserClientProfile } from '../../../types';
 
 interface GenericFormProps<T extends Record<string, any>> {
-  user: FrontendUser | null;
+  auth: AuthUser | null;
+  profile: UserClientProfile | null;
   fields: (keyof T)[];
   formData: T;
   errors: Record<string, string>;
@@ -24,10 +24,12 @@ interface GenericFormProps<T extends Record<string, any>> {
   showHintPassword?: boolean;
   placeholder: PlaceholdersTextProps;
   labels: LabelsTextProps;
+  loading: boolean;
 }
 
 export default function Form<T extends Record<string, any>>({
-  user,
+  auth,
+  profile,
   fields,
   formData,
   errors,
@@ -43,6 +45,7 @@ export default function Form<T extends Record<string, any>>({
   showHintPassword,
   placeholder,
   labels,
+  loading,
 }: GenericFormProps<T>) {
   return (
     <form className={styles.form} onSubmit={onSubmit}>
@@ -55,13 +58,21 @@ export default function Form<T extends Record<string, any>>({
             type="text"
             name="name"
             placeholder={placeholder.name}
-            value={user?.userProfile?.name || formData.name}
+            value={profile?.name || formData.name}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="name"
             required
           />
-          {touched.name && errors.name && <MessageBox message={errors.name} className="error" />}
+          <p
+            className={
+              touched.name && errors.name
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.name && errors.name ? errors.name : '\u00A0'}
+          </p>
         </div>
       )}
 
@@ -80,7 +91,15 @@ export default function Form<T extends Record<string, any>>({
             autoComplete="email"
             required
           />
-          {touched.email && errors.email && <MessageBox message={errors.email} className="error" />}
+          <p
+            className={
+              touched.email && errors.email
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.email && errors.email ? errors.email : '\u00A0'}
+          </p>
         </div>
       )}
 
@@ -113,11 +132,23 @@ export default function Form<T extends Record<string, any>>({
             </button>
           </div>
 
-          {touched.password && errors.password ? (
-            <p className={styles.error}>{errors.password}</p>
-          ) : showHintPassword ? (
-            <p className={styles.hint}>{labels.passwordHint}</p>
-          ) : null}
+          <p
+            className={
+              touched.password && errors.password
+                ? `${styles.feedback} ${styles.error}`
+                : showHintPassword
+                ? `${styles.feedback} ${styles.hint}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {
+              touched.password && errors.password
+                ? errors.password
+                : showHintPassword
+                ? labels.passwordHint
+                : '\u00A0' /* espacio duro para mantener altura */
+            }
+          </p>
         </div>
       )}
 
@@ -130,14 +161,20 @@ export default function Form<T extends Record<string, any>>({
             type="text"
             name="address"
             placeholder={placeholder.address}
-            value={user?.userProfile?.address || formData.address}
+            value={profile?.address || formData.address}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="address"
           />
-          {touched.address && errors.address && (
-            <MessageBox message={errors.address} className="error" />
-          )}
+          <p
+            className={
+              touched.address && errors.address
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.address && errors.address ? errors.address : '\u00A0'}
+          </p>
         </div>
       )}
 
@@ -150,12 +187,20 @@ export default function Form<T extends Record<string, any>>({
             type="tel"
             name="phone"
             placeholder={placeholder.phone}
-            value={user?.userProfile?.phone || formData.phone}
+            value={profile?.phone || formData.phone}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="tel"
           />
-          {touched.phone && errors.phone && <MessageBox message={errors.phone} className="error" />}
+          <p
+            className={
+              touched.phone && errors.phone
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.phone && errors.phone ? errors.phone : '\u00A0'}
+          </p>
         </div>
       )}
 
@@ -172,9 +217,15 @@ export default function Form<T extends Record<string, any>>({
             onBlur={onBlur}
             rows={4}
           />
-          {touched.message && errors.message && (
-            <MessageBox message={errors.message} className="error" />
-          )}
+          <p
+            className={
+              touched.message && errors.message
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.message && errors.message ? errors.message : '\u00A0'}
+          </p>
         </div>
       )}
 
@@ -193,13 +244,25 @@ export default function Form<T extends Record<string, any>>({
             <span className={styles.checkboxText}>{labels.tos}</span>
           </label>
 
-          {touched.tosAccepted && errors.tosAccepted && (
-            <MessageBox message={errors.tosAccepted} className="error" />
-          )}
+          <p
+            className={
+              touched.tosAccepted && errors.tosAccepted
+                ? `${styles.feedback} ${styles.error}`
+                : `${styles.feedback} ${styles.hidden}`
+            }
+          >
+            {touched.tosAccepted && errors.tosAccepted ? errors.tosAccepted : '\u00A0'}
+          </p>
         </div>
       )}
 
-      <button className={styles.button} type="submit">
+      <button
+        className={styles.button}
+        type="submit"
+        disabled={loading}
+        aria-disabled={loading}
+        aria-busy={loading}
+      >
         {button.cta}
       </button>
     </form>

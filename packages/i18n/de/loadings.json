@@ -1,0 +1,35 @@
+{
+  "loading": {
+    "REGISTER_LOADING_SUBMIT": {
+      "title": "Registrierung wird verarbeitet…",
+      "description": "Bitte warten Sie einen Moment."
+    }
+  },
+  "message": {
+    "verifyEmail": {
+      "title": "E-Mail wird bestätigt…",
+      "description": "Bitte warten Sie, während wir Ihren Bestätigungslink prüfen."
+    },
+    "login": {
+      "title": "Sie werden angemeldet…",
+      "description": "Wir bereiten Ihre Sitzung vor. Einen Moment bitte."
+    },
+    "createUser": {
+      "title": "Konto wird geladen…",
+      "description": "Wir richten Ihr Profil und Ihre Einstellungen ein."
+    },
+    "accessDenied": {
+      "title": "Hoppla, etwas fehlt!",
+      "description": "Der Zugriff auf diese Seite ist eingeschränkt. Sie verfügen nicht über die erforderlichen Berechtigungen."
+    },
+    "logout": {
+      "title": "Abmeldung erfolgreich",
+      "description": "Du wurdest erfolgreich von deinem Konto abgemeldet.",
+      "close": "Schließen",
+      "errorTexts": {
+        "title": "Abmeldung fehlgeschlagen",
+        "description": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut."
+      }
+    }
+  }
+}

@@ -25,6 +25,6 @@ export interface ClientPublicConfig {
 }
 
 export interface ClientContextProps {
-  client: ClientPublicConfig | null;
+  client: ClientPublicConfig;
   loading: boolean;
 }

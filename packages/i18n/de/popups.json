@@ -1,0 +1,148 @@
+{
+  "button": {
+    "accept": "Accept",
+    "continue": "Continue",
+    "close": "Close"
+  },
+  "CLIENT_CREATE_SUCCESS": {
+    "title": "Kunde erfolgreich erstellt",
+    "description": "Der Kunde wurde erfolgreich im System angelegt."
+  },
+  "CLIENT_CREATE_DOMAIN_EXISTS": {
+    "title": "Domain bereits vergeben",
+    "description": "Ein Kunde mit dieser Domain existiert bereits."
+  },
+  "CLIENT_CREATE_FAILED": {
+    "title": "Fehler beim Erstellen des Kunden",
+    "description": "Beim Erstellen des Kunden ist ein unerwarteter Fehler aufgetreten."
+  },
+  "CLIENT_FETCH_SUCCESS": {
+    "title": "Client erfolgreich geladen",
+    "description": "Die Client-Daten wurden erfolgreich abgerufen."
+  },
+  "CLIENT_FETCH_NOT_FOUND": {
+    "title": "Client nicht gefunden",
+    "description": "Der angeforderte Client konnte nicht gefunden werden."
+  },
+  "CLIENT_FETCH_FAILED": {
+    "title": "Fehler beim Laden des Clients",
+    "description": "Beim Abrufen des Clients ist ein unerwarteter Fehler aufgetreten."
+  },
+  "CLIENT_FETCH_DASHBOARD_SUCCESS": {
+    "title": "Client-Dashboard erfolgreich geladen",
+    "description": "Die Dashboard-Daten des Clients wurden erfolgreich abgerufen."
+  },
+  "CLIENT_UPDATE_SUCCESS": {
+    "title": "Client erfolgreich aktualisiert",
+    "description": "Die Client-Daten wurden erfolgreich aktualisiert."
+  },
+  "CLIENT_UPDATE_FAILED": {
+    "title": "Fehler beim Aktualisieren des Clients",
+    "description": "Beim Aktualisieren des Clients ist ein unerwarteter Fehler aufgetreten."
+  },
+  "CLIENT_MISSING_CLIENT_ID": {
+    "title": "Client-ID fehlt",
+    "description": "Für diese Registrierung wird eine gültige Client-ID benötigt."
+  },
+  "CLIENT_NOT_FOUND": {
+    "title": "Client nicht gefunden",
+    "description": "Der angegebene Client existiert nicht."
+  },
+
+  "USER_REGISTER_SUCCESS": {
+    "title": "Registrierung erfolgreich",
+    "description": "Wir haben Ihnen eine E-Mail zur Bestätigung Ihrer Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang."
+  },
+  "USER_REGISTER_ALREADY_REGISTERED": {
+    "title": "Account bereits aktiv",
+    "description": "Sie haben bereits ein aktives Konto. Bitte melden Sie sich an."
+  },
+  "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
+    "title": "Passwort erforderlich",
+    "description": "Dieser Account existiert bereits. Bitte geben Sie Ihr aktuelles Passwort ein oder setzen Sie es zurück."
+  },
+  "USER_BLOCKED": {
+    "title": "Zugriff verweigert",
+    "description": "Dieser Account ist gesperrt und kann nicht verwendet werden."
+  },
+  "USER_TOS_NOT_ACCEPTED": {
+    "title": "AGB nicht akzeptiert",
+    "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um fortzufahren."
+  },
+  "USER_EMAIL_ALREADY_REGISTERED": {
+    "title": "E-Mail bereits registriert",
+    "description": "Diese E-Mail ist bereits registriert. Bitte melden Sie sich an, um fortzufahren."
+  },
+  "USER_VERIFY_EMAIL_SUCCESS": {
+    "title": "E-Mail erfolgreich bestätigt",
+    "description": "Ihre E-Mail-Adresse wurde erfolgreich verifiziert."
+  },
+  "USER_VERIFY_EMAIL_RESENDED": {
+    "title": "Bestätigungs-E-Mail erneut gesendet",
+    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie erneut Ihren Posteingang."
+  },
+  "USER_VERIFY_MISSING_TOKEN": {
+    "title": "Ungültiger Bestätigungslink",
+    "description": "Der Verifizierungslink ist ungültig oder fehlt."
+  },
+  "USER_VERIFY_INVALID_TOKEN": {
+    "title": "Ungültiger Token",
+    "description": "Der Bestätigungslink ist ungültig oder wurde beschädigt."
+  },
+  "USER_NOT_FOUND": {
+    "title": "Benutzer nicht gefunden",
+    "description": "Der zugehörige Benutzer konnte nicht gefunden werden."
+  },
+  "LOGOUT_SUCCESS": {
+    "title": "Abmeldung erfolgreich",
+    "description": "Sie wurden erfolgreich abgemeldet."
+  },
+  "LOGOUT_FAILED": {
+    "title": "Abmeldung fehlgeschlagen",
+    "description": "Die Abmeldung konnte nicht durchgeführt werden. Bitte versuchen Sie es erneut."
+  },
+
+  "USER_CLIENT_NOT_FOUND": {
+    "title": "Zugehörigkeit nicht gefunden",
+    "description": "Der Benutzer ist diesem Client nicht zugeordnet."
+  },
+  "USER_CLIENT_BLOCKED": {
+    "title": "Zugriff blockiert",
+    "description": "Ihr Konto ist für diesen Client gesperrt."
+  },
+  "USER_CLIENT_COOKIES_UPDATE_SUCCESS": {
+    "title": "Cookie-Einstellungen aktualisiert",
+    "description": "Ihre Cookie-Einstellungen wurden erfolgreich gespeichert."
+  },
+
+  "REFRESH_TOKEN_MISSING": {
+    "title": "Erneute Anmeldung erforderlich",
+    "description": "Ihre Sitzung ist nicht mehr gültig. Bitte melden Sie sich erneut an."
+  },
+  "REFRESH_TOKEN_EXPIRED": {
+    "title": "Sitzung abgelaufen",
+    "description": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
+  },
+  "ACCESS_TOKEN_REFRESHED": {
+    "title": "Sitzung erneuert",
+    "description": "Ihr Zugriffstoken wurde erfolgreich erneuert."
+  },
+
+  "MAGIC_TOKEN_EXPIRED": {
+    "title": "Login-Link abgelaufen",
+    "description": "Der Magic-Login-Link ist abgelaufen. Bitte fordern Sie einen neuen an."
+  },
+  "MAGIC_TOKEN_INVALID": {
+    "title": "Ungültiger Login-Link",
+    "description": "Der Magic-Login-Token ist ungültig oder beschädigt."
+  },
+  "MAGIC_LOGIN_SUCCESS": {
+    "title": "Login erfolgreich",
+    "description": "Sie wurden erfolgreich eingeloggt."
+  },
+
+  "AUTH_NOT_LOGGED_IN": {
+    "title": "Anmeldung erforderlich",
+    "description": "Sie müssen angemeldet sein, um diese Aktion durchzuführen."
+  }
+}

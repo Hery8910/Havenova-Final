@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Calendar } from '@/packages/components/dashboard/calendar';
 import { CheckoutCart } from '@/packages/components/services/checkoutCart';
-import { useUser } from '@/packages/contexts/user';
+import { useUser } from '@/packages/contexts/profile';
 import { useI18n } from '@/packages/contexts/i18n';
 import { Loading } from '../../../../../packages/components/loading';
 import { useClient } from '../../../../../packages/contexts/client/ClientContext';

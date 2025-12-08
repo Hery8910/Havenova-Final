@@ -4,10 +4,10 @@ import { ContactSection, FAQList, FAQListSkeleton } from '@/packages/components/
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import { useEffect, useState } from 'react';
 import { FaqMessageData } from '@/packages/types';
-import { sendContactMessage } from '@/packages/services/user/userService';
+import { sendContactMessage } from '@/packages/services/profile/profileService';
 import { AlertWrapper } from '@/packages/components/alert';
 import Loading from '@/packages/components/loading/Loading';
 import { useSearchParams } from 'next/navigation';

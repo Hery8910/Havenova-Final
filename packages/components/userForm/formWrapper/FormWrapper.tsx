@@ -16,24 +16,46 @@ import { ButtonProps } from '../../common/button/Button';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../hooks/useLang';
 import { href } from '../../../utils/navigation';
-import { useUser } from '../../../contexts/user';
+import { useProfile } from '../../../contexts/profile';
 import { useClient } from '../../../contexts/client/ClientContext';
 import { useEffect } from 'react';
+import { useAuth } from '../../../contexts/auth/authContext';
 
 interface WrapperProps<T extends Record<string, any>> {
-  fields: string[];
+  fields: FormField[];
   onSubmit: (data: T) => void | Promise<void>;
   button: ButtonProps;
   showForgotPassword?: boolean;
   showHintPassword?: boolean;
   initialValues: T;
+  loading: boolean;
 }
+type ValidateField =
+  | 'name'
+  | 'email'
+  | 'phone'
+  | 'password'
+  | 'address'
+  | 'serviceAddress'
+  | 'message'
+  | 'tosAccepted';
+
+type FormField =
+  | 'name'
+  | 'email'
+  | 'phone'
+  | 'password'
+  | 'address'
+  | 'serviceAddress'
+  | 'message'
+  | 'language'
+  | 'clientId'
+  | 'tosAccepted';
 
 export interface PlaceholdersTextProps {
   name: string;
   email: string;
   password: string;
-  forgotPassword: string;
   address: string;
   phone: string;
   message: string;
@@ -58,21 +80,25 @@ export default function FormWrapper<T extends Record<string, any>>({
   showForgotPassword,
   showHintPassword,
   initialValues,
+  loading,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
-  const { user } = useUser();
+  const { profile } = useProfile();
+  const { auth } = useAuth();
   const { client } = useClient();
   const router = useRouter();
   const lang = useLang();
 
-  const formError = texts.components.form.error;
-  const forgotPassword = texts.components.form.forgotPassword;
-  const placeholderText: PlaceholdersTextProps = texts.components.form.placeholders;
-  const labelText: LabelsTextProps = texts.components.form.labels;
+  const formError = texts.components.form.error as Partial<
+    Record<FormField, Record<string, string>>
+  >;
+
+  const placeholderText = texts.components.form.placeholders;
+  const labelText = texts.components.form.labels;
 
   const [formData, setFormData] = useState<T>(initialValues);
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<FormField, string>>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [showPassword, setShowPassword] = useState(false);
 
@@ -80,40 +106,46 @@ export default function FormWrapper<T extends Record<string, any>>({
     setFormData((prev) => ({
       ...prev,
       clientId: client?._id || '',
-      language: user?.language || 'de',
-      name: user?.userProfile?.name ?? prev.name,
-      email: user?.email ?? prev.email,
-      phone: user?.userProfile?.phone ?? prev.phone,
-      address: user?.userProfile?.address ?? prev.address,
+      language: profile?.language || 'de',
+      name: profile?.name ?? prev.name,
+      email: auth?.email ?? prev.email,
+      phone: profile?.phone ?? prev.phone,
+      address: profile?.address ?? prev.address,
     }));
-  }, [user?.email, user?.language, client?._id]);
+  }, [auth?.email, profile?.language, client?._id]);
 
-  const validators: Record<string, (value: any) => string[]> = {
+  const validators: Record<ValidateField, (value: any) => string[]> = {
     name: validateName,
     email: validateEmail,
     phone: validatePhone,
     password: validatePassword,
     address: validateAddress,
+    serviceAddress: validateAddress, // o tu validador
     message: validateMessage,
     tosAccepted: validateTosAccepted,
   };
 
-  const getValidationError = (name: string, value: string) => {
-    const validator = validators[name];
-    if (!validator) return '';
+  const getValidationError = (name: FormField, value: any) => {
+    if (!(name in validators)) return ''; // no validación requerida
+
+    const validator = validators[name as ValidateField];
     const errs = validator(value);
+
     if (errs.length > 0) {
-      // Aquí usas los textos de error traducibles desde tu objeto formError
       return formError?.[name]?.[errs[0]] || 'Invalid data';
     }
+
     return '';
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-    const err = getValidationError(name, value);
-    setErrors((prev) => ({ ...prev, [name]: err }));
+    const fieldName = name as ValidateField;
+
+    setTouched((prev) => ({ ...prev, [fieldName]: true }));
+
+    const err = getValidationError(fieldName, value);
+    setErrors((prev) => ({ ...prev, [fieldName]: err }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -129,8 +161,10 @@ export default function FormWrapper<T extends Record<string, any>>({
       [name]: value,
     }));
 
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+    const fieldName = name as FormField;
+
+    if (errors[fieldName]) {
+      setErrors((prev) => ({ ...prev, [fieldName]: '' }));
     }
   };
 
@@ -140,28 +174,30 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newErrors: Record<string, string> = {};
+
+    const newErrors: Partial<Record<FormField, string>> = {};
 
     fields.forEach((field) => {
+      if (!(field in validators)) return;
+
       const value = formData[field];
-      const err = getValidationError(field as string, value);
-      if (err) newErrors[field as string] = err;
+      const err = getValidationError(field, value);
+      if (err) newErrors[field] = err;
     });
 
     setErrors(newErrors);
-    console.log(newErrors);
 
     if (Object.values(newErrors).some(Boolean)) return;
     onSubmit(formData); // ✅ aquí ya es de tipo T
 
     setFormData({
       ...initialValues,
-      name: user?.userProfile?.name || '',
-      email: user?.email || '',
-      phone: user?.userProfile?.phone || '',
-      address: user?.userProfile?.address || '',
+      name: profile?.name || '',
+      email: auth?.email || '',
+      phone: profile?.phone || '',
+      address: profile?.address || '',
       clientId: client?._id || '',
-      language: user?.language || 'de',
+      language: profile?.language || 'de',
     } as T);
     setErrors({});
     setTouched({});
@@ -169,7 +205,8 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   return (
     <Form
-      user={user}
+      auth={auth}
+      profile={profile}
       fields={fields}
       formData={formData}
       errors={errors}
@@ -185,6 +222,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       showHintPassword={showHintPassword}
       placeholder={placeholderText}
       labels={labelText}
+      loading={loading}
     />
   );
 }

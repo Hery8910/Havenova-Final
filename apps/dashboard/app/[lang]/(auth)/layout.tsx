@@ -4,7 +4,7 @@ import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
 import '../../global.css';
 import { getClient } from '../../../../../packages/services/client';
 import { ClientProvider } from '../../../../../packages/contexts/client/ClientContext';
-import { DashboardProvider } from '../../../../../packages/contexts/user';
+import { DashboardProvider } from '../../../../../packages/contexts/profile';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];

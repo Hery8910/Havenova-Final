@@ -1,7 +1,7 @@
 'use client';
-import { useUser } from '@/packages/contexts/user';
+import { useUser } from '@/packages/contexts/profile';
 import styles from './page.module.css';
-import {  useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../../packages/hooks';
 import { href } from '../../../../../packages/utils/navigation';
 

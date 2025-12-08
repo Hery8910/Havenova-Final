@@ -4,10 +4,10 @@ import { IoLanguage } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { useUser } from '../../contexts/user';
+import { useProfile } from '../../contexts/profile';
 
 export default function LanguageSwitcher() {
-  const { user, updateUserLanguage } = useUser();
+  const { setLanguage } = useProfile();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   function switchLang(newLang: 'de' | 'en') {
     // 1. Guardar cookie
     Cookies.set('lang', newLang, { path: '/', expires: 365 });
-    updateUserLanguage(newLang);
+    setLanguage(newLang);
     // 2. Cambiar la URL actual
     const parts = pathname.split('/');
     parts[1] = newLang; // reemplaza el slug del idioma

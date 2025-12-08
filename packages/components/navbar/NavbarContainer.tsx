@@ -1,16 +1,17 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@havenova/contexts/user';
+import { useProfile } from '@/packages/contexts/profile';
 import { useI18n } from '@havenova/contexts/i18n';
 import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
-import { NavbarView } from './NavbarView';
-import { NavbarConfig } from './NavbarView';
+import { NavbarConfig, NavbarView } from './NavbarView';
 import { NavbarSkeleton } from './Navbar.skeleton';
+import { useAuth } from '../../contexts/auth/authContext';
 
 export function NavbarContainer() {
-  const { user } = useUser();
+  const { profile } = useProfile();
+  const { auth } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
@@ -18,7 +19,7 @@ export function NavbarContainer() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const theme = user?.theme || 'light';
+  const theme = profile?.theme || 'light';
   const navbarConfig: NavbarConfig = texts?.components?.navbar;
 
   useEffect(() => {
@@ -35,11 +36,12 @@ export function NavbarContainer() {
     setMenuOpen(false);
   };
 
-  if (!navbarConfig || !user) return <NavbarSkeleton />;
+  if (!navbarConfig || !profile) return <NavbarSkeleton />;
 
   return (
     <NavbarView
-      user={user}
+      profile={profile}
+      auth={auth}
       navbarConfig={navbarConfig}
       theme={theme}
       isMobile={isMobile}

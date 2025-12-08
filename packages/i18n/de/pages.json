@@ -1,0 +1,897 @@
+{
+  "home": {
+    "hero": {
+      "headline1": "Hauswartung",
+      "headline2": "Wohnungsreinigung",
+      "subtitle": "Schnelle, zuverlässige und professionelle Hauswartung und Reinigung in Berlin. Entdecken Sie alle unsere Leistungen im Überblick.",
+      "button": {
+        "cta": "Unsere Leistungen ansehen",
+        "variant": "solid",
+        "icon": "forward"
+      },
+      "image": "/images/pages/home-hero.webp"
+    }
+  },
+  "about": {
+    "hero": {
+      "headline1": "Über Uns",
+      "headline2": "Engagiert für Qualität und Transparenz",
+      "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Lösungen."
+    },
+
+    "services": {
+      "title": "Unsere Leistungen",
+      "description": "Wir bieten eine Vielzahl von Reinigungs- und Wartungsdiensten an, damit Ihr Zuhause stets in bestem Zustand bleibt.",
+      "cta": {
+        "label": "Alle Services ansehen",
+        "url": "/services"
+      }
+    },
+    "testimonials": {
+      "title": "Was unsere Kunden sagen",
+      "description": "Wir schätzen jedes Feedback und lernen aus jeder Erfahrung. Hier einige unserer Bewertungen.",
+      "placeholder": "Hier können echte Kundenstimmen angezeigt oder Google/MyHammer integriert werden."
+    },
+    "finalCta": {
+      "headline": "Bereit für Ihren ersten Service?",
+      "subtext": "Lassen Sie uns Ihnen helfen, Ihr Zuhause sauber, organisiert und in guten Händen zu halten.",
+      "button": {
+        "label": "Service anfragen",
+        "url": "/services"
+      }
+    }
+  },
+  "faq": {
+    "faqHero": {
+      "headline1": "Häufig gestellte Fragen",
+      "headline2": "Alles, was Sie über Havenova wissen müssen",
+      "subtitle": "Hier finden Sie Antworten auf die am häufigsten gestellten Fragen zu unseren Services, Buchungen und Zahlungsmethoden. Sollte Ihre Frage nicht dabei sein, steht Ihnen unser Support-Team jederzeit zur Verfügung.",
+      "image": "/images/pages/faq-hero.webp"
+    },
+    "questions": [
+      {
+        "title": "Allgemeine Fragen",
+        "items": [
+          {
+            "question": "Was ist Havenova und wie funktioniert die Plattform?",
+            "answer": "Havenova ist eine digitale Plattform für Haus- und Gebäudeservices in Berlin. Kunden können Dienstleistungen wie Reinigung, Reparaturen oder Möbelaufbau direkt online anfragen, Angebote vergleichen und Termine buchen."
+          },
+          {
+            "question": "Muss ich ein Konto erstellen, um einen Service zu buchen?",
+            "answer": "Nein, Sie können Dienstleistungen auch ohne Konto buchen. Wenn Sie jedoch ein Konto anlegen, profitieren Sie von Vorteilen wie gespeicherten Adressen, Rabattaktionen und einer Übersicht über Ihre bisherigen Aufträge."
+          },
+          {
+            "question": "Wie unterscheiden sich Ihre Services von anderen Anbietern?",
+            "answer": "Wir legen besonderen Wert auf Transparenz, Flexibilität und zuverlässigen Kundenservice. Unsere Dienstleistungen sind individuell anpassbar, und wir arbeiten mit qualifizierten Fachkräften, die versichert und überprüft sind."
+          },
+          {
+            "question": "Wie erreiche ich den Kundensupport?",
+            "answer": "Unser Support-Team ist werktags von 9:00 bis 18:00 Uhr per E-Mail oder Telefon erreichbar. Mitglieder genießen zudem bevorzugten Support mit kürzeren Reaktionszeiten."
+          }
+        ]
+      },
+      {
+        "title": "Buchung & Ablauf",
+        "items": [
+          {
+            "question": "Wie läuft eine typische Buchung ab?",
+            "answer": "Sie wählen den gewünschten Service auf unserer Website aus, geben die Details an und senden die Anfrage ab. Unser Team prüft die Informationen und bestätigt Ihnen den Termin oder erstellt ein individuelles Angebot."
+          },
+          {
+            "question": "Kann ich Termine kurzfristig buchen?",
+            "answer": "Ja, viele Dienstleistungen können innerhalb von 24–48 Stunden durchgeführt werden. Für besonders dringende Fälle versuchen wir stets, die schnellstmögliche Lösung zu finden."
+          },
+          {
+            "question": "Kann ich meine Buchung stornieren oder ändern?",
+            "answer": "Ja, Änderungen und Stornierungen sind bis zu 24 Stunden vor dem Termin kostenlos möglich. Bei kurzfristigeren Absagen behalten wir uns vor, eine Stornogebühr zu berechnen."
+          },
+          {
+            "question": "Erhalte ich eine Bestätigung meiner Buchung?",
+            "answer": "Ja, nach jeder Anfrage und Terminbestätigung erhalten Sie eine E-Mail mit allen relevanten Informationen sowie eine Übersicht in Ihrem Kundenbereich."
+          }
+        ]
+      },
+      {
+        "title": "Preise & Bezahlung",
+        "items": [
+          {
+            "question": "Wie werden die Preise berechnet?",
+            "answer": "Unsere Preise richten sich nach Art, Dauer und Umfang der Dienstleistung. Für Standardservices bieten wir transparente Pauschalen, während individuelle Aufträge ein angepasstes Angebot erfordern."
+          },
+          {
+            "question": "Welche Zahlungsmethoden akzeptieren Sie?",
+            "answer": "Wir akzeptieren gängige Zahlungsmethoden wie Kreditkarte, PayPal und SEPA-Lastschrift. Bei Stammkunden ist auch die Zahlung auf Rechnung möglich."
+          },
+          {
+            "question": "Gibt es zusätzliche Kosten?",
+            "answer": "Nein, alle Kosten werden vor der Buchung transparent ausgewiesen. Sollten im Laufe des Auftrags zusätzliche Arbeiten nötig sein, stimmen wir diese zuerst mit Ihnen ab."
+          },
+          {
+            "question": "Erhalte ich eine Rechnung?",
+            "answer": "Ja, nach Abschluss jeder Dienstleistung erhalten Sie automatisch eine digitale Rechnung per E-Mail, die auch im Kundenbereich heruntergeladen werden kann."
+          }
+        ]
+      },
+      {
+        "title": "Qualität & Sicherheit",
+        "items": [
+          {
+            "question": "Sind Ihre Mitarbeiter versichert?",
+            "answer": "Ja, alle unsere Mitarbeiter und Partner sind umfassend versichert. Schäden, die während eines Auftrags entstehen, sind durch unsere Haftpflichtversicherung abgedeckt."
+          },
+          {
+            "question": "Wie stellen Sie die Qualität sicher?",
+            "answer": "Wir wählen unsere Mitarbeiter sorgfältig aus, schulen sie regelmäßig und arbeiten eng mit unseren Kunden zusammen, um Feedback einzuholen und kontinuierlich Verbesserungen umzusetzen."
+          },
+          {
+            "question": "Arbeiten Sie auch mit externen Fachkräften?",
+            "answer": "Ja, für spezialisierte Arbeiten wie Elektrik, Sanitär oder Malerarbeiten arbeiten wir mit geprüften Fachbetrieben zusammen, um Ihnen höchste Qualität und Sicherheit zu garantieren."
+          },
+          {
+            "question": "Was passiert, wenn ich mit dem Service unzufrieden bin?",
+            "answer": "Ihre Zufriedenheit hat für uns höchste Priorität. Sollten Sie einmal unzufrieden sein, kontaktieren Sie uns bitte umgehend. Wir prüfen den Fall und finden gemeinsam eine Lösung, sei es Nachbesserung oder Rückerstattung."
+          }
+        ]
+      }
+    ],
+    "contactSection": {
+      "heading": "Antwort nicht gefunden?",
+      "description": "Senden Sie uns Ihre Frage und wir melden uns so schnell wie möglich.",
+      "buttonLabel": "Frage senden"
+    }
+  },
+  "contact": {
+    "hero": {
+      "headline1": "Kontakt aufnehmen",
+      "headline2": "Wir sind für Sie da",
+      "subtitle": "Haben Sie Fragen zu unseren Dienstleistungen oder benötigen Sie Unterstützung? Füllen Sie das Formular aus oder nutzen Sie die untenstehenden Kontaktdaten – unser Team wird sich schnellstmöglich bei Ihnen melden."
+    },
+    "contactSection": {
+      "heading": "Schreiben Sie uns eine Nachricht",
+      "description": "Füllen Sie das untenstehende Formular mit Ihren Angaben und Ihrer Nachricht aus. Wir prüfen Ihre Anfrage und melden uns so schnell wie möglich bei Ihnen."
+    }
+  },
+  "reviews": {
+    "hero": {
+      "headline1": "Das sagen unsere Kunden",
+      "headline2": "Echte Meinungen, echte Erfahrungen",
+      "subtitle": "Alle Bewertungen stammen aus anerkannten Plattformen wie Google und MyHammer – für maximale Transparenz und Vertrauen.",
+      "image": "/images/pages/reviews-hero.png",
+      "button": {
+        "cta": "Bewertung auf Google schreiben",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    },
+    "summary": {
+      "heading": "Unsere Gesamtbewertung",
+      "description": "Derzeit zeigen wir die Bewertungen, die wir über MyHammer gesammelt haben. Schritt für Schritt verlagern wir alle neuen Bewertungen auf Google, um noch mehr Transparenz und Vertrauen zu schaffen.",
+      "average": "Durchschnittliche Bewertung",
+      "averageRating": 4.9,
+      "totalReviews": 57
+    },
+    "list": {
+      "heading": "Bewertungen",
+      "button": {
+        "cta": "Mehr laden",
+        "variant": "solid",
+        "icon": "download"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions about Reviews",
+      "items": [
+        {
+          "question": "Where can I leave a review?",
+          "answer": "New reviews can be submitted directly through our Google Business profile. Just follow the link 'Write a review on Google'."
+        },
+        {
+          "question": "What happens to the older reviews from MyHammer?",
+          "answer": "We continue to display our previous reviews from MyHammer here on our website. Going forward, all new reviews will be collected exclusively via Google."
+        },
+        {
+          "question": "Can I edit or delete my review afterwards?",
+          "answer": "Yes. Reviews on Google can be edited or deleted at any time through your own Google account."
+        },
+        {
+          "question": "How do you ensure the authenticity of reviews?",
+          "answer": "By using Google Business, only users with an active Google account can leave reviews. This ensures that all reviews are genuine."
+        },
+        {
+          "question": "Are negative reviews also published?",
+          "answer": "Yes. We believe in transparency and publish all reviews – whether positive or negative."
+        }
+      ],
+      "cta": {
+        "title": "Haben Sie noch weitere Fragen?",
+        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+      },
+      "button": {
+        "cta": "Alle FAQs ansehen",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    }
+  },
+  "services": {
+    "hero": {
+      "headline1": "Professionelle Reinigungs- und Hausmeisterdienste",
+      "headline2": "Zuverlässig. Transparent. Persönlich.",
+      "subtitle": "Ob Reinigung, Möbelmontage oder kleine Reparaturen – wir kümmern uns um Ihr Zuhause und Ihr Geschäft mit Sorgfalt und Erfahrung. Wählen Sie den passenden Service und lehnen Sie sich entspannt zurück.",
+      "image": "/images/pages/services-hero.jpg"
+    },
+    "servicesSection": {
+      "heading": "Unsere Dienstleistungen",
+      "description": "Wir bieten ein breites Spektrum an professionellen Reinigungs- und Handwerksdiensten für Privathaushalte und Unternehmen. Wählen Sie den passenden Service und erhalten Sie ein unverbindliches Angebot.",
+      "button": {
+        "cta": "Alle Leistungen ansehen",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    },
+    "howItWorks": {
+      "heading": "So funktioniert Ihre Serviceanfrage",
+      "steps": [
+        {
+          "title": "Serviceformular ausfüllen",
+          "description": "Wählen Sie den gewünschten Service und geben Sie die wichtigsten Details an, z. B. Möbeltyp oder Standort."
+        },
+        {
+          "title": "Termin auswählen",
+          "description": "Wählen Sie den Termin, der Ihnen am besten passt, und prüfen Sie direkt unsere Verfügbarkeit."
+        },
+        {
+          "title": "Prüfen und bestätigen",
+          "description": "Kontrollieren Sie alle Angaben, um sicherzustellen, dass Ihre Informationen und der Termin korrekt sind."
+        },
+        {
+          "title": "Anfrage absenden",
+          "description": "Senden Sie Ihre Anfrage. Unser Team prüft die Angaben und meldet sich zur Bestätigung oder Anpassung."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen zu unseren Dienstleistungen",
+      "items": [
+        {
+          "question": "Wie kann ich einen Service anfragen?",
+          "answer": "Sie können den gewünschten Service direkt über das Formular auf unserer Website anfragen. Geben Sie einfach alle relevanten Details an – unser Team meldet sich mit einem Angebot oder Terminvorschlag."
+        },
+        {
+          "question": "Wie wird der Preis für den Service berechnet?",
+          "answer": "Jeder Auftrag wird individuell bewertet. Der Preis hängt von Art, Umfang und Aufwand des gewünschten Services ab. Nach Ihrer Anfrage erhalten Sie ein transparentes, unverbindliches Angebot."
+        },
+        {
+          "question": "Bringt Ihr Team das benötigte Material und Werkzeug mit?",
+          "answer": "Ja, unser Team bringt in der Regel alle notwendigen Materialien und Werkzeuge mit. Wenn Sie spezielle Wünsche haben, können Sie diese im Anfrageformular angeben."
+        },
+        {
+          "question": "Kann ich einen Termin verschieben oder absagen?",
+          "answer": "Natürlich. Sie können Ihren Termin bis 24 Stunden vorher kostenlos verschieben oder stornieren. Danach können Gebühren anfallen, da die Planung bereits erfolgt ist."
+        }
+      ],
+      "cta": {
+        "title": "Haben Sie noch weitere Fragen?",
+        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+      },
+      "button": {
+        "cta": "Alle FAQs ansehen",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    }
+  },
+  "checkout": {
+    "header": {
+      "heading": "Abschluss Ihrer Anfrage",
+      "description": "Bitte überprüfen Sie Ihre ausgewählten Dienstleistungen und wählen Sie das Datum für den ersten Besuch, bevor Sie fortfahren."
+    },
+    "denied": {
+      "heading": "Zugriff verweigert",
+      "description": "Diese Seite ist nur für eingeloggte Benutzer mit einer aktiven Serviceanfrage verfügbar. Sie werden in",
+      "redirecting": "Weiterleitung in",
+      "seconds": "Sekunden.",
+      "alt": "Warnsymbol"
+    }
+  },
+  "blog": {
+    "title": "Neuigkeiten aus unserem Blog",
+    "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
+    "cta": {
+      "title": "Bleiben Sie informiert:",
+      "subtitle": "Tipps, Ratgeber und Updates für Ihr Zuhause. Abonnieren Sie unseren Newsletter und verpassen Sie keinen Tipp!",
+      "label": "Abonnieren"
+    }
+  },
+  "user": {
+    "register": {
+      "title": "Willkommen",
+      "description": "Erstellen Sie ein Konto, um Ihre Anfragen zu verwalten und Ihre Vorteile zu erkunden.",
+      "cta": {
+        "title": "Sie haben bereits ein Konto?",
+        "label": "Zu Anmelden",
+        "url": "/user/login"
+      }
+    },
+    "login": {
+      "title": "Willkommen zurück",
+      "cta": {
+        "title": "Sie haben noch kein Konto?",
+        "label": "Zu Anmeldung",
+        "url": "/user/register"
+      }
+    },
+    "edit": {
+      "title": "Bearbeiten",
+      "description": "Halten Sie Ihre Angaben aktuell, um einen reibungslosen Service zu gewährleisten.",
+      "theme": { "title": "Seitenauftritt", "theme": "Aussehen", "lang": "Sprache" },
+      "personalInfo": "Persönliche Informationen",
+      "password": "Passwort"
+    },
+    "forgotPasswordText": {
+      "title": "Setze dein Passwort zurück",
+      "info": "Um ein neues Passwort zu erstellen, gib bitte deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts. Folge den Anweisungen in der E-Mail, um ein neues Passwort für dein Konto festzulegen.",
+      "button": "Link zum Zurücksetzen senden"
+    },
+    "resetPasswordText": {
+      "title": "Neues Passwort festlegen",
+      "info": "Bitte gib dein neues Passwort ein. Das Passwort muss mindestens 8 Zeichen lang sein.",
+      "button": "Passwort speichern"
+    },
+    "verifyEmail": {
+      "title": "E-Mail-Verifizierung",
+      "info": "Wenn Sie keine E-Mail erhalten haben, versuchen Sie es bitte erneut.",
+      "input": {
+        "placeholder": "E-Mail-Adresse",
+        "button": "E-Mail erneut senden.",
+        "info": "Bitte verwenden Sie dieselbe E-Mail-Adresse, die Sie zum Erstellen Ihres Profils verwendet haben."
+      }
+    },
+    "profile": {
+      "greeting": "Hallo,",
+      "manageAccount": "Verwalten Sie Ihre Kontoeinstellungen und sehen Sie Ihre Profildaten ein.",
+      "memberSince": "Mitglied seit:",
+      "verified": "Verifiziert",
+      "name": "Name:",
+      "address": "Adresse:",
+      "phone": "Telefon:",
+      "email": "E-Mail:",
+      "theme": {
+        "title": "Design:",
+        "light": "Hell",
+        "dark": "Dunkel"
+      },
+      "language": {
+        "title": "Sprache:",
+        "lang": "Deutsch"
+      },
+      "notLoggedInTitle": "Sie sind nicht eingeloggt",
+      "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
+      "loginButton": "Zum Login"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "hero": {
+        "headline1": "Datenschutzerklärung",
+        "headline2": "Transparenz und Datensicherheit",
+        "subtitle": "Diese Richtlinie erklärt, wie Havenova deine personenbezogenen Daten auf dieser Plattform verarbeitet, die technisch von Maped Solutions UG betrieben wird.",
+        "image": {
+          "src": "/images/privacy-hero.png",
+          "alt": "Schloss und geschützte Daten"
+        }
+      },
+      "overview": {
+        "title": "Überblick",
+        "intro": "Deine Privatsphäre ist uns wichtig. Wir verarbeiten deine Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Hier findest du Informationen zu Verantwortlichen, Zwecken, Drittanbietern und deinen Rechten.",
+        "bullets": [
+          "Verantwortlicher: Havenova (Art. 4(7) DSGVO).",
+          "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
+          "Rechtsgrundlagen: Vertrag (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f), Einwilligung (Art. 6 Abs. 1 lit. a).",
+          "Bevorzugte Datenregion: EU - Aktive",
+          "Mögliche internationale Übermittlungen mit Schutzmaßnahmen (SCC)."
+        ],
+        "cta": {
+          "label": "Datenschutzkontakt",
+          "href": "/contact"
+        }
+      },
+      "roles": {
+        "title": "Verantwortlichkeiten",
+        "controller": {
+          "title": "Verantwortlicher",
+          "body": "Der Verantwortliche ist Havenova, ansässig in Stollberger Str.43, 12627 Berlin. Kontakt: contact@havenova.de."
+        },
+        "processor": {
+          "title": "Auftragsverarbeiter",
+          "body": "Maped Solutions UG agiert als Auftragsverarbeiter gemäß Art. 28 DSGVO und betreibt die Plattform im Auftrag von Havenova. Technischer Kontakt: support@mapedsolutions.de."
+        },
+        "links": [
+          {
+            "label": "Art. 4(7) – Verantwortlicher",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 28 – Auftragsverarbeiter",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          }
+        ]
+      },
+      "purposesAndLegalBases": {
+        "title": "Zwecke und Rechtsgrundlagen",
+        "intro": "Wir verarbeiten deine Daten nur zu klar definierten und legitimen Zwecken.",
+        "items": [
+          {
+            "purpose": "Bereitstellung von Diensten und Kontoverwaltung",
+            "examples": {
+              "title": "Beispiele: ",
+              "description": "Kontoerstellung, Bearbeitung von Anfragen, Reservierungen, Angeboten und Rechnungen"
+            },
+            "legalBases": {
+              "title": "Rechtliche Grundlagen: ",
+              "description": "Art. 6 Abs. 1 lit. b – Vertragserfüllung"
+            }
+          },
+          {
+            "purpose": "Rechtliche Verpflichtungen",
+            "examples": {
+              "title": "Beispiele: ",
+              "description": "Steuerliche und buchhalterische Pflichten"
+            },
+            "legalBases": {
+              "title": "Rechtliche Grundlagen: ",
+              "description": "Art. 6 Abs. 1 lit. c – Gesetzliche Verpflichtung"
+            }
+          },
+          {
+            "purpose": "Plattformverbesserung und Sicherheit",
+            "examples": {
+              "title": "Beispiele: ",
+              "description": "Protokolle, Betrugsprävention, Leistung, Support"
+            },
+            "legalBases": {
+              "title": "Rechtliche Grundlagen: ",
+              "description": "Art. 6 Abs. 1 lit. f – Berechtigtes Interesse"
+            }
+          },
+          {
+            "purpose": "Marketing und nicht-essentielle Cookies",
+            "examples": {
+              "title": "Beispiele: ",
+              "description": "Newsletter, Aktionen, Analyse"
+            },
+            "legalBases": {
+              "title": "Rechtliche Grundlagen: ",
+              "description": "Art. 6 Abs. 1 lit. a – Einwilligung (widerrufbar)"
+            }
+          }
+        ]
+      },
+      "dataCategories": {
+        "title": "Kategorien personenbezogener Daten",
+        "description": "Je nach Nutzung der Plattform können folgende Daten erhoben werden:",
+        "items": [
+          "Identifikations- und Kontaktdaten (Name, E-Mail, Telefonnummer, Adresse).",
+          "Kontoinformationen und Sicherheit (gehashte Passwörter, Sprache, Rollen).",
+          "Details zu Anfragen und Leistungen (Typen, Beschreibungen, Orte, Termine).",
+          "Vertrags- und Zahlungsdaten (Angebote, Rechnungen, Zahlungen über Drittanbieter).",
+          "Technische Daten (IP-Adresse, Gerät, Logs, Cookies je nach Präferenz)."
+        ]
+      },
+      "thirdParties": {
+        "title": "Externe Dienstleister",
+        "subtitle": "Wir nutzen spezialisierte Anbieter, um die Plattform sicher und effizient zu betreiben.",
+        "intro": "Die folgende Liste zeigt externe Dienste (Hosting, Datenbank, E-Mail, CDN, Zahlungen) mit Zwecken und Datenschutzrichtlinien.",
+        "table": {
+          "headers": {
+            "name": "Anbieter",
+            "purpose": "Zweck",
+            "region": "Region",
+            "privacy": "Datenschutzrichtlinie"
+          },
+          "body": [
+            {
+              "name": "Vercel",
+              "purpose": "Frontend-Hosting",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "Vercel",
+                "href": "https://vercel.com/legal/privacy-policy"
+              }
+            },
+            {
+              "name": "MongoDB",
+              "purpose": "Datenbank",
+              "region": "EU",
+              "privacyUrl": {
+                "label": "MongoDB",
+                "href": "https://www.mongodb.com/legal/privacy-policy"
+              }
+            },
+            {
+              "name": "Cloudflare",
+              "purpose": "CDN / WAF / DDoS Schutz",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "Cloudflare",
+                "href": "https://www.cloudflare.com/privacypolicy/"
+              }
+            },
+            {
+              "name": "Cloudinary",
+              "purpose": "Medienspeicher (Bilder / PDFs)",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "Cloudinary",
+                "href": "https://cloudinary.com/privacy"
+              }
+            },
+            {
+              "name": "SendGrid",
+              "purpose": "Transaktions-E-Mail",
+              "region": "USA",
+              "privacyUrl": {
+                "label": "Twilio",
+                "href": "https://www.twilio.com/legal/privacy"
+              }
+            },
+            {
+              "name": "Zoho Mail",
+              "purpose": "E-Mail-Dienste für Unternehmen",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "Zoho Mail",
+                "href": "https://www.zoho.com/privacy.html"
+              }
+            },
+            {
+              "name": "Stripe",
+              "purpose": "Zahlungsabwicklung",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "Stripe",
+                "href": "https://stripe.com/privacy"
+              }
+            },
+            {
+              "name": "PayPal",
+              "purpose": "Zahlungsabwicklung",
+              "region": "Global",
+              "privacyUrl": {
+                "label": "PayPal",
+                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
+              }
+            }
+          ]
+        }
+      },
+      "security": {
+        "title": "Sicherheitsmaßnahmen (Art. 32 DSGVO)",
+        "body": "Wir setzen geeignete technische und organisatorische Maßnahmen zum Schutz deiner Daten ein: Passwort-Hashing (bcrypt), httpOnly/secure Cookies, rollenbasierter Zugriff, HTTPS, WAF/CDN (Cloudflare), Anomalieerkennung und bevorzugte Speicherung in der EU, wenn möglich. Infrastruktur-Anbieter verschlüsseln Daten bei Übertragung (TLS) und Speicherung."
+      },
+      "cookies": {
+        "title": "Cookies und ähnliche Technologien",
+        "body": "Wir verwenden notwendige Cookies für den Betrieb der Seite. Analyse- und Marketing-Cookies werden nur mit deiner ausdrücklichen Einwilligung verwendet. Du kannst deine Einstellungen jederzeit ändern.",
+        "cta": {
+          "label": "Cookie-Richtlinie",
+          "href": "/cookies-policy"
+        }
+      },
+      "userRights": {
+        "title": "Deine Rechte",
+        "intro": "Du hast gemäß DSGVO folgende Rechte:",
+        "items": [
+          "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18).",
+          "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21).",
+          "Widerruf der Einwilligung jederzeit (Art. 7 Abs. 3)."
+        ],
+        "howTo": "Um deine Rechte auszuüben, kontaktiere uns unter contact@havenova.de oder über das Kontaktformular."
+      },
+      "retention": {
+        "title": "Speicherdauer",
+        "body": "Wir speichern personenbezogene Daten nur so lange, wie es für die Zwecke erforderlich ist oder gesetzliche Vorgaben dies verlangen. Beispielsweise werden Rechnungen 10 Jahre aufbewahrt."
+      },
+      "internationalTransfers": {
+        "title": "Internationale Datenübermittlung",
+        "body": "Wenn Daten außerhalb des EWR übertragen werden, erfolgen Schutzmaßnahmen gemäß den Standardvertragsklauseln (SCC). Wo möglich, nutzen wir Anbieter mit Rechenzentren in der EU. Aktueller EU-Präferenzstatus: Aktiv."
+      },
+
+      "changes": {
+        "title": "Änderungen dieser Richtlinie",
+        "body": "Wir können diese Richtlinie bei rechtlichen oder betrieblichen Änderungen aktualisieren. Wichtige Änderungen werden über die App oder per E-Mail mitgeteilt.",
+        "meta": {
+          "lastUpdated": "Letzte Aktualisierung:"
+        }
+      },
+      "legalReferences": {
+        "title": "Rechtliche Verweise",
+        "items": [
+          {
+            "label": "DSGVO (konsolidierter Text)",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 6 – Rechtmäßigkeit der Verarbeitung",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 13–14 – Informationspflicht",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 28 – Auftragsverarbeiter",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 30 – Verarbeitungsverzeichnis",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "Art. 32 – Sicherheit der Verarbeitung",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          }
+        ]
+      }
+    },
+    "cookies": {
+      "hero": {
+        "headline1": "Cookie-Richtlinie",
+        "headline2": "Verwendung von Cookies und ähnlichen Technologien",
+        "subtitle": "Diese Seite erklärt, wie und warum Cookies auf dieser Plattform verwendet werden, die technisch von Maped Solutions UG betrieben wird.",
+        "image": {
+          "src": "/images/aboutPage/AboutHero.jpg",
+          "alt": "Keks und Einstellungen"
+        }
+      },
+      "overview": {
+        "title": "Überblick",
+        "intro": "Wir verwenden Cookies und ähnliche Technologien, um den Betrieb dieser Plattform sicherzustellen und dein Nutzererlebnis kontinuierlich zu verbessern. Einige Cookies sind technisch notwendig, andere erfordern deine ausdrückliche Zustimmung.",
+        "bullets": [
+          "Technisch notwendige Cookies für grundlegende Funktionen.",
+          "Statistik-Cookies zur anonymisierten Analyse der Nutzung.",
+          "Kein Einsatz von Marketing-Cookies oder Tracking durch Dritte.",
+          "Deine Einstellungen können jederzeit angepasst werden."
+        ],
+        "cta": {
+          "label": "Cookie-Einstellungen verwalten",
+          "action": "openCookieBanner"
+        }
+      },
+      "whatAreCookies": {
+        "title": "Was sind Cookies?",
+        "body": "Cookies sind kleine Textdateien, die auf deinem Gerät gespeichert werden, wenn du eine Website besuchst. Sie ermöglichen es, deinen Browser bei zukünftigen Besuchen wiederzuerkennen und bestimmte Informationen wie Login-Status oder Spracheinstellungen zu speichern."
+      },
+      "types": {
+        "title": "Welche Arten von Cookies verwenden wir?",
+        "items": [
+          {
+            "name": "Notwendige Cookies",
+            "description": "Diese Cookies sorgen dafür, dass die Plattform korrekt funktioniert – z. B. für Anmeldung, Navigation oder Sicherheit. Sie können nicht deaktiviert werden."
+          },
+          {
+            "name": "Statistik-Cookies",
+            "description": "Diese Cookies helfen uns zu verstehen, wie Nutzer mit der Plattform interagieren – z. B. welche Seiten besucht oder welche Funktionen genutzt werden. Die Daten sind anonym und dienen ausschließlich der Optimierung."
+          }
+        ]
+      },
+      "thirdParties": {
+        "title": "Drittanbieter-Dienste",
+        "body": "Wir nutzen externe Dienste zur technischen Analyse und Zahlungsabwicklung. Diese werden so konfiguriert, dass sie DSGVO-konform sind. Daten werden ausschließlich anonym erfasst und nicht zu Werbezwecken verwendet.",
+        "table": {
+          "headers": {
+            "name": "Anbieter",
+            "purpose": "Zweck",
+            "privacy": "Datenschutz"
+          },
+          "body": [
+            {
+              "name": "Google Analytics",
+              "purpose": "Anonymisierte Analyse des Nutzerverhaltens (Seitenaufrufe, Interaktionen). Dient der Optimierung der Plattform.",
+              "privacyUrl": {
+                "label": "Google",
+                "href": "https://policies.google.com/privacy"
+              }
+            },
+            {
+              "name": "Stripe",
+              "purpose": "Verarbeitung von Zahlungen mit hoher Sicherheit. Keine Analyse der Nutzerinteraktion.",
+              "privacyUrl": {
+                "label": "Stripe",
+                "href": "https://stripe.com/de/privacy"
+              }
+            },
+            {
+              "name": "PayPal",
+              "purpose": "Zahlungsabwicklung für Nutzer mit PayPal-Konto. Keine Profilbildung durch Maped Solutions.",
+              "privacyUrl": {
+                "label": "PayPal",
+                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
+              }
+            }
+          ]
+        }
+      },
+      "localStorage": {
+        "title": "Verwendung von localStorage",
+        "body": "Neben Cookies nutzen wir auch den localStorage des Browsers, um Einstellungen wie Sprache, Design oder deinen Gast-Avatar lokal zu speichern. Diese Informationen verlassen dein Gerät nicht und werden nicht mit Dritten geteilt."
+      },
+      "management": {
+        "title": "Verwaltung von Cookies",
+        "intro": "Du kannst deine Cookie-Einstellungen jederzeit über das Banner oder deinen Browser ändern.",
+        "methods": [
+          "Zustimmung oder Ablehnung im Banner bei deinem ersten Besuch.",
+          "Einstellungen im Browser zum Blockieren oder Löschen von Cookies.",
+          "Über den Link „Cookie-Einstellungen“ im Footer jederzeit zugänglich."
+        ],
+        "cta": {
+          "label": "Cookie-Banner erneut öffnen",
+          "action": "openCookieBanner"
+        },
+        "links": [
+          {
+            "label": "Google Chrome",
+            "href": "https://support.google.com/chrome/answer/95647?hl=de"
+          },
+          {
+            "label": "Mozilla Firefox",
+            "href": "https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen"
+          },
+          {
+            "label": "Safari",
+            "href": "https://support.apple.com/de-de/guide/safari/sfri11471/mac"
+          },
+          {
+            "label": "Microsoft Edge",
+            "href": "https://support.microsoft.com/de-de/help/4027947/microsoft-edge-delete-cookies"
+          }
+        ]
+      },
+      "legalBasis": {
+        "title": "Rechtsgrundlage",
+        "body": "Nicht-essentielle Cookies (wie Statistik-Cookies) werden nur mit deiner Einwilligung gespeichert (Art. 6 Abs. 1 lit. a DSGVO). Notwendige Cookies basieren auf unserem berechtigten Interesse am sicheren Betrieb der Seite (Art. 6 Abs. 1 lit. f DSGVO)."
+      },
+      "changes": {
+        "title": "Änderungen dieser Richtlinie",
+        "body": "Diese Richtlinie kann bei Änderungen in der Gesetzgebung oder Technik aktualisiert werden. Das Datum der letzten Änderung findest du hier:",
+        "meta": {
+          "lastUpdated": "Letzte Aktualisierung:"
+        }
+      },
+      "legalReferences": {
+        "title": "Rechtliche Hinweise",
+        "items": [
+          {
+            "label": "DSGVO (EU 2016/679)",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "ePrivacy-Richtlinie",
+            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32002L0058"
+          }
+        ]
+      }
+    },
+    "terms": {
+      "hero": {
+        "headline1": "Nutzungsbedingungen",
+        "headline2": "Allgemeine Geschäftsbedingungen für die Plattform",
+        "subtitle": "Dieses Dokument beschreibt die Rechte und Pflichten zwischen den Nutzern und dem Dienstleister, der diese Plattform verwendet. Die Plattform wird technisch von Maped Solutions UG betrieben.",
+        "image": {
+          "src": "/images/terms-hero.png",
+          "alt": "Rechtliches Dokument und Vertrag"
+        }
+      },
+      "intro": {
+        "title": "Einleitung",
+        "body": "Mit dem Zugriff auf oder der Nutzung unserer Dienste erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Wenn du mit einem der Bedingungen nicht einverstanden bist, solltest du die Plattform nicht nutzen."
+      },
+      "scope": {
+        "title": "Leistungsumfang",
+        "body": "Diese Plattform ermöglicht es Nutzern, Dienstleistungen im Bereich Reinigung, Instandhaltung und Hausservice anzufragen, Angebote zu erhalten, Termine zu vereinbaren und mit dem Dienstleister zu kommunizieren. Einige Leistungen werden direkt vom Anbieter erbracht, während bestimmte Aufgaben (z. B. Elektroreparaturen, Malerarbeiten) durch externe Subunternehmer durchgeführt werden."
+      },
+      "userObligations": {
+        "title": "Pflichten des Nutzers",
+        "items": [
+          "Angabe wahrheitsgemäßer und aktueller Informationen während der Nutzung.",
+          "Keine Nutzung der Plattform für illegale, missbräuchliche oder betrügerische Zwecke.",
+          "Respekt gegenüber den Rechten Dritter, insbesondere bei Dienstleistungen in Gemeinschaftsgebäuden.",
+          "Keine Beeinträchtigung des technischen Betriebs der Plattform.",
+          "Vertrauliche Behandlung der Zugangsdaten."
+        ]
+      },
+      "providerRights": {
+        "title": "Rechte des Anbieters",
+        "items": [
+          "Änderung oder Aussetzung von Funktionen aus technischen oder rechtlichen Gründen.",
+          "Ablehnung oder Stornierung von Anfragen bei Verstößen gegen diese Bedingungen.",
+          "Aktualisierung dieser Bedingungen bei rechtlichen oder betrieblichen Änderungen.",
+          "Angebot individueller Preise oder Sonderkonditionen je nach Kundentyp oder Standort."
+        ]
+      },
+      "payments": {
+        "title": "Zahlungen und Bedingungen",
+        "body": "Die Nutzung der angebotenen Dienstleistungen kann kostenpflichtig sein. Durch die Annahme eines Angebots erklärt sich der Nutzer mit den Konditionen einverstanden.",
+        "items": [
+          "Die Preise werden individuell je nach Dienstleistungsart und Aufwand festgelegt.",
+          "Zahlungen erfolgen über Drittanbieter wie Stripe oder PayPal.",
+          "Bei Stornierung weniger als 24 Stunden vor dem Termin wird eine Stornogebühr von 25 % des vereinbarten Betrags fällig.",
+          "Zahlung erfolgt in der Regel nach Abschluss des Dienstes, sofern nicht anders angegeben."
+        ]
+      },
+      "cancellation": {
+        "title": "Stornierung und Beendigung",
+        "body": "Nutzer können bestätigte Termine stornieren. Erfolgt die Stornierung weniger als 24 Stunden vor dem Termin, wird eine Gebühr gemäß Abschnitt 'Zahlungen' fällig. Der Anbieter behält sich das Recht vor, bei wiederholtem Missbrauch den Zugang zu sperren."
+      },
+      "liability": {
+        "title": "Haftungsbeschränkung",
+        "body": "Der Anbieter haftet nicht für indirekte Schäden, wirtschaftliche Verluste oder Ausfälle, die durch Dritte, Subunternehmer oder höhere Gewalt verursacht wurden. Die Haftung für Sachschäden ist auf den vereinbarten Auftragswert beschränkt und übersteigt in keinem Fall die durch die Berufshaftpflichtversicherung abgedeckte Summe von 3 Millionen Euro. Der Nutzer trägt die Verantwortung für den sicheren Zugang zum Einsatzort."
+      },
+      "changes": {
+        "title": "Änderungen der Bedingungen",
+        "body": "Diese Bedingungen können bei rechtlichen, technischen oder betrieblichen Änderungen aktualisiert werden. Das aktualisierte Dokument wird auf dieser Seite mit dem Datum der letzten Änderung veröffentlicht.",
+        "meta": {
+          "lastUpdated": "Letzte Aktualisierung:"
+        }
+      },
+      "contact": {
+        "title": "Kontakt",
+        "items": [
+          {
+            "label": "Dienstleister",
+            "title": "Hasan Al AL-Hayyawi",
+            "value": "Adresse und Kontaktangaben noch nicht angegeben."
+          },
+          {
+            "label": "Technischer Support",
+            "title": "Maped Solutions UG",
+            "value": "Sarah-Kirsch-Str. 5, 12629 Berlin — contact@mapedsolutions.de"
+          }
+        ],
+        "cta": {
+          "label": "Zum Kontaktformular",
+          "href": "/contact"
+        }
+      },
+      "legalReferences": {
+        "title": "Rechtliche Verweise",
+        "items": [
+          {
+            "label": "Datenschutz-Grundverordnung (DSGVO)",
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+          },
+          {
+            "label": "E-Commerce-Richtlinie (2000/31/EG)",
+            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32000L0031"
+          },
+          {
+            "label": "BGB – Elektronische Verträge",
+            "href": "https://www.gesetze-im-internet.de/englisch_bgb/"
+          }
+        ]
+      }
+    },
+    "imprint": {
+      "hero": {
+        "headline1": "Impressum",
+        "headline2": "Angaben gemäß § 5 TMG",
+        "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
+      },
+      "responsibleSection": {
+        "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
+        "description": "Verantwortlich für die Inhalte dieser Seite ist:"
+      },
+      "taxSection": {
+        "heading": "Umsatzsteuer-ID",
+        "descriptionNoId": "Keine Umsatzsteuer-Identifikationsnummer vorhanden / nicht erforderlich."
+      },
+      "liabilitySection": {
+        "heading": "Haftungsausschluss",
+        "text": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+      },
+      "odrSection": {
+        "heading": "Online-Streitbeilegung (OS)",
+        "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+      }
+    }
+  }
+}

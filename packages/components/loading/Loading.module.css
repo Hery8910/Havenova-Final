@@ -2,12 +2,43 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
+  background: radial-gradient(
+    circle at 50% 110%,
+    var(--bg-1),
+    var(--bg-2),
+    var(--bg-3),
+    var(--bg-4),
+    var(--bg-5),
+    var(--bg-6),
+    var(--bg-7),
+    var(--bg-8),
+    var(--bg-9),
+    var(--bg-10),
+    var(--bg-11),
+    var(--bg-12),
+    var(--bg-13),
+    var(--bg-14),
+    var(--bg-15),
+    var(--bg-16),
+    var(--bg-17),
+    var(--bg-18),
+    var(--bg-19),
+    var(--bg-20),
+    var(--bg-21),
+    var(--bg-22),
+    var(--bg-23),
+    var(--bg-24),
+    var(--bg-25),
+    var(--bg-26)
+  );
 }
 .wrapper {
   display: flex;
@@ -47,12 +78,69 @@
   animation: blink 1.6s ease-in-out infinite;
 }
 
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logoWrapper {
+  position: relative;
+  overflow: hidden; /* Para el efecto de brillo */
+}
+
+.logo {
+  filter: drop-shadow(0 4px 8px #3b3b3b);
+  animation: shine 1.5s infinite ease-in-out;
+}
+
+/* Barra de progreso */
+.progressBar {
+  width: 300px;
+  height: 6px;
+  background-color: var(--text-light);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow);
+  opacity: 0.6;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 30%;
+  background-color: var(--brand-primary);
+  animation: loadSlide 1.5s infinite ease-in-out;
+  border-radius: 8px;
+  opacity: 0.6;
+}
+
+@keyframes shine {
+  0% {
+    opacity: 0.8;
   }
   50% {
-    transform: translateY(-10px);
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes loadSlide {
+  0% {
+    left: -30%;
+    width: 30%;
+  }
+  50% {
+    width: 60%;
+  }
+  100% {
+    left: 100%;
+    width: 30%;
   }
 }

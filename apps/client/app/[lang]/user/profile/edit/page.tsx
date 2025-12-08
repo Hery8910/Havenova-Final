@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '../../../../../../../packages/contexts/user/UserContext';
-import { updateUser } from '../../../../../../../packages/services/user/userService';
+import { useUser } from '../../../../../../../packages/contexts/profile/ProfileContext';
+import { updateUser } from '../../../../../../../packages/services/profile/profileService';
 import styles from './page.module.css';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';

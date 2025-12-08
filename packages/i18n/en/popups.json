@@ -1,0 +1,149 @@
+{
+  "button": {
+    "accept": "Accept",
+    "continue": "Continue",
+    "close": "Close"
+  },
+  "CLIENT_CREATE_SUCCESS": {
+    "title": "Client created successfully",
+    "description": "The client has been successfully added to the system."
+  },
+  "CLIENT_CREATE_DOMAIN_EXISTS": {
+    "title": "Domain already in use",
+    "description": "A client with this domain already exists."
+  },
+  "CLIENT_CREATE_FAILED": {
+    "title": "Client creation failed",
+    "description": "An unexpected error occurred while creating the client."
+  },
+  "CLIENT_FETCH_SUCCESS": {
+    "title": "Client loaded successfully",
+    "description": "The client data was retrieved successfully."
+  },
+  "CLIENT_FETCH_NOT_FOUND": {
+    "title": "Client not found",
+    "description": "The requested client could not be found."
+  },
+  "CLIENT_FETCH_FAILED": {
+    "title": "Client fetch failed",
+    "description": "An unexpected error occurred while retrieving the client."
+  },
+  "CLIENT_FETCH_DASHBOARD_SUCCESS": {
+    "title": "Client dashboard loaded successfully",
+    "description": "The client dashboard data was retrieved successfully."
+  },
+  "CLIENT_UPDATE_SUCCESS": {
+    "title": "Client updated successfully",
+    "description": "The client data was updated successfully."
+  },
+  "CLIENT_UPDATE_FAILED": {
+    "title": "Client update failed",
+    "description": "An unexpected error occurred while updating the client."
+  },
+  "CLIENT_MISSING_CLIENT_ID": {
+    "title": "Missing client ID",
+    "description": "A valid client ID is required for registration."
+  },
+  "CLIENT_NOT_FOUND": {
+    "title": "Client not found",
+    "description": "The specified client does not exist."
+  },
+
+  "USER_REGISTER_SUCCESS": {
+    "title": "Registration successful",
+    "description": "Your account has been created! We have sent you an email to confirm your address. Please check your inbox."
+  },
+  "USER_REGISTER_ALREADY_REGISTERED": {
+    "title": "Account already active",
+    "description": "You already have an active account. Please log in."
+  },
+  "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
+    "title": "Password required",
+    "description": "This email already has an account. Please enter your current password or reset it."
+  },
+  "USER_BLOCKED": {
+    "title": "Access denied",
+    "description": "This account is blocked and cannot be used."
+  },
+  "USER_TOS_NOT_ACCEPTED": {
+    "title": "Terms not accepted",
+    "description": "Please accept the terms and privacy policy to continue."
+  },
+  "USER_EMAIL_ALREADY_REGISTERED": {
+    "title": "Email already registered",
+    "description": "This email is already registered. Please log in to continue."
+  },
+  "USER_VERIFY_EMAIL_SUCCESS": {
+    "title": "Email verified successfully",
+    "description": "Your email address has been successfully verified."
+  },
+  "USER_VERIFY_EMAIL_RESENDED": {
+    "title": "Verification email resend",
+    "description": "We have sent you a new verification email.",
+    "close": "OK"
+  },
+  "USER_VERIFY_MISSING_TOKEN": {
+    "title": "Invalid verification link",
+    "description": "The verification token is missing or invalid."
+  },
+  "USER_VERIFY_INVALID_TOKEN": {
+    "title": "Invalid token",
+    "description": "The verification link is invalid or corrupted."
+  },
+  "USER_NOT_FOUND": {
+    "title": "User not found",
+    "description": "The user associated with this token could not be found."
+  },
+  "LOGOUT_SUCCESS": {
+    "title": "Logged out successfully",
+    "description": "You have been logged out successfully."
+  },
+  "LOGOUT_FAILED": {
+    "title": "Logout failed",
+    "description": "We were unable to log you out. Please try again."
+  },
+
+  "USER_CLIENT_NOT_FOUND": {
+    "title": "Client association not found",
+    "description": "The user is not associated with this client."
+  },
+  "USER_CLIENT_BLOCKED": {
+    "title": "Access blocked",
+    "description": "Your account is blocked for this client."
+  },
+  "USER_CLIENT_COOKIES_UPDATE_SUCCESS": {
+    "title": "Cookie settings updated",
+    "description": "Your cookie preferences have been saved successfully."
+  },
+
+  "REFRESH_TOKEN_MISSING": {
+    "title": "Reauthentication required",
+    "description": "Your session is no longer valid. Please log in again."
+  },
+  "REFRESH_TOKEN_EXPIRED": {
+    "title": "Session expired",
+    "description": "Your session has expired. Please log in again."
+  },
+  "ACCESS_TOKEN_REFRESHED": {
+    "title": "Session renewed",
+    "description": "Your access token has been successfully refreshed."
+  },
+
+  "MAGIC_TOKEN_EXPIRED": {
+    "title": "Login link expired",
+    "description": "The magic login link has expired. Please request a new one."
+  },
+  "MAGIC_TOKEN_INVALID": {
+    "title": "Invalid login link",
+    "description": "The magic login token is invalid or corrupted."
+  },
+  "MAGIC_LOGIN_SUCCESS": {
+    "title": "Login successful",
+    "description": "You have been logged in successfully."
+  },
+
+  "AUTH_NOT_LOGGED_IN": {
+    "title": "Login required",
+    "description": "You need to be logged in to perform this action."
+  }
+}

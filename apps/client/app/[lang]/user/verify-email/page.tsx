@@ -1,165 +1,219 @@
 'use client';
+
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useUser } from '../../../../../../packages/contexts/user/UserContext';
+import { useEffect, useRef, useState } from 'react';
+
+import { useProfile } from '../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
-
-import styles from './page.module.css';
-import { resendVerificationEmail } from '../../../../../../packages/services/user/userService';
 import {
-  ResendVerificationEmailPayload,
-  VerifyEmailPayload,
-} from '../../../../../../packages/types';
+  fallbackGlobalError,
+  fallbackLoginSuccess,
+  useAuth,
+  useGlobalAlert,
+} from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
-import { href } from '../../../../../../packages/utils/navigation';
+import { useVerifyEmailActions } from '@/packages/utils/user/userHandler';
+
 import { FormWrapper } from '../../../../../../packages/components/userForm';
-import Loading from '../../../../../../packages/components/loading/Loading';
-import { AlertWrapper } from '../../../../../../packages/components/alert';
+import styles from './page.module.css';
+import { ResendVerificationEmailPayload } from '../../../../../../packages/types';
+import { getPopup } from '../../../../../../packages/utils/alertType';
+import { href } from '../../../../../../packages/utils/navigation';
 
-export interface VerifyEmailData {
-  title: string;
-  info: string;
-}
-
-const VerifyEmail = () => {
-  const { user, refreshUser } = useUser();
-  const { client } = useClient();
+const VerifyEmailPage = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(false);
+  const token = searchParams.get('token');
   const lang = useLang();
 
-  const status = searchParams.get('status');
-  const code = searchParams.get('code');
-  const http = Number(searchParams.get('http')) || 200;
-
-  const router = useRouter();
   const { texts } = useI18n();
-  const popups = texts.popups;
-  const formText = texts.components.form;
-  const verifyEmail: VerifyEmailData = texts?.pages?.user.verifyEmail;
+  const { popups } = texts;
 
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
+  const formText = texts.components.form;
+  const verifyText = texts.pages.user.verifyEmail;
+  const loadingMsg = texts.loadings.message;
+
+  const { auth, refreshAuth } = useAuth();
+  const { profile } = useProfile();
+  const { client } = useClient();
+
+  const [loading, setLoading] = useState(false);
+  const [showResendForm, setShowResendForm] = useState(false);
+
+  const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
+  const { handleVerifyEmail, handleMagicLogin, handleResendEmail } = useVerifyEmailActions();
+
+  // Evitar doble ejecución del efecto en modo dev / StrictMode
+  const didRunRef = useRef(false);
 
   useEffect(() => {
-    if (!status) return;
+    // Evita doble ejecución en Strict Mode
+    if (didRunRef.current) return;
+    didRunRef.current = true;
 
-    if (status === 'error') {
-      const popupData = popups?.[code || 'GLOBAL_INTERNAL_ERROR'] || {};
-      setAlert({
-        status: http || 400,
-        title: popupData.title || 'Error',
-        description:
-          popupData.description ||
-          texts.popups.GLOBAL_INTERNAL_ERROR.description ||
-          'Invalid or expired link.',
-      });
-      setTimeout(() => router.push('/'), 3000);
-      return;
-    }
+    // Envuelve en microtarea para asegurar que React estabilizó el árbol antes de correr
+    Promise.resolve().then(async () => {
+      if (!token) {
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
 
-    // ✅ Solo para status=success
-    const popupData = popups?.[code || 'USER_REGISTER_SUCCESS'] || {};
-    setAlert({
-      status: http || 200,
-      title: popupData.title || texts.popups.USER_REGISTER_SUCCESS.title,
-      description:
-        popupData.description ||
-        texts.popups.USER_REGISTER_SUCCESS.description ||
-        'Bitte überprüfen Sie Ihre E-Mails, um Ihre Adresse zu bestätigen und Ihr Konto zu aktivieren.',
+        showError({
+          response: {
+            status: 500,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
+          },
+        });
+
+        return;
+      }
+
+      try {
+        // 1) Loading Verificación
+        showLoading({
+          response: {
+            status: 102,
+            title: loadingMsg.verifyEmail.title,
+            description: loadingMsg.verifyEmail.description,
+          },
+        });
+
+        const result = await handleVerifyEmail(popups, token);
+
+        if (!result.ok) return;
+
+        // Aquí controlamos ambos casos:
+        // - usuario nuevo → validación normal
+        // - usuario ya verificado → evitar flujos dobles
+        const magicToken = result.magicToken;
+
+        if (!magicToken) {
+          return;
+        }
+
+        // 2) Loading Login
+        showLoading({
+          response: {
+            status: 102,
+            title: loadingMsg.login.title,
+            description: loadingMsg.login.description,
+          },
+        });
+
+        const login = await handleMagicLogin(popups, magicToken);
+        if (!login) return;
+
+        // 3) Loading Refresh
+        showLoading({
+          response: {
+            status: 102,
+            title: loadingMsg.createUser.title,
+            description: loadingMsg.createUser.description,
+          },
+        });
+
+        // 4) Done!
+        const popupData = getPopup(
+          popups,
+          'USER_LOGIN_SUCCESS',
+          'USER_LOGIN_SUCCESS',
+          fallbackLoginSuccess
+        );
+
+        showSuccess({
+          response: {
+            status: 200,
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel: popups.button.continue,
+          },
+          onConfirm: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
+          },
+        });
+      } catch (err) {
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
+
+        showError({
+          response: {
+            status: 500,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
+          },
+        });
+      }
     });
 
-    setTimeout(async () => {
-      setAlert(null);
-      if (!user?.isVerified) {
-        await refreshUser(); // 👈 actualiza el contexto solo si aún no está verificado
-      }
-      router.push(href(lang, '/'));
-    }, 3000);
-  }, [status, code, http, user?.isVerified]);
+    // SOLO deps vacías → se ejecuta una sola vez
+  }, []);
 
-  const handleResendEmail = async (data: ResendVerificationEmailPayload) => {
+  // ---------------------------
+  // RESEND VERIFICATION EMAIL (desde el formulario)
+  // ---------------------------
+  const onResendSubmit = async (data: any) => {
     setLoading(true);
+
+    const payload: ResendVerificationEmailPayload = {
+      email: data.email || auth?.email || '',
+      language: profile?.language || 'de',
+      clientId: client._id,
+    };
+
     try {
-      if (!client?._id) {
-        const popupData = popups?.INTERNAL_ERROR || {};
-        setAlert({
-          status: 500,
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-        return;
-      }
-
-      if (!data.email || !data.language || !data.clientId) {
-        return;
-      }
-
-      const payload: ResendVerificationEmailPayload = {
-        email: data.email || user?.email || '',
-        language: user?.language || 'de',
-        clientId: client._id,
-      };
-
-      const response = await resendVerificationEmail(payload);
-
-      if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        setAlert({
-          status: 200,
-          title: popupData.title || popups.EMAIL_VERIFICATION_RESENT.title,
-          description: popupData.description || response.message,
-        });
-      }
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        const errorKey = error.response.data.errorCode;
-        const popupData = popups?.[errorKey] || {};
-        setAlert({
-          status: error.response.status,
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description:
-            popupData.description ||
-            error.response.data.message ||
-            popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      } else {
-        setAlert({
-          status: 500,
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      }
+      await handleResendEmail(popups, payload);
     } finally {
       setLoading(false);
     }
   };
 
+  // ---------------------------
+  // RENDER
+  // ---------------------------
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <h1 className={styles.h1}>{verifyEmail.title}</h1>
-        <p className={styles.p}>* {verifyEmail.info}</p>
+        <h1 className={styles.h1}>{verifyText.title}</h1>
+        <p className={styles.p}>* {verifyText.info}</p>
       </header>
-      <section className={`${styles.section} card`}>
-        <FormWrapper<ResendVerificationEmailPayload>
-          fields={['email']}
-          onSubmit={handleResendEmail}
-          button={formText.button.resendEmail}
-          initialValues={{
-            clientId: '',
-            email: '',
-            language: '',
-          }}
-        />
-      </section>
-      {loading && <Loading theme={user?.theme || 'light'} />}
+
+      {showResendForm && (
+        <section className={`${styles.section} card`}>
+          <FormWrapper
+            fields={['email', 'language', 'clientId']}
+            onSubmit={onResendSubmit}
+            button={formText.button.resendEmail}
+            initialValues={{
+              email: auth?.email ?? '',
+              clientId: client._id,
+              language: profile?.language ?? 'de',
+            }}
+            loading={loading}
+          />
+        </section>
+      )}
     </main>
   );
 };
 
-export default VerifyEmail;
+export default VerifyEmailPage;

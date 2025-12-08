@@ -1,5 +1,5 @@
 'use client';
-import { useUser } from '../../../../../../packages/contexts/user/UserContext';
+import { useUser } from '../../../../../../packages/contexts/profile/ProfileContext';
 import { useEffect, useState } from 'react';
 
 import styles from './page.module.css';

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { resetPasswordConfirm } from '@/packages/services/user/userService';
+import { resetPasswordConfirm } from '@/packages/services/profile/profileService';
 
 import { FormWrapper } from '@/packages/components/userForm';
 import { AlertWrapper } from '@/packages/components/alert';

@@ -1,4 +1,3 @@
-// packages/contexts/alert/useAlert.ts
 'use client';
 import { useState, useCallback } from 'react';
 import type { AlertPopupProps } from '@havenova/components/alert/alertPopup/AlertPopup';
@@ -15,6 +14,7 @@ export interface AlertConfig {
 
 type ShowBaseArgs = {
   response: AlertPayload;
+  onConfirm?: () => void;
   onCancel?: () => void;
 };
 
@@ -24,11 +24,16 @@ type ShowConfirmArgs = {
   onCancel?: () => void;
 };
 
+type ShowLoadingArgs = {
+  response: AlertPayload;
+};
+
 type AlertHookReturn = {
   alert: AlertConfig | null;
   showError: (args: ShowBaseArgs) => void;
   showSuccess: (args: ShowBaseArgs) => void;
   showConfirm: (args: ShowConfirmArgs) => void;
+  showLoading: (args: ShowLoadingArgs) => void;
   closeAlert: () => void;
 };
 
@@ -36,6 +41,19 @@ export function useAlertBase(): AlertHookReturn {
   const [alert, setAlert] = useState<AlertConfig | null>(null);
 
   const closeAlert = useCallback(() => setAlert(null), []);
+
+  const showLoading = useCallback(({ response }: ShowLoadingArgs) => {
+    setAlert({
+      response: {
+        status: response.status ?? 102,
+        title: response.title,
+        description: response.description,
+        loading: true,
+        cancelLabel: '',
+      },
+      onCancel: () => {}, // loading nunca se cancela
+    });
+  }, []);
 
   const showError = useCallback(
     ({ response, onCancel }: ShowBaseArgs) => {
@@ -81,5 +99,5 @@ export function useAlertBase(): AlertHookReturn {
     [closeAlert]
   );
 
-  return { alert, showError, showSuccess, showConfirm, closeAlert };
+  return { alert, showError, showSuccess, showConfirm, showLoading, closeAlert };
 }

@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
-import { logoutUser } from '../../services/user/userService';
+import { logoutUser } from '../../services/profile/profileService';
 import { MdLogout } from 'react-icons/md';
 
 import { LuLogOut } from 'react-icons/lu';
 import { useI18n } from '../../contexts/i18n';
-import { useUser } from '../../contexts/user';
+import { useUser } from '../../contexts/profile';
 import { Loading } from '../loading';
 import { AlertWrapper } from '../alert';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';

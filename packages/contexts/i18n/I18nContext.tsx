@@ -1,11 +1,11 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { resources, Locale } from '@havenova/i18n';
+import { resources, Locale, Messages } from '@havenova/i18n';
 
 interface I18nContextType {
   language: Locale;
   setLanguage: (lang: Locale) => void;
-  texts: Record<string, any>;
+  texts: Messages;
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
@@ -18,7 +18,7 @@ export function I18nProvider({
   initialLanguage?: Locale;
 }) {
   const [language, setLanguage] = useState<Locale>(initialLanguage);
-  const [texts, setTexts] = useState(resources[initialLanguage] || {});
+  const [texts, setTexts] = useState<Messages>(resources[initialLanguage]);
 
   useEffect(() => {
     if (resources[language]) {

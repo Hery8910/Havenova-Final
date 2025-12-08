@@ -1,13 +1,13 @@
 'use client';
 import { useEffect } from 'react';
-import { useUser } from '../../contexts/user/UserContext';
+import { useProfile } from '../../contexts/profile/ProfileContext';
 import styles from './ThemeToggler.module.css';
 import Image from 'next/image';
 
 const ThemeToggler = () => {
-  const { user, updateUserTheme } = useUser();
+  const { profile, setTheme } = useProfile();
 
-  const theme: 'dark' | 'light' = user?.theme || 'light';
+  const theme: 'dark' | 'light' = profile?.theme || 'light';
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -16,7 +16,7 @@ const ThemeToggler = () => {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    updateUserTheme(newTheme);
+    setTheme(newTheme);
   };
 
   return (

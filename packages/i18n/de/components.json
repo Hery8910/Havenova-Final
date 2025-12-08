@@ -1,0 +1,880 @@
+{
+  "common": {
+    "welcomeOfferBanner": {
+      "header": "Willkommen bei Havenova!",
+      "description": "Erstelle dein Konto und erhalte 10 % Rabatt auf deine erste Anfrage über die App. Eine Registrierung ist erforderlich, um deine Aufträge zu verwalten und exklusive Angebote zu erhalten.",
+      "button": {
+        "cta": "Konto erstellen",
+        "variant": "solid",
+        "icon": "forward"
+      },
+      "image": {
+        "src": "/images/components/welcome-offer-banner-lg.webp",
+        "alt": "10 % Rabatt Bild"
+      }
+    },
+    "howItWorks": {
+      "title": "So funktioniert’s",
+      "subtitle": "Nahtlos, transparent und zuverlässig",
+      "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
+      "button": {
+        "cta": "Mehr über uns erfahren",
+        "variant": "solid",
+        "icon": "forward"
+      },
+      "steps": [
+        {
+          "title": "Service anfragen",
+          "description": "Übermitteln Sie Ihre Daten online, schnell, unkompliziert und direkt über unsere App.",
+          "image": {
+            "src": "/images/howItWorks-step-1.webp",
+            "alt": "Serviceanfrage ausfüllen"
+          }
+        },
+        {
+          "title": "Angebot erhalten",
+          "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
+          "image": {
+            "src": "/images/howItWorks-step-2.webp",
+            "alt": "Angebot erhalten"
+          }
+        },
+        {
+          "title": "Service erhalten",
+          "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
+          "image": {
+            "src": "/images/howItWorks-step-3.webp",
+            "alt": "Fachkraft bei der Arbeit"
+          }
+        }
+      ]
+    },
+    "story": {
+      "title": "Ein junges Unternehmen mit klarer Vision",
+      "paragraphs": [
+        "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
+        "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
+        "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
+        "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
+      ]
+    },
+    "whyChoose": {
+      "title": "Why Choose Havenova?",
+      "description": "At Havenova, we combine traditional services with modern transparency. Our goal is to make the entire process – from request to completion – as simple, reliable, and customer-focused as possible. The following points highlight what sets us apart from others.",
+      "points": [
+        {
+          "title": "Easy and transparent booking process",
+          "image": {
+            "src": "/svg/whyChoose-1.svg"
+          }
+        },
+        {
+          "title": "Fast and personalized service",
+          "image": {
+            "src": "/svg/whyChoose-2.svg"
+          }
+        },
+        {
+          "title": "Commitment to quality in every task",
+          "image": {
+            "src": "/svg/whyChoose-3.svg"
+          }
+        },
+        {
+          "title": "Ongoing collaboration in digital innovation",
+          "image": {
+            "src": "/svg/whyChoose-4.svg"
+          }
+        }
+      ]
+    },
+    "reviewsSection": {
+      "title": "Vertrauenswürdig von Berliner Haushalten.",
+      "subtitle": "Sehen Sie, was unsere Kunden sagen.",
+      "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
+      "button": {
+        "cta": "Mehr Bewertungen",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    },
+    "values": {
+      "title": "Unsere Werte",
+      "list": [
+        {
+          "label": "Transparenz",
+          "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung."
+        },
+        {
+          "label": "Qualität",
+          "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität."
+        },
+        {
+          "label": "Innovation",
+          "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung."
+        },
+        {
+          "label": "Empathie",
+          "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "items": [
+        {
+          "question": "Welche Dienstleistungen bietet Havenova an?",
+          "answer": "Havenova bietet ein breites Spektrum an Haus- und Gebäudeservices in Berlin an, darunter professionelle Reinigung, kleine Reparaturen, regelmäßige Wartung sowie Unterstützung beim Umzug oder Möbelaufbau. Unser Ziel ist es, zuverlässige und flexible Unterstützung sowohl für Privathaushalte als auch für Unternehmen zu leisten, damit Sie sich auf das Wesentliche konzentrieren können, während wir den Rest übernehmen."
+        },
+        {
+          "question": "Wie schnell kann ich einen Service buchen?",
+          "answer": "Die meisten Dienstleistungen können innerhalb von 24–48 Stunden nach Eingang Ihrer Anfrage terminiert werden. Sobald Sie Ihre Daten über unsere Plattform eingeben, prüft unser Team diese und bestätigt einen Termin, der am besten zu Ihnen passt. In dringenden Fällen versuchen wir stets, die schnellstmögliche Lösung zu finden."
+        },
+        {
+          "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
+          "answer": "Ja, alle unsere Teammitglieder und Partnerunternehmen werden sorgfältig ausgewählt, geschult und sind vollständig versichert. So stellen wir sicher, dass die Arbeiten stets professionell und sicher durchgeführt werden. Für spezielle Aufgaben wie Elektro- oder Malerarbeiten arbeiten wir mit bewährten Fachkräften zusammen, sodass Sie immer die passende Expertise erhalten."
+        },
+        {
+          "question": "Gibt es Rabatte für Mitglieder?",
+          "answer": "Ja, Havenova-Mitglieder genießen exklusive Vorteile wie bis zu 20 % Rabatt auf Dienstleistungen, kürzere Reaktionszeiten und einen jährlichen Wohnungs-Check. Die Mitgliedschaft ist darauf ausgelegt, Ihnen über das ganze Jahr hinweg mehr Sicherheit und Mehrwert zu bieten."
+        }
+      ],
+      "cta": {
+        "title": "Haben Sie noch weitere Fragen?",
+        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
+      },
+      "button": {
+        "cta": "Alle FAQs ansehen",
+        "variant": "solid",
+        "icon": "forward"
+      }
+    },
+    "finalCta": {
+      "headline": "Bereit, Ihre Haussservices zu vereinfachen?",
+      "subheadline": "Buchen Sie noch heute einen Service und erhalten Sie innerhalb von 24–48 Stunden professionelle Unterstützung. Unser erfahrenes Team übernimmt Reinigung, Reparaturen und Wartung, damit Sie sich auf das Wesentliche konzentrieren können.",
+      "button": {
+        "cta": "Jetzt buchen",
+        "href": "/services",
+        "variant": "solid",
+        "icon": "forward"
+      },
+      "image": "/images/final-cta.webp"
+    }
+  },
+  "navbar": {
+    "headers": {
+      "services": "Leistungen",
+      "about": "Havenova",
+      "profile": "Profil"
+    },
+    "services": [
+      {
+        "label": "Möbelmontage",
+        "href": "/services/furniture-assembly",
+        "image": "/svg/furniture-assembly.svg",
+        "alt": "Icon Möbelmontage"
+      },
+      {
+        "label": "Küchenmontage",
+        "href": "/services/kitchen-assembly",
+        "image": "/svg/kitchen-assembly.svg",
+        "alt": "Icon Küchenmontage"
+      },
+      {
+        "label": "Hausservice",
+        "href": "/services/home-service",
+        "image": "/svg/home-service.svg",
+        "alt": "Icon Hausservice"
+      },
+      {
+        "label": "Wohnungsreinigung",
+        "href": "/services/house-cleaning",
+        "image": "/svg/house-cleaning.svg",
+        "alt": "Icon Wohnungsreinigung"
+      },
+      {
+        "label": "Küchenreinigung",
+        "href": "/services/kitchen-cleaning",
+        "image": "/svg/kitchen-cleaning.svg",
+        "alt": "Icon Küchenreinigung"
+      },
+      {
+        "label": "Fensterreinigung",
+        "href": "/services/windows-cleaning",
+        "image": "/svg/windows-cleaning.svg",
+        "alt": "Icon Fensterreinigung"
+      }
+    ],
+    "about": [
+      { "label": "Über uns", "href": "/about" },
+      { "label": "Kontakt", "href": "/contact" },
+      { "label": "Fragen & Antworten", "href": "/faq" },
+      { "label": "Bewertungen", "href": "/reviews" },
+      { "label": "Blog", "href": "/blogs" },
+      { "label": "Unsere Leistungen", "href": "/services" }
+    ],
+    "profile": {
+      "label": "Profil",
+      "href": "/user/profile",
+      "image": "/svg/user.svg",
+      "alt": "Icon Benutzer",
+      "auth": "user"
+    },
+    "register": [
+      {
+        "label": "Registrieren",
+        "href": "/user/register",
+        "image": "/svg/signin.svg",
+        "alt": "Icon Anmeldung",
+        "auth": "guest"
+      },
+      {
+        "label": "Login",
+        "href": "/user/login",
+        "image": "/svg/user.svg",
+        "alt": "Icon Benutzer",
+        "auth": "guest"
+      }
+    ]
+  },
+  "form": {
+    "error": {
+      "name": {
+        "required": "Name ist erforderlich.",
+        "invalid": "Name muss mit einem Großbuchstaben beginnen."
+      },
+      "email": {
+        "required": "E-Mail ist erforderlich.",
+        "invalid": "Ungültiges E-Mail-Format."
+      },
+      "phone": {
+        "required": "Telefonnummer ist erforderlich.",
+        "invalid": "Ungültige Telefonnummer."
+      },
+      "password": {
+        "required": "Passwort ist erforderlich.",
+        "tooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
+        "missingUppercase": "Passwort benötigt einen Großbuchstaben.",
+        "missingNumber": "Passwort benötigt eine Zahl.",
+        "missingSymbol": "Passwort benötigt ein Sonderzeichen."
+      },
+      "address": {
+        "required": "Adresse ist erforderlich.",
+        "invalid": "Ungültiges Adressformat."
+      },
+      "serviceAddress": {
+        "required": "Serviceadresse ist erforderlich.",
+        "invalid": "Ungültiges Format der Serviceadresse."
+      },
+      "message": {
+        "required": "Nachricht ist erforderlich",
+        "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
+        "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
+      },
+      "tosAccepted": {
+        "required": "Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren."
+      }
+    },
+    "button": {
+      "register": {
+        "cta": "Registrieren",
+        "variant": "solid",
+        "icon": "register"
+      },
+      "login": {
+        "cta": "Einloggen",
+        "variant": "solid",
+        "icon": "register"
+      },
+      "edit": {
+        "cta": "Änderungen speichern",
+        "variant": "solid",
+        "icon": "edit"
+      },
+      "changePassword": {
+        "cta": "Passwort speichern",
+        "variant": "solid",
+        "icon": "password"
+      },
+      "forgotPassword": {
+        "cta": "Zurücksetzen",
+        "variant": "solid",
+        "icon": "password"
+      },
+      "resetPassword": {
+        "cta": "Passwort speichern",
+        "variant": "solid",
+        "icon": "password"
+      },
+      "contact": {
+        "cta": "Nachricht senden",
+        "variant": "solid",
+        "icon": "contact"
+      },
+      "resendEmail": {
+        "cta": "E-Mail erneut senden",
+        "variant": "solid",
+        "icon": "resendEmail"
+      }
+    },
+    "labels": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "password": "Passwort",
+      "forgotPassword": "Passwort vergessen?",
+      "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
+      "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
+      "address": "Adresse",
+      "phone": "Telefonnummer",
+      "message": "Nachricht"
+    },
+    "placeholders": {
+      "name": "z. B. Max Mustermann",
+      "email": "z. B. mustermann@example.com",
+      "password": "Mind. 8 Zeichen",
+      "address": "z. B. Musterstraße 12, 12345 Berlin",
+      "phone": "z. B. 0157 12345678",
+      "message": "Ihre Frage oder Nachricht..."
+    }
+  },
+  "cookieBanner": {
+    "title": "Cookies auf dieser Website",
+    "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
+    "acceptAll": {
+      "cta": "Alle akzeptieren",
+      "variant": "solid",
+      "icon": "confirm"
+    },
+    "rejectAll": {
+      "cta": "Nur notwendige",
+      "variant": "outline",
+      "icon": "cancel"
+    },
+    "close": {
+      "cta": "",
+      "variant": "outline",
+      "icon": "close"
+    },
+    "enableStats": "Statistik-Cookies aktivieren"
+  },
+  "services": {
+    "howItWorks": {
+      "title": "So funktioniert es",
+      "steps": [
+        {
+          "title": "Service anfragen",
+          "description": "Füllen Sie das Formular mit den Details Ihres Auftrags aus. Wir prüfen Ihre Anfrage und bereiten ein persönliches Angebot vor."
+        },
+        {
+          "title": "Erste Besichtigung planen",
+          "description": "Ein Mitarbeiter kontaktiert Sie, um einen passenden Termin für die erste Besichtigung oder Beratung zu vereinbaren."
+        },
+        {
+          "title": "Termin für die Arbeit bestätigen",
+          "description": "Nach der Besichtigung erhalten Sie das endgültige Angebot. Sobald Sie bestätigen, wird der Arbeitstermin festgelegt."
+        },
+        {
+          "title": "Service durchführen",
+          "description": "Unser Team führt die Arbeit zuverlässig und professionell aus. Nach Abschluss erhalten Sie eine Rechnung und können Feedback geben."
+        }
+      ]
+    },
+    "furnitureAssembly": {
+      "header": {
+        "title": "Möbelmontage",
+        "subtitle": "Professionell, schnell und stressfrei",
+        "description": "Unsere Experten übernehmen den kompletten Aufbau Ihrer Möbel – von der Anlieferung bis zur Endmontage. Buchen Sie Ihren Termin einfach online und genießen Sie Ihren fertig eingerichteten Raum ohne Aufwand."
+      },
+      "form": {
+        "header": {
+          "title": "Möbelmontage",
+          "img": {
+            "src": "/svg/furniture-assembly.svg",
+            "alt": "Furniture Assembly Symbol"
+          }
+        },
+        "input": {
+          "quantity": "Menge",
+          "width": "Breite",
+          "height": "Höhe",
+          "depth": "Tiefe",
+          "doors": "Anzahl der Türen",
+          "drawers": "Anzahl der Schubladen",
+          "wall": { "title": "An der Wand montiert?", "wall": "Yes", "floor": "No" },
+          "details": "Zusätzliche Details",
+          "comment": "Hinterlassen Sie uns einen Kommentar"
+        },
+        "back_button": "Zurück",
+        "submit_button": "Einreichen",
+        "save_botton": "Speichern",
+        "alerts": {
+          "confirmation": {
+            "title": {
+              "create": "Serviceanfrage gespeichert",
+              "edit": "Serviceanfrage aktualisiert"
+            },
+            "description": {
+              "create": "Ihre Serviceanfrage wurde erfolgreich hinzugefügt. Sie können direkt zur Kasse gehen oder weitere Services erkunden.",
+              "edit": "Ihre Anfrage wurde erfolgreich aktualisiert."
+            },
+            "confirm": "Zur Kasse gehen",
+            "cancel": "Weiter stöbern",
+            "close": "Close"
+          },
+          "error": {
+            "invalid": {
+              "title": "Ungültige Daten",
+              "description": "Einige Felder enthalten ungültige oder unvollständige Informationen. Bitte überprüfen Sie das Formular und versuchen Sie es erneut."
+            },
+            "unexpected": {
+              "title": "Unerwarteter Fehler",
+              "description": "Beim Speichern Ihrer Anfrage ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
+            }
+          }
+        }
+      },
+      "view": {
+        "title": "Details des Möbelstücks",
+        "openButton": { "open": "Mehr", "close": "Weniger" },
+        "editButton": "Edit",
+        "deleteButton": "Löschen",
+        "step": "Details",
+        "deleteConfirm": {
+          "title": "Dienst löschen?",
+          "description": "Möchten Sie diesen Service wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden.",
+          "confirm": "Ja, löschen",
+          "cancel": "Abbrechen"
+        }
+      },
+      "steps": [
+        {
+          "title": "Wählen Sie den Standort",
+          "description": "Wählen Sie den Raum aus, in dem sich das Möbelstück befindet.",
+          "step": "Standort"
+        },
+        {
+          "title": "Wählen Sie das Möbelstück",
+          "description": "Wählen Sie die Art des Möbelstücks, das montiert werden soll.",
+          "step": "Möbelstück"
+        },
+        {
+          "title": "Details des Möbelstücks",
+          "description": "Geben Sie Maße oder besondere Hinweise für die Montage an.",
+          "step": "Details"
+        }
+      ],
+      "locations": {
+        "title": "Standort",
+        "bedroom": "Schlafzimmer",
+        "living_room": "Wohnzimmer",
+        "bathroom": "Badezimmer",
+        "kitchen": "Küche",
+        "office": "Büro / Arbeitszimmer",
+        "hallway": "Flur / Eingang",
+        "balcony": "Balkon / Außenbereich"
+      },
+      "furniture": {
+        "title": "Art der Möbel",
+        "wardrobe": "Kleiderschrank",
+        "bed_frame": "Bettgestell",
+        "dresser": "Kommode",
+        "nightstand": "Nachttisch",
+        "bookshelf": "Bücherregal",
+        "tv_unit": "TV-Möbel",
+        "coffee_table": "Couchtisch",
+        "display_cabinet": "Vitrine",
+        "bathroom_cabinet": "Badezimmerschrank",
+        "mirror_cabinet": "Spiegelschrank",
+        "shelf_unit": "Regaleinheit",
+        "dining_table": "Esstisch",
+        "dining_chair": "Essstuhl",
+        "kitchen_island": "Kücheninsel",
+        "kitchen_cabinet": "Küchenschrank",
+        "desk": "Schreibtisch",
+        "office_chair": "Bürostuhl",
+        "filing_cabinet": "Aktenschrank",
+        "shoe_rack": "Schuhregal",
+        "coat_rack": "Garderobe",
+        "console_table": "Konsolentisch",
+        "outdoor_table": "Gartentisch",
+        "garden_chair": "Gartenstuhl",
+        "plant_shelf": "Pflanzenregal"
+      }
+    },
+    "cart": {
+      "iconAlt": "Warenkorb-Symbol",
+      "open": "Öffnen Sie den Servicewagen",
+      "close": "Warenkorb schließen",
+      "empty": "Ihr Warenkorb ist leer",
+      "title": "Ihre Dienstleistungen",
+      "checkout": "Zur Kasse"
+    },
+    "servicesList": [
+      {
+        "title": "Wohnungsreinigung",
+        "description": "Gründliche Reinigung für Wohnungen, Häuser und Büros. Ideal für regelmäßige Pflege oder einmalige Grundreinigung.",
+        "icon": "house-cleaning",
+        "cta": "Mehr erfahren"
+      },
+      {
+        "title": "Hausmeisterservice",
+        "description": "Zuverlässige Wartung und Betreuung Ihrer Immobilie – von kleinen Reparaturen bis zur Objektpflege.",
+        "icon": "home-service",
+        "cta": "Mehr erfahren"
+      },
+      {
+        "title": "Möbelmontage",
+        "description": "Schneller und fachgerechter Aufbau von Möbeln aller Art – sicher, präzise und stressfrei.",
+        "icon": "furniture-assembly",
+        "cta": "Mehr erfahren"
+      },
+      {
+        "title": "Küchenmontage",
+        "description": "Professionelle Montage kompletter Küchen, inklusive Arbeitsplatten, Geräteanschluss und Anpassungen vor Ort.",
+        "icon": "kitchen-assembly",
+        "cta": "Mehr erfahren"
+      },
+      {
+        "title": "Fensterreinigung",
+        "description": "Streifenfreie Sauberkeit für Fenster, Glasflächen und Wintergärten – innen und außen.",
+        "icon": "windows-cleaning",
+        "cta": "Mehr erfahren"
+      },
+      {
+        "title": "Küchenreinigung",
+        "description": "Gründliche und hygienische Reinigung Ihrer gesamten Küche – inklusive aller Elektrogeräte.",
+        "icon": "kitchen-cleaning",
+        "cta": "Mehr erfahren"
+      }
+    ]
+  },
+  "values": {
+    "title": "Unsere Werte",
+    "list": [
+      {
+        "label": "Transparenz",
+        "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung.",
+        "image": {
+          "src": "/images/01.png",
+          "alt": "Construction equipment and blueprints"
+        }
+      },
+      {
+        "label": "Qualität",
+        "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität.",
+        "image": {
+          "src": "/images/01.png",
+          "alt": "Construction equipment and blueprints"
+        }
+      },
+      {
+        "label": "Innovation",
+        "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung.",
+        "image": {
+          "src": "/images/01.png",
+          "alt": "Construction equipment and blueprints"
+        }
+      },
+      {
+        "label": "Empathie",
+        "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis.",
+        "image": {
+          "src": "/images/01.png",
+          "alt": "Construction equipment and blueprints"
+        }
+      }
+    ]
+  },
+  "reviews": {
+    "averageRating": 4.9,
+    "totalReviews": 57,
+    "reviews": [
+      {
+        "author": "MyHammer-Kunde aus Berlin",
+        "date": "19. Dez 2024",
+        "rating": 5,
+        "service": "Kleine Handwerks- und Montageleistungen: Ausbessern; Sanitäre Installationen",
+        "comment": "Sehr effizient und nett, jederzeit wieder gerne!"
+      },
+      {
+        "author": "MyHammer-Kunde aus Wriezen",
+        "date": "12. Dez 2024",
+        "rating": 5,
+        "service": "Fertigküche: Montage mit Geräten",
+        "comment": "Hasan und sein Kollege haben bei meiner Enkeltochter einen Küchenblock aufgebaut und alle E-Geräte ordnungsgemäß angeschlossen. Sehr zufrieden mit der Arbeit. Am selben Tag erledigt, sehr freundlich und vielseitig. Sehr zu empfehlen."
+      },
+      {
+        "author": "Jonas Woelffer, Berlin",
+        "date": "12. Dez 2024",
+        "rating": 5,
+        "service": "Fertigküche: Zweizeilig; Montage mit Geräten",
+        "comment": "Super Arbeit! Sehr kompetent, verlässlich und korrekt. Immer wieder sehr gerne!"
+      },
+      {
+        "author": "MyHammer-Kunde",
+        "date": "11. Dez 2024",
+        "rating": 5,
+        "service": "Reparaturarbeiten",
+        "comment": "Sehr gute Kommunikation, schnell und sauber erledigt."
+      },
+      {
+        "author": "Sven, Berlin",
+        "date": "8. Dez 2024",
+        "rating": 5,
+        "service": "Möbelmontage",
+        "comment": "Pünktlich, zuverlässig und freundlich. Jederzeit wieder!"
+      },
+      {
+        "author": "MyHammer-Kunde aus Potsdam",
+        "date": "4. Dez 2024",
+        "rating": 4,
+        "service": "Küchenmontage",
+        "comment": "Arbeit in Ordnung, aber kleine Verzögerung beim Termin."
+      },
+      {
+        "author": "Stefanie, Berlin",
+        "date": "1. Dez 2024",
+        "rating": 5,
+        "service": "Möbelmontage: Kleiderschrank",
+        "comment": "Sehr zuverlässig, gute Kommunikation und saubere Arbeit. Jederzeit wieder!"
+      },
+      {
+        "author": "Ali, Berlin",
+        "date": "28. Nov 2024",
+        "rating": 5,
+        "service": "Möbelmontage",
+        "comment": "Alles super gelaufen, sehr freundlich und hilfsbereit. Absolute Empfehlung."
+      },
+      {
+        "author": "Nico, Berlin",
+        "date": "22. Nov 2024",
+        "rating": 5,
+        "service": "Handwerksarbeiten",
+        "comment": "Sehr freundlich, pünktlich und gute Arbeit. Kann ich weiterempfehlen."
+      },
+      {
+        "author": "MyHammer-Kunde",
+        "date": "20. Nov 2024",
+        "rating": 5,
+        "service": "Küchenmontage",
+        "comment": "Alles wie vereinbart, sauber und schnell ausgeführt."
+      },
+      {
+        "author": "Sabine, Berlin",
+        "date": "17. Nov 2024",
+        "rating": 5,
+        "service": "Möbelmontage",
+        "comment": "Sehr gute Arbeit, schnell und professionell. Vielen Dank!"
+      },
+      {
+        "author": "MyHammer-Kunde",
+        "date": "14. Nov 2024",
+        "rating": 5,
+        "service": "Reparaturarbeiten",
+        "comment": "Sehr gute Kommunikation und schnelle Hilfe. Gerne wieder."
+      },
+      {
+        "author": "Thomas, Berlin",
+        "date": "10. Nov 2024",
+        "rating": 5,
+        "service": "Fertigküche: Montage",
+        "comment": "Sehr professionelle Arbeit, freundlich und kompetent. Kann ich nur empfehlen."
+      },
+      {
+        "author": "Katrin, Berlin",
+        "date": "6. Nov 2024",
+        "rating": 4,
+        "service": "Möbelmontage",
+        "comment": "Arbeit war gut, kleine Verzögerung beim Aufbau, aber insgesamt zufrieden."
+      },
+      {
+        "author": "Michael, Berlin",
+        "date": "3. Nov 2024",
+        "rating": 5,
+        "service": "Möbelmontage",
+        "comment": "Sehr gute Arbeit, schnell und freundlich. Jederzeit wieder."
+      },
+      {
+        "author": "MyHammer-Kunde",
+        "date": "30. Okt 2024",
+        "rating": 5,
+        "service": "Handwerksarbeiten",
+        "comment": "Alles top erledigt, sehr zufrieden."
+      },
+      {
+        "author": "Elena, Berlin",
+        "date": "28. Okt 2024",
+        "rating": 5,
+        "service": "Küchenmontage",
+        "comment": "Sehr freundlicher Kontakt, Arbeit einwandfrei und zuverlässig. Sehr empfehlenswert!"
+      },
+      {
+        "author": "MyHammer-Kunde",
+        "date": "24. Okt 2024",
+        "rating": 5,
+        "service": "Möbelmontage",
+        "comment": "Alles bestens, sehr gute Arbeit. Vielen Dank!"
+      },
+      {
+        "author": "Frank, Berlin",
+        "date": "27. Dez 2024",
+        "rating": 5,
+        "service": "Kleine Handwerks- und Montageleistungen: Küchenzeile mit Hängeschränken",
+        "comment": "Reinigungsmeister würde ich eine 10 geben, Da es die nicht gibt gebe ich volle Punktzahl 5 Sterne Sehr pünktlich, angenehme Kommunikation bei Kontaktaufnahme und bei der Ausführung des Auftrag. Sehr sauber und schnell gearbeitet. Jungs macht weiter so !!! Kann ich mit guten Gewissen weiter empfehlen. Merci für die tolle Arbeit :)"
+      },
+      {
+        "author": "Apu, Berlin",
+        "date": "23. Dez 2024",
+        "rating": 5,
+        "service": "Auf- und Abbau von Fertigmöbeln und Fertigteilen: 3 Möbelstücke",
+        "comment": "Reinigungsmeister hat bei uns diverse Möbel aufgebaut. Die Kommunikation war angenehm und unproblematisch. Er hat die Arbeit zur vollen Zufriedenheit erledigt. Gerne wieder!"
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": {
+      "requests": {
+        "requestsList": {
+          "title": "Anfragen",
+          "empty": "Keine Anfragen gefunden",
+          "button": "Weitere Details"
+        },
+        "requestDetails": {
+          "button": {
+            "cta": "Confirm Changes",
+            "variant": "solid",
+            "icon": "confirm"
+          }
+        },
+        "requestStatus": {
+          "submitted": "Eingereicht",
+          "accepted": "Akzeptiert",
+          "inProgress": "In Bearbeitung",
+          "completed": "Abgeschlossen",
+          "cancelled": "Storniert"
+        },
+        "service": {
+          "furniture-assembly": "Möbelmontage",
+          "kitchen-cleaning": "Küchenreinigung",
+          "house-cleaning": "Wohnungsreinigung",
+          "window-cleaning": "Fensterreinigung",
+          "house-service": "Hausservice",
+          "kitchen-assembly": "Küchenmontage",
+          "inspection": "Inspektion"
+        }
+      }
+    }
+  },
+  "footer": {
+    "headers": {
+      "services": "Leistungen",
+      "about": "Havenova",
+      "contact": "Kontakt",
+      "legal": "Legal"
+    },
+    "contact": [
+      {
+        "data": "contact@havenova.de",
+        "image": "/svg/email.svg"
+      },
+      {
+        "data": "+49 176 7091 7803",
+        "image": "/svg/phone.svg"
+      },
+      {
+        "data": "Stollberger Str.43, 12627 Berlin",
+        "image": "/svg/address.svg"
+      },
+      {
+        "label": "Mo-Fr",
+        "data": "08:00-17:00 Uhr"
+      },
+      {
+        "label": "Sa",
+        "data": "08:00-14:00 Uhr"
+      }
+    ],
+    "havenova": [
+      {
+        "label": "Uber Uns",
+        "href": "/about"
+      },
+      {
+        "label": "Kontakt",
+        "href": "/contact"
+      },
+      { "label": "F&A", "href": "/q&a" },
+      {
+        "label": "Rezensionen",
+        "href": "/reviews"
+      },
+      { "label": "Blog", "href": "/blog" },
+      {
+        "label": "Unsere Leistungen",
+        "href": "/service"
+      }
+    ],
+    "services": [
+      {
+        "label": "Möbelmontage",
+        "href": "/services/furniture-assembly"
+      },
+      {
+        "label": "Küchenmontage",
+        "href": "/services/kitchen-assembly"
+      },
+      {
+        "label": "Heimservice",
+        "href": "/services/home-service"
+      },
+      {
+        "label": "House Cleaning",
+        "href": "/services/house-cleaning"
+      },
+      {
+        "label": "Hausreinigung",
+        "href": "/services/kitchen-cleaning"
+      },
+      {
+        "label": "Fensterreinigung",
+        "href": "/services/windows-cleaning"
+      }
+    ],
+    "legal": [
+      {
+        "label": "Datenschutzrichtlinie",
+        "href": "/legal/privacy-policy"
+      },
+      {
+        "label": "Cookie-Richtlinie",
+        "href": "/legal/cookie-policy"
+      },
+      {
+        "label": "Nutzungsbedingungen",
+        "href": "/legal/terms-of-service"
+      },
+      {
+        "label": "Impresum",
+        "href": "/legal/imprint"
+      }
+    ],
+    "social": [
+      {
+        "label": "Facebook",
+        "href": "https://facebook.com/havenova"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://instagram.com/havenova"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/company/havenova"
+      }
+    ],
+    "cta": {
+      "title": "Unterstützt von Maped Solutions",
+      "description": "Diese digitale Plattform wurde entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
+    }
+  }
+}

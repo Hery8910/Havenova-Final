@@ -11,7 +11,7 @@ import {
 import { useI18n } from '@/packages/contexts/i18n';
 import { useLang } from '@/packages/hooks';
 import styles from './page.module.css';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useProfile } from '@/packages/contexts/profile/ProfileContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import Loading from '@/packages/components/loading/Loading';
 import { href } from '@/packages/utils/navigation';
@@ -20,7 +20,7 @@ import ServicesSection from '@/packages/components/pages/services/servicesSectio
 
 const Services = () => {
   const { client, loading } = useClient();
-  const { user } = useUser();
+  const { profile } = useProfile();
   const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
@@ -41,24 +41,24 @@ const Services = () => {
     router.push(href(lang, '/services'));
   };
 
-  if (!client || loading || !user) return <Loading theme={user?.theme ?? 'light'} />;
+  if (!client || loading || !profile) return <Loading theme={profile?.theme ?? 'light'} />;
 
   return (
     <main className={styles.main}>
       <ServicesHero {...heroTexts} />
-
-      {user.role === 'guest' && (
+      {/* 
+      {profile.role === 'guest' && (
         <WelcomeOfferBanner
           {...welcomeOfferTexts}
           onClick={() => router.push(href(lang, '/user/register'))}
         />
-      )}
+      )} */}
 
       <ServicesSection
         services={true}
         {...servicesSectionTexts}
         items={servicesList}
-        theme={user.theme}
+        theme={profile.theme}
         handleItemClick={handleItemClick}
         handleCTAClick={handleCTAClick}
       />

@@ -1,0 +1,59 @@
+{
+  "contactInfo": {
+    "title": "Contact",
+    "mapSection": {
+      "title": "Our Adress",
+      "subtitle": "Visit us at our office or use the map to locate us precisely",
+      "address": "Stollberger Str.43, 12627 Berlin"
+    },
+    "havenova": {
+      "label": "Controller",
+      "name": {
+        "label": "Name",
+        "value": "Havenova",
+        "description": "Your dream home begins with us"
+      },
+      "phone": {
+        "label": "Phone",
+        "value": "+49 176 7091 7803"
+      },
+      "address": {
+        "label": "Address",
+        "value": "Stollberger Str.43, 12627 Berlin",
+        "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
+      },
+      "email": {
+        "label": "Email",
+        "value": "contact@havenova.de"
+      },
+      "weekHours": {
+        "label": "Mo-Fr",
+        "value": "08:00-17:00 Uhr"
+      },
+      "weekendHours": {
+        "label": "Sa",
+        "value": "08:00-14:00 Uhr"
+      }
+    },
+    "maped": {
+      "label": "Technical support",
+      "name": {
+        "label": "Name",
+        "value": "Maped Solutions"
+      },
+      "phone": {
+        "label": "Phone",
+        "value": "+49 177 7312 606"
+      },
+      "address": { "label": "Address", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
+      "email": {
+        "label": "Email",
+        "value": "contact@mapedsolutions.de"
+      }
+    },
+    "cta": {
+      "label": "Go to Contact",
+      "href": "/contact"
+    }
+  }
+}

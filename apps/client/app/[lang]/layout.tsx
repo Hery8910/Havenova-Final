@@ -6,14 +6,14 @@ import { CookieBannerContainer } from '@/packages/components/cookieBanner';
 import { FooterContainer } from '@/packages/components/footer/FooterContainer';
 import { getClient } from '@/packages/services/client';
 import { CookiesProvider } from '@/packages/contexts/cookies/CookiesContext';
-import { I18nProvider, UserProvider } from '@/packages/contexts/';
+import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
 import { AlertProvider } from '@/packages/contexts/';
 import { ServiceCartProvider } from '@/packages/contexts/serviceCart';
 import { ServiceCart } from '@/packages/components/services/serviceCart';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 import { getPageMetadata } from '@/packages/utils/metadata';
-import { ClientContextProps, ClientPublicConfig } from '../../../../packages/types';
+import { ClientPublicConfig } from '../../../../packages/types';
 
 export async function generateMetadata({
   params,
@@ -62,23 +62,25 @@ export default async function LangLayout({
       className={`${poppins.variable} ${roboto.variable}`}
     >
       <body>
-        <ClientProvider initialClient={client}>
-          <AlertProvider>
+        <AlertProvider>
+          <ClientProvider initialClient={client}>
             <I18nProvider initialLanguage={params.lang}>
-              <UserProvider>
-                <CookiesProvider>
-                  <ServiceCartProvider>
-                    <CookieBannerContainer />
-                    <NavbarContainer />
-                    {children}
-                    <ServiceCart />
-                    <FooterContainer />
-                  </ServiceCartProvider>
-                </CookiesProvider>
-              </UserProvider>
+              <AuthProvider>
+                <ProfileProvider>
+                  <CookiesProvider>
+                    <ServiceCartProvider>
+                      <CookieBannerContainer />
+                      <NavbarContainer />
+                      {children}
+                      <ServiceCart />
+                      <FooterContainer />
+                    </ServiceCartProvider>
+                  </CookiesProvider>
+                </ProfileProvider>
+              </AuthProvider>
             </I18nProvider>
-          </AlertProvider>
-        </ClientProvider>
+          </ClientProvider>
+        </AlertProvider>
       </body>
     </html>
   );

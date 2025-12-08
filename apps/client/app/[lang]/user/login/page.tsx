@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
-import { loginUser } from '@/packages/services/user/userService';
+import { loginUser } from '@/packages/services/profile/profileService';
 import Link from 'next/link';
-import { useUser } from '@/packages/contexts/user/UserContext';
+import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { FormWrapper } from '@/packages/components/userForm';

@@ -7,6 +7,7 @@ export * from './offers';
 export * from './page';
 export * from './pages';
 export * from './services';
-export * from './user';
+export * from './profile';
 export * from './userForm';
 export * from './worker';
+export * from './auth';
