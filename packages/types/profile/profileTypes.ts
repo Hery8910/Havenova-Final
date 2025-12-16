@@ -11,6 +11,8 @@ export interface UserClientProfile {
   phone?: string;
   address?: string;
   profileImage?: string;
+  createdAt?: string;
+  isVerified?: boolean;
 
   language: string;
   theme: ThemeMode;
@@ -39,6 +41,7 @@ export interface UpdateUserProfilePayload {
   phone?: string;
   language?: string;
   theme?: ThemeMode;
+  profileImage?: string;
 }
 
 export interface UpdateUserProfileResponse {
@@ -47,23 +50,4 @@ export interface UpdateUserProfileResponse {
   profile: UserClientProfile;
 }
 
-// ---------------------------
-// CONTACT MESSAGE
-// ---------------------------
-
-export interface ContactMessagePayload {
-  userId: string;
-  clientId: string;
-  name: string;
-  email: string;
-  message: string;
-  language: string;
-  originPath: string;
-}
-
-export interface ContactMessageResponse {
-  success: boolean;
-  code: string;
-  message?: string;
-  messageId?: string;
-}
+export interface CreateUserProfileResponse extends UpdateUserProfileResponse {}

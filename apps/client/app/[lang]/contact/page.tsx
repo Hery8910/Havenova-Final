@@ -11,15 +11,20 @@ import {
   FinalCTA,
   FinalCTASkeleton,
 } from '@/packages/components/common';
-import { AlertWrapper } from '@/packages/components/alert';
 import { useEffect, useState } from 'react';
 import { useClient } from '@/packages/contexts/client/ClientContext';
-import { sendContactMessage } from '@/packages/services/profile/profileService';
-import Loading from '@/packages/components/loading/Loading';
 import { useLang } from '@/packages/hooks';
 import { href } from '@/packages/utils/navigation';
 import { Map } from '@/packages/components/map/Map';
-import { useAuth } from '../../../../../packages/contexts';
+import {
+  useAuth,
+  useGlobalAlert,
+  fallbackGlobalError,
+  fallbackGlobalLoading,
+} from '../../../../../packages/contexts';
+import { sendContactMessage } from '@/packages/services/contact';
+import { ContactMessageCreatePayload, ContactMessageFormData } from '@/packages/types';
+import { getPopup } from '@/packages/utils/alertType';
 
 export default function Contact() {
   const { texts } = useI18n();
@@ -29,8 +34,8 @@ export default function Contact() {
   const router = useRouter();
   const lang = useLang();
   const [loading, setLoading] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const searchParams = useSearchParams();
+  const { showSuccess, showError, showLoading, closeAlert } = useGlobalAlert();
 
   const popups = texts.popups;
   const contactHeroTexts = texts.pages.contact.hero;
@@ -39,12 +44,6 @@ export default function Contact() {
   const formText = texts.components.form;
   const faqPreviewTexts = texts.components.common.faq;
   const finalCtaTexts = texts.components.common.finalCta;
-
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
 
   if (!profile) return null;
 
@@ -55,99 +54,126 @@ export default function Contact() {
 
     if (status && code) {
       const popupData = texts.popups?.[code] || {};
-      setAlert({
-        status: http || (status === 'success' ? 200 : 400),
-        title: popupData.title || (status === 'success' ? 'Success' : 'Error'),
+      const isSuccess = status === 'success';
+
+      const response = {
+        status: http || (isSuccess ? 200 : 400),
+        title: popupData.title || (isSuccess ? 'Success' : 'Error'),
         description: popupData.description || '',
-      });
-      setTimeout(() => {
-        setAlert(null);
-      }, 3000);
+        cancelLabel: popupData.close || popups.button?.close || 'Close',
+      };
+
+      const alertMethod = isSuccess ? showSuccess : showError;
+      alertMethod({ response, onCancel: closeAlert });
+
       // limpiar la URL
       window.history.replaceState(null, '', window.location.pathname);
     }
-  }, [searchParams]);
+  }, [closeAlert, popups.button?.close, searchParams, showError, showSuccess, texts.popups]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
+  const handleSubmit = async (data: ContactMessageFormData) => {
+    setLoading(true);
+    try {
+      const loadingPopup = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
+      showLoading({
+        response: {
+          status: 102,
+          title: loadingPopup.title,
+          description: loadingPopup.description,
+        },
+      });
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+      if (!client?._id) {
+        const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        showError({
+          response: {
+            status: 500,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: closeAlert,
+        });
+        return;
+      }
 
-  // const handleSubmit = async (data: Partial<FaqMessageData>) => {
-  //   setLoading(true);
-  //   try {
-  //     if (!client?._id) {
-  //       const popupData = popups?.INTERNAL_ERROR || {};
-  //       setAlert({
-  //         status: 500,
-  //         title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-  //         description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
-  //       });
-  //       return;
-  //     }
+      const payload: ContactMessageCreatePayload = {
+        userId: auth?.userId || '',
+        name: data.name || profile?.name || '',
+        email: data.email || auth?.email || '',
+        message: data.message || '',
+        clientId: client._id,
+      };
 
-  //     const originPath = typeof window !== 'undefined' ? window.location.pathname : '';
+      const response = await sendContactMessage(payload);
 
-  //     const payload = {
-  //       name: data.name || profile?.name || '',
-  //       email: data.email || auth?.email || '',
-  //       message: data.message || '',
-  //       language: profile.language || 'de',
-  //       clientId: client._id,
-  //       originPath,
-  //     };
+      closeAlert(); // cierra el loading
 
-  //     const response = await sendContactMessage(payload);
+      const popupData =
+        (popups as any)?.[response.code] ||
+        (popups as any)?.CONTACT_MESSAGE_CREATED || {
+          title: response.success ? 'Mensaje enviado' : 'No pudimos enviar tu mensaje',
+          description:
+            response.message ||
+            (response.success
+              ? 'Gracias por contactarnos. Te responderemos pronto.'
+              : 'Inténtalo nuevamente en unos minutos.'),
+          close: popups.button?.close || 'Close',
+        };
 
-  //     if (response.success) {
-  //       const popupData = popups?.[response.code] || {};
-  //       setAlert({
-  //         status: 200,
-  //         title: popupData.title || popups.FAQ_MESSAGE_SUCCESS.title,
-  //         description: popupData.description || response.message,
-  //       });
-  //     }
-  //     setTimeout(() => {
-  //       setAlert(null);
-  //     }, 3000);
-  //   } catch (error: any) {
-  //     if (error.response && error.response.data) {
-  //       const errorKey = error.response.data.errorCode;
-  //       const popupData = popups?.[errorKey] || {};
-  //       setAlert({
-  //         status: error.response.status,
-  //         title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-  //         description:
-  //           popupData.description ||
-  //           error.response.data.message ||
-  //           popups.GLOBAL_INTERNAL_ERROR.description,
-  //       });
-  //     } else {
-  //       setAlert({
-  //         status: 500,
-  //         title: popups.GLOBAL_INTERNAL_ERROR.title,
-  //         description: popups.GLOBAL_INTERNAL_ERROR.description,
-  //       });
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      const alertResponse = {
+        status: response.success ? 200 : 500,
+        title: popupData.title,
+        description: popupData.description,
+        cancelLabel: popupData.close,
+      };
+
+      if (response.success) {
+        showSuccess({ response: alertResponse, onCancel: closeAlert });
+      } else {
+        showError({ response: alertResponse, onCancel: closeAlert });
+      }
+    } catch (error: any) {
+      closeAlert(); // cierra el loading antes de mostrar error
+      if (error.response && error.response.data) {
+        const errorKey = error.response.data.errorCode;
+        const popupData = getPopup(popups, errorKey, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        showError({
+          response: {
+            status: error.response.status,
+            title: popupData.title,
+            description: popupData.description || error.response.data.message,
+            cancelLabel: popupData.close,
+          },
+          onCancel: closeAlert,
+        });
+      } else {
+        const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        showError({
+          response: {
+            status: 500,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: closeAlert,
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main>
       {contactHeroTexts ? <ContactHero {...contactHeroTexts} /> : <ContactHeroSkeleton />}
-      {/* 
+
       <ContactSection
         texts={contactTexts}
         handleSubmit={handleSubmit}
         button={formText.button.contact}
-      /> */}
+        loading={loading}
+      />
 
       <ContactInfo {...contactInfo} />
 

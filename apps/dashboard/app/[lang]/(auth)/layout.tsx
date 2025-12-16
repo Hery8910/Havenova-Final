@@ -4,7 +4,7 @@ import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
 import '../../global.css';
 import { getClient } from '../../../../../packages/services/client';
 import { ClientProvider } from '../../../../../packages/contexts/client/ClientContext';
-import { DashboardProvider } from '../../../../../packages/contexts/profile';
+import { AlertProvider, AuthProvider, ProfileProvider } from '../../../../../packages/contexts';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];
@@ -22,11 +22,15 @@ export default async function AuthLayout({
   return (
     <html lang={params.lang} data-theme="light">
       <body>
-        <ClientProvider initialClient={client}>
-          <DashboardProvider>
-            <I18nProvider initialLanguage={params.lang}>{children}</I18nProvider>
-          </DashboardProvider>
-        </ClientProvider>
+        <AlertProvider>
+          <ClientProvider initialClient={client}>
+            <I18nProvider initialLanguage={params.lang}>
+              <AuthProvider>
+                <ProfileProvider>{children}</ProfileProvider>
+              </AuthProvider>
+            </I18nProvider>
+          </ClientProvider>
+        </AlertProvider>
       </body>
     </html>
   );

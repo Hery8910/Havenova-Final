@@ -1,14 +1,13 @@
 import '../../global.css';
 import styles from './layout.module.css';
 import { ClientProvider } from '@/packages/contexts/client/ClientContext';
-import { DashboardProvider, useUser } from '@/packages/contexts/profile/ProfileContext';
-import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
 import { getClient } from '@/packages/services/client';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 import Sidebar from '@/packages/components/sidebar/Sidebar';
 import { DashboardHeader } from '@/packages/components/dashboard/dashboardHeader';
 import React from 'react';
+import { AlertProvider } from '@/packages/contexts/';
 import { MdDashboard, MdPeopleAlt } from 'react-icons/md';
 import { FaFolder } from 'react-icons/fa';
 import { GrUserWorker } from 'react-icons/gr';
@@ -16,7 +15,7 @@ import { IoNotifications, IoSettingsSharp } from 'react-icons/io5';
 import { RxActivityLog } from 'react-icons/rx';
 import { BiSolidOffer } from 'react-icons/bi';
 import { ImBlog } from 'react-icons/im';
-import { redirect } from 'next/navigation';
+import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];
@@ -77,21 +76,25 @@ export default async function LangLayout({
       className={`${poppins.variable} ${roboto.variable}`}
     >
       <body className={styles.body}>
-        <ClientProvider initialClient={client}>
-          <DashboardProvider>
+        <AlertProvider>
+          <ClientProvider initialClient={client}>
             <I18nProvider initialLanguage={params.lang}>
-              <div className={styles.wrapper}>
-                <nav className={styles.nav}>
-                  <Sidebar items={items} context="admin-dashboard" />
-                </nav>
-                <header className={styles.header}>
-                  <DashboardHeader />
-                </header>
-                <main className={`${styles.main} card`}>{children}</main>
-              </div>
+              <AuthProvider>
+                <ProfileProvider>
+                  <div className={styles.layout}>
+                    <nav className={styles.nav}>
+                      <Sidebar items={items} context="admin-dashboard" />
+                    </nav>
+                    <header className={styles.header}>
+                      <DashboardHeader />
+                    </header>
+                    <main className={`${styles.main} card`}>{children}</main>
+                  </div>
+                </ProfileProvider>
+              </AuthProvider>
             </I18nProvider>
-          </DashboardProvider>
-        </ClientProvider>
+          </ClientProvider>
+        </AlertProvider>
       </body>
     </html>
   );

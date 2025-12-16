@@ -6,11 +6,17 @@ import React, {
   useState,
   useCallback,
   useContext,
+  useRef,
   ReactNode,
 } from 'react';
 
 import { useAuth } from '../auth/authContext';
-import { getUserClientProfile, createOrUpdateUserClientProfile } from '@/packages/services/profile';
+import {
+  getUserClientProfile,
+  createUserClientProfile,
+  updateUserClientProfile,
+} from '@/packages/services/profile';
+import { refreshToken } from '@/packages/services/auth/authService';
 
 import { UserClientProfile, ThemeMode } from '@/packages/types/profile/profileTypes';
 import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
@@ -26,6 +32,7 @@ interface ProfileContextProps {
 
   setLanguage: (lang: string) => Promise<void>;
   setTheme: (theme: ThemeMode) => Promise<void>;
+  setProfileImage: (profileImage: string) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
@@ -33,6 +40,7 @@ const ProfileContext = createContext<ProfileContextProps | undefined>(undefined)
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, setAuth } = useAuth();
   const clientId = auth.clientId;
+  const creatingProfileRef = useRef(false);
 
   const [profile, setProfile] = useState<UserClientProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +79,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     name: previous?.name,
     phone: previous?.phone,
     address: previous?.address,
-    profileImage: previous?.profileImage,
+    profileImage: previous?.profileImage ?? '/avatars/avatar-1.svg',
     language: previous?.language ?? 'de',
     theme: previous?.theme ?? 'light',
   });
@@ -118,10 +126,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   // -------------------
 
   const reloadProfile = useCallback(async () => {
-    if (!auth.isLogged || auth.role === 'guest') return;
+    if (!auth.isLogged || auth.role === 'guest' || !clientId) return;
 
     try {
-      const backendProfile = await getUserClientProfile(clientId);
+      const backendProfile = await getUserClientProfile();
       const merged = { ...createLocalDefault(profile), ...backendProfile };
       setProfile(merged);
       saveToStorage(merged);
@@ -132,29 +140,57 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (err: any) {
       const status = err?.response?.status;
+      const code = err?.response?.data?.code;
 
-      if (status === 404 && auth.isNewUser) {
-        // Crear perfil inicial automáticamente
-        const initialProfile: UserClientProfile = {
-          name: '', // si quieres: auth.nameFromRegister
-          language: profile?.language ?? 'de',
-          theme: profile?.theme ?? 'light',
-        };
+      if (
+        (status === 404 || code === 'USER_CLIENT_PROFILE_NOT_FOUND') &&
+        auth.isNewUser &&
+        !creatingProfileRef.current
+      ) {
+        creatingProfileRef.current = true;
 
-        const payload: UpdateUserProfilePayload = {
-          clientId,
-          role: auth.role,
-          ...initialProfile,
-        };
+        try {
+          // Crear perfil inicial automáticamente
+          const initialProfile: UserClientProfile = {
+            name: profile?.name || '',
+            language: profile?.language ?? 'de',
+            theme: profile?.theme ?? 'light',
+          };
 
-        await createOrUpdateUserClientProfile(payload);
+          const payload: UpdateUserProfilePayload = {
+            clientId,
+            role: auth.role,
+            ...initialProfile,
+          };
 
-        const newBackend = await getUserClientProfile(clientId);
-        setProfile({ ...initialProfile, ...newBackend });
-        saveToStorage({ ...initialProfile, ...newBackend });
+          const created = await createUserClientProfile(payload);
+          const newProfile = { ...initialProfile, ...created.profile };
 
-        setAuth({ ...auth, isNewUser: false });
+          setProfile(newProfile);
+          saveToStorage(newProfile);
+
+          setAuth({ ...auth, isNewUser: false });
+        } finally {
+          creatingProfileRef.current = false;
+        }
         return;
+      }
+
+      // Si el token expiró, intenta refrescar y reintenta una vez
+      if (status === 401 || status === 403) {
+        try {
+          await refreshToken();
+          const backendProfile = await getUserClientProfile();
+          const merged = { ...createLocalDefault(profile), ...backendProfile };
+          setProfile(merged);
+          saveToStorage(merged);
+
+          if (auth.isNewUser) {
+            setAuth({ ...auth, isNewUser: false });
+          }
+        } catch {
+          // si vuelve a fallar, no hacemos nada (AuthContext debería manejar la sesión)
+        }
       }
 
       // Otros errores → no tocamos nada
@@ -178,7 +214,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       const updatedLocal = { ...profile, ...patch };
       setProfile(updatedLocal);
       saveToStorage(updatedLocal);
-
+      reloadProfile();
       // Solo sincronizar si está logeado
       if (auth.isLogged && auth.role !== 'guest') {
         const payload: UpdateUserProfilePayload = {
@@ -186,7 +222,21 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           role: auth.role,
           ...updatedLocal,
         };
-        await createOrUpdateUserClientProfile(payload);
+        try {
+          await updateUserClientProfile(payload);
+          reloadProfile();
+        } catch (err: any) {
+          const status = err?.response?.status;
+
+          if (status === 401 || status === 403) {
+            try {
+              await refreshToken();
+              await updateUserClientProfile(payload);
+            } catch {
+              // si vuelve a fallar, no hacemos nada; AuthContext se encargará de la sesión
+            }
+          }
+        }
       }
     },
     [auth, clientId, profile]
@@ -194,6 +244,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const setLanguage = (lang: string) => updateProfile({ language: lang });
   const setTheme = (theme: ThemeMode) => updateProfile({ theme });
+  const setProfileImage = (profileImage: string) => updateProfile({ profileImage });
 
   if (!isClientReady || loading || !profile) return null;
 
@@ -206,6 +257,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         updateProfile,
         setLanguage,
         setTheme,
+        setProfileImage,
       }}
     >
       {children}

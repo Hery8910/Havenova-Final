@@ -1,90 +1,156 @@
-.section {
-  width: 100vw;
-  height: 100vh;
+.card[data-type='success'] {
+  --theme-color: var(--color-success);
+}
+.card[data-type='error'] {
+  --theme-color: var(--color-error);
+}
+.card[data-type='warning'] {
+  --theme-color: var(--color-warning);
+}
+.card[data-type='info'] {
+  --theme-color: var(--color-info);
+}
+.card[data-type='loading'] {
+  --theme-color: var(--color-info);
+}
+
+/* --- Layout Principal (Overlay) --- */
+.overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 15, 15, 0.55);
-  backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 2000;
-  animation: fadeIn 0.25s ease-out;
-}
-
-.modal {
-  width: 100%;
-  max-width: 480px;
-  padding: 24px;
-  border-radius: 16px;
-  border-width: 2px;
-  border-style: solid;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(20px);
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  animation: pop 0.3s ease-out;
-}
-
-.iconContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease-out forwards;
 }
 
-.icon {
-  padding: 12px;
+/* --- La Tarjeta (Glassy Gradient) --- */
+.card {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 8px;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--theme-color) 50%, rgba(255, 255, 255, 0.507)) 0%,
+    var(--bg-card-1) 100%
+  );
+  border: 1px solid var(--theme-color);
+  animation: popUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Icono (Squircle Flotante) --- */
+.iconWrapper,
+.loadingWrapper {
+  width: 72px;
+  height: 72px;
   border-radius: 16px;
-  opacity: 0.95;
-  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px auto;
+  background-color: var(--theme-color);
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.438);
+  color: var(--theme-color);
+  transition: transform 0.3s ease;
+}
+.loadingWrapper {
+  background-color: transparent;
+  box-shadow: none;
+}
+/* Efecto hover sutil en la tarjeta mueve el icono */
+.card:hover .iconWrapper {
+  transform: translateY(-4px) scale(1.05);
 }
 
-.spinner {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 6px solid rgba(255, 255, 255, 0.25);
-  border-top-color: white;
-  animation: spin 0.7s linear infinite, glow 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+.iconImage {
+  object-fit: contain;
 }
 
-.textBlock {
+.content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  text-align: left;
+  gap: 8px;
 }
 
-.buttonGroup {
-  margin-top: 16px;
+.title {
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+/* --- Botones --- */
+.actions {
   display: flex;
   gap: 12px;
+  width: 100%;
 }
 
-.cancel,
-.confirm {
-  padding: 8px 18px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 8px;
-  border-width: 2px;
+.btnCancel,
+.btnConfirm {
+  flex: 1;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: clamp(14px, 3vw, 16px);
+  border-radius: 6px;
   cursor: pointer;
+  border: none;
   transition: all 0.2s ease;
 }
 
-.cancel:hover,
-.confirm:hover {
+/* Estilo Cancelar (Clean Surface) */
+.btnCancel {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: var(--text-secondary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btnCancel:hover {
+  background-color: #f8fafc;
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+
+/* Estilo Confirmar (Vibrant Theme) */
+.btnConfirm {
+  background-color: var(--theme-color);
+  color: #ffffff;
+  /* Sombra de color suave debajo del botón */
+  box-shadow: 0 4px 12px -2px color-mix(in srgb, var(--theme-color) 40%, transparent);
+}
+
+.btnConfirm:hover {
+  filter: brightness(110%);
   transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 16px -4px color-mix(in srgb, var(--theme-color) 50%, transparent);
 }
 
-.confirm {
-  color: white;
+/* --- Spinner Moderno (Minimalista) --- */
+.spinner {
+  width: 60px;
+  height: 60px;
+  animation: rotate 2s linear infinite;
 }
 
+.spinnerPath {
+  stroke: var(--theme-color);
+  background-color: transparent;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+/* --- Animaciones --- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -94,31 +160,34 @@
   }
 }
 
-@keyframes pop {
+@keyframes popUp {
   from {
-    transform: scale(0.92);
     opacity: 0;
+    transform: scale(0.95) translateY(10px);
   }
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
-@keyframes spin {
-  to {
+@keyframes rotate {
+  100% {
     transform: rotate(360deg);
   }
 }
 
-@keyframes glow {
+@keyframes dash {
   0% {
-    filter: drop-shadow(0 0 2px white);
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
   }
   50% {
-    filter: drop-shadow(0 0 12px white);
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
   }
   100% {
-    filter: drop-shadow(0 0 2px white);
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
 }

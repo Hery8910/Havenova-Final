@@ -346,14 +346,15 @@
       "tos": "I have read and accept the Terms of Service and the Privacy Policy.",
       "address": "Address",
       "phone": "Phone number",
+      "profileImage": "Change profile image",
       "message": "Message"
     },
     "placeholders": {
-      "name": "e.g. John Doe",
-      "email": "e.g. john.doe@example.com",
-      "password": "At least 8 characters",
-      "address": "e.g. Main Street 12, 12345 London",
-      "phone": "e.g. +44 7911 123456",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "*********",
+      "address": "Main Street 12, 12345 London",
+      "phone": "+49 7911 123456",
       "message": "Your question or message..."
     }
   },

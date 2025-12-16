@@ -2,9 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
-import { loginUser } from '@/packages/services/profile/profileService';
 import Link from 'next/link';
-import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { FormWrapper } from '@/packages/components/userForm';
@@ -13,6 +11,7 @@ import { AlertWrapper } from '@/packages/components/alert';
 import { LoginPayload } from '@/packages/types';
 import { href } from '@/packages/utils/navigation';
 import { useLang } from '@/packages/hooks';
+import { loginUser } from '../../../../../../packages/services/auth/authService';
 
 export interface LoginData {
   title: string;
@@ -24,9 +23,7 @@ export interface LoginData {
 }
 
 const Login = () => {
-  const { refreshUser } = useUser();
   const { client } = useClient();
-  const { user } = useUser();
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
@@ -108,7 +105,7 @@ const Login = () => {
       <h1 className={styles.h1}>{login.title}</h1>
       <section className={`${styles.section} card`}>
         <FormWrapper<LoginPayload>
-          fields={['email', 'password']}
+          fields={['email', 'password'] as const}
           onSubmit={handleLogin}
           button={formText.button.login}
           showForgotPassword
@@ -117,6 +114,7 @@ const Login = () => {
             email: '',
             password: '',
           }}
+          loading={loading}
         />
         <aside className={styles.aside}>
           <p className={styles.p}>{login.cta.title}</p>
@@ -125,8 +123,6 @@ const Login = () => {
           </Link>
         </aside>
       </section>
-      {loading && !redirecting && <Loading theme={user?.theme || 'light'} />}
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </main>
   );
 };

@@ -17,8 +17,8 @@ const CalendarDayPopup: React.FC<CalendarDayPopupProps> = ({
   const formattedDate = new Date(date).toLocaleDateString('de-DE', {
     weekday: 'long',
     day: '2-digit',
-    month: 'long',
-    year: 'numeric',
+    month: 'short',
+    year: '2-digit',
   });
 
   return (

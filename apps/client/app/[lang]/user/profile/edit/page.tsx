@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '../../../../../../../packages/contexts/profile/ProfileContext';
-import { updateUser } from '../../../../../../../packages/services/profile/profileService';
 import styles from './page.module.css';
-import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
-import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
-import AlertPopup from '../../../../../../../packages/components/alert/alertPopup/AlertPopup';
-import { FormWrapper } from '../../../../../../../packages/components/userForm';
-import { UpdateUserPayload } from '../../../../../../../packages/types';
+import { useProfile } from '@/packages/contexts/profile/ProfileContext';
+import { useClient } from '@/packages/contexts/client/ClientContext';
+import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
+import { FormWrapper } from '@/packages/components/userForm';
+import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
 import { useRouter } from 'next/navigation';
-import ThemeToggler from '../../../../../../../packages/components/themeToggler/ThemeToggler';
-import LanguageSwitcher from '../../../../../../../packages/components/languageSwitcher/LanguageSwitcher';
+import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
+import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
+import { ButtonProps } from '@/packages/components/common/button/Button';
 
 export interface ThemeData {
   title: string;
@@ -21,29 +21,27 @@ export interface ThemeData {
 export interface EditData {
   title: string;
   description: string;
-  subheading: string;
+  subheading?: string;
   theme: ThemeData;
   personalInfo: string;
   password: string;
 }
 interface EditFormData {
   name: string;
-  email: string;
-  password: string;
   address: string;
-  profileImage: string;
   phone: string;
   clientId: string;
 }
 
 export default function Edit() {
-  const { user, refreshUser } = useUser();
+  const { profile, updateProfile, reloadProfile } = useProfile();
   const { client } = useClient();
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
   const edit: EditData = texts?.pages?.user.edit;
   const formText = texts.components.form;
+  const editButton = formText.button.edit as ButtonProps;
 
   const [alert, setAlert] = useState<{
     type: 'success' | 'error';
@@ -51,7 +49,7 @@ export default function Edit() {
     description: string;
   } | null>(null);
 
-  const handleEdit = async (data: UpdateUserPayload) => {
+  const handleEdit = async (data: EditFormData) => {
     try {
       if (!data.name || !data.address || !data.phone || !data.clientId) {
         setAlert({
@@ -61,42 +59,31 @@ export default function Edit() {
         });
         return;
       }
-      const response = await updateUser(data);
-      if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        setAlert({
-          type: 'success',
-          title: popupData.title || popups.USER_EDIT_USER_UPDATE_SUCCESS.title,
-          description: popupData.description || popups.USER_EDIT_USER_UPDATE_SUCCESS.description,
-        });
-        await refreshUser(); // Para refrescar el contexto y mostrar la nueva imagen
-        setTimeout(() => {
-          setAlert(null);
-        }, 3000);
-      }
+      await updateProfile({
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+      });
+
+      setAlert({
+        type: 'success',
+        title: popups.AUTH_GET_SUCCESS.title,
+        description: popups.AUTH_GET_SUCCESS.description,
+      });
+      await reloadProfile();
+      setTimeout(() => {
+        setAlert(null);
+      }, 3000);
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        const errorKey = error.response.data.errorCode;
-        const popupData = popups?.[errorKey] || {};
-        setAlert({
-          type: 'error',
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description:
-            popupData.description ||
-            error.response.data.message ||
-            popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      } else {
-        setAlert({
-          type: 'error',
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      }
+      setAlert({
+        type: 'error',
+        title: popups.GLOBAL_INTERNAL_ERROR.title,
+        description: popups.GLOBAL_INTERNAL_ERROR.description,
+      });
     }
   };
 
-  if (!user) return <p>Loading...</p>;
+  if (!profile) return <p>Loading...</p>;
   return (
     <section className={`${styles.section} card`}>
       <header className={styles.header}>
@@ -118,19 +105,17 @@ export default function Edit() {
       </article>
       <article className={styles.article}>
         <h4 className={styles.h4}>{edit.personalInfo}</h4>
-        <FormWrapper<UpdateUserPayload>
-          fields={['name', 'address', 'phone', 'clientId']}
+        <FormWrapper<EditFormData>
+          fields={['name', 'address', 'phone'] as const}
           onSubmit={handleEdit}
-          button={formText.button.edit}
-          showForgotPassword
+          button={editButton}
           initialValues={{
-            name: '',
-            address: '',
-            phone: '',
-            theme: user.theme,
-            language: user.language,
-            clientId: '',
+            name: profile.name || '',
+            address: profile.address || '',
+            phone: profile.phone || '',
+            clientId: client?._id || '',
           }}
+          loading={false}
         />
       </article>
       {alert && (
@@ -138,7 +123,7 @@ export default function Edit() {
           type={alert.type}
           title={alert.title}
           description={alert.description}
-          onClose={() => setAlert(null)}
+          onCancel={() => setAlert(null)}
         />
       )}
     </section>

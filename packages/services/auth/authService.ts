@@ -52,12 +52,11 @@ export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> =
 // AUTH ME (AuthUser)
 // ---------------------------
 
-export const getAuthUser = async (clientId: string): Promise<AuthUser> => {
+export const getAuthUser = async (): Promise<AuthUser> => {
   const { data } = await api.get<ApiResponse<AuthUser>>('/api/auth/me', {
-    params: { clientId },
     withCredentials: true,
   });
-  return data.data;
+  return data.user;
 };
 
 // ---------------------------

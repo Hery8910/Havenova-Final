@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Calendar } from '@/packages/components/dashboard/calendar';
 import { CheckoutCart } from '@/packages/components/services/checkoutCart';
-import { useUser } from '@/packages/contexts/profile';
 import { useI18n } from '@/packages/contexts/i18n';
 import { Loading } from '../../../../../packages/components/loading';
 import { useClient } from '../../../../../packages/contexts/client/ClientContext';
@@ -13,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useServiceCart } from '../../../../../packages/contexts';
 import { Slot } from '../../../../../packages/utils/calendar/calendarUtils';
+import { useRequireLogin } from '../../../../../packages/hooks/useRequireLogin';
 
 export interface CalendarData {
   year: number;
@@ -30,7 +30,6 @@ export interface CalendarData {
 }
 
 const CheckoutPage = () => {
-  const { user } = useUser();
   const { client } = useClient();
   const { totalCount } = useServiceCart();
   const { texts } = useI18n();
@@ -49,24 +48,8 @@ const CheckoutPage = () => {
     end: '',
     available: true,
   });
-  console.log(selectedDate, selectedSlot);
 
-  const hasAccess = user && user._id && totalCount > 0;
-
-  useEffect(() => {
-    if (!hasAccess) {
-      const timer = setInterval(() => {
-        setRedirectCountdown((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            router.push('/');
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [hasAccess, router]);
+  useRequireLogin();
 
   useEffect(() => {
     const loadCalendar = async () => {
@@ -89,36 +72,11 @@ const CheckoutPage = () => {
         setLoading(false);
       }
     };
-    if (hasAccess) loadCalendar();
-  }, [client?._id, hasAccess]);
-
-  if (!hasAccess) {
-    return (
-      <main className={styles.main}>
-        <header className={`${styles.denied_header} card`}>
-          <Image
-            src="/svg/alert/warning.svg"
-            priority
-            alt={denied.alt}
-            width={100}
-            height={100}
-            className={styles.image_warning}
-          />
-          <article className={styles.article}>
-            <h1 className={styles.h1}>{denied.heading}</h1>
-            <p>{denied.description}</p>
-            <p className={styles.count}>
-              {denied.redirecting} {redirectCountdown} {denied.seconds}.
-            </p>
-          </article>
-        </header>
-      </main>
-    );
-  }
+    loadCalendar();
+  }, [client?._id]);
 
   return (
     <main className={styles.main}>
-      {loading && <Loading theme={user?.theme || 'light'} />}
       <header className={`${styles.header} card`}>
         <Image
           src="/svg/check-list.svg"

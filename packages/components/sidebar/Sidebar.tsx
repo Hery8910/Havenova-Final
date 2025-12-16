@@ -4,12 +4,10 @@ import Link from 'next/link';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
-import { logoutUser } from '../../services/profile/profileService';
 import { MdLogout } from 'react-icons/md';
 
 import { LuLogOut } from 'react-icons/lu';
 import { useI18n } from '../../contexts/i18n';
-import { useUser } from '../../contexts/profile';
 import { Loading } from '../loading';
 import { AlertWrapper } from '../alert';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
@@ -25,14 +23,12 @@ interface DashboardSidebarProps {
 }
 
 export default function Sidebar({ items, context }: DashboardSidebarProps) {
-  const { user } = useUser();
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
-  const { logout } = useUser();
   const [loading, setLoading] = useState(false);
 
   const [alert, setAlert] = useState<{
@@ -52,39 +48,39 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      const response = await logoutUser();
-      if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        logout(); // Limpia el contexto/localstorage, etc.
-        setAlert({
-          status: 200,
-          title: popupData.title || popups.USER_LOGOUT_SUCCESS.title,
-          description: popupData.title || popups.USER_LOGOUT_SUCCESS.description,
-        });
-        setTimeout(() => {
-          setAlert(null);
-          router.push('/');
-        }, 3000);
-      } else {
-        setAlert({
-          status: 500,
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      }
-    } catch (error) {
-      setAlert({
-        status: 500,
-        title: popups.GLOBAL_INTERNAL_ERROR.title,
-        description: popups.GLOBAL_INTERNAL_ERROR.description,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleLogout = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await logoutUser();
+  //     if (response.success) {
+  //       const popupData = popups?.[response.code] || {};
+  //       logout(); // Limpia el contexto/localstorage, etc.
+  //       setAlert({
+  //         status: 200,
+  //         title: popupData.title || popups.USER_LOGOUT_SUCCESS.title,
+  //         description: popupData.title || popups.USER_LOGOUT_SUCCESS.description,
+  //       });
+  //       setTimeout(() => {
+  //         setAlert(null);
+  //         router.push('/');
+  //       }, 3000);
+  //     } else {
+  //       setAlert({
+  //         status: 500,
+  //         title: popups.GLOBAL_INTERNAL_ERROR.title,
+  //         description: popups.GLOBAL_INTERNAL_ERROR.description,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     setAlert({
+  //       status: 500,
+  //       title: popups.GLOBAL_INTERNAL_ERROR.title,
+  //       description: popups.GLOBAL_INTERNAL_ERROR.description,
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <section className={`${styles.nav} ${isOpen ? `${styles.close}` : `${styles.open}`}`}>
@@ -100,7 +96,7 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
       <ul className={styles.ul}>
         {items.map(({ label, href, icon }) => (
           <li key={href} className={styles.li}>
-            <Link
+            {/* <Link
               key={href}
               href={href}
               className={`${styles.link} ${
@@ -108,7 +104,7 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
               } ${pathname === `/${user?.language}${href}` ? styles.active : ''}`}
             >
               {icon} {!isMobile && <p>{label}</p>}
-            </Link>
+            </Link> */}
           </li>
         ))}
       </ul>
@@ -119,14 +115,11 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
             className={`${styles.button} ${
               isMobile ? `${styles.link_close}` : `${styles.link_open}`
             }`}
-            onClick={handleLogout}
           >
             <LuLogOut /> {!isMobile && <p>Logout</p>}
           </button>
         </li>
       </ul>
-      {loading && <Loading theme={user?.theme || 'light'} />}
-      {alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}
     </section>
   );
 }

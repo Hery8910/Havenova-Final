@@ -326,14 +326,15 @@
       "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
       "address": "Adresse",
       "phone": "Telefonnummer",
+      "profileImage": "Profilbild ändern",
       "message": "Nachricht"
     },
     "placeholders": {
-      "name": "z. B. Max Mustermann",
-      "email": "z. B. mustermann@example.com",
-      "password": "Mind. 8 Zeichen",
-      "address": "z. B. Musterstraße 12, 12345 Berlin",
-      "phone": "z. B. 0157 12345678",
+      "name": "Max Mustermann",
+      "email": "mustermann@example.com",
+      "password": "*********",
+      "address": "Musterstraße 12, 12345 Berlin",
+      "phone": "+49 157 12345678",
       "message": "Ihre Frage oder Nachricht..."
     }
   },

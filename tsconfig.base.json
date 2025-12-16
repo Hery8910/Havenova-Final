@@ -17,7 +17,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
+      "@/*": ["./*"],
+      "@/apps/*": ["apps/*"],
+      "@/packages/*": ["packages/*"],
       "@havenova/components/*": ["packages/components/*"],
       "@havenova/contexts/*": ["packages/contexts/*"],
       "@havenova/hooks/*": ["packages/hooks/*"],

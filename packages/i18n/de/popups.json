@@ -4,6 +4,40 @@
     "continue": "Continue",
     "close": "Close"
   },
+  "ACCESS_TOKEN_EXPIRED": {
+    "title": "Sitzung abgelaufen",
+    "description": "Ihr Zugriffstoken ist abgelaufen. Bitte melden Sie sich erneut an."
+  },
+  "NO_ACCESS_TOKEN": {
+    "title": "Zugriffstoken fehlt",
+    "description": "Es wurde kein gültiges Zugriffstoken gefunden. Bitte melden Sie sich erneut an."
+  },
+  "AUTH_NOT_LOGGED_IN": {
+    "title": "Anmeldung erforderlich",
+    "description": "Sie müssen angemeldet sein, um diese Aktion durchzuführen."
+  },
+  "USER_NEED_TO_LOGIN": {
+    "title": "Anmeldung erforderlich",
+    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
+    "confirm": "Zum Login",
+    "close": "Weiter stöbern"
+  },
+  "AUTH_BLOCKED": {
+    "title": "Konto gesperrt",
+    "description": "Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support."
+  },
+  "AUTH_CLIENT_NOT_FOUND": {
+    "title": "Client nicht gefunden",
+    "description": "Ihr Konto konnte keinem Client zugeordnet werden."
+  },
+  "AUTH_USER_NOT_FOUND": {
+    "title": "Benutzer nicht gefunden",
+    "description": "Es konnte kein passender Benutzer gefunden werden."
+  },
+  "GLOBAL_INTERNAL_ERROR": {
+    "title": "Unerwarteter Fehler",
+    "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
+  },
   "CLIENT_CREATE_SUCCESS": {
     "title": "Kunde erfolgreich erstellt",
     "description": "Der Kunde wurde erfolgreich im System angelegt."
@@ -15,6 +49,10 @@
   "CLIENT_CREATE_FAILED": {
     "title": "Fehler beim Erstellen des Kunden",
     "description": "Beim Erstellen des Kunden ist ein unerwarteter Fehler aufgetreten."
+  },
+  "CLIENT_CREATED": {
+    "title": "Kunde erfolgreich erstellt",
+    "description": "Der Kunde wurde erfolgreich im System angelegt."
   },
   "CLIENT_FETCH_SUCCESS": {
     "title": "Client erfolgreich geladen",
@@ -31,6 +69,10 @@
   "CLIENT_FETCH_DASHBOARD_SUCCESS": {
     "title": "Client-Dashboard erfolgreich geladen",
     "description": "Die Dashboard-Daten des Clients wurden erfolgreich abgerufen."
+  },
+  "CLIENT_PUBLIC_FETCH_SUCCESS": {
+    "title": "Client geladen",
+    "description": "Öffentliche Client-Daten wurden erfolgreich abgerufen."
   },
   "CLIENT_UPDATE_SUCCESS": {
     "title": "Client erfolgreich aktualisiert",
@@ -69,6 +111,22 @@
     "title": "AGB nicht akzeptiert",
     "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um fortzufahren."
   },
+  "USER_LOGIN_MISSING_EMAIL": {
+    "title": "E-Mail erforderlich",
+    "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, um fortzufahren."
+  },
+  "USER_LOGIN_MISSING_PASSWORD": {
+    "title": "Passwort erforderlich",
+    "description": "Bitte geben Sie Ihr Passwort ein, um fortzufahren."
+  },
+  "USER_LOGIN_INVALID_PASSWORD": {
+    "title": "Ungültige Anmeldedaten",
+    "description": "Das Passwort ist falsch. Bitte versuchen Sie es erneut."
+  },
+  "USER_LOGIN_USER_NOT_FOUND": {
+    "title": "Benutzer nicht gefunden",
+    "description": "Es wurde kein Konto mit diesen Zugangsdaten gefunden."
+  },
   "USER_EMAIL_ALREADY_REGISTERED": {
     "title": "E-Mail bereits registriert",
     "description": "Diese E-Mail ist bereits registriert. Bitte melden Sie sich an, um fortzufahren."
@@ -76,6 +134,10 @@
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "E-Mail erfolgreich bestätigt",
     "description": "Ihre E-Mail-Adresse wurde erfolgreich verifiziert."
+  },
+  "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
+    "title": "Reset-Link gesendet",
+    "description": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach."
   },
   "USER_VERIFY_EMAIL_RESENDED": {
     "title": "Bestätigungs-E-Mail erneut gesendet",
@@ -85,9 +147,21 @@
     "title": "Ungültiger Bestätigungslink",
     "description": "Der Verifizierungslink ist ungültig oder fehlt."
   },
-  "USER_VERIFY_INVALID_TOKEN": {
-    "title": "Ungültiger Token",
-    "description": "Der Bestätigungslink ist ungültig oder wurde beschädigt."
+  "USER_VERIFY_EMAIL_VERIFIED": {
+    "title": "E-Mail bereits bestätigt",
+    "description": "Ihre E-Mail war bereits verifiziert. Sie können fortfahren."
+  },
+  "USER_RESET_PASSWORD_INVALID_TOKEN": {
+    "title": "Ungültiger Reset-Link",
+    "description": "Der Passwort-Reset-Link ist ungültig. Bitte fordern Sie einen neuen an."
+  },
+  "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
+    "title": "Reset-Link abgelaufen",
+    "description": "Ihr Passwort-Reset-Link ist abgelaufen. Bitte fordern Sie einen neuen an."
+  },
+  "VALIDATION_ERROR": {
+    "title": "Validierungsfehler",
+    "description": "Bitte prüfen Sie die eingegebenen Daten und versuchen Sie es erneut."
   },
   "USER_NOT_FOUND": {
     "title": "Benutzer nicht gefunden",
@@ -100,6 +174,18 @@
   "LOGOUT_FAILED": {
     "title": "Abmeldung fehlgeschlagen",
     "description": "Die Abmeldung konnte nicht durchgeführt werden. Bitte versuchen Sie es erneut."
+  },
+  "USER_LOGOUT_SUCCESS": {
+    "title": "Abmeldung erfolgreich",
+    "description": "Sie wurden erfolgreich abgemeldet."
+  },
+  "USER_LOGOUT_ALL_SUCCESS": {
+    "title": "Abmeldung auf allen Geräten",
+    "description": "Sie wurden auf allen Geräten abgemeldet."
+  },
+  "AUTH_GET_SUCCESS": {
+    "title": "Sitzung geladen",
+    "description": "Ihre Sitzungsinformationen wurden geladen."
   },
 
   "USER_CLIENT_NOT_FOUND": {
@@ -118,6 +204,10 @@
   "REFRESH_TOKEN_MISSING": {
     "title": "Erneute Anmeldung erforderlich",
     "description": "Ihre Sitzung ist nicht mehr gültig. Bitte melden Sie sich erneut an."
+  },
+  "REFRESH_TOKEN_INVALIDATED": {
+    "title": "Sitzung ungültig",
+    "description": "Ihre Sitzung wurde ungültig. Bitte melden Sie sich erneut an."
   },
   "REFRESH_TOKEN_EXPIRED": {
     "title": "Sitzung abgelaufen",
@@ -141,8 +231,36 @@
     "description": "Sie wurden erfolgreich eingeloggt."
   },
 
-  "AUTH_NOT_LOGGED_IN": {
-    "title": "Anmeldung erforderlich",
-    "description": "Sie müssen angemeldet sein, um diese Aktion durchzuführen."
+  "USER_FORGOT_PASSWORD_EMAIL_SENT": {
+    "title": "Reset-Link gesendet",
+    "description": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach."
+  },
+  "USER_LOGIN_EMAIL_NOT_VERIFIED": {
+    "title": "E-Mail nicht bestätigt",
+    "description": "Bitte bestätigen Sie Ihre E-Mail, um fortzufahren. Prüfen Sie Ihr Postfach."
+  },
+  "USER_LOGIN_SUCCESS": {
+    "title": "Login erfolgreich",
+    "description": "Sie wurden erfolgreich eingeloggt."
+  },
+  "USER_RESET_PASSWORD_SUCCESS": {
+    "title": "Passwort zurückgesetzt",
+    "description": "Ihr Passwort wurde aktualisiert. Bitte melden Sie sich mit dem neuen Passwort an."
+  },
+  "USER_UPDATE_PASSWORD_SUCCESS": {
+    "title": "Passwort aktualisiert",
+    "description": "Ihr Passwort wurde erfolgreich aktualisiert."
+  },
+  "USER_VERIFY_EMAIL_RESENT": {
+    "title": "Bestätigungs-E-Mail erneut gesendet",
+    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet."
+  },
+  "USER_VERIFY_EXPIRED_TOKEN": {
+    "title": "Bestätigungslink abgelaufen",
+    "description": "Ihr Bestätigungslink ist abgelaufen. Bitte fordern Sie einen neuen an."
+  },
+  "USER_VERIFY_INVALID_TOKEN": {
+    "title": "Ungültiger Bestätigungslink",
+    "description": "Der Bestätigungslink ist ungültig oder beschädigt."
   }
 }

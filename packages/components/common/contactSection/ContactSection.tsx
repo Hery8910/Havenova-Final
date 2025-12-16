@@ -1,4 +1,4 @@
-import { ContactMessageData } from '../../../types';
+import { ContactMessageFormData } from '../../../types';
 import { FormWrapper } from '../../userForm';
 import { ButtonProps } from '../button/Button';
 import styles from './ContactSection.module.css';
@@ -10,11 +10,17 @@ export interface ContactSectionTexts {
 
 interface ContactSectionProps {
   texts: ContactSectionTexts;
-  handleSubmit: (data: any) => void;
+  handleSubmit: (data: ContactMessageFormData) => void;
   button: ButtonProps;
+  loading?: boolean;
 }
 
-const ContactSection: React.FC<ContactSectionProps> = ({ texts, handleSubmit, button }) => {
+const ContactSection: React.FC<ContactSectionProps> = ({
+  texts,
+  handleSubmit,
+  button,
+  loading = false,
+}) => {
   return (
     <section className={styles.section} role="region" aria-labelledby="contact-heading">
       <header className={styles.header}>
@@ -22,18 +28,18 @@ const ContactSection: React.FC<ContactSectionProps> = ({ texts, handleSubmit, bu
         <p>{texts.description}</p>
       </header>
 
-      <FormWrapper<ContactMessageData>
-        fields={['name', 'email', 'message']}
+      <FormWrapper<ContactMessageFormData>
+        fields={['name', 'email', 'message'] as const}
         onSubmit={handleSubmit}
         button={button}
         initialValues={{
           name: '',
           email: '',
           message: '',
-          language: '',
           clientId: '',
-          originPath: '',
+          userId: '',
         }}
+        loading={loading}
       />
     </section>
   );

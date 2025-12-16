@@ -3,9 +3,11 @@
 import { useRouter } from 'next/navigation';
 import {
   fallbackGlobalError,
+  fallbackButtons,
   fallbackExpiredToken,
   fallbackInvalidToken,
   fallbackVerifyEmailResended,
+  fallbackGlobalLoading,
   useGlobalAlert,
   useAuth,
 } from '../../contexts';
@@ -80,7 +82,7 @@ export function useVerifyEmailActions() {
             status: 401,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popups.button?.close ?? 'OK',
+            cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
           onCancel: () => {
             closeAlert();
@@ -104,7 +106,7 @@ export function useVerifyEmailActions() {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popups.button?.close ?? 'OK',
+            cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
           onCancel: () => {
             closeAlert();
@@ -206,6 +208,7 @@ export function useVerifyEmailActions() {
         email: user.email,
         role: user.role,
         isVerified: user.isVerified,
+        isNewUser: true,
       });
 
       // El success de login no lo mostramos aquí, lo dejas a la página verify-email
@@ -237,7 +240,7 @@ export function useVerifyEmailActions() {
   //  handleResendEmail
   // -----------------------
   const handleResendEmail = async (popups: PopupsTexts, data: ResendVerificationEmailPayload) => {
-    const loadingData = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalError);
+    const loadingData = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
 
     showLoading({
       response: {

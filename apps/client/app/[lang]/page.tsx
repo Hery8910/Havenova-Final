@@ -1,6 +1,6 @@
 'use client';
 import { useProfile } from '@/packages/contexts/profile/ProfileContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
@@ -31,11 +31,11 @@ export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | '
 
 export default function Home() {
   const { client, loading } = useClient();
-  const { profile } = useProfile();
+  const { profile, reloadProfile } = useProfile();
   const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
-  const { auth } = useAuth();
+  const { auth, refreshAuth } = useAuth();
 
   if (!client || loading || !profile) return <Loading theme={profile?.theme ?? 'dark'} />;
   console.log('profile:', profile, 'auth', auth);
@@ -52,6 +52,7 @@ export default function Home() {
 
   const popups = texts.popups;
   const [isMobile, setIsMobile] = useState(false);
+  const didRefreshRef = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,6 +63,26 @@ export default function Home() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Refrescar sesión y perfil si corresponde
+  useEffect(() => {
+    if (didRefreshRef.current) return;
+    didRefreshRef.current = true;
+
+    let isMounted = true;
+
+    (async () => {
+      await refreshAuth();
+      if (!isMounted) return;
+
+      // reloadProfile ya verifica permisos internamente
+      await reloadProfile();
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [refreshAuth, reloadProfile]);
 
   const handleNavigation = (section: HomeCtaCase) => {
     switch (section) {

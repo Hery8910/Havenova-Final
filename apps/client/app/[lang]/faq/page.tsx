@@ -6,8 +6,8 @@ import styles from './page.module.css';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useUser } from '@/packages/contexts/profile/ProfileContext';
 import { useEffect, useState } from 'react';
-import { FaqMessageData } from '@/packages/types';
-import { sendContactMessage } from '@/packages/services/profile/profileService';
+import { ContactMessageCreatePayload, ContactMessageFormData } from '@/packages/types';
+import { sendContactMessage } from '@/packages/services/contact';
 import { AlertWrapper } from '@/packages/components/alert';
 import Loading from '@/packages/components/loading/Loading';
 import { useSearchParams } from 'next/navigation';
@@ -52,7 +52,7 @@ const QuestionsAnswers = () => {
     }
   }, [searchParams]);
 
-  const handleSubmit = async (data: Partial<FaqMessageData>) => {
+  const handleSubmit = async (data: ContactMessageFormData) => {
     setLoading(true);
     try {
       if (!client?._id) {
@@ -65,22 +65,18 @@ const QuestionsAnswers = () => {
         return;
       }
 
-      const originPath = typeof window !== 'undefined' ? window.location.pathname : '';
-
-      const payload: FaqMessageData = {
+      const payload: ContactMessageCreatePayload = {
+        userId: user?.userId || '',
         name: data.name || user?.name || '',
         email: data.email || user?.email || '',
         message: data.message || '',
-        language: user.language || 'de',
         clientId: client._id,
-        originPath,
       };
 
       const response = await sendContactMessage(payload);
 
       if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        console.log(originPath);
+        const popupData = popups?.[response.code] || popups?.CONTACT_MESSAGE_CREATED || {};
 
         setAlert({
           status: 200,
@@ -125,6 +121,7 @@ const QuestionsAnswers = () => {
         texts={contactTexts}
         handleSubmit={handleSubmit}
         button={formText.button.contact}
+        loading={loading}
       />
       {loading && <Loading theme={user?.theme || 'light'} />}
       {!loading && alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}

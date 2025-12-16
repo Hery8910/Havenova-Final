@@ -316,11 +316,11 @@
   },
   "user": {
     "register": {
-      "title": "Welcome",
-      "description": "Create an account to manage your requests and explore your benefits.",
+      "title": "Create account",
+      "description": "Become part of Havenova and book your first service.",
       "cta": {
         "title": "Already have an account?",
-        "label": "Login",
+        "label": "Log in now",
         "url": "/user/login"
       }
     },
@@ -348,6 +348,18 @@
       "title": "Set a new password",
       "info": "Please enter your new password below. The password must be at least 8 characters long.",
       "button": "Save password"
+    },
+    "profileHeader": {
+      "ariaLabel": "User area",
+      "verified": "Verified",
+      "verifiedAria": "Account verified",
+      "missingName": "Your name"
+    },
+    "profileNav": {
+      "profile": "Profile",
+      "requests": "Work requests",
+      "notifications": "Notifications",
+      "settings": "Settings"
     },
     "verifyEmail": {
       "title": "Email Verification",

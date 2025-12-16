@@ -70,7 +70,7 @@ export function useAlertBase(): AlertHookReturn {
   );
 
   const showSuccess = useCallback(
-    ({ response, onCancel }: ShowBaseArgs) => {
+    ({ response, onCancel, onConfirm }: ShowBaseArgs) => {
       setAlert({
         response: {
           ...response,
@@ -78,6 +78,7 @@ export function useAlertBase(): AlertHookReturn {
           cancelLabel: response.cancelLabel ?? 'Close',
         },
         onCancel: onCancel ?? closeAlert,
+        onConfirm,
       });
     },
     [closeAlert]

@@ -4,12 +4,7 @@ import styles from './layout.module.css';
 import { Metadata } from 'next';
 
 import { userProfileMetadata } from '../../../pageMetadata';
-import { Sidebar } from '@/packages/components/sidebar';
-
-import { FaFolder } from 'react-icons/fa6';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { FaUserEdit } from 'react-icons/fa';
-import { MdNotifications } from 'react-icons/md';
+import { ProfileHeader, ProfileNav } from '@/packages/components/user';
 
 export const metadata: Metadata = userProfileMetadata;
 
@@ -18,20 +13,11 @@ interface ProfileLayoutProps {
 }
 
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
-  const userProfileNavItems = [
-    { label: 'Profile', href: '/user/profile', icon: <IoSettingsSharp /> },
-    { label: 'Edit', href: '/user/profile/edit', icon: <FaUserEdit /> },
-    { label: 'Requests', href: '/user/profile/requests', icon: <FaFolder /> },
-    {
-      label: 'Notification',
-      href: '/user/profile/notification',
-      icon: <MdNotifications />,
-    },
-  ];
   return (
     <main className={styles.layout}>
-      <Sidebar items={userProfileNavItems} context="user-profile" />
-      {children}
+      <ProfileHeader />
+        <ProfileNav />
+        {children}
     </main>
   );
 }

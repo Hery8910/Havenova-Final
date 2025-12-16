@@ -4,6 +4,40 @@
     "continue": "Continue",
     "close": "Close"
   },
+  "ACCESS_TOKEN_EXPIRED": {
+    "title": "Session expired",
+    "description": "Your access token has expired. Please log in again."
+  },
+  "NO_ACCESS_TOKEN": {
+    "title": "Missing access token",
+    "description": "We could not find a valid access token. Please log in again."
+  },
+  "AUTH_NOT_LOGGED_IN": {
+    "title": "Login required",
+    "description": "You need to be logged in to perform this action."
+  },
+  "USER_NEED_TO_LOGIN": {
+    "title": "Login required to continue",
+    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
+    "confirm": "Go to login",
+    "close": "Continue browsing"
+  },
+  "AUTH_BLOCKED": {
+    "title": "Account blocked",
+    "description": "Your access is blocked. Please contact support."
+  },
+  "AUTH_CLIENT_NOT_FOUND": {
+    "title": "Client not found",
+    "description": "We couldn't match your account to this client."
+  },
+  "AUTH_USER_NOT_FOUND": {
+    "title": "User not found",
+    "description": "We couldn't find a matching user for this request."
+  },
+  "GLOBAL_INTERNAL_ERROR": {
+    "title": "Unexpected error",
+    "description": "Something went wrong. Please try again or contact support."
+  },
   "CLIENT_CREATE_SUCCESS": {
     "title": "Client created successfully",
     "description": "The client has been successfully added to the system."
@@ -15,6 +49,10 @@
   "CLIENT_CREATE_FAILED": {
     "title": "Client creation failed",
     "description": "An unexpected error occurred while creating the client."
+  },
+  "CLIENT_CREATED": {
+    "title": "Client created successfully",
+    "description": "The client has been successfully added to the system."
   },
   "CLIENT_FETCH_SUCCESS": {
     "title": "Client loaded successfully",
@@ -31,6 +69,10 @@
   "CLIENT_FETCH_DASHBOARD_SUCCESS": {
     "title": "Client dashboard loaded successfully",
     "description": "The client dashboard data was retrieved successfully."
+  },
+  "CLIENT_PUBLIC_FETCH_SUCCESS": {
+    "title": "Client loaded",
+    "description": "Public client data was retrieved successfully."
   },
   "CLIENT_UPDATE_SUCCESS": {
     "title": "Client updated successfully",
@@ -69,6 +111,22 @@
     "title": "Terms not accepted",
     "description": "Please accept the terms and privacy policy to continue."
   },
+  "USER_LOGIN_MISSING_EMAIL": {
+    "title": "Email required",
+    "description": "Please provide your email to continue."
+  },
+  "USER_LOGIN_MISSING_PASSWORD": {
+    "title": "Password required",
+    "description": "Please provide your password to continue."
+  },
+  "USER_LOGIN_INVALID_PASSWORD": {
+    "title": "Invalid credentials",
+    "description": "The password is incorrect. Please try again."
+  },
+  "USER_LOGIN_USER_NOT_FOUND": {
+    "title": "User not found",
+    "description": "No account was found with these credentials."
+  },
   "USER_EMAIL_ALREADY_REGISTERED": {
     "title": "Email already registered",
     "description": "This email is already registered. Please log in to continue."
@@ -77,18 +135,33 @@
     "title": "Email verified successfully",
     "description": "Your email address has been successfully verified."
   },
+  "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
+    "title": "Reset link sent",
+    "description": "We have emailed you a link to reset your password. Please check your inbox."
+  },
   "USER_VERIFY_EMAIL_RESENDED": {
     "title": "Verification email resend",
-    "description": "We have sent you a new verification email.",
-    "close": "OK"
+    "description": "We have sent you a new verification email."
   },
   "USER_VERIFY_MISSING_TOKEN": {
     "title": "Invalid verification link",
     "description": "The verification token is missing or invalid."
   },
-  "USER_VERIFY_INVALID_TOKEN": {
-    "title": "Invalid token",
-    "description": "The verification link is invalid or corrupted."
+  "USER_VERIFY_EMAIL_VERIFIED": {
+    "title": "Email already verified",
+    "description": "Your email was already verified. You can continue."
+  },
+  "USER_RESET_PASSWORD_INVALID_TOKEN": {
+    "title": "Invalid reset link",
+    "description": "The password reset link is invalid. Please request a new one."
+  },
+  "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
+    "title": "Reset link expired",
+    "description": "Your password reset link has expired. Please request a new one."
+  },
+  "VALIDATION_ERROR": {
+    "title": "Validation error",
+    "description": "Please review the entered data and try again."
   },
   "USER_NOT_FOUND": {
     "title": "User not found",
@@ -101,6 +174,18 @@
   "LOGOUT_FAILED": {
     "title": "Logout failed",
     "description": "We were unable to log you out. Please try again."
+  },
+  "USER_LOGOUT_SUCCESS": {
+    "title": "Logged out successfully",
+    "description": "You have been logged out successfully."
+  },
+  "USER_LOGOUT_ALL_SUCCESS": {
+    "title": "Logged out of all sessions",
+    "description": "You have been logged out from all devices."
+  },
+  "AUTH_GET_SUCCESS": {
+    "title": "Session loaded",
+    "description": "Your session information has been loaded."
   },
 
   "USER_CLIENT_NOT_FOUND": {
@@ -119,6 +204,10 @@
   "REFRESH_TOKEN_MISSING": {
     "title": "Reauthentication required",
     "description": "Your session is no longer valid. Please log in again."
+  },
+  "REFRESH_TOKEN_INVALIDATED": {
+    "title": "Session invalidated",
+    "description": "Your session has been invalidated. Please log in again."
   },
   "REFRESH_TOKEN_EXPIRED": {
     "title": "Session expired",
@@ -142,8 +231,36 @@
     "description": "You have been logged in successfully."
   },
 
-  "AUTH_NOT_LOGGED_IN": {
-    "title": "Login required",
-    "description": "You need to be logged in to perform this action."
+  "USER_FORGOT_PASSWORD_EMAIL_SENT": {
+    "title": "Reset link sent",
+    "description": "We have emailed you a link to reset your password. Please check your inbox."
+  },
+  "USER_LOGIN_EMAIL_NOT_VERIFIED": {
+    "title": "Email not verified",
+    "description": "Please verify your email to continue. Check your inbox for the verification link."
+  },
+  "USER_LOGIN_SUCCESS": {
+    "title": "Login successful",
+    "description": "You have been logged in successfully."
+  },
+  "USER_RESET_PASSWORD_SUCCESS": {
+    "title": "Password reset successful",
+    "description": "Your password has been updated. Please log in with your new password."
+  },
+  "USER_UPDATE_PASSWORD_SUCCESS": {
+    "title": "Password updated",
+    "description": "Your password has been updated successfully."
+  },
+  "USER_VERIFY_EMAIL_RESENT": {
+    "title": "Verification email resent",
+    "description": "We have sent you a new verification email."
+  },
+  "USER_VERIFY_EXPIRED_TOKEN": {
+    "title": "Verification link expired",
+    "description": "Your verification link has expired. Please request a new one."
+  },
+  "USER_VERIFY_INVALID_TOKEN": {
+    "title": "Invalid verification link",
+    "description": "The verification link is invalid or corrupted."
   }
 }

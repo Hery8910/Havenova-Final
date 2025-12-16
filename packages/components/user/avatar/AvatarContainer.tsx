@@ -20,15 +20,10 @@ export function AvatarContainer() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (!profile.name || !profile.profileImage) {
-    return <AvatarSkeleton />;
-  }
-
   return (
     <AvatarView
-      name={profile.name}
-      profileImage={profile.profileImage}
-      isMobile={isMobile}
+      name={profile.name ?? 'Profile'}
+      profileImage={profile.profileImage ?? '/avatars/avatar-1.svg'}
       onNavigate={() => router.push(href(lang, '/user/profile'))}
     />
   );

@@ -1,20 +1,38 @@
-
-.article {
+.main {
+  width: 100%;
+}
+.button {
   position: absolute;
-  top: -16px;
-  left: 0;
-  right: 0;
+  bottom: 30px;
+  left: 70px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--bg-card-3);
+  transition: all 0.2s ease-in-out;
+  width: fit-content;
+  font-size: clamp(20px, 3vw, 24px);
+  cursor: pointer;
+  color: var(--text-secondary);
+  border: 1px solid var(--text-secondary);
+}
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+.article {
+  width: 100%;
+  height: max-content;
+  position: absolute;
   inset: 0;
-  background: var(--bg-card);
-  border-radius: 8px;
-  box-shadow: var(--shadow-dark);
-  backdrop-filter: blur(8.1px);
-  border: 1px solid var(--bg-gradient);
-  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 32px;
 }
 .aside {
   width: 100%;
@@ -25,45 +43,45 @@
 .ul {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
   list-style: none;
-  max-width: 300px;
 }
 .li {
   cursor: pointer;
 }
 .image {
+  overflow: hidden;
   border-radius: 50%;
-  padding: 4px;
-  border: 2px solid rgba(184, 184, 184, 0.671);
-  transition: all .2s ease-in-out;
+  padding: 2px;
+  background-color: transparent;
+  border: 3px solid rgba(184, 184, 184, 0.671);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
-.image.selected {
+.image:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.selected {
   border: 2px solid var(--brand-accent);
   outline: 2px solid var(--brand-accent);
 }
-.button {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
-  padding: 8px;
-  border-radius: 4px;
-  background: rgba(103, 103, 103, 0.199);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(103, 103, 103, 0.3);
-  transition: all 0.2s ease-in-out;
-  width: fit-content;
-  font-size: clamp(14px, 3vw, 18px);
+.submitButton {
+  flex: 1;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: clamp(14px, 3vw, 16px);
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 16px;
-  color: #f9f9f9;
+  border: none;
+  background-color: var(--brand-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
 }
-.button:hover {
-  background: #2c6aefe5;
-  border: 1px solid #2c6aefaf;
-  color: var(--font-color-white);
+.submitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  color: var(--text-secondary);
 }

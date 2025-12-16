@@ -4,16 +4,15 @@ import styles from './Avatar.module.css';
 export interface AvatarViewProps {
   name: string;
   profileImage: string;
-  isMobile: boolean;
   onNavigate: () => void;
 }
 
-export function AvatarView({ name, profileImage, isMobile, onNavigate }: AvatarViewProps) {
+export function AvatarView({ name, profileImage, onNavigate }: AvatarViewProps) {
   return (
     <section className={styles.section}>
       <button
         onClick={onNavigate}
-        className={`${styles.button} ${isMobile ? styles.mobile : ''}`}
+        className={styles.button}
         aria-label={`Go to profile of ${name}`}
       >
         <Image
@@ -23,7 +22,7 @@ export function AvatarView({ name, profileImage, isMobile, onNavigate }: AvatarV
           width={40}
           height={40}
         />
-        {!isMobile && <p>{name}</p>}
+        <span className={styles.name}>{name}</span>
       </button>
     </section>
   );

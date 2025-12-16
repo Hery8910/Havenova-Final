@@ -5,19 +5,25 @@ import {
   WorkerProfile,
   UpdateUserProfilePayload,
   UpdateUserProfileResponse,
-  ContactMessagePayload,
-  ContactMessageResponse,
+  CreateUserProfileResponse,
 } from '@/packages/types/profile/profileTypes';
 
 // ---------------------------
 // GET PROFILE
 // ---------------------------
 
-export const getUserClientProfile = async (clientId: string): Promise<UserClientProfile> => {
-  const { data } = await api.get<ApiResponse<UserClientProfile>>('/api/home-services/profile/me', {
-    params: { clientId },
+export const getUserClientProfile = async (): Promise<UserClientProfile> => {
+  const { data } = await api.get<ApiResponse<UserClientProfile>>('/api/home-services/profile', {
     withCredentials: true,
   });
+
+  if (!data.success || !data.data) {
+    const status = data.code === 'USER_CLIENT_PROFILE_NOT_FOUND' ? 404 : 500;
+    const error: any = new Error(data.message || 'Profile fetch failed');
+    error.response = { status, data };
+    throw error;
+  }
+
   return data.data;
 };
 
@@ -25,11 +31,31 @@ export const getUserClientProfile = async (clientId: string): Promise<UserClient
 // UPSERT PROFILE
 // ---------------------------
 
-export const createOrUpdateUserClientProfile = async (
+export const updateUserClientProfile = async (
   payload: UpdateUserProfilePayload
 ): Promise<UpdateUserProfileResponse> => {
   const { data } = await api.patch<ApiResponse<UserClientProfile>>(
-    '/api/home-services/profile/me',
+    '/api/home-services/profile',
+    payload,
+    { withCredentials: true }
+  );
+
+  return {
+    success: data.success,
+    code: data.code,
+    profile: data.data,
+  };
+};
+
+// ---------------------------
+// CREATE PROFILE (new users)
+// ---------------------------
+
+export const createUserClientProfile = async (
+  payload: UpdateUserProfilePayload
+): Promise<CreateUserProfileResponse> => {
+  const { data } = await api.post<ApiResponse<UserClientProfile>>(
+    '/api/home-services/profile',
     payload,
     { withCredentials: true }
   );
@@ -51,20 +77,4 @@ export const getWorkerProfile = async (clientId: string): Promise<WorkerProfile>
     { params: { clientId }, withCredentials: true }
   );
   return data.data;
-};
-
-// ---------------------------
-// CONTACT MESSAGE
-// ---------------------------
-
-export const sendContactMessage = async (
-  payload: ContactMessagePayload
-): Promise<ContactMessageResponse> => {
-  const { data } = await api.post<ApiResponse<null>>('/api/contact', payload);
-
-  return {
-    success: data.success,
-    code: data.code,
-    message: data.message,
-  };
 };

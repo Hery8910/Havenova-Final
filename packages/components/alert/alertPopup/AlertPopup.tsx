@@ -11,7 +11,7 @@ export interface AlertPopupProps {
   cancelLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
-  loading?: boolean; // 👈 nuevo
+  loading?: boolean;
 }
 
 export default function AlertPopup({
@@ -22,93 +22,83 @@ export default function AlertPopup({
   cancelLabel,
   onConfirm,
   onCancel,
-  loading,
+  loading = false,
 }: AlertPopupProps) {
-  const imageMap = {
+  // Mapeo simple solo para las rutas de imagen
+  const imageMap: Record<string, string> = {
     success: '/svg/alert/success.svg',
     error: '/svg/alert/error.svg',
     warning: '/svg/alert/warning.svg',
     info: '/svg/alert/info.svg',
   };
 
-  const colorMap = {
-    success: 'var(--color-success)',
-    error: 'var(--color-error)',
-    warning: 'var(--color-warning)',
-    info: 'var(--color-info)',
-  };
-
-  const bgMap = {
-    success: 'var(--bg-success)',
-    error: 'var(--bg-error)',
-    warning: 'var(--bg-warning)',
-    info: 'var(--bg-info)',
-  };
-
-  const glowColor = colorMap[type];
-
+  // Determinamos el estado visual real. Si carga, forzamos el estilo 'loading'
+  const currentType = loading ? 'loading' : type;
   const hasConfirm = !loading && !!onConfirm && !!confirmLabel;
+  const hasCancel = !loading && !!onCancel && !!cancelLabel; // Opcional: ocultar cancelar si no hay label
 
   return (
-    <section
-      role={hasConfirm ? 'dialog' : 'alertdialog'}
-      aria-modal="true"
-      aria-labelledby="alert-title"
-      aria-describedby="alert-description"
-      tabIndex={-1}
-      className={styles.section}
-    >
-      <div
-        className={styles.modal}
-        style={{ borderColor: glowColor, backgroundColor: bgMap[type] }}
+    <div className={`${styles.overlay} card`}>
+      <section
+        role={hasConfirm ? 'dialog' : 'alertdialog'}
+        aria-modal="true"
+        aria-labelledby="alert-title"
+        aria-describedby="alert-description"
+        className={styles.card}
+        // 👇 Aquí ocurre la magia: pasamos el tipo al CSS
+        data-type={currentType}
       >
-        <div className={styles.iconContainer}>
+        {/* Contenedor del Icono (Squircle flotante) */}
+        <div className={loading ? styles.loadingWrapper : styles.iconWrapper}>
           {loading ? (
-            <div className={styles.spinner} />
+            <svg className={styles.spinner} viewBox="0 0 50 50">
+              <circle
+                className={styles.spinnerPath}
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                strokeWidth="8"
+              ></circle>
+            </svg>
           ) : (
             <Image
               src={imageMap[type]}
               alt={`${type} icon`}
-              width={90}
-              height={90}
-              className={styles.icon}
-              style={{ boxShadow: `0 0 12px ${glowColor}` }}
+              width={40}
+              height={40}
+              className={styles.iconImage}
             />
           )}
         </div>
 
-        <article className={styles.textBlock}>
-          <h4 id="alert-title" style={{ color: glowColor }}>
-            <strong>{title}</strong>
+        {/* Contenido de Texto */}
+        <article className={styles.content}>
+          <h4 id="alert-title" className={styles.title}>
+            {title}
           </h4>
-          <p id="alert-description">{description}</p>
+          <p id="alert-description" className={styles.description}>
+            {description}
+          </p>
 
+          {/* Botones (solo si no está cargando) */}
           {!loading && (
-            <div className={styles.buttonGroup}>
-              <button
-                className={styles.cancel}
-                onClick={onCancel}
-                style={{ borderColor: glowColor, color: glowColor }}
-              >
-                {cancelLabel || 'Cancelar'}
-              </button>
+            <div className={styles.actions}>
+              {hasCancel && (
+                <button onClick={onCancel} className={styles.btnCancel}>
+                  {cancelLabel || 'Cancel'}
+                </button>
+              )}
 
               {hasConfirm && (
-                <button
-                  className={styles.confirm}
-                  onClick={onConfirm}
-                  style={{
-                    backgroundColor: glowColor,
-                    borderColor: glowColor,
-                  }}
-                >
-                  {confirmLabel}
+                <button onClick={onConfirm} className={styles.btnConfirm}>
+                  {confirmLabel || 'Confirm'}
                 </button>
               )}
             </div>
           )}
         </article>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

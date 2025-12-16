@@ -5,3 +5,4 @@ export * from './workRequest';
 export * from './profile';
 export * from './service';
 export * from './auth';
+export * from './contact';

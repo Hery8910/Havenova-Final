@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 import { useAuth } from '../../../contexts/auth/authContext';
 
 interface WrapperProps<T extends Record<string, any>> {
-  fields: FormField[];
+  fields: (FormField & keyof T)[];
   onSubmit: (data: T) => void | Promise<void>;
   button: ButtonProps;
   showForgotPassword?: boolean;
@@ -40,7 +40,7 @@ type ValidateField =
   | 'message'
   | 'tosAccepted';
 
-type FormField =
+export type FormField =
   | 'name'
   | 'email'
   | 'phone'
@@ -99,20 +99,35 @@ export default function FormWrapper<T extends Record<string, any>>({
   const [formData, setFormData] = useState<T>(initialValues);
 
   const [errors, setErrors] = useState<Partial<Record<FormField, string>>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [touched, setTouched] = useState<Partial<Record<FormField, boolean>>>({});
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      clientId: client?._id || '',
-      language: profile?.language || 'de',
-      name: profile?.name ?? prev.name,
-      email: auth?.email ?? prev.email,
-      phone: profile?.phone ?? prev.phone,
-      address: profile?.address ?? prev.address,
+      ...initialValues,
+      clientId: client?._id || initialValues.clientId || '',
+      language: profile?.language || initialValues.language || 'de',
+      name: profile?.name ?? initialValues.name ?? prev.name,
+      email: auth?.email ?? initialValues.email ?? prev.email,
+      phone: profile?.phone ?? initialValues.phone ?? prev.phone,
+      address: profile?.address ?? initialValues.address ?? prev.address,
     }));
-  }, [auth?.email, profile?.language, client?._id]);
+    // Sync whenever profile/auth/initialValues change to keep form updated
+  }, [
+    auth?.email,
+    client?._id,
+    initialValues.address,
+    initialValues.clientId,
+    initialValues.email,
+    initialValues.language,
+    initialValues.name,
+    initialValues.phone,
+    profile?.address,
+    profile?.language,
+    profile?.name,
+    profile?.phone,
+  ]);
 
   const validators: Record<ValidateField, (value: any) => string[]> = {
     name: validateName,
@@ -172,7 +187,7 @@ export default function FormWrapper<T extends Record<string, any>>({
     router.push(href(lang, '/user/forgot-password'));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newErrors: Partial<Record<FormField, string>> = {};
@@ -188,7 +203,7 @@ export default function FormWrapper<T extends Record<string, any>>({
     setErrors(newErrors);
 
     if (Object.values(newErrors).some(Boolean)) return;
-    onSubmit(formData); // ✅ aquí ya es de tipo T
+    await onSubmit(formData); // ✅ aquí ya es de tipo T
 
     setFormData({
       ...initialValues,

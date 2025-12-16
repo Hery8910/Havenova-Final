@@ -1,17 +1,20 @@
 'use client';
 import { useState } from 'react';
-import styles from './page.module.css';
+import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { ButtonProps } from '@/packages/components/common/button/Button';
 import { RegisterFormData, RegisterPayload } from '@/packages/types';
 import { FormWrapper } from '@/packages/components/userForm';
 import {
+  fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingSubmit,
   fallbackRegisterSuccess,
   fallbackTosNotAccepted,
   useGlobalAlert,
+  useProfile,
 } from '@/packages/contexts';
 import {
   loadCookiePrefs,
@@ -20,18 +23,26 @@ import {
 } from '@/packages/utils/cookies/cookieStorage/cookieStorage';
 import { getPopup } from '@/packages/utils/alertType';
 import { registerUser } from '../../../../../../packages/services';
+import { useLang } from '../../../../../../packages/hooks';
+import { useRouter } from 'next/navigation';
+import { href } from '../../../../../../packages/utils/navigation';
+import Image from 'next/image';
 
 export interface RegisterData {
   title: string;
   description: string;
   cta: { title: string; label: string; url: string };
-  image: { src: string; alt: string };
-  backgroundImage: string;
-  button: string;
+  image?: { src: string; alt: string };
+  backgroundImage?: string;
+  button?: string;
 }
 
 const Register = () => {
+  const router = useRouter();
+  const lang = useLang();
   const { client } = useClient();
+  const { profile, updateProfile } = useProfile();
+
   const { texts } = useI18n();
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +50,7 @@ const Register = () => {
   const register: RegisterData = texts?.pages?.user.register;
   const formText = texts.components.form;
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
+  const registerButton = formText.button.register as ButtonProps;
 
   const handleRegister = async (data: RegisterFormData) => {
     try {
@@ -97,6 +109,12 @@ const Register = () => {
       // 4) call backend
       const response = await registerUser(payload);
 
+      // 4.1) Persist local profile data so it survives the verify-email flow
+      await updateProfile({
+        name: data.name,
+        language: data.language || 'de',
+      });
+
       // 5) success popup
       const popupData = getPopup(
         popups,
@@ -110,9 +128,17 @@ const Register = () => {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm,
+          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
-        onConfirm: closeAlert,
+        onConfirm: () => {
+          router.push(href(lang, '/'));
+          closeAlert();
+        },
+        onCancel: () => {
+          router.push(href(lang, '/'));
+          closeAlert();
+        },
       });
     } catch (err: any) {
       const code = err?.response?.data?.code; // FIXED
@@ -126,7 +152,10 @@ const Register = () => {
           description: popupData.description,
           cancelLabel: popupData.close,
         },
-        onCancel: closeAlert,
+        onCancel: () => {
+          router.push(href(lang, '/'));
+          closeAlert();
+        },
       });
     } finally {
       setLoading(false);
@@ -134,18 +163,22 @@ const Register = () => {
   };
 
   return (
-    <main className={styles.main}>
-      <div className={`${styles.wrapper} card`}>
+    <main className={styles.main} aria-labelledby="register-title" aria-describedby="register-desc">
+      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="register-title">
         <header className={styles.header}>
-          <h1 className={styles.h1}>{register?.title}</h1>
-          <p className={styles.header_p}>{register?.description}</p>
+          <h1 id="register-title" className={styles.h1}>
+            {register?.title}
+          </h1>
+          <p id="register-desc" className={styles.header_p}>
+            {register?.description}
+          </p>
         </header>
         <section className={styles.section}>
           <FormWrapper<RegisterFormData>
             showHintPassword
-            fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted']}
+            fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
             onSubmit={handleRegister}
-            button={formText.button.register}
+            button={registerButton}
             initialValues={{
               name: '',
               email: '',

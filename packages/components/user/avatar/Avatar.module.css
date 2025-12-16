@@ -5,25 +5,38 @@
 .button {
   color: rgb(212, 212, 212);
   background: rgba(48, 48, 48, 0.59);
-  border-radius: 16px;
+  border-radius: 50px;
   box-shadow: 0 4px 12px rgba(17, 17, 17, 0.623);
   backdrop-filter: blur(8.1px);
   border: 1px solid rgba(68, 68, 68, 0.671);
   width: fit-content;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  padding: 4px;
-  padding-right: 16px;
-  border-radius: 50px;
+  gap: 12px;
+  padding: 4px 12px 4px 4px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  position: relative;
 }
 .image {
   border-radius: 50%;
 }
-
+.name {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.button:hover .name,
+.button:focus-visible .name {
+  opacity: 1;
+  transform: translateY(0);
+}
+.button:focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 2px;
+}
 .li {
   width: 100%;
   display: flex;

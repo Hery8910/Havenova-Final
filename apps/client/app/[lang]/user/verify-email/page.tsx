@@ -6,9 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useProfile } from '../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../packages/contexts/i18n/I18nContext';
+import { ButtonProps } from '@/packages/components/common/button/Button';
 import {
+  fallbackButtons,
   fallbackGlobalError,
   fallbackLoginSuccess,
+  fallbackLoadingMessages,
   useAuth,
   useGlobalAlert,
 } from '../../../../../../packages/contexts';
@@ -16,7 +19,7 @@ import { useLang } from '../../../../../../packages/hooks';
 import { useVerifyEmailActions } from '@/packages/utils/user/userHandler';
 
 import { FormWrapper } from '../../../../../../packages/components/userForm';
-import styles from './page.module.css';
+import styles from '../userAuth.module.css';
 import { ResendVerificationEmailPayload } from '../../../../../../packages/types';
 import { getPopup } from '../../../../../../packages/utils/alertType';
 import { href } from '../../../../../../packages/utils/navigation';
@@ -32,14 +35,14 @@ const VerifyEmailPage = () => {
 
   const formText = texts.components.form;
   const verifyText = texts.pages.user.verifyEmail;
-  const loadingMsg = texts.loadings.message;
+  const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
+  const resendButton = formText.button.resendEmail as ButtonProps;
 
-  const { auth, refreshAuth } = useAuth();
+  const { auth } = useAuth();
   const { profile } = useProfile();
   const { client } = useClient();
 
   const [loading, setLoading] = useState(false);
-  const [showResendForm, setShowResendForm] = useState(false);
 
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const { handleVerifyEmail, handleMagicLogin, handleResendEmail } = useVerifyEmailActions();
@@ -70,8 +73,8 @@ const VerifyEmailPage = () => {
             cancelLabel: popupData.close,
           },
           onCancel: () => {
-            closeAlert();
             router.push(href(lang, '/'));
+            closeAlert();
           },
         });
 
@@ -80,11 +83,12 @@ const VerifyEmailPage = () => {
 
       try {
         // 1) Loading Verificación
+        const verifyLoading = loadingMsg.verifyEmail ?? fallbackLoadingMessages.verifyEmail;
         showLoading({
           response: {
             status: 102,
-            title: loadingMsg.verifyEmail.title,
-            description: loadingMsg.verifyEmail.description,
+            title: verifyLoading.title,
+            description: verifyLoading.description,
           },
         });
 
@@ -102,11 +106,12 @@ const VerifyEmailPage = () => {
         }
 
         // 2) Loading Login
+        const loginLoading = loadingMsg.login ?? fallbackLoadingMessages.login;
         showLoading({
           response: {
             status: 102,
-            title: loadingMsg.login.title,
-            description: loadingMsg.login.description,
+            title: loginLoading.title,
+            description: loginLoading.description,
           },
         });
 
@@ -114,11 +119,12 @@ const VerifyEmailPage = () => {
         if (!login) return;
 
         // 3) Loading Refresh
+        const createUserLoading = loadingMsg.createUser ?? fallbackLoadingMessages.createUser;
         showLoading({
           response: {
             status: 102,
-            title: loadingMsg.createUser.title,
-            description: loadingMsg.createUser.description,
+            title: createUserLoading.title,
+            description: createUserLoading.description,
           },
         });
 
@@ -135,11 +141,15 @@ const VerifyEmailPage = () => {
             status: 200,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popups.button.continue,
+            confirmLabel: popups.button?.continue ?? fallbackButtons.continue,
           },
           onConfirm: () => {
-            closeAlert();
             router.push(href(lang, '/'));
+            closeAlert();
+          },
+          onCancel: () => {
+            router.push(href(lang, '/'));
+            closeAlert();
           },
         });
       } catch (err) {
@@ -158,14 +168,12 @@ const VerifyEmailPage = () => {
             cancelLabel: popupData.close,
           },
           onCancel: () => {
-            closeAlert();
             router.push(href(lang, '/'));
+            closeAlert();
           },
         });
       }
     });
-
-    // SOLO deps vacías → se ejecuta una sola vez
   }, []);
 
   // ---------------------------
@@ -191,18 +199,27 @@ const VerifyEmailPage = () => {
   // RENDER
   // ---------------------------
   return (
-    <main className={styles.main}>
-      <header className={styles.header}>
-        <h1 className={styles.h1}>{verifyText.title}</h1>
-        <p className={styles.p}>* {verifyText.info}</p>
-      </header>
-
-      {showResendForm && (
-        <section className={`${styles.section} card`}>
-          <FormWrapper
-            fields={['email', 'language', 'clientId']}
+    <main className={styles.main} aria-labelledby="verify-title" aria-describedby="verify-desc">
+      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="verify-title">
+        <header className={styles.header}>
+          <h1 id="verify-title" className={styles.h1}>
+            {verifyText.title}
+          </h1>
+          <p id="verify-desc" className={styles.header_p}>
+            {verifyText.info}
+          </p>
+        </header>
+        <section
+          className={styles.section}
+          aria-labelledby="verify-title"
+          aria-describedby="verify-desc"
+          aria-busy={loading}
+          role="form"
+        >
+          <FormWrapper<ResendVerificationEmailPayload>
+            fields={['email', 'language', 'clientId'] as const}
             onSubmit={onResendSubmit}
-            button={formText.button.resendEmail}
+            button={resendButton}
             initialValues={{
               email: auth?.email ?? '',
               clientId: client._id,
@@ -211,7 +228,7 @@ const VerifyEmailPage = () => {
             loading={loading}
           />
         </section>
-      )}
+      </div>
     </main>
   );
 };

@@ -15,7 +15,7 @@ import { refreshToken, logoutUser, getAuthUser } from '@/packages/services/auth/
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
 import { getPopup } from '@/packages/utils/alertType';
-import { fallbackLogoutSuccess } from '../i18n';
+import { fallbackButtons, fallbackLogoutSuccess } from '../i18n';
 import { AuthUser } from '@/packages/types/auth/authTypes';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isClientReady, setIsClientReady] = useState(false);
 
   const sessionCallbackRef = useRef<(() => void) | null>(null);
+  const isRefreshingRef = useRef(false);
 
   // -------------------
   // Local Storage Utils
@@ -74,15 +75,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // -------------------------
 
   const createGuest = useCallback((): AuthUser => {
+    // Si hay datos previos, úsalos como base (similar a createLocalDefault en perfil)
+    const stored = loadFromStorage();
+    const base: Partial<AuthUser> = stored
+      ? {
+          userId: stored.userId,
+          clientId: stored.clientId,
+          email: stored.email,
+          role: stored.role,
+          status: stored.status,
+          isVerified: stored.isVerified,
+          cookiePrefs: stored.cookiePrefs,
+          isNewUser: stored.isNewUser,
+        }
+      : {};
+
     return {
-      userId: '',
-      clientId,
-      email: '',
-      role: 'guest',
+      userId: base.userId || '',
+      clientId: base.clientId || clientId,
+      email: base.email || '',
+      role: base.role || 'guest',
       isLogged: false,
-      isVerified: false,
-      status: 'active',
-      cookiePrefs: undefined,
+      isVerified: base.isVerified ?? false,
+      status: base.status || 'active',
+      cookiePrefs: base.cookiePrefs,
+      isNewUser: base.isNewUser ?? true,
     };
   }, [clientId]);
 
@@ -105,6 +122,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (stored) {
       setAuthState(stored);
+      // Si ya existía en storage y no es guest, no es un usuario nuevo
+      if (stored.role !== 'guest') {
+        setAuthState({ ...stored, isNewUser: false });
+      }
     } else {
       const guest = createGuest();
       setAuthState(guest);
@@ -129,11 +150,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshAuth = useCallback(
     async (onSessionExpired?: () => void) => {
-      if (!clientId) return;
+      if (!clientId || isRefreshingRef.current) return;
+      isRefreshingRef.current = true;
 
       const stored = loadFromStorage();
       const setFromBackend = (backendAuth: AuthUser) => {
-        const finalAuth = { ...backendAuth };
+        const finalAuth = { ...backendAuth, isLogged: true, isNewUser: false };
         setAuthState(finalAuth);
         saveToStorage(finalAuth);
       };
@@ -145,7 +167,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
 
       try {
-        const backendAuth = await getAuthUser(clientId);
+        const backendAuth = await getAuthUser();
         setFromBackend(backendAuth);
       } catch (err: any) {
         const status = err?.response?.status;
@@ -154,7 +176,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (status === 401 || status === 403) {
           try {
             await refreshToken();
-            const backendAuth = await getAuthUser(clientId);
+            const backendAuth = await getAuthUser();
             setFromBackend(backendAuth);
             return;
           } catch {
@@ -170,6 +192,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
         setGuest();
+      } finally {
+        isRefreshingRef.current = false;
       }
     },
     [clientId, createGuest]
@@ -190,7 +214,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           status: 200,
           title: popup.title,
           description: popup.description,
-          cancelLabel: popups.button.close,
+          cancelLabel: popups.button?.close ?? fallbackButtons.close,
         },
       });
     } catch {
@@ -201,7 +225,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           status: 400,
           title: popup.title,
           description: popup.description,
-          cancelLabel: popups.button.close,
+          cancelLabel: popups.button?.close ?? fallbackButtons.close,
         },
         onCancel: closeAlert,
       });
