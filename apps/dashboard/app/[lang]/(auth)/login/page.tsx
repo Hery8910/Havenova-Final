@@ -1,128 +1,226 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { FormWrapper } from '@/packages/components/userForm';
-import Loading from '@/packages/components/loading/Loading';
-import { AlertWrapper } from '@/packages/components/alert';
+import { ButtonProps } from '@/packages/components/common/button/Button';
 import { LoginPayload } from '@/packages/types';
 import { href } from '@/packages/utils/navigation';
 import { useLang } from '@/packages/hooks';
-import { loginUser } from '../../../../../../packages/services/auth/authService';
+import {
+  fallbackButtons,
+  fallbackGlobalError,
+  fallbackLoadingMessages,
+  fallbackLoginSuccess,
+  useAuth,
+  useGlobalAlert,
+  useProfile,
+} from '../../../../../../packages/contexts';
+import { getPopup } from '../../../../../../packages/utils/alertType';
+import { loginUser } from '../../../../../../packages/services';
 
 export interface LoginData {
   title: string;
   cta: { title: string; label: string; url: string };
-  forgotPassword: { title: string; label: string; url: string };
-  image: { src: string; alt: string };
-  backgroundImage: string;
-  button: string;
+  forgotPassword?: { title: string; label: string; url: string };
+  image?: { src: string; alt: string };
+  backgroundImage?: string;
+  button?: string;
 }
 
 const Login = () => {
   const { client } = useClient();
-  const { texts } = useI18n();
+  const { auth, setAuth } = useAuth();
+  const { texts, language, setLanguage } = useI18n();
+  const { profile } = useProfile();
   const router = useRouter();
   const lang = useLang();
   const [loading, setLoading] = useState(false);
-  const [redirecting, setRedirecting] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
+
+  useEffect(() => {
+    if (!profile?.theme) return;
+    document.documentElement.setAttribute('data-theme', profile.theme);
+    localStorage.setItem('theme', profile.theme);
+  }, [profile?.theme]);
+
+  useEffect(() => {
+    if (!profile?.language) return;
+    const nextLang = profile.language === 'en' ? 'en' : 'de';
+
+    if (nextLang !== lang) {
+      router.replace(href(nextLang, '/login'));
+      return;
+    }
+
+    if (language !== nextLang) {
+      setLanguage(nextLang);
+    }
+  }, [profile?.language, lang, language, router, setLanguage]);
 
   const popups = texts.popups;
   const formText = texts.components.form;
+  const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.user.login;
-
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
+  const descriptionId = 'login-cta';
+  const loginButton = formText.button.login as ButtonProps;
 
   const handleLogin = async (data: LoginPayload) => {
-    setLoading(true);
-
     try {
-      if (!client?._id) {
-        const popupData = popups?.INTERNAL_ERROR || {};
-        setAlert({
-          status: 500,
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-        return;
-      }
-      if (!data.email || !data.password) {
-        return;
-      }
+      setLoading(true);
+
+      // 1) Loading
+      const loadingData = loadingText.login ?? fallbackLoadingMessages.login;
+
+      showLoading({
+        response: {
+          status: 102,
+          title: loadingData.title,
+          description: loadingData.description,
+        },
+      });
+
+      setEmail(data.email);
+      console.log('Lo asigna:', email);
+
       const payload: LoginPayload = {
-        email: data.email || '',
+        email: data.email?.trim() || '',
         password: data.password || '',
-        clientId: client._id,
+        clientId: data.clientId || client._id,
       };
 
+      if (!payload.email || !payload.password || !payload.clientId) {
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
+
+        showError({
+          response: {
+            status: 400,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: closeAlert,
+        });
+        return;
+      }
+
       const response = await loginUser(payload);
-      if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        setRedirecting(true);
-        setAlert({
+      if (!response?.user) {
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
+
+        showError({
+          response: {
+            status: 500,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close,
+          },
+          onCancel: () => {
+            closeAlert();
+          },
+        });
+      }
+      const { user } = response;
+
+      setAuth({
+        ...(auth || {}), // conservas language, theme, etc. si ya existían
+        isLogged: true,
+        userId: user.userId,
+        clientId: user.clientId,
+        email: user.email,
+        role: user.role,
+        isVerified: user.isVerified,
+      });
+
+      const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
+
+      showSuccess({
+        response: {
           status: 200,
-          title: popupData.title || popups.USER_LOGIN_SUCCESS.title,
-          description: popupData.description || popups.USER_LOGIN_SUCCESS.description,
-        });
-      }
-      setTimeout(async () => {
-        await refreshUser();
-        router.push(href(lang, '/'));
-      }, 3000);
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        const errorKey = error.response.data.errorCode;
-        const popupData = popups?.[errorKey] || {};
-        setAlert({
-          status: error.response.status,
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description:
-            popupData.description ||
-            error.response.data.message ||
-            popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      } else {
-        setAlert({
+          title: popupData.title,
+          description: popupData.description,
+          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+        },
+        onConfirm: () => {
+          router.push(href(lang, '/'));
+          closeAlert();
+        },
+        onCancel: () => {
+          router.push(href(lang, '/'));
+          closeAlert();
+        },
+      });
+    } catch (err: any) {
+      const code = err?.response?.data?.code; // FIXED
+
+      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+
+      showError({
+        response: {
           status: 500,
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
-        });
-      }
+          title: popupData.title,
+          description: popupData.description,
+          cancelLabel: popupData.close,
+        },
+        onCancel: () => {
+          closeAlert();
+        },
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className={styles.main}>
-      <h1 className={styles.h1}>{login.title}</h1>
-      <section className={`${styles.section} card`}>
-        <FormWrapper<LoginPayload>
-          fields={['email', 'password'] as const}
-          onSubmit={handleLogin}
-          button={formText.button.login}
-          showForgotPassword
-          initialValues={{
-            clientId: '',
-            email: '',
-            password: '',
-          }}
-          loading={loading}
-        />
-        <aside className={styles.aside}>
-          <p className={styles.p}>{login.cta.title}</p>
-          <Link className={styles.link} href={login.cta.url}>
-            {login.cta.label}
-          </Link>
-        </aside>
-      </section>
+    <main
+      className={styles.main}
+      aria-labelledby="login-title"
+      aria-describedby={login?.cta?.title ? descriptionId : undefined}
+    >
+      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="login-title">
+        <header className={styles.header}>
+          <h1 id="login-title" className={styles.h1}>
+            {login.title}
+          </h1>
+        </header>
+        <section className={styles.section}>
+          <FormWrapper<LoginPayload>
+            fields={['email', 'password', 'clientId'] as const}
+            onSubmit={handleLogin}
+            button={loginButton}
+            showForgotPassword
+            initialValues={{
+              clientId: '',
+              email,
+              password: '',
+            }}
+            loading={loading}
+          />
+          <aside className={styles.aside}>
+            <p id={descriptionId} className={styles.header_p}>
+              {login.cta.title}
+            </p>
+            <Link className={styles.link} href={login.cta.url}>
+              {login.cta.label}
+            </Link>
+          </aside>
+        </section>
+      </div>
     </main>
   );
 };

@@ -1,24 +1,33 @@
-.nav,
-.close {
+.nav {
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: inherit;
-  height: 100%;
-  padding: 8px 0 32px;
-  background: rgba(7, 104, 201, 0.52);
-  border-radius: 4px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(7, 104, 201, 0.3);
+  border-right: 1px solid #6161618e;
 }
-.open {
-  position: absolute;
-  left: 5dvw;
-  z-index: 10;
-  width: 200px;
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
 }
-.ul {
+.wrapper {
+  width: 100%;
+  height: 80px;
+  border-bottom: 1px solid #6161618e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  margin: 16px auto;
+}
+.headerUl,
+.footerUl {
+  padding-top: 32px;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -26,40 +35,38 @@
   align-items: flex-start;
   width: 100%;
 }
-.li {
-  width: 100%;
-  margin-bottom: 4px;
+.footerUl {
+  margin-bottom: 16px;
 }
-
+.headerLi,
+.buttonWrapper {
+  width: 100%;
+  padding: 8px 16px 0 16px;
+}
 .link,
-.open_button,
 .button {
   border-radius: 2px;
-  padding: 8px;
+  padding: 8px 24px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 12px;
   transition: all 0.3s ease-in-out;
-  font-size: clamp(16px, 3vw, 20px);
+  font-size: clamp(14px, 3vw, 18px);
   background-color: transparent;
   border: none;
   color: inherit;
 }
-.open_button {
-  align-self: flex-end;
+.buttonWrapper {
+  border-top: 1px solid #6161618e;
+  margin: 16px auto;
 }
 .button {
-  border: none;
-  background-color: transparent;
-  color: inherit;
-  font-size: clamp(16px, 3vw, 20px);
-  padding: 0;
+  width: 100%;
+  margin-top: 8px;
 }
-.link_open {
-  padding: 8px 32px;
-}
-.link:hover {
+.link:hover,
+.button:hover {
   background-color: var(--brand-primary);
   box-shadow: var(--shadow-dark);
 }
@@ -69,9 +76,6 @@
   box-shadow: var(--shadow-dark);
 }
 @media (min-width: 1024px) {
-  .nav {
-    padding: 120px 0 64px;
-  }
   .open {
     position: unset;
   }

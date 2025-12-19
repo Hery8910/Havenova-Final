@@ -1,16 +1,42 @@
-// app/[lang]/(auth)/layout.tsx
-import React from 'react';
-import { I18nProvider } from '@/packages/contexts/i18n/I18nContext';
 import '../../global.css';
-import { getClient } from '../../../../../packages/services/client';
-import { ClientProvider } from '../../../../../packages/contexts/client/ClientContext';
-import { AlertProvider, AuthProvider, ProfileProvider } from '../../../../../packages/contexts';
+import styles from './layout.module.css';
+import { ClientProvider } from '@/packages/contexts/client/ClientContext';
+import { getClient } from '@/packages/services/client';
+import { Poppins, Roboto } from 'next/font/google';
+import { Metadata } from 'next';
+
+import React from 'react';
+import { AlertProvider } from '@/packages/contexts/';
+
+import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];
 }
 
-export default async function AuthLayout({
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: 'de' | 'en' };
+}): Promise<Metadata> {
+  return {
+    title: params.lang === 'de' ? 'Dashboard | Havenova' : 'Dashboard | Havenova',
+  };
+}
+
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-family-heading',
+});
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-family-body',
+});
+
+export default async function LangLayout({
   children,
   params,
 }: {
@@ -19,9 +45,14 @@ export default async function AuthLayout({
 }) {
   const domain = 'havenova.de';
   const client = await getClient(domain);
+
   return (
-    <html lang={params.lang} data-theme="light">
-      <body>
+    <html
+      lang={params.lang}
+      data-theme="light"
+      className={`${poppins.variable} ${roboto.variable}`}
+    >
+      <body className={styles.body}>
         <AlertProvider>
           <ClientProvider initialClient={client}>
             <I18nProvider initialLanguage={params.lang}>

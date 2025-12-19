@@ -1,0 +1,71 @@
+.container {
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid var(--bg-card-1);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--bg-card-3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px 12px;
+  border: 1px solid var(--bg-card-1);
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-card-3);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.button {
+  border: 1px solid var(--brand-primary);
+  color: var(--brand-primary);
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.buttonPrimary {
+  background: var(--brand-primary);
+  color: var(--text-primary);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

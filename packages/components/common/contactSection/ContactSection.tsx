@@ -1,5 +1,5 @@
 import { ContactMessageFormData } from '../../../types';
-import { FormWrapper } from '../../userForm';
+import ContactFormWrapper from './ContactFormWrapper';
 import { ButtonProps } from '../button/Button';
 import styles from './ContactSection.module.css';
 
@@ -13,6 +13,7 @@ interface ContactSectionProps {
   handleSubmit: (data: ContactMessageFormData) => void;
   button: ButtonProps;
   loading?: boolean;
+  subjects: string[];
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
@@ -20,6 +21,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   handleSubmit,
   button,
   loading = false,
+  subjects,
 }) => {
   return (
     <section className={styles.section} role="region" aria-labelledby="contact-heading">
@@ -28,18 +30,11 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         <p>{texts.description}</p>
       </header>
 
-      <FormWrapper<ContactMessageFormData>
-        fields={['name', 'email', 'message'] as const}
+      <ContactFormWrapper
         onSubmit={handleSubmit}
         button={button}
-        initialValues={{
-          name: '',
-          email: '',
-          message: '',
-          clientId: '',
-          userId: '',
-        }}
         loading={loading}
+        subjects={subjects}
       />
     </section>
   );

@@ -42,6 +42,7 @@ export default function Contact() {
   const contactTexts = texts.pages.contact.contactSection;
   const contactInfo = texts.contactInfo;
   const formText = texts.components.form;
+  const contactSubjects = texts.components.form.subjects?.contact ?? [];
   const faqPreviewTexts = texts.components.common.faq;
   const finalCtaTexts = texts.components.common.finalCta;
 
@@ -102,7 +103,9 @@ export default function Contact() {
         name: data.name || profile?.name || '',
         email: data.email || auth?.email || '',
         message: data.message || '',
+        subject: data.subject || '',
         clientId: client._id,
+        profileImage: profile?.profileImage,
       };
 
       const response = await sendContactMessage(payload);
@@ -173,6 +176,7 @@ export default function Contact() {
         handleSubmit={handleSubmit}
         button={formText.button.contact}
         loading={loading}
+        subjects={contactSubjects}
       />
 
       <ContactInfo {...contactInfo} />

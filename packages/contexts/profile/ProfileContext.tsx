@@ -17,6 +17,7 @@ import {
   updateUserClientProfile,
 } from '@/packages/services/profile';
 import { refreshToken } from '@/packages/services/auth/authService';
+import Cookies from 'js-cookie';
 
 import { UserClientProfile, ThemeMode } from '@/packages/types/profile/profileTypes';
 import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
@@ -83,6 +84,18 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     language: previous?.language ?? 'de',
     theme: previous?.theme ?? 'light',
   });
+
+  const getStoredTheme = (): ThemeMode | null => {
+    if (typeof window === 'undefined') return null;
+    const stored = localStorage.getItem('theme');
+    return stored === 'dark' || stored === 'light' ? stored : null;
+  };
+
+  const getStoredLanguage = (): string | null => {
+    if (typeof window === 'undefined') return null;
+    const stored = Cookies.get('lang');
+    return stored === 'de' || stored === 'en' ? stored : null;
+  };
 
   // -------------------
   // Init hydration guard
@@ -202,6 +215,23 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (!auth.isLogged || auth.role === 'guest') return;
     reloadProfile();
   }, [auth.isLogged, auth.role]);
+
+  // Cuando usuario hace logout → volver a perfil guest/default
+  useEffect(() => {
+    if (!isClientReady) return;
+    if (auth.isLogged && auth.role !== 'guest') return;
+    const lastProfile = profile ?? loadFromStorage();
+    const local = {
+      ...createLocalDefault(lastProfile),
+      name: '',
+      phone: '',
+      address: '',
+      language: lastProfile?.language ?? getStoredLanguage() ?? 'de',
+      theme: lastProfile?.theme ?? getStoredTheme() ?? 'light',
+    };
+    setProfile(local);
+    saveToStorage(local);
+  }, [auth.isLogged, auth.role, isClientReady, profile]);
 
   // -------------------
   // Update profile

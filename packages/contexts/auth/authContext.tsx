@@ -15,8 +15,9 @@ import { refreshToken, logoutUser, getAuthUser } from '@/packages/services/auth/
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
 import { getPopup } from '@/packages/utils/alertType';
-import { fallbackButtons, fallbackLogoutSuccess } from '../i18n';
+import { fallbackButtons, fallbackLogoutSuccess, fallbackPopups } from '../i18n';
 import { AuthUser } from '@/packages/types/auth/authTypes';
+import { useRouter } from 'next/navigation';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 
@@ -35,7 +36,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { client } = useClient();
   const clientId = client?._id || '';
 
-  const { texts } = useI18n();
+  const router = useRouter();
+  const { texts, language } = useI18n();
   const popups = texts.popups;
   const { showError, showSuccess, closeAlert } = useGlobalAlert();
 
@@ -181,6 +183,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return;
           } catch {
             setGuest();
+            const popup = getPopup(
+              popups,
+              'REFRESH_TOKEN_EXPIRED',
+              'REFRESH_TOKEN_EXPIRED',
+              fallbackPopups.REFRESH_TOKEN_EXPIRED
+            );
+
+            showError({
+              response: {
+                status: status || 401,
+                title: popup.title,
+                description: popup.description,
+                cancelLabel: popup.close ?? fallbackButtons.close,
+              },
+              onCancel: () => {
+                closeAlert();
+                router.push(`/${language}/login`);
+              },
+            });
             (onSessionExpired || sessionCallbackRef.current)?.();
             return;
           }
@@ -196,7 +217,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isRefreshingRef.current = false;
       }
     },
-    [clientId, createGuest]
+    [clientId, createGuest, closeAlert, language, popups, router, showError]
   );
 
   // -------------------
@@ -216,6 +237,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           description: popup.description,
           cancelLabel: popups.button?.close ?? fallbackButtons.close,
         },
+        onCancel: () => {
+          closeAlert();
+          router.push(`/${language}/login`);
+        },
       });
     } catch {
       const popup = getPopup(popups, 'LOGOUT_FAILED', 'LOGOUT_FAILED', fallbackLogoutSuccess);
@@ -230,9 +255,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         onCancel: closeAlert,
       });
     } finally {
-      const guest = createGuest();
-      setAuthState(guest);
-      saveToStorage(guest);
+      setTimeout(() => {
+        saveToStorage(null);
+        const guest = createGuest();
+        setAuthState(guest);
+        saveToStorage(guest);
+      }, 5000);
     }
   }, [createGuest, showError, showSuccess, closeAlert, popups]);
 

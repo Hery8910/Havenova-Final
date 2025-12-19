@@ -2,40 +2,56 @@
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 
-import { usePathname, useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useState } from 'react';
-import { MdLogout } from 'react-icons/md';
-
-import { LuLogOut } from 'react-icons/lu';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import {
+  LuBell,
+  LuBriefcase,
+  LuLayoutPanelTop,
+  LuSettings,
+  LuListChecks,
+  LuLogOut,
+  LuMessagesSquare,
+  LuUser,
+  LuUsers,
+} from 'react-icons/lu';
 import { useI18n } from '../../contexts/i18n';
-import { Loading } from '../loading';
-import { AlertWrapper } from '../alert';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useAuth, useProfile } from '../../contexts';
+import { useLang } from '../../hooks';
+import Image from 'next/image';
 
 export interface NavItem {
   label: string;
   href: string;
-  icon: React.JSX.Element;
 }
 interface DashboardSidebarProps {
   items: NavItem[];
   context: 'user-profile' | 'admin-dashboard';
 }
 
-export default function Sidebar({ items, context }: DashboardSidebarProps) {
+export default function Sidebar() {
+  const { logout } = useAuth();
+  const { profile } = useProfile();
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const lang = useLang();
   const { texts } = useI18n();
-  const popups = texts.popups;
-  const [loading, setLoading] = useState(false);
+  const pagesText = texts.components.dashboard.sidebar.pages || [];
+  const settingsText = texts.components.dashboard.sidebar.settings || [];
+  const logoutText = texts.components.dashboard.sidebar.logout || 'Logout';
 
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
+  const iconMap: Record<string, JSX.Element> = {
+    '/': <LuLayoutPanelTop />,
+    '/requests': <LuListChecks />,
+    '/clients': <LuUsers />,
+    '/employees': <LuBriefcase />,
+    '/messages': <LuMessagesSquare />,
+    '/notifications': <LuBell />,
+    '/support': <LuSettings />,
+    '/profile': <LuUser />,
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,79 +63,87 @@ export default function Sidebar({ items, context }: DashboardSidebarProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // const handleLogout = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await logoutUser();
-  //     if (response.success) {
-  //       const popupData = popups?.[response.code] || {};
-  //       logout(); // Limpia el contexto/localstorage, etc.
-  //       setAlert({
-  //         status: 200,
-  //         title: popupData.title || popups.USER_LOGOUT_SUCCESS.title,
-  //         description: popupData.title || popups.USER_LOGOUT_SUCCESS.description,
-  //       });
-  //       setTimeout(() => {
-  //         setAlert(null);
-  //         router.push('/');
-  //       }, 3000);
-  //     } else {
-  //       setAlert({
-  //         status: 500,
-  //         title: popups.GLOBAL_INTERNAL_ERROR.title,
-  //         description: popups.GLOBAL_INTERNAL_ERROR.description,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     setAlert({
-  //       status: 500,
-  //       title: popups.GLOBAL_INTERNAL_ERROR.title,
-  //       description: popups.GLOBAL_INTERNAL_ERROR.description,
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const getLogoSrc = () => {
+    if (profile.theme === 'dark') {
+      return isMobile ? '/favicon-dark.svg' : '/images/logos/nav-logo-dark.webp';
+    } else {
+      return isMobile ? '/favicon-light.svg' : '/images/logos/nav-logo-light.webp';
+    }
+  };
 
   return (
-    <section className={`${styles.nav} ${isOpen ? `${styles.close}` : `${styles.open}`}`}>
-      <button
-        className={styles.open_button}
-        onClick={() => {
-          setIsOpen(!isOpen);
-          setIsMobile(!isMobile);
-        }}
-      >
-        {isMobile ? <IoIosArrowForward /> : <IoIosArrowBack />}
-      </button>
-      <ul className={styles.ul}>
-        {items.map(({ label, href, icon }) => (
-          <li key={href} className={styles.li}>
-            {/* <Link
-              key={href}
-              href={href}
-              className={`${styles.link} ${
+    <section className={`${styles.nav} ${isOpen ? `${styles.open}` : ''}`}>
+      <header className={styles.header}>
+        <div className={styles.wrapper}>
+          <Image
+            className={styles.logo}
+            src={getLogoSrc()}
+            alt="Havenova Logo"
+            width={isMobile ? 40 : 150}
+            height={isMobile ? 40 : 40}
+            priority
+          />
+        </div>
+        <ul className={styles.headerUl}>
+          {pagesText.map(({ label, href }) => {
+            const fullHref = `/${lang}${href}`;
+            return (
+              <li className={styles.headerLi}>
+                <Link
+                  key={href}
+                  href={fullHref}
+                  className={`${styles.link} ${
+                    isMobile ? `${styles.link_close}` : `${styles.link_open}`
+                  } ${pathname === fullHref ? styles.active : ''}`}
+                >
+                  {iconMap[href] || null}
+                  {!isMobile && <p>{label}</p>}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </header>
+      <div className={styles.footer}>
+        <ul className={styles.footerUl}>
+          {settingsText.map(({ label, href }) => {
+            const fullHref = `/${lang}${href}`;
+            return (
+              <li className={styles.headerLi}>
+                <Link
+                  key={href}
+                  href={fullHref}
+                  className={`${styles.link} ${
+                    isMobile ? `${styles.link_close}` : `${styles.link_open}`
+                  } ${pathname === fullHref ? styles.active : ''}`}
+                >
+                  {iconMap[href] || null}
+                  {!isMobile && <p>{label}</p>}
+                </Link>
+              </li>
+            );
+          })}
+          <div className={styles.buttonWrapper}>
+            <button
+              onClick={logout}
+              className={`${styles.button} ${
                 isMobile ? `${styles.link_close}` : `${styles.link_open}`
-              } ${pathname === `/${user?.language}${href}` ? styles.active : ''}`}
+              }`}
             >
-              {icon} {!isMobile && <p>{label}</p>}
-            </Link> */}
-          </li>
-        ))}
-      </ul>
-      <ul className={styles.ul}>
-        <li className={styles.link}>{/* <SupportModal context={context} /> */}</li>
-        <li className={styles.link}>
-          <button
-            className={`${styles.button} ${
-              isMobile ? `${styles.link_close}` : `${styles.link_open}`
-            }`}
-          >
-            <LuLogOut /> {!isMobile && <p>Logout</p>}
-          </button>
-        </li>
-      </ul>
+              <LuLogOut /> {!isMobile && <p>{logoutText}</p>}
+            </button>
+          </div>
+        </ul>
+        <button
+          className={styles.open_button}
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setIsMobile(!isMobile);
+          }}
+        >
+          {isMobile ? <IoIosArrowForward /> : <IoIosArrowBack />}
+        </button>
+      </div>
     </section>
   );
 }

@@ -28,6 +28,7 @@ const QuestionsAnswers = () => {
   const faqHeroTexts = texts.pages.faq.faqHero;
   const faqListTexts = texts.pages.faq.questions;
   const formText = texts.components.form;
+  const contactSubjects = texts.components.form.subjects?.contact ?? [];
   const contactTexts = texts.pages.faq.contactSection;
 
   if (!user) return null;
@@ -70,7 +71,9 @@ const QuestionsAnswers = () => {
         name: data.name || user?.name || '',
         email: data.email || user?.email || '',
         message: data.message || '',
+        subject: data.subject || '',
         clientId: client._id,
+        profileImage: user?.profileImage,
       };
 
       const response = await sendContactMessage(payload);
@@ -122,6 +125,7 @@ const QuestionsAnswers = () => {
         handleSubmit={handleSubmit}
         button={formText.button.contact}
         loading={loading}
+        subjects={contactSubjects}
       />
       {loading && <Loading theme={user?.theme || 'light'} />}
       {!loading && alert && <AlertWrapper response={alert} onClose={() => setAlert(null)} />}

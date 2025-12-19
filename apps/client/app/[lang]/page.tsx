@@ -38,7 +38,6 @@ export default function Home() {
   const { auth, refreshAuth } = useAuth();
 
   if (!client || loading || !profile) return <Loading theme={profile?.theme ?? 'dark'} />;
-  console.log('profile:', profile, 'auth', auth);
 
   const homeHeroTexts = texts.pages.home.hero;
   const howItWorksTexts = texts.components.common.howItWorks;

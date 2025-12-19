@@ -8,13 +8,7 @@ import Sidebar from '@/packages/components/sidebar/Sidebar';
 import { DashboardHeader } from '@/packages/components/dashboard/dashboardHeader';
 import React from 'react';
 import { AlertProvider } from '@/packages/contexts/';
-import { MdDashboard, MdPeopleAlt } from 'react-icons/md';
-import { FaFolder } from 'react-icons/fa';
-import { GrUserWorker } from 'react-icons/gr';
-import { IoNotifications, IoSettingsSharp } from 'react-icons/io5';
-import { RxActivityLog } from 'react-icons/rx';
-import { BiSolidOffer } from 'react-icons/bi';
-import { ImBlog } from 'react-icons/im';
+
 import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
 
 export async function generateStaticParams() {
@@ -53,22 +47,6 @@ export default async function LangLayout({
   const domain = 'havenova.de';
   const client = await getClient(domain);
 
-  const items = [
-    { label: 'Dashboard', href: `/`, icon: <MdDashboard /> },
-    { label: 'Requests', href: `/requests`, icon: <FaFolder /> },
-    { label: 'Employees', href: `/employees`, icon: <GrUserWorker /> },
-    { label: 'Clients', href: `/clients`, icon: <MdPeopleAlt /> },
-    {
-      label: 'Notifications',
-      href: `/notifications`,
-      icon: <IoNotifications />,
-    },
-    { label: 'Activity', href: `/activity`, icon: <RxActivityLog /> },
-    { label: 'Offers', href: `/offer`, icon: <BiSolidOffer /> },
-    { label: 'Blog', href: `/blog`, icon: <ImBlog /> },
-    { label: 'Havenova', href: `/profile`, icon: <IoSettingsSharp /> },
-  ];
-
   return (
     <html
       lang={params.lang}
@@ -83,12 +61,12 @@ export default async function LangLayout({
                 <ProfileProvider>
                   <div className={styles.layout}>
                     <nav className={styles.nav}>
-                      <Sidebar items={items} context="admin-dashboard" />
+                      <Sidebar />
                     </nav>
-                    <header className={styles.header}>
+                    <header className={`${styles.header} card`}>
                       <DashboardHeader />
                     </header>
-                    <main className={`${styles.main} card`}>{children}</main>
+                    <main className={styles.main}>{children}</main>
                   </div>
                 </ProfileProvider>
               </AuthProvider>

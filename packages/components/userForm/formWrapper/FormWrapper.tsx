@@ -109,7 +109,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       clientId: client?._id || initialValues.clientId || '',
       language: profile?.language || initialValues.language || 'de',
       name: profile?.name ?? initialValues.name ?? prev.name,
-      email: auth?.email ?? initialValues.email ?? prev.email,
+      email: auth?.email || initialValues.email || prev.email,
       phone: profile?.phone ?? initialValues.phone ?? prev.phone,
       address: profile?.address ?? initialValues.address ?? prev.address,
     }));
@@ -208,7 +208,7 @@ export default function FormWrapper<T extends Record<string, any>>({
     setFormData({
       ...initialValues,
       name: profile?.name || '',
-      email: auth?.email || '',
+      email: auth?.email || initialValues.email || '',
       phone: profile?.phone || '',
       address: profile?.address || '',
       clientId: client?._id || '',

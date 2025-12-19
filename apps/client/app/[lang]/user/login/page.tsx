@@ -37,6 +37,7 @@ const Login = () => {
   const router = useRouter();
   const lang = useLang();
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
   const popups = texts.popups;
@@ -61,6 +62,7 @@ const Login = () => {
         },
       });
 
+      setEmail(data.email);
       const payload: LoginPayload = {
         email: data.email?.trim() || '',
         password: data.password || '',
@@ -105,7 +107,6 @@ const Login = () => {
           },
           onCancel: () => {
             closeAlert();
-            router.push(href(lang, '/'));
           },
         });
       }
@@ -153,7 +154,6 @@ const Login = () => {
           cancelLabel: popupData.close,
         },
         onCancel: () => {
-          router.push(href(lang, '/'));
           closeAlert();
         },
       });
@@ -182,7 +182,7 @@ const Login = () => {
             showForgotPassword
             initialValues={{
               clientId: '',
-              email: '',
+              email,
               password: '',
             }}
             loading={loading}

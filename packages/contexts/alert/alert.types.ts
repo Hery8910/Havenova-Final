@@ -31,6 +31,11 @@ export interface PopupsTexts {
 
   EMAIL_VERIFICATION_RESENT?: PopupText;
 
+  REFRESH_TOKEN_MISSING?: PopupText;
+  REFRESH_TOKEN_INVALIDATED?: PopupText;
+  REFRESH_TOKEN_EXPIRED?: PopupText;
+  ACCESS_TOKEN_REFRESHED?: PopupText;
+
   GLOBAL_INTERNAL_ERROR?: PopupText;
 }
 

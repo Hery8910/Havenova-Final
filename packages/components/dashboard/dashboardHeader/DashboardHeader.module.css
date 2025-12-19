@@ -1,11 +1,22 @@
 .section {
   width: 100%;
+  height: -webkit-fill-available;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #6161618e;
+}
+.h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: 32px;
 }
 .ul {
-  width: fit-content;
+  height: -webkit-fill-available;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -17,20 +28,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
   padding: 8px 16px;
-  border: 1px solid transparent;
-}
-.li:hover {
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(7, 104, 201, 0.3);
-}
-.li:active {
-  box-shadow: 0 4px 30px transparent;
-  border: 1px solid transparent;
-  transform: scale(95%);
 }
 .h1 {
   font-size: clamp(20px, 3.5vw, 28px);

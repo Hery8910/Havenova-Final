@@ -291,6 +291,9 @@
         "tooShort": "Message must be at least 10 characters",
         "tooLong": "Message must not exceed 1000 characters"
       },
+      "subject": {
+        "required": "Subject is required."
+      },
       "tosAccepted": {
         "required": "You must accept the terms and conditions"
       }
@@ -331,6 +334,11 @@
         "variant": "solid",
         "icon": "contact"
       },
+      "support": {
+        "cta": "Create ticket",
+        "variant": "solid",
+        "icon": "contact"
+      },
       "resendEmail": {
         "cta": "Resend email",
         "variant": "solid",
@@ -347,6 +355,7 @@
       "address": "Address",
       "phone": "Phone number",
       "profileImage": "Change profile image",
+      "subject": "Subject",
       "message": "Message"
     },
     "placeholders": {
@@ -355,7 +364,24 @@
       "password": "*********",
       "address": "Main Street 12, 12345 London",
       "phone": "+49 7911 123456",
+      "subject": "Select a subject",
       "message": "Your question or message..."
+    },
+    "subjects": {
+      "contact": [
+        "Pricing question",
+        "Service request",
+        "Availability and schedules",
+        "Changes or cancellations",
+        "Other"
+      ],
+      "support": [
+        "Login issue",
+        "Platform error",
+        "Service-related issue",
+        "Billing and payments",
+        "Other"
+      ]
     }
   },
   "services": {
@@ -733,6 +759,16 @@
     ]
   },
   "dashboard": {
+    "header": {
+      "dashboard": "Overview",
+      "requests": "Requests",
+      "clients": "Clients",
+      "employees": "Employees",
+      "messages": "Messages",
+      "notifications": "Notifications",
+      "support": "Support",
+      "profile": "Profile"
+    },
     "pages": {
       "requests": {
         "requestsList": {
@@ -763,7 +799,84 @@
           "kitchen-assembly": "Küchenmontage",
           "inspection": "Inspektion"
         }
+      },
+      "support": {
+        "heading": "Support tickets",
+        "description": "Describe the issue and we will create a support ticket for you."
+      },
+      "contactMessages": {
+        "list": {
+          "title": "Contact messages",
+          "empty": "No messages yet",
+          "loading": "Loading messages…",
+          "respondCta": "Respond",
+          "cancelCta": "Cancel",
+          "deleteCta": "Delete",
+          "reloadCta": "Reload list",
+          "viewResponse": "View response",
+          "hideResponse": "Hide response",
+          "description": "Showing the latest messages received through the contact form.",
+          "message": "Message",
+          "answer": "Answer",
+          "badge": {
+            "pending": "Pending",
+            "answered": "Answered"
+          }
+        },
+        "responder": {
+          "title": "Respond to message",
+          "description": "Write a reply and we will mark this message as answered.",
+          "textareaPlaceholder": "Type your response...",
+          "cancel": "Cancel",
+          "submit": "Send response",
+          "successTitle": "Response sent",
+          "successDescription": "The contact message has been marked as answered."
+        },
+        "filters": {
+          "statusLabel": "Status",
+          "statusAll": "All",
+          "statusPending": "Pending",
+          "statusAnswered": "Answered",
+          "emailLabel": "Email",
+          "emailPlaceholder": "client@mail.com",
+          "nameLabel": "Name",
+          "namePlaceholder": "Name or partial",
+          "searchLabel": "Search",
+          "searchPlaceholder": "Text in name, email or message",
+          "apply": "Search",
+          "prevPage": "Previous",
+          "nextPage": "Next",
+          "pageLabel": "Page ",
+          "totalLabel": "Total",
+          "pendingLabel": "Pending",
+          "answeredLabel": "Answered"
+        },
+        "delete": {
+          "modalTitle": "Delete message",
+          "modalDescription": "This will remove the message permanently.",
+          "confirmTitle": "Delete this message?",
+          "confirmDescription": "This action cannot be undone.",
+          "confirmLabel": "Delete",
+          "cancelLabel": "Cancel",
+          "successTitle": "Message deleted",
+          "successDescription": "The message has been removed."
+        }
       }
+    },
+    "sidebar": {
+      "pages": [
+        { "label": "Dashboard", "href": "/" },
+        { "label": "Requests", "href": "/requests" },
+        { "label": "Clients", "href": "/clients" },
+        { "label": "Employees", "href": "/employees" },
+        { "label": "Messages", "href": "/messages" },
+        { "label": "Notifications", "href": "/notifications" }
+      ],
+      "settings": [
+        { "label": "Support", "href": "/support" },
+        { "label": "Profile", "href": "/profile" }
+      ],
+      "logout": "Logout"
     }
   },
   "footer": {

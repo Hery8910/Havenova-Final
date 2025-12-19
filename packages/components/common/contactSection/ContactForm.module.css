@@ -1,0 +1,114 @@
+.form {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.label {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: clamp(15px, 2vw, 18px);
+  border: 1px solid var(--bg-card-3);
+  color: var(--text-primary);
+  background-color: var(--bg-card-1);
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 30px -16px rgba(7, 104, 201, 0.35);
+}
+
+.input::placeholder {
+  font-size: clamp(14px, 3vw, 16px);
+  color: var(--text-secondary);
+  font-family: var(--font-family-main);
+}
+
+.input:focus-visible {
+  outline: 1px solid var(--bg-card-3);
+  outline-offset: 1px;
+  background-color: var(--bg-card-1);
+  box-shadow: 0 0 0 4px rgba(7, 104, 201, 0.16);
+}
+
+.textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.feedback {
+  min-height: clamp(12px, 3vw, 16px);
+  margin-top: 4px;
+}
+
+.error {
+  color: var(--color-error);
+  font-size: clamp(12px, 3vw, 15px);
+  font-style: italic;
+}
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.button {
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 700;
+  padding: 14px;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: none;
+  box-shadow: 0 10px 32px -12px rgba(7, 104, 201, 0.45);
+  border-radius: 16px;
+  background: var(--brand-primary);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--button-gradient) 100%);
+  color: var(--button-text);
+  border: 3px solid var(--brand-primary);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px -12px rgba(7, 104, 201, 0.55);
+}
+
+.button:focus-visible {
+  outline: 3px solid rgba(7, 104, 201, 0.35);
+  outline-offset: 3px;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

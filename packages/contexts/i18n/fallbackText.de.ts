@@ -46,7 +46,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Anmeldung erforderlich',
     'Sie müssen angemeldet sein, um diese Aktion durchzuführen.'
   ),
-  AUTH_BLOCKED: withClose('Konto gesperrt', 'Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support.'),
+  AUTH_BLOCKED: withClose(
+    'Konto gesperrt',
+    'Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support.'
+  ),
   AUTH_CLIENT_NOT_FOUND: withClose(
     'Client nicht gefunden',
     'Ihr Konto konnte keinem Client zugeordnet werden.'
@@ -68,7 +71,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Fehler beim Erstellen des Kunden',
     'Beim Erstellen des Kunden ist ein unerwarteter Fehler aufgetreten.'
   ),
-  CLIENT_CREATED: withClose('Kunde erfolgreich erstellt', 'Der Kunde wurde erfolgreich im System angelegt.'),
+  CLIENT_CREATED: withClose(
+    'Kunde erfolgreich erstellt',
+    'Der Kunde wurde erfolgreich im System angelegt.'
+  ),
   CLIENT_FETCH_SUCCESS: withClose(
     'Client erfolgreich geladen',
     'Die Client-Daten wurden erfolgreich abgerufen.'
@@ -115,7 +121,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Passwort erforderlich',
     'Dieser Account existiert bereits. Bitte geben Sie Ihr aktuelles Passwort ein oder setzen Sie es zurück.'
   ),
-  USER_BLOCKED: withClose('Zugriff verweigert', 'Dieser Account ist gesperrt und kann nicht verwendet werden.'),
+  USER_BLOCKED: withClose(
+    'Zugriff verweigert',
+    'Dieser Account ist gesperrt und kann nicht verwendet werden.'
+  ),
   USER_TOS_NOT_ACCEPTED: withClose(
     'AGB nicht akzeptiert',
     'Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um fortzufahren.'
@@ -196,7 +205,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Weiter stöbern'
   ),
 
-  USER_NOT_FOUND: withClose('Benutzer nicht gefunden', 'Der zugehörige Benutzer konnte nicht gefunden werden.'),
+  USER_NOT_FOUND: withClose(
+    'Benutzer nicht gefunden',
+    'Der zugehörige Benutzer konnte nicht gefunden werden.'
+  ),
   VALIDATION_ERROR: withClose(
     'Validierungsfehler',
     'Bitte prüfen Sie die eingegebenen Daten und versuchen Sie es erneut.'
@@ -261,7 +273,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   ),
 
   GLOBAL_LOADING: withClose('Wird geladen…', 'Bitte warten Sie einen Moment.'),
-  REGISTER_LOADING_SUBMIT: withClose('Registrierung wird verarbeitet…', 'Bitte warten Sie einen Moment.'),
+  REGISTER_LOADING_SUBMIT: withClose(
+    'Registrierung wird verarbeitet…',
+    'Bitte warten Sie einen Moment.'
+  ),
 };
 
 export const fallbackLoadingMessages = {

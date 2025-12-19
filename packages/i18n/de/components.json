@@ -271,6 +271,9 @@
         "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
         "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
       },
+      "subject": {
+        "required": "Betreff ist erforderlich."
+      },
       "tosAccepted": {
         "required": "Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren."
       }
@@ -311,6 +314,11 @@
         "variant": "solid",
         "icon": "contact"
       },
+      "support": {
+        "cta": "Ticket erstellen",
+        "variant": "solid",
+        "icon": "contact"
+      },
       "resendEmail": {
         "cta": "E-Mail erneut senden",
         "variant": "solid",
@@ -327,6 +335,7 @@
       "address": "Adresse",
       "phone": "Telefonnummer",
       "profileImage": "Profilbild ändern",
+      "subject": "Betreff",
       "message": "Nachricht"
     },
     "placeholders": {
@@ -335,7 +344,24 @@
       "password": "*********",
       "address": "Musterstraße 12, 12345 Berlin",
       "phone": "+49 157 12345678",
+      "subject": "Betreff auswählen",
       "message": "Ihre Frage oder Nachricht..."
+    },
+    "subjects": {
+      "contact": [
+        "Frage zum Preis",
+        "Serviceanfrage",
+        "Verfügbarkeit und Termine",
+        "Änderungen oder Stornierungen",
+        "Sonstiges"
+      ],
+      "support": [
+        "Problem mit dem Login",
+        "Plattformfehler",
+        "Problem mit einem Service",
+        "Abrechnung und Zahlungen",
+        "Sonstiges"
+      ]
     }
   },
   "cookieBanner": {
@@ -733,6 +759,16 @@
     ]
   },
   "dashboard": {
+    "header": {
+      "dashboard": "Überblick",
+      "requests": "Anfragen",
+      "clients": "Kunden",
+      "employees": "Mitarbeiter",
+      "messages": "Nachrichten",
+      "notifications": "Benachrichtigungen",
+      "support": "Unterstützung",
+      "profile": "Profil"
+    },
     "pages": {
       "requests": {
         "requestsList": {
@@ -763,7 +799,80 @@
           "kitchen-assembly": "Küchenmontage",
           "inspection": "Inspektion"
         }
+      },
+      "support": {
+        "heading": "Support-Tickets",
+        "description": "Beschreiben Sie Ihr Problem, damit wir ein Support-Ticket erstellen können."
+      },
+      "contactMessages": {
+        "list": {
+          "title": "Kontaktanfragen",
+          "empty": "Noch keine Nachrichten",
+          "loading": "Nachrichten werden geladen…",
+          "respondCta": "Beantworten",
+          "cancelCta": "Abbrechen",
+          "deleteCta": "Löschen",
+          "reloadCta": "Liste neu laden",
+          "viewResponse": "Antwort anzeigen",
+          "hideResponse": "Weniger anzeigen",
+          "description": "Aktuelle Nachrichten aus dem Kontaktformular.",
+          "message": "Nachricht",
+          "answer": "Antwort",
+          "badge": {
+            "pending": "Offen",
+            "answered": "Beantwortet"
+          }
+        },
+        "responder": {
+          "title": "Nachricht beantworten",
+          "description": "Schreibe eine Antwort und wir markieren die Nachricht als beantwortet.",
+          "textareaPlaceholder": "Antwort hier eingeben...",
+          "cancel": "Abbrechen",
+          "submit": "Antwort senden",
+          "successTitle": "Antwort gesendet",
+          "successDescription": "Die Kontaktanfrage wurde als beantwortet markiert."
+        },
+        "filters": {
+          "statusLabel": "Status",
+          "statusAll": "Alle",
+          "statusPending": "Offen",
+          "statusAnswered": "Beantwortet",
+          "searchLabel": "Suche",
+          "searchPlaceholder": "Text in Name, E-Mail oder Nachricht",
+          "apply": "Suchen",
+          "prevPage": "Zurück",
+          "nextPage": "Weiter",
+          "pageLabel": "Seite ",
+          "totalLabel": "Gesamt",
+          "pendingLabel": "Offen",
+          "answeredLabel": "Beantwortet"
+        },
+        "delete": {
+          "modalTitle": "Nachricht löschen",
+          "modalDescription": "Diese Nachricht wird dauerhaft entfernt.",
+          "confirmTitle": "Diese Nachricht löschen?",
+          "confirmDescription": "Diese Aktion kann nicht rückgängig gemacht werden.",
+          "confirmLabel": "Löschen",
+          "cancelLabel": "Abbrechen",
+          "successTitle": "Nachricht gelöscht",
+          "successDescription": "Die Nachricht wurde entfernt."
+        }
       }
+    },
+    "sidebar": {
+      "pages": [
+        { "label": "Dashboard", "href": "/" },
+        { "label": "Anfragen", "href": "/requests" },
+        { "label": "Kunden", "href": "/clients" },
+        { "label": "Mitarbeiter", "href": "/employees" },
+        { "label": "Nachrichten", "href": "/messages" },
+        { "label": "Benachrichtigungen", "href": "/notifications" }
+      ],
+      "settings": [
+        { "label": "Unterstützung", "href": "/support" },
+        { "label": "Profil", "href": "/profile" }
+      ],
+      "logout": "Abmelden"
     }
   },
   "footer": {
