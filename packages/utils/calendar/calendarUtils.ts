@@ -1,4 +1,4 @@
-import { DayReason } from './../../types/calendar/calendarTypes';
+import { BlockedSlot, DayReason } from './../../types/calendar/calendarTypes';
 
 export interface Slot {
   start: string; // "08:00"
@@ -19,13 +19,6 @@ export interface CalendarDay {
   past?: boolean;
   isCurrentMonth?: boolean;
   slots?: Slot[];
-}
-
-export interface BlockedSlot {
-  date: string;
-  start: string;
-  end: string;
-  reason: DayReason;
 }
 
 /**

@@ -5,7 +5,7 @@ import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import { ButtonProps } from '@/packages/components/common/button/Button';
 import { LoginPayload } from '@/packages/types';
 import { href } from '@/packages/utils/navigation';

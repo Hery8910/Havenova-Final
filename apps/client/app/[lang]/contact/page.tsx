@@ -10,7 +10,7 @@ import {
   FAQSectionSkeleton,
   FinalCTA,
   FinalCTASkeleton,
-} from '@/packages/components/common';
+} from '@/packages/components/client';
 import { useEffect, useState } from 'react';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useLang } from '@/packages/hooks';
@@ -75,7 +75,12 @@ export default function Contact() {
   const handleSubmit = async (data: ContactMessageFormData) => {
     setLoading(true);
     try {
-      const loadingPopup = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
+      const loadingPopup = getPopup(
+        popups,
+        'GLOBAL_LOADING',
+        'GLOBAL_LOADING',
+        fallbackGlobalLoading
+      );
       showLoading({
         response: {
           status: 102,
@@ -85,7 +90,12 @@ export default function Contact() {
       });
 
       if (!client?._id) {
-        const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
         showError({
           response: {
             status: 500,
@@ -112,8 +122,7 @@ export default function Contact() {
 
       closeAlert(); // cierra el loading
 
-      const popupData =
-        (popups as any)?.[response.code] ||
+      const popupData = (popups as any)?.[response.code] ||
         (popups as any)?.CONTACT_MESSAGE_CREATED || {
           title: response.success ? 'Mensaje enviado' : 'No pudimos enviar tu mensaje',
           description:
@@ -151,7 +160,12 @@ export default function Contact() {
           onCancel: closeAlert,
         });
       } else {
-        const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
         showError({
           response: {
             status: 500,

@@ -4,9 +4,9 @@ import { useState, useMemo } from 'react';
 import styles from './WorkRequestDetail.module.css';
 import { updateWorkRequest, WorkRequestDetailData } from '@/packages/services/workRequest';
 import { ServiceList } from '../serviceList';
-import { Button } from '../../../../common';
+import { Button } from '../../../../client';
 import { useI18n } from '../../../../../contexts/i18n';
-import { ButtonProps } from '../../../../common/button/Button';
+import { ButtonProps } from '../../../../client/button/Button';
 
 export interface RequestDetailsTexts {
   button: ButtonProps;

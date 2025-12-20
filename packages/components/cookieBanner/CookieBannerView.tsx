@@ -1,7 +1,7 @@
 import { IoIosClose } from 'react-icons/io';
 import styles from './CookieBanner.module.css';
-import { Button } from '../common';
-import { ButtonProps } from '../common/button/Button';
+import { Button } from '../client';
+import { ButtonProps } from '../client/button/Button';
 
 export interface CookieBannerTexts {
   title: string;

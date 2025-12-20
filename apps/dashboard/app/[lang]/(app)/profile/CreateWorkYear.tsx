@@ -3,7 +3,7 @@ import React, { useState, FormEvent, useEffect } from 'react';
 import styles from './CreateWorkYear.module.css';
 import { createCalendar, getCalendarAdmin } from '../../../../packages/services/calendar';
 import { useClient } from '../../../../packages/contexts/client/ClientContext';
-import { useUser } from '../../../../packages/contexts/user/UserContext';
+import { useAuth } from '../../../../packages/contexts/auth/authContext';
 import { Calendar } from '@/packages/components/dashboard/calendar';
 import { Schedules, WorkDaySettings } from '../../../../packages/types/calendar/calendarTypes';
 
@@ -32,7 +32,7 @@ const defaultWorkDaySettings: WorkDaySettings = {
 
 const CreateWorkYear: React.FC = () => {
   const { client } = useClient();
-  const { user } = useUser();
+  const { auth } = useAuth();
   const clientId = client?._id;
   const today = new Date();
 
@@ -57,7 +57,7 @@ const CreateWorkYear: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user || !clientId) {
+    if (!auth?.userId || !clientId) {
       setMessage('Missing user or client info');
       return;
     }

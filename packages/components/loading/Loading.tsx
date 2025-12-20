@@ -7,24 +7,26 @@ export interface LoadingData {
 
 const Loading: React.FC<LoadingData> = ({ theme }) => {
   const backgroundImage =
-    theme === 'dark' ? '/images/logos/logo-dark.webp' : '/images/logos/logo-light.webp';
+    theme === 'light' ? '/images/logos/nav-logo-dark.webp' : '/images/logos/nav-logo-light.webp';
 
   return (
-    <main className={styles.loadingContainer}>
+    <main className={styles.loadingContainer} role="status" aria-live="polite" aria-busy="true">
+      <aside className={styles.loadingWrapper} aria-hidden="true">
+        <div className={styles.spinner} />
+      </aside>
       <div className={styles.logoWrapper}>
         <Image
           src={backgroundImage}
           alt="Havenova Logo"
-          width={400}
-          height={100}
+          width={300}
+          height={75}
           className={styles.logo}
           priority={true}
           fetchPriority="auto"
         />
       </div>
-      <aside className={styles.progressBar}>
-        <span className={styles.progressFill}></span>
-      </aside>
+
+      <p className={styles.visuallyHidden}>Loading…</p>
     </main>
   );
 };

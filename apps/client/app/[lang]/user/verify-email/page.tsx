@@ -18,7 +18,7 @@ import {
 import { useLang } from '../../../../../../packages/hooks';
 import { useVerifyEmailActions } from '@/packages/utils/user/userHandler';
 
-import { FormWrapper } from '../../../../../../packages/components/userForm';
+import { FormWrapper } from '../../../../../../packages/components/user/userForm';
 import styles from '../userAuth.module.css';
 import { ResendVerificationEmailPayload } from '../../../../../../packages/types';
 import { getPopup } from '../../../../../../packages/utils/alertType';

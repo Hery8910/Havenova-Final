@@ -1,13 +1,13 @@
 // utils/validators/furnitureFormValidator.ts
 
 import {
-  FurnitureAssemblyDetailsForm,
-  furnitureServiceInput,
-} from '../../../components/services/furnitureAssembly/furnitureAssemblyForm/FurnitureAssemblyForm';
+  FurnitureAssemblyDetails,
+  FurnitureServiceInput,
+} from '../../../components/services/furnitureAssembly/furnitureAssemblyForm/furnitureAssembly.types';
 
 export const validateFurnitureForm = (
-  formData: FurnitureAssemblyDetailsForm,
-  input: furnitureServiceInput
+  formData: FurnitureAssemblyDetails,
+  input: FurnitureServiceInput
 ): string | null => {
   if (!formData.location) return 'Please select a location.';
   if (!formData.type) return 'Please select a furniture type.';

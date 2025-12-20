@@ -2,9 +2,25 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/packages/components/*": ["../../packages/components/*"],
+      "@/packages/contexts/*": ["../../packages/contexts/*"],
+      "@/packages/hooks/*": ["../../packages/hooks/*"],
+      "@/packages/services/*": ["../../packages/services/*"],
+      "@/packages/types/*": ["../../packages/types/*"],
+      "@/packages/utils/*": ["../../packages/utils/*"],
+      "@/packages/i18n": ["../../packages/i18n/index.ts"],
+      "@/packages/i18n/*": ["../../packages/i18n/*"],
+      "@/apps/*": ["../../apps/*"],
+      "@/packages/*": ["../../packages/*"],
+      "@/*": ["./*"],
+      "@havenova/components/*": ["../../packages/components/*"],
+      "@havenova/contexts/*": ["../../packages/contexts/*"],
+      "@havenova/hooks/*": ["../../packages/hooks/*"],
+      "@havenova/services/*": ["../../packages/services/*"],
+      "@havenova/types/*": ["../../packages/types/*"],
+      "@havenova/utils/*": ["../../packages/utils/*"],
+      "@havenova/i18n": ["../../packages/i18n/index.ts"],
+      "@havenova/i18n/*": ["../../packages/i18n/*"]
     },
     "plugins": [
       {
@@ -14,6 +30,8 @@
   },
   "include": [
     ".",
+    "../../packages/**/*.ts",
+    "../../packages/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

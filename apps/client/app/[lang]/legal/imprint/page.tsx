@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
-import { ContactInfo, FinalCTA, FinalCTASkeleton } from '@/packages/components/common';
+import { ContactInfo, FinalCTA, FinalCTASkeleton } from '@/packages/components/client';
 import { useRouter } from 'next/navigation';
 
 export default function ImprintPage() {

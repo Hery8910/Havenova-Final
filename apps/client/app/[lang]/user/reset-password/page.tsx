@@ -13,7 +13,7 @@ import {
   useGlobalAlert,
   useProfile,
 } from '@/packages/contexts';
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
 import styles from '../userAuth.module.css';
@@ -68,12 +68,12 @@ const ResetPassword = () => {
       );
 
       showError({
-          response: {
-            status: 500,
-            title: popupData.title,
-            description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-          },
+        response: {
+          status: 500,
+          title: popupData.title,
+          description: popupData.description,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+        },
         onCancel: () => {
           closeAlert();
           router.push(href(lang, '/'));
@@ -162,7 +162,12 @@ const ResetPassword = () => {
         clientId: client._id,
       };
 
-      const loadingData = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
+      const loadingData = getPopup(
+        popups,
+        'GLOBAL_LOADING',
+        'GLOBAL_LOADING',
+        fallbackGlobalLoading
+      );
 
       showLoading({
         response: {

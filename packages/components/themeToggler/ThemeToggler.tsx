@@ -31,12 +31,12 @@ const ThemeToggler = () => {
             className={styles.logo}
             src="/svg/moon.svg"
             alt="Moon icon"
-            width={30}
-            height={30}
+            width={25}
+            height={25}
           />
         </span>
         <span className={styles.sun}>
-          <Image className={styles.logo} src="/svg/sun.svg" alt="Sun icon" width={30} height={30} />
+          <Image className={styles.logo} src="/svg/sun.svg" alt="Sun icon" width={25} height={25} />
         </span>
       </div>
     </button>

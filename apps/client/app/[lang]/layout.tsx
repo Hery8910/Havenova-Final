@@ -1,19 +1,23 @@
 // apps/client/src/app/[lang]/layout.tsx
 import '../globals.css';
-import { ClientProvider } from '@/packages/contexts/client/ClientContext';
-import { NavbarContainer } from '@/packages/components/navbar';
-import { CookieBannerContainer } from '@/packages/components/cookieBanner';
-import { FooterContainer } from '@/packages/components/footer/FooterContainer';
-import { getClient } from '@/packages/services/client';
-import { CookiesProvider } from '@/packages/contexts/cookies/CookiesContext';
-import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
-import { AlertProvider } from '@/packages/contexts/';
-import { ServiceCartProvider } from '@/packages/contexts/serviceCart';
-import { ServiceCart } from '@/packages/components/services/serviceCart';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
-import { getPageMetadata } from '@/packages/utils/metadata';
 import { ClientPublicConfig } from '../../../../packages/types';
+import { getPageMetadata } from '../../../../packages/utils/metadata';
+import { getClient } from '../../../../packages/services';
+import {
+  AlertProvider,
+  AuthProvider,
+  ClientProvider,
+  CookiesProvider,
+  I18nProvider,
+  ProfileProvider,
+} from '../../../../packages/contexts';
+import {
+  CookieBannerContainer,
+  FooterContainer,
+  NavbarContainer,
+} from '../../../../packages/components';
 
 export async function generateMetadata({
   params,
@@ -63,23 +67,20 @@ export default async function LangLayout({
     >
       <body>
         <AlertProvider>
-          <ClientProvider initialClient={client}>
-            <I18nProvider initialLanguage={params.lang}>
+          <I18nProvider initialLanguage={params.lang}>
+            <ClientProvider initialClient={client}>
               <AuthProvider>
                 <ProfileProvider>
                   <CookiesProvider>
-                    <ServiceCartProvider>
-                      <CookieBannerContainer />
-                      <NavbarContainer />
-                      {children}
-                      <ServiceCart />
-                      <FooterContainer />
-                    </ServiceCartProvider>
+                    <CookieBannerContainer />
+                    <NavbarContainer />
+                    {children}
+                    <FooterContainer />
                   </CookiesProvider>
                 </ProfileProvider>
               </AuthProvider>
-            </I18nProvider>
-          </ClientProvider>
+            </ClientProvider>
+          </I18nProvider>
         </AlertProvider>
       </body>
     </html>

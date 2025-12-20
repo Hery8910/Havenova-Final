@@ -13,7 +13,7 @@ import {
   useProfile,
 } from '@/packages/contexts';
 import { useLang } from '@/packages/hooks';
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import { ButtonProps } from '@/packages/components/common/button/Button';
 import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
@@ -173,13 +173,13 @@ const ForgotPassword = () => {
         aria-busy={loading}
         role="form"
       >
-          <FormWrapper<ForgotPasswordPayload>
-            fields={['email', 'language', 'clientId'] as const}
-            onSubmit={handleForgotPassword}
-            button={forgotButton}
-            initialValues={{
-              clientId: client?._id || '',
-              email: auth?.email || '',
+        <FormWrapper<ForgotPasswordPayload>
+          fields={['email', 'language', 'clientId'] as const}
+          onSubmit={handleForgotPassword}
+          button={forgotButton}
+          initialValues={{
+            clientId: client?._id || '',
+            email: auth?.email || '',
             language: profile?.language || lang || 'de',
           }}
           loading={loading}

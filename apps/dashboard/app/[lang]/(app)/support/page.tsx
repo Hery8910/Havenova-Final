@@ -12,7 +12,7 @@ import {
   useI18n,
 } from '@/packages/contexts';
 import { getPopup } from '@/packages/utils/alertType';
-import { ContactSection } from '@/packages/components/common';
+import { ContactSection } from '@/packages/components/client';
 import { sendContactMessage } from '@/packages/services/contact';
 
 const SupportPage = () => {
@@ -30,7 +30,12 @@ const SupportPage = () => {
   const handleSubmit = async (data: ContactMessageFormData) => {
     setLoading(true);
     try {
-      const loadingPopup = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
+      const loadingPopup = getPopup(
+        popups,
+        'GLOBAL_LOADING',
+        'GLOBAL_LOADING',
+        fallbackGlobalLoading
+      );
       showLoading({
         response: {
           status: 102,
@@ -40,7 +45,12 @@ const SupportPage = () => {
       });
 
       if (!client?._id) {
-        const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        const popupData = getPopup(
+          popups,
+          'GLOBAL_INTERNAL_ERROR',
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
         showError({
           response: {
             status: 500,
@@ -65,8 +75,7 @@ const SupportPage = () => {
       const response = await sendContactMessage(payload);
       closeAlert();
 
-      const popupData =
-        (popups as any)?.[response.code] ||
+      const popupData = (popups as any)?.[response.code] ||
         (popups as any)?.CONTACT_MESSAGE_CREATED || {
           title: response.success ? 'Ticket created' : 'We could not create the ticket',
           description:
@@ -91,7 +100,12 @@ const SupportPage = () => {
       }
     } catch (error: any) {
       closeAlert();
-      const popupData = getPopup(popups, 'GLOBAL_INTERNAL_ERROR', 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const popupData = getPopup(
+        popups,
+        'GLOBAL_INTERNAL_ERROR',
+        'GLOBAL_INTERNAL_ERROR',
+        fallbackGlobalError
+      );
       showError({
         response: {
           status: 500,

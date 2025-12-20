@@ -6,7 +6,7 @@ import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
-import { FinalCTA, FinalCTASkeleton } from '@/packages/components/common';
+import { FinalCTA, FinalCTASkeleton } from '@/packages/components/client';
 import { useRouter } from 'next/navigation';
 
 export interface TermsOfServicePageTexts {

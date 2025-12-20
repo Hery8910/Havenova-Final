@@ -6,19 +6,19 @@ import { useRouter } from 'next/navigation';
 
 import styles from './AvatarSelector.module.css';
 import { useProfile } from '@/packages/contexts/profile/ProfileContext';
+
+import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
-  useAuth,
-  useGlobalAlert,
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingMessages,
-} from '@/packages/contexts';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { fallbackPopups } from '@/packages/contexts/i18n';
-import { getPopup } from '@/packages/utils/alertType';
+  fallbackPopups,
+} from '@/packages/contexts/i18n';
+import { getPopup } from '@havenova/utils/alertType';
 import { useLang } from '@/packages/hooks';
-import { href } from '@/packages/utils/navigation';
+import { href } from '@havenova/utils/navigation';
 import { MdOutlinePhotoCamera } from 'react-icons/md';
+import { useAuth, useGlobalAlert } from '../../../contexts';
 
 const avatarList = Array.from({ length: 10 }, (_, i) => `/avatars/avatar-${i + 1}.svg`);
 

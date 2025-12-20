@@ -5,7 +5,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import styles from './ProfileHeader.module.css';
 import { useProfile } from '@/packages/contexts/profile/ProfileContext';
-import { useAuth } from '@/packages/contexts/auth/authContext';
+import { useAuth } from '@havenova/contexts/auth/authContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 
 export function ProfileHeader() {

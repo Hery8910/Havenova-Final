@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { TbPointFilled } from 'react-icons/tb';
 
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import { ButtonProps } from '@/packages/components/common/button/Button';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { useProfile } from '@/packages/contexts/profile/ProfileContext';

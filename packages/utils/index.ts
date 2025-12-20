@@ -1,5 +1,4 @@
 export * from './analiticsEvents';
-export * from './applyBrandingToDOM';
 export * from './cookies';
 export * from './user';
 export * from './serviceRequest';

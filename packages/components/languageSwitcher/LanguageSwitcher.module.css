@@ -1,8 +1,8 @@
 .button {
   background-color: transparent;
   border: none;
-  font-size: clamp(18px, 3.5vw, 26px);
-  font-weight: 700;
+  font-size: clamp(18px, 3.5vw, 22px);
+  font-weight: 600;
   text-shadow: var(--shadow-dark);
   display: flex;
   justify-content: center;
@@ -13,5 +13,5 @@
   transition: all 0.3s ease-in-out;
 }
 .button:hover {
-  transform: scale(110%);
+  transform: translateY(-2px);
 }

@@ -36,6 +36,8 @@ export interface PopupsTexts {
   REFRESH_TOKEN_EXPIRED?: PopupText;
   ACCESS_TOKEN_REFRESHED?: PopupText;
 
+  CLIENT_FETCH_FAILED?: PopupText;
+
   GLOBAL_INTERNAL_ERROR?: PopupText;
 }
 

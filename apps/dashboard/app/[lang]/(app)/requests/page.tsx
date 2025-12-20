@@ -17,7 +17,6 @@ import { FaFolder } from 'react-icons/fa';
 
 export default function Requests() {
   const { client } = useClient();
-  const { user } = useUser();
 
   const [requests, setRequests] = useState<WorkRequestSummary[]>([]);
   const [loading, setLoading] = useState(false);

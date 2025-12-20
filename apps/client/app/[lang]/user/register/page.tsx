@@ -6,7 +6,7 @@ import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { ButtonProps } from '@/packages/components/common/button/Button';
 import { RegisterFormData, RegisterPayload } from '@/packages/types';
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import {
   fallbackButtons,
   fallbackGlobalError,

@@ -14,10 +14,10 @@ import { useClient } from '../client/ClientContext';
 import { refreshToken, logoutUser, getAuthUser } from '@/packages/services/auth/authService';
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
-import { getPopup } from '@/packages/utils/alertType';
 import { fallbackButtons, fallbackLogoutSuccess, fallbackPopups } from '../i18n';
 import { AuthUser } from '@/packages/types/auth/authTypes';
 import { useRouter } from 'next/navigation';
+import { getPopup } from '@havenova/utils';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 

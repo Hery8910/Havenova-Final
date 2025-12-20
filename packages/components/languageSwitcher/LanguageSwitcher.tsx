@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useProfile } from '../../contexts/profile';
+import Image from 'next/image';
 
 export default function LanguageSwitcher() {
   const { setLanguage } = useProfile();
@@ -27,11 +28,25 @@ export default function LanguageSwitcher() {
     <section>
       {currentLang === 'en' ? (
         <button className={styles.button} onClick={() => switchLang('de')}>
-          <IoLanguage /> De
+          <Image
+            className={styles.logo}
+            src="/images/germany.png"
+            alt="Germany Flag icon"
+            width={20}
+            height={20}
+          />
+          De
         </button>
       ) : (
         <button className={styles.button} onClick={() => switchLang('en')}>
-          <IoLanguage /> En
+          <Image
+            className={styles.logo}
+            src="/images/uk.png"
+            alt="Germany Flag icon"
+            width={20}
+            height={20}
+          />
+          En
         </button>
       )}
     </section>

@@ -23,9 +23,17 @@ export interface Day {
   requests: any[]; // TODO: define type later (serviceId, start, end, workers)
 }
 
+export interface BlockedSlot {
+  date: string;
+  start: string;
+  end: string;
+  reason: DayReason;
+}
+
 export interface Month {
   month: number; // 1..12
   days: Day[];
+  blockedSlots?: BlockedSlot[];
 }
 
 export interface CalendarData {

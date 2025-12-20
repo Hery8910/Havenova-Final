@@ -4,9 +4,9 @@ import Link from 'next/link';
 import styles from './ProfileNav.module.css';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import { useLang } from '@/packages/hooks';
-import { href } from '@/packages/utils/navigation';
 import { usePathname } from 'next/navigation';
 import { FaUser, FaBell, FaListUl, FaCog } from 'react-icons/fa';
+import { href } from '../../../utils';
 
 const routes = [
   { key: 'profile', path: '/user/profile', icon: <FaUser aria-hidden /> },
@@ -37,7 +37,9 @@ export function ProfileNav({ className }: ProfileNavProps) {
                 className={`${styles.link} ${active ? styles.active : ''}`.trim()}
               >
                 <span className={styles.icon}>{item.icon}</span>
-                <span className={styles.label}>{labels?.[item.key as keyof typeof labels] ?? item.key}</span>
+                <span className={styles.label}>
+                  {labels?.[item.key as keyof typeof labels] ?? item.key}
+                </span>
               </Link>
             </li>
           );

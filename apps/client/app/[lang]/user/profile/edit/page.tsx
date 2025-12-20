@@ -6,7 +6,7 @@ import { useProfile } from '@/packages/contexts/profile/ProfileContext';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
-import { FormWrapper } from '@/packages/components/userForm';
+import { FormWrapper } from '@/packages/components/user/userForm';
 import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
 import { useRouter } from 'next/navigation';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
