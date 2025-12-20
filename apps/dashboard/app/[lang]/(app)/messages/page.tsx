@@ -21,7 +21,7 @@ import Image from 'next/image';
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosArrowUp } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../packages/utils/navigation';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever } from 'react-icons/md';
 
 const PAGE_SIZE = 10;
@@ -401,21 +401,33 @@ const ContactMessagesPage = () => {
           <ul className={styles.items}>
             {messages.map((msg) => (
               <li key={msg._id} className={styles.item}>
-                <Image
-                  className={styles.image}
-                  src={msg.profileImage || '/avatars/avatar-1.svg'}
-                  alt=""
-                  width={40}
-                  height={40}
-                  aria-hidden="true"
-                />
                 <div className={styles.wrapper}>
                   <header className={styles.itemsHeader}>
+                    <Image
+                      className={styles.image}
+                      src={msg.profileImage || '/avatars/avatar-1.svg'}
+                      alt=""
+                      width={40}
+                      height={40}
+                      aria-hidden="true"
+                    />
                     <article className={styles.article}>
                       <p className={styles.name}>{msg.name}</p>
                       <p className={styles.email}>{msg.email}</p>
                     </article>
                     <aside className={styles.aside}>
+                      <div className={styles.asideDiv}>
+                        <span
+                          className={`${styles.statusBadge} ${
+                            msg.status === 'answered' ? styles.answered : styles.pending
+                          }`}
+                        >
+                          {msg.status === 'answered'
+                            ? listTexts?.badge?.answered || 'Respondido'
+                            : listTexts?.badge?.pending || 'Pendiente'}
+                        </span>
+                        <span className={styles.date}>{formatMessageAge(msg.createdAt)}</span>
+                      </div>
                       <button
                         className={styles.menuIcon}
                         onClick={() => {
@@ -428,7 +440,7 @@ const ContactMessagesPage = () => {
                         }}
                         aria-label={listTexts?.deleteCta || 'Delete'}
                       >
-                        <BsThreeDots />
+                        <BsThreeDotsVertical />
                       </button>
                       {deletingId === msg._id && (
                         <button
@@ -439,16 +451,6 @@ const ContactMessagesPage = () => {
                           <MdDeleteForever /> Delete
                         </button>
                       )}
-                      <span
-                        className={`${styles.statusBadge} ${
-                          msg.status === 'answered' ? styles.answered : styles.pending
-                        }`}
-                      >
-                        {msg.status === 'answered'
-                          ? listTexts?.badge?.answered || 'Respondido'
-                          : listTexts?.badge?.pending || 'Pendiente'}
-                      </span>
-                      <span className={styles.date}>{formatMessageAge(msg.createdAt)}</span>
                     </aside>
                   </header>
                   <section className={styles.msgSection}>

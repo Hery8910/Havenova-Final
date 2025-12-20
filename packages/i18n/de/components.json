@@ -763,6 +763,7 @@
       "dashboard": "Überblick",
       "requests": "Anfragen",
       "clients": "Kunden",
+      "property-manager": "Immobilienverwalter",
       "employees": "Mitarbeiter",
       "messages": "Nachrichten",
       "notifications": "Benachrichtigungen",
@@ -803,6 +804,98 @@
       "support": {
         "heading": "Support-Tickets",
         "description": "Beschreiben Sie Ihr Problem, damit wir ein Support-Ticket erstellen können."
+      },
+      "propertyManagers": {
+        "page": {
+          "kicker": "Immobilien",
+          "title": "Immobilienverwalter",
+          "subtitle": "Verwalte Kontaktdaten, Zugriffsstatus und Gebäudezuweisungen für dein Team.",
+          "createCta": "Manager erstellen"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Nach Name oder E-Mail suchen",
+          "statusAll": "Alle Status",
+          "statusActive": "Aktiv",
+          "statusInactive": "Inaktiv",
+          "apply": "Anwenden",
+          "reset": "Zurücksetzen",
+          "totalLabel": "Gesamt",
+          "activeLabel": "Aktiv",
+          "inactiveLabel": "Inaktiv"
+        },
+        "table": {
+          "name": "Name",
+          "email": "E-Mail",
+          "phone": "Telefon",
+          "status": "Status",
+          "buildings": "Gebäude",
+          "actions": "Aktionen",
+          "loading": "Immobilienverwalter werden geladen...",
+          "empty": "Keine Immobilienverwalter gefunden.",
+          "edit": "Bearbeiten",
+          "activate": "Aktivieren",
+          "deactivate": "Deaktivieren"
+        },
+        "pagination": {
+          "prev": "Zurück",
+          "next": "Weiter",
+          "pageLabel": "Seite"
+        },
+        "confirm": {
+          "activateTitle": "Manager aktivieren?",
+          "activateDescription": "Dieser Manager erhält wieder Zugriff auf das Dashboard.",
+          "deactivateTitle": "Manager deaktivieren?",
+          "deactivateDescription": "Dieser Manager verliert den Zugriff auf das Dashboard.",
+          "confirmActivate": "Aktivieren",
+          "confirmDeactivate": "Deaktivieren",
+          "cancel": "Abbrechen"
+        },
+        "form": {
+          "createTitle": "Immobilienverwalter erstellen",
+          "editTitle": "Immobilienverwalter bearbeiten",
+          "createSubtitle": "Füge einen neuen Manager hinzu und weise Gebäude später zu.",
+          "editSubtitle": "Aktualisiere die Daten und den Status des Managers.",
+          "fields": {
+            "name": "Name",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "status": "Status",
+            "preferredContactMethod": "Bevorzugter Kontakt",
+            "notes": "Notizen"
+          },
+          "statusOptions": {
+            "active": "Aktiv",
+            "inactive": "Inaktiv"
+          },
+          "contactOptions": {
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "none": "Keine Präferenz"
+          },
+          "submitCreate": "Manager erstellen",
+          "submitEdit": "Änderungen speichern",
+          "cancel": "Abbrechen",
+          "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
+          "successCreateTitle": "Manager erstellt",
+          "successCreateDescription": "Der Immobilienverwalter wurde erfolgreich hinzugefügt.",
+          "successEditTitle": "Manager aktualisiert",
+          "successEditDescription": "Der Immobilienverwalter wurde erfolgreich aktualisiert."
+        },
+        "details": {
+          "title": "Manager Details",
+          "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
+          "loading": "Details werden geladen...",
+          "phone": "Telefon",
+          "address": "Adresse",
+          "preferredContact": "Bevorzugter Kontakt",
+          "createdAt": "Erstellt",
+          "updatedAt": "Aktualisiert",
+          "notes": "Notizen",
+          "totalBuildings": "Gesamt",
+          "activeBuildings": "Aktiv",
+          "inactiveBuildings": "Inaktiv"
+        }
       },
       "contactMessages": {
         "list": {
@@ -864,6 +957,7 @@
         { "label": "Dashboard", "href": "/" },
         { "label": "Anfragen", "href": "/requests" },
         { "label": "Kunden", "href": "/clients" },
+        { "label": "Immobilienverwalter", "href": "/property-manager" },
         { "label": "Mitarbeiter", "href": "/employees" },
         { "label": "Nachrichten", "href": "/messages" },
         { "label": "Benachrichtigungen", "href": "/notifications" }

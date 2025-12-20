@@ -12,3 +12,4 @@ export * from './userForm';
 export * from './worker';
 export * from './auth';
 export * from './contact';
+export * from './propertyManager';

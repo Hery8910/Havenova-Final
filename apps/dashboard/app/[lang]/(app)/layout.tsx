@@ -63,7 +63,7 @@ export default async function LangLayout({
                     <nav className={styles.nav}>
                       <Sidebar />
                     </nav>
-                    <header className={`${styles.header} card`}>
+                    <header className={styles.header}>
                       <DashboardHeader />
                     </header>
                     <main className={styles.main}>{children}</main>

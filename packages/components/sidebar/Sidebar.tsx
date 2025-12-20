@@ -20,14 +20,11 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useAuth, useProfile } from '../../contexts';
 import { useLang } from '../../hooks';
 import Image from 'next/image';
+import { PiBuildings } from 'react-icons/pi';
 
 export interface NavItem {
   label: string;
   href: string;
-}
-interface DashboardSidebarProps {
-  items: NavItem[];
-  context: 'user-profile' | 'admin-dashboard';
 }
 
 export default function Sidebar() {
@@ -51,6 +48,7 @@ export default function Sidebar() {
     '/notifications': <LuBell />,
     '/support': <LuSettings />,
     '/profile': <LuUser />,
+    '/property-manager': <PiBuildings />,
   };
 
   useEffect(() => {

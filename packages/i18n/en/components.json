@@ -763,6 +763,7 @@
       "dashboard": "Overview",
       "requests": "Requests",
       "clients": "Clients",
+      "property-manager": "Property Manager",
       "employees": "Employees",
       "messages": "Messages",
       "notifications": "Notifications",
@@ -803,6 +804,98 @@
       "support": {
         "heading": "Support tickets",
         "description": "Describe the issue and we will create a support ticket for you."
+      },
+      "propertyManagers": {
+        "page": {
+          "kicker": "Property",
+          "title": "Property Managers",
+          "subtitle": "Manage contact details, access status, and building assignments for your team.",
+          "createCta": "Create manager"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Search by name or email",
+          "statusAll": "All statuses",
+          "statusActive": "Active",
+          "statusInactive": "Inactive",
+          "apply": "Apply",
+          "reset": "Reset",
+          "totalLabel": "Total",
+          "activeLabel": "Active",
+          "inactiveLabel": "Inactive"
+        },
+        "table": {
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "status": "Status",
+          "buildings": "Buildings",
+          "actions": "Actions",
+          "loading": "Loading property managers...",
+          "empty": "No property managers found.",
+          "edit": "Edit",
+          "activate": "Activate",
+          "deactivate": "Deactivate"
+        },
+        "pagination": {
+          "prev": "Previous",
+          "next": "Next",
+          "pageLabel": "Page"
+        },
+        "confirm": {
+          "activateTitle": "Activate manager?",
+          "activateDescription": "This manager will regain access to the dashboard.",
+          "deactivateTitle": "Deactivate manager?",
+          "deactivateDescription": "This manager will lose access to the dashboard.",
+          "confirmActivate": "Activate",
+          "confirmDeactivate": "Deactivate",
+          "cancel": "Cancel"
+        },
+        "form": {
+          "createTitle": "Create property manager",
+          "editTitle": "Edit property manager",
+          "createSubtitle": "Add a new manager and assign buildings later.",
+          "editSubtitle": "Update the manager details and status.",
+          "fields": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "status": "Status",
+            "preferredContactMethod": "Preferred contact method",
+            "notes": "Notes"
+          },
+          "statusOptions": {
+            "active": "Active",
+            "inactive": "Inactive"
+          },
+          "contactOptions": {
+            "email": "Email",
+            "phone": "Phone",
+            "none": "No preference"
+          },
+          "submitCreate": "Create manager",
+          "submitEdit": "Save changes",
+          "cancel": "Cancel",
+          "emptyState": "Select a manager to view details.",
+          "successCreateTitle": "Manager created",
+          "successCreateDescription": "The property manager has been added successfully.",
+          "successEditTitle": "Manager details updated",
+          "successEditDescription": "The property manager has been updated successfully."
+        },
+        "details": {
+          "title": "Manager details",
+          "emptyState": "Select a manager to view details.",
+          "loading": "Loading details...",
+          "phone": "Phone",
+          "address": "Address",
+          "preferredContact": "Preferred contact",
+          "createdAt": "Created",
+          "updatedAt": "Updated",
+          "notes": "Notes",
+          "totalBuildings": "Total",
+          "activeBuildings": "Active",
+          "inactiveBuildings": "Inactive"
+        }
       },
       "contactMessages": {
         "list": {
@@ -868,6 +961,7 @@
         { "label": "Dashboard", "href": "/" },
         { "label": "Requests", "href": "/requests" },
         { "label": "Clients", "href": "/clients" },
+        { "label": "Property Manager", "href": "/property-manager" },
         { "label": "Employees", "href": "/employees" },
         { "label": "Messages", "href": "/messages" },
         { "label": "Notifications", "href": "/notifications" }
