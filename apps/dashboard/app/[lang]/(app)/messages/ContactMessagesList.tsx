@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosArrowUp } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
 import styles from './page.module.css';
-import { ContactMessage } from '@/packages/types';
-import { ContactMessageResponder } from '@/packages/components/dashboard/contactMessages/ContactMessageResponder';
-import { formatMessageAge } from '@/packages/utils/date';
+import { ContactMessage } from '../../../../../../packages/types';
+import { formatMessageAge } from '../../../../../../packages/utils';
+import { ContactMessageResponder } from '../../../../../../packages/components/dashboard/contactMessages/ContactMessageResponder';
 
 interface ContactMessagesListTexts {
   empty?: string;

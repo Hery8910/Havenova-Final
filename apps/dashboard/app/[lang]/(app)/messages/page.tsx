@@ -1,28 +1,32 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './page.module.css';
-import { deleteContactMessage, getContactMessages } from '@/packages/services/contact';
-import { ContactMessage, ContactMessageStatus } from '@/packages/types';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import {
-  fallbackGlobalError,
-  fallbackGlobalLoading,
-  useAuth,
-  useGlobalAlert,
-  useI18n,
-} from '@/packages/contexts';
-import { getPopup } from '@/packages/utils/alertType';
-import { formatMessageAge } from '@/packages/utils/date';
-import { ContactMessageResponder } from '@/packages/components/dashboard/contactMessages/ContactMessageResponder';
 
-import { IoSearch } from 'react-icons/io5';
 import Image from 'next/image';
-import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../packages/utils/navigation';
 import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever } from 'react-icons/md';
+import {
+  fallbackGlobalError,
+  fallbackGlobalLoading,
+  useAuth,
+  useClient,
+  useGlobalAlert,
+  useI18n,
+} from '../../../../../../packages/contexts';
+import { ContactMessage, ContactMessageStatus } from '../../../../../../packages/types';
+import { formatMessageAge, getPopup } from '../../../../../../packages/utils';
+import { deleteContactMessage, getContactMessages } from '../../../../../../packages/services';
+import { ContactMessageResponder } from '../../../../../../packages/components/dashboard/contactMessages/ContactMessageResponder';
+import {
+  DashboardSearchInput,
+  DashboardStatusFilters,
+  DashboardLoadMore,
+  type DashboardStatusFilterItem,
+} from '../../../../../../packages/components/dashboard';
 
 const PAGE_SIZE = 10;
 
@@ -55,6 +59,29 @@ const ContactMessagesPage = () => {
   const [queryInput, setQueryInput] = useState('');
   const [deleteTarget, setDeleteTarget] = useState<ContactMessage | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const hasNextPage = useMemo(() => {
+    if (totals.total) return page * PAGE_SIZE < totals.total;
+    return messages.length === PAGE_SIZE;
+  }, [messages.length, page, totals.total]);
+
+  const statusFilters: DashboardStatusFilterItem<ContactMessageStatus | ''>[] = [
+    {
+      label: filterTexts?.statusAll || 'All',
+      value: '',
+      total: totals.total,
+    },
+    {
+      label: filterTexts?.statusPending || 'Pending',
+      value: 'pending',
+      total: totals.pending,
+    },
+    {
+      label: filterTexts?.statusAnswered || 'Answered',
+      value: 'answered',
+      total: totals.answered,
+    },
+  ];
 
   const handleStatusChange = (status: ContactMessageStatus | '') => {
     setFilters((prev) => ({
@@ -92,7 +119,8 @@ const ContactMessagesPage = () => {
       };
 
       const data = await getContactMessages(params);
-      setMessages(data.messages || []);
+      const nextMessages = data.messages || [];
+      setMessages((prev) => (page === 1 ? nextMessages : [...prev, ...nextMessages]));
       setTotals({
         total: data.totals?.total ?? data.count ?? 0,
         pending: data.totals?.pending ?? 0,
@@ -112,7 +140,8 @@ const ContactMessagesPage = () => {
             status: filters.status || undefined,
             search: filters.query?.trim() || undefined,
           });
-          setMessages(retryData.messages || []);
+          const retryMessages = retryData.messages || [];
+          setMessages((prev) => (page === 1 ? retryMessages : [...prev, ...retryMessages]));
           setTotals({
             total: retryData.totals?.total ?? retryData.count ?? 0,
             pending: retryData.totals?.pending ?? 0,
@@ -335,60 +364,20 @@ const ContactMessagesPage = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
-        <label className={styles.label}>
-          <IoSearch />
-          <input
-            className={styles.input}
-            name="search"
-            id="search"
-            type="text"
-            value={queryInput}
-            placeholder={filterTexts?.searchPlaceholder}
-            onChange={(e) => {
-              const value = e.target.value;
-              setQueryInput(value);
-            }}
-          />
-        </label>
-        <button
-          className={styles.button}
-          onClick={() => {
-            setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
-            setPage(1);
-          }}
-        >
-          {filterTexts?.apply}
-        </button>
-      </header>
-      <section className={styles.buttons}>
-        <div className={`${styles.div} ${(filters.status || '') === '' ? styles.divActive : ''}`}>
-          <button className={styles.statusButton} onClick={() => handleStatusChange('')}>
-            {filterTexts?.statusAll}
-          </button>
-          <span className={styles.badge}>{totals.total}</span>
-        </div>
-        <div
-          className={`${styles.div} ${
-            (filters.status || '') === 'pending' ? styles.divActive : ''
-          }`}
-        >
-          <button className={styles.statusButton} onClick={() => handleStatusChange('pending')}>
-            {filterTexts?.statusPending}
-          </button>
-          <span className={styles.badge}>{totals.pending}</span>
-        </div>
-        <div
-          className={`${styles.div} ${
-            (filters.status || '') === 'answered' ? styles.divActive : ''
-          }`}
-        >
-          <button className={styles.statusButton} onClick={() => handleStatusChange('answered')}>
-            {filterTexts?.statusAnswered}
-          </button>
-          <span className={styles.badge}>{totals.answered}</span>
-        </div>
-      </section>
+      <DashboardSearchInput
+        query={queryInput}
+        placeholder={filterTexts?.searchPlaceholder}
+        onQueryChange={setQueryInput}
+        onApply={() => {
+          setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
+          setPage(1);
+        }}
+      />
+      <DashboardStatusFilters
+        items={statusFilters}
+        activeValue={filters.status ?? ''}
+        onChange={handleStatusChange}
+      />
       <section className={styles.list}>
         {messages.length === 0 ? (
           <div className={styles.listEmpty}>
@@ -526,25 +515,12 @@ const ContactMessagesPage = () => {
           </ul>
         )}
 
-        <div className={styles.pagination}>
-          <button
-            className={styles.paginationButton}
-            disabled={page <= 1 || loading}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-          >
-            <IoIosArrowBack />
-          </button>
-          <span className={styles.pageLabel}>
-            {filterTexts?.pageLabel} {page}
-          </span>
-          <button
-            className={styles.paginationButton}
-            disabled={messages.length < PAGE_SIZE || loading}
-            onClick={() => setPage((p) => p + 1)}
-          >
-            <IoIosArrowForward />
-          </button>
-        </div>
+        <DashboardLoadMore
+          hasMore={hasNextPage}
+          loading={loading}
+          label={filterTexts?.loadMoreLabel || 'Cargar mas resultados'}
+          onLoadMore={() => setPage((current) => current + 1)}
+        />
       </section>
     </main>
   );

@@ -1,0 +1,49 @@
+.buttons {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #6161618e;
+}
+
+.item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  transition: all 0.2s ease-in-out;
+  border-bottom: 2px solid transparent;
+}
+
+.itemActive {
+  border-bottom: 2px solid var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.statusButton {
+  color: inherit;
+  background-color: transparent;
+  padding: 2px 8px;
+  border: none;
+  font-size: clamp(16px, 3vw, 20px);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.statusButton:hover {
+  transform: translateY(-2px);
+  text-shadow: var(--shadow);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 99px;
+  font-size: clamp(10px, 3vw, 14px);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-card-3);
+  border: 1px solid #6161618e;
+}

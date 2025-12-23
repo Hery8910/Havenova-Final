@@ -1,10 +1,10 @@
 'use client';
 import React, { useRef } from 'react';
-import { useImageUploader } from '@/packages/hooks/useImageUploader';
 import { useEffect } from 'react';
 import styles from './ImageUploader.module.css';
 import Image from 'next/image';
 import { MdDeleteForever } from 'react-icons/md';
+import { useImageUploader } from '../../hooks';
 
 interface Props {
   clientId: string;

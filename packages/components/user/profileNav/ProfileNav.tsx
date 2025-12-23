@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import styles from './ProfileNav.module.css';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { useLang } from '@/packages/hooks';
-import { usePathname } from 'next/navigation';
 import { FaUser, FaBell, FaListUl, FaCog } from 'react-icons/fa';
 import { href } from '../../../utils';
+import { useI18n } from '../../../contexts';
+import { useLang } from '../../../hooks';
+import { usePathname } from 'next/navigation';
 
 const routes = [
   { key: 'profile', path: '/user/profile', icon: <FaUser aria-hidden /> },

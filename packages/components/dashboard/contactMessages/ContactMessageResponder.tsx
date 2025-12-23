@@ -2,13 +2,12 @@ import { useState } from 'react';
 import styles from './ContactMessageResponder.module.css';
 import { ContactMessage } from '@/packages/types';
 import { respondContactMessage } from '@/packages/services/contact';
-import { useGlobalAlert } from '@/packages/contexts';
-import { getPopup } from '@/packages/utils/alertType';
-import { useI18n } from '@/packages/contexts/i18n';
+import { useGlobalAlert, useI18n } from '@/packages/contexts';
 import {
   fallbackGlobalError,
   fallbackGlobalLoading,
 } from '@/packages/contexts/i18n/fallbackText.de';
+import { getPopup } from '../../../utils';
 
 interface ContactMessageResponderProps {
   message: ContactMessage;

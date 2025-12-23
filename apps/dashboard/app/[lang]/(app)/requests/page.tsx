@@ -1,19 +1,20 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-
+import styles from './page.module.css';
+import { FaFolder } from 'react-icons/fa';
+import { useClient } from '../../../../../../packages/contexts';
 import {
   getWorkRequestById,
   getWorkRequests,
   RequestFilters,
   WorkRequestSummary,
-} from '@/packages/services/workRequest';
-import { RequestsToolbar } from '@/packages/components/dashboard/pages/requests/requestsToolbar';
-import { WorkRequestDetail } from '@/packages/components/dashboard/pages/requests/workRequestDetail';
-import { RequestList } from '@/packages/components/dashboard/pages/requests/requestsList';
-import styles from './page.module.css';
-import { FaFolder } from 'react-icons/fa';
+} from '../../../../../../packages/services';
+import {
+  RequestList,
+  RequestsToolbar,
+  WorkRequestDetail,
+} from '../../../../../../packages/components/dashboard/pages';
 
 export default function Requests() {
   const { client } = useClient();
@@ -97,7 +98,6 @@ export default function Requests() {
             <h3>Work Requests</h3>
           </header>
 
-          <RequestsToolbar filters={filters} onChange={handleFilterChange} />
           <RequestList data={requests} loading={loading} onSelect={handleSelectRequest} />
         </div>
       ) : (

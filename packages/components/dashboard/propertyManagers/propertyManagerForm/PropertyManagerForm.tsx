@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './page.module.css';
+import styles from './PropertyManagerForm.module.css';
 import type {
   PropertyManagerContactMethod,
   PropertyManagerStatus,
 } from '@/packages/types/propertyManager';
-import { useI18n } from '@/packages/contexts';
+import { useI18n } from '../../../../contexts';
 
 export interface PropertyManagerFormValues {
   name: string;
@@ -108,18 +108,20 @@ const PropertyManagerForm = ({
             onChange={handleChange}
           />
         </label>
-        <label className={styles.field}>
-          {formTexts?.fields?.status || 'Status'}
-          <select
-            className={styles.inputField}
-            name="status"
-            value={values.status}
-            onChange={handleChange}
-          >
-            <option value="active">{formTexts?.statusOptions?.active || 'Active'}</option>
-            <option value="inactive">{formTexts?.statusOptions?.inactive || 'Inactive'}</option>
-          </select>
-        </label>
+        {mode === 'edit' && (
+          <label className={styles.field}>
+            {formTexts?.fields?.status || 'Status'}
+            <select
+              className={styles.inputField}
+              name="status"
+              value={values.status}
+              onChange={handleChange}
+            >
+              <option value="active">{formTexts?.statusOptions?.active || 'Active'}</option>
+              <option value="inactive">{formTexts?.statusOptions?.inactive || 'Inactive'}</option>
+            </select>
+          </label>
+        )}
         <label className={styles.field}>
           {formTexts?.fields?.preferredContactMethod || 'Preferred contact'}
           <select

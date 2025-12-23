@@ -43,11 +43,12 @@
 }
 
 .main {
+  height: -webkit-fill-available;
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   min-height: 0;
   min-width: 0;
   padding: 0;
-  overflow: auto;
+  overflow: hidden;
   scrollbar-width: none;
 }

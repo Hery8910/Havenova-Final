@@ -5,20 +5,19 @@ import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 
 import styles from './AvatarSelector.module.css';
-import { useProfile } from '@/packages/contexts/profile/ProfileContext';
 
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingMessages,
   fallbackPopups,
-} from '@/packages/contexts/i18n';
+  useI18n,
+} from '../../../contexts/i18n';
 import { getPopup } from '@havenova/utils/alertType';
-import { useLang } from '@/packages/hooks';
+import { useLang } from '../../../hooks';
 import { href } from '@havenova/utils/navigation';
 import { MdOutlinePhotoCamera } from 'react-icons/md';
-import { useAuth, useGlobalAlert } from '../../../contexts';
+import { useAuth, useGlobalAlert, useProfile } from '../../../contexts';
 
 const avatarList = Array.from({ length: 10 }, (_, i) => `/avatars/avatar-${i + 1}.svg`);
 

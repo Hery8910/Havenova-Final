@@ -1,0 +1,89 @@
+.form {
+  padding: 16px;
+  background: var(--bg-card-1);
+  border-radius: 12px;
+  border: 1px solid #6161618e;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+}
+
+.formSubtitle {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.inputField {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #6161618e;
+  background: var(--bg-card-3);
+  color: var(--text-primary);
+}
+
+.textarea {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #6161618e;
+  background: var(--bg-card-3);
+  color: var(--text-primary);
+  resize: vertical;
+}
+
+.notesField {
+  grid-column: 1 / -1;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #6161618e;
+  background: var(--bg-card-1);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ghostButton {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px dashed #6161618e;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover,
+.ghostButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}

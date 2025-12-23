@@ -3,24 +3,23 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import Link from 'next/link';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { FormWrapper } from '@/packages/components/user/userForm';
-import { ButtonProps } from '@/packages/components/common/button/Button';
-import { LoginPayload } from '@/packages/types';
-import { href } from '@/packages/utils/navigation';
-import { useLang } from '@/packages/hooks';
 import {
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingMessages,
   fallbackLoginSuccess,
   useAuth,
+  useClient,
   useGlobalAlert,
+  useI18n,
   useProfile,
 } from '../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../packages/utils/alertType';
 import { loginUser } from '../../../../../../packages/services';
+import { useLang } from '../../../../../../packages/hooks';
+import { href } from '../../../../../../packages/utils';
+import { LoginPayload } from '../../../../../../packages/types';
+import { FormWrapper } from '../../../../../../packages/components';
 
 export interface LoginData {
   title: string;
@@ -38,6 +37,7 @@ const Login = () => {
   const { profile } = useProfile();
   const router = useRouter();
   const lang = useLang();
+  const isLoggedIn = auth?.isLogged && auth.role !== 'guest';
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
@@ -52,22 +52,29 @@ const Login = () => {
     if (!profile?.language) return;
     const nextLang = profile.language === 'en' ? 'en' : 'de';
 
-    if (nextLang !== lang) {
-      router.replace(href(nextLang, '/login'));
+    if (!isLoggedIn) {
+      if (nextLang !== lang) {
+        router.replace(href(nextLang, '/login'));
+        return;
+      }
+
+      if (language !== nextLang) {
+        setLanguage(nextLang);
+      }
       return;
     }
 
     if (language !== nextLang) {
       setLanguage(nextLang);
     }
-  }, [profile?.language, lang, language, router, setLanguage]);
+  }, [profile?.language, lang, language, router, setLanguage, isLoggedIn]);
 
   const popups = texts.popups;
   const formText = texts.components.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.user.login;
   const descriptionId = 'login-cta';
-  const loginButton = formText.button.login as ButtonProps;
+  const loginButton = formText.button.login;
 
   const handleLogin = async (data: LoginPayload) => {
     try {
@@ -85,7 +92,6 @@ const Login = () => {
       });
 
       setEmail(data.email);
-      console.log('Lo asigna:', email);
 
       const payload: LoginPayload = {
         email: data.email?.trim() || '',

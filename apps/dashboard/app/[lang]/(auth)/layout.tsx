@@ -1,14 +1,17 @@
 import '../../global.css';
 import styles from './layout.module.css';
-import { ClientProvider } from '@/packages/contexts/client/ClientContext';
-import { getClient } from '@/packages/services/client';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 
 import React from 'react';
-import { AlertProvider } from '@/packages/contexts/';
-
-import { I18nProvider, AuthProvider, ProfileProvider } from '@/packages/contexts/';
+import {
+  AlertProvider,
+  AuthProvider,
+  ClientProvider,
+  I18nProvider,
+  ProfileProvider,
+} from '../../../../../packages/contexts';
+import { getClient } from '../../../../../packages/services';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];
@@ -53,15 +56,15 @@ export default async function LangLayout({
       className={`${poppins.variable} ${roboto.variable}`}
     >
       <body className={styles.body}>
-        <AlertProvider>
-          <ClientProvider initialClient={client}>
-            <I18nProvider initialLanguage={params.lang}>
+        <I18nProvider initialLanguage={params.lang}>
+          <AlertProvider>
+            <ClientProvider initialClient={client}>
               <AuthProvider>
                 <ProfileProvider>{children}</ProfileProvider>
               </AuthProvider>
-            </I18nProvider>
-          </ClientProvider>
-        </AlertProvider>
+            </ClientProvider>
+          </AlertProvider>
+        </I18nProvider>
       </body>
     </html>
   );

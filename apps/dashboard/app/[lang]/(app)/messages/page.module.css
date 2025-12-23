@@ -1,115 +1,12 @@
 .main {
   width: 100%;
-  max-width: 1000px;
+  max-width: 800px;
   margin: 64px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-}
-.header {
-  padding: 8px 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.label {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8px;
-  font-size: clamp(16px, 3vw, 20px);
-  color: var(--text-secondary);
-  background: var(--bg-card-3);
-  border: 1px solid #6161618e;
-  border-radius: 4px;
-  padding: 8px 12px;
-}
-.input {
-  width: 100%;
-  font-size: clamp(14px, 3vw, 18px);
-  padding-left: 8px;
-  background-color: transparent;
-  border: none;
-  border-left: 1px solid #6161618e;
-}
-.input:focus-visible {
-  color: var(--text-primary);
-  outline: none;
-}
-.button,
-.paginationButton {
-  font-size: clamp(14px, 3vw, 18px);
-  border: 1px solid #6161618e;
-  color: var(--text-secondary);
-  background: var(--bg-card-1);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  margin-left: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.button:hover,
-.paginationButton:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-.paginationButton {
-  padding: 8px;
-}
-.buttons {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
-  border-bottom: 1px solid #6161618e;
-}
-.div {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  transition: all 0.2s ease-in-out;
-  border-bottom: 2px solid transparent;
-}
-.divActive {
-  border-bottom: 2px solid var(--brand-primary);
-  color: var(--brand-primary);
-}
-.statusButton {
-  color: inherit;
-  background-color: transparent;
-  padding: 2px 8px;
-  border: none;
-  font-size: clamp(16px, 3vw, 20px);
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-.statusButton:hover {
-  transform: translateY(-2px);
-  text-shadow: var(--shadow);
-}
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 99px;
-  font-size: clamp(10px, 3vw, 14px);
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-card-3);
-  border: 1px solid #6161618e;
 }
 .listEmpty {
   width: 100%;
@@ -351,11 +248,6 @@
   font-size: clamp(14px, 3vw, 18px);
   color: var(--text-secondary);
   padding-top: 8px;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .replyButton {

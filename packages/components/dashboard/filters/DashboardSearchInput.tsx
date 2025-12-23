@@ -1,25 +1,41 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
-import styles from './page.module.css';
+import styles from './DashboardSearchInput.module.css';
 
-interface ContactMessagesFiltersProps {
+interface DashboardSearchInputProps {
   query: string;
   searchLabel?: string;
   placeholder?: string;
-  applyLabel?: string;
+  debounceMs?: number;
   onQueryChange: (value: string) => void;
   onApply: () => void;
 }
 
-export default function ContactMessagesFilters({
+export default function DashboardSearchInput({
   query,
   searchLabel,
   placeholder,
-  applyLabel,
+  debounceMs = 400,
   onQueryChange,
   onApply,
-}: ContactMessagesFiltersProps) {
+}: DashboardSearchInputProps) {
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      onApply();
+    }, debounceMs);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [debounceMs, onApply, query]);
+
   return (
     <header className={styles.header}>
       <label className={styles.label}>
@@ -36,9 +52,6 @@ export default function ContactMessagesFilters({
           onChange={(e) => onQueryChange(e.target.value)}
         />
       </label>
-      <button className={styles.button} type="button" onClick={onApply}>
-        {applyLabel || 'Apply'}
-      </button>
     </header>
   );
 }

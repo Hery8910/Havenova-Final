@@ -4,9 +4,7 @@ import Image from 'next/image';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import styles from './ProfileHeader.module.css';
-import { useProfile } from '@/packages/contexts/profile/ProfileContext';
-import { useAuth } from '@havenova/contexts/auth/authContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { useAuth, useI18n, useProfile } from '../../../contexts';
 
 export function ProfileHeader() {
   const { profile } = useProfile();

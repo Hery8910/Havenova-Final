@@ -839,7 +839,8 @@
         "pagination": {
           "prev": "Zurück",
           "next": "Weiter",
-          "pageLabel": "Seite"
+          "pageLabel": "Seite",
+          "loadMoreLabel": "Mehr Ergebnisse laden"
         },
         "confirm": {
           "activateTitle": "Manager aktivieren?",
@@ -884,14 +885,21 @@
         },
         "details": {
           "title": "Manager Details",
+          "editLabel": "Bearbeiten",
           "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
           "loading": "Details werden geladen...",
           "phone": "Telefon",
           "address": "Adresse",
           "preferredContact": "Bevorzugter Kontakt",
+          "contactOptions": {
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "none": "Keine Präferenz"
+          },
           "createdAt": "Erstellt",
           "updatedAt": "Aktualisiert",
           "notes": "Notizen",
+          "buildings": "Gebäude",
           "totalBuildings": "Gesamt",
           "activeBuildings": "Aktiv",
           "inactiveBuildings": "Inaktiv"
@@ -936,6 +944,7 @@
           "prevPage": "Zurück",
           "nextPage": "Weiter",
           "pageLabel": "Seite ",
+          "loadMoreLabel": "Mehr Ergebnisse laden",
           "totalLabel": "Gesamt",
           "pendingLabel": "Offen",
           "answeredLabel": "Beantwortet"
