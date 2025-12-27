@@ -5,6 +5,9 @@ import {
   PropertyManagerCreatePayload,
   PropertyManagerCreateResponse,
   PropertyManagerDetailResponse,
+  PropertyManagerLookupItem,
+  PropertyManagerLookupQuery,
+  PropertyManagerLookupResponse,
   PropertyManagersListResponse,
   PropertyManagersMeta,
   PropertyManagersQuery,
@@ -31,6 +34,24 @@ export const listPropertyManagers = async (
     headers: buildAuthHeaders(accessToken),
   });
   return data as PropertyManagersListResponse;
+};
+
+export const lookupPropertyManagers = async (
+  params: PropertyManagerLookupQuery,
+  accessToken?: string
+): Promise<PropertyManagerLookupResponse> => {
+  const { data } = await api.get<{
+    success: boolean;
+    code: string;
+    message?: string;
+    data: PropertyManagerLookupItem[];
+  }>('/api/home-services/property-managers/lookup', {
+    params,
+    withCredentials: true,
+    headers: buildAuthHeaders(accessToken),
+  });
+
+  return data as PropertyManagerLookupResponse;
 };
 
 export const createPropertyManager = async (

@@ -38,7 +38,7 @@ export default function DashboardSearchInput({
 
   return (
     <header className={styles.header}>
-      <label className={styles.label}>
+      <label className={`${styles.label} text-body-sm`}>
         <IoSearch aria-hidden="true" />
         <span className={styles.srOnly}>{searchLabel || 'Search'}</span>
         <input

@@ -9,7 +9,6 @@
   align-items: flex-start;
 }
 .emptyP {
-  color: var(--text-secondary);
   margin: 32px 0;
 }
 .aside {
@@ -32,12 +31,6 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
-}
-
-.detailsLabel {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
 }
 
 .detailsTitle {
@@ -71,14 +64,9 @@
   justify-content: space-between;
   align-items: center;
 }
-.p,
 .detailsP,
 .countHeading {
-  font-size: clamp(12px, 3.5vw, 16px);
   display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
 }
 .detailsP {
   text-transform: none;
@@ -96,11 +84,6 @@
   width: 100%;
   border-bottom: 1px solid #6161618e;
 }
-.detailsNote {
-  font-size: clamp(12px, 3.5vw, 16px);
-  color: var(--text-secondary);
-}
-
 .detailsCounts {
   display: flex;
   justify-content: flex-start;
@@ -116,7 +99,6 @@
 }
 .countTitle {
   font-weight: 600;
-  color: var(--text-secondary);
 }
 .totalP {
   padding: 4px 8px;

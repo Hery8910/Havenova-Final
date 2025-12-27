@@ -366,22 +366,10 @@
   },
   "cookieBanner": {
     "title": "Cookies auf dieser Website",
-    "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
-    "acceptAll": {
-      "cta": "Alle akzeptieren",
-      "variant": "solid",
-      "icon": "confirm"
-    },
-    "rejectAll": {
-      "cta": "Nur notwendige",
-      "variant": "outline",
-      "icon": "cancel"
-    },
-    "close": {
-      "cta": "",
-      "variant": "outline",
-      "icon": "close"
-    },
+    "description": "Wir verwenden ausschliesslich notwendige Cookies, damit die Website funktioniert. Wir nutzen keine Analyse- oder Werbe-Cookies und erfassen keine Daten, die ueber die interne Funktionalitaet hinausgehen.",
+    "acceptAll": "Alle akzeptieren",
+    "rejectAll": "Nur notwendige",
+    "close": "Verstanden",
     "enableStats": "Statistik-Cookies aktivieren"
   },
   "services": {
@@ -905,6 +893,106 @@
           "inactiveBuildings": "Inaktiv"
         }
       },
+      "objects": {
+        "page": {
+          "kicker": "Objekte",
+          "title": "Objekte",
+          "subtitle": "Verwalte Gebäude, Status und Zuweisungen.",
+          "createCta": "Objekt erstellen"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Suche nach Name oder Code",
+          "statusAll": "Alle",
+          "statusActive": "Aktiv",
+          "statusInactive": "Inaktiv"
+        },
+        "table": {
+          "propertyManager": "Manager",
+          "entrances": "Eingänge",
+          "status": "Status",
+          "objectNumber": "Objektnummer",
+          "address": "Adresse",
+          "loading": "Objekte werden geladen...",
+          "empty": "Keine Objekte gefunden.",
+          "edit": "Bearbeiten"
+        },
+        "pagination": {
+          "loadMoreLabel": "Mehr Ergebnisse laden"
+        },
+        "details": {
+          "title": "Objektdetails",
+          "editLabel": "Bearbeiten",
+          "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
+          "loading": "Details werden geladen...",
+          "objectNumber": "Objektnummer",
+          "address": "Adresse",
+          "propertyManager": "Manager",
+          "entrancesCount": "Eingänge",
+          "floorCount": "Stockwerke",
+          "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
+          "fixedCleaningDayRequired": "Fester Reinigungstag",
+          "status": "Status",
+          "notes": "Notizen",
+          "createdAt": "Erstellt",
+          "updatedAt": "Aktualisiert"
+        },
+        "form": {
+          "createTitle": "Objekt erstellen",
+          "editTitle": "Objekt bearbeiten",
+          "fields": {
+            "propertyManagerId": "Manager-ID",
+            "propertyManagerPlaceholder": "Manager nach Name oder E-Mail suchen",
+            "propertyManagerLoading": "Suche läuft...",
+            "propertyManagerEmpty": "Keine Manager gefunden.",
+            "propertyManagerNotSelected": "Kein Manager ausgewählt",
+            "objectNumber": "Objektnummer",
+            "street": "Straße",
+            "streetNumber": "Hausnummer",
+            "postalCode": "PLZ",
+            "district": "Bezirk",
+            "entrancesCount": "Eingänge",
+            "floorCount": "Stockwerke",
+            "preferredCleaningDay": "Bevorzugter Reinigungstag",
+            "preferredCleaningDayPlaceholder": "Wochentag auswählen",
+            "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
+            "preferredCleaningWindowDayPlaceholder": "Wochentag auswählen",
+            "cleaningSuppliesRoom": "Reinigungsraum",
+            "keyAccess": "Schlüsselzugang",
+            "waterAccess": "Wasserzugang",
+            "waterDisposal": "Wasserentsorgung",
+            "ladderAvailable": "Leiter verfügbar",
+            "electricityAccess": "Stromzugang",
+            "lightBulbChangeRequired": "Lampenwechsel",
+            "flooringType": "Bodenart",
+            "onSiteContact": "Ansprechpartner vor Ort",
+            "decisionMaker": "Entscheider",
+            "cleaningInfo": "Reinigungsinfo",
+            "status": "Status",
+            "notes": "Notizen"
+          },
+          "days": {
+            "monday": "Montag",
+            "tuesday": "Dienstag",
+            "wednesday": "Mittwoch",
+            "thursday": "Donnerstag",
+            "friday": "Freitag",
+            "saturday": "Samstag",
+            "sunday": "Sonntag"
+          },
+          "statusOptions": {
+            "active": "Aktiv",
+            "inactive": "Inaktiv"
+          },
+          "submitCreate": "Objekt erstellen",
+          "submitEdit": "Änderungen speichern",
+          "cancel": "Abbrechen",
+          "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
+          "successCreateTitle": "Objekt erstellt",
+          "successCreateDescription": "Das Objekt wurde erfolgreich erstellt.",
+          "successEditTitle": "Objekt aktualisiert",
+          "successEditDescription": "Das Objekt wurde erfolgreich aktualisiert."
+        }
+      },
       "contactMessages": {
         "list": {
           "title": "Kontaktanfragen",
@@ -967,6 +1055,7 @@
         { "label": "Anfragen", "href": "/requests" },
         { "label": "Kunden", "href": "/clients" },
         { "label": "Immobilienverwalter", "href": "/property-manager" },
+        { "label": "Objekte", "href": "/objects" },
         { "label": "Mitarbeiter", "href": "/employees" },
         { "label": "Nachrichten", "href": "/messages" },
         { "label": "Benachrichtigungen", "href": "/notifications" }

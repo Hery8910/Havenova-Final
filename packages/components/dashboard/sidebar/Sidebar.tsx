@@ -48,6 +48,7 @@ export default function Sidebar() {
     '/support': <LuSettings />,
     '/profile': <LuUser />,
     '/property-manager': <PiBuildings />,
+    '/objects': <PiBuildings />,
   };
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export default function Sidebar() {
           {pagesText.map(({ label, href }) => {
             const fullHref = `/${lang}${href}`;
             return (
-              <li className={styles.headerLi}>
+              <li key={label} className={styles.headerLi}>
                 <Link
                   key={href}
                   href={fullHref}

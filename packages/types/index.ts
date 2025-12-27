@@ -13,3 +13,4 @@ export * from './worker';
 export * from './auth';
 export * from './contact';
 export * from './propertyManager';
+export * from './object';

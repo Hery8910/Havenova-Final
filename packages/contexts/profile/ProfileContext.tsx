@@ -11,16 +11,16 @@ import React, {
 } from 'react';
 
 import { useAuth } from '../auth/authContext';
-import {
-  getUserClientProfile,
-  createUserClientProfile,
-  updateUserClientProfile,
-} from '@/packages/services/profile';
-import { refreshToken } from '@/packages/services/auth/authService';
+import { refreshToken } from '@havenova/services';
 import Cookies from 'js-cookie';
 
 import { UserClientProfile, ThemeMode } from '@/packages/types/profile/profileTypes';
 import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
+import {
+  createUserClientProfile,
+  getUserClientProfile,
+  updateUserClientProfile,
+} from '@havenova/services';
 
 const PROFILE_STORAGE_KEY = 'hv-profile';
 
@@ -231,7 +231,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     };
     setProfile(local);
     saveToStorage(local);
-  }, [auth.isLogged, auth.role, isClientReady, profile]);
+  }, [auth.isLogged, auth.role, isClientReady]);
 
   // -------------------
   // Update profile

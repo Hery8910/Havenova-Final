@@ -262,5 +262,89 @@
   "USER_VERIFY_INVALID_TOKEN": {
     "title": "Ungültiger Bestätigungslink",
     "description": "Der Bestätigungslink ist ungültig oder beschädigt."
+  },
+  "OBJECT_ADDRESS_EXISTS": {
+    "title": "Adresse bereits vergeben",
+    "description": "Ein Objekt mit dieser Adresse existiert bereits."
+  },
+  "OBJECT_NUMBER_EXISTS": {
+    "title": "Objektnummer bereits vergeben",
+    "description": "Ein Objekt mit dieser Nummer existiert bereits."
+  },
+  "OBJECT_NOT_FOUND": {
+    "title": "Objekt nicht gefunden",
+    "description": "Das angeforderte Objekt konnte nicht gefunden werden."
+  },
+  "PROPERTY_MANAGER_EMAIL_EXISTS": {
+    "title": "E-Mail bereits vergeben",
+    "description": "Ein Manager mit dieser E-Mail-Adresse existiert bereits."
+  },
+  "PROPERTY_MANAGER_EXISTS": {
+    "title": "Manager existiert bereits",
+    "description": "Ein Immobilienverwalter mit diesen Angaben existiert bereits."
+  },
+  "PROPERTY_MANAGER_NOT_FOUND": {
+    "title": "Manager nicht gefunden",
+    "description": "Der angeforderte Immobilienverwalter konnte nicht gefunden werden."
+  },
+  "WORKER_ALREADY_EXISTS": {
+    "title": "Mitarbeiter existiert bereits",
+    "description": "Ein Mitarbeiter mit diesen Angaben existiert bereits."
+  },
+  "WORKER_NOT_FOUND": {
+    "title": "Mitarbeiter nicht gefunden",
+    "description": "Der angeforderte Mitarbeiter konnte nicht gefunden werden."
+  },
+  "OBJECT_CREATED": {
+    "title": "Objekt erstellt",
+    "description": "Das Objekt wurde erfolgreich erstellt."
+  },
+  "OBJECT_FOUND": {
+    "title": "Objekt geladen",
+    "description": "Die Objektdetails wurden erfolgreich geladen."
+  },
+  "OBJECT_LIST": {
+    "title": "Objekte geladen",
+    "description": "Die Objektliste wurde erfolgreich geladen."
+  },
+  "OBJECT_UPDATED": {
+    "title": "Objekt aktualisiert",
+    "description": "Das Objekt wurde erfolgreich aktualisiert."
+  },
+  "PROPERTY_MANAGER_CREATED": {
+    "title": "Manager erstellt",
+    "description": "Der Immobilienverwalter wurde erfolgreich erstellt."
+  },
+  "PROPERTY_MANAGER_FOUND": {
+    "title": "Manager geladen",
+    "description": "Die Managerdetails wurden erfolgreich geladen."
+  },
+  "PROPERTY_MANAGER_LIST": {
+    "title": "Manager geladen",
+    "description": "Die Managerliste wurde erfolgreich geladen."
+  },
+  "PROPERTY_MANAGER_UPDATED": {
+    "title": "Manager aktualisiert",
+    "description": "Der Immobilienverwalter wurde erfolgreich aktualisiert."
+  },
+  "WORKER_CREATED": {
+    "title": "Mitarbeiter erstellt",
+    "description": "Der Mitarbeiter wurde erfolgreich erstellt."
+  },
+  "WORKER_DELETED": {
+    "title": "Mitarbeiter gelöscht",
+    "description": "Der Mitarbeiter wurde entfernt."
+  },
+  "WORKER_FOUND": {
+    "title": "Mitarbeiter geladen",
+    "description": "Die Mitarbeiterdetails wurden erfolgreich geladen."
+  },
+  "WORKER_LIST": {
+    "title": "Mitarbeiter geladen",
+    "description": "Die Mitarbeiterliste wurde erfolgreich geladen."
+  },
+  "WORKER_UPDATED": {
+    "title": "Mitarbeiter aktualisiert",
+    "description": "Der Mitarbeiter wurde erfolgreich aktualisiert."
   }
 }

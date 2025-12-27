@@ -239,22 +239,10 @@
   },
   "cookieBanner": {
     "title": "Cookies on this website",
-    "description": "We use essential cookies to ensure the website functions properly. With your permission, we also use analytics cookies to monitor site usage and improve user experience. We do not collect data for advertising or profiling.",
-    "acceptAll": {
-      "cta": "Accept all",
-      "variant": "solid",
-      "icon": "confirm"
-    },
-    "rejectAll": {
-      "cta": "Only necessary",
-      "variant": "outline",
-      "icon": "cancel"
-    },
-    "close": {
-      "cta": "",
-      "variant": "outline",
-      "icon": "close"
-    },
+    "description": "We use only essential cookies required for the website to function. We do not use analytics or advertising cookies and we do not collect any data beyond what is necessary for internal operation.",
+    "acceptAll": "Accept all",
+    "rejectAll": "Only necessary",
+    "close": "Understood",
     "enableStats": "Enable analytics cookies"
   },
   "form": {
@@ -905,6 +893,106 @@
           "inactiveBuildings": "Inactive"
         }
       },
+      "objects": {
+        "page": {
+          "kicker": "Objects",
+          "title": "Objects",
+          "subtitle": "Manage buildings, access status, and assignments.",
+          "createCta": "Create object"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Search by name or code",
+          "statusAll": "All",
+          "statusActive": "Active",
+          "statusInactive": "Inactive"
+        },
+        "table": {
+          "propertyManager": "Manager",
+          "entrances": "Entrances",
+          "status": "Status",
+          "objectNumber": "Object number",
+          "address": "Address",
+          "loading": "Loading objects...",
+          "empty": "No objects found.",
+          "edit": "Edit"
+        },
+        "pagination": {
+          "loadMoreLabel": "Load more results"
+        },
+        "details": {
+          "title": "Object details",
+          "editLabel": "Edit",
+          "emptyState": "Select an object to view details.",
+          "loading": "Loading details...",
+          "objectNumber": "Object number",
+          "address": "Address",
+          "propertyManager": "Manager",
+          "entrancesCount": "Entrances",
+          "floorCount": "Floors",
+          "preferredCleaningWindowDay": "Preferred window cleaning day",
+          "fixedCleaningDayRequired": "Fixed cleaning day",
+          "status": "Status",
+          "notes": "Notes",
+          "createdAt": "Created",
+          "updatedAt": "Updated"
+        },
+        "form": {
+          "createTitle": "Create object",
+          "editTitle": "Edit object",
+          "fields": {
+            "propertyManagerId": "Manager ID",
+            "propertyManagerPlaceholder": "Search manager by name or email",
+            "propertyManagerLoading": "Searching...",
+            "propertyManagerEmpty": "No managers found.",
+            "propertyManagerNotSelected": "No manager selected",
+            "objectNumber": "Object number",
+            "street": "Street",
+            "streetNumber": "Street number",
+            "postalCode": "Postal code",
+            "district": "District",
+            "entrancesCount": "Entrances",
+            "floorCount": "Floors",
+            "preferredCleaningDay": "Preferred cleaning day",
+            "preferredCleaningDayPlaceholder": "Select a day",
+            "preferredCleaningWindowDay": "Preferred window cleaning day",
+            "preferredCleaningWindowDayPlaceholder": "Select a day",
+            "cleaningSuppliesRoom": "Cleaning supplies room",
+            "keyAccess": "Key access",
+            "waterAccess": "Water access",
+            "waterDisposal": "Water disposal",
+            "ladderAvailable": "Ladder available",
+            "electricityAccess": "Electricity access",
+            "lightBulbChangeRequired": "Light bulb change",
+            "flooringType": "Flooring type",
+            "onSiteContact": "On-site contact",
+            "decisionMaker": "Decision maker",
+            "cleaningInfo": "Cleaning info",
+            "status": "Status",
+            "notes": "Notes"
+          },
+          "days": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+          },
+          "statusOptions": {
+            "active": "Active",
+            "inactive": "Inactive"
+          },
+          "submitCreate": "Create object",
+          "submitEdit": "Save changes",
+          "cancel": "Cancel",
+          "emptyState": "Select an object to view details.",
+          "successCreateTitle": "Object created",
+          "successCreateDescription": "The object has been created successfully.",
+          "successEditTitle": "Object updated",
+          "successEditDescription": "The object has been updated."
+        }
+      },
       "contactMessages": {
         "list": {
           "title": "Contact messages",
@@ -971,6 +1059,7 @@
         { "label": "Requests", "href": "/requests" },
         { "label": "Clients", "href": "/clients" },
         { "label": "Property Manager", "href": "/property-manager" },
+        { "label": "Objects", "href": "/objects" },
         { "label": "Employees", "href": "/employees" },
         { "label": "Messages", "href": "/messages" },
         { "label": "Notifications", "href": "/notifications" }

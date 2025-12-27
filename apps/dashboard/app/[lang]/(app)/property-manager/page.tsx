@@ -18,7 +18,7 @@ import {
   PropertyManagerDetail,
   PropertyManagerStatus,
 } from '../../../../../../packages/types';
-import { getPopup } from '../../../../../../packages/utils';
+import { getPopup, href } from '../../../../../../packages/utils';
 import {
   createPropertyManager,
   getPropertyManagerById,
@@ -34,6 +34,8 @@ import {
   PropertyManagerList,
   type DashboardStatusFilterItem,
 } from '../../../../../../packages/components/dashboard';
+import { useRouter } from 'next/navigation';
+import { useLang } from '../../../../../../packages/hooks';
 
 const PAGE_SIZE = 10;
 
@@ -49,11 +51,14 @@ const EMPTY_FORM: PropertyManagerFormValues = {
 
 const PropertyManagerPage = () => {
   const { client } = useClient();
-  const { refreshAuth } = useAuth();
+  const { auth, refreshAuth } = useAuth();
+  const router = useRouter();
+  const lang = useLang();
+
   const { texts } = useI18n();
   const popups = texts.popups;
   const pageTexts = texts.components?.dashboard?.pages?.propertyManagers;
-  const { showLoading, showError, showConfirm, showSuccess, closeAlert } = useGlobalAlert();
+  const { showLoading, showError, showSuccess, closeAlert } = useGlobalAlert();
 
   const [managers, setManagers] = useState<PropertyManager[]>([]);
   const [loading, setLoading] = useState(false);
@@ -130,6 +135,8 @@ const PropertyManagerPage = () => {
       },
     });
 
+    let shouldCloseAlert = true;
+
     try {
       const data = await listPropertyManagers({
         clientId: client._id,
@@ -172,6 +179,8 @@ const PropertyManagerPage = () => {
 
       const errorKey = errorToHandle?.response?.data?.errorCode;
       const popupData = getPopup(popups, errorKey, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      shouldCloseAlert = false;
+      closeAlert();
       showError({
         response: {
           status: errorToHandle?.response?.status || 500,
@@ -183,7 +192,9 @@ const PropertyManagerPage = () => {
       });
     } finally {
       setLoading(false);
-      closeAlert();
+      if (shouldCloseAlert) {
+        closeAlert();
+      }
     }
   }, [
     client?._id,
@@ -200,6 +211,12 @@ const PropertyManagerPage = () => {
   useEffect(() => {
     fetchManagers();
   }, [fetchManagers]);
+
+  useEffect(() => {
+    if (!auth.isLogged) {
+      router.push(href(lang, '/login'));
+    }
+  }, [auth.isLogged, lang, router]);
 
   const openCreate = () => {
     setActivePanel({ mode: 'create', values: EMPTY_FORM });
@@ -351,6 +368,12 @@ const PropertyManagerPage = () => {
     }
   };
 
+  const listLoading = loading && managers.length === 0;
+  const handleSearchApply = useCallback(() => {
+    setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
+    setPage(1);
+  }, [queryInput]);
+
   return (
     <main className={styles.main}>
       <section className={styles.section}>
@@ -363,10 +386,7 @@ const PropertyManagerPage = () => {
             query={queryInput}
             placeholder={pageTexts?.toolbar?.searchPlaceholder || 'Search by name or email'}
             onQueryChange={setQueryInput}
-            onApply={() => {
-              setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
-              setPage(1);
-            }}
+            onApply={handleSearchApply}
           />
           <DashboardStatusFilters
             items={statusFilters}
@@ -383,7 +403,7 @@ const PropertyManagerPage = () => {
 
         <PropertyManagerList
           managers={managers}
-          loading={loading}
+          loading={listLoading}
           texts={{
             emailLabel: pageTexts?.table?.email || 'Email',
             buildingsLabel: pageTexts?.table?.buildings || 'Buildings',
@@ -414,6 +434,7 @@ const PropertyManagerPage = () => {
         ) : (
           <PropertyManagerDetails
             manager={detailData}
+            loading={detailLoading}
             texts={{
               title: pageTexts?.details?.title || 'Manager details',
               editLabel: pageTexts?.details?.editLabel || pageTexts?.table?.edit || 'Edit',

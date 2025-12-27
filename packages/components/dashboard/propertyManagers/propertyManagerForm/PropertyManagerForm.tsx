@@ -57,21 +57,44 @@ const PropertyManagerForm = ({
         onSubmit(values);
       }}
     >
-      <div>
+      <header className={styles.header}>
         <h2 className={styles.formTitle}>
           {mode === 'create'
             ? formTexts?.createTitle || 'Create property manager'
             : formTexts?.editTitle || 'Edit property manager'}
         </h2>
-        <p className={styles.formSubtitle}>
-          {mode === 'create'
-            ? formTexts?.createSubtitle || 'Add a new manager and assign buildings later.'
-            : formTexts?.editSubtitle || 'Update the manager details and status.'}
-        </p>
-      </div>
-      <div className={styles.formGrid}>
+      </header>
+      <article className={styles.article}>
+        {mode === 'edit' && (
+          <label className={`${styles.field} ${styles.statusField}`}>
+            <span className="text-label">{formTexts?.fields?.status || 'Status'}</span>
+            <span className={styles.statusControl}>
+              <span className={`${styles.statusText} text-body-sm`}>
+                {values.status === 'active'
+                  ? formTexts?.statusOptions?.active || 'Active'
+                  : formTexts?.statusOptions?.inactive || 'Inactive'}
+              </span>
+              <input
+                className={styles.statusInput}
+                type="checkbox"
+                name="status"
+                checked={values.status === 'active'}
+                onChange={(event) => {
+                  setValues((prev) => ({
+                    ...prev,
+                    status: event.target.checked ? 'active' : 'inactive',
+                  }));
+                }}
+                aria-label={formTexts?.fields?.status || 'Status'}
+              />
+              <span className={styles.statusTrack} aria-hidden="true">
+                <span className={styles.statusThumb} />
+              </span>
+            </span>
+          </label>
+        )}
         <label className={styles.field}>
-          {formTexts?.fields?.name || 'Name'}
+          <span className="text-label">{formTexts?.fields?.name || 'Name'}</span>
           <input
             className={styles.inputField}
             name="name"
@@ -81,7 +104,7 @@ const PropertyManagerForm = ({
           />
         </label>
         <label className={styles.field}>
-          {formTexts?.fields?.email || 'Email'}
+          <span className="text-label">{formTexts?.fields?.email || 'Email'}</span>
           <input
             className={styles.inputField}
             name="email"
@@ -91,7 +114,7 @@ const PropertyManagerForm = ({
           />
         </label>
         <label className={styles.field}>
-          {formTexts?.fields?.phone || 'Phone'}
+          <span className="text-label">{formTexts?.fields?.phone || 'Phone'}</span>
           <input
             className={styles.inputField}
             name="phone"
@@ -100,7 +123,7 @@ const PropertyManagerForm = ({
           />
         </label>
         <label className={styles.field}>
-          {formTexts?.fields?.address || 'Address'}
+          <span className="text-label">{formTexts?.fields?.address || 'Address'}</span>
           <input
             className={styles.inputField}
             name="address"
@@ -108,22 +131,10 @@ const PropertyManagerForm = ({
             onChange={handleChange}
           />
         </label>
-        {mode === 'edit' && (
-          <label className={styles.field}>
-            {formTexts?.fields?.status || 'Status'}
-            <select
-              className={styles.inputField}
-              name="status"
-              value={values.status}
-              onChange={handleChange}
-            >
-              <option value="active">{formTexts?.statusOptions?.active || 'Active'}</option>
-              <option value="inactive">{formTexts?.statusOptions?.inactive || 'Inactive'}</option>
-            </select>
-          </label>
-        )}
         <label className={styles.field}>
-          {formTexts?.fields?.preferredContactMethod || 'Preferred contact'}
+          <span className="text-label">
+            {formTexts?.fields?.preferredContactMethod || 'Preferred contact'}
+          </span>
           <select
             className={styles.inputField}
             name="preferredContactMethod"
@@ -136,7 +147,7 @@ const PropertyManagerForm = ({
           </select>
         </label>
         <label className={`${styles.field} ${styles.notesField}`}>
-          {formTexts?.fields?.notes || 'Notes'}
+          <span className="text-label">{formTexts?.fields?.notes || 'Notes'}</span>
           <textarea
             className={styles.textarea}
             name="notes"
@@ -145,17 +156,17 @@ const PropertyManagerForm = ({
             onChange={handleChange}
           />
         </label>
-      </div>
-      <div className={styles.formActions}>
+      </article>
+      <aside className={styles.aside}>
+        <button className={styles.ghostButton} type="button" onClick={onCancel}>
+          {formTexts?.cancel || 'Cancel'}
+        </button>
         <button className={styles.button} type="submit" disabled={loading}>
           {mode === 'create'
             ? formTexts?.submitCreate || 'Create manager'
             : formTexts?.submitEdit || 'Save changes'}
         </button>
-        <button className={styles.ghostButton} type="button" onClick={onCancel}>
-          {formTexts?.cancel || 'Cancel'}
-        </button>
-      </div>
+      </aside>
     </form>
   );
 };

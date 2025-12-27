@@ -1,14 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
-import { useCookies } from '@/packages/contexts/cookies/CookiesContext';
-import { FinalCTA, FinalCTASkeleton } from '@/packages/components/client';
 import { useRouter } from 'next/navigation';
+import { useClient, useCookies, useI18n } from '../../../../../../packages/contexts';
+import { formatMessageAge } from '../../../../../../packages/utils';
 
 export interface CookiesPolicyPageTexts {
   hero: {
@@ -102,11 +100,6 @@ export default function CookiesPolicyPage() {
 
   if (!legalUpdates) return null;
 
-  function formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('de-DE').format(date);
-  }
-
   return (
     <main className={styles.main}>
       {/* Hero */}
@@ -155,39 +148,41 @@ export default function CookiesPolicyPage() {
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.thirdParties.title}</h3>
         <p>{cookies.thirdParties.body}</p>
-        <table className={styles.table}>
-          <thead className={styles.thead}>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{cookies.thirdParties.table.headers.name}</th>
-              <th className={styles.th}>{cookies.thirdParties.table.headers.purpose}</th>
-              <th className={styles.th}>{cookies.thirdParties.table.headers.privacy}</th>
-            </tr>
-          </thead>
-          <tbody className={styles.body}>
-            {cookies.thirdParties.table.body.map((item, i) => (
-              <tr className={styles.tr} key={i}>
-                <td className={styles.td}>{item.name}</td>
-                <td className={styles.td}>{item.purpose}</td>
-                <td className={styles.td}>
-                  <Link
-                    className={styles.link}
-                    href={item.privacyUrl.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.privacyUrl.label} <FiExternalLink />
-                  </Link>
-                </td>
+        {cookies.thirdParties.table.body.length !== 0 && (
+          <table className={styles.table}>
+            <thead className={styles.thead}>
+              <tr className={styles.tr}>
+                <th className={styles.th}>{cookies.thirdParties.table.headers.name}</th>
+                <th className={styles.th}>{cookies.thirdParties.table.headers.purpose}</th>
+                <th className={styles.th}>{cookies.thirdParties.table.headers.privacy}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className={styles.body}>
+              {cookies.thirdParties.table.body.map((item, i) => (
+                <tr className={styles.tr} key={i}>
+                  <td className={styles.td}>{item.name}</td>
+                  <td className={styles.td}>{item.purpose}</td>
+                  <td className={styles.td}>
+                    <Link
+                      className={styles.link}
+                      href={item.privacyUrl.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.privacyUrl.label} <FiExternalLink />
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
 
       {/* localStorage */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.localStorage.title}</h3>
-        <p>{cookies.thirdParties.body}</p>
+        <p>{cookies.localStorage.body}</p>
       </section>
 
       {/* management */}
@@ -237,7 +232,7 @@ export default function CookiesPolicyPage() {
             <strong>{cookies.changes.meta.lastUpdated}</strong>
           </p>
           <p>
-            <em>{formatDate(legalUpdates?.lastCookiesUpdate || '')}</em>
+            <em>{formatMessageAge(legalUpdates?.lastCookiesUpdate || '')}</em>
           </p>
         </aside>
       </section>
@@ -260,12 +255,6 @@ export default function CookiesPolicyPage() {
           ))}
         </ul>
       </section>
-
-      {finalCtaTexts ? (
-        <FinalCTA {...finalCtaTexts} onClick={() => router.push('/services')} />
-      ) : (
-        <FinalCTASkeleton />
-      )}
     </main>
   );
 }

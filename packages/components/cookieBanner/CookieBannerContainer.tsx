@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useCookies } from '@havenova/contexts/cookies';
 import { useI18n } from '@havenova/contexts/i18n';
 import { CookieBannerView } from './CookieBannerView';
-import { CookieBannerSkeleton } from './CookieBanner.skeleton';
 
 export function CookieBannerContainer() {
   const { prefs, showBanner, acceptAll, rejectAll, saveSelection, closeBanner, loading } =

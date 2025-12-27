@@ -53,11 +53,24 @@ export interface PropertyManagersMeta {
   limit: number;
 }
 
+export interface PropertyManagerLookupItem {
+  id: string;
+  name: string;
+  email?: string;
+}
+
+export interface PropertyManagerLookupQuery {
+  clientId?: string;
+  search?: string;
+  limit?: number;
+}
+
 export type PropertyManagersListResponse = ApiResponse<PropertyManager[]> & {
   meta: PropertyManagersMeta;
 };
 
 export type PropertyManagerDetailResponse = ApiResponse<PropertyManagerDetail>;
+export type PropertyManagerLookupResponse = ApiResponse<PropertyManagerLookupItem[]>;
 
 export interface PropertyManagerCreatePayload {
   clientId: string;

@@ -151,7 +151,6 @@ html {
   box-sizing: border-box;
 }
 body {
-  font-family: var(--font-family-body);
   max-width: 100dvw;
   overflow-x: hidden;
   margin: 0 auto;
@@ -251,6 +250,18 @@ a {
 /* ============================
    COMPONENTES REUTILIZABLES
 ============================ */
+.text-label {
+  font-size: clamp(12px, 3vw, 16px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.text-body-sm {
+  font-size: clamp(12px, 3vw, 16px);
+  color: var(--text-secondary);
+}
+
 .button,
 .button_invert,
 .button_close {

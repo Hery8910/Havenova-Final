@@ -386,354 +386,206 @@
     "privacy": {
       "hero": {
         "headline1": "Datenschutzerklärung",
-        "headline2": "Transparenz und Datensicherheit",
-        "subtitle": "Diese Richtlinie erklärt, wie Havenova deine personenbezogenen Daten auf dieser Plattform verarbeitet, die technisch von Maped Solutions UG betrieben wird.",
+        "headline2": "Transparenz und Datenschutz",
+        "subtitle": "Diese Datenschutzerklärung erläutert, wie personenbezogene Daten auf dieser Plattform verarbeitet werden, die technisch von Maped Solutions UG betrieben wird.",
         "image": {
           "src": "/images/privacy-hero.png",
-          "alt": "Schloss und geschützte Daten"
+          "alt": "Datenschutz und Datensicherheit"
         }
       },
       "overview": {
         "title": "Überblick",
-        "intro": "Deine Privatsphäre ist uns wichtig. Wir verarbeiten deine Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Hier findest du Informationen zu Verantwortlichen, Zwecken, Drittanbietern und deinen Rechten.",
+        "intro": "Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert darüber, wer für die Datenverarbeitung verantwortlich ist, zu welchen Zwecken und auf welcher Rechtsgrundlage Daten verarbeitet werden und welche Rechte Ihnen zustehen.",
         "bullets": [
-          "Verantwortlicher: Havenova (Art. 4(7) DSGVO).",
+          "Verantwortlicher: Der jeweilige Kunde dieser Plattform (Art. 4 Nr. 7 DSGVO).",
           "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
-          "Rechtsgrundlagen: Vertrag (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f), Einwilligung (Art. 6 Abs. 1 lit. a).",
-          "Bevorzugte Datenregion: EU - Aktive",
-          "Mögliche internationale Übermittlungen mit Schutzmaßnahmen (SCC)."
+          "Rechtsgrundlagen: Vertragserfüllung (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f).",
+          "Bevorzugte Datenverarbeitung: Europäische Union.",
+          "Datenübermittlungen in Drittländer nur mit geeigneten Garantien (SCC)."
         ],
         "cta": {
-          "label": "Datenschutzkontakt",
+          "label": "Kontakt zum Verantwortlichen",
           "href": "/contact"
         }
       },
       "roles": {
-        "title": "Verantwortlichkeiten",
+        "title": "Verantwortliche Stellen",
         "controller": {
           "title": "Verantwortlicher",
-          "body": "Der Verantwortliche ist Havenova, ansässig in Stollberger Str.43, 12627 Berlin. Kontakt: contact@havenova.de."
+          "body": "Verantwortlicher im Sinne der DSGVO ist das Unternehmen, das die Dienstleistungen über diese Plattform anbietet. Dieses Unternehmen entscheidet über Zwecke und Mittel der Datenverarbeitung. Die Kontaktdaten sind dem Impressum zu entnehmen."
         },
         "processor": {
           "title": "Auftragsverarbeiter",
-          "body": "Maped Solutions UG agiert als Auftragsverarbeiter gemäß Art. 28 DSGVO und betreibt die Plattform im Auftrag von Havenova. Technischer Kontakt: support@mapedsolutions.de."
+          "body": "Maped Solutions UG handelt als Auftragsverarbeiter gemäß Art. 28 DSGVO. Maped Solutions UG betreibt und wartet die Plattform technisch und verarbeitet personenbezogene Daten ausschließlich auf Weisung des Verantwortlichen."
         },
         "links": [
           {
-            "label": "Art. 4(7) – Verantwortlicher",
+            "label": "Art. 4 Nr. 7 DSGVO – Verantwortlicher",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           },
           {
-            "label": "Art. 28 – Auftragsverarbeiter",
+            "label": "Art. 28 DSGVO – Auftragsverarbeiter",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           }
         ]
       },
       "purposesAndLegalBases": {
         "title": "Zwecke und Rechtsgrundlagen",
-        "intro": "Wir verarbeiten deine Daten nur zu klar definierten und legitimen Zwecken.",
+        "intro": "Personenbezogene Daten werden ausschließlich für eindeutig festgelegte und rechtmäßige Zwecke verarbeitet.",
         "items": [
           {
-            "purpose": "Bereitstellung von Diensten und Kontoverwaltung",
+            "purpose": "Erbringung von Dienstleistungen und Nutzerverwaltung",
             "examples": {
-              "title": "Beispiele: ",
-              "description": "Kontoerstellung, Bearbeitung von Anfragen, Reservierungen, Angeboten und Rechnungen"
+              "title": "Beispiele:",
+              "description": "Benutzerkonten, Bearbeitung von Serviceanfragen, Kommunikation, Abrechnung"
             },
             "legalBases": {
-              "title": "Rechtliche Grundlagen: ",
-              "description": "Art. 6 Abs. 1 lit. b – Vertragserfüllung"
+              "title": "Rechtsgrundlage:",
+              "description": "Art. 6 Abs. 1 lit. b DSGVO"
             }
           },
           {
-            "purpose": "Rechtliche Verpflichtungen",
+            "purpose": "Erfüllung gesetzlicher Verpflichtungen",
             "examples": {
-              "title": "Beispiele: ",
-              "description": "Steuerliche und buchhalterische Pflichten"
+              "title": "Beispiele:",
+              "description": "steuer- und handelsrechtliche Aufbewahrungspflichten"
             },
             "legalBases": {
-              "title": "Rechtliche Grundlagen: ",
-              "description": "Art. 6 Abs. 1 lit. c – Gesetzliche Verpflichtung"
+              "title": "Rechtsgrundlage:",
+              "description": "Art. 6 Abs. 1 lit. c DSGVO"
             }
           },
           {
-            "purpose": "Plattformverbesserung und Sicherheit",
+            "purpose": "Technischer Betrieb und Sicherheit",
             "examples": {
-              "title": "Beispiele: ",
-              "description": "Protokolle, Betrugsprävention, Leistung, Support"
+              "title": "Beispiele:",
+              "description": "Server-Logs, Missbrauchsprävention, Systemsicherheit"
             },
             "legalBases": {
-              "title": "Rechtliche Grundlagen: ",
-              "description": "Art. 6 Abs. 1 lit. f – Berechtigtes Interesse"
-            }
-          },
-          {
-            "purpose": "Marketing und nicht-essentielle Cookies",
-            "examples": {
-              "title": "Beispiele: ",
-              "description": "Newsletter, Aktionen, Analyse"
-            },
-            "legalBases": {
-              "title": "Rechtliche Grundlagen: ",
-              "description": "Art. 6 Abs. 1 lit. a – Einwilligung (widerrufbar)"
+              "title": "Rechtsgrundlage:",
+              "description": "Art. 6 Abs. 1 lit. f DSGVO"
             }
           }
         ]
       },
       "dataCategories": {
-        "title": "Kategorien personenbezogener Daten",
-        "description": "Je nach Nutzung der Plattform können folgende Daten erhoben werden:",
+        "title": "Verarbeitete Datenkategorien",
+        "description": "Je nach Nutzung der Plattform können folgende Daten verarbeitet werden:",
         "items": [
-          "Identifikations- und Kontaktdaten (Name, E-Mail, Telefonnummer, Adresse).",
-          "Kontoinformationen und Sicherheit (gehashte Passwörter, Sprache, Rollen).",
-          "Details zu Anfragen und Leistungen (Typen, Beschreibungen, Orte, Termine).",
-          "Vertrags- und Zahlungsdaten (Angebote, Rechnungen, Zahlungen über Drittanbieter).",
-          "Technische Daten (IP-Adresse, Gerät, Logs, Cookies je nach Präferenz)."
+          "Identifikations- und Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer, Anschrift).",
+          "Zugangs- und Sicherheitsdaten (verschlüsselte Passwörter, Rollen, Spracheinstellungen).",
+          "Angaben zu Serviceanfragen (Beschreibungen, Orte).",
+          "Vertrags- und Zahlungsdaten (Rechnungen, Zahlungen über Drittanbieter).",
+          "Technische Daten (IP-Adresse, Geräteinformationen, Server-Logs, technisch notwendige Cookies)."
         ]
       },
       "thirdParties": {
-        "title": "Externe Dienstleister",
-        "subtitle": "Wir nutzen spezialisierte Anbieter, um die Plattform sicher und effizient zu betreiben.",
-        "intro": "Die folgende Liste zeigt externe Dienste (Hosting, Datenbank, E-Mail, CDN, Zahlungen) mit Zwecken und Datenschutzrichtlinien.",
+        "title": "Eingesetzte Dienstleister",
+        "subtitle": "Zur sicheren und effizienten Bereitstellung der Plattform werden externe Dienstleister eingesetzt.",
+        "intro": "Diese Dienstleister handeln auf vertraglicher Grundlage und verarbeiten Daten ausschließlich im Rahmen der DSGVO.",
         "table": {
           "headers": {
             "name": "Anbieter",
             "purpose": "Zweck",
             "region": "Region",
-            "privacy": "Datenschutzrichtlinie"
+            "privacy": "Datenschutzerklärung"
           },
-          "body": [
-            {
-              "name": "Vercel",
-              "purpose": "Frontend-Hosting",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Vercel",
-                "href": "https://vercel.com/legal/privacy-policy"
-              }
-            },
-            {
-              "name": "MongoDB",
-              "purpose": "Datenbank",
-              "region": "EU",
-              "privacyUrl": {
-                "label": "MongoDB",
-                "href": "https://www.mongodb.com/legal/privacy-policy"
-              }
-            },
-            {
-              "name": "Cloudflare",
-              "purpose": "CDN / WAF / DDoS Schutz",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Cloudflare",
-                "href": "https://www.cloudflare.com/privacypolicy/"
-              }
-            },
-            {
-              "name": "Cloudinary",
-              "purpose": "Medienspeicher (Bilder / PDFs)",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Cloudinary",
-                "href": "https://cloudinary.com/privacy"
-              }
-            },
-            {
-              "name": "SendGrid",
-              "purpose": "Transaktions-E-Mail",
-              "region": "USA",
-              "privacyUrl": {
-                "label": "Twilio",
-                "href": "https://www.twilio.com/legal/privacy"
-              }
-            },
-            {
-              "name": "Zoho Mail",
-              "purpose": "E-Mail-Dienste für Unternehmen",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Zoho Mail",
-                "href": "https://www.zoho.com/privacy.html"
-              }
-            },
-            {
-              "name": "Stripe",
-              "purpose": "Zahlungsabwicklung",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Stripe",
-                "href": "https://stripe.com/privacy"
-              }
-            },
-            {
-              "name": "PayPal",
-              "purpose": "Zahlungsabwicklung",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "PayPal",
-                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
-              }
-            }
-          ]
+          "body": []
         }
       },
       "security": {
-        "title": "Sicherheitsmaßnahmen (Art. 32 DSGVO)",
-        "body": "Wir setzen geeignete technische und organisatorische Maßnahmen zum Schutz deiner Daten ein: Passwort-Hashing (bcrypt), httpOnly/secure Cookies, rollenbasierter Zugriff, HTTPS, WAF/CDN (Cloudflare), Anomalieerkennung und bevorzugte Speicherung in der EU, wenn möglich. Infrastruktur-Anbieter verschlüsseln Daten bei Übertragung (TLS) und Speicherung."
+        "title": "Sicherheitsmaßnahmen",
+        "body": "Es werden geeignete technische und organisatorische Maßnahmen gemäß Art. 32 DSGVO eingesetzt, darunter verschlüsselte Passwörter, sichere Datenübertragung (HTTPS/TLS), rollenbasierte Zugriffskontrollen sowie Firewall- und CDN-Schutz."
       },
       "cookies": {
-        "title": "Cookies und ähnliche Technologien",
-        "body": "Wir verwenden notwendige Cookies für den Betrieb der Seite. Analyse- und Marketing-Cookies werden nur mit deiner ausdrücklichen Einwilligung verwendet. Du kannst deine Einstellungen jederzeit ändern.",
-        "cta": {
-          "label": "Cookie-Richtlinie",
-          "href": "/cookies-policy"
-        }
+        "title": "Cookies",
+        "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt."
       },
       "userRights": {
-        "title": "Deine Rechte",
-        "intro": "Du hast gemäß DSGVO folgende Rechte:",
+        "title": "Rechte der betroffenen Personen",
+        "intro": "Betroffene Personen haben folgende Rechte gemäß DSGVO:",
         "items": [
-          "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18).",
-          "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21).",
-          "Widerruf der Einwilligung jederzeit (Art. 7 Abs. 3)."
+          "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18).",
+          "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21)."
         ],
-        "howTo": "Um deine Rechte auszuüben, kontaktiere uns unter contact@havenova.de oder über das Kontaktformular."
+        "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten."
       },
       "retention": {
         "title": "Speicherdauer",
-        "body": "Wir speichern personenbezogene Daten nur so lange, wie es für die Zwecke erforderlich ist oder gesetzliche Vorgaben dies verlangen. Beispielsweise werden Rechnungen 10 Jahre aufbewahrt."
+        "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies zur Erfüllung der Zwecke und gesetzlicher Verpflichtungen erforderlich ist. Danach erfolgt eine Löschung oder Anonymisierung."
       },
       "internationalTransfers": {
-        "title": "Internationale Datenübermittlung",
-        "body": "Wenn Daten außerhalb des EWR übertragen werden, erfolgen Schutzmaßnahmen gemäß den Standardvertragsklauseln (SCC). Wo möglich, nutzen wir Anbieter mit Rechenzentren in der EU. Aktueller EU-Präferenzstatus: Aktiv."
+        "title": "Datenübermittlung in Drittländer",
+        "body": "Sofern Daten außerhalb des EWR verarbeitet werden, erfolgt dies ausschließlich unter Anwendung geeigneter Garantien, insbesondere der Standardvertragsklauseln der Europäischen Kommission."
       },
-
       "changes": {
-        "title": "Änderungen dieser Richtlinie",
-        "body": "Wir können diese Richtlinie bei rechtlichen oder betrieblichen Änderungen aktualisieren. Wichtige Änderungen werden über die App oder per E-Mail mitgeteilt.",
+        "title": "Änderungen dieser Datenschutzerklärung",
+        "body": "Diese Datenschutzerklärung kann aus rechtlichen oder betrieblichen Gründen angepasst werden.",
         "meta": {
-          "lastUpdated": "Letzte Aktualisierung:"
+          "lastUpdated": "Zuletzt aktualisiert:"
         }
-      },
-      "legalReferences": {
-        "title": "Rechtliche Verweise",
-        "items": [
-          {
-            "label": "DSGVO (konsolidierter Text)",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 6 – Rechtmäßigkeit der Verarbeitung",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 13–14 – Informationspflicht",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 28 – Auftragsverarbeiter",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 30 – Verarbeitungsverzeichnis",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 32 – Sicherheit der Verarbeitung",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          }
-        ]
       }
     },
     "cookies": {
       "hero": {
         "headline1": "Cookie-Richtlinie",
-        "headline2": "Verwendung von Cookies und ähnlichen Technologien",
-        "subtitle": "Diese Seite erklärt, wie und warum Cookies auf dieser Plattform verwendet werden, die technisch von Maped Solutions UG betrieben wird.",
+        "headline2": "Verwendung technisch notwendiger Cookies",
+        "subtitle": "Diese Cookie-Richtlinie erläutert, wie und warum auf dieser Plattform Cookies eingesetzt werden, die technisch von Maped Solutions UG betrieben wird.",
         "image": {
-          "src": "/images/aboutPage/AboutHero.jpg",
-          "alt": "Keks und Einstellungen"
+          "src": "/images/cookies-hero.png",
+          "alt": "Cookies und Datenschutzeinstellungen"
         }
       },
       "overview": {
         "title": "Überblick",
-        "intro": "Wir verwenden Cookies und ähnliche Technologien, um den Betrieb dieser Plattform sicherzustellen und dein Nutzererlebnis kontinuierlich zu verbessern. Einige Cookies sind technisch notwendig, andere erfordern deine ausdrückliche Zustimmung.",
+        "intro": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse-, Tracking- oder Marketing-Cookies eingesetzt.",
         "bullets": [
-          "Technisch notwendige Cookies für grundlegende Funktionen.",
-          "Statistik-Cookies zur anonymisierten Analyse der Nutzung.",
-          "Kein Einsatz von Marketing-Cookies oder Tracking durch Dritte.",
-          "Deine Einstellungen können jederzeit angepasst werden."
+          "Ausschließlich technisch notwendige Cookies.",
+          "Keine Analyse- oder Marketing-Cookies.",
+          "Keine Profilbildung oder Nutzerverfolgung.",
+          "Cookies können über die Browsereinstellungen verwaltet werden."
         ],
         "cta": {
-          "label": "Cookie-Einstellungen verwalten",
+          "label": "Cookie-Einstellungen",
           "action": "openCookieBanner"
         }
       },
       "whatAreCookies": {
         "title": "Was sind Cookies?",
-        "body": "Cookies sind kleine Textdateien, die auf deinem Gerät gespeichert werden, wenn du eine Website besuchst. Sie ermöglichen es, deinen Browser bei zukünftigen Besuchen wiederzuerkennen und bestimmte Informationen wie Login-Status oder Spracheinstellungen zu speichern."
+        "body": "Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen grundlegende Funktionen wie sichere Anmeldung, Navigation und Schutz vor Missbrauch."
       },
       "types": {
-        "title": "Welche Arten von Cookies verwenden wir?",
+        "title": "Welche Arten von Cookies werden verwendet?",
         "items": [
           {
-            "name": "Notwendige Cookies",
-            "description": "Diese Cookies sorgen dafür, dass die Plattform korrekt funktioniert – z. B. für Anmeldung, Navigation oder Sicherheit. Sie können nicht deaktiviert werden."
-          },
-          {
-            "name": "Statistik-Cookies",
-            "description": "Diese Cookies helfen uns zu verstehen, wie Nutzer mit der Plattform interagieren – z. B. welche Seiten besucht oder welche Funktionen genutzt werden. Die Daten sind anonym und dienen ausschließlich der Optimierung."
+            "name": "Technisch notwendige Cookies",
+            "description": "Diese Cookies sind erforderlich, um den sicheren und ordnungsgemäßen Betrieb der Plattform zu gewährleisten, z. B. für Authentifizierung, Sicherheit und Sitzungsverwaltung. Sie können nicht deaktiviert werden."
           }
         ]
       },
       "thirdParties": {
-        "title": "Drittanbieter-Dienste",
-        "body": "Wir nutzen externe Dienste zur technischen Analyse und Zahlungsabwicklung. Diese werden so konfiguriert, dass sie DSGVO-konform sind. Daten werden ausschließlich anonym erfasst und nicht zu Werbezwecken verwendet.",
+        "title": "Drittanbieter",
+        "body": "Es werden keine Cookies von Drittanbietern zu Analyse-, Tracking- oder Marketingzwecken eingesetzt. Externe Dienstleister können technisch notwendige Cookies setzen, sofern dies für den Betrieb der Plattform erforderlich ist.",
         "table": {
           "headers": {
             "name": "Anbieter",
             "purpose": "Zweck",
-            "privacy": "Datenschutz"
+            "privacy": "Datenschutzerklärung"
           },
-          "body": [
-            {
-              "name": "Google Analytics",
-              "purpose": "Anonymisierte Analyse des Nutzerverhaltens (Seitenaufrufe, Interaktionen). Dient der Optimierung der Plattform.",
-              "privacyUrl": {
-                "label": "Google",
-                "href": "https://policies.google.com/privacy"
-              }
-            },
-            {
-              "name": "Stripe",
-              "purpose": "Verarbeitung von Zahlungen mit hoher Sicherheit. Keine Analyse der Nutzerinteraktion.",
-              "privacyUrl": {
-                "label": "Stripe",
-                "href": "https://stripe.com/de/privacy"
-              }
-            },
-            {
-              "name": "PayPal",
-              "purpose": "Zahlungsabwicklung für Nutzer mit PayPal-Konto. Keine Profilbildung durch Maped Solutions.",
-              "privacyUrl": {
-                "label": "PayPal",
-                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
-              }
-            }
-          ]
+          "body": []
         }
       },
       "localStorage": {
         "title": "Verwendung von localStorage",
-        "body": "Neben Cookies nutzen wir auch den localStorage des Browsers, um Einstellungen wie Sprache, Design oder deinen Gast-Avatar lokal zu speichern. Diese Informationen verlassen dein Gerät nicht und werden nicht mit Dritten geteilt."
+        "body": "Zusätzlich zu Cookies kann der lokale Speicher des Browsers (localStorage) verwendet werden, um technische Einstellungen wie Sprache oder Designpräferenzen zu speichern. Diese Daten verbleiben ausschließlich auf Ihrem Endgerät und werden nicht an Dritte übermittelt."
       },
       "management": {
         "title": "Verwaltung von Cookies",
-        "intro": "Du kannst deine Cookie-Einstellungen jederzeit über das Banner oder deinen Browser ändern.",
+        "intro": "Sie können Cookies jederzeit über die Einstellungen Ihres Browsers verwalten oder löschen. Die Deaktivierung technisch notwendiger Cookies kann jedoch die Funktionalität der Plattform einschränken.",
         "methods": [
-          "Zustimmung oder Ablehnung im Banner bei deinem ersten Besuch.",
-          "Einstellungen im Browser zum Blockieren oder Löschen von Cookies.",
-          "Über den Link „Cookie-Einstellungen“ im Footer jederzeit zugänglich."
+          "Verwaltung von Cookies über die Browsereinstellungen.",
+          "Löschen bereits gespeicherter Cookies im Browser.",
+          "Einschränkung oder Blockierung von Cookies über Browserfunktionen."
         ],
         "cta": {
           "label": "Cookie-Banner erneut öffnen",
@@ -742,7 +594,7 @@
         "links": [
           {
             "label": "Google Chrome",
-            "href": "https://support.google.com/chrome/answer/95647?hl=de"
+            "href": "https://support.google.com/chrome/answer/95647"
           },
           {
             "label": "Mozilla Firefox",
@@ -754,132 +606,133 @@
           },
           {
             "label": "Microsoft Edge",
-            "href": "https://support.microsoft.com/de-de/help/4027947/microsoft-edge-delete-cookies"
+            "href": "https://support.microsoft.com/de-de/help/4027947"
           }
         ]
       },
       "legalBasis": {
         "title": "Rechtsgrundlage",
-        "body": "Nicht-essentielle Cookies (wie Statistik-Cookies) werden nur mit deiner Einwilligung gespeichert (Art. 6 Abs. 1 lit. a DSGVO). Notwendige Cookies basieren auf unserem berechtigten Interesse am sicheren Betrieb der Seite (Art. 6 Abs. 1 lit. f DSGVO)."
+        "body": "Der Einsatz technisch notwendiger Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und funktionsfähigen Betrieb der Plattform)."
       },
       "changes": {
-        "title": "Änderungen dieser Richtlinie",
-        "body": "Diese Richtlinie kann bei Änderungen in der Gesetzgebung oder Technik aktualisiert werden. Das Datum der letzten Änderung findest du hier:",
+        "title": "Änderungen dieser Cookie-Richtlinie",
+        "body": "Diese Cookie-Richtlinie kann aus rechtlichen oder technischen Gründen angepasst werden. Das Datum der letzten Änderung wird auf dieser Seite angegeben.",
         "meta": {
-          "lastUpdated": "Letzte Aktualisierung:"
+          "lastUpdated": "Zuletzt aktualisiert:"
         }
       },
       "legalReferences": {
-        "title": "Rechtliche Hinweise",
-        "items": [
-          {
-            "label": "DSGVO (EU 2016/679)",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "ePrivacy-Richtlinie",
-            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32002L0058"
-          }
-        ]
-      }
-    },
-    "terms": {
-      "hero": {
-        "headline1": "Nutzungsbedingungen",
-        "headline2": "Allgemeine Geschäftsbedingungen für die Plattform",
-        "subtitle": "Dieses Dokument beschreibt die Rechte und Pflichten zwischen den Nutzern und dem Dienstleister, der diese Plattform verwendet. Die Plattform wird technisch von Maped Solutions UG betrieben.",
-        "image": {
-          "src": "/images/terms-hero.png",
-          "alt": "Rechtliches Dokument und Vertrag"
-        }
-      },
-      "intro": {
-        "title": "Einleitung",
-        "body": "Mit dem Zugriff auf oder der Nutzung unserer Dienste erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Wenn du mit einem der Bedingungen nicht einverstanden bist, solltest du die Plattform nicht nutzen."
-      },
-      "scope": {
-        "title": "Leistungsumfang",
-        "body": "Diese Plattform ermöglicht es Nutzern, Dienstleistungen im Bereich Reinigung, Instandhaltung und Hausservice anzufragen, Angebote zu erhalten, Termine zu vereinbaren und mit dem Dienstleister zu kommunizieren. Einige Leistungen werden direkt vom Anbieter erbracht, während bestimmte Aufgaben (z. B. Elektroreparaturen, Malerarbeiten) durch externe Subunternehmer durchgeführt werden."
-      },
-      "userObligations": {
-        "title": "Pflichten des Nutzers",
-        "items": [
-          "Angabe wahrheitsgemäßer und aktueller Informationen während der Nutzung.",
-          "Keine Nutzung der Plattform für illegale, missbräuchliche oder betrügerische Zwecke.",
-          "Respekt gegenüber den Rechten Dritter, insbesondere bei Dienstleistungen in Gemeinschaftsgebäuden.",
-          "Keine Beeinträchtigung des technischen Betriebs der Plattform.",
-          "Vertrauliche Behandlung der Zugangsdaten."
-        ]
-      },
-      "providerRights": {
-        "title": "Rechte des Anbieters",
-        "items": [
-          "Änderung oder Aussetzung von Funktionen aus technischen oder rechtlichen Gründen.",
-          "Ablehnung oder Stornierung von Anfragen bei Verstößen gegen diese Bedingungen.",
-          "Aktualisierung dieser Bedingungen bei rechtlichen oder betrieblichen Änderungen.",
-          "Angebot individueller Preise oder Sonderkonditionen je nach Kundentyp oder Standort."
-        ]
-      },
-      "payments": {
-        "title": "Zahlungen und Bedingungen",
-        "body": "Die Nutzung der angebotenen Dienstleistungen kann kostenpflichtig sein. Durch die Annahme eines Angebots erklärt sich der Nutzer mit den Konditionen einverstanden.",
-        "items": [
-          "Die Preise werden individuell je nach Dienstleistungsart und Aufwand festgelegt.",
-          "Zahlungen erfolgen über Drittanbieter wie Stripe oder PayPal.",
-          "Bei Stornierung weniger als 24 Stunden vor dem Termin wird eine Stornogebühr von 25 % des vereinbarten Betrags fällig.",
-          "Zahlung erfolgt in der Regel nach Abschluss des Dienstes, sofern nicht anders angegeben."
-        ]
-      },
-      "cancellation": {
-        "title": "Stornierung und Beendigung",
-        "body": "Nutzer können bestätigte Termine stornieren. Erfolgt die Stornierung weniger als 24 Stunden vor dem Termin, wird eine Gebühr gemäß Abschnitt 'Zahlungen' fällig. Der Anbieter behält sich das Recht vor, bei wiederholtem Missbrauch den Zugang zu sperren."
-      },
-      "liability": {
-        "title": "Haftungsbeschränkung",
-        "body": "Der Anbieter haftet nicht für indirekte Schäden, wirtschaftliche Verluste oder Ausfälle, die durch Dritte, Subunternehmer oder höhere Gewalt verursacht wurden. Die Haftung für Sachschäden ist auf den vereinbarten Auftragswert beschränkt und übersteigt in keinem Fall die durch die Berufshaftpflichtversicherung abgedeckte Summe von 3 Millionen Euro. Der Nutzer trägt die Verantwortung für den sicheren Zugang zum Einsatzort."
-      },
-      "changes": {
-        "title": "Änderungen der Bedingungen",
-        "body": "Diese Bedingungen können bei rechtlichen, technischen oder betrieblichen Änderungen aktualisiert werden. Das aktualisierte Dokument wird auf dieser Seite mit dem Datum der letzten Änderung veröffentlicht.",
-        "meta": {
-          "lastUpdated": "Letzte Aktualisierung:"
-        }
-      },
-      "contact": {
-        "title": "Kontakt",
-        "items": [
-          {
-            "label": "Dienstleister",
-            "title": "Hasan Al AL-Hayyawi",
-            "value": "Adresse und Kontaktangaben noch nicht angegeben."
-          },
-          {
-            "label": "Technischer Support",
-            "title": "Maped Solutions UG",
-            "value": "Sarah-Kirsch-Str. 5, 12629 Berlin — contact@mapedsolutions.de"
-          }
-        ],
-        "cta": {
-          "label": "Zum Kontaktformular",
-          "href": "/contact"
-        }
-      },
-      "legalReferences": {
-        "title": "Rechtliche Verweise",
+        "title": "Rechtliche Grundlagen",
         "items": [
           {
             "label": "Datenschutz-Grundverordnung (DSGVO)",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           },
           {
-            "label": "E-Commerce-Richtlinie (2000/31/EG)",
-            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32000L0031"
-          },
-          {
-            "label": "BGB – Elektronische Verträge",
-            "href": "https://www.gesetze-im-internet.de/englisch_bgb/"
+            "label": "ePrivacy-Richtlinie",
+            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32002L0058"
           }
         ]
+      }
+    },
+    "terms": {
+      "hero": {
+        "headline1": "Allgemeine Geschäftsbedingungen",
+        "headline2": "Nutzungsbedingungen der Plattform",
+        "subtitle": "Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung dieser Plattform sowie die Rechte und Pflichten der beteiligten Parteien.",
+        "image": {
+          "src": "/images/terms-hero.png",
+          "alt": "Allgemeine Geschäftsbedingungen"
+        }
+      },
+      "overview": {
+        "title": "Geltungsbereich",
+        "intro": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der über diese Plattform bereitgestellten Funktionen und Dienste.",
+        "bullets": [
+          "Die Plattform wird technisch durch Maped Solutions UG betrieben.",
+          "Die angebotenen Dienstleistungen werden durch den jeweiligen Kunden erbracht.",
+          "Maped Solutions UG erbringt keine eigenen Endkundendienstleistungen.",
+          "Abweichende Bedingungen finden nur Anwendung, wenn sie ausdrücklich vereinbart wurden."
+        ]
+      },
+      "definitions": {
+        "title": "Begriffsbestimmungen",
+        "items": [
+          {
+            "term": "Plattform",
+            "definition": "Die webbasierte Softwarelösung zur Verwaltung von Dienstleistungen und Anfragen."
+          },
+          {
+            "term": "Kunde",
+            "definition": "Das Unternehmen, das über die Plattform Dienstleistungen gegenüber Endnutzern anbietet."
+          },
+          {
+            "term": "Nutzer",
+            "definition": "Natürliche oder juristische Personen, die die Plattform verwenden."
+          },
+          {
+            "term": "Anbieter",
+            "definition": "Maped Solutions UG als technischer Betreiber der Plattform."
+          }
+        ]
+      },
+      "serviceDescription": {
+        "title": "Leistungsbeschreibung",
+        "body": "Maped Solutions UG stellt dem Kunden eine betriebsbereite Softwareplattform (Version 1.0) zur Verfügung. Die Leistung umfasst den technischen Betrieb, die Wartung sowie fortlaufende Optimierung der Plattform.",
+        "note": "Die Plattform ist kein Vermittlungs- oder Ausführungsdienst für die angebotenen Dienstleistungen."
+      },
+      "optimization": {
+        "title": "Fortlaufende Optimierung",
+        "body": "Die fortlaufende Optimierung umfasst technische Verbesserungen, Sicherheitsupdates, Fehlerbehebungen und Leistungsanpassungen. Funktionale Erweiterungen oder Änderungen des Leistungsumfangs bedürfen einer gesonderten Vereinbarung."
+      },
+      "userObligations": {
+        "title": "Pflichten der Nutzer",
+        "items": [
+          "Angabe wahrheitsgemäßer und vollständiger Informationen.",
+          "Vertrauliche Behandlung von Zugangsdaten.",
+          "Keine missbräuchliche oder rechtswidrige Nutzung der Plattform.",
+          "Einhaltung geltender Gesetze und Vorschriften."
+        ]
+      },
+      "availability": {
+        "title": "Verfügbarkeit",
+        "body": "Maped Solutions UG ist bemüht, eine hohe Verfügbarkeit der Plattform sicherzustellen. Eine durchgehende oder unterbrechungsfreie Verfügbarkeit kann jedoch nicht garantiert werden."
+      },
+      "externalContractors": {
+        "title": "Externe Dienstleister",
+        "body": "Der Kunde kann zur Erbringung seiner Dienstleistungen externe Dienstleister einsetzen. Für deren Leistungen, Qualifikation und rechtmäßiges Handeln ist ausschließlich der Kunde verantwortlich."
+      },
+      "liability": {
+        "title": "Haftung",
+        "body": "Maped Solutions UG haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen. Bei einfacher Fahrlässigkeit haftet Maped Solutions UG nur bei Verletzung wesentlicher Vertragspflichten und beschränkt auf den vorhersehbaren Schaden.",
+        "limitations": [
+          "Keine Haftung für Leistungen des Kunden oder externer Dienstleister.",
+          "Keine Haftung für Datenverluste, sofern angemessene Sicherungsmaßnahmen getroffen wurden.",
+          "Keine Haftung für mittelbare Schäden oder entgangenen Gewinn."
+        ]
+      },
+      "payments": {
+        "title": "Zahlungen",
+        "body": "Zahlungen und Abrechnungen erfolgen auf Grundlage der zwischen Maped Solutions UG und dem Kunden geschlossenen Vereinbarungen. Die Plattform selbst stellt keine Zahlungsdienstleistung dar."
+      },
+      "termination": {
+        "title": "Beendigung der Nutzung",
+        "body": "Das Nutzungsverhältnis kann von beiden Parteien unter Einhaltung der vereinbarten Fristen beendet werden. Gesetzliche Kündigungsrechte bleiben unberührt."
+      },
+      "dataProtection": {
+        "title": "Datenschutz",
+        "body": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung dieser Plattform sowie den geltenden datenschutzrechtlichen Vorschriften."
+      },
+      "governingLaw": {
+        "title": "Anwendbares Recht",
+        "body": "Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts."
+      },
+      "changes": {
+        "title": "Änderungen der AGB",
+        "body": "Maped Solutions UG behält sich vor, diese AGB aus rechtlichen oder betrieblichen Gründen zu ändern. Die jeweils aktuelle Fassung ist auf dieser Plattform einsehbar.",
+        "meta": {
+          "lastUpdated": "Zuletzt aktualisiert:"
+        }
       }
     },
     "imprint": {

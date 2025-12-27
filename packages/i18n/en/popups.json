@@ -262,5 +262,89 @@
   "USER_VERIFY_INVALID_TOKEN": {
     "title": "Invalid verification link",
     "description": "The verification link is invalid or corrupted."
+  },
+  "OBJECT_ADDRESS_EXISTS": {
+    "title": "Address already in use",
+    "description": "An object already exists with this address."
+  },
+  "OBJECT_NUMBER_EXISTS": {
+    "title": "Object number already exists",
+    "description": "An object with this number already exists."
+  },
+  "OBJECT_NOT_FOUND": {
+    "title": "Object not found",
+    "description": "The requested object could not be found."
+  },
+  "PROPERTY_MANAGER_EMAIL_EXISTS": {
+    "title": "Email already in use",
+    "description": "A manager already exists with this email address."
+  },
+  "PROPERTY_MANAGER_EXISTS": {
+    "title": "Manager already exists",
+    "description": "A property manager with these details already exists."
+  },
+  "PROPERTY_MANAGER_NOT_FOUND": {
+    "title": "Manager not found",
+    "description": "The requested property manager could not be found."
+  },
+  "WORKER_ALREADY_EXISTS": {
+    "title": "Worker already exists",
+    "description": "A worker with these details already exists."
+  },
+  "WORKER_NOT_FOUND": {
+    "title": "Worker not found",
+    "description": "The requested worker could not be found."
+  },
+  "OBJECT_CREATED": {
+    "title": "Object created",
+    "description": "The object has been created successfully."
+  },
+  "OBJECT_FOUND": {
+    "title": "Object loaded",
+    "description": "The object details were retrieved successfully."
+  },
+  "OBJECT_LIST": {
+    "title": "Objects loaded",
+    "description": "The objects list was retrieved successfully."
+  },
+  "OBJECT_UPDATED": {
+    "title": "Object updated",
+    "description": "The object has been updated successfully."
+  },
+  "PROPERTY_MANAGER_CREATED": {
+    "title": "Manager created",
+    "description": "The property manager has been created successfully."
+  },
+  "PROPERTY_MANAGER_FOUND": {
+    "title": "Manager loaded",
+    "description": "The property manager details were retrieved successfully."
+  },
+  "PROPERTY_MANAGER_LIST": {
+    "title": "Managers loaded",
+    "description": "The property manager list was retrieved successfully."
+  },
+  "PROPERTY_MANAGER_UPDATED": {
+    "title": "Manager updated",
+    "description": "The property manager has been updated successfully."
+  },
+  "WORKER_CREATED": {
+    "title": "Worker created",
+    "description": "The worker has been created successfully."
+  },
+  "WORKER_DELETED": {
+    "title": "Worker deleted",
+    "description": "The worker has been removed."
+  },
+  "WORKER_FOUND": {
+    "title": "Worker loaded",
+    "description": "The worker details were retrieved successfully."
+  },
+  "WORKER_LIST": {
+    "title": "Workers loaded",
+    "description": "The workers list was retrieved successfully."
+  },
+  "WORKER_UPDATED": {
+    "title": "Worker updated",
+    "description": "The worker has been updated successfully."
   }
 }

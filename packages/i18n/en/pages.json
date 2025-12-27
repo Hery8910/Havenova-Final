@@ -397,25 +397,25 @@
     "privacy": {
       "hero": {
         "headline1": "Privacy Policy",
-        "headline2": "Transparency and Data Security",
-        "subtitle": "This policy explains how Havenova handles your personal data through this platform, operated technically by Maped Solutions UG.",
+        "headline2": "Transparency and Data Protection",
+        "subtitle": "This Privacy Policy explains how personal data is processed on this platform, which is technically operated by Maped Solutions UG.",
         "image": {
           "src": "/images/privacy-hero.png",
-          "alt": "Lock and protected data"
+          "alt": "Data protection and security"
         }
       },
       "overview": {
         "title": "Overview",
-        "intro": "Your privacy matters. We process your data in compliance with the General Data Protection Regulation (GDPR). Here’s a summary of who is responsible, why and how we process your data, which third parties are involved, and what rights you have.",
+        "intro": "Protecting personal data is important to us. This Privacy Policy explains who is responsible for data processing, for which purposes data is processed, and what rights users have.",
         "bullets": [
-          "Data Controller: Havenova (Art. 4(7) GDPR).",
+          "Data Controller: The respective client operating this platform (Art. 4(7) GDPR).",
           "Data Processor: Maped Solutions UG (Art. 28 GDPR).",
-          "Main legal bases: contract (Art. 6(1)(b)), legal obligation (Art. 6(1)(c)), legitimate interest (Art. 6(1)(f)), and consent (Art. 6(1)(a)).",
-          "Preferred data region: EU - Active",
-          "International transfers possible with safeguards (SCC)."
+          "Legal bases: Contract performance (Art. 6(1)(b)), legal obligation (Art. 6(1)(c)), legitimate interest (Art. 6(1)(f)).",
+          "Preferred data processing location: European Union.",
+          "International transfers only with appropriate safeguards (SCC)."
         ],
         "cta": {
-          "label": "Contact Data Protection Officer",
+          "label": "Contact the Controller",
           "href": "/contact"
         }
       },
@@ -423,88 +423,77 @@
         "title": "Responsible Parties",
         "controller": {
           "title": "Data Controller",
-          "body": "The data controller is Havenova, located at Stollberger Str.43, 12627 Berlin. You can contact them at contact@havenova.de."
+          "body": "The data controller within the meaning of the GDPR is the company offering services through this platform. This company determines the purposes and means of data processing. Contact details are provided in the Imprint."
         },
         "processor": {
           "title": "Data Processor",
-          "body": "Maped Solutions UG acts as the data processor under Art. 28 GDPR, operating the platform on behalf of Havenova. Technical contact: support@mapedsolutions.de."
+          "body": "Maped Solutions UG acts as a data processor pursuant to Art. 28 GDPR. It operates and maintains the platform technically and processes personal data solely on the instructions of the controller."
         },
         "links": [
           {
-            "label": "Art. 4(7) – Controller",
+            "label": "Art. 4(7) GDPR – Controller",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           },
           {
-            "label": "Art. 28 – Processor",
+            "label": "Art. 28 GDPR – Processor",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           }
         ]
       },
       "purposesAndLegalBases": {
         "title": "Purposes and Legal Bases",
-        "intro": "We only process your data for clear and legitimate purposes.",
+        "intro": "Personal data is processed exclusively for lawful and clearly defined purposes.",
         "items": [
           {
-            "purpose": "Service delivery and account management",
+            "purpose": "Service delivery and user management",
             "examples": {
-              "title": "Examples: ",
-              "description": "creating an account, handling requests, reservations, offers, and invoicing"
+              "title": "Examples:",
+              "description": "user accounts, service requests, communication, invoicing"
             },
             "legalBases": {
-              "title": "Legal Bases: ",
-              "description": "Art. 6(1)(b) – Contract performance"
+              "title": "Legal basis:",
+              "description": "Art. 6(1)(b) GDPR"
             }
           },
           {
-            "purpose": "Legal compliance",
+            "purpose": "Legal obligations",
             "examples": {
-              "title": "Examples: ",
-              "description": "tax and accounting obligations"
+              "title": "Examples:",
+              "description": "tax and accounting retention obligations"
             },
             "legalBases": {
-              "title": "Legal Bases: ",
-              "description": "Art. 6(1)(c) – Legal obligation"
+              "title": "Legal basis:",
+              "description": "Art. 6(1)(c) GDPR"
             }
           },
           {
-            "purpose": "Platform improvement and security",
+            "purpose": "Platform security and operation",
             "examples": {
-              "title": "Examples: ",
-              "description": "logs, fraud prevention, performance, support"
+              "title": "Examples:",
+              "description": "server logs, abuse prevention, system security"
             },
             "legalBases": {
-              "title": "Legal Bases: ",
-              "description": "Art. 6(1)(f) – Legitimate interest"
-            }
-          },
-          {
-            "purpose": "Marketing and non-essential cookies",
-            "examples": {
-              "title": "Examples: ",
-              "description": "newsletters, promotions, analytics"
-            },
-            "legalBases": {
-              "title": "Legal Bases: ",
-              "description": "Art. 6(1)(a) – Consent (revocable)"
+              "title": "Legal basis:",
+              "description": "Art. 6(1)(f) GDPR"
             }
           }
         ]
       },
       "dataCategories": {
-        "title": "Types of Data Processed",
-        "description": "Depending on your use of the platform, we may collect:",
+        "title": "Categories of Data",
+        "description": "Depending on platform usage, the following data may be processed:",
         "items": [
-          "Identification and contact information (name, email, phone, address).",
-          "Account and security data (hashed password, language, roles).",
-          "Request and service details (types, descriptions, locations, dates).",
-          "Contract and payment data (accepted offers, invoices, payment via third parties).",
-          "Technical data (IP address, device, logs, cookies based on your preferences)."
+          "Identification and contact data (name, email address, phone number, address).",
+          "Account and security data (encrypted passwords, roles, language settings).",
+          "Service request data (descriptions, locations).",
+          "Contractual and payment data (invoices, payments via third parties).",
+          "Technical data (IP address, device information, server logs, strictly necessary cookies)."
         ]
       },
       "thirdParties": {
-        "title": "Third-Party Providers",
-        "subtitle": "We use specialized providers to ensure secure and efficient service delivery.",
-        "intro": "Below is a dynamically generated list of external services (hosting, database, email, CDN, payments) with their purposes and privacy policies.",
+        "title": "Third-Party Service Providers",
+        "subtitle": "External providers are used to ensure secure and efficient platform operation.",
+        "intro": "All providers operate under contractual agreements and comply with GDPR requirements.",
         "table": {
           "headers": {
             "name": "Provider",
@@ -512,239 +501,102 @@
             "region": "Region",
             "privacy": "Privacy Policy"
           },
-          "body": [
-            {
-              "name": "Vercel",
-              "purpose": "Frontend hosting",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Vercel",
-                "href": "https://vercel.com/legal/privacy-policy"
-              }
-            },
-            {
-              "name": "MongoDB",
-              "purpose": "Database",
-              "region": "EU",
-              "privacyUrl": {
-                "label": "MongoDB",
-                "href": "https://www.mongodb.com/legal/privacy-policy"
-              }
-            },
-            {
-              "name": "Cloudflare",
-              "purpose": "CDN / WAF / DDoS protection",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Cloudflare",
-                "href": "https://www.cloudflare.com/privacypolicy/"
-              }
-            },
-            {
-              "name": "Cloudinary",
-              "purpose": "Media storage (images / PDFs)",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Cloudinary",
-                "href": "https://cloudinary.com/privacy"
-              }
-            },
-            {
-              "name": "SendGrid",
-              "purpose": "Transactional email",
-              "region": "USA",
-              "privacyUrl": {
-                "label": "Twilio",
-                "href": "https://www.twilio.com/legal/privacy"
-              }
-            },
-            {
-              "name": "Zoho Mail",
-              "purpose": "Business email services",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Zoho Mail",
-                "href": "https://www.zoho.com/privacy.html"
-              }
-            },
-            {
-              "name": "Stripe",
-              "purpose": "Payment processing",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "Stripe",
-                "href": "https://stripe.com/privacy"
-              }
-            },
-            {
-              "name": "PayPal",
-              "purpose": "Payment processing",
-              "region": "Global",
-              "privacyUrl": {
-                "label": "PayPal",
-                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
-              }
-            }
-          ]
+          "body": []
         }
       },
       "security": {
-        "title": "Security Measures (Art. 32 GDPR)",
-        "body": "We apply appropriate technical and organizational measures to protect your data: encrypted passwords (bcrypt), httpOnly/secure cookies, role-based access control, HTTPS, WAF/CDN (Cloudflare), anomaly monitoring, and EU-preferred storage whenever possible. Infrastructure providers apply encryption in transit (TLS) and at rest."
+        "title": "Security Measures",
+        "body": "Appropriate technical and organizational measures pursuant to Art. 32 GDPR are implemented, including encrypted passwords, secure data transmission (HTTPS/TLS), role-based access control, and firewall/CDN protection."
       },
       "cookies": {
-        "title": "Cookies and Similar Technologies",
-        "body": "We use essential cookies for core functionality. Analytics and marketing cookies are only used with your explicit consent. You can manage your preferences at any time.",
-        "cta": {
-          "label": "Cookie Policy",
-          "href": "/cookies-policy"
-        }
+        "title": "Cookies",
+        "body": "This platform uses only strictly necessary cookies required for secure operation and core functionality. No analytics or marketing cookies are used."
       },
       "userRights": {
         "title": "Your Rights",
-        "intro": "Under the GDPR, you have the following rights:",
+        "intro": "Data subjects have the following rights under the GDPR:",
         "items": [
-          "Access (Art. 15), Rectification (Art. 16), Erasure (Art. 17), Restriction (Art. 18).",
-          "Portability (Art. 20), Objection (Art. 21).",
-          "Withdraw consent at any time (Art. 7(3))."
+          "Access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18).",
+          "Data portability (Art. 20), objection (Art. 21)."
         ],
-        "howTo": "To exercise your rights, contact us at contact@havenova.de or via our contact page."
+        "howTo": "Requests must be addressed to the respective data controller."
       },
       "retention": {
         "title": "Data Retention",
-        "body": "We retain data only as long as needed to fulfill the intended purposes and comply with legal obligations. For example, invoices and accounting records are kept for 10 years unless otherwise required."
+        "body": "Personal data is stored only for as long as necessary to fulfill the stated purposes and legal obligations. Thereafter, data is deleted or anonymized."
       },
       "internationalTransfers": {
-        "title": "International Transfers",
-        "body": "If data is transferred outside the EEA, appropriate safeguards (such as Standard Contractual Clauses) are in place. Whenever possible, we configure services to use EU-based data centers. Current EU preference status: Active."
+        "title": "International Data Transfers",
+        "body": "If personal data is processed outside the EEA, this occurs exclusively with appropriate safeguards, in particular the Standard Contractual Clauses approved by the European Commission."
       },
-
       "changes": {
-        "title": "Policy Changes",
-        "body": "We may update this policy due to legal or operational reasons. Major changes will be communicated through the app or by email.",
+        "title": "Changes to this Privacy Policy",
+        "body": "This Privacy Policy may be updated for legal or operational reasons.",
         "meta": {
           "lastUpdated": "Last updated:"
         }
-      },
-      "legalReferences": {
-        "title": "Legal References",
-        "items": [
-          {
-            "label": "GDPR (consolidated text)",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 6 – Lawfulness of processing",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 13–14 – Information to data subjects",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 28 – Processors",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 30 – Records of processing",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 32 – Security of processing",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          }
-        ]
       }
     },
     "cookies": {
       "hero": {
         "headline1": "Cookie Policy",
-        "headline2": "Use of Cookies and Similar Technologies",
-        "subtitle": "This page explains how and why cookies are used on this platform, which is technically operated by Maped Solutions UG.",
+        "headline2": "Use of Strictly Necessary Cookies",
+        "subtitle": "This Cookie Policy explains how and why cookies are used on this platform, which is technically operated by Maped Solutions UG.",
         "image": {
           "src": "/images/cookies-hero.png",
-          "alt": "Cookie and Settings"
+          "alt": "Cookies and privacy settings"
         }
       },
       "overview": {
         "title": "Overview",
-        "intro": "We use cookies and similar technologies to ensure the operation of this platform and to continuously improve your user experience. Some cookies are technically necessary, others require your explicit consent.",
+        "intro": "This platform uses only strictly necessary cookies required for secure operation and essential functionality. No analytics, tracking, or marketing cookies are used.",
         "bullets": [
-          "Technically necessary cookies for core functions.",
-          "Analytics cookies for anonymous usage analysis.",
-          "No marketing or tracking cookies used.",
-          "You can change your preferences at any time."
+          "Only strictly necessary cookies are used.",
+          "No analytics or marketing cookies.",
+          "No user profiling or tracking.",
+          "Cookies can be managed through browser settings."
         ],
         "cta": {
-          "label": "Manage cookie settings",
+          "label": "Cookie settings",
           "action": "openCookieBanner"
         }
       },
       "whatAreCookies": {
         "title": "What are cookies?",
-        "body": "Cookies are small text files that are stored on your device when you visit a website. They allow your browser to be recognized and can store certain information such as login status or language preferences for future visits."
+        "body": "Cookies are small text files stored on your device when you visit a website. They enable essential functions such as secure login, navigation, and protection against misuse."
       },
       "types": {
-        "title": "What types of cookies do we use?",
+        "title": "What types of cookies are used?",
         "items": [
           {
-            "name": "Essential cookies",
-            "description": "These cookies ensure the platform works correctly – e.g. for login, navigation, and security. They cannot be disabled."
-          },
-          {
-            "name": "Analytics cookies",
-            "description": "These cookies help us understand how users interact with the platform – e.g. which pages are visited or which features are used. The data is anonymized and used only for internal improvements."
+            "name": "Strictly necessary cookies",
+            "description": "These cookies are required to ensure the secure and proper operation of the platform, such as authentication, security, and session management. They cannot be disabled."
           }
         ]
       },
       "thirdParties": {
         "title": "Third-party services",
-        "body": "We use external services for technical analysis and payment processing. These services are configured to comply with data protection laws. The data is collected anonymously and not used for advertising purposes.",
+        "body": "No third-party cookies are used for analytics, tracking, or marketing purposes. External service providers may set technically necessary cookies if required for platform operation.",
         "table": {
           "headers": {
             "name": "Provider",
             "purpose": "Purpose",
-            "privacy": "Privacy"
+            "privacy": "Privacy Policy"
           },
-          "body": [
-            {
-              "name": "Google Analytics",
-              "purpose": "Anonymous analysis of user behavior (page views, interactions). Used to optimize the platform.",
-              "privacyUrl": {
-                "label": "Google",
-                "href": "https://policies.google.com/privacy"
-              }
-            },
-            {
-              "name": "Stripe",
-              "purpose": "Secure payment processing. No user interaction is analyzed.",
-              "privacyUrl": {
-                "label": "Stripe",
-                "href": "https://stripe.com/en/privacy"
-              }
-            },
-            {
-              "name": "PayPal",
-              "purpose": "Handles payments for users with PayPal accounts. No profiling is performed by Maped Solutions.",
-              "privacyUrl": {
-                "label": "PayPal",
-                "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
-              }
-            }
-          ]
+          "body": []
         }
       },
       "localStorage": {
         "title": "Use of localStorage",
-        "body": "In addition to cookies, we use the browser's localStorage to store preferences like language, theme, or guest avatar. This data stays on your device and is not shared with any third party."
+        "body": "In addition to cookies, the browser’s localStorage may be used to store technical preferences such as language or theme settings. This data remains on your device and is not shared with third parties."
       },
       "management": {
         "title": "Managing cookies",
-        "intro": "You can change your cookie preferences at any time through the banner or via your browser settings.",
+        "intro": "You can manage or delete cookies at any time via your browser settings. Disabling strictly necessary cookies may affect the functionality of the platform.",
         "methods": [
-          "Accept or reject cookies in the initial banner.",
-          "Use browser settings to block or delete cookies.",
-          "Access the cookie settings via the footer at any time."
+          "Manage cookies through browser settings.",
+          "Delete stored cookies via the browser.",
+          "Restrict or block cookies using browser features."
         ],
         "cta": {
           "label": "Reopen cookie banner",
@@ -753,7 +605,7 @@
         "links": [
           {
             "label": "Google Chrome",
-            "href": "https://support.google.com/chrome/answer/95647?hl=en"
+            "href": "https://support.google.com/chrome/answer/95647"
           },
           {
             "label": "Mozilla Firefox",
@@ -761,21 +613,21 @@
           },
           {
             "label": "Safari",
-            "href": "https://support.apple.com/en-us/guide/safari/sfri11471/mac"
+            "href": "https://support.apple.com/guide/safari/sfri11471/mac"
           },
           {
             "label": "Microsoft Edge",
-            "href": "https://support.microsoft.com/en-us/help/4027947/microsoft-edge-delete-cookies"
+            "href": "https://support.microsoft.com/help/4027947"
           }
         ]
       },
       "legalBasis": {
         "title": "Legal basis",
-        "body": "Non-essential cookies (like analytics) are only set with your consent (Art. 6 para. 1 lit. a GDPR). Essential cookies are based on our legitimate interest in ensuring secure and functional operation of the platform (Art. 6 para. 1 lit. f GDPR)."
+        "body": "Strictly necessary cookies are used based on Art. 6(1)(f) GDPR (legitimate interest in ensuring secure and functional operation of the platform)."
       },
       "changes": {
-        "title": "Changes to this policy",
-        "body": "This policy may be updated due to legal or technical reasons. The date of the last change is shown below:",
+        "title": "Changes to this Cookie Policy",
+        "body": "This Cookie Policy may be updated for legal or technical reasons. The date of the last update is displayed on this page.",
         "meta": {
           "lastUpdated": "Last updated:"
         }
@@ -784,12 +636,12 @@
         "title": "Legal references",
         "items": [
           {
-            "label": "GDPR (EU 2016/679)",
+            "label": "General Data Protection Regulation (GDPR)",
             "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
           },
           {
             "label": "ePrivacy Directive",
-            "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32002L0058"
+            "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058"
           }
         ]
       }
@@ -797,100 +649,101 @@
     "terms": {
       "hero": {
         "headline1": "Terms of Service",
-        "headline2": "General Conditions for Using the Platform",
-        "subtitle": "This document outlines the rights and obligations between users and the service provider using this platform, which is technically operated by Maped Solutions UG.",
+        "headline2": "Platform Terms and Conditions",
+        "subtitle": "These Terms of Service govern the use of this platform and define the rights and obligations of the involved parties.",
         "image": {
           "src": "/images/terms-hero.png",
-          "alt": "Legal document and contract"
+          "alt": "Terms and conditions"
         }
       },
-      "intro": {
-        "title": "Introduction",
-        "body": "By accessing or using our services, you agree to these Terms of Service. If you do not agree with any part of these terms, you should not use the platform."
+      "overview": {
+        "title": "Scope",
+        "intro": "These Terms of Service apply to the use of the functions and services provided through this platform.",
+        "bullets": [
+          "The platform is technically operated by Maped Solutions UG.",
+          "Services are provided by the respective client.",
+          "Maped Solutions UG does not provide end-user services.",
+          "Deviating terms apply only if explicitly agreed."
+        ]
       },
-      "scope": {
-        "title": "Scope of Service",
-        "body": "This platform allows users to request maintenance, cleaning, and home assistance services, receive personalized offers, schedule appointments, and communicate with the service provider. Some services are performed directly by the provider, while others (e.g., electrical repairs, painting) are carried out by external contractors."
+      "definitions": {
+        "title": "Definitions",
+        "items": [
+          {
+            "term": "Platform",
+            "definition": "The web-based software solution for managing services and requests."
+          },
+          {
+            "term": "Client",
+            "definition": "The company offering services to end users through the platform."
+          },
+          {
+            "term": "User",
+            "definition": "Individuals or legal entities using the platform."
+          },
+          {
+            "term": "Provider",
+            "definition": "Maped Solutions UG as the technical operator of the platform."
+          }
+        ]
+      },
+      "serviceDescription": {
+        "title": "Service Description",
+        "body": "Maped Solutions UG provides the client with a production-ready software platform (Version 1.0). The service includes technical operation, maintenance, and continuous optimization.",
+        "note": "The platform does not act as a service provider or intermediary for the services offered."
+      },
+      "optimization": {
+        "title": "Continuous Optimization",
+        "body": "Continuous optimization includes technical improvements, security updates, bug fixes, and performance adjustments. Functional extensions require a separate agreement."
       },
       "userObligations": {
         "title": "User Obligations",
         "items": [
-          "Provide truthful and up-to-date information during use.",
-          "Do not use the platform for illegal, abusive, or fraudulent purposes.",
-          "Respect third-party rights, especially in shared living environments.",
-          "Do not interfere with the technical operation of the platform.",
-          "Keep your login credentials confidential."
+          "Provide accurate and complete information.",
+          "Keep access credentials confidential.",
+          "No misuse or unlawful use of the platform.",
+          "Compliance with applicable laws."
         ]
       },
-      "providerRights": {
-        "title": "Provider Rights",
-        "items": [
-          "Modify, suspend, or limit certain features for technical or legal reasons.",
-          "Reject or cancel requests that violate these terms.",
-          "Update these terms to reflect legal or operational changes.",
-          "Offer special conditions or pricing depending on customer type or location."
+      "availability": {
+        "title": "Availability",
+        "body": "Maped Solutions UG strives to ensure high platform availability. Continuous or uninterrupted availability cannot be guaranteed."
+      },
+      "externalContractors": {
+        "title": "External Contractors",
+        "body": "Clients may engage external contractors to deliver their services. The client is solely responsible for the actions and compliance of such contractors."
+      },
+      "liability": {
+        "title": "Liability",
+        "body": "Maped Solutions UG is liable only for damages caused by intent or gross negligence. In cases of slight negligence, liability is limited to breaches of essential contractual obligations and foreseeable damages.",
+        "limitations": [
+          "No liability for services provided by the client or external contractors.",
+          "No liability for data loss if appropriate backup measures were in place.",
+          "No liability for indirect damages or loss of profit."
         ]
       },
       "payments": {
-        "title": "Payments and Conditions",
-        "body": "Use of the services provided may be subject to fees. Accepting an offer constitutes acceptance of the terms and pricing provided.",
-        "items": [
-          "Prices are defined individually based on the service type and complexity.",
-          "Payments are processed through third-party providers such as Stripe or PayPal.",
-          "If canceled less than 24 hours before the appointment, a cancellation fee of 25% of the agreed amount will apply.",
-          "Unless otherwise specified, payment is due after service completion."
-        ]
+        "title": "Payments",
+        "body": "Payments and billing are governed by the agreements concluded between Maped Solutions UG and the client. The platform itself does not provide payment services."
       },
-      "cancellation": {
-        "title": "Cancellation and Termination",
-        "body": "Users may cancel confirmed appointments. If canceled within 24 hours of the appointment, a fee will apply as outlined in the 'Payments' section. The provider reserves the right to suspend platform access in case of repeated abuse or inappropriate behavior."
+      "termination": {
+        "title": "Termination",
+        "body": "The usage relationship may be terminated by either party in accordance with the agreed notice periods. Statutory termination rights remain unaffected."
       },
-      "liability": {
-        "title": "Limitation of Liability",
-        "body": "The provider is not liable for indirect damages, economic losses, or service interruptions caused by third parties, contractors, or force majeure. Liability for material damages is limited to the value of the contracted service and shall not exceed the provider’s professional insurance coverage of €3 million. Users are responsible for ensuring safe access to the service location."
+      "dataProtection": {
+        "title": "Data Protection",
+        "body": "Personal data is processed in accordance with the Privacy Policy of this platform and applicable data protection laws."
+      },
+      "governingLaw": {
+        "title": "Governing Law",
+        "body": "The laws of the Federal Republic of Germany apply, excluding the UN Convention on Contracts for the International Sale of Goods."
       },
       "changes": {
-        "title": "Changes to the Terms",
-        "body": "These terms may be updated due to legal, technical, or business reasons. The updated document will be published on this page with the date of last modification.",
+        "title": "Changes to these Terms",
+        "body": "Maped Solutions UG reserves the right to amend these Terms for legal or operational reasons. The current version is available on this platform.",
         "meta": {
           "lastUpdated": "Last updated:"
         }
-      },
-      "contact": {
-        "title": "Contact",
-        "items": [
-          {
-            "label": "Service Provider",
-            "title": "Hasan Al AL-Hayyawi",
-            "value": "Address and contact information not yet provided."
-          },
-          {
-            "label": "Technical Support",
-            "title": "Maped Solutions UG",
-            "value": "Sarah-Kirsch-Str. 5, 12629 Berlin — contact@mapedsolutions.de"
-          }
-        ],
-        "cta": {
-          "label": "Go to contact form",
-          "href": "/contact"
-        }
-      },
-      "legalReferences": {
-        "title": "Legal References",
-        "items": [
-          {
-            "label": "General Data Protection Regulation (GDPR)",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "E-Commerce Directive (2000/31/EC)",
-            "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32000L0031"
-          },
-          {
-            "label": "German Civil Code (BGB) – Electronic Contracts",
-            "href": "https://www.gesetze-im-internet.de/englisch_bgb/"
-          }
-        ]
       }
     },
     "imprint": {

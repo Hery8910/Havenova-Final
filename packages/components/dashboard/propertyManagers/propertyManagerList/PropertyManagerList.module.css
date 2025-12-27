@@ -43,9 +43,7 @@
 }
 
 .cardSubtext {
-  font-size: clamp(12px, 3vw, 16px);
   margin: 0;
-  color: var(--text-secondary);
 }
 
 .badge {
@@ -88,10 +86,6 @@
 
 .cardLabel {
   display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
 }
 
 .cardValue {
@@ -121,6 +115,5 @@
 
 .emptyState {
   text-align: center;
-  color: var(--text-secondary);
   padding: 24px 0;
 }

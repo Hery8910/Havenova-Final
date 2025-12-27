@@ -271,6 +271,66 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Ungültiger Bestätigungslink',
     'Der Bestätigungslink ist ungültig oder beschädigt.'
   ),
+  OBJECT_ADDRESS_EXISTS: withClose(
+    'Adresse bereits vergeben',
+    'Ein Objekt mit dieser Adresse existiert bereits.'
+  ),
+  OBJECT_NUMBER_EXISTS: withClose(
+    'Objektnummer bereits vergeben',
+    'Ein Objekt mit dieser Nummer existiert bereits.'
+  ),
+  OBJECT_NOT_FOUND: withClose(
+    'Objekt nicht gefunden',
+    'Das angeforderte Objekt konnte nicht gefunden werden.'
+  ),
+  PROPERTY_MANAGER_EMAIL_EXISTS: withClose(
+    'E-Mail bereits vergeben',
+    'Ein Manager mit dieser E-Mail-Adresse existiert bereits.'
+  ),
+  PROPERTY_MANAGER_EXISTS: withClose(
+    'Manager existiert bereits',
+    'Ein Immobilienverwalter mit diesen Angaben existiert bereits.'
+  ),
+  PROPERTY_MANAGER_NOT_FOUND: withClose(
+    'Manager nicht gefunden',
+    'Der angeforderte Immobilienverwalter konnte nicht gefunden werden.'
+  ),
+  WORKER_ALREADY_EXISTS: withClose(
+    'Mitarbeiter existiert bereits',
+    'Ein Mitarbeiter mit diesen Angaben existiert bereits.'
+  ),
+  WORKER_NOT_FOUND: withClose(
+    'Mitarbeiter nicht gefunden',
+    'Der angeforderte Mitarbeiter konnte nicht gefunden werden.'
+  ),
+  OBJECT_CREATED: withClose('Objekt erstellt', 'Das Objekt wurde erfolgreich erstellt.'),
+  OBJECT_FOUND: withClose('Objekt geladen', 'Die Objektdetails wurden erfolgreich geladen.'),
+  OBJECT_LIST: withClose('Objekte geladen', 'Die Objektliste wurde erfolgreich geladen.'),
+  OBJECT_UPDATED: withClose('Objekt aktualisiert', 'Das Objekt wurde erfolgreich aktualisiert.'),
+  PROPERTY_MANAGER_CREATED: withClose(
+    'Manager erstellt',
+    'Der Immobilienverwalter wurde erfolgreich erstellt.'
+  ),
+  PROPERTY_MANAGER_FOUND: withClose(
+    'Manager geladen',
+    'Die Managerdetails wurden erfolgreich geladen.'
+  ),
+  PROPERTY_MANAGER_LIST: withClose(
+    'Manager geladen',
+    'Die Managerliste wurde erfolgreich geladen.'
+  ),
+  PROPERTY_MANAGER_UPDATED: withClose(
+    'Manager aktualisiert',
+    'Der Immobilienverwalter wurde erfolgreich aktualisiert.'
+  ),
+  WORKER_CREATED: withClose('Mitarbeiter erstellt', 'Der Mitarbeiter wurde erfolgreich erstellt.'),
+  WORKER_DELETED: withClose('Mitarbeiter gelöscht', 'Der Mitarbeiter wurde entfernt.'),
+  WORKER_FOUND: withClose('Mitarbeiter geladen', 'Die Mitarbeiterdetails wurden erfolgreich geladen.'),
+  WORKER_LIST: withClose('Mitarbeiter geladen', 'Die Mitarbeiterliste wurde erfolgreich geladen.'),
+  WORKER_UPDATED: withClose(
+    'Mitarbeiter aktualisiert',
+    'Der Mitarbeiter wurde erfolgreich aktualisiert.'
+  ),
 
   GLOBAL_LOADING: withClose('Wird geladen…', 'Bitte warten Sie einen Moment.'),
   REGISTER_LOADING_SUBMIT: withClose(

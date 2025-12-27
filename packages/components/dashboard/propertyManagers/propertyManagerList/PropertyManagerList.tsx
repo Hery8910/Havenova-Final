@@ -27,11 +27,11 @@ const PropertyManagerList = ({
   onSelect,
 }: PropertyManagerListProps) => {
   if (loading) {
-    return <div className={styles.emptyState}>{texts.loadingLabel}</div>;
+    return <div className={`${styles.emptyState} text-body-sm`}>{texts.loadingLabel}</div>;
   }
 
   if (managers.length === 0) {
-    return <div className={styles.emptyState}>{texts.emptyLabel}</div>;
+    return <div className={`${styles.emptyState} text-body-sm`}>{texts.emptyLabel}</div>;
   }
 
   return (
@@ -47,7 +47,7 @@ const PropertyManagerList = ({
           <header className={styles.cardHeader}>
             <aside>
               <h4 className={styles.cardTitle}>{manager.name}</h4>
-              <p className={styles.cardSubtext}>{manager.email || '-'}</p>
+              <p className={`${styles.cardSubtext} text-body-sm`}>{manager.email || '-'}</p>
             </aside>
             <span
               className={`${styles.badge} ${
@@ -59,10 +59,17 @@ const PropertyManagerList = ({
           </header>
           <article className={styles.cardMeta}>
             <div className={styles.cardMetaDiv}>
-              <span className={styles.cardLabel}>{texts.buildingsLabel}</span>
+              <span className={`${styles.cardLabel} text-label`}>{texts.buildingsLabel}</span>
               <span className={styles.cardValue}>{manager.buildingCount ?? 0}</span>
             </div>
-            <button className={styles.iconButton} onClick={() => onSelect(manager.id)}>
+            <button
+              className={styles.iconButton}
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onSelect(manager.id);
+              }}
+            >
               {texts.detailsLabel} <IoIosArrowForward />
             </button>
           </article>

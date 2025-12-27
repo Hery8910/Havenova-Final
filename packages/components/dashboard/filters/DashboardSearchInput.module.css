@@ -12,8 +12,6 @@
   justify-content: flex-start;
   align-items: center;
   gap: 8px;
-  font-size: clamp(16px, 3vw, 20px);
-  color: var(--text-secondary);
   background: var(--bg-card-3);
   border: 1px solid #6161618e;
   border-radius: 4px;
@@ -21,8 +19,9 @@
 }
 
 .input {
+  color: var(--text-primary);
   width: 100%;
-  font-size: clamp(14px, 3vw, 18px);
+  font-size: clamp(12px, 3vw, 16px);
   padding-left: 8px;
   background-color: transparent;
   border: none;
