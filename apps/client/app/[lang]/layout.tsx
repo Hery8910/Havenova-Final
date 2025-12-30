@@ -13,11 +13,7 @@ import {
   I18nProvider,
   ProfileProvider,
 } from '../../../../packages/contexts';
-import {
-  CookieBannerContainer,
-  FooterContainer,
-  NavbarContainer,
-} from '../../../../packages/components';
+import { CookieBannerContainer } from '../../../../packages/components';
 
 export async function generateMetadata({
   params,
@@ -73,9 +69,7 @@ export default async function LangLayout({
                 <ProfileProvider>
                   <CookiesProvider>
                     <CookieBannerContainer />
-                    <NavbarContainer />
                     {children}
-                    <FooterContainer />
                   </CookiesProvider>
                 </ProfileProvider>
               </AuthProvider>

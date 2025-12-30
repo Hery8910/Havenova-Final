@@ -114,30 +114,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // -------------------
-  // Initial load
-  // -------------------
-
-  useEffect(() => {
-    if (!isClientReady) return;
-
-    const stored = loadFromStorage();
-
-    if (stored) {
-      setAuthState(stored);
-      // Si ya existía en storage y no es guest, no es un usuario nuevo
-      if (stored.role !== 'guest') {
-        setAuthState({ ...stored, isNewUser: false });
-      }
-    } else {
-      const guest = createGuest();
-      setAuthState(guest);
-      saveToStorage(guest);
-    }
-
-    setLoading(false);
-  }, [isClientReady, createGuest]);
-
-  // -------------------
   // Persist always
   // -------------------
 
@@ -199,7 +175,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               },
               onCancel: () => {
                 closeAlert();
-                router.push(`/${language}/login`);
+                router.push(`/${language}/user/login`);
               },
             });
             (onSessionExpired || sessionCallbackRef.current)?.();
@@ -219,6 +195,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     [clientId, createGuest, closeAlert, language, popups, router, showError]
   );
+
+  // -------------------
+  // Initial load
+  // -------------------
+
+  useEffect(() => {
+    if (!isClientReady) return;
+
+    const stored = loadFromStorage();
+
+    if (stored) {
+      setAuthState(stored);
+      // Si ya existía en storage y no es guest, no es un usuario nuevo
+      if (stored.role !== 'guest') {
+        setAuthState({ ...stored, isNewUser: false });
+      }
+      if (stored.role !== 'guest') {
+        setLoading(true);
+        refreshAuth().finally(() => setLoading(false));
+        return;
+      }
+    } else {
+      const guest = createGuest();
+      setAuthState(guest);
+      saveToStorage(guest);
+    }
+
+    setLoading(false);
+  }, [isClientReady, createGuest, refreshAuth]);
 
   // -------------------
   // Logout

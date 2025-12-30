@@ -1,29 +1,30 @@
-.container {
+.button {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 16px 0 8px;
-}
-
-.button {
+  gap: 8px;
+  padding: 8px;
   font-size: clamp(14px, 3vw, 18px);
-  border: 1px solid #6161618e;
   color: var(--text-secondary);
-  background: var(--bg-card-1);
-  padding: 8px 16px;
-  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  background-color: transparent;
+  border: none;
 }
-
 .button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: var(--shadow);
 }
 
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+.label {
+  width: 100%;
+}
+.span {
+  width: 100%;
+  border: 1px solid #6161618e;
 }

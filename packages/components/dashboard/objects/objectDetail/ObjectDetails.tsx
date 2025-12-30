@@ -15,10 +15,21 @@ interface ObjectDetailsTexts {
   propertyManager: string;
   entrancesCount: string;
   floorCount: string;
+  preferredCleaningDay: string;
   preferredCleaningWindowDay: string;
-  fixedCleaningDayRequired: string;
+  cleaningSuppliesRoom?: string;
+  keyAccess?: string;
+  waterAccess?: string;
+  waterDisposal?: string;
+  ladderAvailable?: string;
+  electricityAccess?: string;
+  lightBulbChangeRequired?: string;
+  flooringType?: string;
+  onSiteContact?: string;
+  decisionMaker?: string;
+  cleaningInfo?: string;
   status: string;
-  notes: string;
+  notes?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -61,6 +72,7 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
       <header className={styles.detailsHeader}>
         <div>
           <h2 className={styles.detailsTitle}>{object.objectNumber}</h2>
+          <p className={styles.detailsP}>{object.propertyManagerName || '-'}</p>
           <p className={styles.detailsSubtitle}>{object.address || '-'}</p>
         </div>
         <div className={styles.headerActions}>
@@ -74,33 +86,25 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
         </div>
       </header>
       <ul className={styles.detailsList}>
-        <li className={styles.li}>
-          <p className="text-label">{texts.propertyManager}</p>
-          <p className={`${styles.detailsP} text-body-sm`}>{object.propertyManagerName || '-'}</p>
-        </li>
-        <li className={styles.li}>
-          <p className="text-label">{texts.address}</p>
-          <p className={`${styles.detailsP} text-body-sm`}>{object.address || '-'}</p>
-        </li>
-        <li className={styles.li}>
+        <li className={styles.detailsLi}>
           <p className="text-label">{texts.entrancesCount}</p>
           <p className={`${styles.detailsP} text-body-sm`}>{object.entrancesCount || '-'}</p>
         </li>
-        <li className={styles.li}>
+        <li className={styles.detailsLi}>
           <p className="text-label">{texts.floorCount}</p>
           <p className={`${styles.detailsP} text-body-sm`}>{object.floorCount || '-'}</p>
         </li>
-        <li className={styles.li}>
-          <p className="text-label">{texts.preferredCleaningWindowDay}</p>
+        <li className={styles.detailsLi}>
+          <p className="text-label">{texts.preferredCleaningDay}</p>
           <p className={`${styles.detailsP} text-body-sm`}>{object.preferredCleaningDay || '-'}</p>
         </li>
-        <li className={styles.li}>
-          <p className="text-label">{texts.fixedCleaningDayRequired}</p>
+        <li className={styles.detailsLi}>
+          <p className="text-label">{texts.preferredCleaningWindowDay}</p>
           <p className={`${styles.detailsP} text-body-sm`}>
             {object.preferredCleaningWindowDay || '-'}
           </p>
         </li>
-        <li className={styles.li}>
+        <li className={styles.detailsLi}>
           <p className="text-label">{texts.createdAt}</p>
           {object.createdAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
@@ -108,7 +112,7 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
             </p>
           )}
         </li>
-        <li className={styles.li}>
+        <li className={styles.detailsLi}>
           <p className="text-label">{texts.updatedAt}</p>
           {object.updatedAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
@@ -117,10 +121,56 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
           )}
         </li>
       </ul>
-      <article className={styles.detailsNoteSection}>
-        <p className="text-label">{texts.notes}</p>
-        <p className="text-body-sm">{object.notes || '-'}</p>
-      </article>
+      <ul className={styles.notesList}>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.onSiteContact}</p>
+          <p className="text-body-sm">{object.onSiteContact || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.decisionMaker}</p>
+          <p className="text-body-sm">{object.decisionMaker || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.cleaningSuppliesRoom}</p>
+          <p className="text-body-sm">{object.cleaningSuppliesRoom || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.keyAccess}</p>
+          <p className="text-body-sm">{object.keyAccess || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.waterAccess}</p>
+          <p className="text-body-sm">{object.waterAccess || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.waterDisposal}</p>
+          <p className="text-body-sm">{object.waterDisposal || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.ladderAvailable}</p>
+          <p className="text-body-sm">{object.ladderAvailable || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.electricityAccess}</p>
+          <p className="text-body-sm">{object.electricityAccess || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.lightBulbChangeRequired}</p>
+          <p className="text-body-sm">{object.lightBulbChangeRequired || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.flooringType}</p>
+          <p className="text-body-sm">{object.flooringType || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.cleaningInfo}</p>
+          <p className="text-body-sm">{object.cleaningInfo || '-'}</p>
+        </li>
+        <li className={styles.notesLi}>
+          <p className={`${styles.notesLabel} text-label`}>{texts.notes}</p>
+          <p className="text-body-sm">{object.notes || '-'}</p>
+        </li>
+      </ul>
     </section>
   );
 };

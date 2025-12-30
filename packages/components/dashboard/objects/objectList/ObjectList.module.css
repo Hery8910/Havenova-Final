@@ -1,5 +1,6 @@
 .cards {
   width: 100%;
+  height: max-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -7,7 +8,7 @@
   gap: 16px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 0;
 }
 
 .cardItem {

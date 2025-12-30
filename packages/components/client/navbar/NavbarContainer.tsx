@@ -23,7 +23,7 @@ export function NavbarContainer() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
+      setIsMobile(window.innerWidth <= 1200);
     };
     handleResize();
     window.addEventListener('resize', handleResize);

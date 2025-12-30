@@ -279,51 +279,15 @@
       }
     },
     "button": {
-      "register": {
-        "cta": "Registrieren",
-        "variant": "solid",
-        "icon": "register"
-      },
-      "login": {
-        "cta": "Einloggen",
-        "variant": "solid",
-        "icon": "register"
-      },
-      "edit": {
-        "cta": "Änderungen speichern",
-        "variant": "solid",
-        "icon": "edit"
-      },
-      "changePassword": {
-        "cta": "Passwort speichern",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "forgotPassword": {
-        "cta": "Zurücksetzen",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "resetPassword": {
-        "cta": "Passwort speichern",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "contact": {
-        "cta": "Nachricht senden",
-        "variant": "solid",
-        "icon": "contact"
-      },
-      "support": {
-        "cta": "Ticket erstellen",
-        "variant": "solid",
-        "icon": "contact"
-      },
-      "resendEmail": {
-        "cta": "E-Mail erneut senden",
-        "variant": "solid",
-        "icon": "resendEmail"
-      }
+      "register": "Registrieren",
+      "login": "Einloggen",
+      "edit": "Änderungen speichern",
+      "changePassword": "Passwort speichern",
+      "forgotPassword": "Zurücksetzen",
+      "resetPassword": "Passwort speichern",
+      "contact": "Nachricht senden",
+      "support": "Ticket erstellen",
+      "resendEmail": "E-Mail erneut senden"
     },
     "labels": {
       "name": "Vollständiger Name",
@@ -901,7 +865,7 @@
           "createCta": "Objekt erstellen"
         },
         "toolbar": {
-          "searchPlaceholder": "Suche nach Name oder Code",
+          "searchPlaceholder": "Suche nach Objektnummer oder Adresse",
           "statusAll": "Alle",
           "statusActive": "Aktiv",
           "statusInactive": "Inaktiv"
@@ -929,8 +893,19 @@
           "propertyManager": "Manager",
           "entrancesCount": "Eingänge",
           "floorCount": "Stockwerke",
-          "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
-          "fixedCleaningDayRequired": "Fester Reinigungstag",
+          "preferredCleaningDay": "Reinigungstag",
+          "preferredCleaningWindowDay": "Fester Reinigungstag",
+          "cleaningSuppliesRoom": "Reinigungsraum",
+          "keyAccess": "Schlüsselzugang",
+          "waterAccess": "Wasserzugang",
+          "waterDisposal": "Wasserentsorgung",
+          "ladderAvailable": "Leiter verfügbar",
+          "electricityAccess": "Stromzugang",
+          "lightBulbChangeRequired": "Lampenwechsel",
+          "flooringType": "Bodenart",
+          "onSiteContact": "Ansprechpartner vor Ort",
+          "decisionMaker": "Entscheider",
+          "cleaningInfo": "Reinigungsinfo",
           "status": "Status",
           "notes": "Notizen",
           "createdAt": "Erstellt",

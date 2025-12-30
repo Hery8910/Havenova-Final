@@ -2,7 +2,6 @@
 
 import styles from './Form.module.css';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
-import { ButtonProps } from '../../client/button/Button';
 import { LabelsTextProps, PlaceholdersTextProps, FormField } from '../formWrapper/FormWrapper';
 import { AuthUser, UserClientProfile } from '../../../../types';
 
@@ -19,7 +18,7 @@ interface GenericFormProps<T extends Record<string, any>> {
   onTogglePassword: () => void;
   forgotPassword: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
-  button: ButtonProps;
+  button: string;
   showForgotPassword?: boolean;
   showHintPassword?: boolean;
   placeholder: PlaceholdersTextProps;
@@ -328,7 +327,7 @@ export default function Form<T extends Record<string, any>>({
         aria-disabled={loading}
         aria-busy={loading}
       >
-        {button.cta}
+        {button}
       </button>
     </form>
   );

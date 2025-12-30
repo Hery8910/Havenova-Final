@@ -66,127 +66,80 @@ export function NavbarView({
 
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return isMobile ? '/favicon-dark.svg' : '/images/logos/nav-logo-dark.webp';
+      return '/images/logos/nav-logo-dark.webp';
     } else {
-      return isMobile ? '/favicon-light.svg' : '/images/logos/nav-logo-light.webp';
+      return '/images/logos/nav-logo-light.webp';
     }
   };
 
   return (
     <nav className={styles.nav} aria-label="Main navigation">
-      <div className={styles.desktop}>
-        <Link className={styles.logo} href="/" aria-label="Homepage">
-          <Image
-            className={styles.desktopLogo}
-            src={getLogoSrc()}
-            alt="Havenova Logo"
-            width={isMobile ? 40 : 200}
-            height={isMobile ? 40 : 50}
-            priority
-          />
-        </Link>
-        <ul className={styles.desktopUl}>
-          <li className={styles.desktopLi}>How it works</li>
-          <li className={styles.desktopLi}>Cleaning</li>
-          <li className={styles.desktopLi}>Wartung</li>
-          <li className={styles.desktopLi}>Contact</li>
-          <li className={styles.desktopLi}>About</li>
-        </ul>
-        <aside className={styles.desktopAside}>
-          {!isMobile && (
+      {!isMobile ? (
+        <div className={styles.desktop}>
+          <Link className={styles.logo} href="/" aria-label="Homepage">
+            <Image
+              className={styles.desktopLogo}
+              src={getLogoSrc()}
+              alt="Havenova Logo"
+              width={200}
+              height={50}
+              priority
+            />
+          </Link>
+          <ul className={styles.desktopUl}>
+            <li className={styles.desktopLi}>How it works</li>
+            <li className={styles.desktopLi}>Cleaning</li>
+            <li className={styles.desktopLi}>Wartung</li>
+            <li className={styles.desktopLi}>Contact</li>
+            <li className={styles.desktopLi}>About</li>
+          </ul>
+          <aside className={styles.desktopAside}>
+            {!isMobile && (
+              <>
+                <ThemeToggler />
+                <LanguageSwitcher />
+                <AvatarView />
+              </>
+            )}
+          </aside>
+        </div>
+      ) : (
+        <div className={styles.mobile}>
+          <header className={styles.header}>
+            <Link className={styles.logo} href="/" aria-label="Homepage">
+              <Image
+                className={styles.mobileLogo}
+                src={getLogoSrc()}
+                alt="Havenova Logo"
+                width={200}
+                height={50}
+                priority
+              />
+            </Link>
+            <button className={styles.button} onClick={onToggleMenu}>
+              <HiMenuAlt3 />
+            </button>
+          </header>
+          {menuOpen && (
             <>
-              <ThemeToggler />
-              <LanguageSwitcher />
-              <AvatarView />
+              <aside className={styles.mobileAside}>
+                <div className={styles.asideDiv}>
+                  <ThemeToggler />
+                  <LanguageSwitcher />
+                </div>
+                <AvatarView />
+              </aside>
+              <ul className={styles.mobileUl}>
+                <li className={styles.mobileLi}>Cleaning</li>
+                <li className={styles.mobileLi}>Wartung</li>
+                <li className={styles.mobileLi}>How it works</li>
+                <li className={styles.mobileLi}>Contact</li>
+                <li className={styles.mobileLi}>About</li>
+              </ul>
             </>
           )}
-        </aside>
-      </div>
-      {/* <div className={`${styles.wrapper} ${menuOpen ? styles.open : styles.close}`}>
-        <ul
-          id="navbar-sections"
-          role="menubar"
-          onMouseLeave={onCloseMenu}
-          className={styles.nav_main}
-        >
-          <li className={styles.main_li} role="none">
-            <h3 className={styles.h3}>{navbarConfig?.headers?.services}</h3>
-            <ul className={styles.li_ul} role="menu" aria-label="Services">
-              {navbarConfig?.services.map((link) => (
-                <li className={styles.li} role="none" key={link.label}>
-                  <button
-                    role="menuitem"
-                    onClick={() => onNavigate(link.href)}
-                    className={styles.item}
-                  >
-                    {link.image && (
-                      <Image
-                        className={styles.image}
-                        src={link.image}
-                        alt={link.alt || link.label}
-                        width={35}
-                        height={35}
-                        priority
-                      />
-                    )}
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </li>
-
-          <li className={styles.main_li} role="none">
-            <h3 className={styles.h3}>{navbarConfig?.headers?.about}</h3>
-            <ul className={styles.li_ul} role="menu" aria-label="About">
-              {navbarConfig?.about.map((link) => (
-                <li className={styles.li} role="none" key={link.label}>
-                  <button
-                    role="menuitem"
-                    onClick={() => onNavigate(link.href)}
-                    className={styles.item}
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </li>
-
-          <li className={styles.main_li} role="none">
-            <h3 className={styles.h3}>{navbarConfig?.headers?.profile}</h3>
-            <ul className={styles.li_ul} role="menu" aria-label="Profile">
-              {isMobile && (
-                <li key="prefer" className={styles.li} role="none">
-                  <div role="menuitem" className={styles.item}>
-                    <ThemeToggler />
-                    <LanguageSwitcher />
-                  </div>
-                </li>
-              )}
-              {auth?.role === 'guest' ? (
-                navbarConfig?.register.map((link) => (
-                  <li className={styles.li} role="none" key={link.label}>
-                    <button
-                      role="menuitem"
-                      onClick={() => onNavigate(link.href)}
-                      className={styles.item}
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <li role="none">
-                  <div role="menuitem">
-                    <AvatarView />
-                  </div>
-                </li>
-              )}
-            </ul>
-          </li>
-        </ul>
-      </div> */}
+        </div>
+      )}
     </nav>
   );
 }

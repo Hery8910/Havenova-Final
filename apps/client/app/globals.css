@@ -281,7 +281,7 @@ a {
   backdrop-filter: blur(10px);
   border: 1px solid var(--bg-card-1);
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 10px 32px -12px rgba(7, 104, 201, 0.205);
 }
 
 .quote {

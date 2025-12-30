@@ -12,7 +12,6 @@ import {
   validateTosAccepted,
 } from '../../../../utils/validators/userFormValidator';
 import { useI18n } from '../../../../contexts/i18n';
-import { ButtonProps } from '../../client/button/Button';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../hooks/useLang';
 import { href } from '../../../../utils/navigation';
@@ -24,7 +23,7 @@ import { useAuth } from '../../../../contexts/auth/authContext';
 interface WrapperProps<T extends Record<string, any>> {
   fields: (FormField & keyof T)[];
   onSubmit: (data: T) => void | Promise<void>;
-  button: ButtonProps;
+  button: string;
   showForgotPassword?: boolean;
   showHintPassword?: boolean;
   initialValues: T;

@@ -90,6 +90,7 @@ const ObjectsPage = () => {
     | {
         mode: 'create' | 'edit';
         values: ObjectFormValues;
+        managerLabel?: string;
         objectId?: string;
       }
     | {
@@ -330,6 +331,7 @@ const ObjectsPage = () => {
         status: object.status,
         notes: object.notes || '',
       },
+      managerLabel: object.propertyManagerName || '',
       objectId: object.id,
     });
     setDetailData(null);
@@ -508,7 +510,7 @@ const ObjectsPage = () => {
   }, [queryInput]);
 
   return (
-    <main className={styles.main}>
+    <section className={styles.main}>
       <section className={styles.section}>
         <header className={styles.header}>
           <button className={styles.primaryButton} onClick={openCreate}>
@@ -517,7 +519,9 @@ const ObjectsPage = () => {
           </button>
           <DashboardSearchInput
             query={queryInput}
-            placeholder={pageTexts?.toolbar?.searchPlaceholder || 'Search by name or code'}
+            placeholder={
+              pageTexts?.toolbar?.searchPlaceholder || 'Search by object nummer or adress'
+            }
             onQueryChange={setQueryInput}
             onApply={handleSearchApply}
           />
@@ -532,28 +536,28 @@ const ObjectsPage = () => {
               setPage(1);
             }}
           />
-          <p></p>
         </header>
+        <article className={styles.sectionArticle}>
+          <ObjectList
+            objects={objects}
+            loading={listLoading}
+            texts={{
+              propertyManagerLabel: pageTexts?.table?.propertyManager || 'Manager',
+              entrancesLabel: pageTexts?.table?.entrances || 'Entrances',
+              loadingLabel: pageTexts?.table?.loading || 'Loading objects...',
+              emptyLabel: pageTexts?.table?.empty || 'No objects found.',
+              detailsLabel: pageTexts?.details?.title || 'Details',
+            }}
+            onSelect={handleSelectObject}
+          />
 
-        <ObjectList
-          objects={objects}
-          loading={listLoading}
-          texts={{
-            propertyManagerLabel: pageTexts?.table?.propertyManager || 'Manager',
-            entrancesLabel: pageTexts?.table?.entrances || 'Entrances',
-            loadingLabel: pageTexts?.table?.loading || 'Loading objects...',
-            emptyLabel: pageTexts?.table?.empty || 'No objects found.',
-            detailsLabel: pageTexts?.details?.title || 'Details',
-          }}
-          onSelect={handleSelectObject}
-        />
-
-        <DashboardLoadMore
-          hasMore={hasNextPage}
-          loading={loading}
-          label={pageTexts?.pagination?.loadMoreLabel || 'Load more results'}
-          onLoadMore={() => setPage((current) => current + 1)}
-        />
+          <DashboardLoadMore
+            hasMore={hasNextPage}
+            loading={loading}
+            label={pageTexts?.pagination?.loadMoreLabel || 'Load more results'}
+            onLoadMore={() => setPage((current) => current + 1)}
+          />
+        </article>
       </section>
 
       <aside className={styles.panel}>
@@ -561,9 +565,7 @@ const ObjectsPage = () => {
           <ObjectForm
             mode={activePanel.mode}
             initialValues={activePanel.values}
-            initialManagerLabel={
-              activePanel.mode === 'edit' ? detailData?.propertyManagerName || '' : ''
-            }
+            initialManagerLabel={activePanel.mode === 'edit' ? activePanel.managerLabel || '' : ''}
             onManagerSearch={handleManagerSearch}
             loading={loading}
             onSubmit={handleSubmit}
@@ -586,10 +588,23 @@ const ObjectsPage = () => {
               propertyManager: pageTexts?.details?.propertyManager || 'Manager',
               entrancesCount: pageTexts?.details?.entrancesCount || 'Entrances',
               floorCount: pageTexts?.details?.floorCount || 'Floors',
+              preferredCleaningDay:
+                pageTexts?.details?.preferredCleaningDay || 'Preferred window cleaning day',
               preferredCleaningWindowDay:
-                pageTexts?.details?.preferredCleaningWindowDay || 'Preferred window cleaning day',
-              fixedCleaningDayRequired:
-                pageTexts?.details?.fixedCleaningDayRequired || 'Fixed cleaning day',
+                pageTexts?.details?.preferredCleaningWindowDay || 'Fixed cleaning day',
+              cleaningSuppliesRoom:
+                pageTexts?.details?.cleaningSuppliesRoom || 'Cleaning supplies room',
+              keyAccess: pageTexts?.details?.keyAccess || 'Key access',
+              waterAccess: pageTexts?.details?.waterAccess || 'Water access',
+              waterDisposal: pageTexts?.details?.waterDisposal || 'Water disposal',
+              ladderAvailable: pageTexts?.details?.ladderAvailable || 'Ladder available',
+              electricityAccess: pageTexts?.details?.electricityAccess || 'Electricity access',
+              lightBulbChangeRequired:
+                pageTexts?.details?.lightBulbChangeRequired || 'Light bulb change',
+              flooringType: pageTexts?.details?.flooringType || 'Flooring type',
+              onSiteContact: pageTexts?.details?.onSiteContact || 'On-site contact',
+              decisionMaker: pageTexts?.details?.decisionMaker || 'Decision maker',
+              cleaningInfo: pageTexts?.details?.cleaningInfo || 'Cleaning info',
               status: pageTexts?.details?.status || 'Status',
               notes: pageTexts?.details?.notes || 'Notes',
               createdAt: pageTexts?.details?.createdAt || 'Created',
@@ -599,7 +614,7 @@ const ObjectsPage = () => {
           />
         )}
       </aside>
-    </main>
+    </section>
   );
 };
 

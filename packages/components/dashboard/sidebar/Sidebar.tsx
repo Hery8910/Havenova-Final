@@ -77,7 +77,7 @@ export default function Sidebar() {
             className={styles.logo}
             src={getLogoSrc()}
             alt="Havenova Logo"
-            width={isMobile ? 40 : 150}
+            width={isMobile ? 40 : 160}
             height={isMobile ? 40 : 40}
             priority
           />

@@ -287,51 +287,15 @@
       }
     },
     "button": {
-      "register": {
-        "cta": "Register",
-        "variant": "solid",
-        "icon": "register"
-      },
-      "login": {
-        "cta": "Log in",
-        "variant": "solid",
-        "icon": "login"
-      },
-      "edit": {
-        "cta": "Save Changes",
-        "variant": "solid",
-        "icon": "edit"
-      },
-      "changePassword": {
-        "cta": "Save password",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "forgotPassword": {
-        "cta": "Reset",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "resetPassword": {
-        "cta": "Save password",
-        "variant": "solid",
-        "icon": "password"
-      },
-      "contact": {
-        "cta": "Send message",
-        "variant": "solid",
-        "icon": "contact"
-      },
-      "support": {
-        "cta": "Create ticket",
-        "variant": "solid",
-        "icon": "contact"
-      },
-      "resendEmail": {
-        "cta": "Resend email",
-        "variant": "solid",
-        "icon": "resendEmail"
-      }
+      "register": "Register",
+      "login": "Log in",
+      "edit": "Save Changes",
+      "changePassword": "Save password",
+      "forgotPassword": "Reset",
+      "resetPassword": "Save password",
+      "contact": "Send message",
+      "support": "Create ticket",
+      "resendEmail": "Resend email"
     },
     "labels": {
       "name": "Full name",
@@ -901,7 +865,7 @@
           "createCta": "Create object"
         },
         "toolbar": {
-          "searchPlaceholder": "Search by name or code",
+          "searchPlaceholder": "Search by object nummer or adress",
           "statusAll": "All",
           "statusActive": "Active",
           "statusInactive": "Inactive"
@@ -929,8 +893,19 @@
           "propertyManager": "Manager",
           "entrancesCount": "Entrances",
           "floorCount": "Floors",
-          "preferredCleaningWindowDay": "Preferred window cleaning day",
-          "fixedCleaningDayRequired": "Fixed cleaning day",
+          "preferredCleaningDay": "Cleaning day",
+          "preferredCleaningWindowDay": "Window cleaning day",
+          "cleaningSuppliesRoom": "Cleaning supplies room",
+          "keyAccess": "Key access",
+          "waterAccess": "Water access",
+          "waterDisposal": "Water disposal",
+          "ladderAvailable": "Ladder available",
+          "electricityAccess": "Electricity access",
+          "lightBulbChangeRequired": "Light bulb change",
+          "flooringType": "Flooring type",
+          "onSiteContact": "On-site contact",
+          "decisionMaker": "Decision maker",
+          "cleaningInfo": "Cleaning info",
           "status": "Status",
           "notes": "Notes",
           "createdAt": "Created",
