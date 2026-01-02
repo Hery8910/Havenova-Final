@@ -175,7 +175,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               },
               onCancel: () => {
                 closeAlert();
-                router.push(`/${language}/user/login`);
+                router.push(`/${language}/login`);
               },
             });
             (onSessionExpired || sessionCallbackRef.current)?.();

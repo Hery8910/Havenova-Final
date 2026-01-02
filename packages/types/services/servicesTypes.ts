@@ -1,7 +1,5 @@
 // service.ts
 
-import { FurnitureAssemblyRequest } from '../../components/services/furnitureAssembly/furnitureAssemblyForm/furnitureAssembly.types';
-
 // --------------------------------------
 // Tipos generales
 // --------------------------------------
@@ -44,28 +42,29 @@ export interface ServiceRequest {
 // --------------------------------------
 // Definición de cada tipo de servicio
 // --------------------------------------
-// export interface FurnitureAssemblyDetails {
-//   title: string;
-//   icon: string;
-//   notes?: string;
-//   type: string /*  */;
-//   location: string;
-//   quantity: number;
-//   position: 'floor' | 'wall';
-//   width?: string;
-//   height?: string;
-//   depth?: string;
-//   doors?: number;
-//   drawers?: number;
-// }
-// export interface FurnitureAssemblyRequest {
-//   id: string;
-//   serviceType: 'furniture-assembly';
-//   price: number;
-//   estimatedDuration: number;
-//   icon: string;
-//   details: FurnitureAssemblyDetails;
-// }
+export interface FurnitureAssemblyDetails {
+  title: string;
+  icon: string;
+  notes?: string;
+  type: string;
+  location: string;
+  quantity: number;
+  position: 'floor' | 'wall';
+  width?: string;
+  height?: string;
+  depth?: string;
+  doors?: number;
+  drawers?: number;
+}
+
+export interface FurnitureAssemblyRequest {
+  id: string;
+  serviceType: 'furniture-assembly';
+  price: number;
+  estimatedDuration: number;
+  icon: string;
+  details: FurnitureAssemblyDetails;
+}
 
 export interface KitchenAssemblyRequest {
   id: string;

@@ -11,35 +11,23 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  background: radial-gradient(
-    circle at 50% 110%,
-    var(--bg-1),
-    var(--bg-2),
-    var(--bg-3),
-    var(--bg-4),
-    var(--bg-5),
-    var(--bg-6),
-    var(--bg-7),
-    var(--bg-8),
-    var(--bg-9),
-    var(--bg-10),
-    var(--bg-11),
-    var(--bg-12),
-    var(--bg-13),
-    var(--bg-14),
-    var(--bg-15),
-    var(--bg-16),
-    var(--bg-17),
-    var(--bg-18),
-    var(--bg-19),
-    var(--bg-20),
-    var(--bg-21),
-    var(--bg-22),
-    var(--bg-23),
-    var(--bg-24),
-    var(--bg-25),
-    var(--bg-26)
-  );
+  background:
+    radial-gradient(
+      800px circle at 20% 15%,
+      var(--page-accent-1, rgba(7, 104, 201, 0.12)) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      700px circle at 85% 10%,
+      var(--page-accent-2, rgba(94, 18, 224, 0.08)) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      var(--page-bg-1, #f7f9fc) 0%,
+      var(--page-bg-2, #eef2f7) 55%,
+      var(--page-bg-3, #e7ecf3) 100%
+    );
 }
 
 .logoWrapper {

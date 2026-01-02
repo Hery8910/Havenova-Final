@@ -1,721 +1,308 @@
 {
-  "common": {
-    "welcomeOfferBanner": {
-      "header": "Willkommen bei Havenova!",
-      "description": "Erstelle dein Konto und erhalte 10 % Rabatt auf deine erste Anfrage über die App. Eine Registrierung ist erforderlich, um deine Aufträge zu verwalten und exklusive Angebote zu erhalten.",
-      "button": {
-        "cta": "Konto erstellen",
-        "variant": "solid",
-        "icon": "forward"
+  "client": {
+    "navbar": {
+      "headers": {
+        "services": "Leistungen",
+        "about": "Havenova",
+        "profile": "Profil"
       },
-      "image": {
-        "src": "/images/components/welcome-offer-banner-lg.webp",
-        "alt": "10 % Rabatt Bild"
+      "links": [
+        { "label": "Reinigung", "href": "/services/house-cleaning", "tone": "cleaning" },
+        { "label": "Wartung", "href": "/services/home-service", "tone": "maintenance" },
+        { "label": "So funktioniert’s", "href": "/how-it-work" },
+        { "label": "Kontakt", "href": "/contact" },
+        { "label": "Über uns", "href": "/about" }
+      ],
+      "services": [
+        {
+          "label": "Möbelmontage",
+          "href": "/services/furniture-assembly",
+          "image": "/svg/furniture-assembly.svg",
+          "alt": "Icon Möbelmontage"
+        },
+        {
+          "label": "Küchenmontage",
+          "href": "/services/kitchen-assembly",
+          "image": "/svg/kitchen-assembly.svg",
+          "alt": "Icon Küchenmontage"
+        },
+        {
+          "label": "Hausservice",
+          "href": "/services/home-service",
+          "image": "/svg/home-service.svg",
+          "alt": "Icon Hausservice"
+        },
+        {
+          "label": "Wohnungsreinigung",
+          "href": "/services/house-cleaning",
+          "image": "/svg/house-cleaning.svg",
+          "alt": "Icon Wohnungsreinigung"
+        },
+        {
+          "label": "Küchenreinigung",
+          "href": "/services/kitchen-cleaning",
+          "image": "/svg/kitchen-cleaning.svg",
+          "alt": "Icon Küchenreinigung"
+        },
+        {
+          "label": "Fensterreinigung",
+          "href": "/services/windows-cleaning",
+          "image": "/svg/windows-cleaning.svg",
+          "alt": "Icon Fensterreinigung"
+        }
+      ],
+      "about": [
+        { "label": "Über uns", "href": "/about" },
+        { "label": "Kontakt", "href": "/contact" },
+        { "label": "Fragen & Antworten", "href": "/faq" },
+        { "label": "Bewertungen", "href": "/reviews" },
+        { "label": "Blog", "href": "/blogs" },
+        { "label": "Unsere Leistungen", "href": "/services" }
+      ],
+      "profile": {
+        "label": "Profil",
+        "href": "/user/profile",
+        "image": "/svg/user.svg",
+        "alt": "Icon Benutzer",
+        "auth": "user"
+      },
+      "register": [
+        {
+          "label": "Registrieren",
+          "href": "/user/register",
+          "image": "/svg/signin.svg",
+          "alt": "Icon Anmeldung",
+          "auth": "guest"
+        },
+        {
+          "label": "Login",
+          "href": "/user/login",
+          "image": "/svg/user.svg",
+          "alt": "Icon Benutzer",
+          "auth": "guest"
+        }
+      ]
+    },
+    "form": {
+      "error": {
+        "name": {
+          "required": "Name ist erforderlich.",
+          "invalid": "Name muss mit einem Großbuchstaben beginnen."
+        },
+        "email": {
+          "required": "E-Mail ist erforderlich.",
+          "invalid": "Ungültiges E-Mail-Format."
+        },
+        "phone": {
+          "required": "Telefonnummer ist erforderlich.",
+          "invalid": "Ungültige Telefonnummer."
+        },
+        "password": {
+          "required": "Passwort ist erforderlich.",
+          "tooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
+          "missingUppercase": "Passwort benötigt einen Großbuchstaben.",
+          "missingNumber": "Passwort benötigt eine Zahl.",
+          "missingSymbol": "Passwort benötigt ein Sonderzeichen."
+        },
+        "address": {
+          "required": "Adresse ist erforderlich.",
+          "invalid": "Ungültiges Adressformat."
+        },
+        "serviceAddress": {
+          "required": "Serviceadresse ist erforderlich.",
+          "invalid": "Ungültiges Format der Serviceadresse."
+        },
+        "message": {
+          "required": "Nachricht ist erforderlich",
+          "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
+          "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
+        },
+        "subject": {
+          "required": "Betreff ist erforderlich."
+        },
+        "tosAccepted": {
+          "required": "Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren."
+        }
+      },
+      "button": {
+        "register": "Registrieren",
+        "login": "Einloggen",
+        "edit": "Änderungen speichern",
+        "changePassword": "Passwort speichern",
+        "forgotPassword": "Zurücksetzen",
+        "resetPassword": "Passwort speichern",
+        "contact": "Nachricht senden",
+        "support": "Ticket erstellen",
+        "resendEmail": "E-Mail erneut senden"
+      },
+      "labels": {
+        "name": "Vollständiger Name",
+        "email": "E-Mail-Adresse",
+        "password": "Passwort",
+        "forgotPassword": "Passwort vergessen?",
+        "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
+        "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
+        "address": "Adresse",
+        "phone": "Telefonnummer",
+        "profileImage": "Profilbild ändern",
+        "subject": "Betreff",
+        "message": "Nachricht"
+      },
+      "placeholders": {
+        "name": "Max Mustermann",
+        "email": "mustermann@example.com",
+        "password": "*********",
+        "address": "Musterstraße 12, 12345 Berlin",
+        "phone": "+49 157 12345678",
+        "subject": "Betreff auswählen",
+        "message": "Ihre Frage oder Nachricht..."
+      },
+      "subjects": {
+        "contact": [
+          "Frage zum Preis",
+          "Serviceanfrage",
+          "Verfügbarkeit und Termine",
+          "Änderungen oder Stornierungen",
+          "Sonstiges"
+        ],
+        "support": [
+          "Problem mit dem Login",
+          "Plattformfehler",
+          "Problem mit einem Service",
+          "Abrechnung und Zahlungen",
+          "Sonstiges"
+        ]
       }
     },
-    "howItWorks": {
-      "title": "So funktioniert’s",
-      "subtitle": "Nahtlos, transparent und zuverlässig",
-      "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
-      "button": {
-        "cta": "Mehr über uns erfahren",
-        "variant": "solid",
-        "icon": "forward"
+    "cookieBanner": {
+      "title": "Cookies auf dieser Website",
+      "description": "Wir verwenden ausschliesslich notwendige Cookies, damit die Website funktioniert. Wir nutzen keine Analyse- oder Werbe-Cookies und erfassen keine Daten, die ueber die interne Funktionalitaet hinausgehen.",
+      "acceptAll": "Alle akzeptieren",
+      "rejectAll": "Nur notwendige",
+      "close": "Verstanden",
+      "enableStats": "Statistik-Cookies aktivieren"
+    },
+    "footer": {
+      "headers": {
+        "services": "Leistungen",
+        "about": "Havenova",
+        "contact": "Kontakt",
+        "legal": "Legal"
       },
-      "steps": [
+      "contact": [
         {
-          "title": "Service anfragen",
-          "description": "Übermitteln Sie Ihre Daten online, schnell, unkompliziert und direkt über unsere App.",
-          "image": {
-            "src": "/images/howItWorks-step-1.webp",
-            "alt": "Serviceanfrage ausfüllen"
-          }
+          "data": "contact@havenova.de",
+          "image": "/svg/email.svg"
         },
         {
-          "title": "Angebot erhalten",
-          "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
-          "image": {
-            "src": "/images/howItWorks-step-2.webp",
-            "alt": "Angebot erhalten"
-          }
+          "data": "+49 176 7091 7803",
+          "image": "/svg/phone.svg"
         },
         {
-          "title": "Service erhalten",
-          "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
-          "image": {
-            "src": "/images/howItWorks-step-3.webp",
-            "alt": "Fachkraft bei der Arbeit"
-          }
+          "data": "Stollberger Str.43, 12627 Berlin",
+          "image": "/svg/address.svg"
+        },
+        {
+          "label": "Mo-Fr",
+          "data": "08:00-17:00 Uhr"
+        },
+        {
+          "label": "Sa",
+          "data": "08:00-14:00 Uhr"
         }
-      ]
-    },
-    "story": {
-      "title": "Ein junges Unternehmen mit klarer Vision",
-      "paragraphs": [
-        "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
-        "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
-        "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
-        "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
-      ]
-    },
-    "whyChoose": {
-      "title": "Why Choose Havenova?",
-      "description": "At Havenova, we combine traditional services with modern transparency. Our goal is to make the entire process – from request to completion – as simple, reliable, and customer-focused as possible. The following points highlight what sets us apart from others.",
-      "points": [
+      ],
+      "havenova": [
         {
-          "title": "Easy and transparent booking process",
-          "image": {
-            "src": "/svg/whyChoose-1.svg"
-          }
+          "label": "Uber Uns",
+          "href": "/about"
         },
         {
-          "title": "Fast and personalized service",
-          "image": {
-            "src": "/svg/whyChoose-2.svg"
-          }
+          "label": "Kontakt",
+          "href": "/contact"
         },
+        { "label": "F&A", "href": "/q&a" },
         {
-          "title": "Commitment to quality in every task",
-          "image": {
-            "src": "/svg/whyChoose-3.svg"
-          }
+          "label": "Rezensionen",
+          "href": "/reviews"
         },
+        { "label": "Blog", "href": "/blog" },
         {
-          "title": "Ongoing collaboration in digital innovation",
-          "image": {
-            "src": "/svg/whyChoose-4.svg"
-          }
+          "label": "Unsere Leistungen",
+          "href": "/service"
         }
-      ]
-    },
-    "reviewsSection": {
-      "title": "Vertrauenswürdig von Berliner Haushalten.",
-      "subtitle": "Sehen Sie, was unsere Kunden sagen.",
-      "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
-      "button": {
-        "cta": "Mehr Bewertungen",
-        "variant": "solid",
-        "icon": "forward"
-      }
-    },
-    "values": {
-      "title": "Unsere Werte",
-      "list": [
+      ],
+      "services": [
         {
-          "label": "Transparenz",
-          "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung."
+          "label": "Möbelmontage",
+          "href": "/services/furniture-assembly"
         },
         {
-          "label": "Qualität",
-          "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität."
+          "label": "Küchenmontage",
+          "href": "/services/kitchen-assembly"
         },
         {
-          "label": "Innovation",
-          "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung."
+          "label": "Heimservice",
+          "href": "/services/home-service"
         },
         {
-          "label": "Empathie",
-          "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis."
+          "label": "House Cleaning",
+          "href": "/services/house-cleaning"
+        },
+        {
+          "label": "Hausreinigung",
+          "href": "/services/kitchen-cleaning"
+        },
+        {
+          "label": "Fensterreinigung",
+          "href": "/services/windows-cleaning"
         }
-      ]
-    },
-    "faq": {
-      "title": "Häufig gestellte Fragen",
-      "items": [
+      ],
+      "legal": [
         {
-          "question": "Welche Dienstleistungen bietet Havenova an?",
-          "answer": "Havenova bietet ein breites Spektrum an Haus- und Gebäudeservices in Berlin an, darunter professionelle Reinigung, kleine Reparaturen, regelmäßige Wartung sowie Unterstützung beim Umzug oder Möbelaufbau. Unser Ziel ist es, zuverlässige und flexible Unterstützung sowohl für Privathaushalte als auch für Unternehmen zu leisten, damit Sie sich auf das Wesentliche konzentrieren können, während wir den Rest übernehmen."
+          "label": "Datenschutzrichtlinie",
+          "href": "/legal/privacy-policy"
         },
         {
-          "question": "Wie schnell kann ich einen Service buchen?",
-          "answer": "Die meisten Dienstleistungen können innerhalb von 24–48 Stunden nach Eingang Ihrer Anfrage terminiert werden. Sobald Sie Ihre Daten über unsere Plattform eingeben, prüft unser Team diese und bestätigt einen Termin, der am besten zu Ihnen passt. In dringenden Fällen versuchen wir stets, die schnellstmögliche Lösung zu finden."
+          "label": "Cookie-Richtlinie",
+          "href": "/legal/cookie-policy"
         },
         {
-          "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
-          "answer": "Ja, alle unsere Teammitglieder und Partnerunternehmen werden sorgfältig ausgewählt, geschult und sind vollständig versichert. So stellen wir sicher, dass die Arbeiten stets professionell und sicher durchgeführt werden. Für spezielle Aufgaben wie Elektro- oder Malerarbeiten arbeiten wir mit bewährten Fachkräften zusammen, sodass Sie immer die passende Expertise erhalten."
+          "label": "Nutzungsbedingungen",
+          "href": "/legal/terms-of-service"
         },
         {
-          "question": "Gibt es Rabatte für Mitglieder?",
-          "answer": "Ja, Havenova-Mitglieder genießen exklusive Vorteile wie bis zu 20 % Rabatt auf Dienstleistungen, kürzere Reaktionszeiten und einen jährlichen Wohnungs-Check. Die Mitgliedschaft ist darauf ausgelegt, Ihnen über das ganze Jahr hinweg mehr Sicherheit und Mehrwert zu bieten."
+          "label": "Impresum",
+          "href": "/legal/imprint"
+        }
+      ],
+      "social": [
+        {
+          "label": "Facebook",
+          "href": "https://facebook.com/havenova"
+        },
+        {
+          "label": "Instagram",
+          "href": "https://instagram.com/havenova"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://linkedin.com/company/havenova"
         }
       ],
       "cta": {
-        "title": "Haben Sie noch weitere Fragen?",
-        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
-      },
-      "button": {
-        "cta": "Alle FAQs ansehen",
-        "variant": "solid",
-        "icon": "forward"
+        "title": "Unterstützt von Maped Solutions",
+        "description": "Diese digitale Plattform wurde entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
       }
-    },
-    "finalCta": {
-      "headline": "Bereit, Ihre Haussservices zu vereinfachen?",
-      "subheadline": "Buchen Sie noch heute einen Service und erhalten Sie innerhalb von 24–48 Stunden professionelle Unterstützung. Unser erfahrenes Team übernimmt Reinigung, Reparaturen und Wartung, damit Sie sich auf das Wesentliche konzentrieren können.",
-      "button": {
-        "cta": "Jetzt buchen",
-        "href": "/services",
-        "variant": "solid",
-        "icon": "forward"
-      },
-      "image": "/images/final-cta.webp"
     }
   },
-  "navbar": {
-    "headers": {
-      "services": "Leistungen",
-      "about": "Havenova",
-      "profile": "Profil"
-    },
-    "services": [
-      {
-        "label": "Möbelmontage",
-        "href": "/services/furniture-assembly",
-        "image": "/svg/furniture-assembly.svg",
-        "alt": "Icon Möbelmontage"
-      },
-      {
-        "label": "Küchenmontage",
-        "href": "/services/kitchen-assembly",
-        "image": "/svg/kitchen-assembly.svg",
-        "alt": "Icon Küchenmontage"
-      },
-      {
-        "label": "Hausservice",
-        "href": "/services/home-service",
-        "image": "/svg/home-service.svg",
-        "alt": "Icon Hausservice"
-      },
-      {
-        "label": "Wohnungsreinigung",
-        "href": "/services/house-cleaning",
-        "image": "/svg/house-cleaning.svg",
-        "alt": "Icon Wohnungsreinigung"
-      },
-      {
-        "label": "Küchenreinigung",
-        "href": "/services/kitchen-cleaning",
-        "image": "/svg/kitchen-cleaning.svg",
-        "alt": "Icon Küchenreinigung"
-      },
-      {
-        "label": "Fensterreinigung",
-        "href": "/services/windows-cleaning",
-        "image": "/svg/windows-cleaning.svg",
-        "alt": "Icon Fensterreinigung"
-      }
-    ],
-    "about": [
-      { "label": "Über uns", "href": "/about" },
-      { "label": "Kontakt", "href": "/contact" },
-      { "label": "Fragen & Antworten", "href": "/faq" },
-      { "label": "Bewertungen", "href": "/reviews" },
-      { "label": "Blog", "href": "/blogs" },
-      { "label": "Unsere Leistungen", "href": "/services" }
-    ],
-    "profile": {
-      "label": "Profil",
-      "href": "/user/profile",
-      "image": "/svg/user.svg",
-      "alt": "Icon Benutzer",
-      "auth": "user"
-    },
-    "register": [
-      {
-        "label": "Registrieren",
-        "href": "/user/register",
-        "image": "/svg/signin.svg",
-        "alt": "Icon Anmeldung",
-        "auth": "guest"
-      },
-      {
-        "label": "Login",
-        "href": "/user/login",
-        "image": "/svg/user.svg",
-        "alt": "Icon Benutzer",
-        "auth": "guest"
-      }
-    ]
-  },
-  "form": {
-    "error": {
-      "name": {
-        "required": "Name ist erforderlich.",
-        "invalid": "Name muss mit einem Großbuchstaben beginnen."
-      },
-      "email": {
-        "required": "E-Mail ist erforderlich.",
-        "invalid": "Ungültiges E-Mail-Format."
-      },
-      "phone": {
-        "required": "Telefonnummer ist erforderlich.",
-        "invalid": "Ungültige Telefonnummer."
-      },
-      "password": {
-        "required": "Passwort ist erforderlich.",
-        "tooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
-        "missingUppercase": "Passwort benötigt einen Großbuchstaben.",
-        "missingNumber": "Passwort benötigt eine Zahl.",
-        "missingSymbol": "Passwort benötigt ein Sonderzeichen."
-      },
-      "address": {
-        "required": "Adresse ist erforderlich.",
-        "invalid": "Ungültiges Adressformat."
-      },
-      "serviceAddress": {
-        "required": "Serviceadresse ist erforderlich.",
-        "invalid": "Ungültiges Format der Serviceadresse."
-      },
-      "message": {
-        "required": "Nachricht ist erforderlich",
-        "tooShort": "Die Nachricht muss mindestens 10 Zeichen enthalten",
-        "tooLong": "Die Nachricht darf 1000 Zeichen nicht überschreiten"
-      },
-      "subject": {
-        "required": "Betreff ist erforderlich."
-      },
-      "tosAccepted": {
-        "required": "Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren."
-      }
-    },
-    "button": {
-      "register": "Registrieren",
-      "login": "Einloggen",
-      "edit": "Änderungen speichern",
-      "changePassword": "Passwort speichern",
-      "forgotPassword": "Zurücksetzen",
-      "resetPassword": "Passwort speichern",
-      "contact": "Nachricht senden",
-      "support": "Ticket erstellen",
-      "resendEmail": "E-Mail erneut senden"
-    },
-    "labels": {
-      "name": "Vollständiger Name",
-      "email": "E-Mail-Adresse",
-      "password": "Passwort",
-      "forgotPassword": "Passwort vergessen?",
-      "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
-      "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
-      "address": "Adresse",
-      "phone": "Telefonnummer",
-      "profileImage": "Profilbild ändern",
-      "subject": "Betreff",
-      "message": "Nachricht"
-    },
-    "placeholders": {
-      "name": "Max Mustermann",
-      "email": "mustermann@example.com",
-      "password": "*********",
-      "address": "Musterstraße 12, 12345 Berlin",
-      "phone": "+49 157 12345678",
-      "subject": "Betreff auswählen",
-      "message": "Ihre Frage oder Nachricht..."
-    },
-    "subjects": {
-      "contact": [
-        "Frage zum Preis",
-        "Serviceanfrage",
-        "Verfügbarkeit und Termine",
-        "Änderungen oder Stornierungen",
-        "Sonstiges"
-      ],
-      "support": [
-        "Problem mit dem Login",
-        "Plattformfehler",
-        "Problem mit einem Service",
-        "Abrechnung und Zahlungen",
-        "Sonstiges"
-      ]
-    }
-  },
-  "cookieBanner": {
-    "title": "Cookies auf dieser Website",
-    "description": "Wir verwenden ausschliesslich notwendige Cookies, damit die Website funktioniert. Wir nutzen keine Analyse- oder Werbe-Cookies und erfassen keine Daten, die ueber die interne Funktionalitaet hinausgehen.",
-    "acceptAll": "Alle akzeptieren",
-    "rejectAll": "Nur notwendige",
-    "close": "Verstanden",
-    "enableStats": "Statistik-Cookies aktivieren"
-  },
-  "services": {
-    "howItWorks": {
-      "title": "So funktioniert es",
-      "steps": [
-        {
-          "title": "Service anfragen",
-          "description": "Füllen Sie das Formular mit den Details Ihres Auftrags aus. Wir prüfen Ihre Anfrage und bereiten ein persönliches Angebot vor."
-        },
-        {
-          "title": "Erste Besichtigung planen",
-          "description": "Ein Mitarbeiter kontaktiert Sie, um einen passenden Termin für die erste Besichtigung oder Beratung zu vereinbaren."
-        },
-        {
-          "title": "Termin für die Arbeit bestätigen",
-          "description": "Nach der Besichtigung erhalten Sie das endgültige Angebot. Sobald Sie bestätigen, wird der Arbeitstermin festgelegt."
-        },
-        {
-          "title": "Service durchführen",
-          "description": "Unser Team führt die Arbeit zuverlässig und professionell aus. Nach Abschluss erhalten Sie eine Rechnung und können Feedback geben."
-        }
-      ]
-    },
-    "furnitureAssembly": {
-      "header": {
-        "title": "Möbelmontage",
-        "subtitle": "Professionell, schnell und stressfrei",
-        "description": "Unsere Experten übernehmen den kompletten Aufbau Ihrer Möbel – von der Anlieferung bis zur Endmontage. Buchen Sie Ihren Termin einfach online und genießen Sie Ihren fertig eingerichteten Raum ohne Aufwand."
-      },
-      "form": {
-        "header": {
-          "title": "Möbelmontage",
-          "img": {
-            "src": "/svg/furniture-assembly.svg",
-            "alt": "Furniture Assembly Symbol"
-          }
-        },
-        "input": {
-          "quantity": "Menge",
-          "width": "Breite",
-          "height": "Höhe",
-          "depth": "Tiefe",
-          "doors": "Anzahl der Türen",
-          "drawers": "Anzahl der Schubladen",
-          "wall": { "title": "An der Wand montiert?", "wall": "Yes", "floor": "No" },
-          "details": "Zusätzliche Details",
-          "comment": "Hinterlassen Sie uns einen Kommentar"
-        },
-        "back_button": "Zurück",
-        "submit_button": "Einreichen",
-        "save_botton": "Speichern",
-        "alerts": {
-          "confirmation": {
-            "title": {
-              "create": "Serviceanfrage gespeichert",
-              "edit": "Serviceanfrage aktualisiert"
-            },
-            "description": {
-              "create": "Ihre Serviceanfrage wurde erfolgreich hinzugefügt. Sie können direkt zur Kasse gehen oder weitere Services erkunden.",
-              "edit": "Ihre Anfrage wurde erfolgreich aktualisiert."
-            },
-            "confirm": "Zur Kasse gehen",
-            "cancel": "Weiter stöbern",
-            "close": "Close"
-          },
-          "error": {
-            "invalid": {
-              "title": "Ungültige Daten",
-              "description": "Einige Felder enthalten ungültige oder unvollständige Informationen. Bitte überprüfen Sie das Formular und versuchen Sie es erneut."
-            },
-            "unexpected": {
-              "title": "Unerwarteter Fehler",
-              "description": "Beim Speichern Ihrer Anfrage ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
-            }
-          }
-        }
-      },
-      "view": {
-        "title": "Details des Möbelstücks",
-        "openButton": { "open": "Mehr", "close": "Weniger" },
-        "editButton": "Edit",
-        "deleteButton": "Löschen",
-        "step": "Details",
-        "deleteConfirm": {
-          "title": "Dienst löschen?",
-          "description": "Möchten Sie diesen Service wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden.",
-          "confirm": "Ja, löschen",
-          "cancel": "Abbrechen"
-        }
-      },
-      "steps": [
-        {
-          "title": "Wählen Sie den Standort",
-          "description": "Wählen Sie den Raum aus, in dem sich das Möbelstück befindet.",
-          "step": "Standort"
-        },
-        {
-          "title": "Wählen Sie das Möbelstück",
-          "description": "Wählen Sie die Art des Möbelstücks, das montiert werden soll.",
-          "step": "Möbelstück"
-        },
-        {
-          "title": "Details des Möbelstücks",
-          "description": "Geben Sie Maße oder besondere Hinweise für die Montage an.",
-          "step": "Details"
-        }
-      ],
-      "locations": {
-        "title": "Standort",
-        "bedroom": "Schlafzimmer",
-        "living_room": "Wohnzimmer",
-        "bathroom": "Badezimmer",
-        "kitchen": "Küche",
-        "office": "Büro / Arbeitszimmer",
-        "hallway": "Flur / Eingang",
-        "balcony": "Balkon / Außenbereich"
-      },
-      "furniture": {
-        "title": "Art der Möbel",
-        "wardrobe": "Kleiderschrank",
-        "bed_frame": "Bettgestell",
-        "dresser": "Kommode",
-        "nightstand": "Nachttisch",
-        "bookshelf": "Bücherregal",
-        "tv_unit": "TV-Möbel",
-        "coffee_table": "Couchtisch",
-        "display_cabinet": "Vitrine",
-        "bathroom_cabinet": "Badezimmerschrank",
-        "mirror_cabinet": "Spiegelschrank",
-        "shelf_unit": "Regaleinheit",
-        "dining_table": "Esstisch",
-        "dining_chair": "Essstuhl",
-        "kitchen_island": "Kücheninsel",
-        "kitchen_cabinet": "Küchenschrank",
-        "desk": "Schreibtisch",
-        "office_chair": "Bürostuhl",
-        "filing_cabinet": "Aktenschrank",
-        "shoe_rack": "Schuhregal",
-        "coat_rack": "Garderobe",
-        "console_table": "Konsolentisch",
-        "outdoor_table": "Gartentisch",
-        "garden_chair": "Gartenstuhl",
-        "plant_shelf": "Pflanzenregal"
-      }
-    },
-    "cart": {
-      "iconAlt": "Warenkorb-Symbol",
-      "open": "Öffnen Sie den Servicewagen",
-      "close": "Warenkorb schließen",
-      "empty": "Ihr Warenkorb ist leer",
-      "title": "Ihre Dienstleistungen",
-      "checkout": "Zur Kasse"
-    },
-    "servicesList": [
-      {
-        "title": "Wohnungsreinigung",
-        "description": "Gründliche Reinigung für Wohnungen, Häuser und Büros. Ideal für regelmäßige Pflege oder einmalige Grundreinigung.",
-        "icon": "house-cleaning",
-        "cta": "Mehr erfahren"
-      },
-      {
-        "title": "Hausmeisterservice",
-        "description": "Zuverlässige Wartung und Betreuung Ihrer Immobilie – von kleinen Reparaturen bis zur Objektpflege.",
-        "icon": "home-service",
-        "cta": "Mehr erfahren"
-      },
-      {
-        "title": "Möbelmontage",
-        "description": "Schneller und fachgerechter Aufbau von Möbeln aller Art – sicher, präzise und stressfrei.",
-        "icon": "furniture-assembly",
-        "cta": "Mehr erfahren"
-      },
-      {
-        "title": "Küchenmontage",
-        "description": "Professionelle Montage kompletter Küchen, inklusive Arbeitsplatten, Geräteanschluss und Anpassungen vor Ort.",
-        "icon": "kitchen-assembly",
-        "cta": "Mehr erfahren"
-      },
-      {
-        "title": "Fensterreinigung",
-        "description": "Streifenfreie Sauberkeit für Fenster, Glasflächen und Wintergärten – innen und außen.",
-        "icon": "windows-cleaning",
-        "cta": "Mehr erfahren"
-      },
-      {
-        "title": "Küchenreinigung",
-        "description": "Gründliche und hygienische Reinigung Ihrer gesamten Küche – inklusive aller Elektrogeräte.",
-        "icon": "kitchen-cleaning",
-        "cta": "Mehr erfahren"
-      }
-    ]
-  },
-  "values": {
-    "title": "Unsere Werte",
-    "list": [
-      {
-        "label": "Transparenz",
-        "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung.",
-        "image": {
-          "src": "/images/01.png",
-          "alt": "Construction equipment and blueprints"
-        }
-      },
-      {
-        "label": "Qualität",
-        "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität.",
-        "image": {
-          "src": "/images/01.png",
-          "alt": "Construction equipment and blueprints"
-        }
-      },
-      {
-        "label": "Innovation",
-        "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung.",
-        "image": {
-          "src": "/images/01.png",
-          "alt": "Construction equipment and blueprints"
-        }
-      },
-      {
-        "label": "Empathie",
-        "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis.",
-        "image": {
-          "src": "/images/01.png",
-          "alt": "Construction equipment and blueprints"
-        }
-      }
-    ]
-  },
-  "reviews": {
-    "averageRating": 4.9,
-    "totalReviews": 57,
-    "reviews": [
-      {
-        "author": "MyHammer-Kunde aus Berlin",
-        "date": "19. Dez 2024",
-        "rating": 5,
-        "service": "Kleine Handwerks- und Montageleistungen: Ausbessern; Sanitäre Installationen",
-        "comment": "Sehr effizient und nett, jederzeit wieder gerne!"
-      },
-      {
-        "author": "MyHammer-Kunde aus Wriezen",
-        "date": "12. Dez 2024",
-        "rating": 5,
-        "service": "Fertigküche: Montage mit Geräten",
-        "comment": "Hasan und sein Kollege haben bei meiner Enkeltochter einen Küchenblock aufgebaut und alle E-Geräte ordnungsgemäß angeschlossen. Sehr zufrieden mit der Arbeit. Am selben Tag erledigt, sehr freundlich und vielseitig. Sehr zu empfehlen."
-      },
-      {
-        "author": "Jonas Woelffer, Berlin",
-        "date": "12. Dez 2024",
-        "rating": 5,
-        "service": "Fertigküche: Zweizeilig; Montage mit Geräten",
-        "comment": "Super Arbeit! Sehr kompetent, verlässlich und korrekt. Immer wieder sehr gerne!"
-      },
-      {
-        "author": "MyHammer-Kunde",
-        "date": "11. Dez 2024",
-        "rating": 5,
-        "service": "Reparaturarbeiten",
-        "comment": "Sehr gute Kommunikation, schnell und sauber erledigt."
-      },
-      {
-        "author": "Sven, Berlin",
-        "date": "8. Dez 2024",
-        "rating": 5,
-        "service": "Möbelmontage",
-        "comment": "Pünktlich, zuverlässig und freundlich. Jederzeit wieder!"
-      },
-      {
-        "author": "MyHammer-Kunde aus Potsdam",
-        "date": "4. Dez 2024",
-        "rating": 4,
-        "service": "Küchenmontage",
-        "comment": "Arbeit in Ordnung, aber kleine Verzögerung beim Termin."
-      },
-      {
-        "author": "Stefanie, Berlin",
-        "date": "1. Dez 2024",
-        "rating": 5,
-        "service": "Möbelmontage: Kleiderschrank",
-        "comment": "Sehr zuverlässig, gute Kommunikation und saubere Arbeit. Jederzeit wieder!"
-      },
-      {
-        "author": "Ali, Berlin",
-        "date": "28. Nov 2024",
-        "rating": 5,
-        "service": "Möbelmontage",
-        "comment": "Alles super gelaufen, sehr freundlich und hilfsbereit. Absolute Empfehlung."
-      },
-      {
-        "author": "Nico, Berlin",
-        "date": "22. Nov 2024",
-        "rating": 5,
-        "service": "Handwerksarbeiten",
-        "comment": "Sehr freundlich, pünktlich und gute Arbeit. Kann ich weiterempfehlen."
-      },
-      {
-        "author": "MyHammer-Kunde",
-        "date": "20. Nov 2024",
-        "rating": 5,
-        "service": "Küchenmontage",
-        "comment": "Alles wie vereinbart, sauber und schnell ausgeführt."
-      },
-      {
-        "author": "Sabine, Berlin",
-        "date": "17. Nov 2024",
-        "rating": 5,
-        "service": "Möbelmontage",
-        "comment": "Sehr gute Arbeit, schnell und professionell. Vielen Dank!"
-      },
-      {
-        "author": "MyHammer-Kunde",
-        "date": "14. Nov 2024",
-        "rating": 5,
-        "service": "Reparaturarbeiten",
-        "comment": "Sehr gute Kommunikation und schnelle Hilfe. Gerne wieder."
-      },
-      {
-        "author": "Thomas, Berlin",
-        "date": "10. Nov 2024",
-        "rating": 5,
-        "service": "Fertigküche: Montage",
-        "comment": "Sehr professionelle Arbeit, freundlich und kompetent. Kann ich nur empfehlen."
-      },
-      {
-        "author": "Katrin, Berlin",
-        "date": "6. Nov 2024",
-        "rating": 4,
-        "service": "Möbelmontage",
-        "comment": "Arbeit war gut, kleine Verzögerung beim Aufbau, aber insgesamt zufrieden."
-      },
-      {
-        "author": "Michael, Berlin",
-        "date": "3. Nov 2024",
-        "rating": 5,
-        "service": "Möbelmontage",
-        "comment": "Sehr gute Arbeit, schnell und freundlich. Jederzeit wieder."
-      },
-      {
-        "author": "MyHammer-Kunde",
-        "date": "30. Okt 2024",
-        "rating": 5,
-        "service": "Handwerksarbeiten",
-        "comment": "Alles top erledigt, sehr zufrieden."
-      },
-      {
-        "author": "Elena, Berlin",
-        "date": "28. Okt 2024",
-        "rating": 5,
-        "service": "Küchenmontage",
-        "comment": "Sehr freundlicher Kontakt, Arbeit einwandfrei und zuverlässig. Sehr empfehlenswert!"
-      },
-      {
-        "author": "MyHammer-Kunde",
-        "date": "24. Okt 2024",
-        "rating": 5,
-        "service": "Möbelmontage",
-        "comment": "Alles bestens, sehr gute Arbeit. Vielen Dank!"
-      },
-      {
-        "author": "Frank, Berlin",
-        "date": "27. Dez 2024",
-        "rating": 5,
-        "service": "Kleine Handwerks- und Montageleistungen: Küchenzeile mit Hängeschränken",
-        "comment": "Reinigungsmeister würde ich eine 10 geben, Da es die nicht gibt gebe ich volle Punktzahl 5 Sterne Sehr pünktlich, angenehme Kommunikation bei Kontaktaufnahme und bei der Ausführung des Auftrag. Sehr sauber und schnell gearbeitet. Jungs macht weiter so !!! Kann ich mit guten Gewissen weiter empfehlen. Merci für die tolle Arbeit :)"
-      },
-      {
-        "author": "Apu, Berlin",
-        "date": "23. Dez 2024",
-        "rating": 5,
-        "service": "Auf- und Abbau von Fertigmöbeln und Fertigteilen: 3 Möbelstücke",
-        "comment": "Reinigungsmeister hat bei uns diverse Möbel aufgebaut. Die Kommunikation war angenehm und unproblematisch. Er hat die Arbeit zur vollen Zufriedenheit erledigt. Gerne wieder!"
-      }
-    ]
-  },
+
   "dashboard": {
     "header": {
       "dashboard": "Überblick",
       "requests": "Anfragen",
       "clients": "Kunden",
       "property-manager": "Immobilienverwalter",
+      "global-task-catalog": "Globaler Aufgaben-Katalog",
       "employees": "Mitarbeiter",
       "messages": "Nachrichten",
       "notifications": "Benachrichtigungen",
@@ -723,304 +310,67 @@
       "profile": "Profil"
     },
     "pages": {
-      "requests": {
-        "requestsList": {
-          "title": "Anfragen",
-          "empty": "Keine Anfragen gefunden",
-          "button": "Weitere Details"
+      "globalTaskCatalog": {
+        "title": "Globaler Aufgaben-Katalog",
+        "subtitle": "Gesamtsummen und Bundles im gemeinsamen Katalog.",
+        "loading": "Katalog wird geladen...",
+        "empty": "Keine Katalogdaten verfügbar.",
+        "successTitle": "Katalog geladen",
+        "successDescription": "Der globale Aufgaben-Katalog wurde erfolgreich geladen.",
+        "bundleSuccessTitle": "Bundle geladen",
+        "bundleSuccessDescription": "Die Bundle-Details wurden erfolgreich geladen.",
+        "totals": {
+          "title": "Summen",
+          "bundles": "Bundles",
+          "steps": "Schritte",
+          "billables": "Abrechenbar"
         },
-        "requestDetails": {
-          "button": {
-            "cta": "Confirm Changes",
-            "variant": "solid",
-            "icon": "confirm"
-          }
-        },
-        "requestStatus": {
-          "submitted": "Eingereicht",
-          "accepted": "Akzeptiert",
-          "inProgress": "In Bearbeitung",
-          "completed": "Abgeschlossen",
-          "cancelled": "Storniert"
-        },
-        "service": {
-          "furniture-assembly": "Möbelmontage",
-          "kitchen-cleaning": "Küchenreinigung",
-          "house-cleaning": "Wohnungsreinigung",
-          "window-cleaning": "Fensterreinigung",
-          "house-service": "Hausservice",
-          "kitchen-assembly": "Küchenmontage",
-          "inspection": "Inspektion"
-        }
-      },
-      "support": {
-        "heading": "Support-Tickets",
-        "description": "Beschreiben Sie Ihr Problem, damit wir ein Support-Ticket erstellen können."
-      },
-      "propertyManagers": {
-        "page": {
-          "kicker": "Immobilien",
-          "title": "Immobilienverwalter",
-          "subtitle": "Verwalte Kontaktdaten, Zugriffsstatus und Gebäudezuweisungen für dein Team.",
-          "createCta": "Manager erstellen"
-        },
-        "toolbar": {
-          "searchPlaceholder": "Nach Name oder E-Mail suchen",
-          "statusAll": "Alle Status",
-          "statusActive": "Aktiv",
-          "statusInactive": "Inaktiv",
-          "apply": "Anwenden",
-          "reset": "Zurücksetzen",
-          "totalLabel": "Gesamt",
-          "activeLabel": "Aktiv",
-          "inactiveLabel": "Inaktiv"
-        },
-        "table": {
-          "name": "Name",
-          "email": "E-Mail",
-          "phone": "Telefon",
-          "status": "Status",
-          "buildings": "Gebäude",
-          "actions": "Aktionen",
-          "loading": "Immobilienverwalter werden geladen...",
-          "empty": "Keine Immobilienverwalter gefunden.",
-          "edit": "Bearbeiten",
-          "activate": "Aktivieren",
-          "deactivate": "Deaktivieren"
-        },
-        "pagination": {
-          "prev": "Zurück",
-          "next": "Weiter",
-          "pageLabel": "Seite",
-          "loadMoreLabel": "Mehr Ergebnisse laden"
-        },
-        "confirm": {
-          "activateTitle": "Manager aktivieren?",
-          "activateDescription": "Dieser Manager erhält wieder Zugriff auf das Dashboard.",
-          "deactivateTitle": "Manager deaktivieren?",
-          "deactivateDescription": "Dieser Manager verliert den Zugriff auf das Dashboard.",
-          "confirmActivate": "Aktivieren",
-          "confirmDeactivate": "Deaktivieren",
-          "cancel": "Abbrechen"
-        },
-        "form": {
-          "createTitle": "Immobilienverwalter erstellen",
-          "editTitle": "Immobilienverwalter bearbeiten",
-          "createSubtitle": "Füge einen neuen Manager hinzu und weise Gebäude später zu.",
-          "editSubtitle": "Aktualisiere die Daten und den Status des Managers.",
-          "fields": {
-            "name": "Name",
-            "email": "E-Mail",
-            "phone": "Telefon",
-            "address": "Adresse",
-            "status": "Status",
-            "preferredContactMethod": "Bevorzugter Kontakt",
-            "notes": "Notizen"
-          },
-          "statusOptions": {
-            "active": "Aktiv",
-            "inactive": "Inaktiv"
-          },
-          "contactOptions": {
-            "email": "E-Mail",
-            "phone": "Telefon",
-            "none": "Keine Präferenz"
-          },
-          "submitCreate": "Manager erstellen",
-          "submitEdit": "Änderungen speichern",
-          "cancel": "Abbrechen",
-          "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
-          "successCreateTitle": "Manager erstellt",
-          "successCreateDescription": "Der Immobilienverwalter wurde erfolgreich hinzugefügt.",
-          "successEditTitle": "Manager aktualisiert",
-          "successEditDescription": "Der Immobilienverwalter wurde erfolgreich aktualisiert."
-        },
-        "details": {
-          "title": "Manager Details",
-          "editLabel": "Bearbeiten",
-          "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
-          "loading": "Details werden geladen...",
-          "phone": "Telefon",
-          "address": "Adresse",
-          "preferredContact": "Bevorzugter Kontakt",
-          "contactOptions": {
-            "email": "E-Mail",
-            "phone": "Telefon",
-            "none": "Keine Präferenz"
-          },
-          "createdAt": "Erstellt",
-          "updatedAt": "Aktualisiert",
-          "notes": "Notizen",
-          "buildings": "Gebäude",
-          "totalBuildings": "Gesamt",
-          "activeBuildings": "Aktiv",
-          "inactiveBuildings": "Inaktiv"
-        }
-      },
-      "objects": {
-        "page": {
-          "kicker": "Objekte",
-          "title": "Objekte",
-          "subtitle": "Verwalte Gebäude, Status und Zuweisungen.",
-          "createCta": "Objekt erstellen"
-        },
-        "toolbar": {
-          "searchPlaceholder": "Suche nach Objektnummer oder Adresse",
-          "statusAll": "Alle",
+        "bundles": {
+          "title": "Bundles",
+          "empty": "Keine Bundles verfügbar",
+          "recurrenceLabel": "Wiederholung",
+          "areaLabel": "Bereich",
+          "stepsLabel": "Schritte",
+          "billablesLabel": "Abrechenbar",
           "statusActive": "Aktiv",
           "statusInactive": "Inaktiv"
         },
-        "table": {
-          "propertyManager": "Manager",
-          "entrances": "Eingänge",
-          "status": "Status",
-          "objectNumber": "Objektnummer",
-          "address": "Adresse",
-          "loading": "Objekte werden geladen...",
-          "empty": "Keine Objekte gefunden.",
-          "edit": "Bearbeiten"
-        },
-        "pagination": {
-          "loadMoreLabel": "Mehr Ergebnisse laden"
-        },
         "details": {
-          "title": "Objektdetails",
-          "editLabel": "Bearbeiten",
-          "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
-          "loading": "Details werden geladen...",
-          "objectNumber": "Objektnummer",
-          "address": "Adresse",
-          "propertyManager": "Manager",
-          "entrancesCount": "Eingänge",
-          "floorCount": "Stockwerke",
-          "preferredCleaningDay": "Reinigungstag",
-          "preferredCleaningWindowDay": "Fester Reinigungstag",
-          "cleaningSuppliesRoom": "Reinigungsraum",
-          "keyAccess": "Schlüsselzugang",
-          "waterAccess": "Wasserzugang",
-          "waterDisposal": "Wasserentsorgung",
-          "ladderAvailable": "Leiter verfügbar",
-          "electricityAccess": "Stromzugang",
-          "lightBulbChangeRequired": "Lampenwechsel",
-          "flooringType": "Bodenart",
-          "onSiteContact": "Ansprechpartner vor Ort",
-          "decisionMaker": "Entscheider",
-          "cleaningInfo": "Reinigungsinfo",
-          "status": "Status",
-          "notes": "Notizen",
-          "createdAt": "Erstellt",
-          "updatedAt": "Aktualisiert"
-        },
-        "form": {
-          "createTitle": "Objekt erstellen",
-          "editTitle": "Objekt bearbeiten",
-          "fields": {
-            "propertyManagerId": "Manager-ID",
-            "propertyManagerPlaceholder": "Manager nach Name oder E-Mail suchen",
-            "propertyManagerLoading": "Suche läuft...",
-            "propertyManagerEmpty": "Keine Manager gefunden.",
-            "propertyManagerNotSelected": "Kein Manager ausgewählt",
-            "objectNumber": "Objektnummer",
-            "street": "Straße",
-            "streetNumber": "Hausnummer",
-            "postalCode": "PLZ",
-            "district": "Bezirk",
-            "entrancesCount": "Eingänge",
-            "floorCount": "Stockwerke",
-            "preferredCleaningDay": "Bevorzugter Reinigungstag",
-            "preferredCleaningDayPlaceholder": "Wochentag auswählen",
-            "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
-            "preferredCleaningWindowDayPlaceholder": "Wochentag auswählen",
-            "cleaningSuppliesRoom": "Reinigungsraum",
-            "keyAccess": "Schlüsselzugang",
-            "waterAccess": "Wasserzugang",
-            "waterDisposal": "Wasserentsorgung",
-            "ladderAvailable": "Leiter verfügbar",
-            "electricityAccess": "Stromzugang",
-            "lightBulbChangeRequired": "Lampenwechsel",
-            "flooringType": "Bodenart",
-            "onSiteContact": "Ansprechpartner vor Ort",
-            "decisionMaker": "Entscheider",
-            "cleaningInfo": "Reinigungsinfo",
-            "status": "Status",
-            "notes": "Notizen"
-          },
-          "days": {
-            "monday": "Montag",
-            "tuesday": "Dienstag",
-            "wednesday": "Mittwoch",
-            "thursday": "Donnerstag",
-            "friday": "Freitag",
-            "saturday": "Samstag",
-            "sunday": "Sonntag"
-          },
-          "statusOptions": {
-            "active": "Aktiv",
-            "inactive": "Inaktiv"
-          },
-          "submitCreate": "Objekt erstellen",
-          "submitEdit": "Änderungen speichern",
-          "cancel": "Abbrechen",
-          "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
-          "successCreateTitle": "Objekt erstellt",
-          "successCreateDescription": "Das Objekt wurde erfolgreich erstellt.",
-          "successEditTitle": "Objekt aktualisiert",
-          "successEditDescription": "Das Objekt wurde erfolgreich aktualisiert."
-        }
-      },
-      "contactMessages": {
-        "list": {
-          "title": "Kontaktanfragen",
-          "empty": "Noch keine Nachrichten",
-          "loading": "Nachrichten werden geladen…",
-          "respondCta": "Beantworten",
-          "cancelCta": "Abbrechen",
-          "deleteCta": "Löschen",
-          "reloadCta": "Liste neu laden",
-          "viewResponse": "Antwort anzeigen",
-          "hideResponse": "Weniger anzeigen",
-          "description": "Aktuelle Nachrichten aus dem Kontaktformular.",
-          "message": "Nachricht",
-          "answer": "Antwort",
-          "badge": {
-            "pending": "Offen",
-            "answered": "Beantwortet"
-          }
-        },
-        "responder": {
-          "title": "Nachricht beantworten",
-          "description": "Schreibe eine Antwort und wir markieren die Nachricht als beantwortet.",
-          "textareaPlaceholder": "Antwort hier eingeben...",
-          "cancel": "Abbrechen",
-          "submit": "Antwort senden",
-          "successTitle": "Antwort gesendet",
-          "successDescription": "Die Kontaktanfrage wurde als beantwortet markiert."
-        },
-        "filters": {
-          "statusLabel": "Status",
-          "statusAll": "Alle",
-          "statusPending": "Offen",
-          "statusAnswered": "Beantwortet",
-          "searchLabel": "Suche",
-          "searchPlaceholder": "Text in Name, E-Mail oder Nachricht",
-          "apply": "Suchen",
-          "prevPage": "Zurück",
-          "nextPage": "Weiter",
-          "pageLabel": "Seite ",
-          "loadMoreLabel": "Mehr Ergebnisse laden",
-          "totalLabel": "Gesamt",
-          "pendingLabel": "Offen",
-          "answeredLabel": "Beantwortet"
-        },
-        "delete": {
-          "modalTitle": "Nachricht löschen",
-          "modalDescription": "Diese Nachricht wird dauerhaft entfernt.",
-          "confirmTitle": "Diese Nachricht löschen?",
-          "confirmDescription": "Diese Aktion kann nicht rückgängig gemacht werden.",
-          "confirmLabel": "Löschen",
-          "cancelLabel": "Abbrechen",
-          "successTitle": "Nachricht gelöscht",
-          "successDescription": "Die Nachricht wurde entfernt."
+          "title": "Katalogdetails",
+          "nameLabel": "Name",
+          "versionLabel": "Version",
+          "activeLabel": "Aktiv",
+          "inactiveLabel": "Inaktiv",
+          "createdLabel": "Erstellt",
+          "updatedLabel": "Aktualisiert",
+          "bundleTitle": "Bundle-Details",
+          "bundleEmpty": "Wählen Sie ein Bundle aus, um Details zu sehen",
+          "bundleLoading": "Bundle-Details werden geladen...",
+          "bundleDescriptionLabel": "Beschreibung",
+          "recurrenceKeyLabel": "Wiederholungsschlüssel",
+          "areaKeyLabel": "Bereichsschlüssel",
+          "scheduleTitle": "Zeitplan",
+          "scheduleFrequencyLabel": "Frequenz",
+          "scheduleIntervalLabel": "Intervall (Wochen)",
+          "scheduleAnchorLabel": "Ankerwoche",
+          "scheduleNoteLabel": "Notiz",
+          "pricingTitle": "Preisgestaltung",
+          "pricingCurrencyLabel": "Währung",
+          "pricingClientLabel": "Kunde brutto",
+          "pricingPartnerLabel": "Partner brutto",
+          "pricingTaxLabel": "Steuersatz",
+          "stepsTitle": "Schritte",
+          "stepsEmpty": "Keine Schritte verfügbar.",
+          "stepsRequirementLabel": "Anforderung",
+          "stepsBillableLabel": "Abrechenbar",
+          "stepsOrderLabel": "Reihenfolge",
+          "stepsBillableYes": "Ja",
+          "stepsBillableNo": "Nein",
+          "recurrenceLabel": "Wiederholung",
+          "areaLabel": "Bereich",
+          "stepsLabel": "Schritte",
+          "billablesLabel": "Abrechenbar",
+          "bundleStatusLabel": "Bundle-Status"
         }
       }
     },
@@ -1031,6 +381,7 @@
         { "label": "Kunden", "href": "/clients" },
         { "label": "Immobilienverwalter", "href": "/property-manager" },
         { "label": "Objekte", "href": "/objects" },
+        { "label": "Globaler Aufgaben-Katalog", "href": "/global-task-catalog" },
         { "label": "Mitarbeiter", "href": "/employees" },
         { "label": "Nachrichten", "href": "/messages" },
         { "label": "Benachrichtigungen", "href": "/notifications" }
@@ -1040,118 +391,6 @@
         { "label": "Profil", "href": "/profile" }
       ],
       "logout": "Abmelden"
-    }
-  },
-  "footer": {
-    "headers": {
-      "services": "Leistungen",
-      "about": "Havenova",
-      "contact": "Kontakt",
-      "legal": "Legal"
-    },
-    "contact": [
-      {
-        "data": "contact@havenova.de",
-        "image": "/svg/email.svg"
-      },
-      {
-        "data": "+49 176 7091 7803",
-        "image": "/svg/phone.svg"
-      },
-      {
-        "data": "Stollberger Str.43, 12627 Berlin",
-        "image": "/svg/address.svg"
-      },
-      {
-        "label": "Mo-Fr",
-        "data": "08:00-17:00 Uhr"
-      },
-      {
-        "label": "Sa",
-        "data": "08:00-14:00 Uhr"
-      }
-    ],
-    "havenova": [
-      {
-        "label": "Uber Uns",
-        "href": "/about"
-      },
-      {
-        "label": "Kontakt",
-        "href": "/contact"
-      },
-      { "label": "F&A", "href": "/q&a" },
-      {
-        "label": "Rezensionen",
-        "href": "/reviews"
-      },
-      { "label": "Blog", "href": "/blog" },
-      {
-        "label": "Unsere Leistungen",
-        "href": "/service"
-      }
-    ],
-    "services": [
-      {
-        "label": "Möbelmontage",
-        "href": "/services/furniture-assembly"
-      },
-      {
-        "label": "Küchenmontage",
-        "href": "/services/kitchen-assembly"
-      },
-      {
-        "label": "Heimservice",
-        "href": "/services/home-service"
-      },
-      {
-        "label": "House Cleaning",
-        "href": "/services/house-cleaning"
-      },
-      {
-        "label": "Hausreinigung",
-        "href": "/services/kitchen-cleaning"
-      },
-      {
-        "label": "Fensterreinigung",
-        "href": "/services/windows-cleaning"
-      }
-    ],
-    "legal": [
-      {
-        "label": "Datenschutzrichtlinie",
-        "href": "/legal/privacy-policy"
-      },
-      {
-        "label": "Cookie-Richtlinie",
-        "href": "/legal/cookie-policy"
-      },
-      {
-        "label": "Nutzungsbedingungen",
-        "href": "/legal/terms-of-service"
-      },
-      {
-        "label": "Impresum",
-        "href": "/legal/imprint"
-      }
-    ],
-    "social": [
-      {
-        "label": "Facebook",
-        "href": "https://facebook.com/havenova"
-      },
-      {
-        "label": "Instagram",
-        "href": "https://instagram.com/havenova"
-      },
-      {
-        "label": "LinkedIn",
-        "href": "https://linkedin.com/company/havenova"
-      }
-    ],
-    "cta": {
-      "title": "Unterstützt von Maped Solutions",
-      "description": "Diese digitale Plattform wurde entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
     }
   }
 }

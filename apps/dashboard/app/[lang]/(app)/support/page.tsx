@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { ContactMessageCreatePayload, ContactMessageFormData } from '@/packages/types';
 import { useClient } from '@/packages/contexts/client/ClientContext';
@@ -12,7 +12,6 @@ import {
   useI18n,
 } from '@/packages/contexts';
 import { getPopup } from '@/packages/utils/alertType';
-import { ContactSection } from '@/packages/components/client';
 import { sendContactMessage } from '@/packages/services/contact';
 
 const SupportPage = () => {
@@ -26,6 +25,24 @@ const SupportPage = () => {
   const { showLoading, showError, showSuccess, closeAlert } = useGlobalAlert();
 
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<ContactMessageFormData>({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    clientId: '',
+    userId: '',
+  });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      clientId: client?._id || prev.clientId,
+      userId: auth?.userId || prev.userId,
+      name: prev.name || auth?.email || '',
+      email: prev.email || auth?.email || '',
+    }));
+  }, [auth?.email, auth?.userId, client?._id]);
 
   const handleSubmit = async (data: ContactMessageFormData) => {
     setLoading(true);
@@ -120,21 +137,72 @@ const SupportPage = () => {
     }
   };
 
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await handleSubmit(formData);
+  };
+
   return (
     <main className={styles.main}>
       <header className={styles.header}>
         <p>{supportTexts?.heading ?? 'Support'}</p>
       </header>
-      <ContactSection
-        texts={{
-          heading: supportTexts?.heading ?? 'Support',
-          description: supportTexts?.description ?? '',
-        }}
-        handleSubmit={handleSubmit}
-        button={formText.button.support ?? formText.button.contact}
-        loading={loading}
-        subjects={supportSubjects}
-      />
+      <form className={`${styles.section} card`} onSubmit={handleFormSubmit}>
+        <p>{supportTexts?.description ?? ''}</p>
+        <label>
+          {formText.labels.name}
+          <input
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder={formText.placeholders.name}
+          />
+        </label>
+        <label>
+          {formText.labels.email}
+          <input
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder={formText.placeholders.email}
+          />
+        </label>
+        <label>
+          {formText.labels.subject}
+          <select name="subject" value={formData.subject} onChange={handleInputChange}>
+            <option value="">{formText.placeholders.subject}</option>
+            {supportSubjects.map((subject) => (
+              <option key={subject} value={subject}>
+                {subject}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          {formText.labels.message}
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            placeholder={formText.placeholders.message}
+            rows={5}
+          />
+        </label>
+        <button type="submit" disabled={loading}>
+          {loading
+            ? fallbackGlobalLoading.title
+            : formText.button.support ?? formText.button.contact}
+        </button>
+      </form>
     </main>
   );
 };

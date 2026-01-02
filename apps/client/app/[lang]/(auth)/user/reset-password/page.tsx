@@ -4,7 +4,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { ButtonProps } from '@/packages/components/common/button/Button';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -49,7 +48,7 @@ const ResetPassword = () => {
   const popups = texts.popups;
   // const accessDenied: accessDeniedText = texts.message.accessDenied;
   const resetPasswordText: ResetPasswordData = texts.pages.user.resetPasswordText;
-  const resetButton = formText.button.resetPassword as ButtonProps;
+  const resetButton = formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);
 

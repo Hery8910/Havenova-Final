@@ -14,7 +14,6 @@ import {
 } from '@/packages/contexts';
 import { useLang } from '@/packages/hooks';
 import { FormWrapper } from '@/packages/components/user/userForm';
-import { ButtonProps } from '@/packages/components/common/button/Button';
 import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
@@ -51,7 +50,7 @@ const ForgotPassword = () => {
   const popups = texts.popups;
   const formText = texts.components.form;
   const forgotPasswordText: ForgotPasswordData = texts?.pages?.user.forgotPasswordText;
-  const forgotButton = formText.button.forgotPassword as ButtonProps;
+  const forgotButton = formText.button.forgotPassword;
 
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {
     try {

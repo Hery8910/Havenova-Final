@@ -1,761 +1,768 @@
 {
-  "home": {
-    "hero": {
-      "headline1": "Hauswartung",
-      "headline2": "Wohnungsreinigung",
-      "subtitle": "Schnelle, zuverlässige und professionelle Hauswartung und Reinigung in Berlin. Entdecken Sie alle unsere Leistungen im Überblick.",
-      "button": {
-        "cta": "Unsere Leistungen ansehen",
-        "variant": "solid",
-        "icon": "forward"
-      },
-      "image": "/images/pages/home-hero.webp"
-    }
-  },
-  "about": {
-    "hero": {
-      "headline1": "Über Uns",
-      "headline2": "Engagiert für Qualität und Transparenz",
-      "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Lösungen."
-    },
-
-    "services": {
-      "title": "Unsere Leistungen",
-      "description": "Wir bieten eine Vielzahl von Reinigungs- und Wartungsdiensten an, damit Ihr Zuhause stets in bestem Zustand bleibt.",
-      "cta": {
-        "label": "Alle Services ansehen",
-        "url": "/services"
-      }
-    },
-    "testimonials": {
-      "title": "Was unsere Kunden sagen",
-      "description": "Wir schätzen jedes Feedback und lernen aus jeder Erfahrung. Hier einige unserer Bewertungen.",
-      "placeholder": "Hier können echte Kundenstimmen angezeigt oder Google/MyHammer integriert werden."
-    },
-    "finalCta": {
-      "headline": "Bereit für Ihren ersten Service?",
-      "subtext": "Lassen Sie uns Ihnen helfen, Ihr Zuhause sauber, organisiert und in guten Händen zu halten.",
-      "button": {
-        "label": "Service anfragen",
-        "url": "/services"
-      }
-    }
-  },
-  "faq": {
-    "faqHero": {
-      "headline1": "Häufig gestellte Fragen",
-      "headline2": "Alles, was Sie über Havenova wissen müssen",
-      "subtitle": "Hier finden Sie Antworten auf die am häufigsten gestellten Fragen zu unseren Services, Buchungen und Zahlungsmethoden. Sollte Ihre Frage nicht dabei sein, steht Ihnen unser Support-Team jederzeit zur Verfügung.",
-      "image": "/images/pages/faq-hero.webp"
-    },
-    "questions": [
-      {
-        "title": "Allgemeine Fragen",
-        "items": [
-          {
-            "question": "Was ist Havenova und wie funktioniert die Plattform?",
-            "answer": "Havenova ist eine digitale Plattform für Haus- und Gebäudeservices in Berlin. Kunden können Dienstleistungen wie Reinigung, Reparaturen oder Möbelaufbau direkt online anfragen, Angebote vergleichen und Termine buchen."
-          },
-          {
-            "question": "Muss ich ein Konto erstellen, um einen Service zu buchen?",
-            "answer": "Nein, Sie können Dienstleistungen auch ohne Konto buchen. Wenn Sie jedoch ein Konto anlegen, profitieren Sie von Vorteilen wie gespeicherten Adressen, Rabattaktionen und einer Übersicht über Ihre bisherigen Aufträge."
-          },
-          {
-            "question": "Wie unterscheiden sich Ihre Services von anderen Anbietern?",
-            "answer": "Wir legen besonderen Wert auf Transparenz, Flexibilität und zuverlässigen Kundenservice. Unsere Dienstleistungen sind individuell anpassbar, und wir arbeiten mit qualifizierten Fachkräften, die versichert und überprüft sind."
-          },
-          {
-            "question": "Wie erreiche ich den Kundensupport?",
-            "answer": "Unser Support-Team ist werktags von 9:00 bis 18:00 Uhr per E-Mail oder Telefon erreichbar. Mitglieder genießen zudem bevorzugten Support mit kürzeren Reaktionszeiten."
-          }
-        ]
-      },
-      {
-        "title": "Buchung & Ablauf",
-        "items": [
-          {
-            "question": "Wie läuft eine typische Buchung ab?",
-            "answer": "Sie wählen den gewünschten Service auf unserer Website aus, geben die Details an und senden die Anfrage ab. Unser Team prüft die Informationen und bestätigt Ihnen den Termin oder erstellt ein individuelles Angebot."
-          },
-          {
-            "question": "Kann ich Termine kurzfristig buchen?",
-            "answer": "Ja, viele Dienstleistungen können innerhalb von 24–48 Stunden durchgeführt werden. Für besonders dringende Fälle versuchen wir stets, die schnellstmögliche Lösung zu finden."
-          },
-          {
-            "question": "Kann ich meine Buchung stornieren oder ändern?",
-            "answer": "Ja, Änderungen und Stornierungen sind bis zu 24 Stunden vor dem Termin kostenlos möglich. Bei kurzfristigeren Absagen behalten wir uns vor, eine Stornogebühr zu berechnen."
-          },
-          {
-            "question": "Erhalte ich eine Bestätigung meiner Buchung?",
-            "answer": "Ja, nach jeder Anfrage und Terminbestätigung erhalten Sie eine E-Mail mit allen relevanten Informationen sowie eine Übersicht in Ihrem Kundenbereich."
-          }
-        ]
-      },
-      {
-        "title": "Preise & Bezahlung",
-        "items": [
-          {
-            "question": "Wie werden die Preise berechnet?",
-            "answer": "Unsere Preise richten sich nach Art, Dauer und Umfang der Dienstleistung. Für Standardservices bieten wir transparente Pauschalen, während individuelle Aufträge ein angepasstes Angebot erfordern."
-          },
-          {
-            "question": "Welche Zahlungsmethoden akzeptieren Sie?",
-            "answer": "Wir akzeptieren gängige Zahlungsmethoden wie Kreditkarte, PayPal und SEPA-Lastschrift. Bei Stammkunden ist auch die Zahlung auf Rechnung möglich."
-          },
-          {
-            "question": "Gibt es zusätzliche Kosten?",
-            "answer": "Nein, alle Kosten werden vor der Buchung transparent ausgewiesen. Sollten im Laufe des Auftrags zusätzliche Arbeiten nötig sein, stimmen wir diese zuerst mit Ihnen ab."
-          },
-          {
-            "question": "Erhalte ich eine Rechnung?",
-            "answer": "Ja, nach Abschluss jeder Dienstleistung erhalten Sie automatisch eine digitale Rechnung per E-Mail, die auch im Kundenbereich heruntergeladen werden kann."
-          }
-        ]
-      },
-      {
-        "title": "Qualität & Sicherheit",
-        "items": [
-          {
-            "question": "Sind Ihre Mitarbeiter versichert?",
-            "answer": "Ja, alle unsere Mitarbeiter und Partner sind umfassend versichert. Schäden, die während eines Auftrags entstehen, sind durch unsere Haftpflichtversicherung abgedeckt."
-          },
-          {
-            "question": "Wie stellen Sie die Qualität sicher?",
-            "answer": "Wir wählen unsere Mitarbeiter sorgfältig aus, schulen sie regelmäßig und arbeiten eng mit unseren Kunden zusammen, um Feedback einzuholen und kontinuierlich Verbesserungen umzusetzen."
-          },
-          {
-            "question": "Arbeiten Sie auch mit externen Fachkräften?",
-            "answer": "Ja, für spezialisierte Arbeiten wie Elektrik, Sanitär oder Malerarbeiten arbeiten wir mit geprüften Fachbetrieben zusammen, um Ihnen höchste Qualität und Sicherheit zu garantieren."
-          },
-          {
-            "question": "Was passiert, wenn ich mit dem Service unzufrieden bin?",
-            "answer": "Ihre Zufriedenheit hat für uns höchste Priorität. Sollten Sie einmal unzufrieden sein, kontaktieren Sie uns bitte umgehend. Wir prüfen den Fall und finden gemeinsam eine Lösung, sei es Nachbesserung oder Rückerstattung."
-          }
-        ]
-      }
-    ],
-    "contactSection": {
-      "heading": "Antwort nicht gefunden?",
-      "description": "Senden Sie uns Ihre Frage und wir melden uns so schnell wie möglich.",
-      "buttonLabel": "Frage senden"
-    }
-  },
-  "contact": {
-    "hero": {
-      "headline1": "Kontakt aufnehmen",
-      "headline2": "Wir sind für Sie da",
-      "subtitle": "Haben Sie Fragen zu unseren Dienstleistungen oder benötigen Sie Unterstützung? Füllen Sie das Formular aus oder nutzen Sie die untenstehenden Kontaktdaten – unser Team wird sich schnellstmöglich bei Ihnen melden."
-    },
-    "contactSection": {
-      "heading": "Schreiben Sie uns eine Nachricht",
-      "description": "Füllen Sie das untenstehende Formular mit Ihren Angaben und Ihrer Nachricht aus. Wir prüfen Ihre Anfrage und melden uns so schnell wie möglich bei Ihnen."
-    }
-  },
-  "reviews": {
-    "hero": {
-      "headline1": "Das sagen unsere Kunden",
-      "headline2": "Echte Meinungen, echte Erfahrungen",
-      "subtitle": "Alle Bewertungen stammen aus anerkannten Plattformen wie Google und MyHammer – für maximale Transparenz und Vertrauen.",
-      "image": "/images/pages/reviews-hero.png",
-      "button": {
-        "cta": "Bewertung auf Google schreiben",
-        "variant": "solid",
-        "icon": "forward"
-      }
-    },
-    "summary": {
-      "heading": "Unsere Gesamtbewertung",
-      "description": "Derzeit zeigen wir die Bewertungen, die wir über MyHammer gesammelt haben. Schritt für Schritt verlagern wir alle neuen Bewertungen auf Google, um noch mehr Transparenz und Vertrauen zu schaffen.",
-      "average": "Durchschnittliche Bewertung",
-      "averageRating": 4.9,
-      "totalReviews": 57
-    },
-    "list": {
-      "heading": "Bewertungen",
-      "button": {
-        "cta": "Mehr laden",
-        "variant": "solid",
-        "icon": "download"
-      }
-    },
-    "faq": {
-      "title": "Frequently Asked Questions about Reviews",
-      "items": [
-        {
-          "question": "Where can I leave a review?",
-          "answer": "New reviews can be submitted directly through our Google Business profile. Just follow the link 'Write a review on Google'."
-        },
-        {
-          "question": "What happens to the older reviews from MyHammer?",
-          "answer": "We continue to display our previous reviews from MyHammer here on our website. Going forward, all new reviews will be collected exclusively via Google."
-        },
-        {
-          "question": "Can I edit or delete my review afterwards?",
-          "answer": "Yes. Reviews on Google can be edited or deleted at any time through your own Google account."
-        },
-        {
-          "question": "How do you ensure the authenticity of reviews?",
-          "answer": "By using Google Business, only users with an active Google account can leave reviews. This ensures that all reviews are genuine."
-        },
-        {
-          "question": "Are negative reviews also published?",
-          "answer": "Yes. We believe in transparency and publish all reviews – whether positive or negative."
-        }
-      ],
-      "cta": {
-        "title": "Haben Sie noch weitere Fragen?",
-        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
-      },
-      "button": {
-        "cta": "Alle FAQs ansehen",
-        "variant": "solid",
-        "icon": "forward"
-      }
-    }
-  },
-  "services": {
-    "hero": {
-      "headline1": "Professionelle Reinigungs- und Hausmeisterdienste",
-      "headline2": "Zuverlässig. Transparent. Persönlich.",
-      "subtitle": "Ob Reinigung, Möbelmontage oder kleine Reparaturen – wir kümmern uns um Ihr Zuhause und Ihr Geschäft mit Sorgfalt und Erfahrung. Wählen Sie den passenden Service und lehnen Sie sich entspannt zurück.",
-      "image": "/images/pages/services-hero.jpg"
-    },
-    "servicesSection": {
-      "heading": "Unsere Dienstleistungen",
-      "description": "Wir bieten ein breites Spektrum an professionellen Reinigungs- und Handwerksdiensten für Privathaushalte und Unternehmen. Wählen Sie den passenden Service und erhalten Sie ein unverbindliches Angebot.",
-      "button": {
-        "cta": "Alle Leistungen ansehen",
-        "variant": "solid",
-        "icon": "forward"
-      }
-    },
-    "howItWorks": {
-      "heading": "So funktioniert Ihre Serviceanfrage",
-      "steps": [
-        {
-          "title": "Serviceformular ausfüllen",
-          "description": "Wählen Sie den gewünschten Service und geben Sie die wichtigsten Details an, z. B. Möbeltyp oder Standort."
-        },
-        {
-          "title": "Termin auswählen",
-          "description": "Wählen Sie den Termin, der Ihnen am besten passt, und prüfen Sie direkt unsere Verfügbarkeit."
-        },
-        {
-          "title": "Prüfen und bestätigen",
-          "description": "Kontrollieren Sie alle Angaben, um sicherzustellen, dass Ihre Informationen und der Termin korrekt sind."
-        },
-        {
-          "title": "Anfrage absenden",
-          "description": "Senden Sie Ihre Anfrage. Unser Team prüft die Angaben und meldet sich zur Bestätigung oder Anpassung."
-        }
-      ]
-    },
-    "faq": {
-      "title": "Häufig gestellte Fragen zu unseren Dienstleistungen",
-      "items": [
-        {
-          "question": "Wie kann ich einen Service anfragen?",
-          "answer": "Sie können den gewünschten Service direkt über das Formular auf unserer Website anfragen. Geben Sie einfach alle relevanten Details an – unser Team meldet sich mit einem Angebot oder Terminvorschlag."
-        },
-        {
-          "question": "Wie wird der Preis für den Service berechnet?",
-          "answer": "Jeder Auftrag wird individuell bewertet. Der Preis hängt von Art, Umfang und Aufwand des gewünschten Services ab. Nach Ihrer Anfrage erhalten Sie ein transparentes, unverbindliches Angebot."
-        },
-        {
-          "question": "Bringt Ihr Team das benötigte Material und Werkzeug mit?",
-          "answer": "Ja, unser Team bringt in der Regel alle notwendigen Materialien und Werkzeuge mit. Wenn Sie spezielle Wünsche haben, können Sie diese im Anfrageformular angeben."
-        },
-        {
-          "question": "Kann ich einen Termin verschieben oder absagen?",
-          "answer": "Natürlich. Sie können Ihren Termin bis 24 Stunden vorher kostenlos verschieben oder stornieren. Danach können Gebühren anfallen, da die Planung bereits erfolgt ist."
-        }
-      ],
-      "cta": {
-        "title": "Haben Sie noch weitere Fragen?",
-        "description": "Weitere Antworten finden Sie auf unserer FAQ-Seite. Sollten Ihre Fragen dort nicht beantwortet werden, können Sie uns jederzeit direkt kontaktieren."
-      },
-      "button": {
-        "cta": "Alle FAQs ansehen",
-        "variant": "solid",
-        "icon": "forward"
-      }
-    }
-  },
-  "checkout": {
-    "header": {
-      "heading": "Abschluss Ihrer Anfrage",
-      "description": "Bitte überprüfen Sie Ihre ausgewählten Dienstleistungen und wählen Sie das Datum für den ersten Besuch, bevor Sie fortfahren."
-    },
-    "denied": {
-      "heading": "Zugriff verweigert",
-      "description": "Diese Seite ist nur für eingeloggte Benutzer mit einer aktiven Serviceanfrage verfügbar. Sie werden in",
-      "redirecting": "Weiterleitung in",
-      "seconds": "Sekunden.",
-      "alt": "Warnsymbol"
-    }
-  },
-  "blog": {
-    "title": "Neuigkeiten aus unserem Blog",
-    "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
-    "cta": {
-      "title": "Bleiben Sie informiert:",
-      "subtitle": "Tipps, Ratgeber und Updates für Ihr Zuhause. Abonnieren Sie unseren Newsletter und verpassen Sie keinen Tipp!",
-      "label": "Abonnieren"
-    }
-  },
-  "user": {
-    "register": {
-      "title": "Konto erstellen",
-      "description": "Werden Sie Teil von Havenova und buchen Sie Ihren ersten Service.",
-      "cta": {
-        "title": "Sie haben bereits ein Konto?",
-        "label": "Jetzt einloggen",
-        "url": "/user/login"
-      }
-    },
-    "login": {
-      "title": "Willkommen zurück",
-      "cta": {
-        "title": "Sie haben noch kein Konto?",
-        "label": "Zu Anmeldung",
-        "url": "/user/register"
-      }
-    },
-    "edit": {
-      "title": "Bearbeiten",
-      "description": "Halten Sie Ihre Angaben aktuell, um einen reibungslosen Service zu gewährleisten.",
-      "theme": { "title": "Seitenauftritt", "theme": "Aussehen", "lang": "Sprache" },
-      "personalInfo": "Persönliche Informationen",
-      "password": "Passwort"
-    },
-    "forgotPasswordText": {
-      "title": "Setze dein Passwort zurück",
-      "info": "Um ein neues Passwort zu erstellen, gib bitte deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts. Folge den Anweisungen in der E-Mail, um ein neues Passwort für dein Konto festzulegen.",
-      "button": "Link zum Zurücksetzen senden"
-    },
-    "resetPasswordText": {
-      "title": "Neues Passwort festlegen",
-      "info": "Bitte gib dein neues Passwort ein. Das Passwort muss mindestens 8 Zeichen lang sein.",
-      "button": "Passwort speichern"
-    },
-    "profileHeader": {
-      "ariaLabel": "Benutzerbereich",
-      "verified": "Verifiziert",
-      "verifiedAria": "Konto verifiziert",
-      "missingName": "Ihr Name"
-    },
-    "profileNav": {
-      "profile": "Profil",
-      "requests": "Anfragen",
-      "notifications": "Benachrichtigungen",
-      "settings": "Einstellungen"
-    },
-    "verifyEmail": {
-      "title": "E-Mail-Verifizierung",
-      "info": "Wenn Sie keine E-Mail erhalten haben, versuchen Sie es bitte erneut.",
-      "input": {
-        "placeholder": "E-Mail-Adresse",
-        "button": "E-Mail erneut senden.",
-        "info": "Bitte verwenden Sie dieselbe E-Mail-Adresse, die Sie zum Erstellen Ihres Profils verwendet haben."
-      }
-    },
-    "profile": {
-      "greeting": "Hallo,",
-      "manageAccount": "Verwalten Sie Ihre Kontoeinstellungen und sehen Sie Ihre Profildaten ein.",
-      "memberSince": "Mitglied seit:",
-      "verified": "Verifiziert",
-      "name": "Name:",
-      "address": "Adresse:",
-      "phone": "Telefon:",
-      "email": "E-Mail:",
-      "theme": {
-        "title": "Design:",
-        "light": "Hell",
-        "dark": "Dunkel"
-      },
-      "language": {
-        "title": "Sprache:",
-        "lang": "Deutsch"
-      },
-      "notLoggedInTitle": "Sie sind nicht eingeloggt",
-      "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
-      "loginButton": "Zum Login"
-    }
-  },
-  "legal": {
-    "privacy": {
-      "hero": {
-        "headline1": "Datenschutzerklärung",
-        "headline2": "Transparenz und Datenschutz",
-        "subtitle": "Diese Datenschutzerklärung erläutert, wie personenbezogene Daten auf dieser Plattform verarbeitet werden, die technisch von Maped Solutions UG betrieben wird.",
-        "image": {
-          "src": "/images/privacy-hero.png",
-          "alt": "Datenschutz und Datensicherheit"
-        }
-      },
-      "overview": {
-        "title": "Überblick",
-        "intro": "Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert darüber, wer für die Datenverarbeitung verantwortlich ist, zu welchen Zwecken und auf welcher Rechtsgrundlage Daten verarbeitet werden und welche Rechte Ihnen zustehen.",
-        "bullets": [
-          "Verantwortlicher: Der jeweilige Kunde dieser Plattform (Art. 4 Nr. 7 DSGVO).",
-          "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
-          "Rechtsgrundlagen: Vertragserfüllung (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f).",
-          "Bevorzugte Datenverarbeitung: Europäische Union.",
-          "Datenübermittlungen in Drittländer nur mit geeigneten Garantien (SCC)."
-        ],
+  "client": {
+    "home": {},
+    "cleaning": {},
+    "home-service": {},
+    "contact": {},
+    "how-it-works": {},
+    "reviews": {},
+    "user": {
+      "register": {
+        "title": "Konto erstellen",
+        "description": "Werden Sie Teil von Havenova und buchen Sie Ihren ersten Service.",
         "cta": {
-          "label": "Kontakt zum Verantwortlichen",
-          "href": "/contact"
+          "title": "Sie haben bereits ein Konto?",
+          "label": "Jetzt einloggen",
+          "url": "/user/login"
         }
       },
-      "roles": {
-        "title": "Verantwortliche Stellen",
-        "controller": {
-          "title": "Verantwortlicher",
-          "body": "Verantwortlicher im Sinne der DSGVO ist das Unternehmen, das die Dienstleistungen über diese Plattform anbietet. Dieses Unternehmen entscheidet über Zwecke und Mittel der Datenverarbeitung. Die Kontaktdaten sind dem Impressum zu entnehmen."
-        },
-        "processor": {
-          "title": "Auftragsverarbeiter",
-          "body": "Maped Solutions UG handelt als Auftragsverarbeiter gemäß Art. 28 DSGVO. Maped Solutions UG betreibt und wartet die Plattform technisch und verarbeitet personenbezogene Daten ausschließlich auf Weisung des Verantwortlichen."
-        },
-        "links": [
-          {
-            "label": "Art. 4 Nr. 7 DSGVO – Verantwortlicher",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "Art. 28 DSGVO – Auftragsverarbeiter",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          }
-        ]
-      },
-      "purposesAndLegalBases": {
-        "title": "Zwecke und Rechtsgrundlagen",
-        "intro": "Personenbezogene Daten werden ausschließlich für eindeutig festgelegte und rechtmäßige Zwecke verarbeitet.",
-        "items": [
-          {
-            "purpose": "Erbringung von Dienstleistungen und Nutzerverwaltung",
-            "examples": {
-              "title": "Beispiele:",
-              "description": "Benutzerkonten, Bearbeitung von Serviceanfragen, Kommunikation, Abrechnung"
-            },
-            "legalBases": {
-              "title": "Rechtsgrundlage:",
-              "description": "Art. 6 Abs. 1 lit. b DSGVO"
-            }
-          },
-          {
-            "purpose": "Erfüllung gesetzlicher Verpflichtungen",
-            "examples": {
-              "title": "Beispiele:",
-              "description": "steuer- und handelsrechtliche Aufbewahrungspflichten"
-            },
-            "legalBases": {
-              "title": "Rechtsgrundlage:",
-              "description": "Art. 6 Abs. 1 lit. c DSGVO"
-            }
-          },
-          {
-            "purpose": "Technischer Betrieb und Sicherheit",
-            "examples": {
-              "title": "Beispiele:",
-              "description": "Server-Logs, Missbrauchsprävention, Systemsicherheit"
-            },
-            "legalBases": {
-              "title": "Rechtsgrundlage:",
-              "description": "Art. 6 Abs. 1 lit. f DSGVO"
-            }
-          }
-        ]
-      },
-      "dataCategories": {
-        "title": "Verarbeitete Datenkategorien",
-        "description": "Je nach Nutzung der Plattform können folgende Daten verarbeitet werden:",
-        "items": [
-          "Identifikations- und Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer, Anschrift).",
-          "Zugangs- und Sicherheitsdaten (verschlüsselte Passwörter, Rollen, Spracheinstellungen).",
-          "Angaben zu Serviceanfragen (Beschreibungen, Orte).",
-          "Vertrags- und Zahlungsdaten (Rechnungen, Zahlungen über Drittanbieter).",
-          "Technische Daten (IP-Adresse, Geräteinformationen, Server-Logs, technisch notwendige Cookies)."
-        ]
-      },
-      "thirdParties": {
-        "title": "Eingesetzte Dienstleister",
-        "subtitle": "Zur sicheren und effizienten Bereitstellung der Plattform werden externe Dienstleister eingesetzt.",
-        "intro": "Diese Dienstleister handeln auf vertraglicher Grundlage und verarbeiten Daten ausschließlich im Rahmen der DSGVO.",
-        "table": {
-          "headers": {
-            "name": "Anbieter",
-            "purpose": "Zweck",
-            "region": "Region",
-            "privacy": "Datenschutzerklärung"
-          },
-          "body": []
+      "login": {
+        "title": "Willkommen zurück",
+        "cta": {
+          "title": "Sie haben noch kein Konto?",
+          "label": "Zu Anmeldung",
+          "url": "/user/register"
         }
       },
-      "security": {
-        "title": "Sicherheitsmaßnahmen",
-        "body": "Es werden geeignete technische und organisatorische Maßnahmen gemäß Art. 32 DSGVO eingesetzt, darunter verschlüsselte Passwörter, sichere Datenübertragung (HTTPS/TLS), rollenbasierte Zugriffskontrollen sowie Firewall- und CDN-Schutz."
+      "edit": {
+        "title": "Bearbeiten",
+        "description": "Halten Sie Ihre Angaben aktuell, um einen reibungslosen Service zu gewährleisten.",
+        "theme": { "title": "Seitenauftritt", "theme": "Aussehen", "lang": "Sprache" },
+        "personalInfo": "Persönliche Informationen",
+        "password": "Passwort"
+      },
+      "forgotPasswordText": {
+        "title": "Setze dein Passwort zurück",
+        "info": "Um ein neues Passwort zu erstellen, gib bitte deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts. Folge den Anweisungen in der E-Mail, um ein neues Passwort für dein Konto festzulegen.",
+        "button": "Link zum Zurücksetzen senden"
+      },
+      "resetPasswordText": {
+        "title": "Neues Passwort festlegen",
+        "info": "Bitte gib dein neues Passwort ein. Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "button": "Passwort speichern"
+      },
+      "profileHeader": {
+        "ariaLabel": "Benutzerbereich",
+        "verified": "Verifiziert",
+        "verifiedAria": "Konto verifiziert",
+        "missingName": "Ihr Name"
+      },
+      "profileNav": {
+        "profile": "Profil",
+        "requests": "Anfragen",
+        "notifications": "Benachrichtigungen",
+        "settings": "Einstellungen"
+      },
+      "verifyEmail": {
+        "title": "E-Mail-Verifizierung",
+        "info": "Wenn Sie keine E-Mail erhalten haben, versuchen Sie es bitte erneut.",
+        "input": {
+          "placeholder": "E-Mail-Adresse",
+          "button": "E-Mail erneut senden.",
+          "info": "Bitte verwenden Sie dieselbe E-Mail-Adresse, die Sie zum Erstellen Ihres Profils verwendet haben."
+        }
+      },
+      "profile": {
+        "greeting": "Hallo,",
+        "manageAccount": "Verwalten Sie Ihre Kontoeinstellungen und sehen Sie Ihre Profildaten ein.",
+        "memberSince": "Mitglied seit:",
+        "verified": "Verifiziert",
+        "name": "Name:",
+        "address": "Adresse:",
+        "phone": "Telefon:",
+        "email": "E-Mail:",
+        "theme": {
+          "title": "Design:",
+          "light": "Hell",
+          "dark": "Dunkel"
+        },
+        "language": {
+          "title": "Sprache:",
+          "lang": "Deutsch"
+        },
+        "notLoggedInTitle": "Sie sind nicht eingeloggt",
+        "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
+        "loginButton": "Zum Login"
+      }
+    },
+    "legal": {
+      "privacy": {
+        "hero": {
+          "headline1": "Datenschutzerklärung",
+          "headline2": "Transparenz und Datenschutz",
+          "subtitle": "Diese Datenschutzerklärung erläutert, wie personenbezogene Daten auf dieser Plattform verarbeitet werden, die technisch von Maped Solutions UG betrieben wird.",
+          "image": {
+            "src": "/images/privacy-hero.png",
+            "alt": "Datenschutz und Datensicherheit"
+          }
+        },
+        "overview": {
+          "title": "Überblick",
+          "intro": "Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert darüber, wer für die Datenverarbeitung verantwortlich ist, zu welchen Zwecken und auf welcher Rechtsgrundlage Daten verarbeitet werden und welche Rechte Ihnen zustehen.",
+          "bullets": [
+            "Verantwortlicher: Der jeweilige Kunde dieser Plattform (Art. 4 Nr. 7 DSGVO).",
+            "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
+            "Rechtsgrundlagen: Vertragserfüllung (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f).",
+            "Bevorzugte Datenverarbeitung: Europäische Union.",
+            "Datenübermittlungen in Drittländer nur mit geeigneten Garantien (SCC)."
+          ],
+          "cta": {
+            "label": "Kontakt zum Verantwortlichen",
+            "href": "/contact"
+          }
+        },
+        "roles": {
+          "title": "Verantwortliche Stellen",
+          "controller": {
+            "title": "Verantwortlicher",
+            "body": "Verantwortlicher im Sinne der DSGVO ist das Unternehmen, das die Dienstleistungen über diese Plattform anbietet. Dieses Unternehmen entscheidet über Zwecke und Mittel der Datenverarbeitung. Die Kontaktdaten sind dem Impressum zu entnehmen."
+          },
+          "processor": {
+            "title": "Auftragsverarbeiter",
+            "body": "Maped Solutions UG handelt als Auftragsverarbeiter gemäß Art. 28 DSGVO. Maped Solutions UG betreibt und wartet die Plattform technisch und verarbeitet personenbezogene Daten ausschließlich auf Weisung des Verantwortlichen."
+          },
+          "links": [
+            {
+              "label": "Art. 4 Nr. 7 DSGVO – Verantwortlicher",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 28 DSGVO – Auftragsverarbeiter",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            }
+          ]
+        },
+        "purposesAndLegalBases": {
+          "title": "Zwecke und Rechtsgrundlagen",
+          "intro": "Personenbezogene Daten werden ausschließlich für eindeutig festgelegte und rechtmäßige Zwecke verarbeitet.",
+          "items": [
+            {
+              "purpose": "Erbringung von Dienstleistungen und Nutzerverwaltung",
+              "examples": {
+                "title": "Beispiele:",
+                "description": "Benutzerkonten, Bearbeitung von Serviceanfragen, Kommunikation, Abrechnung"
+              },
+              "legalBases": {
+                "title": "Rechtsgrundlage:",
+                "description": "Art. 6 Abs. 1 lit. b DSGVO"
+              }
+            },
+            {
+              "purpose": "Erfüllung gesetzlicher Verpflichtungen",
+              "examples": {
+                "title": "Beispiele:",
+                "description": "steuer- und handelsrechtliche Aufbewahrungspflichten"
+              },
+              "legalBases": {
+                "title": "Rechtsgrundlage:",
+                "description": "Art. 6 Abs. 1 lit. c DSGVO"
+              }
+            },
+            {
+              "purpose": "Technischer Betrieb und Sicherheit",
+              "examples": {
+                "title": "Beispiele:",
+                "description": "Server-Logs, Missbrauchsprävention, Systemsicherheit"
+              },
+              "legalBases": {
+                "title": "Rechtsgrundlage:",
+                "description": "Art. 6 Abs. 1 lit. f DSGVO"
+              }
+            }
+          ]
+        },
+        "dataCategories": {
+          "title": "Verarbeitete Datenkategorien",
+          "description": "Je nach Nutzung der Plattform können folgende Daten verarbeitet werden:",
+          "items": [
+            "Identifikations- und Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer, Anschrift).",
+            "Zugangs- und Sicherheitsdaten (verschlüsselte Passwörter, Rollen, Spracheinstellungen).",
+            "Angaben zu Serviceanfragen (Beschreibungen, Orte).",
+            "Vertrags- und Zahlungsdaten (Rechnungen, Zahlungen über Drittanbieter).",
+            "Technische Daten (IP-Adresse, Geräteinformationen, Server-Logs, technisch notwendige Cookies)."
+          ]
+        },
+        "thirdParties": {
+          "title": "Eingesetzte Dienstleister",
+          "subtitle": "Zur sicheren und effizienten Bereitstellung der Plattform werden externe Dienstleister eingesetzt.",
+          "intro": "Diese Dienstleister handeln auf vertraglicher Grundlage und verarbeiten Daten ausschließlich im Rahmen der DSGVO.",
+          "table": {
+            "headers": {
+              "name": "Anbieter",
+              "purpose": "Zweck",
+              "region": "Region",
+              "privacy": "Datenschutzerklärung"
+            },
+            "body": []
+          }
+        },
+        "security": {
+          "title": "Sicherheitsmaßnahmen",
+          "body": "Es werden geeignete technische und organisatorische Maßnahmen gemäß Art. 32 DSGVO eingesetzt, darunter verschlüsselte Passwörter, sichere Datenübertragung (HTTPS/TLS), rollenbasierte Zugriffskontrollen sowie Firewall- und CDN-Schutz."
+        },
+        "cookies": {
+          "title": "Cookies",
+          "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt."
+        },
+        "userRights": {
+          "title": "Rechte der betroffenen Personen",
+          "intro": "Betroffene Personen haben folgende Rechte gemäß DSGVO:",
+          "items": [
+            "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18).",
+            "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21)."
+          ],
+          "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten."
+        },
+        "retention": {
+          "title": "Speicherdauer",
+          "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies zur Erfüllung der Zwecke und gesetzlicher Verpflichtungen erforderlich ist. Danach erfolgt eine Löschung oder Anonymisierung."
+        },
+        "internationalTransfers": {
+          "title": "Datenübermittlung in Drittländer",
+          "body": "Sofern Daten außerhalb des EWR verarbeitet werden, erfolgt dies ausschließlich unter Anwendung geeigneter Garantien, insbesondere der Standardvertragsklauseln der Europäischen Kommission."
+        },
+        "changes": {
+          "title": "Änderungen dieser Datenschutzerklärung",
+          "body": "Diese Datenschutzerklärung kann aus rechtlichen oder betrieblichen Gründen angepasst werden.",
+          "meta": {
+            "lastUpdated": "Zuletzt aktualisiert:"
+          }
+        }
       },
       "cookies": {
-        "title": "Cookies",
-        "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt."
-      },
-      "userRights": {
-        "title": "Rechte der betroffenen Personen",
-        "intro": "Betroffene Personen haben folgende Rechte gemäß DSGVO:",
-        "items": [
-          "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18).",
-          "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21)."
-        ],
-        "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten."
-      },
-      "retention": {
-        "title": "Speicherdauer",
-        "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies zur Erfüllung der Zwecke und gesetzlicher Verpflichtungen erforderlich ist. Danach erfolgt eine Löschung oder Anonymisierung."
-      },
-      "internationalTransfers": {
-        "title": "Datenübermittlung in Drittländer",
-        "body": "Sofern Daten außerhalb des EWR verarbeitet werden, erfolgt dies ausschließlich unter Anwendung geeigneter Garantien, insbesondere der Standardvertragsklauseln der Europäischen Kommission."
-      },
-      "changes": {
-        "title": "Änderungen dieser Datenschutzerklärung",
-        "body": "Diese Datenschutzerklärung kann aus rechtlichen oder betrieblichen Gründen angepasst werden.",
-        "meta": {
-          "lastUpdated": "Zuletzt aktualisiert:"
-        }
-      }
-    },
-    "cookies": {
-      "hero": {
-        "headline1": "Cookie-Richtlinie",
-        "headline2": "Verwendung technisch notwendiger Cookies",
-        "subtitle": "Diese Cookie-Richtlinie erläutert, wie und warum auf dieser Plattform Cookies eingesetzt werden, die technisch von Maped Solutions UG betrieben wird.",
-        "image": {
-          "src": "/images/cookies-hero.png",
-          "alt": "Cookies und Datenschutzeinstellungen"
-        }
-      },
-      "overview": {
-        "title": "Überblick",
-        "intro": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse-, Tracking- oder Marketing-Cookies eingesetzt.",
-        "bullets": [
-          "Ausschließlich technisch notwendige Cookies.",
-          "Keine Analyse- oder Marketing-Cookies.",
-          "Keine Profilbildung oder Nutzerverfolgung.",
-          "Cookies können über die Browsereinstellungen verwaltet werden."
-        ],
-        "cta": {
-          "label": "Cookie-Einstellungen",
-          "action": "openCookieBanner"
-        }
-      },
-      "whatAreCookies": {
-        "title": "Was sind Cookies?",
-        "body": "Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen grundlegende Funktionen wie sichere Anmeldung, Navigation und Schutz vor Missbrauch."
-      },
-      "types": {
-        "title": "Welche Arten von Cookies werden verwendet?",
-        "items": [
-          {
-            "name": "Technisch notwendige Cookies",
-            "description": "Diese Cookies sind erforderlich, um den sicheren und ordnungsgemäßen Betrieb der Plattform zu gewährleisten, z. B. für Authentifizierung, Sicherheit und Sitzungsverwaltung. Sie können nicht deaktiviert werden."
+        "hero": {
+          "headline1": "Cookie-Richtlinie",
+          "headline2": "Verwendung technisch notwendiger Cookies",
+          "subtitle": "Diese Cookie-Richtlinie erläutert, wie und warum auf dieser Plattform Cookies eingesetzt werden, die technisch von Maped Solutions UG betrieben wird.",
+          "image": {
+            "src": "/images/cookies-hero.png",
+            "alt": "Cookies und Datenschutzeinstellungen"
           }
-        ]
-      },
-      "thirdParties": {
-        "title": "Drittanbieter",
-        "body": "Es werden keine Cookies von Drittanbietern zu Analyse-, Tracking- oder Marketingzwecken eingesetzt. Externe Dienstleister können technisch notwendige Cookies setzen, sofern dies für den Betrieb der Plattform erforderlich ist.",
-        "table": {
-          "headers": {
-            "name": "Anbieter",
-            "purpose": "Zweck",
-            "privacy": "Datenschutzerklärung"
-          },
-          "body": []
-        }
-      },
-      "localStorage": {
-        "title": "Verwendung von localStorage",
-        "body": "Zusätzlich zu Cookies kann der lokale Speicher des Browsers (localStorage) verwendet werden, um technische Einstellungen wie Sprache oder Designpräferenzen zu speichern. Diese Daten verbleiben ausschließlich auf Ihrem Endgerät und werden nicht an Dritte übermittelt."
-      },
-      "management": {
-        "title": "Verwaltung von Cookies",
-        "intro": "Sie können Cookies jederzeit über die Einstellungen Ihres Browsers verwalten oder löschen. Die Deaktivierung technisch notwendiger Cookies kann jedoch die Funktionalität der Plattform einschränken.",
-        "methods": [
-          "Verwaltung von Cookies über die Browsereinstellungen.",
-          "Löschen bereits gespeicherter Cookies im Browser.",
-          "Einschränkung oder Blockierung von Cookies über Browserfunktionen."
-        ],
-        "cta": {
-          "label": "Cookie-Banner erneut öffnen",
-          "action": "openCookieBanner"
         },
-        "links": [
-          {
-            "label": "Google Chrome",
-            "href": "https://support.google.com/chrome/answer/95647"
-          },
-          {
-            "label": "Mozilla Firefox",
-            "href": "https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen"
-          },
-          {
-            "label": "Safari",
-            "href": "https://support.apple.com/de-de/guide/safari/sfri11471/mac"
-          },
-          {
-            "label": "Microsoft Edge",
-            "href": "https://support.microsoft.com/de-de/help/4027947"
+        "overview": {
+          "title": "Überblick",
+          "intro": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse-, Tracking- oder Marketing-Cookies eingesetzt.",
+          "bullets": [
+            "Ausschließlich technisch notwendige Cookies.",
+            "Keine Analyse- oder Marketing-Cookies.",
+            "Keine Profilbildung oder Nutzerverfolgung.",
+            "Cookies können über die Browsereinstellungen verwaltet werden."
+          ],
+          "cta": {
+            "label": "Cookie-Einstellungen",
+            "action": "openCookieBanner"
           }
-        ]
-      },
-      "legalBasis": {
-        "title": "Rechtsgrundlage",
-        "body": "Der Einsatz technisch notwendiger Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und funktionsfähigen Betrieb der Plattform)."
-      },
-      "changes": {
-        "title": "Änderungen dieser Cookie-Richtlinie",
-        "body": "Diese Cookie-Richtlinie kann aus rechtlichen oder technischen Gründen angepasst werden. Das Datum der letzten Änderung wird auf dieser Seite angegeben.",
-        "meta": {
-          "lastUpdated": "Zuletzt aktualisiert:"
+        },
+        "whatAreCookies": {
+          "title": "Was sind Cookies?",
+          "body": "Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen grundlegende Funktionen wie sichere Anmeldung, Navigation und Schutz vor Missbrauch."
+        },
+        "types": {
+          "title": "Welche Arten von Cookies werden verwendet?",
+          "items": [
+            {
+              "name": "Technisch notwendige Cookies",
+              "description": "Diese Cookies sind erforderlich, um den sicheren und ordnungsgemäßen Betrieb der Plattform zu gewährleisten, z. B. für Authentifizierung, Sicherheit und Sitzungsverwaltung. Sie können nicht deaktiviert werden."
+            }
+          ]
+        },
+        "thirdParties": {
+          "title": "Drittanbieter",
+          "body": "Es werden keine Cookies von Drittanbietern zu Analyse-, Tracking- oder Marketingzwecken eingesetzt. Externe Dienstleister können technisch notwendige Cookies setzen, sofern dies für den Betrieb der Plattform erforderlich ist.",
+          "table": {
+            "headers": {
+              "name": "Anbieter",
+              "purpose": "Zweck",
+              "privacy": "Datenschutzerklärung"
+            },
+            "body": []
+          }
+        },
+        "localStorage": {
+          "title": "Verwendung von localStorage",
+          "body": "Zusätzlich zu Cookies kann der lokale Speicher des Browsers (localStorage) verwendet werden, um technische Einstellungen wie Sprache oder Designpräferenzen zu speichern. Diese Daten verbleiben ausschließlich auf Ihrem Endgerät und werden nicht an Dritte übermittelt."
+        },
+        "management": {
+          "title": "Verwaltung von Cookies",
+          "intro": "Sie können Cookies jederzeit über die Einstellungen Ihres Browsers verwalten oder löschen. Die Deaktivierung technisch notwendiger Cookies kann jedoch die Funktionalität der Plattform einschränken.",
+          "methods": [
+            "Verwaltung von Cookies über die Browsereinstellungen.",
+            "Löschen bereits gespeicherter Cookies im Browser.",
+            "Einschränkung oder Blockierung von Cookies über Browserfunktionen."
+          ],
+          "cta": {
+            "label": "Cookie-Banner erneut öffnen",
+            "action": "openCookieBanner"
+          },
+          "links": [
+            {
+              "label": "Google Chrome",
+              "href": "https://support.google.com/chrome/answer/95647"
+            },
+            {
+              "label": "Mozilla Firefox",
+              "href": "https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen"
+            },
+            {
+              "label": "Safari",
+              "href": "https://support.apple.com/de-de/guide/safari/sfri11471/mac"
+            },
+            {
+              "label": "Microsoft Edge",
+              "href": "https://support.microsoft.com/de-de/help/4027947"
+            }
+          ]
+        },
+        "legalBasis": {
+          "title": "Rechtsgrundlage",
+          "body": "Der Einsatz technisch notwendiger Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und funktionsfähigen Betrieb der Plattform)."
+        },
+        "changes": {
+          "title": "Änderungen dieser Cookie-Richtlinie",
+          "body": "Diese Cookie-Richtlinie kann aus rechtlichen oder technischen Gründen angepasst werden. Das Datum der letzten Änderung wird auf dieser Seite angegeben.",
+          "meta": {
+            "lastUpdated": "Zuletzt aktualisiert:"
+          }
+        },
+        "legalReferences": {
+          "title": "Rechtliche Grundlagen",
+          "items": [
+            {
+              "label": "Datenschutz-Grundverordnung (DSGVO)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "ePrivacy-Richtlinie",
+              "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32002L0058"
+            }
+          ]
         }
       },
-      "legalReferences": {
-        "title": "Rechtliche Grundlagen",
-        "items": [
-          {
-            "label": "Datenschutz-Grundverordnung (DSGVO)",
-            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
-          },
-          {
-            "label": "ePrivacy-Richtlinie",
-            "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32002L0058"
+      "terms": {
+        "hero": {
+          "headline1": "Allgemeine Geschäftsbedingungen",
+          "headline2": "Nutzungsbedingungen der Plattform",
+          "subtitle": "Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung dieser Plattform sowie die Rechte und Pflichten der beteiligten Parteien.",
+          "image": {
+            "src": "/images/terms-hero.png",
+            "alt": "Allgemeine Geschäftsbedingungen"
           }
-        ]
+        },
+        "overview": {
+          "title": "Geltungsbereich",
+          "intro": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der über diese Plattform bereitgestellten Funktionen und Dienste.",
+          "bullets": [
+            "Die Plattform wird technisch durch Maped Solutions UG betrieben.",
+            "Die angebotenen Dienstleistungen werden durch den jeweiligen Kunden erbracht.",
+            "Maped Solutions UG erbringt keine eigenen Endkundendienstleistungen.",
+            "Abweichende Bedingungen finden nur Anwendung, wenn sie ausdrücklich vereinbart wurden."
+          ]
+        },
+        "definitions": {
+          "title": "Begriffsbestimmungen",
+          "items": [
+            {
+              "term": "Plattform",
+              "definition": "Die webbasierte Softwarelösung zur Verwaltung von Dienstleistungen und Anfragen."
+            },
+            {
+              "term": "Kunde",
+              "definition": "Das Unternehmen, das über die Plattform Dienstleistungen gegenüber Endnutzern anbietet."
+            },
+            {
+              "term": "Nutzer",
+              "definition": "Natürliche oder juristische Personen, die die Plattform verwenden."
+            },
+            {
+              "term": "Anbieter",
+              "definition": "Maped Solutions UG als technischer Betreiber der Plattform."
+            }
+          ]
+        },
+        "serviceDescription": {
+          "title": "Leistungsbeschreibung",
+          "body": "Maped Solutions UG stellt dem Kunden eine betriebsbereite Softwareplattform (Version 1.0) zur Verfügung. Die Leistung umfasst den technischen Betrieb, die Wartung sowie fortlaufende Optimierung der Plattform.",
+          "note": "Die Plattform ist kein Vermittlungs- oder Ausführungsdienst für die angebotenen Dienstleistungen."
+        },
+        "optimization": {
+          "title": "Fortlaufende Optimierung",
+          "body": "Die fortlaufende Optimierung umfasst technische Verbesserungen, Sicherheitsupdates, Fehlerbehebungen und Leistungsanpassungen. Funktionale Erweiterungen oder Änderungen des Leistungsumfangs bedürfen einer gesonderten Vereinbarung."
+        },
+        "userObligations": {
+          "title": "Pflichten der Nutzer",
+          "items": [
+            "Angabe wahrheitsgemäßer und vollständiger Informationen.",
+            "Vertrauliche Behandlung von Zugangsdaten.",
+            "Keine missbräuchliche oder rechtswidrige Nutzung der Plattform.",
+            "Einhaltung geltender Gesetze und Vorschriften."
+          ]
+        },
+        "availability": {
+          "title": "Verfügbarkeit",
+          "body": "Maped Solutions UG ist bemüht, eine hohe Verfügbarkeit der Plattform sicherzustellen. Eine durchgehende oder unterbrechungsfreie Verfügbarkeit kann jedoch nicht garantiert werden."
+        },
+        "externalContractors": {
+          "title": "Externe Dienstleister",
+          "body": "Der Kunde kann zur Erbringung seiner Dienstleistungen externe Dienstleister einsetzen. Für deren Leistungen, Qualifikation und rechtmäßiges Handeln ist ausschließlich der Kunde verantwortlich."
+        },
+        "liability": {
+          "title": "Haftung",
+          "body": "Maped Solutions UG haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen. Bei einfacher Fahrlässigkeit haftet Maped Solutions UG nur bei Verletzung wesentlicher Vertragspflichten und beschränkt auf den vorhersehbaren Schaden.",
+          "limitations": [
+            "Keine Haftung für Leistungen des Kunden oder externer Dienstleister.",
+            "Keine Haftung für Datenverluste, sofern angemessene Sicherungsmaßnahmen getroffen wurden.",
+            "Keine Haftung für mittelbare Schäden oder entgangenen Gewinn."
+          ]
+        },
+        "payments": {
+          "title": "Zahlungen",
+          "body": "Zahlungen und Abrechnungen erfolgen auf Grundlage der zwischen Maped Solutions UG und dem Kunden geschlossenen Vereinbarungen. Die Plattform selbst stellt keine Zahlungsdienstleistung dar."
+        },
+        "termination": {
+          "title": "Beendigung der Nutzung",
+          "body": "Das Nutzungsverhältnis kann von beiden Parteien unter Einhaltung der vereinbarten Fristen beendet werden. Gesetzliche Kündigungsrechte bleiben unberührt."
+        },
+        "dataProtection": {
+          "title": "Datenschutz",
+          "body": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung dieser Plattform sowie den geltenden datenschutzrechtlichen Vorschriften."
+        },
+        "governingLaw": {
+          "title": "Anwendbares Recht",
+          "body": "Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts."
+        },
+        "changes": {
+          "title": "Änderungen der AGB",
+          "body": "Maped Solutions UG behält sich vor, diese AGB aus rechtlichen oder betrieblichen Gründen zu ändern. Die jeweils aktuelle Fassung ist auf dieser Plattform einsehbar.",
+          "meta": {
+            "lastUpdated": "Zuletzt aktualisiert:"
+          }
+        }
+      },
+      "imprint": {
+        "hero": {
+          "headline1": "Impressum",
+          "headline2": "Angaben gemäß § 5 TMG",
+          "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
+        },
+        "responsibleSection": {
+          "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
+          "description": "Verantwortlich für die Inhalte dieser Seite ist:"
+        },
+        "taxSection": {
+          "heading": "Umsatzsteuer-ID",
+          "descriptionNoId": "Keine Umsatzsteuer-Identifikationsnummer vorhanden / nicht erforderlich."
+        },
+        "liabilitySection": {
+          "heading": "Haftungsausschluss",
+          "text": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+        },
+        "odrSection": {
+          "heading": "Online-Streitbeilegung (OS)",
+          "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+        }
+      }
+    }
+  },
+
+  "dashboard": {
+    "requests": {
+      "requestsList": {
+        "title": "Anfragen",
+        "empty": "Keine Anfragen gefunden",
+        "button": "Weitere Details"
+      },
+      "requestDetails": {
+        "button": {
+          "cta": "Confirm Changes",
+          "variant": "solid",
+          "icon": "confirm"
+        }
+      },
+      "requestStatus": {
+        "submitted": "Eingereicht",
+        "accepted": "Akzeptiert",
+        "inProgress": "In Bearbeitung",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      },
+      "service": {
+        "furniture-assembly": "Möbelmontage",
+        "kitchen-cleaning": "Küchenreinigung",
+        "house-cleaning": "Wohnungsreinigung",
+        "window-cleaning": "Fensterreinigung",
+        "house-service": "Hausservice",
+        "kitchen-assembly": "Küchenmontage",
+        "inspection": "Inspektion"
       }
     },
-    "terms": {
-      "hero": {
-        "headline1": "Allgemeine Geschäftsbedingungen",
-        "headline2": "Nutzungsbedingungen der Plattform",
-        "subtitle": "Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung dieser Plattform sowie die Rechte und Pflichten der beteiligten Parteien.",
-        "image": {
-          "src": "/images/terms-hero.png",
-          "alt": "Allgemeine Geschäftsbedingungen"
-        }
+    "support": {
+      "heading": "Support-Tickets",
+      "description": "Beschreiben Sie Ihr Problem, damit wir ein Support-Ticket erstellen können."
+    },
+    "propertyManagers": {
+      "page": {
+        "kicker": "Immobilien",
+        "title": "Immobilienverwalter",
+        "subtitle": "Verwalte Kontaktdaten, Zugriffsstatus und Gebäudezuweisungen für dein Team.",
+        "createCta": "Manager erstellen"
       },
-      "overview": {
-        "title": "Geltungsbereich",
-        "intro": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der über diese Plattform bereitgestellten Funktionen und Dienste.",
-        "bullets": [
-          "Die Plattform wird technisch durch Maped Solutions UG betrieben.",
-          "Die angebotenen Dienstleistungen werden durch den jeweiligen Kunden erbracht.",
-          "Maped Solutions UG erbringt keine eigenen Endkundendienstleistungen.",
-          "Abweichende Bedingungen finden nur Anwendung, wenn sie ausdrücklich vereinbart wurden."
-        ]
+      "toolbar": {
+        "searchPlaceholder": "Nach Name oder E-Mail suchen",
+        "statusAll": "Alle Status",
+        "statusActive": "Aktiv",
+        "statusInactive": "Inaktiv",
+        "apply": "Anwenden",
+        "reset": "Zurücksetzen",
+        "totalLabel": "Gesamt",
+        "activeLabel": "Aktiv",
+        "inactiveLabel": "Inaktiv"
       },
-      "definitions": {
-        "title": "Begriffsbestimmungen",
-        "items": [
-          {
-            "term": "Plattform",
-            "definition": "Die webbasierte Softwarelösung zur Verwaltung von Dienstleistungen und Anfragen."
-          },
-          {
-            "term": "Kunde",
-            "definition": "Das Unternehmen, das über die Plattform Dienstleistungen gegenüber Endnutzern anbietet."
-          },
-          {
-            "term": "Nutzer",
-            "definition": "Natürliche oder juristische Personen, die die Plattform verwenden."
-          },
-          {
-            "term": "Anbieter",
-            "definition": "Maped Solutions UG als technischer Betreiber der Plattform."
-          }
-        ]
+      "table": {
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "status": "Status",
+        "buildings": "Gebäude",
+        "actions": "Aktionen",
+        "loading": "Immobilienverwalter werden geladen...",
+        "empty": "Keine Immobilienverwalter gefunden.",
+        "edit": "Bearbeiten",
+        "activate": "Aktivieren",
+        "deactivate": "Deaktivieren"
       },
-      "serviceDescription": {
-        "title": "Leistungsbeschreibung",
-        "body": "Maped Solutions UG stellt dem Kunden eine betriebsbereite Softwareplattform (Version 1.0) zur Verfügung. Die Leistung umfasst den technischen Betrieb, die Wartung sowie fortlaufende Optimierung der Plattform.",
-        "note": "Die Plattform ist kein Vermittlungs- oder Ausführungsdienst für die angebotenen Dienstleistungen."
+      "pagination": {
+        "prev": "Zurück",
+        "next": "Weiter",
+        "pageLabel": "Seite",
+        "loadMoreLabel": "Mehr Ergebnisse laden"
       },
-      "optimization": {
-        "title": "Fortlaufende Optimierung",
-        "body": "Die fortlaufende Optimierung umfasst technische Verbesserungen, Sicherheitsupdates, Fehlerbehebungen und Leistungsanpassungen. Funktionale Erweiterungen oder Änderungen des Leistungsumfangs bedürfen einer gesonderten Vereinbarung."
+      "confirm": {
+        "activateTitle": "Manager aktivieren?",
+        "activateDescription": "Dieser Manager erhält wieder Zugriff auf das Dashboard.",
+        "deactivateTitle": "Manager deaktivieren?",
+        "deactivateDescription": "Dieser Manager verliert den Zugriff auf das Dashboard.",
+        "confirmActivate": "Aktivieren",
+        "confirmDeactivate": "Deaktivieren",
+        "cancel": "Abbrechen"
       },
-      "userObligations": {
-        "title": "Pflichten der Nutzer",
-        "items": [
-          "Angabe wahrheitsgemäßer und vollständiger Informationen.",
-          "Vertrauliche Behandlung von Zugangsdaten.",
-          "Keine missbräuchliche oder rechtswidrige Nutzung der Plattform.",
-          "Einhaltung geltender Gesetze und Vorschriften."
-        ]
+      "form": {
+        "createTitle": "Immobilienverwalter erstellen",
+        "editTitle": "Immobilienverwalter bearbeiten",
+        "createSubtitle": "Füge einen neuen Manager hinzu und weise Gebäude später zu.",
+        "editSubtitle": "Aktualisiere die Daten und den Status des Managers.",
+        "fields": {
+          "name": "Name",
+          "email": "E-Mail",
+          "phone": "Telefon",
+          "address": "Adresse",
+          "status": "Status",
+          "preferredContactMethod": "Bevorzugter Kontakt",
+          "notes": "Notizen"
+        },
+        "statusOptions": {
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        },
+        "contactOptions": {
+          "email": "E-Mail",
+          "phone": "Telefon",
+          "none": "Keine Präferenz"
+        },
+        "submitCreate": "Manager erstellen",
+        "submitEdit": "Änderungen speichern",
+        "cancel": "Abbrechen",
+        "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
+        "successCreateTitle": "Manager erstellt",
+        "successCreateDescription": "Der Immobilienverwalter wurde erfolgreich hinzugefügt.",
+        "successEditTitle": "Manager aktualisiert",
+        "successEditDescription": "Der Immobilienverwalter wurde erfolgreich aktualisiert."
       },
-      "availability": {
-        "title": "Verfügbarkeit",
-        "body": "Maped Solutions UG ist bemüht, eine hohe Verfügbarkeit der Plattform sicherzustellen. Eine durchgehende oder unterbrechungsfreie Verfügbarkeit kann jedoch nicht garantiert werden."
-      },
-      "externalContractors": {
-        "title": "Externe Dienstleister",
-        "body": "Der Kunde kann zur Erbringung seiner Dienstleistungen externe Dienstleister einsetzen. Für deren Leistungen, Qualifikation und rechtmäßiges Handeln ist ausschließlich der Kunde verantwortlich."
-      },
-      "liability": {
-        "title": "Haftung",
-        "body": "Maped Solutions UG haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen. Bei einfacher Fahrlässigkeit haftet Maped Solutions UG nur bei Verletzung wesentlicher Vertragspflichten und beschränkt auf den vorhersehbaren Schaden.",
-        "limitations": [
-          "Keine Haftung für Leistungen des Kunden oder externer Dienstleister.",
-          "Keine Haftung für Datenverluste, sofern angemessene Sicherungsmaßnahmen getroffen wurden.",
-          "Keine Haftung für mittelbare Schäden oder entgangenen Gewinn."
-        ]
-      },
-      "payments": {
-        "title": "Zahlungen",
-        "body": "Zahlungen und Abrechnungen erfolgen auf Grundlage der zwischen Maped Solutions UG und dem Kunden geschlossenen Vereinbarungen. Die Plattform selbst stellt keine Zahlungsdienstleistung dar."
-      },
-      "termination": {
-        "title": "Beendigung der Nutzung",
-        "body": "Das Nutzungsverhältnis kann von beiden Parteien unter Einhaltung der vereinbarten Fristen beendet werden. Gesetzliche Kündigungsrechte bleiben unberührt."
-      },
-      "dataProtection": {
-        "title": "Datenschutz",
-        "body": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung dieser Plattform sowie den geltenden datenschutzrechtlichen Vorschriften."
-      },
-      "governingLaw": {
-        "title": "Anwendbares Recht",
-        "body": "Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts."
-      },
-      "changes": {
-        "title": "Änderungen der AGB",
-        "body": "Maped Solutions UG behält sich vor, diese AGB aus rechtlichen oder betrieblichen Gründen zu ändern. Die jeweils aktuelle Fassung ist auf dieser Plattform einsehbar.",
-        "meta": {
-          "lastUpdated": "Zuletzt aktualisiert:"
-        }
+      "details": {
+        "title": "Manager Details",
+        "editLabel": "Bearbeiten",
+        "emptyState": "Wähle einen Manager aus, um Details zu sehen.",
+        "loading": "Details werden geladen...",
+        "phone": "Telefon",
+        "address": "Adresse",
+        "preferredContact": "Bevorzugter Kontakt",
+        "contactOptions": {
+          "email": "E-Mail",
+          "phone": "Telefon",
+          "none": "Keine Präferenz"
+        },
+        "createdAt": "Erstellt",
+        "updatedAt": "Aktualisiert",
+        "notes": "Notizen",
+        "buildings": "Gebäude",
+        "totalBuildings": "Gesamt",
+        "activeBuildings": "Aktiv",
+        "inactiveBuildings": "Inaktiv"
       }
     },
-    "imprint": {
-      "hero": {
-        "headline1": "Impressum",
-        "headline2": "Angaben gemäß § 5 TMG",
-        "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
+    "objects": {
+      "page": {
+        "kicker": "Objekte",
+        "title": "Objekte",
+        "subtitle": "Verwalte Gebäude, Status und Zuweisungen.",
+        "createCta": "Objekt erstellen"
       },
-      "responsibleSection": {
-        "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
-        "description": "Verantwortlich für die Inhalte dieser Seite ist:"
+      "toolbar": {
+        "searchPlaceholder": "Suche nach Objektnummer oder Adresse",
+        "statusAll": "Alle",
+        "statusActive": "Aktiv",
+        "statusInactive": "Inaktiv"
       },
-      "taxSection": {
-        "heading": "Umsatzsteuer-ID",
-        "descriptionNoId": "Keine Umsatzsteuer-Identifikationsnummer vorhanden / nicht erforderlich."
+      "table": {
+        "propertyManager": "Manager",
+        "entrances": "Eingänge",
+        "status": "Status",
+        "objectNumber": "Objektnummer",
+        "address": "Adresse",
+        "loading": "Objekte werden geladen...",
+        "empty": "Keine Objekte gefunden.",
+        "edit": "Bearbeiten"
       },
-      "liabilitySection": {
-        "heading": "Haftungsausschluss",
-        "text": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+      "pagination": {
+        "loadMoreLabel": "Mehr Ergebnisse laden"
       },
-      "odrSection": {
-        "heading": "Online-Streitbeilegung (OS)",
-        "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+      "details": {
+        "title": "Objektdetails",
+        "editLabel": "Bearbeiten",
+        "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
+        "loading": "Details werden geladen...",
+        "objectNumber": "Objektnummer",
+        "address": "Adresse",
+        "propertyManager": "Manager",
+        "entrancesCount": "Eingänge",
+        "floorCount": "Stockwerke",
+        "preferredCleaningDay": "Reinigungstag",
+        "preferredCleaningWindowDay": "Fester Reinigungstag",
+        "cleaningSuppliesRoom": "Reinigungsraum",
+        "keyAccess": "Schlüsselzugang",
+        "waterAccess": "Wasserzugang",
+        "waterDisposal": "Wasserentsorgung",
+        "ladderAvailable": "Leiter verfügbar",
+        "electricityAccess": "Stromzugang",
+        "lightBulbChangeRequired": "Lampenwechsel",
+        "flooringType": "Bodenart",
+        "onSiteContact": "Ansprechpartner vor Ort",
+        "decisionMaker": "Entscheider",
+        "cleaningInfo": "Reinigungsinfo",
+        "status": "Status",
+        "notes": "Notizen",
+        "createdAt": "Erstellt",
+        "updatedAt": "Aktualisiert"
+      },
+      "form": {
+        "createTitle": "Objekt erstellen",
+        "editTitle": "Objekt bearbeiten",
+        "fields": {
+          "propertyManagerId": "Manager-ID",
+          "propertyManagerPlaceholder": "Manager nach Name oder E-Mail suchen",
+          "propertyManagerLoading": "Suche läuft...",
+          "propertyManagerEmpty": "Keine Manager gefunden.",
+          "propertyManagerNotSelected": "Kein Manager ausgewählt",
+          "objectNumber": "Objektnummer",
+          "street": "Straße",
+          "streetNumber": "Hausnummer",
+          "postalCode": "PLZ",
+          "district": "Bezirk",
+          "entrancesCount": "Eingänge",
+          "floorCount": "Stockwerke",
+          "preferredCleaningDay": "Bevorzugter Reinigungstag",
+          "preferredCleaningDayPlaceholder": "Wochentag auswählen",
+          "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
+          "preferredCleaningWindowDayPlaceholder": "Wochentag auswählen",
+          "cleaningSuppliesRoom": "Reinigungsraum",
+          "keyAccess": "Schlüsselzugang",
+          "waterAccess": "Wasserzugang",
+          "waterDisposal": "Wasserentsorgung",
+          "ladderAvailable": "Leiter verfügbar",
+          "electricityAccess": "Stromzugang",
+          "lightBulbChangeRequired": "Lampenwechsel",
+          "flooringType": "Bodenart",
+          "onSiteContact": "Ansprechpartner vor Ort",
+          "decisionMaker": "Entscheider",
+          "cleaningInfo": "Reinigungsinfo",
+          "status": "Status",
+          "notes": "Notizen"
+        },
+        "days": {
+          "monday": "Montag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch",
+          "thursday": "Donnerstag",
+          "friday": "Freitag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag"
+        },
+        "statusOptions": {
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        },
+        "submitCreate": "Objekt erstellen",
+        "submitEdit": "Änderungen speichern",
+        "cancel": "Abbrechen",
+        "emptyState": "Wähle ein Objekt aus, um Details zu sehen.",
+        "successCreateTitle": "Objekt erstellt",
+        "successCreateDescription": "Das Objekt wurde erfolgreich erstellt.",
+        "successEditTitle": "Objekt aktualisiert",
+        "successEditDescription": "Das Objekt wurde erfolgreich aktualisiert."
+      }
+    },
+    "contactMessages": {
+      "list": {
+        "title": "Kontaktanfragen",
+        "empty": "Noch keine Nachrichten",
+        "loading": "Nachrichten werden geladen…",
+        "respondCta": "Beantworten",
+        "cancelCta": "Abbrechen",
+        "deleteCta": "Löschen",
+        "reloadCta": "Liste neu laden",
+        "viewResponse": "Antwort anzeigen",
+        "hideResponse": "Weniger anzeigen",
+        "description": "Aktuelle Nachrichten aus dem Kontaktformular.",
+        "message": "Nachricht",
+        "answer": "Antwort",
+        "badge": {
+          "pending": "Offen",
+          "answered": "Beantwortet"
+        }
+      },
+      "responder": {
+        "title": "Nachricht beantworten",
+        "description": "Schreibe eine Antwort und wir markieren die Nachricht als beantwortet.",
+        "textareaPlaceholder": "Antwort hier eingeben...",
+        "cancel": "Abbrechen",
+        "submit": "Antwort senden",
+        "successTitle": "Antwort gesendet",
+        "successDescription": "Die Kontaktanfrage wurde als beantwortet markiert."
+      },
+      "filters": {
+        "statusLabel": "Status",
+        "statusAll": "Alle",
+        "statusPending": "Offen",
+        "statusAnswered": "Beantwortet",
+        "searchLabel": "Suche",
+        "searchPlaceholder": "Text in Name, E-Mail oder Nachricht",
+        "apply": "Suchen",
+        "prevPage": "Zurück",
+        "nextPage": "Weiter",
+        "pageLabel": "Seite ",
+        "loadMoreLabel": "Mehr Ergebnisse laden",
+        "totalLabel": "Gesamt",
+        "pendingLabel": "Offen",
+        "answeredLabel": "Beantwortet"
+      },
+      "delete": {
+        "modalTitle": "Nachricht löschen",
+        "modalDescription": "Diese Nachricht wird dauerhaft entfernt.",
+        "confirmTitle": "Diese Nachricht löschen?",
+        "confirmDescription": "Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmLabel": "Löschen",
+        "cancelLabel": "Abbrechen",
+        "successTitle": "Nachricht gelöscht",
+        "successDescription": "Die Nachricht wurde entfernt."
       }
     }
   }

@@ -56,7 +56,7 @@ export function Footer() {
   const { texts } = useI18n();
   const { openManager } = useCookies();
 
-  const footer = texts?.components.footer;
+  const footer = texts?.components.client.footer;
 
   return (
     <footer className={styles.footer} aria-label="Website footer">

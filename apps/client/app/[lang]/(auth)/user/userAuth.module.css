@@ -42,9 +42,6 @@
 }
 .h1 {
   color: var(--text-secondary);
-  font-weight: 500;
-  font-size: clamp(24px, 4.5vw, 36px);
-  line-height: 1;
 }
 .header_p {
   color: var(--text-secondary);

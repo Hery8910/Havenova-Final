@@ -1,4 +1,5 @@
 'use client';
+import styles from './page.module.css';
 import { useEffect, useState } from 'react';
 
 import { useClient } from '../../../../../packages/contexts/client';
@@ -57,7 +58,7 @@ export default function Home() {
 
   return (
     <main>
-      <p>hero</p>
+      <p className={styles.p}>hero</p>
     </main>
   );
 }

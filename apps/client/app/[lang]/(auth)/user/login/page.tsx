@@ -40,10 +40,9 @@ const Login = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
   const popups = texts.popups;
-  const formText = texts.components.form;
+  const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
-  const login: LoginData = texts?.pages?.user.login;
-  const descriptionId = 'login-cta';
+  const login: LoginData = texts?.pages?.client.user.login;
   const loginButton = formText.button.login;
 
   const handleLogin = async (data: LoginPayload) => {
@@ -165,7 +164,7 @@ const Login = () => {
     <main
       className={styles.main}
       aria-labelledby="login-title"
-      aria-describedby={login?.cta?.title ? descriptionId : undefined}
+      aria-describedby={login?.cta?.title ? 'login-cta' : undefined}
     >
       <div className={`${styles.wrapper} card`} role="region" aria-labelledby="login-title">
         <header className={styles.header}>
@@ -187,7 +186,7 @@ const Login = () => {
             loading={loading}
           />
           <aside className={styles.aside}>
-            <p id={descriptionId} className={styles.header_p}>
+            <p id={'login-cta'} className={styles.header_p}>
               {login.cta.title}
             </p>
             <Link className={styles.link} href={login.cta.url}>

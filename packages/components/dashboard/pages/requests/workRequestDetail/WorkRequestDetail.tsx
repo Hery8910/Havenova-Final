@@ -2,14 +2,32 @@
 
 import { useState, useMemo } from 'react';
 import styles from './WorkRequestDetail.module.css';
-import { updateWorkRequest, WorkRequestDetailData } from '@/packages/services/workRequest';
 import { ServiceList } from '../serviceList';
-import { Button } from '../../../../client';
 import { useI18n } from '../../../../../contexts/i18n';
-import { ButtonProps } from '../../../../client/button/Button';
 
 export interface RequestDetailsTexts {
-  button: ButtonProps;
+  button: {
+    cta: string;
+  };
+}
+
+interface ServiceItem {
+  _id: string;
+  status: string;
+  serviceType: string;
+  price: number;
+  estimatedDuration: number;
+}
+
+interface WorkRequestDetailData {
+  _id: string;
+  status: string;
+  serviceAddress: string;
+  notes?: string;
+  user?: {
+    name?: string;
+  };
+  services: ServiceItem[];
 }
 
 interface WorkRequestDetailProps {
@@ -39,11 +57,6 @@ export default function WorkRequestDetail({ request, onClose, onUpdated }: WorkR
   const handleSave = async () => {
     setSaving(true);
     try {
-      await updateWorkRequest(request._id, {
-        notes,
-        totalPrice,
-        totalEstimatedDuration: totalDuration,
-      });
       onUpdated();
       onClose();
     } catch (err) {
@@ -57,7 +70,9 @@ export default function WorkRequestDetail({ request, onClose, onUpdated }: WorkR
     <section className={`${styles.section} card`}>
       <header className={styles.header}>
         <h3>Work Request Details</h3>
-        <Button variant="outline" cta="" icon="close" onClick={onClose} />
+        <button type="button" onClick={onClose}>
+          Close
+        </button>
       </header>
 
       <article className={styles.info}>
@@ -89,12 +104,9 @@ export default function WorkRequestDetail({ request, onClose, onUpdated }: WorkR
       </div>
 
       <ServiceList services={request.services} />
-      <Button
-        cta={requestDetails.button.cta}
-        variant={requestDetails.button.variant}
-        icon={requestDetails.button.icon}
-        onClick={handleSave}
-      />
+      <button type="button" onClick={handleSave} disabled={saving}>
+        {requestDetails?.button?.cta ?? 'Save'}
+      </button>
     </section>
   );
 }

@@ -38,6 +38,10 @@
     "title": "Unexpected error",
     "description": "Something went wrong. Please try again or contact support."
   },
+  "CATALOG_FOUND": {
+    "title": "Catalog loaded",
+    "description": "The global task catalog was loaded successfully."
+  },
   "CLIENT_CREATE_SUCCESS": {
     "title": "Client created successfully",
     "description": "The client has been successfully added to the system."

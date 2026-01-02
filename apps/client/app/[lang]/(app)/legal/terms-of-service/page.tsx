@@ -6,8 +6,6 @@ import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
-import { FinalCTA, FinalCTASkeleton } from '@/packages/components/client';
-import { useRouter } from 'next/navigation';
 
 export interface TermsOfServicePageTexts {
   hero: {
@@ -71,10 +69,7 @@ export interface ContactTexts {
 export default function TermsOfServicePage() {
   const { client } = useClient();
   const { texts } = useI18n();
-  const router = useRouter();
-
   const terms: TermsOfServicePageTexts = texts?.pages?.legal?.terms;
-  const finalCtaTexts = texts.components.common.finalCta;
 
   if (!client || !terms) return null;
 
@@ -188,11 +183,6 @@ export default function TermsOfServicePage() {
         </ul>
       </section>
 
-      {finalCtaTexts ? (
-        <FinalCTA {...finalCtaTexts} onClick={() => router.push('/services')} />
-      ) : (
-        <FinalCTASkeleton />
-      )}
     </main>
   );
 }

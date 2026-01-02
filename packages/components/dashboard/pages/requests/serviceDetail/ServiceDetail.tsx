@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import styles from './ServiceDetail.module.css';
 import { IoClose } from 'react-icons/io5';
-import { getServiceById, updateService } from '@/packages/services/service';
+import { getServiceById, updateService } from '../../../../../services';
 
 interface ServiceDetailProps {
   id: string;

@@ -27,7 +27,6 @@ interface GenericFormProps<T extends Record<string, any>> {
 }
 
 export default function Form<T extends Record<string, any>>({
-  auth,
   profile,
   fields,
   formData,

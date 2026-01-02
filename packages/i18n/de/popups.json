@@ -38,6 +38,10 @@
     "title": "Unerwarteter Fehler",
     "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
   },
+  "CATALOG_FOUND": {
+    "title": "Katalog geladen",
+    "description": "Der globale Aufgaben-Katalog wurde erfolgreich geladen."
+  },
   "CLIENT_CREATE_SUCCESS": {
     "title": "Kunde erfolgreich erstellt",
     "description": "Der Kunde wurde erfolgreich im System angelegt."

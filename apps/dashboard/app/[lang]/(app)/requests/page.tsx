@@ -1,15 +1,24 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import styles from './page.module.css';
 import { FaFolder } from 'react-icons/fa';
 import { useClient } from '../../../../../../packages/contexts';
-import {
-  getWorkRequestById,
-  getWorkRequests,
-  RequestFilters,
-  WorkRequestSummary,
-} from '../../../../../../packages/services';
+interface RequestFilters {
+  status: string;
+  date: string;
+  search: string;
+}
+
+interface WorkRequestSummary {
+  _id: string;
+  status: string;
+  createdAt: string;
+  services?: string[];
+  user?: {
+    name?: string;
+  };
+}
 import {
   RequestList,
   RequestsToolbar,
@@ -21,12 +30,6 @@ export default function Requests() {
 
   const [requests, setRequests] = useState<WorkRequestSummary[]>([]);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<{
-    status: number;
-    title: string;
-    description: string;
-  } | null>(null);
-
   const [filters, setFilters] = useState<RequestFilters>({
     status: '',
     date: '',
@@ -34,56 +37,12 @@ export default function Requests() {
   });
   const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
 
-  const handleSelectRequest = async (id: string) => {
-    try {
-      const data = await getWorkRequestById(id);
-      setSelectedRequest(data);
-      console.log('🟢 Selected request:', data);
-      // Aquí luego puedes abrir un modal o panel lateral con esos detalles
-    } catch (error) {
-      console.error('Error fetching work request details:', error);
+  const handleSelectRequest = (id: string) => {
+    const selected = requests.find((request) => request._id === id);
+    if (selected) {
+      setSelectedRequest(selected);
     }
   };
-
-  const fetchWorkRequests = useCallback(async () => {
-    if (!client?._id) return;
-
-    setLoading(true);
-    try {
-      const response = await getWorkRequests(client._id, filters);
-
-      if (response.success) {
-        setRequests(response.workRequests);
-      } else {
-        setAlert({
-          status: 400,
-          title: 'Error loading requests',
-          description: 'Could not retrieve work requests.',
-        });
-      }
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        setAlert({
-          status: error.response.status,
-          title: 'Error loading data',
-          description: error.response.data.message || 'Unexpected error.',
-        });
-      } else {
-        setAlert({
-          status: 500,
-          title: 'Server error',
-          description: 'Could not load work requests.',
-        });
-      }
-    } finally {
-      setLoading(false);
-      setTimeout(() => setAlert(null), 4000);
-    }
-  }, [client?._id, filters]);
-
-  useEffect(() => {
-    fetchWorkRequests();
-  }, [fetchWorkRequests]);
 
   const handleFilterChange = (key: keyof RequestFilters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -104,7 +63,7 @@ export default function Requests() {
         <WorkRequestDetail
           request={selectedRequest}
           onClose={() => setSelectedRequest(null)}
-          onUpdated={fetchWorkRequests} // refresca la tabla
+          onUpdated={() => undefined}
         />
       )}
     </section>

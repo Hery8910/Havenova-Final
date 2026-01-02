@@ -8,5 +8,4 @@ export * from './loading';
 export * from './languageSwitcher';
 export * from './themeToggler';
 export * from './dashboard';
-export * from './imageUploader';
 export * from './client';

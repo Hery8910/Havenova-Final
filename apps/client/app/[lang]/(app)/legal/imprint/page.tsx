@@ -2,7 +2,6 @@
 
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
-import { ContactInfo, FinalCTA, FinalCTASkeleton } from '@/packages/components/client';
 import { useRouter } from 'next/navigation';
 
 export default function ImprintPage() {
@@ -10,7 +9,6 @@ export default function ImprintPage() {
   const router = useRouter();
 
   const imprintTexts = texts.pages.legal.imprint;
-  const contactInfo = texts.contactInfo;
   const finalCtaTexts = texts.components.common.finalCta;
 
   return (
@@ -21,10 +19,6 @@ export default function ImprintPage() {
         <p>{imprintTexts.hero.subtitle}</p>
       </header>
       <main className={styles.main}>
-        <section className={styles.section}>
-          <ContactInfo {...contactInfo} />
-        </section>
-
         <section className={styles.section}>
           <h3>{imprintTexts.responsibleSection.heading}</h3>
           <p>{imprintTexts.responsibleSection.description}</p>
@@ -52,10 +46,14 @@ export default function ImprintPage() {
         </section>
       </main>
       {finalCtaTexts ? (
-        <FinalCTA {...finalCtaTexts} onClick={() => router.push('/services')} />
-      ) : (
-        <FinalCTASkeleton />
-      )}
+        <div className={styles.section}>
+          <p>{finalCtaTexts.headline}</p>
+          <p>{finalCtaTexts.subheadline}</p>
+          <button type="button" onClick={() => router.push('/services')}>
+            {finalCtaTexts.button?.cta ?? 'Services'}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

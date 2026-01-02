@@ -19,11 +19,11 @@ export function NavbarContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const theme = profile?.theme || 'light';
-  const navbarConfig: NavbarConfig = texts?.components?.navbar;
+  const navbarConfig: NavbarConfig | undefined = texts?.components?.client?.navbar;
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1200);
+      setIsMobile(window.innerWidth <= 1450);
     };
     handleResize();
     window.addEventListener('resize', handleResize);

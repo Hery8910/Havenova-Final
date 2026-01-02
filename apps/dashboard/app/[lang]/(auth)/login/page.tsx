@@ -70,9 +70,9 @@ const Login = () => {
   }, [profile?.language, lang, language, router, setLanguage, isLoggedIn]);
 
   const popups = texts.popups;
-  const formText = texts.components.form;
+  const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
-  const login: LoginData = texts?.pages?.user.login;
+  const login: LoginData = texts?.pages?.client.user.login;
   const descriptionId = 'login-cta';
   const loginButton = formText.button.login;
 

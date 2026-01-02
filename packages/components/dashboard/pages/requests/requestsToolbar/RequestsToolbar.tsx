@@ -1,6 +1,10 @@
 import { IoSearch } from 'react-icons/io5';
 import styles from './RequestsToolbar.module.css';
-import { RequestFilters } from '@/packages/services/workRequest';
+interface RequestFilters {
+  status: string;
+  date: string;
+  search: string;
+}
 
 interface RequestsToolbarProps {
   filters: RequestFilters;

@@ -1,12 +1,19 @@
 'use client';
 
 import styles from './ServiceList.module.css';
-import { WorkRequestDetailData } from '@/packages/services/workRequest';
 import { useState } from 'react';
 import { ServiceDetail } from '../serviceDetail';
 
+interface ServiceItem {
+  _id: string;
+  status: string;
+  serviceType: string;
+  price: number;
+  estimatedDuration: number;
+}
+
 interface ServiceListProps {
-  services: WorkRequestDetailData['services'];
+  services: ServiceItem[];
 }
 
 export default function ServiceList({ services }: ServiceListProps) {

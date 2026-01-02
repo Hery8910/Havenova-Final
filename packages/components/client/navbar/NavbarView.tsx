@@ -18,6 +18,10 @@ export interface IconNavItem extends BaseNavItem {
   alt: string;
 }
 
+export interface NavLinkItem extends BaseNavItem {
+  tone?: 'cleaning' | 'maintenance' | string;
+}
+
 export type ServiceNavItem = IconNavItem;
 export interface SimpleNavItem extends BaseNavItem {}
 
@@ -33,6 +37,7 @@ export type HeadersItem = {
 
 export interface NavbarConfig {
   headers: HeadersItem;
+  links?: NavLinkItem[];
   services: ServiceNavItem[];
   about: SimpleNavItem[];
   profile: ProfileNavItem;
@@ -72,6 +77,14 @@ export function NavbarView({
     }
   };
 
+  const links: NavLinkItem[] = navbarConfig?.links ?? [
+    { label: 'Cleaning', href: '/services/house-cleaning', tone: 'cleaning' },
+    { label: 'Maintenance', href: '/services/home-service', tone: 'maintenance' },
+    { label: 'How it works', href: '/how-it-work' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'About', href: '/about' },
+  ];
+
   return (
     <nav className={styles.nav} aria-label="Main navigation">
       {!isMobile ? (
@@ -87,11 +100,17 @@ export function NavbarView({
             />
           </Link>
           <ul className={styles.desktopUl}>
-            <li className={styles.desktopLi}>How it works</li>
-            <li className={styles.desktopLi}>Cleaning</li>
-            <li className={styles.desktopLi}>Wartung</li>
-            <li className={styles.desktopLi}>Contact</li>
-            <li className={styles.desktopLi}>About</li>
+            {links.map((item) => (
+              <li key={item.href} className={styles.desktopLi}>
+                <button
+                  type="button"
+                  className={`${styles.linkButton} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
+                  onClick={() => onNavigate(item.href)}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
           </ul>
           <aside className={styles.desktopAside}>
             {!isMobile && (
@@ -130,11 +149,22 @@ export function NavbarView({
                 <AvatarView />
               </aside>
               <ul className={styles.mobileUl}>
-                <li className={styles.mobileLi}>Cleaning</li>
-                <li className={styles.mobileLi}>Wartung</li>
-                <li className={styles.mobileLi}>How it works</li>
-                <li className={styles.mobileLi}>Contact</li>
-                <li className={styles.mobileLi}>About</li>
+                {links.map((item) => (
+                  <li key={item.href} className={styles.mobileLi}>
+                    <button
+                      type="button"
+                      className={`${styles.linkButton} ${
+                        item.tone ? styles[`tone_${item.tone}`] : ''
+                      }`}
+                      onClick={() => {
+                        onNavigate(item.href);
+                        onCloseMenu();
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </>
           )}

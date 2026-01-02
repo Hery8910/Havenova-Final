@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useProfile } from '../../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
-import { ButtonProps } from '@/packages/components/common/button/Button';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -36,7 +35,7 @@ const VerifyEmailPage = () => {
   const formText = texts.components.form;
   const verifyText = texts.pages.user.verifyEmail;
   const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
-  const resendButton = formText.button.resendEmail as ButtonProps;
+  const resendButton = formText.button.resendEmail;
 
   const { auth } = useAuth();
   const { profile } = useProfile();

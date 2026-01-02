@@ -88,12 +88,12 @@ export default function FormWrapper<T extends Record<string, any>>({
   const router = useRouter();
   const lang = useLang();
 
-  const formError = texts.components.form.error as Partial<
+  const formError = texts.components.client.form.error as Partial<
     Record<FormField, Record<string, string>>
   >;
 
-  const placeholderText = texts.components.form.placeholders;
-  const labelText = texts.components.form.labels;
+  const placeholderText = texts.components.client.form.placeholders;
+  const labelText = texts.components.client.form.labels;
 
   const [formData, setFormData] = useState<T>(initialValues);
 
