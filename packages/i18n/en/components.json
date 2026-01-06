@@ -1,11 +1,6 @@
 {
   "client": {
     "navbar": {
-      "headers": {
-        "services": "Services",
-        "about": "Havenova",
-        "profile": "Profile"
-      },
       "links": [
         { "label": "Cleaning", "href": "/services/house-cleaning", "tone": "cleaning" },
         { "label": "Maintenance", "href": "/services/home-service", "tone": "maintenance" },
@@ -13,73 +8,18 @@
         { "label": "Contact", "href": "/contact" },
         { "label": "About", "href": "/about" }
       ],
-      "services": [
-        {
-          "label": "Furniture Assembly",
-          "href": "/services/furniture-assembly",
-          "image": "/svg/furniture-assembly.svg",
-          "alt": "Icon Furniture Assembly"
-        },
-        {
-          "label": "Kitchen Assembly",
-          "href": "/services/kitchen-assembly",
-          "image": "/svg/kitchen-assembly.svg",
-          "alt": "Icon Kitchen Assembly"
-        },
-        {
-          "label": "Home Service",
-          "href": "/services/home-service",
-          "image": "/svg/home-service.svg",
-          "alt": "Icon Home Service"
-        },
-        {
-          "label": "Apartment Cleaning",
-          "href": "/services/house-cleaning",
-          "image": "/svg/house-cleaning.svg",
-          "alt": "Icon Apartment Cleaning"
-        },
-        {
-          "label": "Kitchen Cleaning",
-          "href": "/services/kitchen-cleaning",
-          "image": "/svg/kitchen-cleaning.svg",
-          "alt": "Icon Kitchen Cleaning"
-        },
-        {
-          "label": "Window Cleaning",
-          "href": "/services/windows-cleaning",
-          "image": "/svg/windows-cleaning.svg",
-          "alt": "Icon Window Cleaning"
-        }
-      ],
-      "about": [
-        { "label": "About Us", "href": "/about" },
-        { "label": "Contact", "href": "/contact" },
-        { "label": "Q&A", "href": "/faq" },
-        { "label": "Reviews", "href": "/reviews" },
-        { "label": "Blog", "href": "/blogs" },
-        { "label": "Our Services", "href": "/services" }
-      ],
       "profile": {
         "label": "Profile",
-        "href": "/user/profile",
-        "image": "/svg/user.svg",
-        "alt": "User Icon",
-        "auth": "user"
+        "href": "/user/profile"
       },
       "register": [
         {
           "label": "Register",
-          "href": "/user/register",
-          "image": "/svg/signin.svg",
-          "alt": "Sign in Icon",
-          "auth": "guest"
+          "href": "/user/register"
         },
         {
           "label": "Login",
-          "href": "/user/login",
-          "image": "/svg/user.svg",
-          "alt": "User Icon",
-          "auth": "guest"
+          "href": "/user/login"
         }
       ]
     },
@@ -184,9 +124,7 @@
     },
     "footer": {
       "headers": {
-        "services": "Services",
         "about": "Havenova",
-        "contact": "Contact",
         "legal": "Legal"
       },
       "contact": [
@@ -211,51 +149,12 @@
           "data": "08:00-14:00 Uhr"
         }
       ],
-      "havenova": [
-        {
-          "label": "About Us",
-          "href": "/about"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        { "label": "FAQ", "href": "/q&a" },
-        {
-          "label": "Reviews",
-          "href": "/reviews"
-        },
-        { "label": "Blog", "href": "/blog" },
-        {
-          "label": "Our Services",
-          "href": "/service"
-        }
-      ],
-      "services": [
-        {
-          "label": "Furniture Assembly",
-          "href": "/services/furniture-assembly"
-        },
-        {
-          "label": "Kitchen Assembly",
-          "href": "/services/kitchen-assembly"
-        },
-        {
-          "label": "Home Service",
-          "href": "/services/home-service"
-        },
-        {
-          "label": "House Cleaning",
-          "href": "/services/house-cleaning"
-        },
-        {
-          "label": "Kitchen Cleaning",
-          "href": "/services/kitchen-cleaning"
-        },
-        {
-          "label": "Window Cleaning",
-          "href": "/services/windows-cleaning"
-        }
+      "links": [
+        { "label": "Cleaning", "href": "/services/house-cleaning", "tone": "cleaning" },
+        { "label": "Maintenance", "href": "/services/home-service", "tone": "maintenance" },
+        { "label": "How it works", "href": "/how-it-work" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "About", "href": "/about" }
       ],
       "legal": [
         {
@@ -290,8 +189,9 @@
         }
       ],
       "cta": {
-        "title": "Powered by Maped Solutions",
-        "description": "This digital platform was designed and developed to provide modern, efficient, and tailored solutions for service companies."
+        "cookies": "Cookie Preference",
+        "title": "Maped Solutions",
+        "description": "This platform was thoughtfully designed and developed by Maped Solutions, with a clear focus on making everyday work easier for service-based businesses."
       }
     }
   },
@@ -302,7 +202,7 @@
       "requests": "Requests",
       "clients": "Clients",
       "property-manager": "Property Manager",
-      "global-task-catalog": "Global Task Catalog",
+      "global-task-catalog": "Task Catalog",
       "employees": "Employees",
       "messages": "Messages",
       "notifications": "Notifications",
@@ -319,6 +219,35 @@
         "successDescription": "The global task catalog was loaded successfully.",
         "bundleSuccessTitle": "Bundle loaded",
         "bundleSuccessDescription": "The bundle details were loaded successfully.",
+        "recurrenceKeys": {
+          "WEEKLY": "Weekly",
+          "BIWEEKLY": "Biweekly",
+          "MONTHLY": "Monthly",
+          "QUARTERLY": "Quarterly",
+          "SEMIANNUAL": "Semiannual",
+          "ANNUAL": "Annual",
+          "SEASONAL_SPRING": "Seasonal spring",
+          "SEASONAL_SUMMER": "Seasonal summer",
+          "SEASONAL_AUTUMN": "Seasonal autumn",
+          "SEASONAL_WINTER": "Seasonal winter",
+          "ON_DEMAND": "On demand"
+        },
+        "areaKeys": {
+          "STAIRWELL": "Stairwell",
+          "ENTRANCE": "Entrance",
+          "OUTDOOR": "Outdoor",
+          "BASEMENT": "Basement",
+          "PARKING": "Parking",
+          "WINDOWS": "Windows",
+          "DOORS": "Doors",
+          "ELEVATOR": "Elevator",
+          "BIN_AREA": "Bin area",
+          "GARDEN": "Garden",
+          "ROOF": "Roof",
+          "HALLWAY": "Hallway",
+          "STORAGE": "Storage",
+          "OTHER": "Other"
+        },
         "totals": {
           "title": "Totals",
           "bundles": "Bundles",
@@ -328,6 +257,21 @@
         "bundles": {
           "title": "Bundles",
           "empty": "No bundles available",
+          "loading": "Loading bundles...",
+          "filters": {
+            "searchPlaceholder": "Search by title",
+            "statusLabel": "Status",
+            "statusAll": "All",
+            "statusActive": "Active",
+            "statusInactive": "Inactive",
+            "recurrenceLabel": "Recurrence",
+            "areaLabel": "Area",
+            "resetLabel": "Reset"
+          },
+          "pagination": {
+            "loadMoreLabel": "Load more",
+            "loadingLabel": "Loading..."
+          },
           "recurrenceLabel": "Recurrence",
           "areaLabel": "Area",
           "stepsLabel": "Steps",
@@ -358,7 +302,7 @@
           "pricingCurrencyLabel": "Currency",
           "pricingClientLabel": "Client gross",
           "pricingPartnerLabel": "Partner gross",
-          "pricingTaxLabel": "Tax rate",
+          "pricingTaxLabel": "Expected profit",
           "stepsTitle": "Steps",
           "stepsEmpty": "No steps available.",
           "stepsRequirementLabel": "Requirement",
@@ -381,7 +325,7 @@
         { "label": "Clients", "href": "/clients" },
         { "label": "Property Manager", "href": "/property-manager" },
         { "label": "Objects", "href": "/objects" },
-        { "label": "Global Task Catalog", "href": "/global-task-catalog" },
+        { "label": "Task catalog", "href": "/global-task-catalog" },
         { "label": "Employees", "href": "/employees" },
         { "label": "Messages", "href": "/messages" },
         { "label": "Notifications", "href": "/notifications" }
@@ -390,7 +334,9 @@
         { "label": "Support", "href": "/support" },
         { "label": "Profile", "href": "/profile" }
       ],
-      "logout": "Logout"
+      "logout": "Logout",
+      "closeMenu": "Close menu",
+      "openMenu": "Open menu"
     }
   }
 }

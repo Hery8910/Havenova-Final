@@ -1,8 +1,9 @@
 {
   "button": {
-    "accept": "Accept",
-    "continue": "Continue",
-    "close": "Close"
+    "accept": "Akzeptieren",
+    "continue": "Weiter",
+    "close": "Schließen",
+    "reload": "Neu laden"
   },
   "ACCESS_TOKEN_EXPIRED": {
     "title": "Sitzung abgelaufen",
@@ -19,6 +20,12 @@
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
     "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
+    "confirm": "Zum Login",
+    "close": "Weiter stöbern"
+  },
+  "USER_SESSION_EXPIRED": {
+    "title": "Sitzung abgelaufen",
+    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden.",
     "confirm": "Zum Login",
     "close": "Weiter stöbern"
   },

@@ -71,9 +71,9 @@ export function NavbarView({
 
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return '/images/logos/nav-logo-dark.webp';
+      return '/logos/nav-logo-dark.webp';
     } else {
-      return '/images/logos/nav-logo-light.webp';
+      return '/logos/nav-logo-light.webp';
     }
   };
 
@@ -84,35 +84,52 @@ export function NavbarView({
     { label: 'Contact', href: '/contact' },
     { label: 'About', href: '/about' },
   ];
+  const serviceLinks = links.filter((item) => item.href.startsWith('/services'));
+  const mainLinks = links.filter((item) => !item.href.startsWith('/services'));
 
   return (
-    <nav className={styles.nav} aria-label="Main navigation">
+    <nav className={styles.navbar} aria-label="Main navigation">
       {!isMobile ? (
-        <div className={styles.desktop}>
-          <Link className={styles.logo} href="/" aria-label="Homepage">
+        <div className={styles.desktopLayout}>
+          <Link className={styles.logoLink} href="/" aria-label="Homepage">
             <Image
-              className={styles.desktopLogo}
+              className={styles.logoImage}
               src={getLogoSrc()}
               alt="Havenova Logo"
-              width={200}
-              height={50}
+              width={170}
+              height={40}
               priority
             />
           </Link>
-          <ul className={styles.desktopUl}>
-            {links.map((item) => (
-              <li key={item.href} className={styles.desktopLi}>
-                <button
-                  type="button"
-                  className={`${styles.linkButton} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
-                  onClick={() => onNavigate(item.href)}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <aside className={styles.desktopAside}>
+          <div className={styles.navLists}>
+            <ul className={styles.navList}>
+              {serviceLinks.map((item) => (
+                <li key={item.href} className={styles.navItem}>
+                  <button
+                    type="button"
+                    className={`${styles.navLink} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
+                    onClick={() => onNavigate(item.href)}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <ul className={styles.navList}>
+              {mainLinks.map((item) => (
+                <li key={item.href} className={styles.navItem}>
+                  <button
+                    type="button"
+                    className={`${styles.navLink} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
+                    onClick={() => onNavigate(item.href)}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <aside className={styles.navActions}>
             {!isMobile && (
               <>
                 <ThemeToggler />
@@ -123,50 +140,87 @@ export function NavbarView({
           </aside>
         </div>
       ) : (
-        <div className={styles.mobile}>
-          <header className={styles.header}>
-            <Link className={styles.logo} href="/" aria-label="Homepage">
+        <div className={styles.mobileLayout}>
+          <header className={styles.mobileHeader}>
+            <Link className={styles.logoLink} href="/" aria-label="Homepage">
               <Image
-                className={styles.mobileLogo}
+                className={styles.logoImage}
                 src={getLogoSrc()}
                 alt="Havenova Logo"
-                width={200}
-                height={50}
+                width={170}
+                height={40}
                 priority
               />
             </Link>
-            <button className={styles.button} onClick={onToggleMenu}>
+            <button
+              type="button"
+              className={styles.menuButton}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              onClick={onToggleMenu}
+            >
               <HiMenuAlt3 />
             </button>
           </header>
           {menuOpen && (
-            <>
-              <aside className={styles.mobileAside}>
-                <div className={styles.asideDiv}>
-                  <ThemeToggler />
-                  <LanguageSwitcher />
+            <div className={styles.imageWrapper}>
+              <Image
+                className={styles.logoImage}
+                src={'/images/berlin.webp'}
+                alt="Berlin"
+                width={700}
+                height={500}
+                priority
+              />
+              <section className={styles.mobileSection}>
+                <aside className={styles.mobileActions}>
+                  <div className={styles.mobileActionsGroup}>
+                    <ThemeToggler />
+                    <LanguageSwitcher />
+                  </div>
+                  <AvatarView />
+                </aside>
+                <div className={styles.mobileLists} id="mobile-navigation">
+                  <ul className={styles.servicesList}>
+                    {serviceLinks.map((item) => (
+                      <li key={item.href} className={styles.mobileItem}>
+                        <button
+                          type="button"
+                          className={`${styles.navLink} ${
+                            item.tone ? styles[`tone_${item.tone}`] : ''
+                          }`}
+                          onClick={() => {
+                            onNavigate(item.href);
+                            onCloseMenu();
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className={styles.pagesList}>
+                    {mainLinks.map((item) => (
+                      <li key={item.href} className={styles.mobileItem}>
+                        <button
+                          type="button"
+                          className={`${styles.navLink} ${
+                            item.tone ? styles[`tone_${item.tone}`] : ''
+                          }`}
+                          onClick={() => {
+                            onNavigate(item.href);
+                            onCloseMenu();
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <AvatarView />
-              </aside>
-              <ul className={styles.mobileUl}>
-                {links.map((item) => (
-                  <li key={item.href} className={styles.mobileLi}>
-                    <button
-                      type="button"
-                      className={`${styles.linkButton} ${
-                        item.tone ? styles[`tone_${item.tone}`] : ''
-                      }`}
-                      onClick={() => {
-                        onNavigate(item.href);
-                        onCloseMenu();
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </>
+              </section>
+            </div>
           )}
         </div>
       )}

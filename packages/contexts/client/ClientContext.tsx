@@ -22,6 +22,7 @@ export function ClientProvider({
   const didNotifyRef = useRef(false);
   const { texts } = useI18n();
   const { showConfirm, closeAlert } = useGlobalAlert();
+  const popups = texts?.popups ?? {};
 
   useEffect(() => {
     // Si initialClient viene desde el layout (como tú haces), esto ya resuelve todo
@@ -37,7 +38,7 @@ export function ClientProvider({
     didNotifyRef.current = true;
 
     const popup = getPopup(
-      texts.popups,
+      popups,
       'CLIENT_FETCH_FAILED',
       'CLIENT_FETCH_FAILED',
       fallbackPopups.CLIENT_FETCH_FAILED
@@ -48,8 +49,13 @@ export function ClientProvider({
         status: 500,
         title: popup.title,
         description: popup.description,
-        confirmLabel: 'Reload',
-        cancelLabel: popup.close ?? texts.popups.button?.close ?? fallbackButtons.close,
+        confirmLabel:
+          popup.confirm ??
+          popups?.button?.reload ??
+          fallbackButtons.reload ??
+          popups?.button?.continue ??
+          fallbackButtons.continue,
+        cancelLabel: popup.close ?? popups?.button?.close ?? fallbackButtons.close,
       },
       onConfirm: () => {
         closeAlert();
@@ -57,7 +63,7 @@ export function ClientProvider({
       },
       onCancel: closeAlert,
     });
-  }, [client, closeAlert, loading, showConfirm, texts.popups]);
+  }, [client, closeAlert, loading, showConfirm, popups]);
 
   // Estado de carga → NO renderiza nada
   if (loading) {

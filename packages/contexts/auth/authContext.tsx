@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { texts, language } = useI18n();
   const popups = texts.popups;
-  const { showError, showSuccess, closeAlert } = useGlobalAlert();
+  const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
 
   const [auth, setAuthState] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -159,25 +159,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return;
           } catch {
             setGuest();
+            const role = stored?.role;
+            const shouldOfferContinue = role === 'user';
+            const popupKey = shouldOfferContinue
+              ? 'USER_SESSION_EXPIRED'
+              : 'REFRESH_TOKEN_EXPIRED';
             const popup = getPopup(
               popups,
-              'REFRESH_TOKEN_EXPIRED',
-              'REFRESH_TOKEN_EXPIRED',
-              fallbackPopups.REFRESH_TOKEN_EXPIRED
+              popupKey,
+              popupKey,
+              shouldOfferContinue
+                ? fallbackPopups.USER_SESSION_EXPIRED
+                : fallbackPopups.REFRESH_TOKEN_EXPIRED
             );
 
-            showError({
-              response: {
-                status: status || 401,
-                title: popup.title,
-                description: popup.description,
-                cancelLabel: popup.close ?? fallbackButtons.close,
-              },
-              onCancel: () => {
-                closeAlert();
-                router.push(`/${language}/login`);
-              },
-            });
+            if (shouldOfferContinue) {
+              showConfirm({
+                response: {
+                  status: status || 401,
+                  title: popup.title,
+                  description: popup.description,
+                  confirmLabel:
+                    popup.confirm ?? texts.popups?.button?.continue ?? fallbackButtons.continue,
+                  cancelLabel: popup.close ?? fallbackButtons.close,
+                },
+                onConfirm: () => {
+                  closeAlert();
+                  router.push(`/${language}/user/login`);
+                },
+                onCancel: closeAlert,
+              });
+            } else {
+              showError({
+                response: {
+                  status: status || 401,
+                  title: popup.title,
+                  description: popup.description,
+                  cancelLabel: popup.close ?? fallbackButtons.close,
+                },
+                onCancel: () => {
+                  closeAlert();
+                  router.push(`/${language}/user/login`);
+                },
+              });
+            }
             (onSessionExpired || sessionCallbackRef.current)?.();
             return;
           }
@@ -193,7 +218,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isRefreshingRef.current = false;
       }
     },
-    [clientId, createGuest, closeAlert, language, popups, router, showError]
+    [clientId, createGuest, closeAlert, language, popups, router, showConfirm, showError, texts]
   );
 
   // -------------------

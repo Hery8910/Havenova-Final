@@ -14,11 +14,48 @@ export type CatalogBundleSummary = {
   bundleId: string;
   title: string;
   recurrence: string;
+  recurrenceKey?: RecurrenceKey;
+  areaKey?: AreaKey;
   area: string;
   stepsCount: number;
   billablesCount: number;
   isActive: boolean;
 };
+
+export type CatalogBundlesMeta = {
+  total: number;
+  page: number;
+  limit: number;
+};
+
+export type RecurrenceKey =
+  | 'WEEKLY'
+  | 'BIWEEKLY'
+  | 'MONTHLY'
+  | 'QUARTERLY'
+  | 'SEMIANNUAL'
+  | 'ANNUAL'
+  | 'SEASONAL_SPRING'
+  | 'SEASONAL_SUMMER'
+  | 'SEASONAL_AUTUMN'
+  | 'SEASONAL_WINTER'
+  | 'ON_DEMAND';
+
+export type AreaKey =
+  | 'STAIRWELL'
+  | 'ENTRANCE'
+  | 'OUTDOOR'
+  | 'BASEMENT'
+  | 'PARKING'
+  | 'WINDOWS'
+  | 'DOORS'
+  | 'ELEVATOR'
+  | 'BIN_AREA'
+  | 'GARDEN'
+  | 'ROOF'
+  | 'HALLWAY'
+  | 'STORAGE'
+  | 'OTHER';
 
 export type CatalogBundleSchedule = {
   frequency: string;
@@ -48,8 +85,8 @@ export type CatalogBundleDetail = {
   bundleId: string;
   title: string;
   description: string;
-  recurrenceKey: string;
-  areaKey: string;
+  recurrenceKey: RecurrenceKey;
+  areaKey: AreaKey;
   schedule: CatalogBundleSchedule;
   bundlePricing: CatalogBundlePricing;
   steps: CatalogBundleStep[];
@@ -68,6 +105,7 @@ export type GlobalTaskCatalogSummary = {
   isActive: boolean;
   totals: CatalogTotals;
   bundles: CatalogBundleSummary[];
+  meta?: CatalogBundlesMeta;
   createdAt: string;
   updatedAt: string;
 };

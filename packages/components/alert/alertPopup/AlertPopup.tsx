@@ -26,10 +26,10 @@ export default function AlertPopup({
 }: AlertPopupProps) {
   // Mapeo simple solo para las rutas de imagen
   const imageMap: Record<string, string> = {
-    success: '/svg/alert/success.svg',
-    error: '/svg/alert/error.svg',
-    warning: '/svg/alert/warning.svg',
-    info: '/svg/alert/info.svg',
+    success: '/alert/success.svg',
+    error: '/alert/error.svg',
+    warning: '/alert/warning.svg',
+    info: '/alert/info.svg',
   };
 
   // Determinamos el estado visual real. Si carga, forzamos el estilo 'loading'

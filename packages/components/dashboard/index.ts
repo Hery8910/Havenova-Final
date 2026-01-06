@@ -4,3 +4,6 @@ export * from './pagination';
 export * from './propertyManagers';
 export * from './objects';
 export * from './sidebar';
+export * from './statusBadge';
+export * from './recurrenceBadge';
+export * from './areaBadge';

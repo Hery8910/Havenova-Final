@@ -260,7 +260,7 @@ a {
   );
   backdrop-filter: blur(10px);
   border: 1px solid var(--bg-card-1);
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: var(--shadow);
 }
 

@@ -1,4 +1,4 @@
-.nav {
+.navbar {
   width: 100%;
   max-width: 100dvw;
   overflow: hidden;
@@ -11,27 +11,16 @@
   margin: 0 auto;
   z-index: 100;
   color: var(--text-primary);
-  background: linear-gradient(
-    180deg,
-    rgba(247, 249, 252, 0.75) 0%,
-    rgba(238, 242, 247, 0.65) 55%,
-    rgba(231, 236, 243, 0.6) 100%
-  );
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  background: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
-:global([data-theme='dark']) .nav {
-  background: linear-gradient(
-    180deg,
-    rgba(12, 20, 36, 0.6) 0%,
-    rgba(10, 19, 33, 0.55) 55%,
-    rgba(9, 16, 27, 0.5) 100%
-  );
-  box-shadow: 0 8px 24px rgba(3, 7, 18, 0.35);
+:global([data-theme='dark']) .navbar {
+  box-shadow: var(--shadow-lg);
 }
-.desktop,
-.desktopUl {
+.desktopLayout {
   padding: 8px 5dvw;
   max-width: 1700px;
   width: 100%;
@@ -40,27 +29,36 @@
   justify-content: space-between;
   align-items: center;
 }
-.desktopLogo {
+.logoImage {
   transition: transform 0.2s ease-in-out;
 }
-.desktopLogo:hover {
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+}
+.logoImage:hover {
   transform: translateY(-2px);
 }
-.desktopUl {
-  list-style: none;
+.navList {
+  display: flex;
   justify-content: center;
   gap: 16px;
 }
-.desktopLi {
+.navLists {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.navItem {
   width: fit-content;
 }
-.desktopAside {
+.navActions {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
 }
-.mobile {
+.mobileLayout {
   width: 100%;
   padding: 8px 5dvw;
   display: flex;
@@ -69,24 +67,30 @@
   align-items: stretch;
   gap: 32px;
 }
-.header {
+.imageWrapper {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.mobileAside,
-.asideDiv {
+.mobileHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobileActions,
+.mobileActionsGroup {
   display: flex;
   flex-wrap: wrap-reverse;
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
 }
-.asideDiv {
+.mobileActionsGroup {
   width: 200px;
 }
-.button {
+.menuButton {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -96,30 +100,50 @@
   font-size: clamp(24px, 3vw, 30px);
   cursor: pointer;
 }
-
-.mobileUl {
-  list-style: none;
+.mobileSection {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
+  gap: 32px;
+  width: 100%;
+}
+.mobileLists {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  width: 100%;
+}
+.servicesList,
+.pagesList {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
   gap: 10px;
   margin: 0;
   padding: 0;
 }
-.mobileLi {
+.pagesList {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.mobileItem {
   width: 100%;
   max-width: 200px;
-  text-align: end;
+  text-align: center;
 }
-.linkButton {
+.navLink {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 10px 16px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-primary);
@@ -128,10 +152,15 @@
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
-.linkButton:hover {
+.navLink:hover {
   background-color: rgba(7, 104, 201, 0.12);
   transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
+}
+.navLink:focus-visible,
+.menuButton:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
 }
 .tone_cleaning {
   color: var(--brand-primary);
@@ -143,6 +172,6 @@
   border-color: rgba(94, 18, 224, 0.22);
   background-color: rgba(94, 18, 224, 0.08);
 }
-:global([data-theme='dark']) .linkButton:hover {
+:global([data-theme='dark']) .navLink:hover {
   background-color: rgba(148, 163, 184, 0.16);
 }

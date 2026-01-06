@@ -1,11 +1,6 @@
 {
   "client": {
     "navbar": {
-      "headers": {
-        "services": "Leistungen",
-        "about": "Havenova",
-        "profile": "Profil"
-      },
       "links": [
         { "label": "Reinigung", "href": "/services/house-cleaning", "tone": "cleaning" },
         { "label": "Wartung", "href": "/services/home-service", "tone": "maintenance" },
@@ -13,73 +8,18 @@
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
       ],
-      "services": [
-        {
-          "label": "Möbelmontage",
-          "href": "/services/furniture-assembly",
-          "image": "/svg/furniture-assembly.svg",
-          "alt": "Icon Möbelmontage"
-        },
-        {
-          "label": "Küchenmontage",
-          "href": "/services/kitchen-assembly",
-          "image": "/svg/kitchen-assembly.svg",
-          "alt": "Icon Küchenmontage"
-        },
-        {
-          "label": "Hausservice",
-          "href": "/services/home-service",
-          "image": "/svg/home-service.svg",
-          "alt": "Icon Hausservice"
-        },
-        {
-          "label": "Wohnungsreinigung",
-          "href": "/services/house-cleaning",
-          "image": "/svg/house-cleaning.svg",
-          "alt": "Icon Wohnungsreinigung"
-        },
-        {
-          "label": "Küchenreinigung",
-          "href": "/services/kitchen-cleaning",
-          "image": "/svg/kitchen-cleaning.svg",
-          "alt": "Icon Küchenreinigung"
-        },
-        {
-          "label": "Fensterreinigung",
-          "href": "/services/windows-cleaning",
-          "image": "/svg/windows-cleaning.svg",
-          "alt": "Icon Fensterreinigung"
-        }
-      ],
-      "about": [
-        { "label": "Über uns", "href": "/about" },
-        { "label": "Kontakt", "href": "/contact" },
-        { "label": "Fragen & Antworten", "href": "/faq" },
-        { "label": "Bewertungen", "href": "/reviews" },
-        { "label": "Blog", "href": "/blogs" },
-        { "label": "Unsere Leistungen", "href": "/services" }
-      ],
       "profile": {
         "label": "Profil",
-        "href": "/user/profile",
-        "image": "/svg/user.svg",
-        "alt": "Icon Benutzer",
-        "auth": "user"
+        "href": "/user/profile"
       },
       "register": [
         {
           "label": "Registrieren",
-          "href": "/user/register",
-          "image": "/svg/signin.svg",
-          "alt": "Icon Anmeldung",
-          "auth": "guest"
+          "href": "/user/register"
         },
         {
           "label": "Login",
-          "href": "/user/login",
-          "image": "/svg/user.svg",
-          "alt": "Icon Benutzer",
-          "auth": "guest"
+          "href": "/user/login"
         }
       ]
     },
@@ -184,9 +124,7 @@
     },
     "footer": {
       "headers": {
-        "services": "Leistungen",
         "about": "Havenova",
-        "contact": "Kontakt",
         "legal": "Legal"
       },
       "contact": [
@@ -211,51 +149,12 @@
           "data": "08:00-14:00 Uhr"
         }
       ],
-      "havenova": [
-        {
-          "label": "Uber Uns",
-          "href": "/about"
-        },
-        {
-          "label": "Kontakt",
-          "href": "/contact"
-        },
-        { "label": "F&A", "href": "/q&a" },
-        {
-          "label": "Rezensionen",
-          "href": "/reviews"
-        },
-        { "label": "Blog", "href": "/blog" },
-        {
-          "label": "Unsere Leistungen",
-          "href": "/service"
-        }
-      ],
-      "services": [
-        {
-          "label": "Möbelmontage",
-          "href": "/services/furniture-assembly"
-        },
-        {
-          "label": "Küchenmontage",
-          "href": "/services/kitchen-assembly"
-        },
-        {
-          "label": "Heimservice",
-          "href": "/services/home-service"
-        },
-        {
-          "label": "House Cleaning",
-          "href": "/services/house-cleaning"
-        },
-        {
-          "label": "Hausreinigung",
-          "href": "/services/kitchen-cleaning"
-        },
-        {
-          "label": "Fensterreinigung",
-          "href": "/services/windows-cleaning"
-        }
+      "links": [
+        { "label": "Reinigung", "href": "/services/house-cleaning", "tone": "cleaning" },
+        { "label": "Wartung", "href": "/services/home-service", "tone": "maintenance" },
+        { "label": "So funktioniert’s", "href": "/how-it-work" },
+        { "label": "Kontakt", "href": "/contact" },
+        { "label": "Über uns", "href": "/about" }
       ],
       "legal": [
         {
@@ -290,8 +189,9 @@
         }
       ],
       "cta": {
-        "title": "Unterstützt von Maped Solutions",
-        "description": "Diese digitale Plattform wurde entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
+        "cookies": "Cookie-Einstellungen",
+        "title": "Maped Solutions",
+        "description": "Diese Plattform wurde mit Sorgfalt und technischem Know-how von Maped Solutions konzipiert und entwickelt – mit dem Ziel, Dienstleistungsunternehmen den Arbeitsalltag zu erleichtern."
       }
     }
   },
@@ -302,7 +202,7 @@
       "requests": "Anfragen",
       "clients": "Kunden",
       "property-manager": "Immobilienverwalter",
-      "global-task-catalog": "Globaler Aufgaben-Katalog",
+      "global-task-catalog": "Aufgaben-Katalog",
       "employees": "Mitarbeiter",
       "messages": "Nachrichten",
       "notifications": "Benachrichtigungen",
@@ -319,6 +219,35 @@
         "successDescription": "Der globale Aufgaben-Katalog wurde erfolgreich geladen.",
         "bundleSuccessTitle": "Bundle geladen",
         "bundleSuccessDescription": "Die Bundle-Details wurden erfolgreich geladen.",
+        "recurrenceKeys": {
+          "WEEKLY": "Wöchentlich",
+          "BIWEEKLY": "Alle zwei Wochen",
+          "MONTHLY": "Monatlich",
+          "QUARTERLY": "Vierteljährlich",
+          "SEMIANNUAL": "Halbjährlich",
+          "ANNUAL": "Jährlich",
+          "SEASONAL_SPRING": "Saisonal Frühling",
+          "SEASONAL_SUMMER": "Saisonal Sommer",
+          "SEASONAL_AUTUMN": "Saisonal Herbst",
+          "SEASONAL_WINTER": "Saisonal Winter",
+          "ON_DEMAND": "Bei Bedarf"
+        },
+        "areaKeys": {
+          "STAIRWELL": "Treppenhaus",
+          "ENTRANCE": "Eingang",
+          "OUTDOOR": "Außenbereich",
+          "BASEMENT": "Keller",
+          "PARKING": "Parkplatz",
+          "WINDOWS": "Fenster",
+          "DOORS": "Türen",
+          "ELEVATOR": "Aufzug",
+          "BIN_AREA": "Müllbereich",
+          "GARDEN": "Garten",
+          "ROOF": "Dach",
+          "HALLWAY": "Flur",
+          "STORAGE": "Lager",
+          "OTHER": "Sonstiges"
+        },
         "totals": {
           "title": "Summen",
           "bundles": "Bundles",
@@ -328,6 +257,21 @@
         "bundles": {
           "title": "Bundles",
           "empty": "Keine Bundles verfügbar",
+          "loading": "Bundles werden geladen...",
+          "filters": {
+            "searchPlaceholder": "Nach Titel suchen",
+            "statusLabel": "Status",
+            "statusAll": "Alle",
+            "statusActive": "Aktiv",
+            "statusInactive": "Inaktiv",
+            "recurrenceLabel": "Wiederholung",
+            "areaLabel": "Bereich",
+            "resetLabel": "Zurücksetzen"
+          },
+          "pagination": {
+            "loadMoreLabel": "Mehr laden",
+            "loadingLabel": "Laden..."
+          },
           "recurrenceLabel": "Wiederholung",
           "areaLabel": "Bereich",
           "stepsLabel": "Schritte",
@@ -358,7 +302,7 @@
           "pricingCurrencyLabel": "Währung",
           "pricingClientLabel": "Kunde brutto",
           "pricingPartnerLabel": "Partner brutto",
-          "pricingTaxLabel": "Steuersatz",
+          "pricingTaxLabel": "Erwarteter Gewinn",
           "stepsTitle": "Schritte",
           "stepsEmpty": "Keine Schritte verfügbar.",
           "stepsRequirementLabel": "Anforderung",
@@ -381,7 +325,7 @@
         { "label": "Kunden", "href": "/clients" },
         { "label": "Immobilienverwalter", "href": "/property-manager" },
         { "label": "Objekte", "href": "/objects" },
-        { "label": "Globaler Aufgaben-Katalog", "href": "/global-task-catalog" },
+        { "label": "Aufgabenkatalog", "href": "/global-task-catalog" },
         { "label": "Mitarbeiter", "href": "/employees" },
         { "label": "Nachrichten", "href": "/messages" },
         { "label": "Benachrichtigungen", "href": "/notifications" }
@@ -390,7 +334,9 @@
         { "label": "Unterstützung", "href": "/support" },
         { "label": "Profil", "href": "/profile" }
       ],
-      "logout": "Abmelden"
+      "logout": "Abmelden",
+      "closeMenu": "Menü schließen",
+      "openMenu": "Menü öffnen"
     }
   }
 }

@@ -26,6 +26,7 @@ export interface PopupsTexts {
   USER_EDIT_EMPTY_NEW_PASSWORD?: PopupText;
   USER_PASSWORD_RESET_SUCCESS?: PopupText;
   USER_NEED_TO_LOGIN?: PopupText;
+  USER_SESSION_EXPIRED?: PopupText;
   LOGOUT_SUCCESS?: PopupText;
   LOGOUT_FAILED?: PopupText;
 

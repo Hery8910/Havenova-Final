@@ -2,7 +2,8 @@
   "button": {
     "accept": "Accept",
     "continue": "Continue",
-    "close": "Close"
+    "close": "Close",
+    "reload": "Reload"
   },
   "ACCESS_TOKEN_EXPIRED": {
     "title": "Session expired",
@@ -19,6 +20,12 @@
   "USER_NEED_TO_LOGIN": {
     "title": "Login required to continue",
     "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
+    "confirm": "Go to login",
+    "close": "Continue browsing"
+  },
+  "USER_SESSION_EXPIRED": {
+    "title": "Session expired",
+    "description": "Your session has expired. You can keep browsing or go to login.",
     "confirm": "Go to login",
     "close": "Continue browsing"
   },

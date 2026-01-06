@@ -17,23 +17,18 @@ interface GlobalTaskCatalogTotalsProps {
 
 const GlobalTaskCatalogTotals = ({ totals, texts }: GlobalTaskCatalogTotalsProps) => (
   <section className={styles.section}>
-    <header className={styles.header}>
-      <h4>{texts.title}</h4>
-    </header>
-    <div className={styles.grid}>
-      <article className={`${styles.card} card`}>
-        <span className={styles.value}>{totals.bundles}</span>
-        <span className={styles.label}>{texts.bundles}</span>
-      </article>
-      <article className={`${styles.card} card`}>
-        <span className={styles.value}>{totals.steps}</span>
-        <span className={styles.label}>{texts.steps}</span>
-      </article>
-      <article className={`${styles.card} card`}>
-        <span className={styles.value}>{totals.billables}</span>
-        <span className={styles.label}>{texts.billables}</span>
-      </article>
-    </div>
+    <article className={`${styles.card} card`}>
+      <span className={styles.label}>{texts.bundles}</span>
+      <span className={styles.value}>{totals.bundles}</span>
+    </article>
+    <article className={`${styles.card} card`}>
+      <span className={styles.label}>{texts.steps}</span>
+      <span className={styles.value}>{totals.steps}</span>
+    </article>
+    <article className={`${styles.card} card`}>
+      <span className={styles.label}>{texts.billables}</span>
+      <span className={styles.value}>{totals.billables}</span>
+    </article>
   </section>
 );
 

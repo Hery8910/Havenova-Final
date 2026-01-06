@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
   LuBell,
+  LuBookOpen,
   LuBriefcase,
   LuLayoutPanelTop,
   LuSettings,
@@ -30,13 +31,15 @@ export default function Sidebar() {
   const { logout } = useAuth();
   const { profile } = useProfile();
   const pathname = usePathname();
-  const [isMobile, setIsMobile] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const lang = useLang();
   const { texts } = useI18n();
-  const pagesText = texts.components.dashboard.sidebar.pages || [];
-  const settingsText = texts.components.dashboard.sidebar.settings || [];
-  const logoutText = texts.components.dashboard.sidebar.logout || 'Logout';
+  const sidebarTexts = texts.components.dashboard.sidebar || {};
+  const pagesText = sidebarTexts.pages || [];
+  const settingsText = sidebarTexts.settings || [];
+  const logoutText = sidebarTexts.logout || 'Logout';
+  const closeMenuText = sidebarTexts.closeMenu || 'Close menu';
+  const openMenuText = sidebarTexts.openMenu || 'Open menu';
 
   const iconMap: Record<string, JSX.Element> = {
     '/': <LuLayoutPanelTop />,
@@ -49,12 +52,12 @@ export default function Sidebar() {
     '/profile': <LuUser />,
     '/property-manager': <PiBuildings />,
     '/objects': <PiBuildings />,
+    '/global-task-catalog': <LuBookOpen />,
   };
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-      setIsOpen(window.innerWidth <= 1024);
+      setIsCollapsed(window.innerWidth <= 1024);
     };
 
     handleResize();
@@ -63,85 +66,104 @@ export default function Sidebar() {
   }, []);
   const getLogoSrc = () => {
     if (profile.theme === 'dark') {
-      return isMobile ? '/favicon-dark.svg' : '/images/logos/nav-logo-dark.webp';
+      return isCollapsed ? '/favicon-light.svg' : '/images/logos/nav-logo-dark.webp';
     } else {
-      return isMobile ? '/favicon-light.svg' : '/images/logos/nav-logo-light.webp';
+      return isCollapsed ? '/favicon-dark.svg' : '/images/logos/nav-logo-light.webp';
     }
   };
 
   return (
-    <section className={`${styles.nav} ${isOpen ? `${styles.open}` : ''}`}>
-      <header className={styles.header}>
-        <div className={styles.wrapper}>
+    <nav className={styles.sidebar} aria-label="Sidebar navigation" id="dashboard-sidebar">
+      <header className={styles.sidebarHeader}>
+        <div className={styles.logoWrapper}>
           <Image
             className={styles.logo}
             src={getLogoSrc()}
             alt="Havenova Logo"
-            width={isMobile ? 40 : 160}
-            height={isMobile ? 40 : 40}
+            width={isCollapsed ? 40 : 160}
+            height={isCollapsed ? 40 : 40}
             priority
           />
         </div>
-        <ul className={styles.headerUl}>
+        <ul className={styles.navList}>
           {pagesText.map(({ label, href }) => {
             const fullHref = `/${lang}${href}`;
             return (
-              <li key={label} className={styles.headerLi}>
+              <li key={label} className={styles.navItem}>
                 <Link
                   key={href}
                   href={fullHref}
-                  className={`${styles.link} ${
-                    isMobile ? `${styles.link_close}` : `${styles.link_open}`
+                  className={`${styles.navLink} ${
+                    isCollapsed ? styles.navLinkCompact : styles.navLinkFull
                   } ${pathname === fullHref ? styles.active : ''}`}
+                  aria-current={pathname === fullHref ? 'page' : undefined}
+                  aria-label={label}
+                  title={isCollapsed ? label : undefined}
                 >
                   {iconMap[href] || null}
-                  {!isMobile && <p>{label}</p>}
+                  {!isCollapsed && <p>{label}</p>}
                 </Link>
               </li>
             );
           })}
         </ul>
       </header>
-      <div className={styles.footer}>
-        <ul className={styles.footerUl}>
+      <div className={styles.sidebarFooter}>
+        <ul className={styles.footerList}>
           {settingsText.map(({ label, href }) => {
             const fullHref = `/${lang}${href}`;
             return (
-              <li className={styles.headerLi}>
+              <li key={label} className={styles.navItem}>
                 <Link
                   key={href}
                   href={fullHref}
-                  className={`${styles.link} ${
-                    isMobile ? `${styles.link_close}` : `${styles.link_open}`
+                  className={`${styles.navLink} ${
+                    isCollapsed ? styles.navLinkCompact : styles.navLinkFull
                   } ${pathname === fullHref ? styles.active : ''}`}
+                  aria-current={pathname === fullHref ? 'page' : undefined}
+                  aria-label={label}
+                  title={isCollapsed ? label : undefined}
                 >
                   {iconMap[href] || null}
-                  {!isMobile && <p>{label}</p>}
+                  {!isCollapsed && <p>{label}</p>}
                 </Link>
               </li>
             );
           })}
-          <div className={styles.buttonWrapper}>
+          <li className={styles.navItem}>
             <button
+              type="button"
               onClick={logout}
-              className={`${styles.button} ${
-                isMobile ? `${styles.link_close}` : `${styles.link_open}`
+              className={`${styles.logoutButton} ${
+                isCollapsed ? styles.navLinkCompact : styles.navLinkFull
               }`}
+              aria-label={logoutText}
+              title={isCollapsed ? logoutText : undefined}
             >
-              <LuLogOut /> {!isMobile && <p>{logoutText}</p>}
+              <LuLogOut /> {!isCollapsed && <p>{logoutText}</p>}
             </button>
-          </div>
+          </li>
         </ul>
         <button
-          className={styles.open_button}
+          type="button"
+          className={styles.toggleButton}
+          aria-controls="dashboard-sidebar"
+          aria-expanded={!isCollapsed}
+          aria-label={isCollapsed ? openMenuText : closeMenuText}
           onClick={() => {
-            setIsOpen(!isOpen);
-            setIsMobile(!isMobile);
+            setIsCollapsed(!isCollapsed);
           }}
         >
-          {isMobile ? <IoIosArrowForward /> : <IoIosArrowBack />}
+          {isCollapsed ? (
+            <IoIosArrowForward />
+          ) : (
+            <>
+              <IoIosArrowBack />
+              <span className={styles.toggleLabel}>{closeMenuText}</span>
+            </>
+          )}
         </button>
       </div>
-    </section>
+    </nav>
   );
 }

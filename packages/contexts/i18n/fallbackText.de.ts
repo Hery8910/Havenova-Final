@@ -9,6 +9,7 @@ export const fallbackButtons = {
   accept: 'Akzeptieren',
   continue: 'Weiter',
   close: 'Schließen',
+  reload: 'Neu laden',
 };
 
 const withClose = (title: string, description: string): PopupFallback => ({
@@ -236,6 +237,12 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Ihre Cookie-Einstellungen wurden erfolgreich gespeichert.'
   ),
 
+  USER_SESSION_EXPIRED: withConfirmAndClose(
+    'Sitzung abgelaufen',
+    'Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden.',
+    'Zum Login',
+    'Weiter stöbern'
+  ),
   REFRESH_TOKEN_MISSING: withClose(
     'Erneute Anmeldung erforderlich',
     'Ihre Sitzung ist nicht mehr gültig. Bitte melden Sie sich erneut an.'

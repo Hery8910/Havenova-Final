@@ -3,6 +3,34 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.wrapper {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: auto;
+  scrollbar-width: none;
+  padding: 32px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 2%,
+    black 98%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%);
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .header {
@@ -26,73 +54,52 @@
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
-
-.cardSelected {
-  outline: 2px solid var(--brand-primary);
-}
-
 .cardHeader {
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
-
+.badgeGroup {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
 .cardTitle {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 6px;
 }
-
-.cardSubtext {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.badgeActive {
-  background: var(--bg-success);
-  color: var(--color-success);
-}
-
-.badgeInactive {
-  background: var(--bg-error);
-  color: var(--color-error);
-}
-
 .meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 32px;
 }
-
+.metaDiv {
+  display: flex;
+  gap: 8px;
+}
 .metaLabel {
   display: block;
-  font-size: 11px;
+  font-size: clamp(12px, 1.6vw, 15px);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-secondary);
 }
-
 .metaValue {
   font-size: 15px;
   font-weight: 600;
 }
-
 .emptyState {
   width: 100%;
   padding: 24px;

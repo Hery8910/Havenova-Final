@@ -26,5 +26,10 @@ export function getPopup(
   const close =
     typeof raw?.close === 'string' ? raw.close : popups.button?.close || hardcodedFallback.close;
 
-  return { title, description, close };
+  const confirm =
+    typeof raw?.confirm === 'string'
+      ? raw.confirm
+      : popups.button?.continue || hardcodedFallback.confirm;
+
+  return { title, description, close, confirm };
 }
