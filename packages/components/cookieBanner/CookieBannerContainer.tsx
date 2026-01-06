@@ -10,7 +10,7 @@ export function CookieBannerContainer() {
   const { texts } = useI18n();
 
   const [stats, setStats] = useState(prefs?.consent.statistics ?? false);
-  const cookieTexts = texts?.components?.cookieBanner;
+  const cookieTexts = texts?.components?.client.cookieBanner;
 
   if (!cookieTexts || !showBanner || loading) return null;
 

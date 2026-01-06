@@ -23,6 +23,20 @@
         }
       ]
     },
+    "avatar": {
+      "profile": {
+        "label": "Profile",
+        "ariaLabel": "Go to profile page"
+      },
+      "register": {
+        "label": "Register",
+        "ariaLabel": "Go to register page"
+      },
+      "login": {
+        "label": "Log in",
+        "ariaLabel": "Go to login page"
+      }
+    },
     "form": {
       "error": {
         "name": {
@@ -191,7 +205,7 @@
       "cta": {
         "cookies": "Cookie Preference",
         "title": "Maped Solutions",
-        "description": "This platform was thoughtfully designed and developed by Maped Solutions, with a clear focus on making everyday work easier for service-based businesses."
+        "description": "This platform was developed by Maped Solutions, with a clear focus on making everyday work easier for service-based businesses."
       }
     }
   },

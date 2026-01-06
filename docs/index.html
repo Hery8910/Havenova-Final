@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Havenova | Reinigung & Wartung in Berlin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              havenova: {
+                dark: "#071624",
+                primary: "#002442",
+                accent: "#8BE8CB",
+                light: "#F5F7FA",
+                ink: "#0B1220",
+              },
+            },
+            fontFamily: {
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .hero-pattern {
+        background-image: radial-gradient(rgba(139, 232, 203, 0.55) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-slate-700 antialiased">
+ 
+    <!-- HERO -->
+    <section class="relative bg-havenova-light py-20 lg:py-28 overflow-hidden">
+      <div class="absolute inset-0 hero-pattern opacity-[0.06]"></div>
+
+      <div class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <!-- Text side -->
+          <div class="lg:w-1/2">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 bg-white text-havenova-dark rounded-full text-xs font-bold mb-6 uppercase tracking-wider border border-slate-200"
+            >
+              <span class="w-2 h-2 rounded-full bg-havenova-accent"></span>
+              Digitale Service-Plattform
+            </div>
+
+            <h2 class="text-4xl lg:text-6xl font-extrabold text-havenova-ink mb-6 leading-tight">
+              Reinigung & Wartung – <span class="text-transparent bg-clip-text bg-gradient-to-r from-havenova-dark to-slate-600">einfach online anfragen.</span>
+            </h2>
+
+            <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
+              Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand.
+            </p>
+
+            <!-- Two CTAs (one per service) -->
+            <div class="flex flex-col sm:flex-row gap-4 font-semibold">
+              <a
+                href="/services/house-cleaning"
+                class="bg-havenova-dark text-white px-8 py-4 rounded-xl hover:opacity-90 transition text-center shadow-xl shadow-black/10"
+              >
+                Reinigung anfragen
+              </a>
+              <a
+                href="/services/home-service"
+                class="bg-white text-havenova-dark border border-slate-200 px-8 py-4 rounded-xl hover:bg-slate-50 transition text-center flex items-center justify-center gap-2"
+              >
+                Wartung anfragen <span>→</span>
+              </a>
+            </div>
+
+            <!-- Trust bullets (no “reviews” yet) -->
+            <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 font-medium">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-havenova-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Schnelle Anfrage
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-havenova-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Individuelles Angebot
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-havenova-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Digital & effizient
+              </div>
+            </div>
+          </div>
+
+          <!-- Image side -->
+          <div class="lg:w-1/2 relative">
+            <div class="absolute -inset-4 bg-gradient-to-r from-havenova-accent to-white rounded-3xl opacity-25 blur-xl"></div>
+
+            <img
+              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+              alt="Havenova – Service in Berlin"
+              class="relative rounded-3xl shadow-2xl border-4 border-white"
+            />
+
+            <!-- small banner on image (not reviews) -->
+            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg border border-slate-100 hidden md:block">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 font-bold">
+                  ✓
+                </div>
+                <div>
+                  <p class="text-havenova-ink font-bold">Neu: Digitale Plattform</p>
+                  <p class="text-xs text-slate-500">Anfragen & Updates an einem Ort</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- mini tag top-right -->
+            <div class="absolute top-4 right-4 bg-havenova-dark/90 text-white text-xs font-bold px-3 py-2 rounded-full border border-white/10">
+              Berlin & Umgebung
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP DOWNLOAD CTA SECTION -->
+    <section id="app" class="py-18 lg:py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 lg:p-12 shadow-xl shadow-black/5">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div class="max-w-2xl">
+              <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-havenova-dark bg-havenova-accent/20 border border-havenova-accent/30 rounded-full px-3 py-1 mb-4">
+                PWA · Installierbar
+              </div>
+              <h3 class="text-3xl lg:text-4xl font-extrabold text-havenova-ink mb-3">
+                Installiere Havenova als App – auf jedem Gerät.
+              </h3>
+              <p class="text-slate-600 leading-relaxed">
+                Nutze Havenova wie eine native App: schneller Zugriff, bessere Performance und ein klarer Überblick über deine Anfragen – am Handy, Tablet oder Desktop.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+              <a
+                href="#"
+                class="flex-1 lg:flex-none bg-havenova-dark text-white px-7 py-4 rounded-xl font-bold text-center hover:opacity-90 transition"
+              >
+                App installieren
+              </a>
+              <a
+                href="/how-it-work"
+                class="flex-1 lg:flex-none bg-white text-havenova-dark border border-slate-200 px-7 py-4 rounded-xl font-semibold text-center hover:bg-slate-50 transition"
+              >
+                So funktioniert’s
+              </a>
+            </div>
+          </div>
+
+          <!-- simple feature chips -->
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="px-3 py-2 rounded-full bg-white border border-slate-200 text-sm text-slate-600">⚡ Schneller Start</span>
+            <span class="px-3 py-2 rounded-full bg-white border border-slate-200 text-sm text-slate-600">🔔 Updates & Status</span>
+            <span class="px-3 py-2 rounded-full bg-white border border-slate-200 text-sm text-slate-600">📱 Mobile-first</span>
+            <span class="px-3 py-2 rounded-full bg-white border border-slate-200 text-sm text-slate-600">🧾 Alles an einem Ort</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (2 cards) -->
+    <section id="services" class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h3 class="text-3xl font-extrabold text-havenova-ink mb-4">Unsere Services</h3>
+          <p class="text-slate-500 max-w-2xl mx-auto">
+            Zwei klare Wege – wähle den passenden Service und sende deine Anfrage in wenigen Minuten.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Cleaning -->
+          <div class="group p-8 bg-white rounded-2xl border border-slate-200 hover:border-havenova-accent hover:shadow-xl transition duration-300">
+            <div class="w-14 h-14 bg-havenova-accent/20 text-havenova-dark rounded-xl flex items-center justify-center mb-6 group-hover:bg-havenova-dark group-hover:text-white transition">
+              <!-- broom icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21l6-6m0 0l3-3m-3 3l6 6M9 15l3-3m0 0l6-6m-6 6l6 6" />
+              </svg>
+            </div>
+
+            <h4 class="text-xl font-bold text-havenova-ink mb-3">Reinigung</h4>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+              Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Allgemeinflächen – flexibel, gründlich und passend zu deinem Bedarf.
+            </p>
+
+            <a
+              href="/services/house-cleaning"
+              class="inline-flex items-center gap-2 font-bold text-sm text-havenova-dark hover:text-slate-700 transition"
+            >
+              Zur Reinigungsanfrage <span>→</span>
+            </a>
+          </div>
+
+          <!-- Maintenance -->
+          <div class="group p-8 bg-white rounded-2xl border border-slate-200 hover:border-havenova-accent hover:shadow-xl transition duration-300">
+            <div class="w-14 h-14 bg-havenova-accent/20 text-havenova-dark rounded-xl flex items-center justify-center mb-6 group-hover:bg-havenova-dark group-hover:text-white transition">
+              <!-- tools icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a4 4 0 01-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2 2-2-2 2-2z" />
+              </svg>
+            </div>
+
+            <h4 class="text-xl font-bold text-havenova-ink mb-3">Wartung & Hausservice</h4>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+              Kleine Reparaturen, Instandhaltung und praktische Hilfe rund ums Zuhause – schnell organisiert, transparent abgestimmt.
+            </p>
+
+            <a
+              href="/services/home-service"
+              class="inline-flex items-center gap-2 font-bold text-sm text-havenova-dark hover:text-slate-700 transition"
+            >
+              Zur Wartungsanfrage <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section id="benefits" class="py-20 bg-havenova-light">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white text-havenova-dark rounded-full text-xs font-bold mb-5 uppercase tracking-wider border border-slate-200">
+              Vorteile
+            </div>
+            <h3 class="text-3xl lg:text-4xl font-extrabold text-havenova-ink mb-5">
+              Für Kund:innen angenehm – für das Team effizient.
+            </h3>
+            <p class="text-slate-600 leading-relaxed mb-8 max-w-xl">
+              Havenova reduziert Hin-und-her, macht Anfragen klarer und sorgt für einen sauberen Ablauf: weniger Missverständnisse, schnelleres Angebot, bessere Planung.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-5 rounded-2xl bg-white border border-slate-200">
+                <p class="font-bold text-havenova-ink mb-1">Klare Anfragen</p>
+                <p class="text-sm text-slate-600">Formulare sammeln genau die Infos, die gebraucht werden – ohne Stress.</p>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-slate-200">
+                <p class="font-bold text-havenova-ink mb-1">Schnellere Angebote</p>
+                <p class="text-sm text-slate-600">Weniger Rückfragen, schnelleres Matching, bessere Reaktionszeit.</p>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-slate-200">
+                <p class="font-bold text-havenova-ink mb-1">Bessere Planung</p>
+                <p class="text-sm text-slate-600">Services lassen sich sauber priorisieren und koordinieren.</p>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-slate-200">
+                <p class="font-bold text-havenova-ink mb-1">Transparenz</p>
+                <p class="text-sm text-slate-600">Status & Kommunikation zentral – für beide Seiten nachvollziehbar.</p>
+              </div>
+            </div>
+          </div>
+
+          
+
+
+
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
+

@@ -10,7 +10,7 @@ export function ProfileHeader() {
   const { profile } = useProfile();
   const { auth } = useAuth();
   const { texts } = useI18n();
-  const labels = texts.pages.user.profileHeader;
+  const labels = texts.pages.client.user.profileHeader;
 
   const name = profile?.name || labels?.missingName;
   const email = auth?.email || '—';

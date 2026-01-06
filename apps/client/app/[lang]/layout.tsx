@@ -68,8 +68,8 @@ export default async function LangLayout({
               <AuthProvider>
                 <ProfileProvider>
                   <CookiesProvider>
-                    <CookieBannerContainer />
                     {children}
+                    <CookieBannerContainer />
                   </CookiesProvider>
                 </ProfileProvider>
               </AuthProvider>

@@ -1,64 +1,72 @@
 'use client';
-import styles from './page.module.css';
-import { useEffect, useState } from 'react';
 
-import { useClient } from '../../../../../packages/contexts/client';
+import styles from './page.module.css';
 import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
 import { useLang } from '../../../../../packages/hooks/useLang';
+import { HeroSection } from '../../../../../packages/components/client/pages/home/HeroSection/HeroSection';
+import { AppInstallSection } from '../../../../../packages/components/client/pages/home/AppInstallSection/AppInstallSection';
+import { ServicesSection } from '../../../../../packages/components/client/pages/home/ServicesSection/ServicesSection';
+import { BenefitsSection } from '../../../../../packages/components/client/pages/home/BenefitsSection/BenefitsSection';
 
-import { useRouter } from 'next/navigation';
-
-import { href } from '../../../../../packages/utils/navigation';
-import { Loading } from '../../../../../packages/components';
-
-export type HomeCtaCase = 'hero' | 'offer' | 'about' | 'services' | 'review' | 'faq' | 'ctaFinal';
+export interface HomePageTexts {
+  hero: {
+    badge: string;
+    title: string;
+    titleAccent: string;
+    subtitle: string;
+    ctas: {
+      cleaning: { label: string; href: string };
+      maintenance: { label: string; href: string };
+    };
+    trust: string[];
+    image: {
+      src: string;
+      alt: string;
+      badgeTitle: string;
+      badgeSubtitle: string;
+      tag: string;
+    };
+  };
+  appInstall: {
+    kicker: string;
+    title: string;
+    description: string;
+    primaryCta: { label: string; installedLabel: string };
+    secondaryCta: { label: string; href: string };
+    features: string[];
+  };
+  services: {
+    title: string;
+    subtitle: string;
+    items: {
+      title: string;
+      description: string;
+      ctaLabel: string;
+      href: string;
+      icon: string;
+    }[];
+  };
+  benefits: {
+    kicker: string;
+    title: string;
+    description: string;
+    items: { title: string; description: string }[];
+  };
+}
 
 export default function Home() {
-  const { client, loading } = useClient();
-  const router = useRouter();
   const lang = useLang();
   const { texts } = useI18n();
+  const home: HomePageTexts = texts?.pages?.client?.home;
 
-  // const [isMobile, setIsMobile] = useState(false);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth <= 1000);
-  //   };
-
-  //   handleResize();
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-
-  const handleNavigation = (section: HomeCtaCase) => {
-    switch (section) {
-      case 'hero':
-        router.push(href(lang, '/services'));
-        break;
-      case 'offer':
-        router.push(href(lang, '/user/register'));
-        break;
-      case 'about':
-        router.push(href(lang, '/about'));
-        break;
-      case 'services':
-        router.push(href(lang, '/services'));
-        break;
-      case 'review':
-        router.push(href(lang, '/reviews'));
-        break;
-      case 'ctaFinal':
-        router.push(href(lang, '/services'));
-        break;
-      default:
-        console.warn(`No redirect defined for ${section}`);
-    }
-  };
+  if (!home) return null;
 
   return (
-    <main>
-      <p className={styles.p}>hero</p>
+    <main className={styles.main}>
+      <HeroSection texts={home.hero} lang={lang} />
+      <AppInstallSection texts={home.appInstall} lang={lang} />
+      <ServicesSection texts={home.services} lang={lang} />
+      <BenefitsSection texts={home.benefits} />
     </main>
   );
 }

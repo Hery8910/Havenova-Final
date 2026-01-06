@@ -38,6 +38,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 0;
+  margin: 0;
 }
 .link {
   color: var(--brand-primary);
@@ -53,6 +55,10 @@
 }
 .link:hover {
   color: var(--color-info);
+}
+.link:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
 }
 .purpose_tbody {
   border: 1px solid var(--text-secondary);
@@ -80,16 +86,22 @@
 .purpose_td {
   padding: 8px;
 }
+.table_wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .table {
   margin: 0 auto;
   border: 1px solid var(--text-secondary);
   border-radius: 4px;
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 .tr {
-  width: auto;
-  display: grid;
   text-align: left;
-  grid-template-columns: 1fr 2fr 1fr;
   border-bottom: 1px solid var(--text-secondary);
 }
 .tr:last-child {
@@ -104,6 +116,7 @@
   padding: 8px;
   color: var(--text-secondary);
   border-right: 1px solid var(--text-secondary);
+  overflow-wrap: anywhere;
 }
 .th:last-child,
 .td:last-child {
@@ -113,6 +126,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.visually_hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 .contact_ul {
   display: flex;
@@ -138,4 +161,29 @@
 .contact_td {
   font-size: clamp(16px, 3vw, 20px);
   padding: 8px;
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding-top: 80px;
+    gap: 32px;
+  }
+  .section {
+    padding: 20px;
+    gap: 12px;
+  }
+  .purpose_tr {
+    grid-template-columns: 1fr;
+  }
+  .purpose_th {
+    border-right: none;
+    border-bottom: 1px solid var(--text-secondary);
+  }
+  .aside {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .contact_tr {
+    grid-template-columns: 1fr;
+  }
 }

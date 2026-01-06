@@ -1,8 +1,13 @@
 import { Metadata } from 'next';
+import { getPageMetadata } from '../../../../../../../packages/utils/metadata';
 
-import { cookiePolicyMetadata } from '../../../../pageMetadata';
-
-export const metadata: Metadata = cookiePolicyMetadata;
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: 'de' | 'en' };
+}): Promise<Metadata> {
+  return getPageMetadata(params.lang, 'cookiePolicy');
+}
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

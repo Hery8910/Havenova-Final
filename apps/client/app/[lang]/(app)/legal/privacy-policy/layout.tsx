@@ -1,8 +1,13 @@
 import { Metadata } from 'next';
+import { getPageMetadata } from '../../../../../../../packages/utils/metadata';
 
-import { privacyPolicyMetadata } from '../../../../pageMetadata';
-
-export const metadata: Metadata = privacyPolicyMetadata;
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: 'de' | 'en' };
+}): Promise<Metadata> {
+  return getPageMetadata(params.lang, 'privacyPolicy');
+}
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

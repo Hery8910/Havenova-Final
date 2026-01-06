@@ -23,7 +23,7 @@ export function ProfileNav({ className }: ProfileNavProps) {
   const { texts } = useI18n();
   const lang = useLang();
   const pathname = usePathname();
-  const labels = texts.pages.user.profileNav;
+  const labels = texts.pages.client.user.profileNav;
 
   return (
     <nav className={`${styles.nav} ${className ?? ''}`.trim()} aria-label="Profil Navigation">

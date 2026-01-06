@@ -1,6 +1,86 @@
 {
   "client": {
-    "home": {},
+    "home": {
+      "hero": {
+        "badge": "Digitale Service-Plattform",
+        "title": "Reinigung & Wartung –",
+        "titleAccent": "einfach online anfragen.",
+        "subtitle": "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand.",
+        "ctas": {
+          "cleaning": {
+            "label": "Reinigung anfragen",
+            "href": "/services/house-cleaning"
+          },
+          "maintenance": {
+            "label": "Wartung anfragen",
+            "href": "/services/home-service"
+          }
+        },
+        "image": {
+          "src": "/images/home-hero.webp",
+          "alt": "Havenova – Service in Berlin",
+          "badgeTitle": "Neu: Digitale Plattform",
+          "badgeSubtitle": "Anfragen & Updates an einem Ort",
+          "tag": "Berlin & Umgebung"
+        }
+      },
+      "appInstall": {
+        "kicker": "PWA · Installierbar",
+        "title": "Installiere Havenova als App – auf jedem Gerät.",
+        "description": "Nutze Havenova wie eine native App: schneller Zugriff, bessere Performance und ein klarer Überblick über deine Anfragen – am Handy, Tablet oder Desktop.",
+        "primaryCta": {
+          "label": "App installieren",
+          "installedLabel": "App installiert"
+        },
+        "secondaryCta": {
+          "label": "So funktioniert’s"
+        },
+        "features": ["Schneller Start", "Updates & Status", "Mobile-first", "Alles an einem Ort"]
+      },
+      "services": {
+        "title": "Unsere Services",
+        "subtitle": "Zwei klare Wege – wähle den passenden Service und sende deine Anfrage in wenigen Minuten.",
+        "items": [
+          {
+            "title": "Reinigung",
+            "description": "Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Allgemeinflächen – flexibel, gründlich und passend zu deinem Bedarf.",
+            "ctaLabel": "Zur Reinigungsanfrage",
+            "href": "/services/house-cleaning",
+            "icon": "🧹"
+          },
+          {
+            "title": "Wartung & Hausservice",
+            "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe rund ums Zuhause – schnell organisiert, transparent abgestimmt.",
+            "ctaLabel": "Zur Wartungsanfrage",
+            "href": "/services/home-service",
+            "icon": "🛠️"
+          }
+        ]
+      },
+      "benefits": {
+        "kicker": "Vorteile",
+        "title": "Für Kund:innen angenehm – für das Team effizient.",
+        "description": "Havenova reduziert Hin-und-her, macht Anfragen klarer und sorgt für einen sauberen Ablauf: weniger Missverständnisse, schnelleres Angebot, bessere Planung.",
+        "items": [
+          {
+            "title": "Klare Anfragen",
+            "description": "Formulare sammeln genau die Infos, die gebraucht werden – ohne Stress."
+          },
+          {
+            "title": "Schnellere Angebote",
+            "description": "Weniger Rückfragen, schnelleres Matching, bessere Reaktionszeit."
+          },
+          {
+            "title": "Bessere Planung",
+            "description": "Services lassen sich sauber priorisieren und koordinieren."
+          },
+          {
+            "title": "Transparenz",
+            "description": "Status & Kommunikation zentral – für beide Seiten nachvollziehbar."
+          }
+        ]
+      }
+    },
     "cleaning": {},
     "home-service": {},
     "contact": {},
@@ -184,8 +264,8 @@
         },
         "thirdParties": {
           "title": "Eingesetzte Dienstleister",
-          "subtitle": "Zur sicheren und effizienten Bereitstellung der Plattform werden externe Dienstleister eingesetzt.",
-          "intro": "Diese Dienstleister handeln auf vertraglicher Grundlage und verarbeiten Daten ausschließlich im Rahmen der DSGVO.",
+          "subtitle": "Diese Übersicht bezieht sich auf technische Dienstleister, die für den Betrieb der Plattform erforderlich sein können (z. B. Hosting, E-Mail-Zustellung, Zahlungsabwicklung).",
+          "intro": "Keine Anbieter werden für Analyse- oder Marketingzwecke eingesetzt.",
           "table": {
             "headers": {
               "name": "Anbieter",
@@ -193,7 +273,53 @@
               "region": "Region",
               "privacy": "Datenschutzerklärung"
             },
-            "body": []
+            "body": [
+              {
+                "name": "Vercel",
+                "purpose": "Hosting und Betrieb des Frontends, technische Logs",
+                "region": "Global (standortabhängig)",
+                "privacyUrl": {
+                  "label": "Datenschutzerklärung",
+                  "href": "https://vercel.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "Cloudflare R2",
+                "purpose": "Speicherung und Auslieferung statischer Dateien",
+                "region": "Global (standortabhängig)",
+                "privacyUrl": {
+                  "label": "Datenschutzerklärung",
+                  "href": "https://www.cloudflare.com/de-de/privacypolicy/"
+                }
+              },
+              {
+                "name": "Render",
+                "purpose": "Hosting des Backends, technische Logs",
+                "region": "Global (standortabhängig)",
+                "privacyUrl": {
+                  "label": "Datenschutzerklärung",
+                  "href": "https://render.com/privacy"
+                }
+              },
+              {
+                "name": "MongoDB Atlas",
+                "purpose": "Datenbank-Hosting",
+                "region": "Global (standortabhängig)",
+                "privacyUrl": {
+                  "label": "Datenschutzerklärung",
+                  "href": "https://www.mongodb.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "SendGrid",
+                "purpose": "E-Mail-Zustellung",
+                "region": "Global (standortabhängig)",
+                "privacyUrl": {
+                  "label": "Datenschutzerklärung",
+                  "href": "https://www.twilio.com/legal/privacy"
+                }
+              }
+            ]
           }
         },
         "security": {
@@ -202,20 +328,47 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt."
+          "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt.",
+          "cta": {
+            "label": "Cookie-Richtlinie ansehen",
+            "href": "/legal/cookie-policy"
+          }
         },
         "userRights": {
           "title": "Rechte der betroffenen Personen",
           "intro": "Betroffene Personen haben folgende Rechte gemäß DSGVO:",
           "items": [
             "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18).",
-            "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21)."
+            "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21).",
+            "Widerruf einer Einwilligung (Art. 7 Abs. 3), sofern die Verarbeitung auf Einwilligung beruht.",
+            "Beschwerde bei einer Aufsichtsbehörde (Art. 77)."
           ],
-          "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten."
+          "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten. Wir können eine Identifikation verlangen und beantworten Anfragen grundsätzlich innerhalb eines Monats."
         },
         "retention": {
           "title": "Speicherdauer",
           "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies zur Erfüllung der Zwecke und gesetzlicher Verpflichtungen erforderlich ist. Danach erfolgt eine Löschung oder Anonymisierung."
+        },
+        "additionalInformation": {
+          "title": "Weitere Informationen nach Art. 13 DSGVO",
+          "items": [
+            {
+              "title": "Pflicht zur Bereitstellung von Daten",
+              "body": "Die Bereitstellung personenbezogener Daten ist für die Nutzung der Plattform erforderlich. Ohne diese Daten sind Registrierung und Nutzung der Services nicht möglich."
+            },
+            {
+              "title": "Datenquellen",
+              "body": "Wir verarbeiten Daten, die Sie bereitstellen, sowie technische Nutzungsdaten, die bei der Nutzung der Plattform entstehen (z. B. Logfiles)."
+            },
+            {
+              "title": "Automatisierte Entscheidungen",
+              "body": "Es findet keine automatisierte Entscheidungsfindung einschließlich Profiling im Sinne von Art. 22 DSGVO statt."
+            },
+            {
+              "title": "Datenschutzkontakt",
+              "body": "Sofern ein Datenschutzbeauftragter benannt ist, werden dessen Kontaktdaten im Impressum oder auf Anfrage mitgeteilt."
+            }
+          ]
         },
         "internationalTransfers": {
           "title": "Datenübermittlung in Drittländer",
@@ -227,6 +380,19 @@
           "meta": {
             "lastUpdated": "Zuletzt aktualisiert:"
           }
+        },
+        "legalReferences": {
+          "title": "Rechtliche Grundlagen",
+          "items": [
+            {
+              "label": "Datenschutz-Grundverordnung (DSGVO)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Europäischer Datenschutzausschuss – Aufsichtsbehörden",
+              "href": "https://edpb.europa.eu/about-edpb/board/members_en"
+            }
+          ]
         }
       },
       "cookies": {
@@ -444,13 +610,27 @@
           "headline2": "Angaben gemäß § 5 TMG",
           "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
         },
+        "providerSection": {
+          "heading": "Anbieterinformationen",
+          "description": "Angaben zum Anbieter gemäß den geltenden europäischen Rechtsvorschriften:",
+          "fields": {
+            "companyName": "Unternehmen",
+            "address": "Adresse",
+            "email": "E-Mail",
+            "phone": "Telefon"
+          },
+          "fallbacks": {
+            "companyName": "Havenova",
+            "address": "Stollberger Str.43, 12627 Berlin",
+            "email": "contact@havenova.com",
+            "phone": "+49 000 0000000"
+          }
+        },
         "responsibleSection": {
           "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
-          "description": "Verantwortlich für die Inhalte dieser Seite ist:"
-        },
-        "taxSection": {
-          "heading": "Umsatzsteuer-ID",
-          "descriptionNoId": "Keine Umsatzsteuer-Identifikationsnummer vorhanden / nicht erforderlich."
+          "description": "Verantwortlich für die Inhalte dieser Seite ist:",
+          "name": "Hasan Al Al-Hayyawi",
+          "address": "Stollberger Str.43, 12627 Berlin"
         },
         "liabilitySection": {
           "heading": "Haftungsausschluss",
@@ -458,7 +638,12 @@
         },
         "odrSection": {
           "heading": "Online-Streitbeilegung (OS)",
-          "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+          "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:",
+          "link": {
+            "label": "https://ec.europa.eu/consumers/odr",
+            "href": "https://ec.europa.eu/consumers/odr"
+          },
+          "note": "Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
         }
       }
     }

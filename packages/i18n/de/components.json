@@ -23,6 +23,20 @@
         }
       ]
     },
+    "avatar": {
+      "profile": {
+        "label": "Profil",
+        "ariaLabel": "Zur Profilseite"
+      },
+      "register": {
+        "label": "Registrieren",
+        "ariaLabel": "Zur Registrierungsseite"
+      },
+      "login": {
+        "label": "Login",
+        "ariaLabel": "Zur Login-Seite"
+      }
+    },
     "form": {
       "error": {
         "name": {
@@ -191,7 +205,7 @@
       "cta": {
         "cookies": "Cookie-Einstellungen",
         "title": "Maped Solutions",
-        "description": "Diese Plattform wurde mit Sorgfalt und technischem Know-how von Maped Solutions konzipiert und entwickelt – mit dem Ziel, Dienstleistungsunternehmen den Arbeitsalltag zu erleichtern."
+        "description": "Diese Plattform wurde von Maped Solutions konzipiert und entwickelt – mit dem Ziel, Dienstleistungsunternehmen den Arbeitsalltag zu erleichtern."
       }
     }
   },

@@ -54,9 +54,9 @@ export interface ProfileData {
 
 const Profile = () => {
   const { texts } = useI18n();
-  const profileTexts: ProfileData = texts?.pages?.user.profile;
+  const profileTexts: ProfileData = texts?.pages?.client.user.profile;
   const popups = texts.popups;
-  const formText = texts.components.form;
+  const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const [saving, setSaving] = useState(false);
 

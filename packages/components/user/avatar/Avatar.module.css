@@ -6,19 +6,5 @@
   gap: 8px;
 }
 .button {
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: clamp(14px, 3vw, 18px);
-  padding: 8px 16px;
-  border-radius: 4px;
-  background: var(--brand-primary);
-  border: none;
-  width: fit-content;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-.button:hover {
-  color: var(--text-secondary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  font-size: 14px;
 }

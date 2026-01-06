@@ -4,7 +4,6 @@ import Link from 'next/link';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
-import { useRouter } from 'next/navigation';
 import { useClient, useCookies, useI18n } from '../../../../../../../packages/contexts';
 import { formatMessageAge } from '../../../../../../../packages/utils';
 
@@ -89,10 +88,7 @@ export default function CookiesPolicyPage() {
   const { client } = useClient();
   const { texts } = useI18n();
   const { openManager } = useCookies();
-  const router = useRouter();
-
-  const cookies: CookiesPolicyPageTexts = texts?.pages?.legal?.cookies;
-  const finalCtaTexts = texts.components.common.finalCta;
+  const cookies: CookiesPolicyPageTexts = texts?.pages?.client?.legal?.cookies;
 
   if (!client || !cookies) return null;
 
@@ -120,7 +116,7 @@ export default function CookiesPolicyPage() {
             </li>
           ))}
         </ul>
-        <button className={styles.link} onClick={openManager}>
+        <button className={styles.link} type="button" onClick={openManager}>
           {cookies.overview.cta.label} <IoIosLink />
         </button>
       </section>
@@ -149,33 +145,42 @@ export default function CookiesPolicyPage() {
         <h3 className={styles.h3}>{cookies.thirdParties.title}</h3>
         <p>{cookies.thirdParties.body}</p>
         {cookies.thirdParties.table.body.length !== 0 && (
-          <table className={styles.table}>
-            <thead className={styles.thead}>
-              <tr className={styles.tr}>
-                <th className={styles.th}>{cookies.thirdParties.table.headers.name}</th>
-                <th className={styles.th}>{cookies.thirdParties.table.headers.purpose}</th>
-                <th className={styles.th}>{cookies.thirdParties.table.headers.privacy}</th>
-              </tr>
-            </thead>
-            <tbody className={styles.body}>
-              {cookies.thirdParties.table.body.map((item, i) => (
-                <tr className={styles.tr} key={i}>
-                  <td className={styles.td}>{item.name}</td>
-                  <td className={styles.td}>{item.purpose}</td>
-                  <td className={styles.td}>
-                    <Link
-                      className={styles.link}
-                      href={item.privacyUrl.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.privacyUrl.label} <FiExternalLink />
-                    </Link>
-                  </td>
+          <div className={styles.table_wrapper}>
+            <table className={styles.table}>
+              <caption className={styles.visually_hidden}>{cookies.thirdParties.title}</caption>
+              <thead className={styles.thead}>
+                <tr className={styles.tr}>
+                  <th className={styles.th} scope="col">
+                    {cookies.thirdParties.table.headers.name}
+                  </th>
+                  <th className={styles.th} scope="col">
+                    {cookies.thirdParties.table.headers.purpose}
+                  </th>
+                  <th className={styles.th} scope="col">
+                    {cookies.thirdParties.table.headers.privacy}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className={styles.body}>
+                {cookies.thirdParties.table.body.map((item, i) => (
+                  <tr className={styles.tr} key={i}>
+                    <td className={styles.td}>{item.name}</td>
+                    <td className={styles.td}>{item.purpose}</td>
+                    <td className={styles.td}>
+                      <Link
+                        className={styles.link}
+                        href={item.privacyUrl.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.privacyUrl.label} <FiExternalLink />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
 
@@ -210,7 +215,7 @@ export default function CookiesPolicyPage() {
             </li>
           ))}
           <li key={cookies.management.cta.action}>
-            <button className={styles.link} onClick={openManager}>
+            <button className={styles.link} type="button" onClick={openManager}>
               {cookies.overview.cta.label} <IoIosLink />
             </button>
           </li>
@@ -232,7 +237,7 @@ export default function CookiesPolicyPage() {
             <strong>{cookies.changes.meta.lastUpdated}</strong>
           </p>
           <p>
-            <em>{formatMessageAge(legalUpdates?.lastCookiesUpdate || '')}</em>
+            <em>{formatMessageAge(legalUpdates?.cookies?.updatedAt || '')}</em>
           </p>
         </aside>
       </section>

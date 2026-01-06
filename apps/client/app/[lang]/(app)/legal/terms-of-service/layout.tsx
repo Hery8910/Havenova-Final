@@ -1,8 +1,13 @@
 import { Metadata } from 'next';
+import { getPageMetadata } from '../../../../../../../packages/utils/metadata';
 
-import { termsOfServiceMetadata } from '../../../../pageMetadata';
-
-export const metadata: Metadata = termsOfServiceMetadata;
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: 'de' | 'en' };
+}): Promise<Metadata> {
+  return getPageMetadata(params.lang, 'termsOfService');
+}
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

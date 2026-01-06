@@ -1,11 +1,10 @@
 // components/legal/PrivacyPolicyPage.tsx
 'use client';
 import Link from 'next/link';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
+import { useClient, useI18n } from '../../../../../../../packages/contexts';
 
 export interface PrivacyPageTexts {
   hero: {
@@ -74,6 +73,10 @@ export interface PrivacyPageTexts {
   };
   retention: { title: string; body: string };
   internationalTransfers: { title: string; body: string };
+  additionalInformation: {
+    title: string;
+    items: { title: string; body: string }[];
+  };
   changes: {
     title: string;
     body: string;
@@ -99,9 +102,9 @@ export interface ContactTexts {
 export default function PrivacyPolicyPage() {
   const { client } = useClient();
   const { texts } = useI18n();
-  const privacy: PrivacyPageTexts = texts?.pages?.legal.privacy;
+  const privacy: PrivacyPageTexts = texts?.pages?.legal?.privacy;
 
-  if (!client) return null;
+  if (!client || !privacy) return null;
 
   const { legalUpdates } = client;
 
@@ -203,41 +206,54 @@ export default function PrivacyPolicyPage() {
         </ul>
       </section>
 
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{privacy.thirdParties.title}</h3>
-        <p>{privacy.thirdParties.subtitle}</p>
-        <p>{privacy.thirdParties.intro}</p>
+      {
+        <section className={styles.section}>
+          <h3 className={styles.h3}>{privacy.thirdParties.title}</h3>
+          <p>{privacy.thirdParties.subtitle}</p>
+          <p>{privacy.thirdParties.intro}</p>
 
-        <table className={styles.table}>
-          <thead className={styles.thead}>
-            <tr className={styles.tr}>
-              <th className={styles.th}>{privacy.thirdParties.table.headers.name}</th>
-              <th className={styles.th}>{privacy.thirdParties.table.headers.purpose}</th>
-              <th className={styles.th}>{privacy.thirdParties.table.headers.region}</th>
-              <th className={styles.th}>{privacy.thirdParties.table.headers.privacy}</th>
-            </tr>
-          </thead>
-          <tbody className={styles.body}>
-            {privacy.thirdParties.table.body.map((item) => (
-              <tr className={styles.tr} key={item.name}>
-                <td className={styles.td}>{item.name}</td>
-                <td className={styles.td}>{item.purpose}</td>
-                <td className={styles.td}>{item.region}</td>
-                <td className={styles.td}>
-                  <Link
-                    className={styles.link}
-                    href={item.privacyUrl.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.privacyUrl.label} <FiExternalLink />
-                  </Link>
-                </td>
+        <div className={styles.table_wrapper}>
+          <table className={styles.table}>
+            <caption className={styles.visually_hidden}>{privacy.thirdParties.title}</caption>
+            <thead className={styles.thead}>
+              <tr className={styles.tr}>
+              <th className={styles.th} scope="col">
+                {privacy.thirdParties.table.headers.name}
+              </th>
+              <th className={styles.th} scope="col">
+                {privacy.thirdParties.table.headers.purpose}
+              </th>
+              <th className={styles.th} scope="col">
+                {privacy.thirdParties.table.headers.region}
+              </th>
+              <th className={styles.th} scope="col">
+                {privacy.thirdParties.table.headers.privacy}
+              </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className={styles.body}>
+              {privacy.thirdParties.table.body.map((item) => (
+                <tr className={styles.tr} key={item.name}>
+                  <td className={styles.td}>{item.name}</td>
+                  <td className={styles.td}>{item.purpose}</td>
+                  <td className={styles.td}>{item.region}</td>
+                  <td className={styles.td}>
+                    <Link
+                      className={styles.link}
+                      href={item.privacyUrl.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.privacyUrl.label} <FiExternalLink />
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
+      }
 
       <section className={styles.section}>
         <h3 className={styles.h3}>{privacy.security.title}</h3>
@@ -271,6 +287,18 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className={styles.section}>
+        <h3 className={styles.h3}>{privacy.additionalInformation.title}</h3>
+        <ul className={styles.ul}>
+          {privacy.additionalInformation.items.map((item, i) => (
+            <li className={styles.purpose_li} key={i}>
+              <h4 className={styles.h4}>{item.title}</h4>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className={styles.section}>
         <h3 className={styles.h3}>{privacy.internationalTransfers.title}</h3>
         <p>{privacy.internationalTransfers.body}</p>
       </section>
@@ -282,7 +310,7 @@ export default function PrivacyPolicyPage() {
           <p>
             <strong>{privacy.changes.meta.lastUpdated}</strong>
           </p>
-          <p>{formatDate(legalUpdates?.lastPrivacyUpdate || '')}</p>
+          <p>{formatDate(legalUpdates?.privacy?.updatedAt || '')}</p>
         </aside>
       </section>
 
@@ -303,7 +331,6 @@ export default function PrivacyPolicyPage() {
           ))}
         </ul>
       </section>
-
     </main>
   );
 }

@@ -2,7 +2,7 @@
   color-scheme: light;
 
   /* Brand */
-  --brand-primary: #0768c9;
+  --brand-primary: hsl(210, 93%, 41%);
   --brand-secondary: #5e12e0;
   --brand-accent: #f2c14e;
 
@@ -10,8 +10,8 @@
   --page-bg-1: #f7f9fc;
   --page-bg-2: #eef2f7;
   --page-bg-3: #e7ecf3;
-  --page-accent-1: rgba(7, 104, 201, 0.18);
-  --page-accent-2: rgba(94, 18, 224, 0.12);
+  --page-accent-1: hsla(210, 93%, 41%, 0.2);
+  --page-accent-2: rgba(94, 18, 224, 0.2);
 
   /* Text */
   --text-primary: #424242;
@@ -30,7 +30,7 @@
   --surface-border: rgba(7, 104, 201, 0.16);
 
   /* Glass */
-  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(255, 255, 255, 0.4);
 
   /* Shadows */
@@ -50,9 +50,9 @@
   --font-size-600: 2.25rem;
 
   /* Layout */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-pill: 999px;
   --space-1: 4px;
   --space-2: 8px;
@@ -76,23 +76,23 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --page-bg-1: #0c1424;
-  --page-bg-2: #0a1321;
-  --page-bg-3: #09101b;
-  --page-accent-1: rgba(7, 104, 201, 0.08);
-  --page-accent-2: rgba(94, 18, 224, 0.06);
+  --page-bg-1: hsl(220, 50%, 14%);
+  --page-bg-2: hsl(217, 53%, 13%);
+  --page-bg-3: hsl(217, 50%, 12%);
+  --page-accent-1: hsla(210, 93%, 41%, 0.1);
+  --page-accent-2: hsla(262, 85%, 47%, 0.1);
 
   --text-primary: #dad9d9;
   --text-secondary: #a6a6a6;
   --text-muted: #8a8a8a;
   --text-inverse: #111111;
 
-  --surface-1: rgba(4, 50, 96, 0.6);
-  --surface-2: rgba(3, 38, 66, 0.6);
-  --surface-3: rgba(2, 25, 34, 0.6);
+  --surface-1: rgba(4, 50, 96, 0.7);
+  --surface-2: rgba(3, 38, 66, 0.7);
+  --surface-3: rgba(2, 25, 34, 0.8);
   --surface-border: rgba(94, 18, 224, 0.2);
 
-  --glass-bg: rgba(9, 18, 30, 0.55);
+  --glass-bg: hsla(214, 54%, 15%, 0.9);
   --glass-border: rgba(255, 255, 255, 0.08);
 
   --shadow-sm: 0 2px 10px rgba(7, 7, 7, 0.45);
@@ -175,9 +175,9 @@ h3,
 h4,
 h5,
 h6 {
+  margin: 0;
   font-family: var(--font-family-heading);
   font-weight: 600;
-  margin: 0 0 var(--space-3);
   letter-spacing: -0.4px;
 }
 h1 {
@@ -273,7 +273,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 6px 14px;
+  padding: 4px 32px;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: clamp(14px, 3vw, 18px);
@@ -286,7 +286,7 @@ p {
 .button {
   background: var(--brand-primary);
   border-color: var(--brand-primary);
-  color: var(--text-inverse);
+  color: #f5f5f5;
 }
 .btn--solid:hover,
 .button:hover {
@@ -306,6 +306,7 @@ p {
 }
 .btn--outline:hover,
 .button_invert:hover {
+  transform: translateY(-1px);
   background: rgba(7, 104, 201, 0.08);
 }
 .btn--ghost {
@@ -365,6 +366,21 @@ p {
   -webkit-backdrop-filter: blur(14px);
 }
 
+.card--cleaning,
+.card--service {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-2));
+  border: 1px solid var(--page-accent-2);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.card--cleaning {
+  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-1));
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-md);
+}
 /* ============================
    MISC
 ============================ */

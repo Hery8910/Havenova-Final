@@ -1,7 +1,12 @@
+export interface ClientLegalUpdateEntry {
+  version?: string;
+  updatedAt?: string;
+}
+
 export interface ClientLegalUpdates {
-  lastPrivacyUpdate: string;
-  lastCookiesUpdate: string;
-  lastTermsUpdate: string;
+  privacy?: ClientLegalUpdateEntry;
+  cookies?: ClientLegalUpdateEntry;
+  terms?: ClientLegalUpdateEntry;
 }
 export interface ClientSchedule {
   monday: { start: string; end: string };

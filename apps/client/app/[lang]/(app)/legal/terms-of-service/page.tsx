@@ -1,12 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { useClient, useI18n } from '../../../../../../../packages/contexts';
 import styles from './page.module.css';
-import { FiExternalLink } from 'react-icons/fi';
-import { IoIosLink } from 'react-icons/io';
-
 export interface TermsOfServicePageTexts {
   hero: {
     headline1: string;
@@ -14,11 +9,21 @@ export interface TermsOfServicePageTexts {
     subtitle: string;
     image: { src: string; alt: string };
   };
-  intro: {
+  overview: {
+    title: string;
+    intro: string;
+    bullets: string[];
+  };
+  definitions: {
+    title: string;
+    items: { term: string; definition: string }[];
+  };
+  serviceDescription: {
     title: string;
     body: string;
+    note: string;
   };
-  scope: {
+  optimization: {
     title: string;
     body: string;
   };
@@ -26,20 +31,32 @@ export interface TermsOfServicePageTexts {
     title: string;
     items: string[];
   };
-  providerRights: {
-    title: string;
-    items: string[];
-  };
-  payments: {
+  availability: {
     title: string;
     body: string;
-    items: string[];
   };
-  cancellation: {
+  externalContractors: {
     title: string;
     body: string;
   };
   liability: {
+    title: string;
+    body: string;
+    limitations: string[];
+  };
+  payments: {
+    title: string;
+    body: string;
+  };
+  termination: {
+    title: string;
+    body: string;
+  };
+  dataProtection: {
+    title: string;
+    body: string;
+  };
+  governingLaw: {
     title: string;
     body: string;
   };
@@ -47,10 +64,6 @@ export interface TermsOfServicePageTexts {
     title: string;
     body: string;
     meta: { lastUpdated: string };
-  };
-  legalReferences: {
-    title: string;
-    items: { label: string; href: string }[];
   };
 }
 
@@ -69,7 +82,7 @@ export interface ContactTexts {
 export default function TermsOfServicePage() {
   const { client } = useClient();
   const { texts } = useI18n();
-  const terms: TermsOfServicePageTexts = texts?.pages?.legal?.terms;
+  const terms: TermsOfServicePageTexts = texts?.pages?.client?.legal?.terms;
 
   if (!client || !terms) return null;
 
@@ -91,19 +104,46 @@ export default function TermsOfServicePage() {
         <p className={styles.header_p}>{terms.hero.subtitle}</p>
       </section>
 
-      {/* Introducción */}
+      {/* Overview */}
       <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.intro.title}</h3>
-        <p>{terms.intro.body}</p>
+        <h3 className={styles.h3}>{terms.overview.title}</h3>
+        <p>{terms.overview.intro}</p>
+        <ul className={styles.ul}>
+          {terms.overview.bullets.map((item, i) => (
+            <li key={i}>
+              <p>{item}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      {/* Alcance */}
+      {/* Definitions */}
       <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.scope.title}</h3>
-        <p>{terms.scope.body}</p>
+        <h3 className={styles.h3}>{terms.definitions.title}</h3>
+        <dl className={styles.definition_list}>
+          {terms.definitions.items.map((item) => (
+            <div className={styles.definition_item} key={item.term}>
+              <dt className={styles.definition_term}>{item.term}</dt>
+              <dd className={styles.definition_desc}>{item.definition}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
-      {/* Obligaciones del usuario */}
+      {/* Service Description */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.serviceDescription.title}</h3>
+        <p>{terms.serviceDescription.body}</p>
+        <p className={styles.note}>{terms.serviceDescription.note}</p>
+      </section>
+
+      {/* Continuous Optimization */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.optimization.title}</h3>
+        <p>{terms.optimization.body}</p>
+      </section>
+
+      {/* User Obligations */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{terms.userObligations.title}</h3>
         <ul className={styles.ul}>
@@ -115,44 +155,56 @@ export default function TermsOfServicePage() {
         </ul>
       </section>
 
-      {/* Derechos del proveedor */}
+      {/* Availability */}
       <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.providerRights.title}</h3>
-        <ul className={styles.ul}>
-          {terms.providerRights.items.map((item, i) => (
-            <li key={i}>
-              <p>{item}</p>
-            </li>
-          ))}
-        </ul>
+        <h3 className={styles.h3}>{terms.availability.title}</h3>
+        <p>{terms.availability.body}</p>
       </section>
 
-      {/* Pagos y condiciones */}
+      {/* External Contractors */}
       <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.payments.title}</h3>
-        <p>{terms.payments.body}</p>
-        <ul className={styles.ul}>
-          {terms.payments.items.map((item, i) => (
-            <li key={i}>
-              <p>{item}</p>
-            </li>
-          ))}
-        </ul>
+        <h3 className={styles.h3}>{terms.externalContractors.title}</h3>
+        <p>{terms.externalContractors.body}</p>
       </section>
 
-      {/* Cancelación */}
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.cancellation.title}</h3>
-        <p>{terms.cancellation.body}</p>
-      </section>
-
-      {/* Responsabilidad */}
+      {/* Liability */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{terms.liability.title}</h3>
         <p>{terms.liability.body}</p>
+        <ul className={styles.ul}>
+          {terms.liability.limitations.map((item, i) => (
+            <li key={i}>
+              <p>{item}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      {/* Cambios */}
+      {/* Payments */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.payments.title}</h3>
+        <p>{terms.payments.body}</p>
+      </section>
+
+      {/* Termination */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.termination.title}</h3>
+        <p>{terms.termination.body}</p>
+      </section>
+
+      {/* Data Protection */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.dataProtection.title}</h3>
+        <p>{terms.dataProtection.body}</p>
+      </section>
+
+      {/* Governing Law */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.governingLaw.title}</h3>
+        <p>{terms.governingLaw.body}</p>
+      </section>
+
+      {/* Changes */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{terms.changes.title}</h3>
         <p>{terms.changes.body}</p>
@@ -160,29 +212,9 @@ export default function TermsOfServicePage() {
           <p>
             <strong>{terms.changes.meta.lastUpdated}</strong>
           </p>
-          <p>{formatDate(legalUpdates?.lastTermsUpdate || '')}</p>
+          <p>{formatDate(legalUpdates?.terms?.updatedAt || '')}</p>
         </aside>
       </section>
-
-      {/* Referencias legales */}
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{terms.legalReferences.title}</h3>
-        <ul className={styles.ul}>
-          {terms.legalReferences.items.map((item, i) => (
-            <li key={i}>
-              <Link
-                href={item.href}
-                className={styles.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.label} <FiExternalLink />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
     </main>
   );
 }

@@ -24,7 +24,7 @@ export function CookieBannerView({ texts, onReject, onAccept, onClose }: CookieB
   return (
     <div className={`${styles.wrapper} card`}>
       <section
-        className={`${styles.banner} card`}
+        className={`${styles.banner} card--glass`}
         role="dialog"
         aria-live="polite"
         aria-label="Cookie consent banner"
@@ -34,7 +34,7 @@ export function CookieBannerView({ texts, onReject, onAccept, onClose }: CookieB
           <h4 className={styles.title}>{texts.title}</h4>
           <p className={styles.description}>{texts.description}</p>
         </article>
-        <button className={styles.button} onClick={onClose}>
+        <button className="button" onClick={onReject}>
           {texts.close}
         </button>
       </section>

@@ -108,6 +108,9 @@
   gap: 32px;
   width: 100%;
 }
+.tabletImage {
+  opacity: 0.8;
+}
 .mobileLists {
   display: flex;
   flex-direction: column;
@@ -174,4 +177,10 @@
 }
 :global([data-theme='dark']) .navLink:hover {
   background-color: rgba(148, 163, 184, 0.16);
+}
+@media (max-width: 900px) {
+  .tabletImage {
+    display: none;
+    opacity: 0.8;
+  }
 }

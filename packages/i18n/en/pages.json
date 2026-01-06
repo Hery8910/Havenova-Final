@@ -1,6 +1,86 @@
 {
   "client": {
-    "home": {},
+    "home": {
+      "hero": {
+        "badge": "Digital service platform",
+        "title": "Cleaning & maintenance —",
+        "titleAccent": "request online in minutes.",
+        "subtitle": "Choose your service, send your request in minutes, and receive a tailored offer. Transparent, reliable, and without extra effort.",
+        "ctas": {
+          "cleaning": {
+            "label": "Request cleaning",
+            "href": "/services/house-cleaning"
+          },
+          "maintenance": {
+            "label": "Request maintenance",
+            "href": "/services/home-service"
+          }
+        },
+        "image": {
+          "src": "/images/home-hero.webp",
+          "alt": "Havenova service in Berlin",
+          "badgeTitle": "New: Digital platform",
+          "badgeSubtitle": "Requests & updates in one place",
+          "tag": "Berlin & surrounding area"
+        }
+      },
+      "appInstall": {
+        "kicker": "PWA · Installable",
+        "title": "Install Havenova as an app — on any device.",
+        "description": "Use Havenova like a native app: faster access, better performance, and a clear overview of your requests — on mobile, tablet, or desktop.",
+        "primaryCta": {
+          "label": "Install app",
+          "installedLabel": "App installed"
+        },
+        "secondaryCta": {
+          "label": "How it works"
+        },
+        "features": ["Fast start", "Updates & status", "Mobile-first", "Everything in one place"]
+      },
+      "services": {
+        "title": "Our services",
+        "subtitle": "Two clear paths — choose the right service and send your request in minutes.",
+        "items": [
+          {
+            "title": "Cleaning",
+            "description": "Reliable cleaning for apartments, stairwells, and common areas — flexible, thorough, and tailored to your needs.",
+            "ctaLabel": "Request cleaning",
+            "href": "/services/house-cleaning",
+            "icon": "🧹"
+          },
+          {
+            "title": "Maintenance & home service",
+            "description": "Small repairs, upkeep, and practical help at home — quickly arranged and transparently coordinated.",
+            "ctaLabel": "Request maintenance",
+            "href": "/services/home-service",
+            "icon": "🛠️"
+          }
+        ]
+      },
+      "benefits": {
+        "kicker": "Benefits",
+        "title": "Comfortable for customers — efficient for the team.",
+        "description": "Havenova reduces back-and-forth, clarifies requests, and keeps workflows clean: fewer misunderstandings, faster quotes, better planning.",
+        "items": [
+          {
+            "title": "Clear requests",
+            "description": "Forms collect exactly the information needed — without stress."
+          },
+          {
+            "title": "Faster quotes",
+            "description": "Fewer follow-ups, quicker matching, better response times."
+          },
+          {
+            "title": "Better planning",
+            "description": "Services can be prioritized and coordinated with clarity."
+          },
+          {
+            "title": "Transparency",
+            "description": "Status and communication in one place — clear for both sides."
+          }
+        ]
+      }
+    },
     "cleaning": {},
     "home-service": {},
     "contact": {},
@@ -184,8 +264,8 @@
         },
         "thirdParties": {
           "title": "Third-Party Service Providers",
-          "subtitle": "External providers are used to ensure secure and efficient platform operation.",
-          "intro": "All providers operate under contractual agreements and comply with GDPR requirements.",
+          "subtitle": "This overview refers to technical providers that may be required to operate the platform (e.g., hosting, email delivery, payment processing).",
+          "intro": "No providers are used for analytics or marketing.",
           "table": {
             "headers": {
               "name": "Provider",
@@ -193,7 +273,53 @@
               "region": "Region",
               "privacy": "Privacy Policy"
             },
-            "body": []
+            "body": [
+              {
+                "name": "Vercel",
+                "purpose": "Frontend hosting and operations, technical logs",
+                "region": "Global (region-dependent)",
+                "privacyUrl": {
+                  "label": "Privacy Policy",
+                  "href": "https://vercel.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "Cloudflare R2",
+                "purpose": "Storage and delivery of static assets",
+                "region": "Global (region-dependent)",
+                "privacyUrl": {
+                  "label": "Privacy Policy",
+                  "href": "https://www.cloudflare.com/privacypolicy/"
+                }
+              },
+              {
+                "name": "Render",
+                "purpose": "Backend hosting, technical logs",
+                "region": "Global (region-dependent)",
+                "privacyUrl": {
+                  "label": "Privacy Policy",
+                  "href": "https://render.com/privacy"
+                }
+              },
+              {
+                "name": "MongoDB Atlas",
+                "purpose": "Database hosting",
+                "region": "Global (region-dependent)",
+                "privacyUrl": {
+                  "label": "Privacy Policy",
+                  "href": "https://www.mongodb.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "SendGrid",
+                "purpose": "Email delivery",
+                "region": "Global (region-dependent)",
+                "privacyUrl": {
+                  "label": "Privacy Policy",
+                  "href": "https://www.twilio.com/legal/privacy"
+                }
+              }
+            ]
           }
         },
         "security": {
@@ -202,20 +328,47 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "This platform uses only strictly necessary cookies required for secure operation and core functionality. No analytics or marketing cookies are used."
+          "body": "This platform uses only strictly necessary cookies required for secure operation and core functionality. No analytics or marketing cookies are used.",
+          "cta": {
+            "label": "View Cookie Policy",
+            "href": "/legal/cookie-policy"
+          }
         },
         "userRights": {
           "title": "Your Rights",
           "intro": "Data subjects have the following rights under the GDPR:",
           "items": [
             "Access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18).",
-            "Data portability (Art. 20), objection (Art. 21)."
+            "Data portability (Art. 20), objection (Art. 21).",
+            "Withdrawal of consent (Art. 7(3)) where processing is based on consent.",
+            "Right to lodge a complaint with a supervisory authority (Art. 77)."
           ],
-          "howTo": "Requests must be addressed to the respective data controller."
+          "howTo": "Requests must be addressed to the respective data controller. We may request identification and generally respond within one month."
         },
         "retention": {
           "title": "Data Retention",
           "body": "Personal data is stored only for as long as necessary to fulfill the stated purposes and legal obligations. Thereafter, data is deleted or anonymized."
+        },
+        "additionalInformation": {
+          "title": "Additional Information under Art. 13 GDPR",
+          "items": [
+            {
+              "title": "Requirement to provide data",
+              "body": "Providing personal data is necessary to use the platform. Without this data, registration and use of the services are not possible."
+            },
+            {
+              "title": "Data sources",
+              "body": "We process data you provide as well as technical usage data generated when using the platform (e.g., log files)."
+            },
+            {
+              "title": "Automated decision-making",
+              "body": "No automated decision-making, including profiling within the meaning of Art. 22 GDPR, takes place."
+            },
+            {
+              "title": "Privacy contact",
+              "body": "If a Data Protection Officer is appointed, their contact details will be provided in the Imprint or upon request."
+            }
+          ]
         },
         "internationalTransfers": {
           "title": "International Data Transfers",
@@ -227,6 +380,19 @@
           "meta": {
             "lastUpdated": "Last updated:"
           }
+        },
+        "legalReferences": {
+          "title": "Legal References",
+          "items": [
+            {
+              "label": "General Data Protection Regulation (GDPR)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "European Data Protection Board – Supervisory authorities",
+              "href": "https://edpb.europa.eu/about-edpb/board/members_en"
+            }
+          ]
         }
       },
       "cookies": {
@@ -444,13 +610,27 @@
           "headline2": "Information pursuant to § 5 TMG",
           "subtitle": "This page contains the legally required information about the provider of this website."
         },
+        "providerSection": {
+          "heading": "Service Provider Information",
+          "description": "Provider details as required by applicable European laws:",
+          "fields": {
+            "companyName": "Company",
+            "address": "Address",
+            "email": "Email",
+            "phone": "Phone"
+          },
+          "fallbacks": {
+            "companyName": "Havenova",
+            "address": "Stollberger Str.43, 12627 Berlin",
+            "email": "contact@havenova.com",
+            "phone": "+49 000 0000000"
+          }
+        },
         "responsibleSection": {
           "heading": "Responsible for Content pursuant to § 55 Abs. 2 RStV",
-          "description": "The person responsible for the content of this website is:"
-        },
-        "taxSection": {
-          "heading": "VAT ID",
-          "descriptionNoId": "No VAT identification number available / not required."
+          "description": "The person responsible for the content of this website is:",
+          "name": "Hasan Al Al-Hayyawi",
+          "address": "Stollberger Str.43, 12627 Berlin"
         },
         "liabilitySection": {
           "heading": "Disclaimer",
@@ -458,7 +638,12 @@
         },
         "odrSection": {
           "heading": "Online Dispute Resolution (ODR)",
-          "text": "The European Commission provides a platform for online dispute resolution (ODR): [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr).\n\nWe are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
+          "text": "The European Commission provides a platform for online dispute resolution (ODR):",
+          "link": {
+            "label": "https://ec.europa.eu/consumers/odr",
+            "href": "https://ec.europa.eu/consumers/odr"
+          },
+          "note": "We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
         }
       }
     }

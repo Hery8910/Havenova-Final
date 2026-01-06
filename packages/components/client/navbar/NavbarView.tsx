@@ -166,11 +166,11 @@ export function NavbarView({
           {menuOpen && (
             <div className={styles.imageWrapper}>
               <Image
-                className={styles.logoImage}
+                className={styles.tabletImage}
                 src={'/images/berlin.webp'}
                 alt="Berlin"
-                width={700}
-                height={500}
+                width={600}
+                height={400}
                 priority
               />
               <section className={styles.mobileSection}>
