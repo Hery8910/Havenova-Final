@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import styles from './ServicesSection.module.css';
 import { href } from '../../../../../utils/navigation';
+import Image from 'next/image';
+import { IoIosArrowForward } from 'react-icons/io';
 
 export function ServicesSection({
   texts,
@@ -36,14 +38,25 @@ export function ServicesSection({
 
             return (
               <article className={`${styles.card} ${cardVariant}`} key={item.title}>
-                <div className={styles.cardIcon} aria-hidden="true">
-                  {item.icon}
+                <div className={`${styles.cardIcon} ${cardVariant}`} aria-hidden="true">
+                  <Image
+                    className={styles.logoImage}
+                    src={item.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
                 </div>
-                <h3 className={styles.cardTitle}>{item.title}</h3>
-                <p className={styles.cardText}>{item.description}</p>
-                <Link className={styles.cardLink} href={href(lang, item.href)}>
-                  {item.ctaLabel} <span aria-hidden="true">→</span>
-                </Link>
+                <aside className={styles.cardAside}>
+                  <h3 className={styles.cardTitle}>{item.title}</h3>
+                  <p className={styles.cardText}>{item.description}</p>
+                  <Link className={styles.cardLink} href={href(lang, item.href)}>
+                    {item.ctaLabel}{' '}
+                    <span aria-hidden="true">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </aside>
               </article>
             );
           })}

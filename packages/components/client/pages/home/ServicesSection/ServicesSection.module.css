@@ -7,7 +7,7 @@
 }
 .container {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -39,6 +39,13 @@
   gap: 24px;
 }
 
+.card {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+  align-items: center;
+}
 .card:hover {
   cursor: pointer;
   transform: translateY(-2px);
@@ -46,37 +53,51 @@
   box-shadow: 0 20px 40px rgba(7, 22, 36, 0.12);
 }
 .cardIcon {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   border-radius: 16px;
-  background: rgba(139, 232, 203, 0.25);
-  color: #071624;
-  display: inline-flex;
-  align-items: center;
+  padding: 0;
+  display: flex;
   justify-content: center;
-  font-size: 26px;
+  align-items: center;
+}
+.cardAside {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: flex-start;
+  gap: 6px;
+}
+.cardHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .cardTitle {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--brand-primary);
 }
 .cardText {
   margin: 0;
   color: var(--text-secondary);
-  line-height: 1.6;
+  font-weight: 700;
+  line-height: 1.3;
 }
 .cardLink {
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--brand-primary);
   text-decoration: none;
   display: inline-flex;
   gap: 8px;
   align-items: center;
+  transition: color 0.3s ease-in-out;
 }
 .cardLink:hover {
-  color: #3b4a61;
+  color: var(--text-secondary);
 }
 .cardLink:focus-visible {
   outline: 2px solid var(--brand-primary);

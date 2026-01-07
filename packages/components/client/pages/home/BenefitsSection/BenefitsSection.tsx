@@ -21,14 +21,16 @@ export function BenefitsSection({
             </h2>
             <p className={styles.sectionSubtitle}>{texts.description}</p>
           </div>
-          <div className={styles.benefitsCards}>
+          <ul className={styles.benefitsCards}>
             {texts.items.map((item) => (
-              <article className={styles.benefitCard} key={item.title}>
-                <h3 className={styles.benefitTitle}>{item.title}</h3>
-                <p className={styles.benefitText}>{item.description}</p>
-              </article>
+              <li className={styles.benefitItem} key={item.title}>
+                <article className={styles.benefitCard}>
+                  <h3 className={styles.benefitTitle}>{item.title}</h3>
+                  <p className={styles.benefitText}>{item.description}</p>
+                </article>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

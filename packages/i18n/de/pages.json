@@ -44,16 +44,16 @@
           {
             "title": "Reinigung",
             "description": "Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Allgemeinflächen – flexibel, gründlich und passend zu deinem Bedarf.",
-            "ctaLabel": "Zur Reinigungsanfrage",
+            "ctaLabel": "Jetzt bestellen",
             "href": "/services/house-cleaning",
-            "icon": "🧹"
+            "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Wartung & Hausservice",
             "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe rund ums Zuhause – schnell organisiert, transparent abgestimmt.",
-            "ctaLabel": "Zur Wartungsanfrage",
+            "ctaLabel": "Jetzt bestellen",
             "href": "/services/home-service",
-            "icon": "🛠️"
+            "icon": "/svg/service.svg"
           }
         ]
       },

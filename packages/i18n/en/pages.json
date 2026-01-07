@@ -43,17 +43,17 @@
         "items": [
           {
             "title": "Cleaning",
-            "description": "Reliable cleaning for apartments, stairwells, and common areas — flexible, thorough, and tailored to your needs.",
-            "ctaLabel": "Request cleaning",
+            "description": "Reliable cleaning for apartments, stairwells, and common areas — tailored to your needs.",
+            "ctaLabel": "Order now",
             "href": "/services/house-cleaning",
-            "icon": "🧹"
+            "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Maintenance & home service",
             "description": "Small repairs, upkeep, and practical help at home — quickly arranged and transparently coordinated.",
-            "ctaLabel": "Request maintenance",
+            "ctaLabel": "Order now",
             "href": "/services/home-service",
-            "icon": "🛠️"
+            "icon": "/svg/service.svg"
           }
         ]
       },
