@@ -150,12 +150,12 @@ const Profile = () => {
   const editButton = formText.button.edit;
   const avatarAlt = userProfile.name
     ? `${userProfile.name} avatar`
-    : profileTexts?.manageAccount ?? 'User avatar';
+    : (profileTexts?.manageAccount ?? 'User avatar');
 
   return (
     <div className={styles.wrapper}>
       <section
-        className={`${styles.section} card`}
+        className={`${styles.section} card--glass`}
         aria-labelledby="profile-title"
         aria-describedby="profile-description"
       >

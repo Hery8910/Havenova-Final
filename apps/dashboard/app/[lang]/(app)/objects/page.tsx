@@ -11,6 +11,7 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
+  useRequireRole,
 } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import { getPopup, href } from '../../../../../../packages/utils';
@@ -68,6 +69,7 @@ const EMPTY_FORM: ObjectFormValues = {
 };
 
 const ObjectsPage = () => {
+  const isAllowed = useRequireRole('admin');
   const { client } = useClient();
   const { auth, refreshAuth } = useAuth();
   const router = useRouter();
@@ -103,6 +105,8 @@ const ObjectsPage = () => {
   const [detailData, setDetailData] = useState<BuildingDetail | null>(null);
   const fetchKeyRef = useRef(0);
   const detailFetchKeyRef = useRef(0);
+
+  if (!isAllowed) return null;
 
   useEffect(() => {
     if (!auth.isLogged) {

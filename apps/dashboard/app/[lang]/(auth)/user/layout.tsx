@@ -1,4 +1,4 @@
-import '../../global.css';
+import '../../../global.css';
 import styles from './layout.module.css';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
@@ -10,8 +10,9 @@ import {
   ClientProvider,
   I18nProvider,
   ProfileProvider,
-} from '../../../../../packages/contexts';
-import { getClient } from '../../../../../packages/services';
+  WorkerProvider,
+} from '../../../../../../packages/contexts';
+import { getClient } from '../../../../../../packages/services';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }];
@@ -60,7 +61,7 @@ export default async function LangLayout({
           <AlertProvider>
             <ClientProvider initialClient={client}>
               <AuthProvider>
-                <ProfileProvider>{children}</ProfileProvider>
+                <WorkerProvider>{children}</WorkerProvider>
               </AuthProvider>
             </ClientProvider>
           </AlertProvider>

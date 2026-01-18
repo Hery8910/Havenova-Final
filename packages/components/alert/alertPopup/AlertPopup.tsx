@@ -38,7 +38,7 @@ export default function AlertPopup({
   const hasCancel = !loading && !!onCancel && !!cancelLabel; // Opcional: ocultar cancelar si no hay label
 
   return (
-    <div className={`${styles.overlay} card`}>
+    <div className={`${styles.overlay} card--glass`}>
       <section
         role={hasConfirm ? 'dialog' : 'alertdialog'}
         aria-modal="true"

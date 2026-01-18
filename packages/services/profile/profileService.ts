@@ -2,7 +2,6 @@ import api from '../api/api';
 import { ApiResponse } from '@/packages/types/api';
 import {
   UserClientProfile,
-  WorkerProfile,
   UpdateUserProfilePayload,
   UpdateUserProfileResponse,
   CreateUserProfileResponse,
@@ -65,16 +64,4 @@ export const createUserClientProfile = async (
     code: data.code,
     profile: data.data,
   };
-};
-
-// ---------------------------
-// WORKER PROFILE (si existe en backend)
-// ---------------------------
-
-export const getWorkerProfile = async (clientId: string): Promise<WorkerProfile> => {
-  const { data } = await api.get<ApiResponse<WorkerProfile>>(
-    '/api/home-services/worker/profile/me',
-    { params: { clientId }, withCredentials: true }
-  );
-  return data.data;
 };

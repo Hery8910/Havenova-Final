@@ -6,8 +6,7 @@ export interface LoadingData {
 }
 
 const Loading: React.FC<LoadingData> = ({ theme }) => {
-  const backgroundImage =
-    theme === 'light' ? '/images/logos/nav-logo-dark.webp' : '/images/logos/nav-logo-light.webp';
+  const backgroundImage = theme === 'light' ? '/logos/nav-logo-dark.webp' : '/logos/nav-logo-light.webp';
 
   return (
     <main className={styles.loadingContainer} role="status" aria-live="polite" aria-busy="true">

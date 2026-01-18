@@ -88,8 +88,10 @@
 @media (max-width: 900px) {
   .benefitsGrid {
     flex-direction: column;
+    gap: 32px;
   }
-  .benefitsCopy {
-    max-width: none;
+  .benefitsCards {
+    max-width: 500px;
+    margin: 0 auto;
   }
 }

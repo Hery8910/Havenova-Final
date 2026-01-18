@@ -14,7 +14,7 @@ import { useClient } from '../client/ClientContext';
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
 import { fallbackButtons, fallbackLogoutSuccess, fallbackPopups } from '../i18n';
-import { AuthUser } from '@/packages/types/auth/authTypes';
+import { AuthRole, AuthUser } from '@/packages/types/auth/authTypes';
 import { useRouter } from 'next/navigation';
 import { getPopup } from '@havenova/utils';
 import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
@@ -161,9 +161,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setGuest();
             const role = stored?.role;
             const shouldOfferContinue = role === 'user';
-            const popupKey = shouldOfferContinue
-              ? 'USER_SESSION_EXPIRED'
-              : 'REFRESH_TOKEN_EXPIRED';
+            const popupKey = shouldOfferContinue ? 'USER_SESSION_EXPIRED' : 'REFRESH_TOKEN_EXPIRED';
             const popup = getPopup(
               popups,
               popupKey,
@@ -269,7 +267,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         onCancel: () => {
           closeAlert();
-          router.push(`/${language}/login`);
+          router.push(`/${language}/user/login`);
         },
       });
     } catch {
@@ -329,4 +327,42 @@ export const useAuth = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
+};
+
+export const useRequireRole = (expectedRole: AuthRole) => {
+  const { auth, loading } = useAuth();
+  const { showError, closeAlert } = useGlobalAlert();
+  const { texts, language } = useI18n();
+  const router = useRouter();
+  const didNotifyRef = useRef(false);
+
+  const isAllowed = Boolean(auth?.isLogged && auth.role === expectedRole);
+
+  useEffect(() => {
+    if (!auth || loading || isAllowed || didNotifyRef.current) return;
+    didNotifyRef.current = true;
+
+    const popups = texts?.popups ?? {};
+    const popup = getPopup(
+      popups,
+      'PERMISSION_DENIED',
+      'PERMISSION_DENIED',
+      fallbackPopups.PERMISSION_DENIED
+    );
+
+    showError({
+      response: {
+        status: 403,
+        title: popup.title,
+        description: popup.description,
+        cancelLabel: popup.close ?? fallbackPopups.PERMISSION_DENIED.close,
+      },
+      onCancel: () => {
+        closeAlert();
+        router.push(`/${language}/user/login`);
+      },
+    });
+  }, [auth, loading, isAllowed, texts, language, router, showError, closeAlert, expectedRole]);
+
+  return isAllowed;
 };

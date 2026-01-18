@@ -9,6 +9,7 @@ import {
   useAuth,
   useGlobalAlert,
   useI18n,
+  useRequireRole,
 } from '../../../../../../packages/contexts';
 import {
   GlobalTaskCatalogBundleList,
@@ -31,6 +32,7 @@ import {
 import { getPopup } from '../../../../../../packages/utils';
 
 const GlobalTaskCatalogPage = () => {
+  const isAllowed = useRequireRole('admin');
   const { texts, language } = useI18n();
   const { refreshAuth } = useAuth();
   const { showLoading, showError, showSuccess, closeAlert } = useGlobalAlert();
@@ -58,6 +60,8 @@ const GlobalTaskCatalogPage = () => {
   const [queryInput, setQueryInput] = useState('');
 
   const [selectedBundleId, setSelectedBundleId] = useState<string | null>(null);
+
+  if (!isAllowed) return null;
 
   const handleSearchApply = useCallback(() => {
     if (queryInput === filters.title) return;

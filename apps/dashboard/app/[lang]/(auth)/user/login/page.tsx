@@ -13,13 +13,14 @@ import {
   useGlobalAlert,
   useI18n,
   useProfile,
-} from '../../../../../../packages/contexts';
-import { getPopup } from '../../../../../../packages/utils/alertType';
-import { loginUser } from '../../../../../../packages/services';
-import { useLang } from '../../../../../../packages/hooks';
-import { href } from '../../../../../../packages/utils';
-import { LoginPayload } from '../../../../../../packages/types';
-import { FormWrapper } from '../../../../../../packages/components';
+  useWorker,
+} from '../../../../../../../packages/contexts';
+import { getPopup } from '../../../../../../../packages/utils/alertType';
+import { loginUser } from '../../../../../../../packages/services';
+import { useLang } from '../../../../../../../packages/hooks';
+import { href } from '../../../../../../../packages/utils';
+import { LoginPayload } from '../../../../../../../packages/types';
+import { FormWrapper } from '../../../../../../../packages/components';
 
 export interface LoginData {
   title: string;
@@ -34,7 +35,7 @@ const Login = () => {
   const { client } = useClient();
   const { auth, setAuth } = useAuth();
   const { texts, language, setLanguage } = useI18n();
-  const { profile } = useProfile();
+  const { worker } = useWorker();
   const router = useRouter();
   const lang = useLang();
   const isLoggedIn = auth?.isLogged && auth.role !== 'guest';
@@ -43,14 +44,14 @@ const Login = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
   useEffect(() => {
-    if (!profile?.theme) return;
-    document.documentElement.setAttribute('data-theme', profile.theme);
-    localStorage.setItem('theme', profile.theme);
-  }, [profile?.theme]);
+    if (!worker?.theme) return;
+    document.documentElement.setAttribute('data-theme', worker.theme);
+    localStorage.setItem('theme', worker.theme);
+  }, [worker?.theme]);
 
   useEffect(() => {
-    if (!profile?.language) return;
-    const nextLang = profile.language === 'en' ? 'en' : 'de';
+    if (!worker?.language) return;
+    const nextLang = worker.language === 'en' ? 'en' : 'de';
 
     if (!isLoggedIn) {
       if (nextLang !== lang) {
@@ -67,7 +68,7 @@ const Login = () => {
     if (language !== nextLang) {
       setLanguage(nextLang);
     }
-  }, [profile?.language, lang, language, router, setLanguage, isLoggedIn]);
+  }, [worker?.language, lang, language, router, setLanguage, isLoggedIn]);
 
   const popups = texts.popups;
   const formText = texts.components.client.form;
@@ -159,18 +160,15 @@ const Login = () => {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: '',
         },
-        onConfirm: () => {
-          router.push(href(lang, '/'));
-          closeAlert();
-        },
-        onCancel: () => {
-          router.push(href(lang, '/'));
-          closeAlert();
-        },
+        onCancel: closeAlert,
       });
+
+      setTimeout(() => {
+        router.push(href(lang, '/'));
+        closeAlert();
+      }, 3000);
     } catch (err: any) {
       const code = err?.response?.data?.code; // FIXED
 
@@ -217,14 +215,6 @@ const Login = () => {
             }}
             loading={loading}
           />
-          <aside className={styles.aside}>
-            <p id={descriptionId} className={styles.header_p}>
-              {login.cta.title}
-            </p>
-            <Link className={styles.link} href={login.cta.url}>
-              {login.cta.label}
-            </Link>
-          </aside>
         </section>
       </div>
     </main>

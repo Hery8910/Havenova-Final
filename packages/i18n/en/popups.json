@@ -306,6 +306,15 @@
     "title": "Worker not found",
     "description": "The requested worker could not be found."
   },
+  "WORKER_LOAD_FAILED": {
+    "title": "Failed to load data",
+    "description": "Worker data could not be loaded. Please reload the page."
+  },
+  "PERMISSION_DENIED": {
+    "title": "Access denied",
+    "description": "You do not have the required permissions to access this page.",
+    "close": "Go to login"
+  },
   "OBJECT_CREATED": {
     "title": "Object created",
     "description": "The object has been created successfully."

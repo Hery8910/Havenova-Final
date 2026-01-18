@@ -46,8 +46,8 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const popups = texts.popups;
-  const register: RegisterData = texts?.pages?.user.register;
-  const formText = texts.components.form;
+  const register: RegisterData = texts?.pages?.client.user.register;
+  const formText = texts.components.client.form;
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
 
@@ -163,7 +163,11 @@ const Register = () => {
 
   return (
     <main className={styles.main} aria-labelledby="register-title" aria-describedby="register-desc">
-      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="register-title">
+      <div
+        className={`${styles.wrapper} card--glass`}
+        role="region"
+        aria-labelledby="register-title"
+      >
         <header className={styles.header}>
           <h1 id="register-title" className={styles.h1}>
             {register?.title}

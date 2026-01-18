@@ -306,6 +306,15 @@
     "title": "Mitarbeiter nicht gefunden",
     "description": "Der angeforderte Mitarbeiter konnte nicht gefunden werden."
   },
+  "WORKER_LOAD_FAILED": {
+    "title": "Fehler beim Laden der Daten",
+    "description": "Die Mitarbeiterdaten konnten nicht geladen werden. Bitte laden Sie die Seite neu."
+  },
+  "PERMISSION_DENIED": {
+    "title": "Zugriff verweigert",
+    "description": "Sie haben nicht die erforderlichen Berechtigungen, um diese Seite zu sehen.",
+    "close": "Zum Login"
+  },
   "OBJECT_CREATED": {
     "title": "Objekt erstellt",
     "description": "Das Objekt wurde erfolgreich erstellt."

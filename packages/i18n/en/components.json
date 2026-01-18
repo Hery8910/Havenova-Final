@@ -90,12 +90,16 @@
         "resendEmail": "Resend email"
       },
       "labels": {
-        "name": "Full name",
-        "email": "Email address",
+        "name": "Name",
+        "email": "Email",
         "password": "Password",
         "forgotPassword": "Forgot Password?",
         "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
-        "tos": "I have read and accept the Terms of Service and the Privacy Policy.",
+        "tosPrefix": "I have read and accept the ",
+        "tosTerms": "Terms of Service",
+        "tosConnector": " and the ",
+        "tosPrivacy": "Privacy Policy",
+        "tosSuffix": ".",
         "address": "Address",
         "phone": "Phone number",
         "profileImage": "Change profile image",
@@ -105,7 +109,7 @@
       "placeholders": {
         "name": "John Doe",
         "email": "john.doe@example.com",
-        "password": "*********",
+        "password": "Min. 8 characters",
         "address": "Main Street 12, 12345 London",
         "phone": "+49 7911 123456",
         "subject": "Select a subject",

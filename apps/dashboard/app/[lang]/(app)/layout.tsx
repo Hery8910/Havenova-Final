@@ -9,7 +9,7 @@ import {
   AuthProvider,
   ClientProvider,
   I18nProvider,
-  ProfileProvider,
+  WorkerProvider,
 } from '../../../../../packages/contexts';
 import DashboardHeader from '../../../../../packages/components/dashboard/dashboardHeader/DashboardHeader';
 import { Sidebar } from '../../../../../packages/components';
@@ -61,7 +61,7 @@ export default async function LangLayout({
           <AlertProvider>
             <ClientProvider initialClient={client}>
               <AuthProvider>
-                <ProfileProvider>
+                <WorkerProvider>
                   <div className={styles.layout}>
                     <nav className={styles.nav}>
                       <Sidebar />
@@ -71,7 +71,7 @@ export default async function LangLayout({
                     </header>
                     <main className={styles.main}>{children}</main>
                   </div>
-                </ProfileProvider>
+                </WorkerProvider>
               </AuthProvider>
             </ClientProvider>
           </AlertProvider>

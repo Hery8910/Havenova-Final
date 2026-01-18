@@ -13,18 +13,6 @@ interface BeforeInstallPromptEvent extends Event {
 const INSTALL_FLAG_KEY = 'pwa-installed';
 const INSTALL_COOKIE = `${INSTALL_FLAG_KEY}=true; path=/; max-age=31536000; samesite=lax`;
 
-const getInstallFlag = () => {
-  if (typeof document === 'undefined') {
-    return false;
-  }
-
-  const fromStorage = window.localStorage?.getItem(INSTALL_FLAG_KEY) === 'true';
-  const fromCookie = document.cookie
-    .split('; ')
-    .some((entry) => entry.startsWith(`${INSTALL_FLAG_KEY}=true`));
-  return fromStorage || fromCookie;
-};
-
 const setInstallFlag = () => {
   window.localStorage?.setItem(INSTALL_FLAG_KEY, 'true');
   document.cookie = INSTALL_COOKIE;
@@ -56,10 +44,9 @@ export function AppInstallSection({
     const mediaQuery = window.matchMedia?.('(display-mode: standalone)');
 
     const checkInstalled = () => {
-      const storedInstalled = getInstallFlag();
       const isStandalone =
         mediaQuery?.matches || (window.navigator as { standalone?: boolean }).standalone;
-      setIsInstalled(Boolean(isStandalone || storedInstalled));
+      setIsInstalled(Boolean(isStandalone));
     };
 
     checkInstalled();
@@ -110,8 +97,10 @@ export function AppInstallSection({
     checkRelatedApps();
   }, []);
 
+  const secondaryHref = href(lang, '/how-it-work');
   const handleInstall = useCallback(async () => {
     if (!installPrompt) {
+      window.location.assign(secondaryHref);
       return;
     }
 
@@ -122,17 +111,18 @@ export function AppInstallSection({
       setInstallFlag();
       setIsInstalled(true);
     }
-  }, [installPrompt]);
+  }, [installPrompt, secondaryHref]);
+  console.log(installPrompt, isInstalled);
 
   const canInstall = Boolean(installPrompt) && !isInstalled;
   const isUnavailable = !isInstalled && !canInstall;
-  const secondaryHref = href(lang, '/how-it-work');
+  const primaryLabel = isInstalled ? texts.primaryCta.installedLabel : texts.primaryCta.label;
 
   return (
     <section className={styles.appInstall} aria-labelledby="home-app-title">
       <div
         className={`${styles.appCard} card`}
-        data-state={!canInstall ? 'installed' : isUnavailable ? 'unavailable' : 'available'}
+        data-state={isInstalled ? 'installed' : isUnavailable ? 'unavailable' : 'available'}
       >
         <div className={styles.appContent}>
           <span className={styles.kicker}>{texts.kicker}</span>
@@ -146,10 +136,10 @@ export function AppInstallSection({
               canInstall ? styles.ctaPrimaryInstall : styles.ctaPrimaryUnavailable
             } button`}
             onClick={canInstall ? handleInstall : undefined}
-            disabled={isInstalled || isUnavailable}
-            aria-disabled={isInstalled || isUnavailable}
+            disabled={isInstalled}
+            aria-disabled={isInstalled}
           >
-            {!canInstall ? texts.primaryCta.installedLabel : texts.primaryCta.label}
+            {primaryLabel}
           </button>
           <Link className={`${styles.ctaGhost} button_invert`} href={secondaryHref}>
             {texts.secondaryCta.label}

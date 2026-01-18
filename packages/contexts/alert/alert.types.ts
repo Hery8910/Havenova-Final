@@ -40,6 +40,8 @@ export interface PopupsTexts {
   CLIENT_FETCH_FAILED?: PopupText;
 
   GLOBAL_INTERNAL_ERROR?: PopupText;
+  PERMISSION_DENIED?: PopupText;
+  WORKER_LOAD_FAILED?: PopupText;
 }
 
 export type PopupCode = Exclude<keyof PopupsTexts, 'button'>;

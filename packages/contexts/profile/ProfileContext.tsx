@@ -1,6 +1,6 @@
 'use client';
 
-import React, {
+import {
   createContext,
   useEffect,
   useState,
@@ -36,7 +36,7 @@ interface ProfileContextProps {
   setProfileImage: (profileImage: string) => Promise<void>;
 }
 
-const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
+export const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, setAuth } = useAuth();

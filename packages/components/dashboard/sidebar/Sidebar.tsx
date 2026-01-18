@@ -19,7 +19,7 @@ import {
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
 import { PiBuildings } from 'react-icons/pi';
-import { useAuth, useI18n, useProfile } from '../../../contexts';
+import { useAuth, useI18n, useWorker } from '../../../contexts';
 import { useLang } from '../../../hooks';
 
 export interface NavItem {
@@ -29,7 +29,7 @@ export interface NavItem {
 
 export default function Sidebar() {
   const { logout } = useAuth();
-  const { profile } = useProfile();
+  const { worker } = useWorker();
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const lang = useLang();
@@ -65,10 +65,10 @@ export default function Sidebar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const getLogoSrc = () => {
-    if (profile.theme === 'dark') {
-      return isCollapsed ? '/favicon-light.svg' : '/images/logos/nav-logo-dark.webp';
+    if (worker.theme === 'dark') {
+      return isCollapsed ? '/favicon-light.svg' : '/logos/nav-logo-dark.webp';
     } else {
-      return isCollapsed ? '/favicon-dark.svg' : '/images/logos/nav-logo-light.webp';
+      return isCollapsed ? '/favicon-dark.svg' : '/logos/nav-logo-light.webp';
     }
   };
 

@@ -10,11 +10,13 @@ import {
   useAuth,
   useGlobalAlert,
   useI18n,
+  useRequireRole,
 } from '@/packages/contexts';
 import { getPopup } from '@/packages/utils/alertType';
 import { sendContactMessage } from '@/packages/services/contact';
 
 const SupportPage = () => {
+  const isAllowed = useRequireRole('admin');
   const { client } = useClient();
   const { auth } = useAuth();
   const { texts } = useI18n();
@@ -43,6 +45,8 @@ const SupportPage = () => {
       email: prev.email || auth?.email || '',
     }));
   }, [auth?.email, auth?.userId, client?._id]);
+
+  if (!isAllowed) return null;
 
   const handleSubmit = async (data: ContactMessageFormData) => {
     setLoading(true);

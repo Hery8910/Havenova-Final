@@ -16,6 +16,7 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
+  useRequireRole,
 } from '../../../../../../packages/contexts';
 import { ContactMessage, ContactMessageStatus } from '../../../../../../packages/types';
 import { formatMessageAge, getPopup } from '../../../../../../packages/utils';
@@ -31,6 +32,7 @@ import {
 const PAGE_SIZE = 10;
 
 const ContactMessagesPage = () => {
+  const isAllowed = useRequireRole('admin');
   const { client } = useClient();
   const { auth, refreshAuth } = useAuth();
   const router = useRouter();
@@ -41,6 +43,8 @@ const ContactMessagesPage = () => {
   const deleteTexts = contactTexts?.delete;
   const popups = texts.popups;
   const { showLoading, showError, showConfirm, showSuccess, closeAlert } = useGlobalAlert();
+
+  if (!isAllowed) return null;
 
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(false);

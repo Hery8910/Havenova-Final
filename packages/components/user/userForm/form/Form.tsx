@@ -1,13 +1,15 @@
 //form.tsx
 
+import Link from 'next/link';
 import styles from './Form.module.css';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { LabelsTextProps, PlaceholdersTextProps, FormField } from '../formWrapper/FormWrapper';
 import { AuthUser, UserClientProfile } from '../../../../types';
+import type { WorkerRecord } from '../../../../types/worker';
 
 interface GenericFormProps<T extends Record<string, any>> {
   auth: AuthUser | null;
-  profile: UserClientProfile | null;
+  profile: UserClientProfile | WorkerRecord | null;
   fields: FormField[];
   formData: T;
   errors: Record<string, string>;
@@ -301,12 +303,22 @@ export default function Form<T extends Record<string, any>>({
               aria-describedby="tos-error"
             />
             <span className={styles.customCheckbox}></span>
-            <span className={styles.checkboxText}>{labels.tos}</span>
+            <span className={styles.checkboxText}>
+              {labels.tosPrefix}
+              <Link className={styles.policyLink} href="/legal/terms-of-service">
+                {labels.tosTerms}
+              </Link>
+              {labels.tosConnector}
+              <Link className={styles.policyLink} href="/legal/privacy-policy">
+                {labels.tosPrivacy}
+              </Link>
+              {labels.tosSuffix}
+            </span>
           </label>
 
           <p
             className={
-              touched.tosAccepted && errors.tosAccepted
+              errors.tosAccepted
                 ? `${styles.feedback} ${styles.error}`
                 : `${styles.feedback} ${styles.hidden}`
             }
@@ -314,13 +326,13 @@ export default function Form<T extends Record<string, any>>({
             role="status"
             aria-live="polite"
           >
-            {touched.tosAccepted && errors.tosAccepted ? errors.tosAccepted : '\u00A0'}
+            {errors.tosAccepted ? errors.tosAccepted : '\u00A0'}
           </p>
         </div>
       )}
 
       <button
-        className={styles.button}
+        className="button"
         type="submit"
         disabled={loading}
         aria-disabled={loading}

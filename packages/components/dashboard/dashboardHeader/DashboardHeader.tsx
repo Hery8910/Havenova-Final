@@ -1,6 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import { useAuth, useI18n, useProfile } from '../../../contexts';
+import { useAuth, useI18n, useWorker } from '../../../contexts';
 import LanguageSwitcher from '../../languageSwitcher/LanguageSwitcher';
 import ThemeToggler from '../../themeToggler/ThemeToggler';
 
@@ -8,7 +8,7 @@ import styles from './DashboardHeader.module.css';
 import Image from 'next/image';
 
 export default function DashboardHeader() {
-  const { profile } = useProfile();
+  const { worker } = useWorker();
   const { auth } = useAuth();
   const pathname = usePathname();
   const { texts } = useI18n();
@@ -31,17 +31,17 @@ export default function DashboardHeader() {
           <LanguageSwitcher />
         </li>
         <li className={styles.profilLi}>
-          {profile.profileImage && (
+          {worker.profileImage && (
             <Image
               className={styles.image}
-              src={profile.profileImage}
-              alt={`${profile.name}'s profile picture`}
+              src={worker.profileImage}
+              alt={`${worker.name}'s profile picture`}
               width={30}
               height={30}
             />
           )}
           <div className={styles.profileDiv}>
-            <p className={styles.name}>{profile.name}</p>
+            <p className={styles.name}>{worker.name}</p>
             <p className={styles.role}>{auth.role}</p>
           </div>
         </li>

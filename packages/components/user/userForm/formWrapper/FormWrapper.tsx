@@ -15,7 +15,7 @@ import { useI18n } from '../../../../contexts/i18n';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../hooks/useLang';
 import { href } from '../../../../utils/navigation';
-import { useProfile } from '../../../../contexts/profile';
+import { useProfile, useWorker } from '../../../../contexts';
 import { useClient } from '../../../../contexts/client/ClientContext';
 import { useEffect } from 'react';
 import { useAuth } from '../../../../contexts/auth/authContext';
@@ -66,7 +66,11 @@ export interface LabelsTextProps {
   password: string;
   forgotPassword: string;
   passwordHint: string;
-  tos: string;
+  tosPrefix: string;
+  tosTerms: string;
+  tosConnector: string;
+  tosPrivacy: string;
+  tosSuffix: string;
   address: string;
   phone: string;
   message: string;
@@ -82,7 +86,24 @@ export default function FormWrapper<T extends Record<string, any>>({
   loading,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
-  const { profile } = useProfile();
+  let profileContext: ReturnType<typeof useProfile> | null = null;
+  let workerContext: ReturnType<typeof useWorker> | null = null;
+
+  try {
+    profileContext = useProfile();
+  } catch {
+    // ProfileContext not available, fall back to worker.
+  }
+
+  if (!profileContext) {
+    try {
+      workerContext = useWorker();
+    } catch {
+      // WorkerContext not available.
+    }
+  }
+
+  const profile = profileContext?.profile ?? workerContext?.worker;
   const { auth } = useAuth();
   const { client } = useClient();
   const router = useRouter();
@@ -220,7 +241,7 @@ export default function FormWrapper<T extends Record<string, any>>({
   return (
     <Form
       auth={auth}
-      profile={profile}
+      profile={profile ?? null}
       fields={fields}
       formData={formData}
       errors={errors}

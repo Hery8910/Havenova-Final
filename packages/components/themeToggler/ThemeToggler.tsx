@@ -1,13 +1,31 @@
 'use client';
 import { useEffect } from 'react';
-import { useProfile } from '../../contexts/profile/ProfileContext';
+import { useProfile, useWorker } from '../../contexts';
 import styles from './ThemeToggler.module.css';
 import Image from 'next/image';
 
 const ThemeToggler = () => {
-  const { profile, setTheme } = useProfile();
+  let profileContext: ReturnType<typeof useProfile> | null = null;
+  let workerContext: ReturnType<typeof useWorker> | null = null;
 
-  const theme: 'dark' | 'light' = profile?.theme || 'light';
+  try {
+    profileContext = useProfile();
+  } catch {
+    // ProfileContext not available, fall back to worker.
+  }
+
+  if (!profileContext) {
+    try {
+      workerContext = useWorker();
+    } catch {
+      // WorkerContext not available.
+    }
+  }
+
+  const setTheme = profileContext?.setTheme ?? workerContext?.setTheme;
+
+  const theme: 'dark' | 'light' =
+    profileContext?.profile?.theme || workerContext?.worker?.theme || 'light';
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -15,6 +33,7 @@ const ThemeToggler = () => {
   }, [theme]);
 
   const toggleTheme = () => {
+    if (!setTheme) return;
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
   };

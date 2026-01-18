@@ -166,7 +166,7 @@ const Login = () => {
       aria-labelledby="login-title"
       aria-describedby={login?.cta?.title ? 'login-cta' : undefined}
     >
-      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="login-title">
+      <div className={`${styles.wrapper} card--glass`} role="region" aria-labelledby="login-title">
         <header className={styles.header}>
           <h1 id="login-title" className={styles.h1}>
             {login.title}

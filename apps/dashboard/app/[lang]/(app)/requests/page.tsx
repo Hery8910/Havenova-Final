@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from './page.module.css';
 import { FaFolder } from 'react-icons/fa';
-import { useClient } from '../../../../../../packages/contexts';
+import { useClient, useRequireRole } from '../../../../../../packages/contexts';
 interface RequestFilters {
   status: string;
   date: string;
@@ -26,7 +26,10 @@ import {
 } from '../../../../../../packages/components/dashboard/pages';
 
 export default function Requests() {
+  const isAllowed = useRequireRole('admin');
   const { client } = useClient();
+
+  if (!isAllowed) return null;
 
   const [requests, setRequests] = useState<WorkRequestSummary[]>([]);
   const [loading, setLoading] = useState(false);

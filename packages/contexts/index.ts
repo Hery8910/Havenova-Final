@@ -4,3 +4,4 @@ export * from './i18n';
 export * from './profile';
 export * from './alert';
 export * from './auth';
+export * from './worker';

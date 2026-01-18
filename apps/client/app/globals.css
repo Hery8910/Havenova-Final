@@ -3,15 +3,15 @@
 
   /* Brand */
   --brand-primary: hsl(210, 93%, 41%);
-  --brand-secondary: #5e12e0;
+  --brand-secondary: hsl(262, 85%, 47%);
   --brand-accent: #f2c14e;
 
   /* Page backgrounds */
   --page-bg-1: #f7f9fc;
   --page-bg-2: #eef2f7;
   --page-bg-3: #e7ecf3;
-  --page-accent-1: hsla(210, 93%, 41%, 0.2);
-  --page-accent-2: rgba(94, 18, 224, 0.2);
+  --page-accent-1: hsla(210, 93%, 41%, 0.15);
+  --page-accent-2: hsla(262, 85%, 47%, 0.15);
 
   /* Text */
   --text-primary: #424242;
@@ -118,8 +118,8 @@ body {
   min-height: 100dvh;
   font-family: var(--font-family-body);
   color: var(--text-primary);
-  background: radial-gradient(900px circle at 15% 10%, var(--page-accent-1) 0%, transparent 60%),
-    radial-gradient(700px circle at 85% 15%, var(--page-accent-2) 0%, transparent 55%),
+  background: radial-gradient(900px circle at 35% 10%, var(--page-accent-1) 0%, transparent 60%),
+    radial-gradient(700px circle at 65% 85%, var(--page-accent-2) 0%, transparent 55%),
     linear-gradient(180deg, var(--page-bg-1) 0%, var(--page-bg-2) 55%, var(--page-bg-3) 100%);
   background-repeat: no-repeat;
   background-size: cover;
@@ -273,7 +273,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 4px 32px;
+  padding: 8px 32px;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: clamp(14px, 3vw, 18px);
@@ -360,10 +360,17 @@ p {
   box-shadow: var(--shadow-md);
 }
 .card--glass {
-  background: var(--glass-bg);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  background: radial-gradient(
+    circle at 70% 110%,
+    var(--surface-1),
+    var(--surface-2),
+    var(--page-accent-1)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .card--cleaning,

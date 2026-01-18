@@ -1,20 +1,17 @@
 .main {
   width: 100%;
   min-height: 100dvh;
-  padding: 40px 16px 56px;
   background-image: url('/svg/user-background.svg');
   background-position: center;
   background-size: cover;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
 }
 .wrapper {
-  padding: 32px 28px;
+  padding: 24px;
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   min-height: 60dvh;
   display: flex;
   flex-direction: column;
@@ -42,10 +39,11 @@
 }
 .h1 {
   color: var(--text-secondary);
+  font-size: clamp(24px, 3vw, 28px);
 }
 .header_p {
   color: var(--text-secondary);
-  font-size: clamp(14px, 3vw, 18px);
+  font-size: clamp(14px, 1.6vw, 17px);
 }
 .aside {
   width: 100%;

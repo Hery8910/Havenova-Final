@@ -1,17 +1,22 @@
 .card[data-type='success'] {
   --theme-color: var(--color-success);
+  --bg-color: var(--bg-success);
 }
 .card[data-type='error'] {
   --theme-color: var(--color-error);
+  --bg-color: var(--bg-error);
 }
 .card[data-type='warning'] {
   --theme-color: var(--color-warning);
+  --bg-color: var(--bg-warning);
 }
 .card[data-type='info'] {
   --theme-color: var(--color-info);
+  --bg-color: var(--bg-info);
 }
 .card[data-type='loading'] {
   --theme-color: var(--color-info);
+  --bg-color: var(--bg-info);
 }
 
 /* --- Layout Principal (Overlay) --- */
@@ -30,16 +35,21 @@
 .card {
   width: 100%;
   max-width: 380px;
-  border-radius: 8px;
-  padding: 40px 32px;
+  padding: 24px 32px;
   text-align: center;
   position: relative;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--theme-color) 50%, rgba(255, 255, 255, 0.507)) 0%,
-    var(--bg-card-1) 100%
+
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  background: radial-gradient(
+    circle at 70% 110%,
+    var(--surface-1),
+    var(--surface-2),
+    var(--bg-color)
   );
-  border: 1px solid var(--theme-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--bg-color);
   animation: popUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 

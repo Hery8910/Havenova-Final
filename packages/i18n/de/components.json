@@ -90,12 +90,16 @@
         "resendEmail": "E-Mail erneut senden"
       },
       "labels": {
-        "name": "Vollständiger Name",
-        "email": "E-Mail-Adresse",
+        "name": "Name",
+        "email": "E-Mail",
         "password": "Passwort",
         "forgotPassword": "Passwort vergessen?",
         "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
-        "tos": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
+        "tosPrefix": "Ich habe die ",
+        "tosTerms": "AGB",
+        "tosConnector": " und die ",
+        "tosPrivacy": "Datenschutzerklärung",
+        "tosSuffix": " gelesen und akzeptiere sie.",
         "address": "Adresse",
         "phone": "Telefonnummer",
         "profileImage": "Profilbild ändern",
@@ -105,7 +109,7 @@
       "placeholders": {
         "name": "Max Mustermann",
         "email": "mustermann@example.com",
-        "password": "*********",
+        "password": "Mind. 8 Zeichen",
         "address": "Musterstraße 12, 12345 Berlin",
         "phone": "+49 157 12345678",
         "subject": "Betreff auswählen",

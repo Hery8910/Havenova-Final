@@ -12,6 +12,7 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
+  useRequireRole,
 } from '../../../../../../packages/contexts';
 import {
   PropertyManager,
@@ -50,6 +51,7 @@ const EMPTY_FORM: PropertyManagerFormValues = {
 };
 
 const PropertyManagerPage = () => {
+  const isAllowed = useRequireRole('admin');
   const { client } = useClient();
   const { auth, refreshAuth } = useAuth();
   const router = useRouter();
@@ -83,6 +85,8 @@ const PropertyManagerPage = () => {
   >(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailData, setDetailData] = useState<PropertyManagerDetail | null>(null);
+
+  if (!isAllowed) return null;
 
   const statusFilters: DashboardStatusFilterItem<PropertyManagerStatus | ''>[] = [
     {

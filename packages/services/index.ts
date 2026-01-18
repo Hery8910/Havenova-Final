@@ -7,3 +7,4 @@ export * from './contact';
 export * from './propertyManager';
 export * from './object';
 export * from './globalTaskCatalog';
+export * from './worker';

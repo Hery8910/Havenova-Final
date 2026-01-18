@@ -310,6 +310,15 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Mitarbeiter nicht gefunden',
     'Der angeforderte Mitarbeiter konnte nicht gefunden werden.'
   ),
+  WORKER_LOAD_FAILED: withClose(
+    'Fehler beim Laden der Daten',
+    'Die Mitarbeiterdaten konnten nicht geladen werden. Bitte laden Sie die Seite neu.'
+  ),
+  PERMISSION_DENIED: {
+    title: 'Zugriff verweigert',
+    description: 'Sie haben nicht die erforderlichen Berechtigungen, um diese Seite zu sehen.',
+    close: 'Zum Login',
+  },
   OBJECT_CREATED: withClose('Objekt erstellt', 'Das Objekt wurde erfolgreich erstellt.'),
   OBJECT_FOUND: withClose('Objekt geladen', 'Die Objektdetails wurden erfolgreich geladen.'),
   OBJECT_LIST: withClose('Objekte geladen', 'Die Objektliste wurde erfolgreich geladen.'),

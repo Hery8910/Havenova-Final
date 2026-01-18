@@ -4,17 +4,35 @@ import { IoLanguage } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { useProfile } from '../../contexts/profile';
+import { useProfile, useWorker } from '../../contexts';
 import Image from 'next/image';
 
 export default function LanguageSwitcher() {
-  const { setLanguage } = useProfile();
+  let profileContext: ReturnType<typeof useProfile> | null = null;
+  let workerContext: ReturnType<typeof useWorker> | null = null;
+
+  try {
+    profileContext = useProfile();
+  } catch {
+    // ProfileContext not available, fall back to worker.
+  }
+
+  if (!profileContext) {
+    try {
+      workerContext = useWorker();
+    } catch {
+      // WorkerContext not available.
+    }
+  }
+
+  const setLanguage = profileContext?.setLanguage ?? workerContext?.setLanguage;
   const router = useRouter();
   const pathname = usePathname();
 
   const currentLang = pathname.split('/')[1] as 'de' | 'en';
 
   function switchLang(newLang: 'de' | 'en') {
+    if (!setLanguage) return;
     // 1. Guardar cookie
     Cookies.set('lang', newLang, { path: '/', expires: 365 });
     setLanguage(newLang);
