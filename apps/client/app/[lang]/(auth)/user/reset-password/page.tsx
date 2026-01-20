@@ -4,14 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import {
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackGlobalLoading,
-  useAuth,
-  useGlobalAlert,
-  useProfile,
-} from '@/packages/contexts';
+import { fallbackButtons, fallbackGlobalError, fallbackGlobalLoading, useGlobalAlert } from '@/packages/contexts';
 import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
@@ -36,8 +29,6 @@ interface ResetPasswordFormData {
 
 const ResetPassword = () => {
   const { client } = useClient();
-  const { auth } = useAuth();
-  const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -47,8 +38,7 @@ const ResetPassword = () => {
   const formText = texts.components.client.form;
   const popups = texts.popups;
   // const accessDenied: accessDeniedText = texts.message.accessDenied;
-  const userTexts = texts.pages as unknown as { user: { resetPasswordText: ResetPasswordData } };
-  const resetPasswordText: ResetPasswordData = userTexts.user.resetPasswordText;
+  const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
   const resetButton = formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);
@@ -107,7 +97,18 @@ const ResetPassword = () => {
         },
       });
     }
-  }, [token, status, code, http, popups, router, showError, closeAlert]);
+  }, [
+    token,
+    status,
+    code,
+    http,
+    popups,
+    router,
+    showError,
+    closeAlert,
+    lang,
+    texts.popups.GLOBAL_INTERNAL_ERROR.description,
+  ]);
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
     setLoading(true);
@@ -200,15 +201,14 @@ const ResetPassword = () => {
           },
         });
       }
-    } catch (error: any) {
-      console.log(token, client._id, error);
-
-      const code = error?.response?.data?.code;
+    } catch (error) {
+      const err = error as { response?: { data?: { code?: string }; status?: number } };
+      const code = err.response?.data?.code;
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: error?.response?.status ?? 500,
+          status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,

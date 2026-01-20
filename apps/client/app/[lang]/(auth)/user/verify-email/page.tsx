@@ -33,20 +33,7 @@ const VerifyEmailPage = () => {
   const { popups } = texts;
 
   const formText = texts.components.client.form;
-  const userTexts = texts.pages as unknown as {
-    user: {
-      verifyEmail: {
-        title: string;
-        info: string;
-        input: {
-          placeholder: string;
-          button: string;
-          info: string;
-        };
-      };
-    };
-  };
-  const verifyText = userTexts.user.verifyEmail;
+  const verifyText = texts.pages.client.user.verifyEmail;
   const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
   const resendButton = formText.button.resendEmail;
 
@@ -164,7 +151,7 @@ const VerifyEmailPage = () => {
             closeAlert();
           },
         });
-      } catch (err) {
+      } catch {
         const popupData = getPopup(
           popups,
           'GLOBAL_INTERNAL_ERROR',
@@ -186,12 +173,26 @@ const VerifyEmailPage = () => {
         });
       }
     });
-  }, []);
+  }, [
+    closeAlert,
+    handleMagicLogin,
+    handleVerifyEmail,
+    lang,
+    loadingMsg.createUser,
+    loadingMsg.login,
+    loadingMsg.verifyEmail,
+    popups,
+    router,
+    showError,
+    showLoading,
+    showSuccess,
+    token,
+  ]);
 
   // ---------------------------
   // RESEND VERIFICATION EMAIL (desde el formulario)
   // ---------------------------
-  const onResendSubmit = async (data: any) => {
+  const onResendSubmit = async (data: ResendVerificationEmailPayload) => {
     setLoading(true);
 
     const payload: ResendVerificationEmailPayload = {

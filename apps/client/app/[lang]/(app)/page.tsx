@@ -18,7 +18,6 @@ export interface HomePageTexts {
       cleaning: { label: string; href: string };
       maintenance: { label: string; href: string };
     };
-    trust: string[];
     image: {
       src: string;
       alt: string;
@@ -32,7 +31,7 @@ export interface HomePageTexts {
     title: string;
     description: string;
     primaryCta: { label: string; installedLabel: string };
-    secondaryCta: { label: string; href: string };
+    secondaryCta: { label: string };
     features: string[];
   };
   services: {

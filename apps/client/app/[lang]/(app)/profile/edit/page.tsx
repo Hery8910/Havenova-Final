@@ -7,8 +7,6 @@ import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
 import { FormWrapper } from '@/packages/components/user/userForm';
-import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
-import { useRouter } from 'next/navigation';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
 import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
 
@@ -35,11 +33,9 @@ interface EditFormData {
 export default function Edit() {
   const { profile, updateProfile, reloadProfile } = useProfile();
   const { client } = useClient();
-  const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
-  const userTexts = texts.pages as unknown as { user: { edit: EditData } };
-  const edit: EditData = userTexts.user.edit;
+  const edit: EditData = texts.pages.client.user.edit;
   const formText = texts.components.client.form;
   const editButton = formText.button.edit;
 
@@ -74,7 +70,7 @@ export default function Edit() {
       setTimeout(() => {
         setAlert(null);
       }, 3000);
-    } catch (error: any) {
+    } catch {
       setAlert({
         type: 'error',
         title: popups.GLOBAL_INTERNAL_ERROR.title,

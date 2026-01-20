@@ -49,8 +49,7 @@ const ForgotPassword = () => {
 
   const popups = texts.popups;
   const formText = texts.components.client.form;
-  const userTexts = texts.pages as unknown as { user: { forgotPasswordText: ForgotPasswordData } };
-  const forgotPasswordText: ForgotPasswordData = userTexts.user.forgotPasswordText;
+  const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
 
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {
@@ -137,14 +136,15 @@ const ForgotPassword = () => {
           onCancel: closeAlert,
         });
       }
-    } catch (error: any) {
-      const code = error?.response?.data?.code;
+    } catch (error) {
+      const err = error as { response?: { data?: { code?: string }; status?: number } };
+      const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: error?.response?.status ?? 500,
+          status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,

@@ -25,7 +25,6 @@ import { registerUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
-import Image from 'next/image';
 
 export interface RegisterData {
   title: string;
@@ -40,7 +39,7 @@ const Register = () => {
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
-  const { profile, updateProfile } = useProfile();
+  const { updateProfile } = useProfile();
 
   const { texts } = useI18n();
   const [loading, setLoading] = useState(false);
@@ -139,8 +138,9 @@ const Register = () => {
           closeAlert();
         },
       });
-    } catch (err: any) {
-      const code = err?.response?.data?.code; // FIXED
+    } catch (error) {
+      const err = error as { response?: { data?: { code?: string } } };
+      const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 

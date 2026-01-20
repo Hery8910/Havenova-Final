@@ -102,7 +102,7 @@ export interface ContactTexts {
 export default function PrivacyPolicyPage() {
   const { client } = useClient();
   const { texts } = useI18n();
-  const privacy: PrivacyPageTexts = texts?.pages?.legal?.privacy;
+  const privacy: PrivacyPageTexts = texts.pages.client.legal.privacy;
 
   if (!client || !privacy) return null;
 

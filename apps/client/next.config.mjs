@@ -9,12 +9,6 @@ const nextConfig = {
     '@havenova/utils',
     '@havenova/i18n',
   ],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   reactStrictMode: true,
 };
 

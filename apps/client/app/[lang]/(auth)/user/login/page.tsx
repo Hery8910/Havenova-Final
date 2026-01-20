@@ -139,8 +139,9 @@ const Login = () => {
           closeAlert();
         },
       });
-    } catch (err: any) {
-      const code = err?.response?.data?.code; // FIXED
+    } catch (error) {
+      const err = error as { response?: { data?: { code?: string } } };
+      const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 

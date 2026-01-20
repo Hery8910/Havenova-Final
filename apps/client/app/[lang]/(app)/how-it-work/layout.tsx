@@ -1,5 +1,3 @@
-import { Metadata } from 'next';
-
 // import { aboutMetadata } from "../pageMetadata";
 // export const metadata: Metadata = aboutMetadata;
 

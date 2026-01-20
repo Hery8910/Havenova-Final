@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { TbPointFilled } from 'react-icons/tb';
 
 import styles from './page.module.css';
 import { getPopup } from '../../../../../../packages/utils/alertType';
@@ -61,7 +60,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
 
   const { profile: userProfile, updateProfile, reloadProfile } = useProfile();
-  const { auth, loading: authLoading } = useAuth();
+  const { auth } = useAuth();
   const { showError, showConfirm, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -118,8 +117,12 @@ const Profile = () => {
       });
       await reloadProfile();
 
-      const successPopup =
-        (texts.popups as any)?.AUTH_GET_SUCCESS ?? fallbackPopups.AUTH_GET_SUCCESS;
+      const successPopup = getPopup(
+        popups,
+        'AUTH_GET_SUCCESS',
+        'AUTH_GET_SUCCESS',
+        fallbackPopups.AUTH_GET_SUCCESS
+      );
 
       showSuccess({
         response: {
@@ -130,8 +133,13 @@ const Profile = () => {
         },
         onCancel: closeAlert,
       });
-    } catch (error) {
-      const errorPopup = texts.popups?.GLOBAL_INTERNAL_ERROR ?? fallbackGlobalError;
+    } catch {
+      const errorPopup = getPopup(
+        popups,
+        'GLOBAL_INTERNAL_ERROR',
+        'GLOBAL_INTERNAL_ERROR',
+        fallbackGlobalError
+      );
 
       showError({
         response: {

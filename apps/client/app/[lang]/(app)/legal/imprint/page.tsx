@@ -2,13 +2,11 @@
 
 import Link from 'next/link';
 import styles from './page.module.css';
-import { useRouter } from 'next/navigation';
 import { useClient, useI18n } from '../../../../../../../packages/contexts';
 
 export default function ImprintPage() {
   const { client } = useClient();
   const { texts } = useI18n();
-  const router = useRouter();
 
   const imprintTexts = texts?.pages?.client?.legal?.imprint;
 

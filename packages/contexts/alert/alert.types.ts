@@ -29,6 +29,7 @@ export interface PopupsTexts {
   USER_SESSION_EXPIRED?: PopupText;
   LOGOUT_SUCCESS?: PopupText;
   LOGOUT_FAILED?: PopupText;
+  AUTH_GET_SUCCESS?: PopupText;
 
   EMAIL_VERIFICATION_RESENT?: PopupText;
 
