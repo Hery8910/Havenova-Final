@@ -6,10 +6,10 @@ import styles from './CreateWorkerForm.module.css';
 import { useClient } from '../../../contexts/client/ClientContext';
 import { useI18n } from '../../../contexts/i18n/I18nContext';
 import AlertPopup from '../../alert/alertPopup/AlertPopup';
-import { createWorker } from '../../../services/worker';
-import { CreateWorkerPayload } from '../../../types/worker/workerTypes';
+import { createWorkerProfile } from '../../../services/worker';
+import { CreateWorkerProfilePayload } from '../../../types/worker/workerTypes';
 
-type FormState = Omit<CreateWorkerPayload, 'clientId'>;
+type FormState = Omit<CreateWorkerProfilePayload, 'clientId'>;
 
 const CreateWorkerForm = () => {
   const { client } = useClient();
@@ -21,15 +21,10 @@ const CreateWorkerForm = () => {
     email: '',
     phone: '',
     profileImage: '',
-    password: '',
-    roles: ['INSPECTOR'],
-    employment: {
-      type: 'EMPLOYEE',
-      startDate: new Date().toISOString().split('T')[0],
-      endDate: undefined,
-    },
-    pay: { type: 'HOURLY', currency: 'EUR', hourlyRate: 0 },
+    address: '',
+    jobTitle: '',
     language: language || 'de',
+    theme: 'light',
   });
 
   const [alert, setAlert] = useState<{
@@ -49,15 +44,10 @@ const CreateWorkerForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleNestedChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    section: string
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev: any) => ({
-      ...prev,
-      [section]: { ...prev[section], [name]: value },
-    }));
+  const cleanValue = (value?: string) => {
+    if (!value) return undefined;
+    const trimmed = value.trim();
+    return trimmed === '' ? undefined : trimmed;
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -68,45 +58,36 @@ const CreateWorkerForm = () => {
     setAlert(null);
 
     try {
-      const payload: CreateWorkerPayload = {
-        ...formData,
+      const payload: CreateWorkerProfilePayload = {
         clientId: client._id,
-        profileImage: getRandomAvatarPath(),
-        employment: formData.employment?.type
-          ? {
-              type: formData.employment.type as 'EMPLOYEE' | 'CONTRACTOR',
-              startDate: formData.employment.startDate!,
-              endDate: formData.employment.endDate || undefined,
-            }
-          : undefined,
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: cleanValue(formData.phone),
+        address: cleanValue(formData.address),
+        jobTitle: cleanValue(formData.jobTitle),
+        profileImage: cleanValue(formData.profileImage) ?? getRandomAvatarPath(),
+        language: formData.language || undefined,
+        theme: formData.theme || undefined,
       };
 
-      const response = await createWorker(payload);
-      if (response.success) {
-        const popupData = popups?.[response.code] || {};
-        setAlert({
-          type: 'success',
-          title: popupData.title || 'Registrierung erfolgreich!',
-          description:
-            popupData.description ||
-            'Bitte überprüfen Sie Ihre E-Mails, um Ihre Adresse zu bestätigen und Ihr Konto zu aktivieren.',
-        });
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          profileImage: '',
-          password: '',
-          roles: ['INSPECTOR'],
-          employment: {
-            type: 'EMPLOYEE',
-            startDate: new Date().toISOString().split('T')[0],
-            endDate: '',
-          },
-          pay: { type: 'HOURLY', currency: 'EUR', hourlyRate: 0 },
-          language: language || 'de',
-        });
-      }
+      await createWorkerProfile(payload);
+      const popupData = popups?.WORKER_CREATED || {};
+      setAlert({
+        type: 'success',
+        title: popupData.title || 'Mitarbeiter erstellt',
+        description:
+          popupData.description || 'Der Mitarbeiter wurde erfolgreich erstellt.',
+      });
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        profileImage: '',
+        address: '',
+        jobTitle: '',
+        language: language || 'de',
+        theme: 'light',
+      });
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorKey = error.response.data.errorCode || error.response.data.code;
@@ -163,68 +144,37 @@ const CreateWorkerForm = () => {
         />
 
         <input
-          type="password"
-          name="password"
-          placeholder="Contraseña (opcional)"
-          value={formData.password}
+          type="text"
+          name="jobTitle"
+          placeholder="Cargo (opcional)"
+          value={formData.jobTitle}
           onChange={handleChange}
         />
 
-        <select
-          name="type"
-          value={formData.employment?.type}
-          onChange={(e) => handleNestedChange(e, 'employment')}
-        >
-          <option value="EMPLOYEE">Empleado</option>
-          <option value="CONTRACTOR">Contratista</option>
-        </select>
-
         <input
-          type="date"
-          name="startDate"
-          value={formData.employment?.startDate}
-          onChange={(e) => handleNestedChange(e, 'employment')}
+          type="text"
+          name="address"
+          placeholder="Dirección"
+          value={formData.address}
+          onChange={handleChange}
         />
 
         <input
-          type="date"
-          name="endDate"
-          value={formData.employment?.endDate}
-          onChange={(e) => handleNestedChange(e, 'employment')}
+          type="url"
+          name="profileImage"
+          placeholder="Foto de perfil (URL)"
+          value={formData.profileImage}
+          onChange={handleChange}
         />
-
-        <select
-          name="type"
-          value={formData.pay?.type}
-          onChange={(e) => handleNestedChange(e, 'pay')}
-        >
-          <option value="HOURLY">Por hora</option>
-          <option value="SALARIED">Salario mensual</option>
-        </select>
-
-        {formData.pay?.type === 'HOURLY' && (
-          <input
-            type="number"
-            name="hourlyRate"
-            placeholder="Tarifa por hora"
-            value={formData.pay.hourlyRate || ''}
-            onChange={(e) => handleNestedChange(e, 'pay')}
-          />
-        )}
-
-        {formData.pay?.type === 'SALARIED' && (
-          <input
-            type="number"
-            name="monthlySalary"
-            placeholder="Salario mensual"
-            value={formData.pay.monthlySalary || ''}
-            onChange={(e) => handleNestedChange(e, 'pay')}
-          />
-        )}
 
         <select name="language" value={formData.language} onChange={handleChange}>
           <option value="de">Deutsch</option>
           <option value="en">English</option>
+        </select>
+
+        <select name="theme" value={formData.theme} onChange={handleChange}>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
         </select>
 
         <button type="submit" disabled={loading}>

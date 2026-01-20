@@ -21,7 +21,7 @@ export default function DashboardHeader() {
     headerTexts[currentSection as keyof typeof headerTexts] || headerTexts.dashboard || '';
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} card--glass`}>
       <h4 className={styles.h4}>{title}</h4>
       <ul className={styles.ul}>
         <li className={styles.li}>

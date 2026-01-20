@@ -4,6 +4,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import styles from './ObjectDetails.module.css';
 import { BuildingDetail } from '@/packages/types/object';
 import { formatMessageAge } from '../../../../utils';
+import { useI18n } from '../../../../contexts/i18n/I18nContext';
 
 interface ObjectDetailsTexts {
   title: string;
@@ -42,6 +43,9 @@ interface ObjectDetailsProps {
 }
 
 const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetailsProps) => {
+  const { texts: i18nTexts, language } = useI18n();
+  const relativeTime = i18nTexts.date?.relative;
+
   if (loading) {
     return (
       <section className={styles.detailsSection}>
@@ -108,7 +112,7 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
           <p className="text-label">{texts.createdAt}</p>
           {object.createdAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
-              {formatMessageAge(object.createdAt)}
+              {formatMessageAge(object.createdAt, { relativeTime, locale: language })}
             </p>
           )}
         </li>
@@ -116,7 +120,7 @@ const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetails
           <p className="text-label">{texts.updatedAt}</p>
           {object.updatedAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
-              {formatMessageAge(object.updatedAt)}
+              {formatMessageAge(object.updatedAt, { relativeTime, locale: language })}
             </p>
           )}
         </li>

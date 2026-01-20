@@ -55,7 +55,7 @@ const Login = () => {
 
     if (!isLoggedIn) {
       if (nextLang !== lang) {
-        router.replace(href(nextLang, '/login'));
+        router.replace(href(nextLang, '/user/login'));
         return;
       }
 

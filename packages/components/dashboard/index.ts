@@ -7,3 +7,4 @@ export * from './sidebar';
 export * from './statusBadge';
 export * from './recurrenceBadge';
 export * from './areaBadge';
+export * from './workers';

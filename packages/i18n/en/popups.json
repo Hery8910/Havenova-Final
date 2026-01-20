@@ -17,6 +17,14 @@
     "title": "Login required",
     "description": "You need to be logged in to perform this action."
   },
+  "AUTH_REQUIRED": {
+    "title": "Login required",
+    "description": "You must be logged in to perform this action."
+  },
+  "AUTH_FORBIDDEN": {
+    "title": "Access forbidden",
+    "description": "You do not have permission to perform this action."
+  },
   "USER_NEED_TO_LOGIN": {
     "title": "Login required to continue",
     "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
@@ -96,6 +104,10 @@
   "CLIENT_MISSING_CLIENT_ID": {
     "title": "Missing client ID",
     "description": "A valid client ID is required for registration."
+  },
+  "CLIENT_ID_MISMATCH": {
+    "title": "Client mismatch",
+    "description": "The provided client does not match your session."
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client not found",

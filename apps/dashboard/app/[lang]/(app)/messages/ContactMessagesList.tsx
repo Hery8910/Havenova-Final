@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { ContactMessage } from '../../../../../../packages/types';
 import { formatMessageAge } from '../../../../../../packages/utils';
 import { ContactMessageResponder } from '../../../../../../packages/components/dashboard/contactMessages/ContactMessageResponder';
+import { useI18n } from '../../../../../../packages/contexts';
 
 interface ContactMessagesListTexts {
   empty?: string;
@@ -71,6 +72,9 @@ export default function ContactMessagesList({
   onResponded,
   onCloseResponder,
 }: ContactMessagesListProps) {
+  const { texts, language } = useI18n();
+  const relativeTime = texts.date?.relative;
+
   return (
     <section className={styles.list}>
       {messages.length === 0 ? (
@@ -123,7 +127,9 @@ export default function ContactMessagesList({
                           ? listTexts?.badge?.answered || 'Answered'
                           : listTexts?.badge?.pending || 'Pending'}
                       </span>
-                      <span className={styles.date}>{formatMessageAge(msg.createdAt)}</span>
+                      <span className={styles.date}>
+                        {formatMessageAge(msg.createdAt, { relativeTime, locale: language })}
+                      </span>
                     </aside>
                   </header>
                   <section className={styles.msgSection}>
@@ -178,7 +184,10 @@ export default function ContactMessagesList({
                           <p className={styles.name}>{msg.response?.respondedByName || 'System'}</p>
                           {msg.response?.respondedAt && (
                             <span className={styles.date}>
-                              {formatMessageAge(msg.response?.respondedAt)}
+                              {formatMessageAge(msg.response?.respondedAt, {
+                                relativeTime,
+                                locale: language,
+                              })}
                             </span>
                           )}
                         </div>

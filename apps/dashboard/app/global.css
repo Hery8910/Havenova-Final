@@ -1,10 +1,8 @@
 :root {
-  color-scheme: light;
-
-  /* Brand */
-  --brand-primary: hsl(210, 93%, 41%);
-  --brand-secondary: hsl(262, 85%, 47%);
-  --brand-accent: #f2c14e;
+  /* Brand Colors */
+  --brand-primary: #0768c9;
+  --brand-secondary: #5e12e0;
+  --brand-accent: #f2c150;
 
   /* Page backgrounds */
   --page-bg-1: #f7f9fc;
@@ -12,6 +10,7 @@
   --page-bg-3: #e7ecf3;
   --page-accent-1: hsla(210, 93%, 41%, 0.15);
   --page-accent-2: hsla(262, 85%, 47%, 0.15);
+  --page-accent-3: hsla(42, 86%, 63%, 0.15);
 
   /* Text */
   --text-primary: #424242;
@@ -116,6 +115,7 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
+  overflow: hidden;
   font-family: var(--font-family-body);
   color: var(--text-primary);
   background:
@@ -132,7 +132,7 @@ body {
 main {
   width: 100%;
   max-width: 100dvw;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 img,
 picture,
@@ -210,9 +210,8 @@ h6 {
   line-height: 1.35;
 }
 p {
-  margin: 0 0 var(--space-4);
+  margin: 0;
   font-size: clamp(14px, 1.6vw, 17px);
-  line-height: 1.6;
 }
 .sr-only {
   position: absolute;
@@ -274,7 +273,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 8px 32px;
+  padding: 6px 18px;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: clamp(14px, 3vw, 18px);

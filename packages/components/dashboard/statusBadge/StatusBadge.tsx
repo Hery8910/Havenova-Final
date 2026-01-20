@@ -4,8 +4,8 @@ import { GoDotFill } from 'react-icons/go';
 import styles from './StatusBadge.module.css';
 
 interface StatusBadgeProps {
-  label: string;
-  isActive: boolean;
+  label: string | undefined;
+  isActive: boolean | undefined;
 }
 
 const StatusBadge = ({ label, isActive }: StatusBadgeProps) => (

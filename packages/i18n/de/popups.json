@@ -17,6 +17,14 @@
     "title": "Anmeldung erforderlich",
     "description": "Sie müssen angemeldet sein, um diese Aktion durchzuführen."
   },
+  "AUTH_REQUIRED": {
+    "title": "Anmeldung erforderlich",
+    "description": "Sie müssen angemeldet sein, um diese Aktion auszuführen."
+  },
+  "AUTH_FORBIDDEN": {
+    "title": "Zugriff verboten",
+    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen."
+  },
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
     "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
@@ -96,6 +104,10 @@
   "CLIENT_MISSING_CLIENT_ID": {
     "title": "Client-ID fehlt",
     "description": "Für diese Registrierung wird eine gültige Client-ID benötigt."
+  },
+  "CLIENT_ID_MISMATCH": {
+    "title": "Client stimmt nicht",
+    "description": "Der angegebene Client stimmt nicht mit Ihrer Sitzung überein."
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client nicht gefunden",

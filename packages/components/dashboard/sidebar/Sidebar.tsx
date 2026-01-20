@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import {
   LuBell,
   LuBookOpen,
-  LuBriefcase,
   LuLayoutPanelTop,
   LuSettings,
   LuListChecks,
@@ -21,6 +20,7 @@ import Image from 'next/image';
 import { PiBuildings } from 'react-icons/pi';
 import { useAuth, useI18n, useWorker } from '../../../contexts';
 import { useLang } from '../../../hooks';
+import { GrUserManager, GrUserWorker } from 'react-icons/gr';
 
 export interface NavItem {
   label: string;
@@ -45,12 +45,12 @@ export default function Sidebar() {
     '/': <LuLayoutPanelTop />,
     '/requests': <LuListChecks />,
     '/clients': <LuUsers />,
-    '/employees': <LuBriefcase />,
+    '/employees': <GrUserWorker />,
     '/messages': <LuMessagesSquare />,
     '/notifications': <LuBell />,
     '/support': <LuSettings />,
     '/profile': <LuUser />,
-    '/property-manager': <PiBuildings />,
+    '/property-manager': <GrUserManager />,
     '/objects': <PiBuildings />,
     '/global-task-catalog': <LuBookOpen />,
   };
@@ -73,7 +73,11 @@ export default function Sidebar() {
   };
 
   return (
-    <nav className={styles.sidebar} aria-label="Sidebar navigation" id="dashboard-sidebar">
+    <nav
+      className={`${styles.sidebar} card--glass`}
+      aria-label="Sidebar navigation"
+      id="dashboard-sidebar"
+    >
       <header className={styles.sidebarHeader}>
         <div className={styles.logoWrapper}>
           <Image

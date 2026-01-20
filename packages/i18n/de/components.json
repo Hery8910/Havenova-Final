@@ -334,6 +334,28 @@
           "billablesLabel": "Abrechenbar",
           "bundleStatusLabel": "Bundle-Status"
         }
+      },
+      "employees": {
+        "totalLabel": "Gesamt Mitarbeiter",
+        "createButton": "Mitarbeiter anlegen",
+        "createHelper": "Neues Teammitglied hinzufügen",
+        "details": {
+          "title": "Mitarbeiterdetails",
+          "emptyLabel": "Wählen Sie einen Mitarbeiter aus, um Details zu sehen.",
+          "loadingLabel": "Mitarbeiterdetails werden geladen...",
+          "phoneLabel": "Telefon",
+          "addressLabel": "Adresse",
+          "languageLabel": "Sprache",
+          "userStatusLabel": "Benutzerstatus",
+          "verifiedLabel": "Verifiziert",
+          "roleLabel": "Rolle",
+          "accessStatusLabel": "Zugriffsstatus",
+          "createdLabel": "Erstellt",
+          "updatedLabel": "Aktualisiert",
+          "extraLabel": "Extra",
+          "yesLabel": "Ja",
+          "noLabel": "Nein"
+        }
       }
     },
     "sidebar": {

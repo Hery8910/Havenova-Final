@@ -1,29 +1,10 @@
 .sidebar {
   height: 100%;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid #6161618e;
-  background: linear-gradient(
-    180deg,
-    rgba(247, 249, 252, 0.5) 0%,
-    rgba(238, 242, 247, 0.5) 55%,
-    rgba(231, 236, 243, 0.4) 100%
-  );
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-:global([data-theme='dark']) .sidebar {
-  background: linear-gradient(
-    180deg,
-    rgba(12, 20, 36, 0.5) 0%,
-    rgba(10, 19, 33, 0.5) 55%,
-    rgba(9, 16, 27, 0.4) 100%
-  );
-  box-shadow: 0 8px 24px rgba(3, 7, 18, 0.35);
 }
 .sidebarHeader {
   display: flex;
@@ -34,12 +15,9 @@
 }
 .logoWrapper {
   width: 100%;
-  height: 8dvh;
-  border-bottom: 1px solid #6161618e;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  padding-left: 16px;
 }
 .logo {
   margin: 16px;
@@ -79,7 +57,7 @@
   font-size: clamp(14px, 3vw, 18px);
   background-color: transparent;
   border: none;
-  color: inherit;
+  color: var(--text-primary);
   font-weight: 600;
   cursor: pointer;
 }
@@ -104,12 +82,12 @@
 .navLink:hover,
 .logoutButton:hover,
 .toggleButton:hover {
-  color: var(--text-light);
+  color: var(--text-inverse);
   background-color: var(--brand-primary);
   box-shadow: var(--shadow-dark);
 }
 .active {
-  color: var(--text-light);
+  color: var(--text-inverse);
   background-color: var(--brand-primary);
   box-shadow: var(--shadow-dark);
 }

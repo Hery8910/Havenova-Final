@@ -334,6 +334,28 @@
           "billablesLabel": "Billables",
           "bundleStatusLabel": "Bundle status"
         }
+      },
+      "employees": {
+        "totalLabel": "Total employees",
+        "createButton": "Create employee",
+        "createHelper": "Add a new team member",
+        "details": {
+          "title": "Worker details",
+          "emptyLabel": "Select a worker to see details.",
+          "loadingLabel": "Loading worker details...",
+          "phoneLabel": "Phone",
+          "addressLabel": "Address",
+          "languageLabel": "Language",
+          "userStatusLabel": "User status",
+          "verifiedLabel": "Verified",
+          "roleLabel": "Role",
+          "accessStatusLabel": "Access status",
+          "createdLabel": "Created",
+          "updatedLabel": "Updated",
+          "extraLabel": "Extra",
+          "yesLabel": "Yes",
+          "noLabel": "No"
+        }
       }
     },
     "sidebar": {

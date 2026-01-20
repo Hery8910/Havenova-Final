@@ -37,6 +37,7 @@ const ContactMessagesPage = () => {
   const { auth, refreshAuth } = useAuth();
   const router = useRouter();
   const { texts, language } = useI18n();
+  const relativeTime = texts.date?.relative;
   const contactTexts = texts.components?.dashboard?.pages?.contactMessages;
   const listTexts = contactTexts?.list;
   const filterTexts = contactTexts?.filters;
@@ -419,7 +420,12 @@ const ContactMessagesPage = () => {
                             ? listTexts?.badge?.answered || 'Respondido'
                             : listTexts?.badge?.pending || 'Pendiente'}
                         </span>
-                        <span className={styles.date}>{formatMessageAge(msg.createdAt)}</span>
+                        <span className={styles.date}>
+                          {formatMessageAge(msg.createdAt, {
+                            relativeTime,
+                            locale: language,
+                          })}
+                        </span>
                       </div>
                       <button
                         className={styles.menuIcon}
@@ -498,7 +504,10 @@ const ContactMessagesPage = () => {
                           <p className={styles.name}>{msg.response?.respondedByName || 'System'}</p>
                           {msg.response?.respondedAt && (
                             <span className={styles.date}>
-                              {formatMessageAge(msg.response?.respondedAt)}
+                              {formatMessageAge(msg.response?.respondedAt, {
+                                relativeTime,
+                                locale: language,
+                              })}
                             </span>
                           )}
                         </div>

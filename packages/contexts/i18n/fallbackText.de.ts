@@ -47,6 +47,14 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Anmeldung erforderlich',
     'Sie müssen angemeldet sein, um diese Aktion durchzuführen.'
   ),
+  AUTH_REQUIRED: withClose(
+    'Anmeldung erforderlich',
+    'Sie müssen angemeldet sein, um diese Aktion auszuführen.'
+  ),
+  AUTH_FORBIDDEN: withClose(
+    'Zugriff verboten',
+    'Sie haben keine Berechtigung, diese Aktion auszuführen.'
+  ),
   AUTH_BLOCKED: withClose(
     'Konto gesperrt',
     'Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support.'
@@ -107,6 +115,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   CLIENT_MISSING_CLIENT_ID: withClose(
     'Client-ID fehlt',
     'Für diese Registrierung wird eine gültige Client-ID benötigt.'
+  ),
+  CLIENT_ID_MISMATCH: withClose(
+    'Client stimmt nicht',
+    'Der angegebene Client stimmt nicht mit Ihrer Sitzung überein.'
   ),
   CLIENT_NOT_FOUND: withClose('Client nicht gefunden', 'Der angegebene Client existiert nicht.'),
 

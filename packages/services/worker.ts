@@ -1,24 +1,14 @@
 import { ApiResponse } from '../types/api/apiTypes';
 import {
-  CreateWorkerPayload,
   CreateWorkerProfilePayload,
   UpdateWorkerProfilePayload,
   WorkerListItem,
   WorkerListMeta,
   WorkerListParams,
   WorkerRecord,
+  WorkerDetailData,
 } from '../types/worker/workerTypes';
 import api from './api/api';
-
-export const createWorker = async (
-  payload: CreateWorkerPayload
-): Promise<ApiResponse<{ workerId: string }>> => {
-  const response = await api.post<ApiResponse<{ workerId: string }>>(
-    '/api/workers/create',
-    payload
-  );
-  return response.data;
-};
 
 const WORKER_PROFILE_BASE_PATH = '/api/home-services/worker';
 
@@ -65,4 +55,14 @@ export const listWorkers = async (
     { params, withCredentials: true }
   );
   return { workers: data.data ?? [], meta: data.meta };
+};
+
+type WorkerDetailResponse = ApiResponse<WorkerDetailData> & { worker?: WorkerDetailData };
+
+export const getWorkerById = async (workerId: string): Promise<WorkerDetailData> => {
+  const { data } = await api.get<WorkerDetailResponse>(
+    `${WORKER_PROFILE_BASE_PATH}/${workerId}`,
+    { withCredentials: true }
+  );
+  return data.worker ?? data.data;
 };

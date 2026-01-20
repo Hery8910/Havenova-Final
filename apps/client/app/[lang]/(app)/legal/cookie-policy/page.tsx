@@ -86,9 +86,10 @@ export interface ContactTexts {
 
 export default function CookiesPolicyPage() {
   const { client } = useClient();
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
   const { openManager } = useCookies();
   const cookies: CookiesPolicyPageTexts = texts?.pages?.client?.legal?.cookies;
+  const relativeTime = texts.date?.relative;
 
   if (!client || !cookies) return null;
 
@@ -237,7 +238,12 @@ export default function CookiesPolicyPage() {
             <strong>{cookies.changes.meta.lastUpdated}</strong>
           </p>
           <p>
-            <em>{formatMessageAge(legalUpdates?.cookies?.updatedAt || '')}</em>
+            <em>
+              {formatMessageAge(legalUpdates?.cookies?.updatedAt || '', {
+                relativeTime,
+                locale: language,
+              })}
+            </em>
           </p>
         </aside>
       </section>

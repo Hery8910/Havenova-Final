@@ -4,6 +4,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { PropertyManagerDetail } from '@/packages/types';
 import styles from './PropertyManagerDetails.module.css';
 import { formatMessageAge } from '../../../../utils';
+import { useI18n } from '../../../../contexts/i18n/I18nContext';
 
 interface PropertyManagerDetailsTexts {
   buildings: string;
@@ -40,6 +41,9 @@ const PropertyManagerDetails = ({
   loading = false,
   onEdit,
 }: PropertyManagerDetailsProps) => {
+  const { texts: i18nTexts, language } = useI18n();
+  const relativeTime = i18nTexts.date?.relative;
+
   if (loading) {
     return (
       <section className={styles.detailsSection}>
@@ -104,7 +108,7 @@ const PropertyManagerDetails = ({
           <p className="text-label">{texts.createdAt}</p>
           {manager.createdAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
-              {formatMessageAge(manager.createdAt)}
+              {formatMessageAge(manager.createdAt, { relativeTime, locale: language })}
             </p>
           )}
         </li>
@@ -112,7 +116,7 @@ const PropertyManagerDetails = ({
           <p className="text-label">{texts.updatedAt}</p>
           {manager.updatedAt && (
             <p className={`${styles.detailsP} text-body-sm`}>
-              {formatMessageAge(manager.updatedAt)}
+              {formatMessageAge(manager.updatedAt, { relativeTime, locale: language })}
             </p>
           )}
         </li>

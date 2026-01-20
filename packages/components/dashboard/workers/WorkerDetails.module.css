@@ -1,0 +1,126 @@
+.section {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.empty {
+  margin: 24px 0 0;
+  color: var(--text-muted);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--surface-border);
+  padding-bottom: 20px;
+}
+.headerDiv {
+  display: flex;
+  gap: 8px;
+}
+.avatarWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+.badge {
+  height: fit-content;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--surface-border);
+  color: var(--text-secondary);
+  background: var(--surface-border);
+}
+.avatar {
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.name {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 28px);
+}
+
+.email {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.infoUL {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.infoCard {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.infoValue {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.timestamps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.extraSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extraContent {
+  background: rgba(8, 15, 26, 0.04);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 24px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
