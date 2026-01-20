@@ -44,10 +44,11 @@ const ResetPassword = () => {
   const searchParams = useSearchParams();
 
   const { texts } = useI18n();
-  const formText = texts.components.form;
+  const formText = texts.components.client.form;
   const popups = texts.popups;
   // const accessDenied: accessDeniedText = texts.message.accessDenied;
-  const resetPasswordText: ResetPasswordData = texts.pages.user.resetPasswordText;
+  const userTexts = texts.pages as unknown as { user: { resetPasswordText: ResetPasswordData } };
+  const resetPasswordText: ResetPasswordData = userTexts.user.resetPasswordText;
   const resetButton = formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);

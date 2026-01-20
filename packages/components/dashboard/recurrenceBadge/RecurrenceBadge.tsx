@@ -65,7 +65,7 @@ interface RecurrenceBadgeProps {
 
 const RecurrenceBadge = ({ value, label }: RecurrenceBadgeProps) => {
   const key = normalizeRecurrenceKey(value);
-  const colors = key ? RECURRENCE_COLORS[key] : null;
+  const colors = key ? RECURRENCE_COLORS[key as keyof typeof RECURRENCE_COLORS] : null;
   const badgeLabel = label ?? key ?? value;
 
   return (

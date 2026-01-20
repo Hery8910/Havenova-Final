@@ -86,8 +86,6 @@ const PropertyManagerPage = () => {
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailData, setDetailData] = useState<PropertyManagerDetail | null>(null);
 
-  if (!isAllowed) return null;
-
   const statusFilters: DashboardStatusFilterItem<PropertyManagerStatus | ''>[] = [
     {
       label: pageTexts?.toolbar?.statusAll || 'All',
@@ -377,6 +375,8 @@ const PropertyManagerPage = () => {
     setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
     setPage(1);
   }, [queryInput]);
+
+  if (!isAllowed) return null;
 
   return (
     <main className={styles.main}>

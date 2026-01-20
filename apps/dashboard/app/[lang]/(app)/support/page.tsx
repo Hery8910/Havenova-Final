@@ -2,8 +2,8 @@
 
 import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
 import styles from './page.module.css';
-import { ContactMessageCreatePayload, ContactMessageFormData } from '@/packages/types';
-import { useClient } from '@/packages/contexts/client/ClientContext';
+import { ContactMessageCreatePayload, ContactMessageFormData } from '../../../../../../packages/types';
+import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
 import {
   fallbackGlobalError,
   fallbackGlobalLoading,
@@ -11,9 +11,9 @@ import {
   useGlobalAlert,
   useI18n,
   useRequireRole,
-} from '@/packages/contexts';
-import { getPopup } from '@/packages/utils/alertType';
-import { sendContactMessage } from '@/packages/services/contact';
+} from '../../../../../../packages/contexts';
+import { getPopup } from '../../../../../../packages/utils/alertType';
+import { sendContactMessage } from '../../../../../../packages/services/contact';
 
 const SupportPage = () => {
   const isAllowed = useRequireRole('admin');
@@ -21,8 +21,8 @@ const SupportPage = () => {
   const { auth } = useAuth();
   const { texts } = useI18n();
   const supportTexts = texts.components?.dashboard?.pages?.support;
-  const formText = texts.components.form;
-  const supportSubjects = texts.components.form.subjects?.support ?? [];
+  const formText = texts.components?.client?.form;
+  const supportSubjects = texts.components?.client?.form?.subjects?.support ?? [];
   const popups = texts.popups;
   const { showLoading, showError, showSuccess, closeAlert } = useGlobalAlert();
 
@@ -184,7 +184,7 @@ const SupportPage = () => {
           {formText.labels.subject}
           <select name="subject" value={formData.subject} onChange={handleInputChange}>
             <option value="">{formText.placeholders.subject}</option>
-            {supportSubjects.map((subject) => (
+            {supportSubjects.map((subject: string) => (
               <option key={subject} value={subject}>
                 {subject}
               </option>

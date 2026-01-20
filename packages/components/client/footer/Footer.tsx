@@ -5,24 +5,21 @@ import styles from './Footer.module.css';
 import { useCookies, useI18n } from '../../../contexts';
 
 interface HeadersItem {
-  services: string;
-  about: string;
-  contact: string;
-  legal: string;
+  services?: string;
+  about?: string;
+  contact?: string;
+  legal?: string;
 }
 interface ContactItem {
-  label: string;
+  label?: string;
   data: string;
-  image: string;
+  image?: string;
 }
 
-interface HavenovaItem {
+interface LinkItem {
   label: string;
   href: string;
-}
-interface ServicesItem {
-  label: string;
-  href: string;
+  tone?: string;
 }
 interface LegalItem {
   label: string;
@@ -35,13 +32,13 @@ interface SocialItem {
 interface CtaItem {
   title: string;
   description: string;
+  cookies: string;
 }
 
 export interface FooterProps {
   headers: HeadersItem;
   contact: ContactItem[];
-  havenova: HavenovaItem[];
-  services: ServicesItem[];
+  links: LinkItem[];
   legal: LegalItem[];
   social: SocialItem[];
   cta: CtaItem;
@@ -56,7 +53,9 @@ export function Footer() {
   const { texts } = useI18n();
   const { openManager } = useCookies();
 
-  const footer = texts?.components.client.footer;
+  const footer = texts?.components?.client?.footer as FooterProps | undefined;
+
+  if (!footer) return null;
 
   return (
     <footer className={styles.footer} aria-label="Website footer">

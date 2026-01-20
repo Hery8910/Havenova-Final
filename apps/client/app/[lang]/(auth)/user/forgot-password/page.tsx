@@ -48,8 +48,9 @@ const ForgotPassword = () => {
   const lang = useLang();
 
   const popups = texts.popups;
-  const formText = texts.components.form;
-  const forgotPasswordText: ForgotPasswordData = texts?.pages?.user.forgotPasswordText;
+  const formText = texts.components.client.form;
+  const userTexts = texts.pages as unknown as { user: { forgotPasswordText: ForgotPasswordData } };
+  const forgotPasswordText: ForgotPasswordData = userTexts.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
 
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {

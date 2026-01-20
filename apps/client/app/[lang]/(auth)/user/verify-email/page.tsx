@@ -32,8 +32,21 @@ const VerifyEmailPage = () => {
   const { texts } = useI18n();
   const { popups } = texts;
 
-  const formText = texts.components.form;
-  const verifyText = texts.pages.user.verifyEmail;
+  const formText = texts.components.client.form;
+  const userTexts = texts.pages as unknown as {
+    user: {
+      verifyEmail: {
+        title: string;
+        info: string;
+        input: {
+          placeholder: string;
+          button: string;
+          info: string;
+        };
+      };
+    };
+  };
+  const verifyText = userTexts.user.verifyEmail;
   const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
   const resendButton = formText.button.resendEmail;
 

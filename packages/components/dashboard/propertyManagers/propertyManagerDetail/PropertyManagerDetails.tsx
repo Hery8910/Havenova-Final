@@ -99,8 +99,11 @@ const PropertyManagerDetails = ({
           <p className="text-label">{texts.preferredContact}</p>
           <p className={`${styles.detailsP} text-body-sm`}>
             {manager.preferredContactMethod
-              ? texts.contactOptions?.[manager.preferredContactMethod] ||
-                manager.preferredContactMethod
+              ? (texts.contactOptions?.[
+                  manager.preferredContactMethod as keyof NonNullable<
+                    PropertyManagerDetailsTexts['contactOptions']
+                  >
+                ] ?? manager.preferredContactMethod)
               : '-'}
           </p>
         </li>

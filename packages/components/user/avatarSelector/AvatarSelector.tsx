@@ -159,8 +159,8 @@ export default function AvatarSelector() {
         type="button"
         onClick={() => setOpen(true)}
         className={styles.button}
-        aria-label={texts?.components?.form?.labels?.name || 'Change profile image'}
-        title={texts?.components?.form?.labels?.profileImage || 'Change profile image'}
+        aria-label={texts?.components?.client?.form?.labels?.name || 'Change profile image'}
+        title={texts?.components?.client?.form?.labels?.profileImage || 'Change profile image'}
       >
         <MdOutlinePhotoCamera aria-hidden="true" />
       </button>

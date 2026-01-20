@@ -61,8 +61,6 @@ const GlobalTaskCatalogPage = () => {
 
   const [selectedBundleId, setSelectedBundleId] = useState<string | null>(null);
 
-  if (!isAllowed) return null;
-
   const handleSearchApply = useCallback(() => {
     if (queryInput === filters.title) return;
     setFilters((prev) => ({ ...prev, title: queryInput }));
@@ -278,13 +276,10 @@ const GlobalTaskCatalogPage = () => {
     },
     [
       closeAlert,
-      pageTexts?.bundleSuccessDescription,
-      pageTexts?.bundleSuccessTitle,
       popups,
       refreshAuth,
       showError,
       showLoading,
-      showSuccess,
     ]
   );
 
@@ -371,6 +366,8 @@ const GlobalTaskCatalogPage = () => {
     recurrenceKeys: pageTexts?.recurrenceKeys ?? {},
     areaKeys: pageTexts?.areaKeys ?? {},
   };
+
+  if (!isAllowed) return null;
 
   if (!catalog) {
     return (

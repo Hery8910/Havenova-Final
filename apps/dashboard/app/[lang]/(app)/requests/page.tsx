@@ -29,8 +29,6 @@ export default function Requests() {
   const isAllowed = useRequireRole('admin');
   const { client } = useClient();
 
-  if (!isAllowed) return null;
-
   const [requests, setRequests] = useState<WorkRequestSummary[]>([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<RequestFilters>({
@@ -50,6 +48,8 @@ export default function Requests() {
   const handleFilterChange = (key: keyof RequestFilters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
+
+  if (!isAllowed) return null;
 
   return (
     <section className={styles.section}>

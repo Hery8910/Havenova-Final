@@ -45,8 +45,6 @@ const ContactMessagesPage = () => {
   const popups = texts.popups;
   const { showLoading, showError, showConfirm, showSuccess, closeAlert } = useGlobalAlert();
 
-  if (!isAllowed) return null;
-
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
@@ -366,6 +364,8 @@ const ContactMessagesPage = () => {
       },
     });
   };
+
+  if (!isAllowed) return null;
 
   return (
     <main className={styles.main}>

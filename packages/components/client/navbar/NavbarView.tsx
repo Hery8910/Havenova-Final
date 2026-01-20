@@ -25,8 +25,10 @@ export interface NavLinkItem extends BaseNavItem {
 export type ServiceNavItem = IconNavItem;
 export interface SimpleNavItem extends BaseNavItem {}
 
-export interface ProfileNavItem extends IconNavItem {
-  auth: string;
+export interface ProfileNavItem extends BaseNavItem {
+  auth?: string;
+  image?: string;
+  alt?: string;
 }
 
 export type HeadersItem = {
@@ -36,12 +38,12 @@ export type HeadersItem = {
 };
 
 export interface NavbarConfig {
-  headers: HeadersItem;
+  headers?: HeadersItem;
   links?: NavLinkItem[];
-  services: ServiceNavItem[];
-  about: SimpleNavItem[];
-  profile: ProfileNavItem;
-  register: ProfileNavItem[];
+  services?: ServiceNavItem[];
+  about?: SimpleNavItem[];
+  profile?: ProfileNavItem;
+  register?: ProfileNavItem[];
 }
 
 export interface NavbarViewProps {

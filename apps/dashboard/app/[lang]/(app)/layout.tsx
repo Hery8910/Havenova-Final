@@ -1,6 +1,5 @@
 import '../../global.css';
 import styles from './layout.module.css';
-import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 import React from 'react';
 import { getClient } from '../../../../../packages/services';
@@ -28,18 +27,6 @@ export async function generateMetadata({
   };
 }
 
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-family-heading',
-});
-
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  variable: '--font-family-body',
-});
-
 export default async function LangLayout({
   children,
   params,
@@ -51,11 +38,7 @@ export default async function LangLayout({
   const client = await getClient(domain);
 
   return (
-    <html
-      lang={params.lang}
-      data-theme="light"
-      className={`${poppins.variable} ${roboto.variable}`}
-    >
+    <html lang={params.lang} data-theme="light">
       <body className={styles.body}>
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>

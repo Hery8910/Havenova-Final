@@ -91,7 +91,7 @@ const CreateWorkerForm = () => {
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorKey = error.response.data.errorCode || error.response.data.code;
-        const popupData = popups?.[errorKey] || {};
+        const popupData = errorKey ? (popups as Record<string, any>)?.[errorKey] || {} : {};
         setAlert({
           type: 'error',
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
@@ -187,7 +187,8 @@ const CreateWorkerForm = () => {
           type={alert.type}
           title={alert.title}
           description={alert.description}
-          onClose={() => setAlert(null)}
+          cancelLabel="Cerrar"
+          onCancel={() => setAlert(null)}
         />
       )}
     </section>

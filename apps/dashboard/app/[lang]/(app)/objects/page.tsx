@@ -106,8 +106,6 @@ const ObjectsPage = () => {
   const fetchKeyRef = useRef(0);
   const detailFetchKeyRef = useRef(0);
 
-  if (!isAllowed) return null;
-
   useEffect(() => {
     if (!auth.isLogged) {
       router.push(href(lang, '/login'));
@@ -379,8 +377,8 @@ const ObjectsPage = () => {
         district: values.district.trim(),
         entrancesCount: normalizeOptional(values.entrancesCount),
         floorCount: normalizeOptional(values.floorCount),
-        cleaningSince: normalizeOptional(values.preferredCleaningWindowDay),
-        preferredCleaningDay: normalizeOptional(values.preferredCleaningDay),
+        preferredCleaningWindowDay: values.preferredCleaningWindowDay,
+        preferredCleaningDay: values.preferredCleaningDay,
         cleaningSuppliesRoom: normalizeOptional(values.cleaningSuppliesRoom),
         keyAccess: normalizeOptional(values.keyAccess),
         waterAccess: normalizeOptional(values.waterAccess),
@@ -512,6 +510,8 @@ const ObjectsPage = () => {
     setFilters((prev) => ({ ...prev, query: queryInput.trim() }));
     setPage(1);
   }, [queryInput]);
+
+  if (!isAllowed) return null;
 
   return (
     <section className={styles.main}>

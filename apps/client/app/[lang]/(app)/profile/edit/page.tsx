@@ -38,8 +38,9 @@ export default function Edit() {
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
-  const edit: EditData = texts?.pages?.user.edit;
-  const formText = texts.components.form;
+  const userTexts = texts.pages as unknown as { user: { edit: EditData } };
+  const edit: EditData = userTexts.user.edit;
+  const formText = texts.components.client.form;
   const editButton = formText.button.edit;
 
   const [alert, setAlert] = useState<{

@@ -35,8 +35,8 @@ export default function Sidebar() {
   const lang = useLang();
   const { texts } = useI18n();
   const sidebarTexts = texts.components.dashboard.sidebar || {};
-  const pagesText = sidebarTexts.pages || [];
-  const settingsText = sidebarTexts.settings || [];
+  const pagesText = (sidebarTexts.pages || []) as NavItem[];
+  const settingsText = (sidebarTexts.settings || []) as NavItem[];
   const logoutText = sidebarTexts.logout || 'Logout';
   const closeMenuText = sidebarTexts.closeMenu || 'Close menu';
   const openMenuText = sidebarTexts.openMenu || 'Open menu';

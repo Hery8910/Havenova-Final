@@ -227,6 +227,14 @@
       "support": "Unterstützung",
       "profile": "Profil"
     },
+    "filters": {
+      "searchPlaceholder": "Nach Name suchen",
+      "searchLabel": "Suchen"
+    },
+    "pagination": {
+      "loadMore": "Mehr laden",
+      "loading": "Wird geladen..."
+    },
     "pages": {
       "globalTaskCatalog": {
         "title": "Globaler Aufgaben-Katalog",
@@ -356,6 +364,262 @@
           "yesLabel": "Ja",
           "noLabel": "Nein"
         }
+      },
+      "contactMessages": {
+        "title": "Kontaktanfragen",
+        "list": {
+          "empty": "Keine Nachrichten",
+          "reloadCta": "Neu laden",
+          "respondCta": "Antworten",
+          "cancelCta": "Abbrechen",
+          "viewResponse": "Antwort anzeigen",
+          "hideResponse": "Antwort verbergen",
+          "deleteCta": "Löschen",
+          "message": "Nachricht",
+          "answer": "Antwort",
+          "badge": {
+            "pending": "Offen",
+            "answered": "Beantwortet"
+          },
+          "pageLabel": "Seite",
+          "prevPageLabel": "Vorherige Seite",
+          "nextPageLabel": "Nächste Seite"
+        },
+        "filters": {
+          "statusAll": "Alle",
+          "statusPending": "Offen",
+          "statusAnswered": "Beantwortet",
+          "statusLabel": "Status",
+          "searchPlaceholder": "Nachrichten suchen",
+          "loadMoreLabel": "Mehr Ergebnisse laden"
+        },
+        "delete": {
+          "modalTitle": "Nachricht löschen",
+          "confirmTitle": "Nachricht löschen",
+          "confirmDescription": "Möchten Sie diese Nachricht wirklich löschen?",
+          "confirmLabel": "Löschen",
+          "cancelLabel": "Abbrechen",
+          "successTitle": "Nachricht gelöscht",
+          "successDescription": "Die Nachricht wurde entfernt."
+        },
+        "responder": {
+          "title": "Antwort",
+          "textareaPlaceholder": "Antwort schreiben...",
+          "cancel": "Abbrechen",
+          "submit": "Antwort senden",
+          "successTitle": "Antwort gesendet",
+          "successDescription": "Die Nachricht wurde als beantwortet markiert."
+        }
+      },
+      "requests": {
+        "requestsList": {
+          "title": "Anfragen",
+          "empty": "Keine Anfragen gefunden.",
+          "button": "Details ansehen"
+        },
+        "requestStatus": {
+          "submitted": "Eingereicht",
+          "accepted": "Angenommen",
+          "inProgress": "In Bearbeitung",
+          "completed": "Abgeschlossen",
+          "cancelled": "Storniert"
+        },
+        "service": {
+          "inspection": "Inspektion",
+          "houseService": "Haushaltsservice",
+          "kitchenCleaning": "Küchenreinigung",
+          "kitchenAssembly": "Küchenmontage",
+          "houseCleaning": "Hausreinigung",
+          "furnitureAssembly": "Möbelmontage",
+          "windowCleaning": "Fensterreinigung"
+        },
+        "requestDetails": {
+          "button": {
+            "cta": "Speichern"
+          }
+        }
+      },
+      "objects": {
+        "page": {
+          "createCta": "Objekt erstellen"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Nach Objektnummer oder Adresse suchen",
+          "statusAll": "Alle",
+          "statusActive": "Aktiv",
+          "statusInactive": "Inaktiv"
+        },
+        "pagination": {
+          "loadMoreLabel": "Mehr Ergebnisse laden"
+        },
+        "table": {
+          "propertyManager": "Verwalter",
+          "entrances": "Eingänge",
+          "loading": "Objekte werden geladen...",
+          "empty": "Keine Objekte gefunden.",
+          "edit": "Bearbeiten"
+        },
+        "details": {
+          "title": "Objektdetails",
+          "editLabel": "Bearbeiten",
+          "emptyState": "Wählen Sie ein Objekt aus, um Details zu sehen.",
+          "loading": "Details werden geladen...",
+          "objectNumber": "Objektnummer",
+          "address": "Adresse",
+          "propertyManager": "Verwalter",
+          "entrancesCount": "Eingänge",
+          "floorCount": "Stockwerke",
+          "preferredCleaningDay": "Bevorzugter Reinigungstag",
+          "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
+          "cleaningSuppliesRoom": "Putzmittelraum",
+          "keyAccess": "Schlüsselzugang",
+          "waterAccess": "Wasserzugang",
+          "waterDisposal": "Wasserentsorgung",
+          "ladderAvailable": "Leiter vorhanden",
+          "electricityAccess": "Stromzugang",
+          "lightBulbChangeRequired": "Leuchtmittelwechsel",
+          "flooringType": "Bodenbelag",
+          "onSiteContact": "Kontakt vor Ort",
+          "decisionMaker": "Entscheider",
+          "cleaningInfo": "Reinigungsinfo",
+          "status": "Status",
+          "notes": "Notizen",
+          "createdAt": "Erstellt",
+          "updatedAt": "Aktualisiert"
+        },
+        "form": {
+          "createTitle": "Objekt erstellen",
+          "editTitle": "Objekt bearbeiten",
+          "cancel": "Abbrechen",
+          "submitCreate": "Objekt erstellen",
+          "submitEdit": "Änderungen speichern",
+          "successCreateTitle": "Objekt erstellt",
+          "successEditTitle": "Objekt aktualisiert",
+          "successCreateDescription": "Das Objekt wurde erfolgreich erstellt.",
+          "successEditDescription": "Das Objekt wurde aktualisiert.",
+          "emptyState": "Wählen Sie ein Objekt aus, um Details zu sehen.",
+          "statusOptions": {
+            "active": "Aktiv",
+            "inactive": "Inaktiv"
+          },
+          "days": {
+            "monday": "Montag",
+            "tuesday": "Dienstag",
+            "wednesday": "Mittwoch",
+            "thursday": "Donnerstag",
+            "friday": "Freitag",
+            "saturday": "Samstag",
+            "sunday": "Sonntag"
+          },
+          "fields": {
+            "status": "Status",
+            "propertyManagerId": "Verwalter-ID",
+            "propertyManagerPlaceholder": "Verwalter nach Name oder E-Mail suchen",
+            "propertyManagerNotSelected": "Kein Verwalter ausgewählt",
+            "propertyManagerLoading": "Suche...",
+            "propertyManagerEmpty": "Keine Verwalter gefunden.",
+            "objectNumber": "Objektnummer",
+            "street": "Straße",
+            "streetNumber": "Hausnummer",
+            "postalCode": "Postleitzahl",
+            "district": "Bezirk",
+            "entrancesCount": "Eingänge",
+            "floorCount": "Stockwerke",
+            "preferredCleaningDay": "Bevorzugter Reinigungstag",
+            "preferredCleaningDayPlaceholder": "Tag auswählen",
+            "preferredCleaningWindowDay": "Bevorzugter Fensterreinigungstag",
+            "preferredCleaningWindowDayPlaceholder": "Tag auswählen",
+            "cleaningSuppliesRoom": "Putzmittelraum",
+            "keyAccess": "Schlüsselzugang",
+            "waterAccess": "Wasserzugang",
+            "waterDisposal": "Wasserentsorgung",
+            "ladderAvailable": "Leiter vorhanden",
+            "electricityAccess": "Stromzugang",
+            "lightBulbChangeRequired": "Leuchtmittelwechsel",
+            "flooringType": "Bodenbelag",
+            "onSiteContact": "Kontakt vor Ort",
+            "decisionMaker": "Entscheider",
+            "cleaningInfo": "Reinigungsinfo",
+            "notes": "Notizen"
+          }
+        }
+      },
+      "propertyManagers": {
+        "page": {
+          "createCta": "Verwalter erstellen"
+        },
+        "toolbar": {
+          "searchPlaceholder": "Nach Name oder E-Mail suchen",
+          "statusAll": "Alle",
+          "statusActive": "Aktiv",
+          "statusInactive": "Inaktiv"
+        },
+        "pagination": {
+          "loadMoreLabel": "Mehr Ergebnisse laden"
+        },
+        "table": {
+          "email": "E-Mail",
+          "buildings": "Gebäude",
+          "loading": "Verwalter werden geladen...",
+          "empty": "Keine Verwalter gefunden.",
+          "edit": "Bearbeiten"
+        },
+        "details": {
+          "title": "Verwalterdetails",
+          "editLabel": "Bearbeiten",
+          "emptyState": "Wählen Sie einen Verwalter aus, um Details zu sehen.",
+          "loading": "Details werden geladen...",
+          "phone": "Telefon",
+          "address": "Adresse",
+          "preferredContact": "Kontakt",
+          "contactOptions": {
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "none": "Keine Präferenz"
+          },
+          "createdAt": "Erstellt",
+          "updatedAt": "Aktualisiert",
+          "notes": "Notizen",
+          "buildings": "Gebäude",
+          "totalBuildings": "Gesamt",
+          "activeBuildings": "Aktiv",
+          "inactiveBuildings": "Inaktiv"
+        },
+        "form": {
+          "createTitle": "Verwalter erstellen",
+          "editTitle": "Verwalter bearbeiten",
+          "cancel": "Abbrechen",
+          "submitCreate": "Verwalter erstellen",
+          "submitEdit": "Änderungen speichern",
+          "successCreateTitle": "Verwalter erstellt",
+          "successEditTitle": "Verwalter aktualisiert",
+          "successCreateDescription": "Der Verwalter wurde erfolgreich erstellt.",
+          "successEditDescription": "Der Verwalter wurde aktualisiert.",
+          "emptyState": "Wählen Sie einen Verwalter aus, um Details zu sehen.",
+          "statusOptions": {
+            "active": "Aktiv",
+            "inactive": "Inaktiv"
+          },
+          "contactOptions": {
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "none": "Keine Präferenz"
+          },
+          "fields": {
+            "status": "Status",
+            "name": "Name",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "preferredContactMethod": "Bevorzugter Kontakt",
+            "notes": "Notizen"
+          }
+        }
+      }
+      ,
+      "support": {
+        "heading": "Support",
+        "description": "Beschreiben Sie Ihr Anliegen, wir melden uns schnellstmöglich."
       }
     },
     "sidebar": {
