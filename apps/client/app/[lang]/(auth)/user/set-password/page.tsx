@@ -4,7 +4,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
-import { fallbackButtons, fallbackGlobalError, fallbackGlobalLoading, useGlobalAlert } from '@/packages/contexts';
+import {
+  fallbackButtons,
+  fallbackGlobalError,
+  fallbackGlobalLoading,
+  useGlobalAlert,
+} from '@/packages/contexts';
 import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';

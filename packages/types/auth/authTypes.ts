@@ -110,7 +110,7 @@ export interface ForgotPasswordResponse {
 }
 
 export interface ResetPasswordPayload {
-  token: string;
+  inviteToken: string;
   newPassword: string;
 }
 
