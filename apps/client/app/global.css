@@ -2,8 +2,8 @@
   color-scheme: light;
 
   /* Brand */
-  --brand-primary: hsl(210, 93%, 41%);
-  --brand-secondary: hsl(262, 85%, 47%);
+  --brand-primary: #0769ca;
+  --brand-secondary: #d9c6fa;
   --brand-accent: #f2c14e;
 
   /* Page backgrounds */
@@ -38,7 +38,7 @@
   --shadow-sm: 0 2px 8px rgba(19, 19, 19, 0.15);
   --shadow-md: 0 8px 24px rgba(19, 19, 19, 0.18);
   --shadow-lg: 0 14px 36px rgba(19, 19, 19, 0.2);
-  --text-shadow: 2px 2px 4px rgba(199, 199, 199, 0.8);
+  --text-shadow: 2px 2px 4px rgba(199, 199, 199, 0.356);
 
   /* Typography */
   --font-family-body: 'Poppins', 'Inter', sans-serif;
@@ -383,16 +383,24 @@ p {
 .card--service {
   padding: var(--space-4);
   border-radius: var(--radius-md);
-  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-3));
+  background: radial-gradient(
+    circle at 70% 110%,
+    rgba(255, 255, 255, 0.555),
+    hsla(42, 86%, 63%, 0.2)
+  );
   border: 1px solid var(--page-accent-3);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 .card--cleaning {
-  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-1));
+  background: radial-gradient(
+    circle at 70% 110%,
+    rgba(255, 255, 255, 0.555),
+    hsla(210, 93%, 41%, 0.2)
+  );
   border: 1px solid var(--surface-border);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 .color--cleaning {
   color: var(--brand-primary);

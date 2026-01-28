@@ -41,19 +41,13 @@ export function ServicesSection({
 
             return (
               <article className={`${styles.card} ${cardVariant}`} key={item.title}>
-                <div className={`${styles.cardIcon} ${cardVariant}`} aria-hidden="true">
-                  <Image
-                    className={styles.logoImage}
-                    src={item.icon}
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
+                <div className={styles.cardIcon} aria-hidden="true">
+                  <Image className={styles.icon} src={item.icon} alt="" width={40} height={40} />
                 </div>
                 <aside className={styles.cardAside}>
-                  <h3 className={`${styles.cardTitle} ${titleColor}`}>{item.title}</h3>
+                  <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardText}>{item.description}</p>
-                  <Link className={`${styles.cardLink} ${titleColor}`} href={href(lang, item.href)}>
+                  <Link className={styles.cardLink} href={href(lang, item.href)}>
                     {item.ctaLabel}{' '}
                     <span aria-hidden="true">
                       <IoIosArrowForward />

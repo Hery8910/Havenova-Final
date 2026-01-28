@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { HiMenuAlt3 } from 'react-icons/hi';
 import ThemeToggler from '../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../languageSwitcher/LanguageSwitcher';
 import styles from './Navbar.module.css';
@@ -136,7 +135,7 @@ export function NavbarView({
               <>
                 <ThemeToggler />
                 <LanguageSwitcher />
-                <AvatarView />
+                <AvatarView isMobile={isMobile} />
               </>
             )}
           </aside>
@@ -156,13 +155,14 @@ export function NavbarView({
             </Link>
             <button
               type="button"
-              className={styles.menuButton}
+              className={`${styles.menuButton} ${menuOpen ? styles.menuButtonOpen : ''}`}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               onClick={onToggleMenu}
             >
-              <HiMenuAlt3 />
+              <span className={styles.menuLine} aria-hidden="true" />
+              <span className={styles.menuLine} aria-hidden="true" />
             </button>
           </header>
           {menuOpen && (
@@ -181,7 +181,7 @@ export function NavbarView({
                     <ThemeToggler />
                     <LanguageSwitcher />
                   </div>
-                  <AvatarView />
+                  <AvatarView isMobile={isMobile} />
                 </aside>
                 <div className={styles.mobileLists} id="mobile-navigation">
                   <ul className={styles.servicesList}>

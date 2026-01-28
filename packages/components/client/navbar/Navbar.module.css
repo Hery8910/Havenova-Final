@@ -1,7 +1,7 @@
 .navbar {
   width: 100%;
   max-width: 100dvw;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   position: fixed;
@@ -9,16 +9,11 @@
   top: 0;
   left: 0;
   margin: 0 auto;
-  z-index: 100;
+  z-index: 9;
   color: var(--text-primary);
   background: var(--glass-bg);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-:global([data-theme='dark']) .navbar {
-  box-shadow: var(--shadow-lg);
 }
 .desktopLayout {
   padding: 8px 5dvw;
@@ -55,7 +50,7 @@
 .navActions {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   gap: 16px;
 }
 .mobileLayout {
@@ -97,8 +92,32 @@
   background-color: transparent;
   border: none;
   color: var(--text-secondary);
-  font-size: clamp(24px, 3vw, 30px);
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  position: relative;
+}
+.menuLine {
+  position: absolute;
+  width: 26px;
+  height: 2px;
+  border-radius: 999px;
+  background-color: currentColor;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+.menuLine:first-child {
+  transform: translateY(-5px);
+}
+.menuLine:last-child {
+  transform: translateY(5px);
+}
+.menuButtonOpen .menuLine:first-child {
+  transform: rotate(45deg);
+}
+.menuButtonOpen .menuLine:last-child {
+  transform: rotate(-45deg);
 }
 .mobileSection {
   display: flex;
@@ -127,7 +146,7 @@
   align-items: center;
   gap: 10px;
   margin: 0;
-  padding: 0;
+  padding: 0 0 32px 0;
 }
 .pagesList {
   flex-direction: column;
@@ -153,7 +172,10 @@
   font-weight: 600;
   font-size: clamp(13px, 2.6vw, 16px);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 .navLink:hover {
   background-color: rgba(7, 104, 201, 0.12);
