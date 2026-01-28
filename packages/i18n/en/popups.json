@@ -198,6 +198,12 @@
     "title": "Logout failed",
     "description": "We were unable to log you out. Please try again."
   },
+  "LOGOUT_CONFIRM": {
+    "title": "Log out?",
+    "description": "Are you sure you want to log out?",
+    "confirm": "Log out",
+    "close": "Cancel"
+  },
   "USER_LOGOUT_SUCCESS": {
     "title": "Logged out successfully",
     "description": "You have been logged out successfully."

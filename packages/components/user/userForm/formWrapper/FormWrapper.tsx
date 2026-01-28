@@ -22,7 +22,7 @@ import { useAuth } from '../../../../contexts/auth/authContext';
 
 interface WrapperProps<T extends Record<string, any>> {
   fields: (FormField & keyof T)[];
-  onSubmit: (data: T) => void | Promise<void>;
+  onSubmit: (data: T) => void | boolean | Promise<void | boolean>;
   button: string;
   showForgotPassword?: boolean;
   showHintPassword?: boolean;
@@ -149,11 +149,18 @@ export default function FormWrapper<T extends Record<string, any>>({
     profile?.phone,
   ]);
 
+  const passwordValidator = (value: string): string[] => {
+    if (showHintPassword) {
+      return validatePassword(value);
+    }
+    return value?.trim() ? [] : ['required'];
+  };
+
   const validators: Record<ValidateField, (value: any) => string[]> = {
     name: validateName,
     email: validateEmail,
     phone: validatePhone,
-    password: validatePassword,
+    password: passwordValidator,
     address: validateAddress,
     serviceAddress: validateAddress, // o tu validador
     message: validateMessage,
@@ -222,8 +229,21 @@ export default function FormWrapper<T extends Record<string, any>>({
 
     setErrors(newErrors);
 
-    if (Object.values(newErrors).some(Boolean)) return;
-    await onSubmit(formData); // ✅ aquí ya es de tipo T
+    if (Object.values(newErrors).some(Boolean)) {
+      setTouched((prev) => ({
+        ...prev,
+        ...Object.fromEntries(
+          Object.entries(newErrors)
+            .filter(([, value]) => Boolean(value))
+            .map(([key]) => [key, true])
+        ),
+      }));
+      return;
+    }
+
+    const submitResult = await onSubmit(formData); // ✅ aquí ya es de tipo T
+
+    if (submitResult === false) return;
 
     setFormData({
       ...initialValues,

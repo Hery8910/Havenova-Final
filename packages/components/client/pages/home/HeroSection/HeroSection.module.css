@@ -83,8 +83,9 @@
   color: var(--text-inverse);
 }
 .ctaSecondary {
-  background: var(--brand-secondary);
+  background: var(--brand-accent);
   color: var(--text-inverse);
+  border-color: var(--brand-accent);
 }
 .trustList {
   display: flex;

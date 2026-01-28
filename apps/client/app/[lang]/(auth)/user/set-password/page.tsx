@@ -48,13 +48,13 @@ const ResetPassword = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const token = searchParams.get('token');
+  const inviteToken = searchParams.get('token');
   const status = searchParams.get('status');
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
 
   useEffect(() => {
-    if (!token) {
+    if (!inviteToken) {
       const popupData = getPopup(
         popups,
         'GLOBAL_INTERNAL_ERROR',
@@ -103,7 +103,7 @@ const ResetPassword = () => {
       });
     }
   }, [
-    token,
+    inviteToken,
     status,
     code,
     http,
@@ -119,7 +119,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      if (!token || !client?._id) {
+      if (!inviteToken || !client?._id) {
         const popupData = getPopup(
           popups,
           'GLOBAL_INTERNAL_ERROR',
@@ -163,9 +163,9 @@ const ResetPassword = () => {
       }
 
       const payload = {
-        token,
-        newPassword: data.password,
         clientId: client._id,
+        inviteToken,
+        newPassword: data.password,
       };
 
       const loadingData = getPopup(
@@ -232,13 +232,13 @@ const ResetPassword = () => {
           <h1 id="reset-title" className={styles.h1}>
             {resetPasswordText.title}
           </h1>
-          <p id="reset-desc" className={styles.header_p}>
+          <p id="reset-desc" className={styles.header_hint}>
             * {resetPasswordText.info}
           </p>
         </header>
 
         <section
-          className={`${styles.section} card`}
+          className={styles.section}
           aria-labelledby="reset-title"
           aria-describedby="reset-desc"
           aria-busy={loading}

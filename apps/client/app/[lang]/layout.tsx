@@ -1,5 +1,5 @@
 // apps/client/src/app/[lang]/layout.tsx
-import '../globals.css';
+import '../global.css';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
 import { ClientPublicConfig } from '../../../../packages/types';

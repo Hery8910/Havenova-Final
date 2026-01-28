@@ -40,7 +40,6 @@ const Login = () => {
   const lang = useLang();
   const isLoggedIn = auth?.isLogged && auth.role !== 'guest';
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState<string>('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
   useEffect(() => {
@@ -77,7 +76,7 @@ const Login = () => {
   const descriptionId = 'login-cta';
   const loginButton = formText.button.login;
 
-  const handleLogin = async (data: LoginPayload) => {
+  const handleLogin = async (data: LoginPayload): Promise<boolean> => {
     try {
       setLoading(true);
 
@@ -91,8 +90,6 @@ const Login = () => {
           description: loadingData.description,
         },
       });
-
-      setEmail(data.email);
 
       const payload: LoginPayload = {
         email: data.email?.trim() || '',
@@ -117,7 +114,7 @@ const Login = () => {
           },
           onCancel: closeAlert,
         });
-        return;
+        return false;
       }
 
       const response = await loginUser(payload);
@@ -140,6 +137,7 @@ const Login = () => {
             closeAlert();
           },
         });
+        return false;
       }
       const { user } = response;
 
@@ -169,6 +167,7 @@ const Login = () => {
         router.push(href(lang, '/'));
         closeAlert();
       }, 3000);
+      return true;
     } catch (err: any) {
       const code = err?.response?.data?.code; // FIXED
 
@@ -185,6 +184,7 @@ const Login = () => {
           closeAlert();
         },
       });
+      return false;
     } finally {
       setLoading(false);
     }
@@ -210,7 +210,7 @@ const Login = () => {
             showForgotPassword
             initialValues={{
               clientId: '',
-              email,
+              email: '',
               password: '',
             }}
             loading={loading}

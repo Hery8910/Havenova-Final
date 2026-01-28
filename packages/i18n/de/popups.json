@@ -198,6 +198,12 @@
     "title": "Abmeldung fehlgeschlagen",
     "description": "Die Abmeldung konnte nicht durchgeführt werden. Bitte versuchen Sie es erneut."
   },
+  "LOGOUT_CONFIRM": {
+    "title": "Abmelden?",
+    "description": "Möchten Sie sich wirklich abmelden?",
+    "confirm": "Abmelden",
+    "close": "Abbrechen"
+  },
   "USER_LOGOUT_SUCCESS": {
     "title": "Abmeldung erfolgreich",
     "description": "Sie wurden erfolgreich abgemeldet."

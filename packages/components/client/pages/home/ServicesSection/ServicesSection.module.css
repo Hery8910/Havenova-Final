@@ -1,15 +1,33 @@
 .services {
-  padding: 200px 0;
-  background-image: url('/images/user-background.webp');
+  padding: 0 5dvw;
+  margin: 200px auto;
+  width: 100%;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+.services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/about-hero.webp');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  opacity: 0.6;
+  z-index: 0;
 }
 .container {
   width: 100%;
+  height: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 .sectionTitle {
   font-size: clamp(28px, 4vw, 40px);
@@ -53,8 +71,8 @@
   box-shadow: 0 20px 40px rgba(7, 22, 36, 0.12);
 }
 .cardIcon {
-  width: 60px;
-  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
   border-radius: 16px;
   padding: 0;
   display: flex;
@@ -79,7 +97,6 @@
   margin: 0;
   font-size: 20px;
   font-weight: 700;
-  color: var(--brand-primary);
 }
 .cardText {
   margin: 0;
@@ -89,7 +106,6 @@
 }
 .cardLink {
   font-weight: 700;
-  color: var(--brand-primary);
   text-decoration: none;
   display: inline-flex;
   gap: 8px;

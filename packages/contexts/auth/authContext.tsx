@@ -20,6 +20,8 @@ import { getPopup } from '@havenova/utils';
 import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
+const PROFILE_STORAGE_KEY = 'hv-profile';
+const WORKER_STORAGE_KEY = 'hv-worker-profile';
 
 interface AuthContextProps {
   auth: AuthUser;
@@ -70,6 +72,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(value));
+  };
+
+  const clearUserStorage = () => {
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem(PROFILE_STORAGE_KEY);
+    localStorage.removeItem(WORKER_STORAGE_KEY);
   };
 
   // -------------------------
@@ -158,6 +167,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setFromBackend(backendAuth);
             return;
           } catch {
+            clearUserStorage();
             setGuest();
             const role = stored?.role;
             const shouldOfferContinue = role === 'user';
@@ -252,7 +262,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Logout
   // -------------------
 
-  const logout = useCallback(async () => {
+  const performLogout = useCallback(async () => {
     try {
       await logoutUser();
 
@@ -283,6 +293,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         onCancel: closeAlert,
       });
     } finally {
+      clearUserStorage();
       setTimeout(() => {
         saveToStorage(null);
         const guest = createGuest();
@@ -291,6 +302,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }, 5000);
     }
   }, [createGuest, showError, showSuccess, closeAlert, popups]);
+
+  const logout = useCallback(async () => {
+    const popup = getPopup(popups, 'LOGOUT_CONFIRM', 'LOGOUT_CONFIRM', fallbackPopups.LOGOUT_CONFIRM);
+
+    showConfirm({
+      response: {
+        status: 200,
+        title: popup.title,
+        description: popup.description,
+        confirmLabel: popup.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
+        cancelLabel: popup.close ?? popups.button?.close ?? fallbackButtons.close,
+      },
+      onConfirm: async () => {
+        closeAlert();
+        await performLogout();
+      },
+      onCancel: closeAlert,
+    });
+  }, [closeAlert, performLogout, popups, showConfirm]);
 
   // -------------------
   // API

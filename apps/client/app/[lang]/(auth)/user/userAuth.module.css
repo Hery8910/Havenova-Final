@@ -45,6 +45,10 @@
   color: var(--text-secondary);
   font-size: clamp(14px, 1.6vw, 17px);
 }
+.header_hint {
+  color: var(--color-warning);
+  font-style: italic;
+}
 .aside {
   width: 100%;
   display: flex;

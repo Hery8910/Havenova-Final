@@ -215,6 +215,7 @@
   },
 
   "dashboard": {
+    "profileButton": "Profil öffnen",
     "header": {
       "dashboard": "Überblick",
       "requests": "Anfragen",

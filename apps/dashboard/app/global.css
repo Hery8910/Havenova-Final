@@ -386,11 +386,18 @@ p {
   box-shadow: var(--shadow-md);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  color: var(--brand-secondary);
 }
 .card--cleaning {
   background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-1));
   border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-md);
+}
+.color--cleaning {
+  color: var(--brand-primary);
+}
+.color--service {
+  color: var(--brand-secondary);
 }
 /* ============================
    MISC

@@ -222,7 +222,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (auth.isLogged && auth.role !== 'guest') return;
     const lastProfile = profile ?? loadFromStorage();
     const local = {
-      ...createLocalDefault(lastProfile),
+      ...createLocalDefault(null),
       name: '',
       phone: '',
       address: '',

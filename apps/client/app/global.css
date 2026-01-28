@@ -12,6 +12,7 @@
   --page-bg-3: #e7ecf3;
   --page-accent-1: hsla(210, 93%, 41%, 0.15);
   --page-accent-2: hsla(262, 85%, 47%, 0.15);
+  --page-accent-3: hsla(42, 86%, 63%, 0.15);
 
   /* Text */
   --text-primary: #424242;
@@ -118,7 +119,8 @@ body {
   min-height: 100dvh;
   font-family: var(--font-family-body);
   color: var(--text-primary);
-  background: radial-gradient(900px circle at 35% 10%, var(--page-accent-1) 0%, transparent 60%),
+  background:
+    radial-gradient(900px circle at 35% 10%, var(--page-accent-1) 0%, transparent 60%),
     radial-gradient(700px circle at 65% 85%, var(--page-accent-2) 0%, transparent 55%),
     linear-gradient(180deg, var(--page-bg-1) 0%, var(--page-bg-2) 55%, var(--page-bg-3) 100%);
   background-repeat: no-repeat;
@@ -278,7 +280,11 @@ p {
   font-weight: 600;
   font-size: clamp(14px, 3vw, 18px);
   border: 1px solid transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease,
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
     border-color 0.2s ease;
   box-shadow: var(--shadow-sm);
 }
@@ -377,8 +383,8 @@ p {
 .card--service {
   padding: var(--space-4);
   border-radius: var(--radius-md);
-  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-2));
-  border: 1px solid var(--page-accent-2);
+  background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-3));
+  border: 1px solid var(--page-accent-3);
   box-shadow: var(--shadow-md);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -387,6 +393,12 @@ p {
   background: radial-gradient(circle at 70% 110%, var(--glass-bg), var(--page-accent-1));
   border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-md);
+}
+.color--cleaning {
+  color: var(--brand-primary);
+}
+.color--service {
+  color: var(--brand-accent);
 }
 /* ============================
    MISC

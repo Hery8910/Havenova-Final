@@ -91,7 +91,9 @@ export default function TermsOfServicePage() {
   if (!legalUpdates) return null;
 
   function formatDate(dateString: string): string {
+    if (!dateString) return '';
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return new Intl.DateTimeFormat('de-DE').format(date);
   }
 

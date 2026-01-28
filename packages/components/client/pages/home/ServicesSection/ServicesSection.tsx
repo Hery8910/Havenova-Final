@@ -35,6 +35,9 @@ export function ServicesSection({
             const cardVariant = item.href.includes('house-cleaning')
               ? 'card--cleaning'
               : 'card--service';
+            const titleColor = item.href.includes('house-cleaning')
+              ? 'color--cleaning'
+              : 'color--service';
 
             return (
               <article className={`${styles.card} ${cardVariant}`} key={item.title}>
@@ -48,9 +51,9 @@ export function ServicesSection({
                   />
                 </div>
                 <aside className={styles.cardAside}>
-                  <h3 className={styles.cardTitle}>{item.title}</h3>
+                  <h3 className={`${styles.cardTitle} ${titleColor}`}>{item.title}</h3>
                   <p className={styles.cardText}>{item.description}</p>
-                  <Link className={styles.cardLink} href={href(lang, item.href)}>
+                  <Link className={`${styles.cardLink} ${titleColor}`} href={href(lang, item.href)}>
                     {item.ctaLabel}{' '}
                     <span aria-hidden="true">
                       <IoIosArrowForward />

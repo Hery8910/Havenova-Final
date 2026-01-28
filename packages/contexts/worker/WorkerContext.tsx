@@ -48,6 +48,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const isRefreshingRef = useRef(false);
   const notFoundRef = useRef(false);
   const didNotifyRef = useRef(false);
+  const workerRef = useRef<WorkerRecord | null>(null);
 
   const loadFromStorage = (): WorkerRecord | null => {
     if (typeof window === 'undefined') return null;
@@ -119,6 +120,10 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     saveToStorage(worker);
   }, [worker, isClientReady]);
 
+  useEffect(() => {
+    workerRef.current = worker;
+  }, [worker]);
+
   const reloadWorker = useCallback(async () => {
     if (!auth.isLogged || auth.role === 'guest' || isRefreshingRef.current) return;
     if (notFoundRef.current) return;
@@ -126,7 +131,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const backendWorker = await getWorkerProfile();
-      const merged = { ...createLocalDefault(worker), ...backendWorker };
+      const merged = { ...createLocalDefault(workerRef.current), ...backendWorker };
       setWorker(merged);
       saveToStorage(merged);
       notFoundRef.current = false;
@@ -137,7 +142,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
 
       if (status === 404 || code === 'WORKER_NOT_FOUND') {
         notFoundRef.current = true;
-        const local = createLocalDefault(worker);
+        const local = createLocalDefault(workerRef.current);
         setWorker(local);
         saveToStorage(local);
         if (!didNotifyRef.current) {
@@ -165,7 +170,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
         try {
           await refreshToken();
           const backendWorker = await getWorkerProfile();
-          const merged = { ...createLocalDefault(worker), ...backendWorker };
+          const merged = { ...createLocalDefault(workerRef.current), ...backendWorker };
           setWorker(merged);
           saveToStorage(merged);
           notFoundRef.current = false;
@@ -176,7 +181,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       isRefreshingRef.current = false;
     }
-  }, [auth.isLogged, auth.role, worker, clientId]);
+  }, [auth.isLogged, auth.role, clientId]);
 
   useEffect(() => {
     if (!auth.isLogged || auth.role === 'guest') return;
@@ -190,7 +195,9 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     didNotifyRef.current = false;
     const lastWorker = worker ?? loadFromStorage();
     const local = {
-      ...createLocalDefault(lastWorker),
+      ...createLocalDefault(null),
+      userId: '',
+      email: '',
       name: '',
       phone: '',
       address: '',

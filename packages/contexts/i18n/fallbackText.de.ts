@@ -232,6 +232,12 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Abmeldung fehlgeschlagen',
     'Die Abmeldung konnte nicht durchgeführt werden. Bitte versuchen Sie es erneut.'
   ),
+  LOGOUT_CONFIRM: withConfirmAndClose(
+    'Abmelden?',
+    'Möchten Sie sich wirklich abmelden?',
+    'Abmelden',
+    'Abbrechen'
+  ),
   USER_LOGOUT_SUCCESS: withClose('Abmeldung erfolgreich', 'Sie wurden erfolgreich abgemeldet.'),
   USER_LOGOUT_ALL_SUCCESS: withClose(
     'Abmeldung auf allen Geräten',
@@ -407,6 +413,7 @@ export const fallbackExpiredToken = fallbackPopups.USER_VERIFY_EXPIRED_TOKEN;
 export const fallbackInvalidToken = fallbackPopups.USER_VERIFY_INVALID_TOKEN;
 export const fallbackLoginSuccess = fallbackPopups.USER_LOGIN_SUCCESS;
 export const fallbackLogoutSuccess = fallbackPopups.LOGOUT_SUCCESS;
+export const fallbackLogoutConfirm = fallbackPopups.LOGOUT_CONFIRM;
 export const fallbackLogoutError = fallbackPopups.LOGOUT_FAILED;
 export const fallbackLoadingSubmit = fallbackPopups.REGISTER_LOADING_SUBMIT;
 export const fallbackGlobalLoading = fallbackPopups.GLOBAL_LOADING;

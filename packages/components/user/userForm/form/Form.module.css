@@ -57,7 +57,10 @@
   color: var(--text-secondary);
   padding: 4px;
   border-radius: 50%;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 .show:focus-visible {
   outline: none;
@@ -66,13 +69,14 @@
   color: var(--brand-primary);
 }
 .forgotPassword {
+  z-index: 3;
   border: none;
   background-color: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  font-size: clamp(14px, 1.6vw, 17px);
-  font-weight: 600;
+  font-size: clamp(12px, 1.6vw, 14px);
+  font-weight: 500;
   font-style: italic;
 }
 .forgotPassword:hover {
