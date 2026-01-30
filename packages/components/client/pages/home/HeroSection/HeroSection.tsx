@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './HeroSection.module.css';
 import { href } from '../../../../../utils/navigation';
 
-export function HeroSection({
+export default function HeroSection({
   texts,
   lang,
 }: {
@@ -19,7 +19,6 @@ export function HeroSection({
       src: string;
       alt: string;
       badgeTitle: string;
-      badgeSubtitle: string;
       tag: string;
     };
   };
@@ -56,7 +55,6 @@ export function HeroSection({
             <img className={styles.heroImage} src={texts.image.src} alt={texts.image.alt} />
             <figcaption className={styles.heroCard} aria-hidden="true">
               <p className={styles.heroCardTitle}>{texts.image.badgeTitle}</p>
-              <p className={styles.heroCardSubtitle}>{texts.image.badgeSubtitle}</p>
             </figcaption>
             <span className={styles.heroTag}>{texts.image.tag}</span>
           </figure>

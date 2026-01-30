@@ -13,6 +13,15 @@ interface BeforeInstallPromptEvent extends Event {
 const INSTALL_FLAG_KEY = 'pwa-installed';
 const INSTALL_COOKIE = `${INSTALL_FLAG_KEY}=true; path=/; max-age=31536000; samesite=lax`;
 
+const getInstallFlag = () => {
+  const hasLocalStorage =
+    typeof window !== 'undefined' && window.localStorage?.getItem(INSTALL_FLAG_KEY) === 'true';
+  const hasCookie =
+    typeof document !== 'undefined' &&
+    document.cookie?.split('; ').some((cookie) => cookie === `${INSTALL_FLAG_KEY}=true`);
+  return hasLocalStorage || hasCookie;
+};
+
 const setInstallFlag = () => {
   window.localStorage?.setItem(INSTALL_FLAG_KEY, 'true');
   document.cookie = INSTALL_COOKIE;
@@ -23,17 +32,25 @@ const clearInstallFlag = () => {
   document.cookie = `${INSTALL_FLAG_KEY}=; path=/; max-age=0; samesite=lax`;
 };
 
-export function AppInstallSection({
+export default function AppInstallSection({
   texts,
   lang,
 }: {
   texts: {
-    kicker: string;
-    title: string;
-    description: string;
-    primaryCta: { label: string; installedLabel: string };
-    secondaryCta: { label: string };
-    features: string[];
+    appInstall: {
+      kicker: string;
+      title: string;
+      description: string;
+      primaryCta: { label: string; installedLabel: string };
+      secondaryCta: { label: string };
+      features: string[];
+    };
+    appInstalled: {
+      kicker: string;
+      title: string;
+      description: string;
+      primaryCta: { label: string };
+    };
   };
   lang: 'de' | 'en';
 }) {
@@ -46,7 +63,10 @@ export function AppInstallSection({
     const checkInstalled = () => {
       const isStandalone =
         mediaQuery?.matches || (window.navigator as { standalone?: boolean }).standalone;
-      setIsInstalled(Boolean(isStandalone));
+      if (isStandalone) {
+        setInstallFlag();
+      }
+      setIsInstalled(Boolean(isStandalone) || getInstallFlag());
     };
 
     checkInstalled();
@@ -76,6 +96,10 @@ export function AppInstallSection({
   useEffect(() => {
     const checkRelatedApps = async () => {
       try {
+        if (getInstallFlag()) {
+          setIsInstalled(true);
+          return;
+        }
         const relatedApps = await (
           navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> }
         ).getInstalledRelatedApps?.();
@@ -85,15 +109,11 @@ export function AppInstallSection({
         if (relatedApps.length > 0) {
           setInstallFlag();
           setIsInstalled(true);
-        } else {
-          clearInstallFlag();
-          setIsInstalled(false);
         }
       } catch {
         // Ignore unsupported or blocked APIs.
       }
     };
-
     checkRelatedApps();
   }, []);
 
@@ -112,11 +132,13 @@ export function AppInstallSection({
       setIsInstalled(true);
     }
   }, [installPrompt, secondaryHref]);
-  console.log(installPrompt, isInstalled);
 
   const canInstall = Boolean(installPrompt) && !isInstalled;
   const isUnavailable = !isInstalled && !canInstall;
-  const primaryLabel = isInstalled ? texts.primaryCta.installedLabel : texts.primaryCta.label;
+  const primaryLabel = isInstalled
+    ? texts.appInstall.primaryCta.installedLabel
+    : texts.appInstall.primaryCta.label;
+  const activeTexts = isInstalled ? texts.appInstalled : texts.appInstall;
 
   return (
     <section className={styles.appInstall} aria-labelledby="home-app-title">
@@ -125,25 +147,33 @@ export function AppInstallSection({
         data-state={isInstalled ? 'installed' : isUnavailable ? 'unavailable' : 'available'}
       >
         <div className={styles.appContent}>
-          <span className={styles.kicker}>{texts.kicker}</span>
-          <h2 id="home-app-title">{texts.title}</h2>
-          <p className={styles.sectionSubtitle}>{texts.description}</p>
+          <span className={styles.kicker}>{activeTexts.kicker}</span>
+          <h2 id="home-app-title">{activeTexts.title}</h2>
+          <p className={styles.sectionSubtitle}>{activeTexts.description}</p>
         </div>
         <div className={styles.appCtas}>
-          <button
-            type="button"
-            className={`${
-              canInstall ? styles.ctaPrimaryInstall : styles.ctaPrimaryUnavailable
-            } button`}
-            onClick={canInstall ? handleInstall : undefined}
-            disabled={isInstalled}
-            aria-disabled={isInstalled}
-          >
-            {primaryLabel}
-          </button>
-          <Link className={`${styles.ctaGhost} button_invert`} href={secondaryHref}>
-            {texts.secondaryCta.label}
-          </Link>
+          {isInstalled ? (
+            <Link className={`${styles.ctaPrimaryInstall} button`} href={secondaryHref}>
+              {texts.appInstalled.primaryCta.label}
+            </Link>
+          ) : (
+            <>
+              <button
+                type="button"
+                className={`${
+                  canInstall ? styles.ctaPrimaryInstall : styles.ctaPrimaryUnavailable
+                } button`}
+                onClick={canInstall ? handleInstall : undefined}
+                disabled={isInstalled}
+                aria-disabled={isInstalled}
+              >
+                {primaryLabel}
+              </button>
+              <Link className={`${styles.ctaGhost} button_invert`} href={secondaryHref}>
+                {texts.appInstall.secondaryCta.label}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </section>

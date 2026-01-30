@@ -193,9 +193,9 @@
   background-color: rgba(7, 104, 201, 0.08);
 }
 .tone_maintenance {
-  color: var(--brand-secondary);
-  border-color: rgba(94, 18, 224, 0.22);
-  background-color: rgba(94, 18, 224, 0.08);
+  color: var(--brand-accent);
+  border-color: var(--brand-accent);
+  background-color: var(--page-accent-3);
 }
 :global([data-theme='dark']) .navLink:hover {
   background-color: rgba(148, 163, 184, 0.16);

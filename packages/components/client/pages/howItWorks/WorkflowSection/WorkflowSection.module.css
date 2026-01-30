@@ -1,0 +1,125 @@
+.workflow {
+  padding: clamp(48px, 7vw, 96px) 0;
+  position: relative;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  max-width: 720px;
+  text-align: center;
+}
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(24px, 3.6vw, 36px);
+  font-weight: 800;
+}
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(16px, 2.4vw, 18px);
+  line-height: 1.6;
+}
+.stepsGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.stepItem {
+  margin: 0;
+}
+.stepCard {
+  width: 100%;
+  max-width: 450px;
+  height: 100%;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.stepCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.stepAside {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-accent);
+  color: var(--text-inverse);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.stepTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.stepDescription {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.note {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: radial-gradient(circle at 70% 110%, var(--bg-warning), var(--page-accent-3));
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-warning);
+}
+.noteTitle {
+  color: var(--color-warning);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+.noteDescription {
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .stepsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+  .note {
+    padding: 18px;
+  }
+}

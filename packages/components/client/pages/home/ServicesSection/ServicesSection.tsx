@@ -4,7 +4,7 @@ import { href } from '../../../../../utils/navigation';
 import Image from 'next/image';
 import { IoIosArrowForward } from 'react-icons/io';
 
-export function ServicesSection({
+export default function ServicesSection({
   texts,
   lang,
 }: {

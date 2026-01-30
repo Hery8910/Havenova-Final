@@ -143,125 +143,43 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
   },
-  services: {
+  howItWorks: {
     en: {
-      title: 'Our Services - Havenova Berlin',
+      title: 'How It Works | Havenova',
       description:
-        'Explore Havenova’s handyman, cleaning, and maintenance services in Berlin. Reliable, fast, and professional solutions.',
+        'See how Havenova handles service requests from first message to completion with a clear, reliable workflow.',
       openGraph: {
-        title: 'Havenova Services',
+        title: 'How It Works | Havenova',
         description:
-          'Choose from our range of professional home services tailored to your needs in Berlin.',
+          'Understand the Havenova workflow for home services: request, review, scheduling, and completion.',
         type: 'website',
-        url: 'https://havenova.de/en/services',
+        url: 'https://havenova.de/en/how-it-work',
         images: [
           {
-            url: 'https://havenova.de/images/og-services.jpg',
+            url: 'https://havenova.de/images/og-how-it-works.jpg',
             width: 1200,
             height: 630,
-            alt: 'Havenova Services',
+            alt: 'Havenova workflow overview',
           },
         ],
       },
     },
     de: {
-      title: 'Unsere Dienstleistungen - Havenova Berlin',
+      title: 'So funktioniert es | Havenova',
       description:
-        'Entdecken Sie Havenovas Handwerker-, Reinigungs- und Wartungsdienste in Berlin. Zuverlässige, schnelle und professionelle Lösungen.',
+        'Erfahre, wie Havenova Serviceanfragen von der ersten Nachricht bis zur Fertigstellung klar strukturiert abwickelt.',
       openGraph: {
-        title: 'Havenova Dienstleistungen',
+        title: 'So funktioniert es | Havenova',
         description:
-          'Wählen Sie aus unserem Angebot an professionellen Hausdiensten, die auf Ihre Bedürfnisse in Berlin zugeschnitten sind.',
+          'Verstehe den Havenova Ablauf für Hausservices: Anfrage, Prüfung, Terminierung und Abschluss.',
         type: 'website',
-        url: 'https://havenova.de/de/services',
+        url: 'https://havenova.de/de/how-it-work',
         images: [
           {
-            url: 'https://havenova.de/images/og-services.jpg',
+            url: 'https://havenova.de/images/og-how-it-works.jpg',
             width: 1200,
             height: 630,
-            alt: 'Havenova Dienstleistungen',
-          },
-        ],
-      },
-    },
-  },
-  faq: {
-    en: {
-      title: 'FAQ - Havenova Berlin',
-      description:
-        'Find answers to frequently asked questions about Havenova’s services, bookings, and support in Berlin.',
-      openGraph: {
-        title: 'FAQ Havenova',
-        description: 'Your most common questions about Havenova answered clearly and directly.',
-        type: 'website',
-        url: 'https://havenova.de/en/faq',
-        images: [
-          {
-            url: 'https://havenova.de/images/og-faq.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'FAQ Havenova',
-          },
-        ],
-      },
-    },
-    de: {
-      title: 'FAQ - Havenova Berlin',
-      description:
-        'Finden Sie Antworten auf häufig gestellte Fragen zu Havenovas Dienstleistungen, Buchungen und Support in Berlin.',
-      openGraph: {
-        title: 'FAQ Havenova',
-        description: 'Die häufigsten Fragen zu Havenova klar und direkt beantwortet.',
-        type: 'website',
-        url: 'https://havenova.de/de/faq',
-        images: [
-          {
-            url: 'https://havenova.de/images/og-faq.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'FAQ Havenova',
-          },
-        ],
-      },
-    },
-  },
-  reviews: {
-    en: {
-      title: 'Customer Reviews - Havenova Berlin',
-      description:
-        'Read what our customers say about Havenova’s home services in Berlin. Trusted by many happy clients.',
-      openGraph: {
-        title: 'Havenova Customer Reviews',
-        description:
-          'Discover real customer experiences with Havenova’s handyman and cleaning services in Berlin.',
-        type: 'website',
-        url: 'https://havenova.de/en/reviews',
-        images: [
-          {
-            url: 'https://havenova.de/images/og-reviews.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'Havenova Reviews',
-          },
-        ],
-      },
-    },
-    de: {
-      title: 'Kundenbewertungen - Havenova Berlin',
-      description:
-        'Lesen Sie, was unsere Kunden über Havenovas Hausservices in Berlin sagen. Vertraut von vielen zufriedenen Kunden.',
-      openGraph: {
-        title: 'Havenova Kundenbewertungen',
-        description:
-          'Entdecken Sie echte Kundenerfahrungen mit Havenovas Handwerker- und Reinigungsdiensten in Berlin.',
-        type: 'website',
-        url: 'https://havenova.de/de/reviews',
-        images: [
-          {
-            url: 'https://havenova.de/images/og-reviews.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'Havenova Bewertungen',
+            alt: 'Havenova Ablaufübersicht',
           },
         ],
       },

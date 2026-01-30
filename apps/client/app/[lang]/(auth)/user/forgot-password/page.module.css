@@ -1,11 +1,12 @@
 .main {
+  padding: 0 5dvw;
   width: 100%;
   min-height: 100dvh;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 64px;
+  gap: 24px;
   background-image: url('/svg/user-background.svg');
   background-position: center;
   background-size: cover;
@@ -59,12 +60,9 @@
   color: var(--brand-primary);
 }
 
-@media (max-width: 1440px) {
-}
-@media (max-width: 1024px) {
-}
-
-@media (max-width: 768px) {
-}
-@media (max-width: 425px) {
+@media (min-width: 1024px) {
+  .main {
+    flex-direction: row;
+    gap: 64px;
+  }
 }

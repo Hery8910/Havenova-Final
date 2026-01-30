@@ -34,8 +34,15 @@
         },
         "secondaryCta": {
           "label": "How it works"
-        },
-        "features": ["Fast start", "Updates & status", "Mobile-first", "Everything in one place"]
+        }
+      },
+      "appInstalled": {
+        "kicker": "App ready",
+        "title": "Havenova is ready to use.",
+        "description": "You’re all set. Manage your home services, track requests, and stay in control — all from one place.",
+        "primaryCta": {
+          "label": "How it works"
+        }
       },
       "services": {
         "title": "Our services",
@@ -81,10 +88,62 @@
         ]
       }
     },
+    "about": {},
     "cleaning": {},
     "home-service": {},
     "contact": {},
-    "how-it-works": {},
+    "howItWorks": {
+      "hero": {
+        "kicker": "About Havenova",
+        "title": "Home services, simplified — for customers and for service teams.",
+        "description": "Havenova is the company behind this platform for cleaning and home maintenance. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently.",
+        "cta": {
+          "label": "How it works",
+          "href": "/how-it-work"
+        },
+        "ctaAriaLabel": "How it works primary action",
+        "image": {
+          "src": "/images/howItWorks-hero.webp",
+          "alt": "Havenova service in Berlin",
+          "badgeTitle": "Berlin & surrounding area"
+        }
+      },
+      "workflow": {
+        "title": "How the workflow works",
+        "subtitle": "A practical flow that keeps requests structured — without forcing fixed prices or complicated forms.",
+        "steps": [
+          {
+            "title": "Request & review",
+            "description": "You send a service request with the relevant details. We review the information carefully to understand your needs and prepare the next step."
+          },
+          {
+            "title": "Visit & confirmation",
+            "description": "We visit the location to check the details on site. Based on this visit, we confirm the scope of the work and send you the final offer."
+          },
+          {
+            "title": "Service & completion",
+            "description": "We carry out the service as agreed and keep you informed throughout the process. Once everything is completed, we send you the invoice."
+          }
+        ],
+        "note": {
+          "title": "Why we don’t show fixed prices on the website",
+          "description": "Many home services depend on context (size, condition, materials, access, time). Havenova keeps requests structured so the company can price fairly — and the customer knows exactly what is included."
+        }
+      },
+      "benefits": {
+        "title": "Benefits for both sides",
+        "description": "This platform was created to build long-term relationships between Havenova and its customers, based on trust, clarity, and shared information. It ensures you always know what was requested, what was agreed, and what was delivered. Ready to request your first service?",
+        "ctaAriaLabel": "Service request actions",
+        "ctaCleaning": {
+          "label": "Request cleaning",
+          "href": "/services/house-cleaning"
+        },
+        "ctaHomeServices": {
+          "label": "Request maintenance",
+          "href": "/services/home-service"
+        }
+      }
+    },
     "reviews": {},
     "user": {
       "register": {

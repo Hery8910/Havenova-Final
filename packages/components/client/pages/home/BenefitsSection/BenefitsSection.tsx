@@ -1,6 +1,6 @@
 import styles from './BenefitsSection.module.css';
 
-export function BenefitsSection({
+export default function BenefitsSection({
   texts,
 }: {
   texts: {
@@ -24,7 +24,7 @@ export function BenefitsSection({
           <ul className={styles.benefitsCards}>
             {texts.items.map((item) => (
               <li className={styles.benefitItem} key={item.title}>
-                <article className={styles.benefitCard}>
+                <article className={`${styles.benefitCard} card--glass`}>
                   <h3 className={styles.benefitTitle}>{item.title}</h3>
                   <p className={styles.benefitText}>{item.description}</p>
                 </article>
