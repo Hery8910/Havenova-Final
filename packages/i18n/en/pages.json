@@ -34,7 +34,8 @@
         },
         "secondaryCta": {
           "label": "How it works"
-        }
+        },
+        "features": ["Fast launch", "Updates & status", "Mobile-first", "Everything in one place"]
       },
       "appInstalled": {
         "kicker": "App ready",
