@@ -2,8 +2,8 @@
   "client": {
     "navbar": {
       "links": [
-        { "label": "Reinigung", "href": "/services/house-cleaning", "tone": "cleaning" },
-        { "label": "Wartung", "href": "/services/home-service", "tone": "maintenance" },
+        { "label": "Reinigung", "href": "/services/house-cleaning" },
+        { "label": "Wartung", "href": "/services/home-service" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
@@ -168,8 +168,8 @@
         }
       ],
       "links": [
-        { "label": "Reinigung", "href": "/services/house-cleaning", "tone": "cleaning" },
-        { "label": "Wartung", "href": "/services/home-service", "tone": "maintenance" },
+        { "label": "Reinigung", "href": "/services/house-cleaning" },
+        { "label": "Wartung", "href": "/services/home-service" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }

@@ -39,11 +39,6 @@
   justify-content: center;
   gap: 16px;
 }
-.navLists {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
 .navItem {
   width: fit-content;
 }
@@ -137,21 +132,15 @@
   gap: 16px;
   width: 100%;
 }
-.servicesList,
-.pagesList {
+.mobileList {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
   gap: 10px;
   margin: 0;
   padding: 0 0 32px 0;
-}
-.pagesList {
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
 }
 .mobileItem {
   width: 100%;
@@ -186,16 +175,6 @@
 .menuButton:focus-visible {
   outline: 2px solid var(--brand-primary);
   outline-offset: 2px;
-}
-.tone_cleaning {
-  color: var(--brand-primary);
-  border-color: rgba(7, 104, 201, 0.22);
-  background-color: rgba(7, 104, 201, 0.08);
-}
-.tone_maintenance {
-  color: var(--brand-accent);
-  border-color: var(--brand-accent);
-  background-color: var(--page-accent-3);
 }
 :global([data-theme='dark']) .navLink:hover {
   background-color: rgba(148, 163, 184, 0.16);

@@ -89,7 +89,51 @@
         ]
       }
     },
-    "about": {},
+    "about": {
+      "intro": {
+        "title": "Bei Havenova",
+        "description": "Wir verbinden traditionelle Dienstleistungen mit moderner Transparenz. Unser Ziel ist es, den gesamten Prozess – von der Anfrage bis zum Abschluss – so einfach, zuverlässig und kundenorientiert wie möglich zu gestalten."
+      },
+      "story": {
+        "title": "Ein junges Unternehmen mit klarer Vision",
+        "paragraphs": [
+          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
+          "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
+          "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
+          "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
+        ]
+      },
+      "clients": {
+        "title": "Für wen wir arbeiten",
+        "items": [
+          {
+            "title": "Privathaushalte",
+            "description": "Wir arbeiten mit Mieter:innen und Eigentümer:innen, die eine verlässliche Lösung für Reinigung oder Hausservice suchen, jeden Auftrag nachverfolgen und alles sauber dokumentieren möchten.",
+            "image": "/images/private-properties.webp",
+            "imageAlt": "Wohngebäude im privaten Umfeld"
+          },
+          {
+            "title": "Hausverwaltung",
+            "description": "Wir unterstützen Hausverwaltungen mit strukturierten Serviceanfragen, klarer Kommunikation und einem transparenten Überblick über Wartung und Reinigung in mehreren Objekten.",
+            "image": "/images/property-management.webp",
+            "imageAlt": "Mehrparteienhaus mit gepflegter Fassade"
+          },
+          {
+            "title": "Büros und Praxen",
+            "description": "Wir helfen Büros und Praxen, wiederkehrende Reinigungs- und Wartungsservices mit klaren Abläufen, dokumentierten Leistungen und minimalem Aufwand zu organisieren.",
+            "image": "/images/practices.webp",
+            "imageAlt": "Modernes Büro mit Besprechungsbereich"
+          },
+          {
+            "title": "Kleine Unternehmen",
+            "description": "Wir begleiten kleine Unternehmen, die zuverlässige Reinigungs- oder Wartungsservices brauchen, mit einem einfachen Prozess für Anfrage, Fortschritt und Übersicht.",
+            "image": "/images/businesses.webp",
+            "imageAlt": "Ladengeschäft mit Kundenbereich"
+          }
+        ],
+        "closing": "Unser Fokus liegt auf Klarheit, Organisation und langfristiger Verlässlichkeit."
+      }
+    },
     "cleaning": {},
     "home-service": {},
     "contact": {},
@@ -127,7 +171,7 @@
           }
         ],
         "note": {
-          "title": "Warum wir keine Festpreise auf der Website zeigen",
+          "title": "Warum wir keine Festpreise auf der Website zeigen?",
           "description": "Viele Hausservices hängen vom Kontext ab (Größe, Zustand, Materialien, Zugang, Zeit). Havenova strukturiert Anfragen, damit Unternehmen fair kalkulieren können – und Kund:innen genau wissen, was enthalten ist."
         }
       },

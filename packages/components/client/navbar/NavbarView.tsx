@@ -17,9 +17,7 @@ export interface IconNavItem extends BaseNavItem {
   alt: string;
 }
 
-export interface NavLinkItem extends BaseNavItem {
-  tone?: 'cleaning' | 'maintenance' | string;
-}
+export interface NavLinkItem extends BaseNavItem {}
 
 export type ServiceNavItem = IconNavItem;
 export interface SimpleNavItem extends BaseNavItem {}
@@ -79,14 +77,12 @@ export function NavbarView({
   };
 
   const links: NavLinkItem[] = navbarConfig?.links ?? [
-    { label: 'Cleaning', href: '/services/house-cleaning', tone: 'cleaning' },
-    { label: 'Maintenance', href: '/services/home-service', tone: 'maintenance' },
+    { label: 'Cleaning', href: '/services/house-cleaning' },
+    { label: 'Maintenance', href: '/services/home-service' },
     { label: 'How it works', href: '/how-it-work' },
     { label: 'Contact', href: '/contact' },
     { label: 'About', href: '/about' },
   ];
-  const serviceLinks = links.filter((item) => item.href.startsWith('/services'));
-  const mainLinks = links.filter((item) => !item.href.startsWith('/services'));
 
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
@@ -102,34 +98,19 @@ export function NavbarView({
               priority
             />
           </Link>
-          <div className={styles.navLists}>
-            <ul className={styles.navList}>
-              {serviceLinks.map((item) => (
-                <li key={item.href} className={styles.navItem}>
-                  <button
-                    type="button"
-                    className={`${styles.navLink} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
-                    onClick={() => onNavigate(item.href)}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <ul className={styles.navList}>
-              {mainLinks.map((item) => (
-                <li key={item.href} className={styles.navItem}>
-                  <button
-                    type="button"
-                    className={`${styles.navLink} ${item.tone ? styles[`tone_${item.tone}`] : ''}`}
-                    onClick={() => onNavigate(item.href)}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className={styles.navList}>
+            {links.map((item) => (
+              <li key={item.href} className={styles.navItem}>
+                <button
+                  type="button"
+                  className={styles.navLink}
+                  onClick={() => onNavigate(item.href)}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
           <aside className={styles.navActions}>
             {!isMobile && (
               <>
@@ -184,32 +165,12 @@ export function NavbarView({
                   <AvatarView isMobile={isMobile} />
                 </aside>
                 <div className={styles.mobileLists} id="mobile-navigation">
-                  <ul className={styles.servicesList}>
-                    {serviceLinks.map((item) => (
+                  <ul className={styles.mobileList}>
+                    {links.map((item) => (
                       <li key={item.href} className={styles.mobileItem}>
                         <button
                           type="button"
-                          className={`${styles.navLink} ${
-                            item.tone ? styles[`tone_${item.tone}`] : ''
-                          }`}
-                          onClick={() => {
-                            onNavigate(item.href);
-                            onCloseMenu();
-                          }}
-                        >
-                          {item.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                  <ul className={styles.pagesList}>
-                    {mainLinks.map((item) => (
-                      <li key={item.href} className={styles.mobileItem}>
-                        <button
-                          type="button"
-                          className={`${styles.navLink} ${
-                            item.tone ? styles[`tone_${item.tone}`] : ''
-                          }`}
+                          className={styles.navLink}
                           onClick={() => {
                             onNavigate(item.href);
                             onCloseMenu();

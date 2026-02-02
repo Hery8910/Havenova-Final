@@ -1,0 +1,38 @@
+.section {
+  padding: clamp(24px, 5vw, 56px) 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 800;
+  text-align: center;
+}
+
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.paragraph {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+}
