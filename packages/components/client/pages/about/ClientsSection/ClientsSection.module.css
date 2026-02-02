@@ -105,9 +105,6 @@
 }
 
 @media (max-width: 640px) {
-  .container {
-    padding: 0 20px;
-  }
   .item {
     min-width: 300px;
     min-height: 450px;
