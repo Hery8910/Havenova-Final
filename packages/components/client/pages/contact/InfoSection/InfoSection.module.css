@@ -1,14 +1,10 @@
 .contactSection {
   width: 100%;
-  max-width: 450px;
-  height: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 16px 32px;
 }
 .contactSection::before {
   content: '';
@@ -17,7 +13,7 @@
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.5;
-  z-index: -4;
+  z-index: -10;
   width: 400px;
   height: 400px;
   background: radial-gradient(
@@ -31,11 +27,16 @@
   box-shadow: var(--shadow-md);
 }
 .contact {
-  height: auto;
+  max-width: 450px;
+  min-height: 300px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 32px;
+  font-style: normal;
 }
 .contactTitle {
   color: var(--text-primary);
@@ -67,7 +68,7 @@
 .quickActions {
   display: none;
   justify-content: center;
-  padding: 16px 5dvw 32px;
+  padding: 16px 5dvw;
 }
 
 .actionList {
@@ -117,5 +118,9 @@
 @media (max-width: 720px) {
   .quickActions {
     display: flex;
+  }
+
+  .contactSection::before {
+    bottom: 0%;
   }
 }
