@@ -1,5 +1,6 @@
 .contactSection {
   width: 100%;
+  max-width: 450px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -10,8 +11,7 @@
   content: '';
   position: absolute;
   bottom: -100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 20%;
   opacity: 0.5;
   z-index: -10;
   width: 400px;
@@ -27,7 +27,6 @@
   box-shadow: var(--shadow-md);
 }
 .contact {
-  max-width: 450px;
   min-height: 300px;
   width: 100%;
   display: flex;
@@ -115,12 +114,15 @@
   border: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .quickActions {
     display: flex;
   }
 
   .contactSection::before {
+    width: 200px;
+    height: 200px;
     bottom: 0%;
+    left: 0;
   }
 }
