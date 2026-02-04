@@ -1,7 +1,42 @@
+.contactSection {
+  width: 100%;
+  max-width: 450px;
+  height: 400px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.contactSection::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.5;
+  z-index: -4;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle at 70% 110%,
+    var(--page-accent-1),
+    var(--page-accent-2),
+    var(--page-accent-3)
+  );
+  border-radius: var(--radius-lg);
+  transform: rotate(45deg);
+  box-shadow: var(--shadow-md);
+}
 .contact {
+  height: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.contactTitle {
+  color: var(--text-primary);
 }
 .contactList {
   width: 100%;
@@ -18,7 +53,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 .contactLabel {
   font-style: normal;
@@ -36,7 +71,7 @@
 
 .actionList {
   display: flex;
-  gap: 16px;
+  gap: 32px;
   align-items: center;
   justify-content: center;
 }
@@ -46,7 +81,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .actionLink:focus-visible {
@@ -60,8 +97,9 @@
 }
 
 .actionImage {
-  width: 92px;
-  height: 92px;
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
 }
 
 .srOnly {

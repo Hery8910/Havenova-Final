@@ -13,6 +13,7 @@ export default function InfoSection({
 }: {
   texts: {
     contact: {
+      title: string;
       email: string;
       phone: string;
       address: string;
@@ -44,12 +45,10 @@ export default function InfoSection({
   const hasQuickActions = Boolean(mailHref || telHref || whatsappHref);
 
   return (
-    <section>
-      <address
-        className={styles.contact}
-        aria-label={ariaTexts?.info || 'Contact information'}
-      >
-        <ul className={`${styles.contactList} card--glass`}>
+    <section className={styles.contactSection}>
+      <h3 className={styles.contactTitle}>{texts?.contact?.title}</h3>
+      <address className={styles.contact} aria-label={ariaTexts?.info || 'Contact information'}>
+        <ul className={styles.contactList}>
           <li className={styles.contactItem} key={'1'}>
             <span className={styles.contactIcon}>
               <LuMail />

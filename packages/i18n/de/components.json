@@ -132,6 +132,27 @@
         ]
       }
     },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "items": [
+        {
+          "question": "Welche Dienstleistungen bietet Havenova an?",
+          "answer": "Havenova bietet ein breites Spektrum an Haus- und Gebäudeservices in Berlin an, darunter professionelle Reinigung, kleine Reparaturen, regelmäßige Wartung sowie Unterstützung beim Umzug oder Möbelaufbau. Unser Ziel ist es, zuverlässige und flexible Unterstützung sowohl für Privathaushalte als auch für Unternehmen zu leisten, damit Sie sich auf das Wesentliche konzentrieren können, während wir den Rest übernehmen."
+        },
+        {
+          "question": "Wie schnell kann ich einen Service buchen?",
+          "answer": "Die meisten Dienstleistungen können innerhalb von 24–48 Stunden nach Eingang Ihrer Anfrage terminiert werden. Sobald Sie Ihre Daten über unsere Plattform eingeben, prüft unser Team diese und bestätigt einen Termin, der am besten zu Ihnen passt. In dringenden Fällen versuchen wir stets, die schnellstmögliche Lösung zu finden."
+        },
+        {
+          "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
+          "answer": "Ja, alle unsere Teammitglieder und Partnerunternehmen werden sorgfältig ausgewählt, geschult und sind vollständig versichert. So stellen wir sicher, dass die Arbeiten stets professionell und sicher durchgeführt werden. Für spezielle Aufgaben wie Elektro- oder Malerarbeiten arbeiten wir mit bewährten Fachkräften zusammen, sodass Sie immer die passende Expertise erhalten."
+        },
+        {
+          "question": "Wie läuft eine typische Buchung ab?",
+          "answer": "Sie wählen den gewünschten Service auf unserer Website aus, geben die Details an und senden die Anfrage ab. Unser Team prüft die Informationen und bestätigt Ihnen den Termin oder erstellt ein individuelles Angebot."
+        }
+      ]
+    },
     "cookieBanner": {
       "title": "Cookies auf dieser Website",
       "description": "Wir verwenden ausschliesslich notwendige Cookies, damit die Website funktioniert. Wir nutzen keine Analyse- oder Werbe-Cookies und erfassen keine Daten, die ueber die interne Funktionalitaet hinausgehen.",
@@ -146,6 +167,7 @@
         "legal": "Legal"
       },
       "contact": {
+        "title": "Contact us",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"

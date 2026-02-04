@@ -132,6 +132,27 @@
         ]
       }
     },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "What services does Havenova offer?",
+          "answer": "Havenova offers a wide range of home and property services in Berlin, including professional cleaning, small repairs, regular maintenance, and assistance with moving or furniture assembly. Our goal is to provide reliable and flexible support for both private households and businesses, so you can focus on what matters most while we take care of the rest."
+        },
+        {
+          "question": "How quickly can I book a service?",
+          "answer": "Most services can be scheduled within 24–48 hours after we receive your request. Once you submit your details through our platform, our team reviews them and confirms an appointment that works best for you. For urgent cases, we always try to find the fastest possible solution."
+        },
+        {
+          "question": "Are your employees qualified and insured?",
+          "answer": "Yes, all our team members and partner contractors are carefully selected, trained, and fully insured. This ensures that the work is carried out safely and professionally. We also work with trusted specialists for tasks such as electrical or painting work, so you always get the right expertise."
+        },
+        {
+          "question": "What is the typical booking process?",
+          "answer": "You choose the service you need on our website, provide the details, and submit your request. Our team reviews the information and confirms the appointment or prepares a custom offer for you."
+        }
+      ]
+    },
     "cookieBanner": {
       "title": "Cookies on this website",
       "description": "We use only essential cookies required for the website to function. We do not use analytics or advertising cookies and we do not collect any data beyond what is necessary for internal operation.",
@@ -146,6 +167,7 @@
         "legal": "Legal"
       },
       "contact": {
+        "title": "Contact uns",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"

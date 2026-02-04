@@ -1,4 +1,5 @@
 'use client';
+import { FAQSection } from '../../../../../../packages/components';
 import {
   ContactFormSection,
   ContactHeroSection,
@@ -24,6 +25,7 @@ export interface ContactPageTexts {
 }
 export interface ContactInfoTexts {
   contact: {
+    title: string;
     email: string;
     phone: string;
     address: string;
@@ -40,8 +42,11 @@ export default function Contact() {
   return (
     <main className={styles.main}>
       <ContactHeroSection texts={contact.hero} lang={lang} />
-      <ContactFormSection />
-      <InfoSection texts={contactInfoTexts} />
+      <div className={styles.wrapper}>
+        <ContactFormSection />
+        <InfoSection texts={contactInfoTexts} />
+      </div>
+      <FAQSection />
     </main>
   );
 }
