@@ -45,7 +45,7 @@ export default function InfoSection({
   const hasQuickActions = Boolean(mailHref || telHref || whatsappHref);
 
   return (
-    <section className={styles.contactSection}>
+    <section className={`${styles.contactSection} card--glass`}>
       <h3 className={styles.contactTitle}>{texts?.contact?.title}</h3>
       <address className={styles.contact} aria-label={ariaTexts?.info || 'Contact information'}>
         <ul className={styles.contactList}>

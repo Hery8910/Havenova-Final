@@ -145,3 +145,17 @@
   margin: 0;
   font-size: clamp(14px, 1.6vw, 17px);
 }
+
+@media (max-width: 720px) {
+  .card {
+    padding: 20px;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .submit {
+    width: 100%;
+  }
+}

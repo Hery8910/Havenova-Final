@@ -4,10 +4,11 @@
   gap: 48px;
 }
 .wrapper {
+  margin-top: 100px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 64px;
 }

@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 64px;
+  gap: 32px;
   padding: 0 5dvw;
   text-align: center;
 }
@@ -59,7 +59,6 @@
   transform: rotate(-45deg);
 }
 .description {
-  font-size: clamp(18px, 3.5vw, 26px);
   margin-bottom: 32px;
 }
 .p {

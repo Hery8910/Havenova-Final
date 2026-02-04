@@ -201,15 +201,7 @@ export function ContactFormSection() {
   return (
     <section className={styles.section} aria-labelledby="contact-form-title">
       <article className={`${styles.card} card--glass`}>
-        <header className={styles.header}>
-          <p className={styles.kicker} id="contact-form-title">
-            {submitLabel}
-          </p>
-          <p className={styles.subtitle}>
-            {texts?.pages?.client?.contact?.hero?.subtitle ||
-              'Tell us what you need and we will respond by email.'}
-          </p>
-        </header>
+        <h3 id="contact-form-title">{submitLabel}</h3>
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.row}>
@@ -229,11 +221,7 @@ export function ContactFormSection() {
                 aria-describedby="contact-name-error"
                 required
               />
-              <span
-                id="contact-name-error"
-                className={styles.error}
-                aria-live="polite"
-              >
+              <span id="contact-name-error" className={styles.error} aria-live="polite">
                 {showFieldError('name') ?? ''}
               </span>
             </label>
@@ -255,11 +243,7 @@ export function ContactFormSection() {
                 aria-describedby="contact-email-error"
                 required
               />
-              <span
-                id="contact-email-error"
-                className={styles.error}
-                aria-live="polite"
-              >
+              <span id="contact-email-error" className={styles.error} aria-live="polite">
                 {showFieldError('email') ?? ''}
               </span>
             </label>
@@ -287,11 +271,7 @@ export function ContactFormSection() {
                 </option>
               ))}
             </select>
-            <span
-              id="contact-subject-error"
-              className={styles.error}
-              aria-live="polite"
-            >
+            <span id="contact-subject-error" className={styles.error} aria-live="polite">
               {showFieldError('subject') ?? ''}
             </span>
           </label>
@@ -311,11 +291,7 @@ export function ContactFormSection() {
               aria-describedby="contact-message-error"
               required
             />
-            <span
-              id="contact-message-error"
-              className={styles.error}
-              aria-live="polite"
-            >
+            <span id="contact-message-error" className={styles.error} aria-live="polite">
               {showFieldError('message') ?? ''}
             </span>
           </label>
