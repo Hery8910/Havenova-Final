@@ -8,8 +8,8 @@
   gap: 32px;
   padding: 32px 0 0;
   background-color: #071624;
-  background: radial-gradient(1200px 900px at 50% -120px, rgba(60, 100, 87, 0.103), transparent 60%),
-    #071624;
+  background:
+    radial-gradient(1200px 900px at 50% -120px, rgba(60, 100, 87, 0.103), transparent 60%), #071624;
 }
 
 .logoLink {
@@ -51,18 +51,14 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.contactLabel,
-.contactValue {
+  align-items: baseline;
   color: var(--text-muted);
-  font-size: clamp(14px, 1.6vw, 18px);
 }
-
+.contactLabel {
+  margin: 0;
+}
 .contactIcon {
-  width: 25px;
-  height: 25px;
+  font-size: clamp(16px, 1.6vw, 20px);
 }
 
 .links {

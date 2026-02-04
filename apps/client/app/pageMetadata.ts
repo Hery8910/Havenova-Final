@@ -65,43 +65,86 @@ export const homeMetadata: PageMetadata = {
 };
 
 // Metadata for About page
-export const aboutMetadata: PageMetadata = {
-  title: 'About Havenova - Your Trusted Home Service Partner in Berlin',
-  description:
-    'Learn more about Havenova, our mission, and the team dedicated to delivering top-quality handyman services in Berlin.',
-  keywords: 'about Havenova, handyman team Berlin, home service company Berlin, company mission',
-  openGraph: {
-    title: 'About Havenova - Professional Handyman Services',
+export const aboutMetadataTranslations: Record<'en' | 'de', PageMetadata> = {
+  en: {
+    title: 'About Havenova - Your Trusted Home Service Partner in Berlin',
     description:
-      'Discover who we are and why customers trust Havenova for home maintenance services in Berlin.',
-    type: 'website',
-    url: 'https://havenova.de/about',
-    images: [
-      {
-        url: 'https://havenova.de/images/og-about.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Havenova Team',
-      },
-    ],
+      'Learn more about Havenova, our mission, and the team dedicated to delivering top-quality handyman services in Berlin.',
+    keywords:
+      'about Havenova, handyman team Berlin, home service company Berlin, company mission',
+    openGraph: {
+      title: 'About Havenova - Professional Handyman Services',
+      description:
+        'Discover who we are and why customers trust Havenova for home maintenance services in Berlin.',
+      type: 'website',
+      url: 'https://havenova.de/en/about',
+      images: [
+        {
+          url: 'https://havenova.de/images/og-about.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Havenova Team',
+        },
+      ],
+    },
+    icons: {
+      icon: [
+        { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
+        { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
+        {
+          url: '/favicon-light.svg',
+          media: '(prefers-color-scheme: light)',
+          type: 'image/svg+xml',
+        },
+        {
+          url: '/favicon-dark.svg',
+          media: '(prefers-color-scheme: dark)',
+          type: 'image/svg+xml',
+        },
+      ],
+    },
   },
-  icons: {
-    icon: [
-      { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
-      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
-      {
-        url: '/favicon-light.svg',
-        media: '(prefers-color-scheme: light)',
-        type: 'image/svg+xml',
-      },
-      {
-        url: '/favicon-dark.svg',
-        media: '(prefers-color-scheme: dark)',
-        type: 'image/svg+xml',
-      },
-    ],
+  de: {
+    title: 'Über Havenova - Ihr vertrauenswürdiger Partner für Hausservices in Berlin',
+    description:
+      'Erfahren Sie mehr über Havenova, unsere Mission und das Team, das hochwertige Handwerkerdienste in Berlin anbietet.',
+    keywords:
+      'über Havenova, Handwerkerteam Berlin, Hausservice-Unternehmen Berlin, Unternehmensmission',
+    openGraph: {
+      title: 'Über Havenova - Professionelle Handwerkerdienste',
+      description:
+        'Entdecken Sie, wer wir sind und warum Kunden Havenova für Hauswartungsdienste in Berlin vertrauen.',
+      type: 'website',
+      url: 'https://havenova.de/de/about',
+      images: [
+        {
+          url: 'https://havenova.de/images/og-about.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Havenova Team',
+        },
+      ],
+    },
+    icons: {
+      icon: [
+        { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
+        { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
+        {
+          url: '/favicon-light.svg',
+          media: '(prefers-color-scheme: light)',
+          type: 'image/svg+xml',
+        },
+        {
+          url: '/favicon-dark.svg',
+          media: '(prefers-color-scheme: dark)',
+          type: 'image/svg+xml',
+        },
+      ],
+    },
   },
 };
+
+export const aboutMetadata: PageMetadata = aboutMetadataTranslations.en;
 
 // Metadata for Services page
 export const servicesMetadata: PageMetadata = {

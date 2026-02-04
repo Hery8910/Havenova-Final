@@ -1,0 +1,75 @@
+.header {
+  padding: 0 5dvw;
+  margin: 0;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/contact-hero.webp');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: left;
+  opacity: 0.5;
+  z-index: 0;
+}
+.container {
+  z-index: 1;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 5dvw;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(30px, 4.4vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.description {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.heroCtas {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctaPrimary {
+  background: var(--brand-primary);
+  color: var(--text-primary-fixed);
+}
+.ctaSecondary {
+  background: var(--brand-accent);
+  color: var(--text-primary-fixed);
+  border-color: var(--brand-accent);
+}
+
+@media (min-width: 1200px) {
+  .header {
+    padding: 16px;
+  }
+  .header::before {
+    background-size: cover;
+    background-position: center;
+  }
+}

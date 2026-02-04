@@ -6,10 +6,10 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
     en: {
       title: 'Havenova - Your Trusted Home Service Partner in Berlin',
       description:
-        'Book reliable handyman, cleaning and home services in Berlin with Havenova. Transparent, fast and professional.',
+        'Book reliable handyman, cleaning and home service in Berlin with Havenova. Transparent, fast and professional.',
       openGraph: {
         title: 'Havenova - Professional Home Services in Berlin',
-        description: 'Discover top-quality handyman, cleaning, and maintenance services in Berlin.',
+        description: 'Discover top-quality handyman, cleaning, and home service in Berlin.',
         type: 'website',
         url: 'https://havenova.de/en',
         images: [
@@ -39,13 +39,12 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
     de: {
-      title: 'Havenova - Ihr vertrauenswürdiger Partner für Hausservices in Berlin',
+      title: 'Havenova - Ihr vertrauenswürdiger Partner für Hausservice in Berlin',
       description:
-        'Buchen Sie zuverlässige Handwerker-, Reinigungs- und Hausservices in Berlin mit Havenova. Transparent, schnell und professionell.',
+        'Buchen Sie zuverlässige Handwerker-, Reinigungs- und Hausservice in Berlin mit Havenova. Transparent, schnell und professionell.',
       openGraph: {
-        title: 'Havenova - Professionelle Hausservices in Berlin',
-        description:
-          'Entdecken Sie hochwertige Handwerker-, Reinigungs- und Wartungsdienste in Berlin.',
+        title: 'Havenova - Professioneller Hausservice in Berlin',
+        description: 'Entdecken Sie hochwertige Handwerker-, Reinigungs- und Hausservice in Berlin.',
         type: 'website',
         url: 'https://havenova.de/de',
         images: [
@@ -53,7 +52,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
             url: 'https://havenova.de/images/og-home.jpg',
             width: 1200,
             height: 630,
-            alt: 'Havenova Hausservices',
+            alt: 'Havenova Hausservice',
           },
         ],
       },
@@ -67,7 +66,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       openGraph: {
         title: 'About Havenova - Professional Handyman Services',
         description:
-          'Discover who we are and why customers trust Havenova for home maintenance services in Berlin.',
+          'Discover who we are and why customers trust Havenova for home service in Berlin.',
         type: 'website',
         url: 'https://havenova.de/en/about',
         images: [
@@ -81,13 +80,13 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
     de: {
-      title: 'Über Havenova - Ihr vertrauenswürdiger Partner für Hausservices in Berlin',
+      title: 'Über Havenova - Ihr vertrauenswürdiger Partner für Hausservice in Berlin',
       description:
         'Erfahren Sie mehr über Havenova, unsere Mission und das Team, das hochwertige Handwerkerdienste in Berlin anbietet.',
       openGraph: {
         title: 'Über Havenova - Professionelle Handwerkerdienste',
         description:
-          'Entdecken Sie, wer wir sind und warum Kunden Havenova für Hauswartungsdienste in Berlin vertrauen.',
+          'Entdecken Sie, wer wir sind und warum Kunden Havenova für Hausservice in Berlin vertrauen.',
         type: 'website',
         url: 'https://havenova.de/de/about',
         images: [
@@ -151,7 +150,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       openGraph: {
         title: 'How It Works | Havenova',
         description:
-          'Understand the Havenova workflow for home services: request, review, scheduling, and completion.',
+          'Understand the Havenova workflow for home service: request, review, scheduling, and completion.',
         type: 'website',
         url: 'https://havenova.de/en/how-it-work',
         images: [
@@ -171,7 +170,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       openGraph: {
         title: 'So funktioniert es | Havenova',
         description:
-          'Verstehe den Havenova Ablauf für Hausservices: Anfrage, Prüfung, Terminierung und Abschluss.',
+          'Verstehe den Havenova Ablauf für Hausservice: Anfrage, Prüfung, Terminierung und Abschluss.',
         type: 'website',
         url: 'https://havenova.de/de/how-it-work',
         images: [

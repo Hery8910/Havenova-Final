@@ -7,7 +7,7 @@ export interface ContactMessageCreatePayload {
   name: string;
   email: string;
   message: string;
-  subject?: string;
+  subject: string;
   profileImage?: string;
   userId?: string;
 }

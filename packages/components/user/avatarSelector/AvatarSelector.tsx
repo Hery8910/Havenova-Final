@@ -19,7 +19,7 @@ import { href } from '@havenova/utils/navigation';
 import { MdOutlinePhotoCamera } from 'react-icons/md';
 import { useAuth, useGlobalAlert, useProfile } from '../../../contexts';
 
-const avatarList = Array.from({ length: 10 }, (_, i) => `/avatars/avatar-${i + 1}.svg`);
+const avatarList = Array.from({ length: 10 }, (_, i) => `/avatars/avatar-${i + 1}.png`);
 
 export default function AvatarSelector() {
   const [open, setOpen] = useState(false);
@@ -37,9 +37,12 @@ export default function AvatarSelector() {
 
   const normalizeAvatar = (value?: string) => {
     if (!value) return '';
-    if (typeof window !== 'undefined') {
-      const origin = window.location.origin;
-      if (value.startsWith(origin)) return value.slice(origin.length);
+    if (value.startsWith('/')) return value;
+    try {
+      const parsed = new URL(value);
+      if (parsed.pathname.startsWith('/avatars/')) return parsed.pathname;
+    } catch {
+      // ignore invalid URLs and return as-is
     }
     return value;
   };
@@ -113,12 +116,7 @@ export default function AvatarSelector() {
         },
       });
 
-      const resolvedAvatar =
-        selectedAvatar.startsWith('http') || selectedAvatar.startsWith('https')
-          ? selectedAvatar
-          : typeof window !== 'undefined'
-          ? `${window.location.origin}${selectedAvatar}`
-          : selectedAvatar;
+      const resolvedAvatar = normalizeAvatar(selectedAvatar);
 
       await setProfileImage(resolvedAvatar);
       await reloadProfile();

@@ -3,7 +3,7 @@
     "home": {
       "hero": {
         "badge": "Digital service platform",
-        "title": "Cleaning & maintenance —",
+        "title": "Cleaning & home service —",
         "titleAccent": "request online in minutes.",
         "subtitle": "Choose your service, send your request in minutes, and receive a tailored offer. Transparent, reliable, and without extra effort.",
         "ctas": {
@@ -12,7 +12,7 @@
             "href": "/services/house-cleaning"
           },
           "maintenance": {
-            "label": "Request maintenance",
+            "label": "Request home service",
             "href": "/services/home-service"
           }
         },
@@ -40,7 +40,7 @@
       "appInstalled": {
         "kicker": "App ready",
         "title": "Havenova is ready to use.",
-        "description": "You’re all set. Manage your home services, track requests, and stay in control — all from one place.",
+        "description": "You’re all set. Manage your home service, track requests, and stay in control — all from one place.",
         "primaryCta": {
           "label": "How it works"
         }
@@ -57,7 +57,7 @@
             "icon": "/svg/cleaning.svg"
           },
           {
-            "title": "Maintenance & home service",
+            "title": "Home service",
             "description": "Small repairs, upkeep, and practical help at home — quickly arranged and transparently coordinated.",
             "ctaLabel": "Order now",
             "href": "/services/home-service",
@@ -97,7 +97,7 @@
       "story": {
         "title": "A Young Company with a Clear Vision",
         "paragraphs": [
-          "Havenova was founded in 2023 with a clear idea: to offer home cleaning and maintenance services in Berlin with the customer at the center.",
+          "Havenova was founded in 2023 with a clear idea: to offer home cleaning and home service in Berlin with the customer at the center.",
           "From the beginning, the company has worked to stand out by focusing on customer experience and maintaining clear and professional communication at every stage of the service.",
           "In its first years, Havenova has actively participated in the development of this digital platform together with Maped Solutions. This tool was created to simplify service requests, improve communication, and offer full transparency to users.",
           "Our focus remains the same: to improve every day, adapt to the needs of our clients, and continue developing digital solutions that benefit both customers and companies in the sector."
@@ -108,25 +108,25 @@
         "items": [
           {
             "title": "Private properties",
-            "description": "We work with tenants and homeowners who want a reliable way to request cleaning or home services, track each job, and keep a clear record of everything that has been done.",
+            "description": "We work with tenants and homeowners who want a reliable way to request cleaning or home service, track each job, and keep a clear record of everything that has been done.",
             "image": "/images/private-properties.webp",
             "imageAlt": "Residential building in a private neighborhood"
           },
           {
             "title": "Property management",
-            "description": "We support property management companies by structuring service requests, improving communication, and keeping a transparent overview of maintenance and cleaning across multiple properties.",
+            "description": "We support property management companies by structuring service requests, improving communication, and keeping a transparent overview of home service and cleaning across multiple properties.",
             "image": "/images/property-management.webp",
             "imageAlt": "Multi-unit residential building facade"
           },
           {
             "title": "Offices and practices",
-            "description": "We help offices and professional practices manage recurring cleaning and maintenance services with clear schedules, documented work, and minimal administrative effort.",
+            "description": "We help offices and professional practices manage recurring cleaning and home service with clear schedules, documented work, and minimal administrative effort.",
             "image": "/images/practices.webp",
             "imageAlt": "Modern office meeting area"
           },
           {
             "title": "Small businesses",
-            "description": "We work with small businesses that need dependable cleaning or maintenance services, offering a simple process to request help, follow progress, and keep everything organized.",
+            "description": "We work with small businesses that need dependable cleaning or home service, offering a simple process to request help, follow progress, and keep everything organized.",
             "image": "/images/businesses.webp",
             "imageAlt": "Small retail storefront interior"
           }
@@ -136,12 +136,27 @@
     },
     "cleaning": {},
     "home-service": {},
-    "contact": {},
+    "contact": {
+      "hero": {
+        "title": "Contact us",
+        "subtitle": "Tell us what you need and we’ll reply by email as soon as possible. For service requests please use the service forms",
+        "ctas": {
+          "cleaning": {
+            "label": "Reinigung anfragen",
+            "href": "/services/house-cleaning"
+          },
+          "maintenance": {
+            "label": "Hausservice anfragen",
+            "href": "/services/home-service"
+          }
+        }
+      }
+    },
     "howItWorks": {
       "hero": {
         "kicker": "About Havenova",
         "title": "Home services, simplified — for customers and for service teams.",
-        "description": "Havenova is the company behind this platform for cleaning and home maintenance. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently.",
+        "description": "Havenova is the company behind this platform for cleaning and home service. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently.",
         "cta": {
           "label": "How it works",
           "href": "/how-it-work"
@@ -184,7 +199,7 @@
           "href": "/services/house-cleaning"
         },
         "ctaHomeServices": {
-          "label": "Request maintenance",
+          "label": "Request home service",
           "href": "/services/home-service"
         }
       }

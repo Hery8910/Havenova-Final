@@ -38,7 +38,7 @@ export function AvatarView({ isMobile }: AvatarViewProps) {
         <button
           type="button"
           onClick={() => handleNavigate('/profile')}
-          className={`${styles.button} button`}
+          className={styles.icon}
           aria-label={profileAria}
         >
           <CgProfile />

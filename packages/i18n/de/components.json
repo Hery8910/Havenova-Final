@@ -3,7 +3,7 @@
     "navbar": {
       "links": [
         { "label": "Reinigung", "href": "/services/house-cleaning" },
-        { "label": "Wartung", "href": "/services/home-service" },
+        { "label": "Hausservice", "href": "/services/home-service" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
@@ -145,31 +145,24 @@
         "about": "Havenova",
         "legal": "Legal"
       },
-      "contact": [
-        {
-          "data": "contact@havenova.de",
-          "image": "/svg/email.svg"
-        },
-        {
-          "data": "+49 176 7091 7803",
-          "image": "/svg/phone.svg"
-        },
-        {
-          "data": "Stollberger Str.43, 12627 Berlin",
-          "image": "/svg/address.svg"
-        },
-        {
+      "contact": {
+        "email": "contact@havenova.de",
+        "phone": "+49 176 7091 7803",
+        "address": "Stollberger Str.43, 12627 Berlin"
+      },
+      "hour": {
+        "week": {
           "label": "Mo-Fr",
           "data": "08:00-17:00 Uhr"
         },
-        {
+        "weekend": {
           "label": "Sa",
           "data": "08:00-14:00 Uhr"
         }
-      ],
+      },
       "links": [
         { "label": "Reinigung", "href": "/services/house-cleaning" },
-        { "label": "Wartung", "href": "/services/home-service" },
+        { "label": "Hausservice", "href": "/services/home-service" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
@@ -210,6 +203,20 @@
         "cookies": "Cookie-Einstellungen",
         "title": "Maped Solutions",
         "description": "Diese Plattform wurde von Maped Solutions konzipiert und entwickelt – mit dem Ziel, Dienstleistungsunternehmen den Arbeitsalltag zu erleichtern."
+      }
+    },
+    "contact": {
+      "aria": {
+        "info": "Kontaktinformationen",
+        "quickActions": "Schnellkontakt",
+        "call": "Telefonnummer anrufen",
+        "email": "E-Mail senden",
+        "whatsapp": "WhatsApp-Chat öffnen"
+      },
+      "quickActions": {
+        "call": "Anrufen",
+        "email": "E-Mail",
+        "whatsapp": "WhatsApp"
       }
     }
   },
@@ -616,8 +623,7 @@
             "notes": "Notizen"
           }
         }
-      }
-      ,
+      },
       "support": {
         "heading": "Support",
         "description": "Beschreiben Sie Ihr Anliegen, wir melden uns schnellstmöglich."

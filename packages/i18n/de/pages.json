@@ -3,7 +3,7 @@
     "home": {
       "hero": {
         "badge": "Digitale Service-Plattform",
-        "title": "Reinigung & Wartung –",
+        "title": "Reinigung & Hausservice –",
         "titleAccent": "einfach online anfragen.",
         "subtitle": "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand.",
         "ctas": {
@@ -12,7 +12,7 @@
             "href": "/services/house-cleaning"
           },
           "maintenance": {
-            "label": "Wartung anfragen",
+            "label": "Hausservice anfragen",
             "href": "/services/home-service"
           }
         },
@@ -57,7 +57,7 @@
             "icon": "/svg/cleaning.svg"
           },
           {
-            "title": "Wartung & Hausservice",
+            "title": "Hausservice",
             "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe rund ums Zuhause – schnell organisiert, transparent abgestimmt.",
             "ctaLabel": "Jetzt bestellen",
             "href": "/services/home-service",
@@ -97,7 +97,7 @@
       "story": {
         "title": "Ein junges Unternehmen mit klarer Vision",
         "paragraphs": [
-          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
+          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Hausservices in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
           "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
           "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
           "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
@@ -114,19 +114,19 @@
           },
           {
             "title": "Hausverwaltung",
-            "description": "Wir unterstützen Hausverwaltungen mit strukturierten Serviceanfragen, klarer Kommunikation und einem transparenten Überblick über Wartung und Reinigung in mehreren Objekten.",
+            "description": "Wir unterstützen Hausverwaltungen mit strukturierten Serviceanfragen, klarer Kommunikation und einem transparenten Überblick über Hausservice und Reinigung in mehreren Objekten.",
             "image": "/images/property-management.webp",
             "imageAlt": "Mehrparteienhaus mit gepflegter Fassade"
           },
           {
             "title": "Büros und Praxen",
-            "description": "Wir helfen Büros und Praxen, wiederkehrende Reinigungs- und Wartungsservices mit klaren Abläufen, dokumentierten Leistungen und minimalem Aufwand zu organisieren.",
+            "description": "Wir helfen Büros und Praxen, wiederkehrende Reinigungs- und Hausservices mit klaren Abläufen, dokumentierten Leistungen und minimalem Aufwand zu organisieren.",
             "image": "/images/practices.webp",
             "imageAlt": "Modernes Büro mit Besprechungsbereich"
           },
           {
             "title": "Kleine Unternehmen",
-            "description": "Wir begleiten kleine Unternehmen, die zuverlässige Reinigungs- oder Wartungsservices brauchen, mit einem einfachen Prozess für Anfrage, Fortschritt und Übersicht.",
+            "description": "Wir begleiten kleine Unternehmen, die zuverlässige Reinigungs- oder Hausservices brauchen, mit einem einfachen Prozess für Anfrage, Fortschritt und Übersicht.",
             "image": "/images/businesses.webp",
             "imageAlt": "Ladengeschäft mit Kundenbereich"
           }
@@ -136,12 +136,27 @@
     },
     "cleaning": {},
     "home-service": {},
-    "contact": {},
+    "contact": {
+      "hero": {
+        "title": "Contact us",
+        "subtitle": "Tell us what you need and we’ll reply by email as soon as possible. For service requests please use the service forms",
+        "ctas": {
+          "cleaning": {
+            "label": "Reinigung anfragen",
+            "href": "/services/house-cleaning"
+          },
+          "maintenance": {
+            "label": "Hausservice anfragen",
+            "href": "/services/home-service"
+          }
+        }
+      }
+    },
     "howItWorks": {
       "hero": {
         "kicker": "Über Havenova",
         "title": "Hausservices, vereinfacht – für Kund:innen und Serviceteams.",
-        "description": "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hauswartung. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können.",
+        "description": "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hausservice. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können.",
         "cta": {
           "label": "So funktioniert’s",
           "href": "/how-it-work"
@@ -184,7 +199,7 @@
           "href": "/services/house-cleaning"
         },
         "ctaHomeServices": {
-          "label": "Wartung anfragen",
+          "label": "Hausservice anfragen",
           "href": "/services/home-service"
         }
       }

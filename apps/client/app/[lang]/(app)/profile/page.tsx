@@ -159,6 +159,17 @@ const Profile = () => {
   const avatarAlt = userProfile.name
     ? `${userProfile.name} avatar`
     : (profileTexts?.manageAccount ?? 'User avatar');
+  const normalizeAvatar = (value?: string) => {
+    if (!value) return '';
+    if (value.startsWith('/')) return value;
+    try {
+      const parsed = new URL(value);
+      if (parsed.pathname.startsWith('/avatars/')) return parsed.pathname;
+    } catch {
+      // ignore invalid URLs and return as-is
+    }
+    return value;
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -173,7 +184,7 @@ const Profile = () => {
           </h3>
           <div className={styles.div}>
             <Image
-              src={userProfile.profileImage || '/avatars/avatar-1.svg'}
+              src={normalizeAvatar(userProfile.profileImage) || '/avatars/avatar-5.png'}
               alt={avatarAlt}
               width={70}
               height={70}

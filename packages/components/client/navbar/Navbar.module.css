@@ -45,7 +45,7 @@
 .navActions {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: 16px;
 }
 .mobileLayout {

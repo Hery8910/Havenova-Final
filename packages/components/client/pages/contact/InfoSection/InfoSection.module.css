@@ -1,0 +1,82 @@
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contactList {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 32px;
+  gap: 8px;
+}
+
+.contactItem {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--text-secondary);
+}
+.contactLabel {
+  font-style: normal;
+  margin: 0;
+}
+.contactIcon {
+  font-size: clamp(16px, 1.6vw, 20px);
+}
+
+.quickActions {
+  display: none;
+  justify-content: center;
+  padding: 16px 5dvw 32px;
+}
+
+.actionList {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.actionLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.actionLink:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 4px;
+}
+
+.actionLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -20px rgba(7, 104, 201, 0.35);
+}
+
+.actionImage {
+  width: 92px;
+  height: 92px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .quickActions {
+    display: flex;
+  }
+}

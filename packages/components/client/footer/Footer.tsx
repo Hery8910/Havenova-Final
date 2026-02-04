@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
 import { useCookies, useI18n } from '../../../contexts';
+import { LuMail, LuMapPin, LuPhone } from 'react-icons/lu';
 
 interface HeadersItem {
   services?: string;
@@ -10,10 +11,9 @@ interface HeadersItem {
   contact?: string;
   legal?: string;
 }
-interface ContactItem {
+interface WeekItem {
   label?: string;
   data: string;
-  image?: string;
 }
 
 interface LinkItem {
@@ -37,7 +37,12 @@ interface CtaItem {
 
 export interface FooterProps {
   headers: HeadersItem;
-  contact: ContactItem[];
+  contact: {
+    email: string;
+    phone: string;
+    address: string;
+  };
+  hour: { week: WeekItem; weekend: WeekItem };
   links: LinkItem[];
   legal: LegalItem[];
   social: SocialItem[];
@@ -72,22 +77,32 @@ export function Footer() {
       <div className={`${styles.content} container`}>
         <address className={styles.contact} aria-label="Contact information">
           <ul className={styles.contactList}>
-            {footer.contact.map((elem, index) => (
-              <li key={index} className={styles.contactItem}>
-                {elem.image ? (
-                  <Image
-                    className={styles.contactIcon}
-                    src={elem.image}
-                    alt={elem.label ?? elem.data}
-                    width={25}
-                    height={25}
-                  />
-                ) : (
-                  <span className={styles.contactLabel}>{elem.label}</span>
-                )}
-                <span className={styles.contactValue}>{elem.data}</span>
-              </li>
-            ))}
+            <li className={styles.contactItem} key={'1'}>
+              <span className={styles.contactIcon}>
+                <LuMail />
+              </span>
+              <p className={styles.contactLabel}>{footer?.contact?.email}</p>
+            </li>
+            <li className={styles.contactItem} key={'2'}>
+              <span className={styles.contactIcon}>
+                <LuPhone />
+              </span>
+              <p className={styles.contactLabel}>{footer?.contact?.phone}</p>
+            </li>
+            <li className={styles.contactItem} key={'3'}>
+              <span className={styles.contactIcon}>
+                <LuMapPin />
+              </span>
+              <p className={styles.contactLabel}>{footer?.contact?.address}</p>
+            </li>
+            <li className={styles.contactItem} key={'4'}>
+              <p className={styles.contactLabel}>{footer?.hour?.week.label}</p>
+              <p className={styles.contactLabel}>{footer?.hour?.week.data}</p>
+            </li>
+            <li className={styles.contactItem} key={'5'}>
+              <p className={styles.contactLabel}>{footer?.hour?.weekend.label}</p>
+              <p className={styles.contactLabel}>{footer?.hour?.weekend.data}</p>
+            </li>
           </ul>
         </address>
         <nav className={styles.links} aria-label="Footer links">

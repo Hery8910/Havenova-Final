@@ -68,6 +68,8 @@ const Login = () => {
       };
 
       if (!payload.email || !payload.password || !payload.clientId) {
+        console.log(payload, client);
+
         const popupData = getPopup(
           popups,
           'GLOBAL_INTERNAL_ERROR',
@@ -88,6 +90,7 @@ const Login = () => {
       }
 
       const response = await loginUser(payload);
+
       if (!response?.user) {
         const popupData = getPopup(
           popups,
@@ -180,7 +183,7 @@ const Login = () => {
             button={loginButton}
             showForgotPassword
             initialValues={{
-              clientId: '',
+              clientId: client._id,
               email,
               password: '',
             }}
