@@ -10,7 +10,7 @@
   inset: 0;
   background-image: url('/images/testimonials-background.svg');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   opacity: 0.4;
   z-index: 0;
@@ -29,15 +29,19 @@
   margin: 0;
 }
 .kicker {
-  width: fit-content;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--card-primary-bg);
+  border: 1px solid var(--card-primary-bg);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 16px;
-  border-radius: var(--radius-sm);
-  color: var(--brand-primary);
-  background: var(--page-accent-1);
-  border: 1px solid var(--surface-border);
 }
 .benefits {
   padding: clamp(56px, 8vw, 96px) 0;
@@ -96,5 +100,9 @@
   .benefitsCards {
     max-width: 500px;
     margin: 0 auto;
+  }
+  .container::before {
+    background-image: url('/images/testimonials-background-sm.svg');
+    background-size: contain;
   }
 }

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './HeroSection.module.css';
 import { href } from '../../../../../utils/navigation';
+import { IoLocationOutline } from 'react-icons/io5';
 
 export default function HeroSection({
   texts,
@@ -54,9 +55,10 @@ export default function HeroSection({
             <span className={styles.heroGlow} aria-hidden="true" />
             <img className={styles.heroImage} src={texts.image.src} alt={texts.image.alt} />
             <figcaption className={styles.heroCard} aria-hidden="true">
-              <p className={styles.heroCardTitle}>{texts.image.badgeTitle}</p>
+              <p className={styles.heroCardTag}>
+                <IoLocationOutline /> {texts.image.tag}
+              </p>
             </figcaption>
-            <span className={styles.heroTag}>{texts.image.tag}</span>
           </figure>
         </div>
       </div>

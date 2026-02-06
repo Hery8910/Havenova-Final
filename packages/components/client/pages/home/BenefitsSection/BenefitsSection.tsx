@@ -24,7 +24,7 @@ export default function BenefitsSection({
           <ul className={styles.benefitsCards}>
             {texts.items.map((item) => (
               <li className={styles.benefitItem} key={item.title}>
-                <article className={`${styles.benefitCard} card--glass`}>
+                <article className={`${styles.benefitCard} card`}>
                   <h3 className={styles.benefitTitle}>{item.title}</h3>
                   <p className={styles.benefitText}>{item.description}</p>
                 </article>
