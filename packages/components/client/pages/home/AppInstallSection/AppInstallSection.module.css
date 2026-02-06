@@ -25,9 +25,9 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--color-warning);
-  background: var(--bg-warning);
-  border: 1px solid var(--color-warning);
+  color: var(--color-secondary);
+  background: var(--card-secondary);
+  border: 1px solid var(--card-secondary-bg);
 }
 .appInstall {
   display: flex;
@@ -52,10 +52,9 @@
 }
 
 .ctaPrimaryInstall {
-  border-color: transparent;
-  background: var(--brand-accent);
-  color: var(--text-primary-fixed);
-  box-shadow: none;
+  background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-primary-light) 100%);
+  border-color: var(--brand-primary);
+  color: var(--text-inverse);
 }
 .ctaPrimaryUnavailable {
   border: none;
@@ -63,10 +62,10 @@
   color: var(--text-muted);
   box-shadow: none;
 }
-.ctaGhost {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--brand-accent);
+.ctaSecondary {
+  background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-secondary-light) 100%);
+  border-color: var(--brand-secondary);
+  color: var(--text-inverse);
 }
 .ctaPrimary:hover,
 .ctaGhost:hover {

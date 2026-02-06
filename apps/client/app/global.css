@@ -2,17 +2,34 @@
   color-scheme: light;
 
   /* Brand */
-  --brand-primary: #0769ca;
-  --brand-secondary: #5d12de;
-  --brand-accent: #f2c14e;
+  --brand-primary: #0768c9;
+  --brand-secondary: #5e12e0;
+  --brand-accent: #f2c150;
 
-  /* Page backgrounds */
-  --page-bg-1: #f7f9fc;
-  --page-bg-2: #eef2f7;
-  --page-bg-3: #e7ecf3;
-  --page-accent-1: hsla(210, 93%, 41%, 0.15);
-  --page-accent-2: hsla(262, 85%, 47%, 0.15);
-  --page-accent-3: hsla(42, 86%, 63%, 0.15);
+  --brand-primary-light: hsl(210, 93%, 57%);
+  --brand-secondary-light: hsl(262, 85%, 57%);
+  --brand-accent-light: hsl(42, 86%, 57%);
+
+  --brand-primary-dark: hsl(210, 93%, 25%);
+  --brand-secondary-dark: hsl(262, 85%, 25%);
+  --brand-accent-dark: hsl(42, 86%, 25%);
+
+  --card-primary: hsla(210, 93%, 57%, 0.1);
+  --card-primary-bg: hsla(210, 93%, 57%, 0.3);
+  --card-secondary: hsla(262, 85%, 47%, 0.2);
+  --card-secondary-bg: hsla(262, 85%, 47%, 0.4);
+  --card-accent: hsla(42, 86%, 63%, 0.2);
+  --card-accent-bg: hsla(42, 86%, 63%, 0.4);
+
+  --nav: rgba(224, 208, 251, 0.7);
+  --nav-1: rgba(232, 219, 249, 0.7);
+
+  /* Page background */
+  --page-primary-1: #fffbf2ff;
+  --page-primary-2: #f7f0f4ff;
+  --page-primary-3: #f0e6f7ff;
+  --page-primary-4: #e8dbf9ff;
+  --page-primary-5: #e0d0fbff;
 
   /* Text */
   --text-primary: #424242;
@@ -77,6 +94,23 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
+  --brand-primary-light: hsl(210, 93%, 35%);
+  --brand-secondary-light: hsl(262, 85%, 35%);
+  --brand-accent-light: hsl(42, 86%, 35%);
+
+  --brand-primary-dark: hsl(210, 93%, 25%);
+  --brand-secondary-dark: hsl(262, 85%, 25%);
+  --brand-accent-dark: hsl(42, 86%, 25%);
+
+  --page-primary-1: #170635ff;
+  --page-primary-2: #1b0e31ff;
+  --page-primary-3: #1f162eff;
+  --page-primary-4: #221e2aff;
+  --page-primary-5: rgb(32, 32, 32);
+
+  --nav: rgba(32, 32, 32, 0.7);
+  --nav-1: rgba(34, 30, 42, 0.7);
+
   --page-bg-1: hsl(220, 50%, 14%);
   --page-bg-2: hsl(217, 53%, 13%);
   --page-bg-3: hsl(217, 50%, 12%);
@@ -119,10 +153,14 @@ body {
   min-height: 100dvh;
   font-family: var(--font-family-body);
   color: var(--text-primary);
-  background:
-    radial-gradient(900px circle at 35% 10%, var(--page-accent-1) 0%, transparent 60%),
-    radial-gradient(700px circle at 65% 85%, var(--page-accent-2) 0%, transparent 55%),
-    linear-gradient(180deg, var(--page-bg-1) 0%, var(--page-bg-2) 55%, var(--page-bg-3) 100%);
+  background: radial-gradient(
+    circle at 50% 120%,
+    var(--page-primary-1),
+    var(--page-primary-2),
+    var(--page-primary-3),
+    var(--page-primary-4),
+    var(--page-primary-5)
+  );
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -267,9 +305,10 @@ p {
 /* ============================
    BUTTONS
 ============================ */
-.btn,
+
 .button,
 .button_invert {
+  min-width: 150px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -277,7 +316,7 @@ p {
   padding: 4px 24px;
   border-radius: var(--radius-sm);
   font-weight: 600;
-  font-size: clamp(14px, 3vw, 18px);
+  font-size: clamp(16px, 3vw, 18px);
   border: 1px solid transparent;
   transition:
     transform 0.2s ease,
@@ -289,9 +328,9 @@ p {
 }
 .btn--solid,
 .button {
-  background: var(--brand-primary);
+  background: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%);
   border-color: var(--brand-primary);
-  color: #f5f5f5;
+  color: var(--text-inverse);
 }
 .btn--solid:hover,
 .button:hover {
@@ -353,53 +392,28 @@ p {
    CARDS
 ============================ */
 .card {
-  padding: var(--space-4);
-  border-radius: var(--radius-lg);
-  background: radial-gradient(
-    circle at 70% 110%,
-    var(--surface-1),
-    var(--surface-2),
-    var(--surface-3)
-  );
-  border: 1px solid var(--surface-border);
-  box-shadow: var(--shadow-md);
-}
-.card--glass {
   box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
-  background: radial-gradient(
-    circle at 70% 110%,
-    var(--surface-1),
-    var(--surface-2),
-    var(--page-accent-1)
-  );
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+  background: radial-gradient(circle at 70% 110%, var(--card-primary), var(--card-primary-bg));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-primary-bg);
 }
 
 .card--cleaning,
 .card--service {
-  padding: var(--space-4);
+  padding: 16px 32px;
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
-  background: radial-gradient(
-    circle at 70% 110%,
-    rgba(255, 255, 255, 0.555),
-    hsla(42, 86%, 63%, 0.2)
-  );
-  border: 1px solid var(--page-accent-3);
-  box-shadow: var(--shadow-sm);
+  background: radial-gradient(circle at 70% 110%, var(--card-primary), var(--card-primary-bg));
+  border: 1px solid var(--card-primary-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-}
-.card--cleaning {
-  background: radial-gradient(
-    circle at 70% 110%,
-    rgba(255, 255, 255, 0.555),
-    hsla(210, 93%, 41%, 0.2)
-  );
-  border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-sm);
+}
+.card--service {
+  background: radial-gradient(circle at 70% 110%, var(--card-accent), var(--card-accent-bg));
+  border: 1px solid var(--card-accent-bg);
 }
 .color--cleaning {
   color: var(--brand-primary);

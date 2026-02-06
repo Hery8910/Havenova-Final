@@ -10,9 +10,6 @@
   border: none;
   font-size: 24px;
 }
-.button {
-  width: 100%;
-}
 .dropdown {
   position: relative;
 }
@@ -31,8 +28,18 @@
 }
 .buttons {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+}
+.login {
+  background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-secondary-light) 100%);
+  border-color: var(--brand-secondary);
+}
+
+@media (min-width: 640px) {
+  .buttons {
+    flex-direction: row;
+  }
 }

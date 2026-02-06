@@ -153,7 +153,7 @@ export default function AppInstallSection({
         </div>
         <div className={styles.appCtas}>
           {isInstalled ? (
-            <Link className={`${styles.ctaPrimaryInstall} button`} href={secondaryHref}>
+            <Link className={`${styles.ctaSecondary} button`} href={secondaryHref}>
               {texts.appInstalled.primaryCta.label}
             </Link>
           ) : (
@@ -169,7 +169,7 @@ export default function AppInstallSection({
               >
                 {primaryLabel}
               </button>
-              <Link className={`${styles.ctaGhost} button_invert`} href={secondaryHref}>
+              <Link className={`${styles.ctaSecondary} button`} href={secondaryHref}>
                 {texts.appInstall.secondaryCta.label}
               </Link>
             </>

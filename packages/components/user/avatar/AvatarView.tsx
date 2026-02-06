@@ -58,7 +58,7 @@ export function AvatarView({ isMobile }: AvatarViewProps) {
               <button
                 type="button"
                 onClick={() => handleNavigate('/user/login')}
-                className="button_invert"
+                className={`${styles.login} button`}
                 aria-label={loginAria}
               >
                 {loginLabel}

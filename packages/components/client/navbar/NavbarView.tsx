@@ -148,21 +148,13 @@ export function NavbarView({
           </header>
           {menuOpen && (
             <div className={styles.imageWrapper}>
-              <Image
-                className={styles.tabletImage}
-                src={'/images/berlin.webp'}
-                alt="Berlin"
-                width={600}
-                height={400}
-                priority
-              />
               <section className={styles.mobileSection}>
                 <aside className={styles.mobileActions}>
+                  <AvatarView isMobile={isMobile} />
                   <div className={styles.mobileActionsGroup}>
                     <ThemeToggler />
                     <LanguageSwitcher />
                   </div>
-                  <AvatarView isMobile={isMobile} />
                 </aside>
                 <div className={styles.mobileLists} id="mobile-navigation">
                   <ul className={styles.mobileList}>
@@ -181,6 +173,14 @@ export function NavbarView({
                       </li>
                     ))}
                   </ul>
+                  <Image
+                    className={styles.tabletImage}
+                    src={'/images/berlin.webp'}
+                    alt="Berlin"
+                    width={600}
+                    height={400}
+                    priority
+                  />
                 </div>
               </section>
             </div>

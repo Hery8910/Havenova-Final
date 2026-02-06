@@ -13,7 +13,7 @@
   position: absolute;
   inset: 0;
   display: block;
-  background-image: radial-gradient(var(--page-accent-1) 1px, transparent 1px);
+  background-image: radial-gradient(var(--brand-secondary-light) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.35;
 }
@@ -79,13 +79,12 @@
 }
 
 .ctaPrimary {
-  background: var(--brand-primary);
   color: var(--text-inverse);
 }
 .ctaSecondary {
-  background: var(--brand-accent);
-  color: var(--text-inverse);
+  background: linear-gradient(0deg, var(--brand-accent) 0%, var(--brand-accent-light) 100%);
   border-color: var(--brand-accent);
+  color: var(--text-inverse);
 }
 .trustList {
   display: flex;
