@@ -7,11 +7,13 @@
   align-items: center;
   gap: 32px;
   padding: 32px 0 0;
-  background-color: #071624;
-  background:
-    radial-gradient(1200px 900px at 50% -120px, rgba(60, 100, 87, 0.103), transparent 60%), #071624;
+  background: radial-gradient(
+    circle at 50% 160%,
+    rgb(15, 29, 43),
+    rgb(18, 24, 31),
+    rgb(22, 22, 22)
+  );
 }
-
 .logoLink {
   display: inline-flex;
   align-items: center;
@@ -82,6 +84,7 @@
 
 .linkHeading {
   margin: 0;
+  font-size: 22px;
 }
 
 .linkList {
@@ -107,7 +110,7 @@
   justify-content: flex-end;
   width: 100%;
   font-weight: 600;
-  font-size: clamp(14px, 3vw, 18px);
+  font-size: 18px;
   transition: color 0.2s ease-in-out;
 }
 .supportLink {

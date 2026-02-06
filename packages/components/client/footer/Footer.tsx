@@ -69,7 +69,7 @@ export function Footer() {
           className={styles.logoImage}
           src="/logos/nav-logo-dark.webp"
           alt="Havenova Logo"
-          width={200}
+          width={150}
           height={50}
           priority
         />
