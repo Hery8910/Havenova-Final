@@ -52,7 +52,6 @@ export default function HeroSection({
             </nav>
           </header>
           <figure className={styles.heroImageWrap}>
-            <span className={styles.heroGlow} aria-hidden="true" />
             <img className={styles.heroImage} src={texts.image.src} alt={texts.image.alt} />
             <figcaption className={styles.heroCard} aria-hidden="true">
               <p className={styles.heroCardTag}>

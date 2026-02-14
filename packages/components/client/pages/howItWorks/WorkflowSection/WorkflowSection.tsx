@@ -22,7 +22,7 @@ export default function WorkflowSection({
         <ol className={styles.stepsGrid}>
           {texts.steps.map((step, index) => (
             <li className={styles.stepItem} key={step.title}>
-              <article className={`${styles.stepCard} card--glass`}>
+              <article className={`${styles.stepCard} card`}>
                 <aside className={styles.stepAside}>
                   <span className={styles.badge}>{index + 1}</span>
                   <h3 className={styles.stepTitle}>{step.title}</h3>
@@ -32,7 +32,7 @@ export default function WorkflowSection({
             </li>
           ))}
         </ol>
-        <aside className={`${styles.note} card--glass`}>
+        <aside className={`${styles.note} card`}>
           <h3 className={styles.noteTitle}>{texts.note.title}</h3>
           <p className={styles.noteDescription}>{texts.note.description}</p>
         </aside>

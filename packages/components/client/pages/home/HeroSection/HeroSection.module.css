@@ -13,7 +13,7 @@
   position: absolute;
   inset: 0;
   display: block;
-  background-image: radial-gradient(var(--brand-secondary-light) 1px, transparent 1px);
+  background-image: radial-gradient(var(--card-secondary-bg) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.35;
 }
@@ -47,7 +47,6 @@
   gap: 8px;
 }
 .heroTitle {
-  font-size: clamp(34px, 5vw, 56px);
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.1;
@@ -78,40 +77,9 @@
   gap: 16px;
 }
 
-.ctaPrimary {
-  color: var(--text-inverse);
-}
 .ctaSecondary {
-  background: linear-gradient(0deg, var(--brand-accent) 0%, var(--brand-accent-light) 100%);
+  background: linear-gradient(0deg, var(--brand-accent-light) 0%, var(--brand-accent) 100%);
   border-color: var(--brand-accent);
-  color: var(--text-inverse);
-}
-.trustList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px 24px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
-}
-.trustItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.trustIcon {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: var(--surface-1);
-  color: var(--text-primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
 }
 .heroImageWrap {
   position: relative;
@@ -120,22 +88,14 @@
   align-items: center;
   margin: 0;
 }
-.heroGlow {
-  position: absolute;
-  inset: -20px;
-  display: block;
-  border-radius: 32px;
-  background: linear-gradient(90deg, var(--surface-1), var(--glass-bg));
-  filter: blur(24px);
-  opacity: 0.5;
-}
+
 .heroImage {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 700px;
   border-radius: 28px;
-  border: 4px solid var(--glass-border);
+  border: 4px solid var(--glass-bg);
   background: var(--glass-bg);
 }
 .heroCard {
@@ -147,6 +107,8 @@
   flex-direction: column;
   align-items: center;
   background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-radius: var(--radius-sm);
   padding: 4px 32px;
   box-shadow: var(--shadow-md);
@@ -159,25 +121,7 @@
   gap: 8px;
   margin: 0;
   font-weight: 700;
-  color: var(--text-primary);
-}
-.heroCardSubtitle {
-  margin: 0;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-.heroTag {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
-  background: var(--brand-primary);
-  color: var(--text-inverse);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid var(--glass-border);
+  color: var(--text-light-fixed);
 }
 
 @media (max-width: 1040px) {
@@ -199,10 +143,5 @@
   }
   .hero {
     padding: 56px 0;
-  }
-
-  .heroTag {
-    top: 12px;
-    right: 12px;
   }
 }

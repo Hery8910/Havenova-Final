@@ -12,8 +12,6 @@ export interface HowItWorksPageTexts {
     kicker: string;
     title: string;
     description: string;
-    cta: { label: string; href: string };
-    ctaAriaLabel: string;
     image: {
       src: string;
       alt: string;
@@ -44,7 +42,7 @@ export default function HowItWorks() {
 
   return (
     <main className={styles.main}>
-      <HowItWorksHeroSection texts={howItWorks.hero} lang={lang} />
+      <HowItWorksHeroSection texts={howItWorks.hero} />
       <WorkflowSection texts={howItWorks.workflow} />
       <BenefitsSplitSection texts={howItWorks.benefits} lang={lang} />
     </main>
