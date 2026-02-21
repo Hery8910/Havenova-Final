@@ -47,7 +47,6 @@ const ResetPassword = () => {
   const formText = texts.components.client.form;
   const popups = texts.popups;
   // const accessDenied: accessDeniedText = texts.message.accessDenied;
-  const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
   const resetButton = formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);
