@@ -24,12 +24,12 @@ export default function ServicesSection({
   return (
     <section className={styles.services} aria-labelledby="home-services-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeader}>
+        <header className={styles.sectionHeader}>
           <h2 id="home-services-title" className={styles.sectionTitle}>
             {texts.title}
           </h2>
           <p className={styles.sectionSubtitle}>{texts.subtitle}</p>
-        </div>
+        </header>
         <div className={styles.cardGrid}>
           {texts.items.map((item) => {
             const cardVariant = item.href.includes('house-cleaning')

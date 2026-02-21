@@ -13,7 +13,7 @@
   position: absolute;
   inset: 0;
   display: block;
-  background-image: radial-gradient(var(--card-secondary-bg) 1px, transparent 1px);
+  background-image: radial-gradient(var(--brand-secondary-light) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.35;
 }

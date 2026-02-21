@@ -22,7 +22,7 @@ export default function ClientsSection({
         </h2>
         <ul className={styles.list}>
           {texts.items.map((item, index) => (
-            <li className={`${styles.item} card--glass`} key={`${item.title}-${index}`}>
+            <li className={styles.item} key={`${item.title}-${index}`}>
               <article
                 className={styles.card}
                 aria-labelledby={`about-client-title-${index}`}

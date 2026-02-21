@@ -64,7 +64,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 12, 20, 0.3) 40%, var(--page-bg-1) 100%);
+  background: #1f1f1f;
+  background: linear-gradient(180deg, rgba(31, 31, 31, 0.4) 0%, rgba(31, 31, 31, 0.7) 100%);
 }
 
 .content {
@@ -80,11 +81,11 @@
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-light-fixed);
 }
 
 .cardDescription {
-  color: var(--text-primary);
+  color: var(--text-light-secondary-fixed);
   margin: 0;
   font-size: 14px;
   line-height: 1.5;

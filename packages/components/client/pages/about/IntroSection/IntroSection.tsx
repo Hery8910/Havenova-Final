@@ -10,7 +10,7 @@ export default function IntroSection({
 }) {
   return (
     <header className={styles.header} aria-labelledby="about-intro-title">
-      <article className={`${styles.container} card--glass`}>
+      <article className={`${styles.container} card`}>
         <h1 id="about-intro-title" className={styles.title}>
           {texts.title}
         </h1>

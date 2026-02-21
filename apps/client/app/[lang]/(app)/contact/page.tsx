@@ -42,7 +42,7 @@ export default function Contact() {
   return (
     <main className={styles.main}>
       <ContactHeroSection texts={contact.hero} lang={lang} />
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} card`}>
         <ContactFormSection />
         <InfoSection texts={contactInfoTexts} />
       </div>
