@@ -227,24 +227,22 @@ const ResetPassword = () => {
 
   return (
     <main className={styles.main} aria-labelledby="reset-title" aria-describedby="reset-desc">
-      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="reset-title">
+      <div className={styles.wrapper} role="region" aria-labelledby="reset-title">
         <header className={styles.header}>
           <h1 id="reset-title" className={styles.h1}>
             {resetPasswordText.title}
           </h1>
-          <p id="reset-desc" className={styles.header_hint}>
-            * {resetPasswordText.info}
-          </p>
         </header>
 
         <section
-          className={styles.section}
+          className={`${styles.section} card`}
           aria-labelledby="reset-title"
           aria-describedby="reset-desc"
           aria-busy={loading}
           role="form"
         >
           <FormWrapper<ResetPasswordFormData>
+            showHintPassword
             fields={['password', 'clientId'] as const}
             onSubmit={handleResetPassword}
             button={resetButton}

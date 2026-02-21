@@ -176,7 +176,7 @@ const Login = () => {
             {login.title}
           </h1>
         </header>
-        <section className={styles.section}>
+        <section className={`${styles.section} card`}>
           <FormWrapper<LoginPayload>
             fields={['email', 'password', 'clientId'] as const}
             onSubmit={handleLogin}

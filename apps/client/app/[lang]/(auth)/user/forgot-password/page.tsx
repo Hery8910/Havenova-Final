@@ -167,7 +167,7 @@ const ForgotPassword = () => {
         </p>
       </header>
       <section
-        className={`${styles.section} card--glass`}
+        className={`${styles.section} card`}
         aria-labelledby={headingId}
         aria-describedby={descriptionId}
         aria-busy={loading}

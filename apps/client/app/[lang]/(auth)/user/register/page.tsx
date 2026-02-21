@@ -176,7 +176,7 @@ const Register = () => {
             {register?.description}
           </p>
         </header>
-        <section className={styles.section}>
+        <section className={`${styles.section} card`}>
           <FormWrapper<RegisterFormData>
             showHintPassword
             fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}

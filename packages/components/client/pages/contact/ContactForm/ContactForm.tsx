@@ -200,7 +200,7 @@ export function ContactFormSection() {
 
   return (
     <section className={styles.section} aria-labelledby="contact-form-title">
-      <article className={`${styles.card} card--glass`}>
+      <article className={`${styles.card} card`}>
         <h3 id="contact-form-title">{submitLabel}</h3>
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>

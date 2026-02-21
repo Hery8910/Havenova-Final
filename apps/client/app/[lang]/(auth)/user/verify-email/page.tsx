@@ -213,7 +213,7 @@ const VerifyEmailPage = () => {
   // ---------------------------
   return (
     <main className={styles.main} aria-labelledby="verify-title" aria-describedby="verify-desc">
-      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="verify-title">
+      <div className={styles.wrapper} role="region" aria-labelledby="verify-title">
         <header className={styles.header}>
           <h1 id="verify-title" className={styles.h1}>
             {verifyText.title}
@@ -223,7 +223,7 @@ const VerifyEmailPage = () => {
           </p>
         </header>
         <section
-          className={styles.section}
+          className={`${styles.section} card`}
           aria-labelledby="verify-title"
           aria-describedby="verify-desc"
           aria-busy={loading}
