@@ -12,6 +12,7 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
+  useProfile,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { loginUser } from '../../../../../../../packages/services';
@@ -19,6 +20,7 @@ import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { href } from '../../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../../packages/components';
+import Image from 'next/image';
 
 export interface LoginData {
   title: string;
@@ -31,6 +33,7 @@ export interface LoginData {
 
 const Login = () => {
   const { client } = useClient();
+  const { profile } = useProfile();
   const { auth, setAuth } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
@@ -44,6 +47,14 @@ const Login = () => {
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.client.user.login;
   const loginButton = formText.button.login;
+
+  const getLogoSrc = () => {
+    if (profile.theme !== 'dark') {
+      return '/logos/nav-logo-dark.webp';
+    } else {
+      return '/logos/nav-logo-light.webp';
+    }
+  };
 
   const handleLogin = async (data: LoginPayload) => {
     try {
@@ -170,13 +181,20 @@ const Login = () => {
       aria-labelledby="login-title"
       aria-describedby={login?.cta?.title ? 'login-cta' : undefined}
     >
-      <div className={`${styles.wrapper} card--glass`} role="region" aria-labelledby="login-title">
+      <div className={styles.wrapper} role="region" aria-labelledby="login-title">
         <header className={styles.header}>
-          <h1 id="login-title" className={styles.h1}>
-            {login.title}
-          </h1>
+          <Link className={styles.logoLink} href="/" aria-label="Homepage">
+            <Image
+              className={styles.logoImage}
+              src={getLogoSrc()}
+              alt="Havenova Logo"
+              width={170}
+              height={40}
+              priority
+            />
+          </Link>
         </header>
-        <section className={`${styles.section} card`}>
+        <section className={styles.section}>
           <FormWrapper<LoginPayload>
             fields={['email', 'password', 'clientId'] as const}
             onSubmit={handleLogin}

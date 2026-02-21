@@ -17,6 +17,8 @@ import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export interface ForgotPasswordData {
   title: string;
@@ -51,6 +53,14 @@ const ForgotPassword = () => {
   const formText = texts.components.client.form;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
+
+  const getLogoSrc = () => {
+    if (profile.theme !== 'dark') {
+      return '/logos/nav-logo-dark.webp';
+    } else {
+      return '/logos/nav-logo-light.webp';
+    }
+  };
 
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {
     try {
@@ -159,6 +169,16 @@ const ForgotPassword = () => {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
+        <Link className={styles.logoLink} href="/" aria-label="Homepage">
+          <Image
+            className={styles.logoImage}
+            src={getLogoSrc()}
+            alt="Havenova Logo"
+            width={170}
+            height={40}
+            priority
+          />
+        </Link>
         <h1 id={headingId} className={styles.h1}>
           {forgotPasswordText.title}
         </h1>
@@ -167,7 +187,7 @@ const ForgotPassword = () => {
         </p>
       </header>
       <section
-        className={`${styles.section} card`}
+        className={styles.section}
         aria-labelledby={headingId}
         aria-describedby={descriptionId}
         aria-busy={loading}

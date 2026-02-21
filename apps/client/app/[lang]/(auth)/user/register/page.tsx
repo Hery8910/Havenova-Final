@@ -25,6 +25,7 @@ import { registerUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
+import Image from 'next/image';
 
 export interface RegisterData {
   title: string;
@@ -39,7 +40,7 @@ const Register = () => {
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
-  const { updateProfile } = useProfile();
+  const { profile, updateProfile } = useProfile();
 
   const { texts } = useI18n();
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,14 @@ const Register = () => {
   const formText = texts.components.client.form;
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
+
+  const getLogoSrc = () => {
+    if (profile.theme !== 'dark') {
+      return '/logos/nav-logo-dark.webp';
+    } else {
+      return '/logos/nav-logo-light.webp';
+    }
+  };
 
   const handleRegister = async (data: RegisterFormData) => {
     try {
@@ -163,20 +172,20 @@ const Register = () => {
 
   return (
     <main className={styles.main} aria-labelledby="register-title" aria-describedby="register-desc">
-      <div
-        className={`${styles.wrapper} card--glass`}
-        role="region"
-        aria-labelledby="register-title"
-      >
+      <div className={styles.wrapper} role="region" aria-labelledby="register-title">
         <header className={styles.header}>
-          <h1 id="register-title" className={styles.h1}>
-            {register?.title}
-          </h1>
-          <p id="register-desc" className={styles.header_p}>
-            {register?.description}
-          </p>
+          <Link className={styles.logoLink} href="/" aria-label="Homepage">
+            <Image
+              className={styles.logoImage}
+              src={getLogoSrc()}
+              alt="Havenova Logo"
+              width={170}
+              height={40}
+              priority
+            />
+          </Link>
         </header>
-        <section className={`${styles.section} card`}>
+        <section className={styles.section}>
           <FormWrapper<RegisterFormData>
             showHintPassword
             fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}

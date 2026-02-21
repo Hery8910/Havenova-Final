@@ -7,9 +7,6 @@
   justify-content: center;
   align-items: center;
   gap: 24px;
-  background-image: url('/svg/user-background.svg');
-  background-position: center;
-  background-size: cover;
 }
 .section {
   width: 100%;
@@ -18,17 +15,15 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 64px 32px;
 }
 .header {
   width: 100%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 64px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 .h1 {
   font-weight: 500;

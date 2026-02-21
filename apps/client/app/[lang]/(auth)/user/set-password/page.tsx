@@ -9,6 +9,7 @@ import {
   fallbackGlobalError,
   fallbackGlobalLoading,
   useGlobalAlert,
+  useProfile,
 } from '@/packages/contexts';
 import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
@@ -16,6 +17,8 @@ import { resetPassword } from '@/packages/services';
 import styles from '../userAuth.module.css';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { useLang } from '../../../../../../../packages/hooks';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export interface ResetPasswordData {
   title: string;
@@ -34,6 +37,7 @@ interface ResetPasswordFormData {
 
 const ResetPassword = () => {
   const { client } = useClient();
+  const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -52,6 +56,14 @@ const ResetPassword = () => {
   const status = searchParams.get('status');
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
+
+  const getLogoSrc = () => {
+    if (profile.theme !== 'dark') {
+      return '/logos/nav-logo-dark.webp';
+    } else {
+      return '/logos/nav-logo-light.webp';
+    }
+  };
 
   useEffect(() => {
     if (!inviteToken) {
@@ -229,13 +241,20 @@ const ResetPassword = () => {
     <main className={styles.main} aria-labelledby="reset-title" aria-describedby="reset-desc">
       <div className={styles.wrapper} role="region" aria-labelledby="reset-title">
         <header className={styles.header}>
-          <h1 id="reset-title" className={styles.h1}>
-            {resetPasswordText.title}
-          </h1>
+          <Link className={styles.logoLink} href="/" aria-label="Homepage">
+            <Image
+              className={styles.logoImage}
+              src={getLogoSrc()}
+              alt="Havenova Logo"
+              width={170}
+              height={40}
+              priority
+            />
+          </Link>
         </header>
 
         <section
-          className={`${styles.section} card`}
+          className={styles.section}
           aria-labelledby="reset-title"
           aria-describedby="reset-desc"
           aria-busy={loading}
