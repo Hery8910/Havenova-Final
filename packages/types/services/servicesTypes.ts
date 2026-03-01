@@ -155,3 +155,34 @@ export type ServiceRequestItem =
   | HouseCleaningRequest
   | WindowCleaningRequest
   | HouseServiceRequest;
+
+// --------------------------------------
+// Cleaning request domain (new backend)
+// --------------------------------------
+
+export type CleaningServiceType = 'cleaning';
+export type CleaningCustomerType = 'private' | 'business';
+export type CleaningRequestStatus =
+  | 'submitted'
+  | 'date_confirmed'
+  | 'alternative_date_proposed'
+  | 'visit_completed'
+  | 'task_created'
+  | 'cancelled';
+export type CleaningFrequency = 'once' | 'two_per_month' | 'three_per_month' | 'weekly';
+export type PropertySizeRange = 'under_50' | '50_80' | '80_120' | 'over_120';
+
+export interface CleaningPropertyDetails {
+  sizeRange: PropertySizeRange;
+  roomsCount: number;
+  hasBalcony: boolean;
+  hasIndoorStairs: boolean;
+  hasPets: boolean;
+  details?: string;
+}
+
+export interface CleaningRequestDetailsInput {
+  customerType: CleaningCustomerType;
+  frequency: CleaningFrequency;
+  property: CleaningPropertyDetails;
+}

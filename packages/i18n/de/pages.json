@@ -134,7 +134,107 @@
         "closing": "Unser Fokus liegt auf Klarheit, Organisation und langfristiger Verlässlichkeit."
       }
     },
-    "cleaning": {},
+    "cleaning": {
+      "hero": {
+        "icon": {
+          "src": "/svg/cleaning.svg",
+          "alt": "Symbol für Reinigungsservice"
+        },
+        "title": "Professioneller",
+        "accent": "Reinigungsservice",
+        "title2": "in Berlin",
+        "description": "Flexibel, zuverlässig und passend für Ihr Zuhause oder Ihr Unternehmen. Havenova bietet strukturierte Reinigungslösungen für Wohnungen, Büros und Gemeinschaftsflächen mit klarer Kommunikation, planbaren Terminen und gleichbleibender Qualität von der Anfrage bis zum Abschluss."
+      },
+      "authAlert": {
+        "title": "Konto erforderlich, um eine Reinigungsanfrage zu senden",
+        "description": "Um eine Anfrage für den Reinigungsservice zu senden, benötigen Sie ein aktives Havenova-Konto und eine aktive Anmeldung. Melden Sie sich an, wenn Sie bereits ein Konto haben, oder erstellen Sie in wenigen Schritten ein neues Konto.",
+        "closeLabel": "Hinweis zum erforderlichen Konto schließen",
+        "ctas": {
+          "login": {
+            "label": "Zum Login",
+            "href": "/user/login"
+          },
+          "register": {
+            "label": "Konto erstellen",
+            "href": "/user/register"
+          }
+        }
+      },
+      "form": {
+        "process": {
+          "title": "Schließen Sie Ihre Reinigungsanfrage in 4 Schritten ab",
+          "description": "Folgen Sie den Schritten, damit wir alle Daten für die Erstbesichtigung und Einsatzplanung erhalten.",
+          "stepLabel": "Schritt",
+          "steps": {
+            "customerFrequency": {
+              "heading": "Kunde und Häufigkeit"
+            },
+            "propertyDetails": {
+              "heading": "Objektdetails"
+            },
+            "scheduling": {
+              "heading": "Erstbesuch: Datum und Uhrzeit"
+            },
+            "serviceAddress": {
+              "heading": "Einsatzadresse"
+            }
+          }
+        },
+        "customerType": {
+          "label": "Kundentyp",
+          "options": {
+            "private": "Privat",
+            "business": "Gewerblich"
+          }
+        },
+        "frequency": {
+          "label": "Gewünschte Häufigkeit",
+          "recommendedLabel": "Am meisten gefragt",
+          "options": {
+            "once": "Einmalig",
+            "two_per_month": "2x pro Monat",
+            "weekly": "Wöchentlich",
+            "three_per_month": "3x pro Monat"
+          },
+          "discounts": {
+            "once": "0% Rabatt",
+            "two_per_month": "5% Rabatt",
+            "three_per_month": "10% Rabatt",
+            "weekly": "15% Rabatt"
+          }
+        },
+        "property": {
+          "title": "Objektdetails",
+          "sizeRangeLabel": "Flächenbereich",
+          "sizeRangeOptions": {
+            "under_50": "Unter 50 m2",
+            "50_80": "50 bis 80 m2",
+            "80_120": "80 bis 120 m2",
+            "over_120": "Über 120 m2"
+          },
+          "roomsCountLabel": "Anzahl der Räume",
+          "hasBalconyLabel": "Balkon",
+          "hasIndoorStairsLabel": "Innenliegende Treppen",
+          "hasPetsLabel": "Haustiere im Objekt",
+          "detailsLabel": "Zusätzliche Hinweise (optional)",
+          "detailsPlaceholder": "Teilen Sie uns besondere Reinigungswünsche, Zugangshinweise oder Präferenzen mit."
+        },
+        "common": {
+          "yes": "Ja",
+          "no": "Nein",
+          "next": "Weiter",
+          "back": "Zurück",
+          "submit": "Weiter mit Adresse und Termin"
+        },
+        "errors": {
+          "required": "Dieses Feld ist erforderlich.",
+          "invalid": "Bitte geben Sie einen gültigen Wert ein.",
+          "roomsRange": "Die Raumanzahl muss zwischen 0 und 50 liegen.",
+          "detailsTooLong": "Zusätzliche Hinweise dürfen maximal 1500 Zeichen enthalten.",
+          "unsafeInput": "Bitte entfernen Sie nicht unterstützte Zeichen oder Skripte aus diesem Feld."
+        }
+      }
+    },
     "home-service": {},
     "contact": {
       "hero": {

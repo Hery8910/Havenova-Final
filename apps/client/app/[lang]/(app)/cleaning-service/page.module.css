@@ -1,5 +1,4 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 6vw, 80px);
 }

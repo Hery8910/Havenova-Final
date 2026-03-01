@@ -1,0 +1,116 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.group {
+  border: none;
+  padding: 12px;
+}
+
+.legend {
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 6px;
+}
+
+.toggleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.choiceButton,
+.frequencyButton {
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  min-height: 42px;
+  padding: 6px;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.choiceButton:hover,
+.frequencyButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.frequencyGrid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.frequencyButton {
+  position: relative;
+  width: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.frequencyText {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-weight: 500;
+}
+
+.frequencyDiscount {
+  width: 120px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: 700;
+  color: var(--brand-primary-dark);
+  background-color: var(--card-primary-bg);
+}
+
+.recommended {
+  border-color: color-mix(in srgb, var(--brand-primary) 65%, var(--surface-border));
+}
+
+.badge {
+  position: absolute;
+  bottom: -8px;
+  left: 8px;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.active {
+  border-color: var(--brand-primary);
+  background: var(--card-primary-bg);
+}
+
+.error {
+  min-height: 20px;
+  color: var(--color-error);
+  font-size: var(--font-size-100);
+}
+
+.choiceButton:focus-visible,
+.frequencyButton:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,98 @@
+.header {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+}
+.timeline {
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.timelineItem {
+  width: 100%;
+}
+
+.card {
+  height: fit-content;
+  width: 100%;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background: r r rgba(255, 255, 255, 0.05);
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.index {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 2px solid var(--surface-border);
+  z-index: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stepLabel {
+  margin: 0;
+  letter-spacing: 0.03em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.stepHeading {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(16px, 2vw, 20px);
+}
+
+.active {
+  border-color: var(--brand-primary);
+  background: color-mix(in srgb, var(--brand-primary) 12%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.active .index {
+  border-color: var(--brand-primary);
+  background: var(--brand-primary);
+  color: var(--text-primary);
+}
+.active .stepHeading {
+  color: var(--text-primary);
+}
+
+.completed .index {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+@media (min-width: 1080px) {
+}

@@ -134,7 +134,107 @@
         "closing": "Our focus is on clarity, organization, and long-term reliability."
       }
     },
-    "cleaning": {},
+    "cleaning": {
+      "hero": {
+        "icon": {
+          "src": "/svg/cleaning.svg",
+          "alt": "Cleaning service icon"
+        },
+        "title": "Professional",
+        "accent": "Cleaning Service",
+        "title2": "in Berlin",
+        "description": "Flexible, reliable, and tailored to your home or business. Havenova provides structured cleaning support for apartments, offices, and shared properties with clear communication, dependable scheduling, and consistent quality from request to completion."
+      },
+      "authAlert": {
+        "title": "Account required to submit a cleaning request",
+        "description": "To send a cleaning service request, you need an active Havenova account and an active session. Please log in if you already have an account, or create one in a few steps.",
+        "closeLabel": "Close account required notice",
+        "ctas": {
+          "login": {
+            "label": "Go to login",
+            "href": "/user/login"
+          },
+          "register": {
+            "label": "Create account",
+            "href": "/user/register"
+          }
+        }
+      },
+      "form": {
+        "process": {
+          "title": "Complete your cleaning request in 4 steps",
+          "description": "Follow each step to provide the data we need for your first visit planning and service setup.",
+          "stepLabel": "Step",
+          "steps": {
+            "customerFrequency": {
+              "heading": "Customer and recurrence"
+            },
+            "propertyDetails": {
+              "heading": "Property details"
+            },
+            "scheduling": {
+              "heading": "First visit date and hour"
+            },
+            "serviceAddress": {
+              "heading": "Service address"
+            }
+          }
+        },
+        "customerType": {
+          "label": "Customer type",
+          "options": {
+            "private": "Private",
+            "business": "Business"
+          }
+        },
+        "frequency": {
+          "label": "Preferred frequency",
+          "recommendedLabel": "Most requested",
+          "options": {
+            "once": "One-time",
+            "two_per_month": "2 times per month",
+            "weekly": "Weekly",
+            "three_per_month": "3 times per month"
+          },
+          "discounts": {
+            "once": "0% discount",
+            "two_per_month": "5% discount",
+            "three_per_month": "10% discount",
+            "weekly": "15% discount"
+          }
+        },
+        "property": {
+          "title": "Property details",
+          "sizeRangeLabel": "Property size range",
+          "sizeRangeOptions": {
+            "under_50": "Under 50 m2",
+            "50_80": "50 to 80 m2",
+            "80_120": "80 to 120 m2",
+            "over_120": "Over 120 m2"
+          },
+          "roomsCountLabel": "Number of rooms",
+          "hasBalconyLabel": "Balcony",
+          "hasIndoorStairsLabel": "Indoor stairs",
+          "hasPetsLabel": "Pets in property",
+          "detailsLabel": "Additional details (optional)",
+          "detailsPlaceholder": "Tell us about special cleaning needs, access notes, or preferences."
+        },
+        "common": {
+          "yes": "Yes",
+          "no": "No",
+          "next": "Continue",
+          "back": "Back",
+          "submit": "Continue with address and date"
+        },
+        "errors": {
+          "required": "This field is required.",
+          "invalid": "Please enter a valid value.",
+          "roomsRange": "Rooms count must be between 0 and 50.",
+          "detailsTooLong": "Additional details must be 1500 characters or fewer.",
+          "unsafeInput": "Please remove unsupported characters or scripts from this field."
+        }
+      }
+    },
     "home-service": {},
     "contact": {
       "hero": {
