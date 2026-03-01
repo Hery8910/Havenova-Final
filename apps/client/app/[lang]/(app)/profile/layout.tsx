@@ -1,5 +1,5 @@
 // app/profile/layout.tsx
-import React, { ReactNode } from 'react';
+import React from 'react';
 import styles from './layout.module.css';
 import { Metadata } from 'next';
 import { getPageMetadata } from '../../../../../../packages/utils/metadata';
