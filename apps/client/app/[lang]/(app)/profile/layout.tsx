@@ -2,17 +2,18 @@
 import React, { ReactNode } from 'react';
 import styles from './layout.module.css';
 import { Metadata } from 'next';
-
-import { userProfileMetadata } from '../../../pageMetadata';
+import { getPageMetadata } from '../../../../../../packages/utils/metadata';
 import { ProfileHeader, ProfileNav } from '../../../../../../packages/components';
 
-export const metadata: Metadata = userProfileMetadata;
-
-interface ProfileLayoutProps {
-  children: ReactNode;
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: 'de' | 'en' };
+}): Promise<Metadata> {
+  return getPageMetadata(params.lang, 'profile');
 }
 
-export default function ProfileLayout({ children }: ProfileLayoutProps) {
+export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className={styles.layout}>
       <ProfileHeader />

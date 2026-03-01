@@ -230,6 +230,234 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
   },
+  profile: {
+    en: {
+      title: 'My Profile | Havenova',
+      description:
+        'Manage your Havenova profile details, contact information, and account preferences.',
+      openGraph: {
+        title: 'My Profile | Havenova',
+        description: 'Manage your account settings and personal information on Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/en/profile',
+      },
+    },
+    de: {
+      title: 'Mein Profil | Havenova',
+      description:
+        'Verwalten Sie Ihre Havenova-Profildaten, Kontaktinformationen und Kontoeinstellungen.',
+      openGraph: {
+        title: 'Mein Profil | Havenova',
+        description: 'Verwalten Sie Kontoeinstellungen und persönliche Daten auf Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/de/profile',
+      },
+    },
+  },
+  profileEdit: {
+    en: {
+      title: 'Edit Profile | Havenova',
+      description:
+        'Update your personal information, language, and preferences in your Havenova account.',
+      openGraph: {
+        title: 'Edit Profile | Havenova',
+        description: 'Edit your Havenova profile details and preferences.',
+        type: 'website',
+        url: 'https://havenova.de/en/profile/edit',
+      },
+    },
+    de: {
+      title: 'Profil bearbeiten | Havenova',
+      description:
+        'Aktualisieren Sie persönliche Daten, Sprache und Einstellungen in Ihrem Havenova-Konto.',
+      openGraph: {
+        title: 'Profil bearbeiten | Havenova',
+        description: 'Bearbeiten Sie Ihre Havenova-Profildaten und Einstellungen.',
+        type: 'website',
+        url: 'https://havenova.de/de/profile/edit',
+      },
+    },
+  },
+  profileNotifications: {
+    en: {
+      title: 'Notifications | Havenova',
+      description: 'Review and manage notification preferences in your Havenova account.',
+      openGraph: {
+        title: 'Notifications | Havenova',
+        description: 'Manage your Havenova notification settings.',
+        type: 'website',
+        url: 'https://havenova.de/en/profile/notification',
+      },
+    },
+    de: {
+      title: 'Benachrichtigungen | Havenova',
+      description: 'Prüfen und verwalten Sie Benachrichtigungseinstellungen in Ihrem Konto.',
+      openGraph: {
+        title: 'Benachrichtigungen | Havenova',
+        description: 'Verwalten Sie Ihre Havenova-Benachrichtigungseinstellungen.',
+        type: 'website',
+        url: 'https://havenova.de/de/profile/notification',
+      },
+    },
+  },
+  profileRequests: {
+    en: {
+      title: 'My Requests | Havenova',
+      description: 'Track and review your submitted service requests in Havenova.',
+      openGraph: {
+        title: 'My Requests | Havenova',
+        description: 'View your current and previous service requests in Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/en/profile/requests',
+      },
+    },
+    de: {
+      title: 'Meine Anfragen | Havenova',
+      description: 'Verfolgen und prüfen Sie Ihre eingereichten Serviceanfragen bei Havenova.',
+      openGraph: {
+        title: 'Meine Anfragen | Havenova',
+        description: 'Sehen Sie aktuelle und frühere Serviceanfragen in Havenova ein.',
+        type: 'website',
+        url: 'https://havenova.de/de/profile/requests',
+      },
+    },
+  },
+  auth: {
+    en: {
+      title: 'Account Access | Havenova',
+      description: 'Access your Havenova account to sign in, register, or recover your password.',
+      openGraph: {
+        title: 'Account Access | Havenova',
+        description: 'Sign in or create your Havenova account.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/login',
+      },
+    },
+    de: {
+      title: 'Kontozugang | Havenova',
+      description:
+        'Greifen Sie auf Ihr Havenova-Konto zu, um sich anzumelden, zu registrieren oder Ihr Passwort zurückzusetzen.',
+      openGraph: {
+        title: 'Kontozugang | Havenova',
+        description: 'Melden Sie sich an oder erstellen Sie ein Havenova-Konto.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/login',
+      },
+    },
+  },
+  login: {
+    en: {
+      title: 'Login | Havenova',
+      description: 'Sign in to your Havenova account to manage services and profile settings.',
+      openGraph: {
+        title: 'Login | Havenova',
+        description: 'Access your Havenova account securely.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/login',
+      },
+    },
+    de: {
+      title: 'Anmelden | Havenova',
+      description:
+        'Melden Sie sich bei Ihrem Havenova-Konto an, um Services und Profileinstellungen zu verwalten.',
+      openGraph: {
+        title: 'Anmelden | Havenova',
+        description: 'Greifen Sie sicher auf Ihr Havenova-Konto zu.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/login',
+      },
+    },
+  },
+  register: {
+    en: {
+      title: 'Register | Havenova',
+      description: 'Create your Havenova account to book and manage home services in Berlin.',
+      openGraph: {
+        title: 'Register | Havenova',
+        description: 'Create a Havenova account in a few steps.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/register',
+      },
+    },
+    de: {
+      title: 'Registrieren | Havenova',
+      description:
+        'Erstellen Sie Ihr Havenova-Konto, um Hausservices in Berlin zu buchen und zu verwalten.',
+      openGraph: {
+        title: 'Registrieren | Havenova',
+        description: 'Erstellen Sie in wenigen Schritten ein Havenova-Konto.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/register',
+      },
+    },
+  },
+  forgotPassword: {
+    en: {
+      title: 'Forgot Password | Havenova',
+      description: 'Request a secure password reset link for your Havenova account.',
+      openGraph: {
+        title: 'Forgot Password | Havenova',
+        description: 'Reset your Havenova account password securely.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/forgot-password',
+      },
+    },
+    de: {
+      title: 'Passwort vergessen | Havenova',
+      description: 'Fordern Sie einen sicheren Link zum Zurücksetzen Ihres Passworts an.',
+      openGraph: {
+        title: 'Passwort vergessen | Havenova',
+        description: 'Setzen Sie Ihr Havenova-Kontopasswort sicher zurück.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/forgot-password',
+      },
+    },
+  },
+  setPassword: {
+    en: {
+      title: 'Set New Password | Havenova',
+      description: 'Set a new password and restore access to your Havenova account.',
+      openGraph: {
+        title: 'Set New Password | Havenova',
+        description: 'Create a new password for your Havenova account.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/set-password',
+      },
+    },
+    de: {
+      title: 'Neues Passwort setzen | Havenova',
+      description: 'Setzen Sie ein neues Passwort und stellen Sie den Kontozugang wieder her.',
+      openGraph: {
+        title: 'Neues Passwort setzen | Havenova',
+        description: 'Erstellen Sie ein neues Passwort für Ihr Havenova-Konto.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/set-password',
+      },
+    },
+  },
+  verifyEmail: {
+    en: {
+      title: 'Verify Email | Havenova',
+      description: 'Verify your email address to activate your Havenova account securely.',
+      openGraph: {
+        title: 'Verify Email | Havenova',
+        description: 'Complete email verification for your Havenova account.',
+        type: 'website',
+        url: 'https://havenova.de/en/user/verify-email',
+      },
+    },
+    de: {
+      title: 'E-Mail verifizieren | Havenova',
+      description:
+        'Bestätigen Sie Ihre E-Mail-Adresse, um Ihr Havenova-Konto sicher zu aktivieren.',
+      openGraph: {
+        title: 'E-Mail verifizieren | Havenova',
+        description: 'Schließen Sie die E-Mail-Verifizierung für Ihr Havenova-Konto ab.',
+        type: 'website',
+        url: 'https://havenova.de/de/user/verify-email',
+      },
+    },
+  },
   privacyPolicy: {
     en: {
       title: 'Privacy Policy | Havenova',
