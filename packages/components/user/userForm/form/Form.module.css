@@ -193,6 +193,10 @@
   margin-right: 8px;
   display: inline-block;
 }
+.button {
+  max-width: 200px;
+  align-self: center;
+}
 
 @keyframes spin {
   to {

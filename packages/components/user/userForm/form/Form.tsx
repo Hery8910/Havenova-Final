@@ -169,8 +169,8 @@ export default function Form<T extends Record<string, any>>({
               touched.password && errors.password
                 ? `${styles.feedback} ${styles.error}`
                 : showHintPassword
-                ? `${styles.feedback} ${styles.hint}`
-                : `${styles.feedback} ${styles.hidden}`
+                  ? `${styles.feedback} ${styles.hint}`
+                  : `${styles.feedback} ${styles.hidden}`
             }
             id="password-hint"
             role="status"
@@ -180,8 +180,8 @@ export default function Form<T extends Record<string, any>>({
               touched.password && errors.password
                 ? errors.password
                 : showHintPassword
-                ? labels.passwordHint
-                : '\u00A0' /* espacio duro para mantener altura */
+                  ? labels.passwordHint
+                  : '\u00A0' /* espacio duro para mantener altura */
             }
           </p>
         </div>
@@ -332,7 +332,7 @@ export default function Form<T extends Record<string, any>>({
       )}
 
       <button
-        className="button"
+        className={`${styles.button} button`}
         type="submit"
         disabled={loading}
         aria-disabled={loading}

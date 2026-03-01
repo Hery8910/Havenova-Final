@@ -184,6 +184,52 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
   },
+  'cleaning-service': {
+    en: {
+      title: 'Professional Cleaning Service in Berlin | Havenova',
+      description:
+        'Book a trusted cleaning service in Berlin with Havenova for homes, apartments, and offices. Flexible scheduling, transparent pricing, and quality results.',
+      keywords:
+        'cleaning service Berlin, home cleaning Berlin, apartment cleaning Berlin, office cleaning Berlin, deep cleaning Berlin, move-out cleaning Berlin, professional cleaners Berlin, Havenova cleaning',
+      openGraph: {
+        title: 'Professional Cleaning Service in Berlin | Havenova',
+        description:
+          'Reliable home and office cleaning in Berlin with flexible appointments and professional standards.',
+        type: 'website',
+        url: 'https://havenova.de/en/cleaning-service',
+        images: [
+          {
+            url: 'https://havenova.de/images/og-home.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'Havenova cleaning service in Berlin',
+          },
+        ],
+      },
+    },
+    de: {
+      title: 'Professioneller Reinigungsservice in Berlin | Havenova',
+      description:
+        'Buchen Sie einen zuverlässigen Reinigungsservice in Berlin mit Havenova für Wohnungen, Häuser und Büros. Flexible Termine, transparente Preise und professionelle Ergebnisse.',
+      keywords:
+        'Reinigungsservice Berlin, Wohnungsreinigung Berlin, Hausreinigung Berlin, Büroreinigung Berlin, Grundreinigung Berlin, Endreinigung Berlin, professionelle Reinigungskräfte Berlin, Havenova Reinigung',
+      openGraph: {
+        title: 'Professioneller Reinigungsservice in Berlin | Havenova',
+        description:
+          'Zuverlässige Wohnungs- und Büroreinigung in Berlin mit flexiblen Terminen und professionellem Standard.',
+        type: 'website',
+        url: 'https://havenova.de/de/cleaning-service',
+        images: [
+          {
+            url: 'https://havenova.de/images/og-home.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'Havenova Reinigungsservice in Berlin',
+          },
+        ],
+      },
+    },
+  },
   privacyPolicy: {
     en: {
       title: 'Privacy Policy | Havenova',

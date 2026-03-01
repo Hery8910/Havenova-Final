@@ -55,7 +55,7 @@ const ForgotPassword = () => {
   const forgotButton = formText.button.forgotPassword;
 
   const getLogoSrc = () => {
-    if (profile.theme !== 'dark') {
+    if (profile.theme === 'dark') {
       return '/logos/nav-logo-dark.webp';
     } else {
       return '/logos/nav-logo-light.webp';
@@ -168,46 +168,48 @@ const ForgotPassword = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
-        <Link className={styles.logoLink} href="/" aria-label="Homepage">
-          <Image
-            className={styles.logoImage}
-            src={getLogoSrc()}
-            alt="Havenova Logo"
-            width={170}
-            height={40}
-            priority
-          />
-        </Link>
-        <h1 id={headingId} className={styles.h1}>
-          {forgotPasswordText.title}
-        </h1>
-        <p id={descriptionId} className={styles.p}>
-          * {forgotPasswordText.info}
-        </p>
-      </header>
-      <section
-        className={styles.section}
-        aria-labelledby={headingId}
-        aria-describedby={descriptionId}
-        aria-busy={loading}
-        role="form"
-      >
-        <FormWrapper<ForgotPasswordPayload>
-          fields={['email', 'language', 'clientId'] as const}
-          onSubmit={handleForgotPassword}
-          button={forgotButton}
-          initialValues={{
-            clientId: client?._id || '',
-            email: auth?.email || '',
-            language: profile?.language || lang || 'de',
-          }}
-          loading={loading}
+      <Link className={styles.logoLink} href="/" aria-label="Homepage">
+        <Image
+          className={styles.logoImage}
+          src={getLogoSrc()}
+          alt="Havenova Logo"
+          width={400}
+          height={100}
+          priority
         />
-        <p style={srOnly} role="status" aria-live="polite">
-          {loading ? fallbackForgotPasswordLoading.description : ''}
-        </p>
-      </section>
+      </Link>
+      <div className={styles.wrapper}>
+        <header className={styles.header}>
+          <h1 id={headingId} className={styles.h1}>
+            {forgotPasswordText.title}
+          </h1>
+          <p id={descriptionId} className={styles.p}>
+            * {forgotPasswordText.info}
+          </p>
+        </header>
+        <section
+          className={styles.section}
+          aria-labelledby={headingId}
+          aria-describedby={descriptionId}
+          aria-busy={loading}
+          role="form"
+        >
+          <FormWrapper<ForgotPasswordPayload>
+            fields={['email', 'language', 'clientId'] as const}
+            onSubmit={handleForgotPassword}
+            button={forgotButton}
+            initialValues={{
+              clientId: client?._id || '',
+              email: auth?.email || '',
+              language: profile?.language || lang || 'de',
+            }}
+            loading={loading}
+          />
+          <p style={srOnly} role="status" aria-live="polite">
+            {loading ? fallbackForgotPasswordLoading.description : ''}
+          </p>
+        </section>
+      </div>
     </main>
   );
 };

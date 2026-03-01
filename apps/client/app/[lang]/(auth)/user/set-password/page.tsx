@@ -57,7 +57,7 @@ const ResetPassword = () => {
   const http = Number(searchParams.get('http')) || 200;
 
   const getLogoSrc = () => {
-    if (profile.theme !== 'dark') {
+    if (profile.theme === 'dark') {
       return '/logos/nav-logo-dark.webp';
     } else {
       return '/logos/nav-logo-light.webp';

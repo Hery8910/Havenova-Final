@@ -49,7 +49,7 @@ const Login = () => {
   const loginButton = formText.button.login;
 
   const getLogoSrc = () => {
-    if (profile.theme !== 'dark') {
+    if (profile.theme === 'dark') {
       return '/logos/nav-logo-dark.webp';
     } else {
       return '/logos/nav-logo-light.webp';
@@ -188,8 +188,8 @@ const Login = () => {
               className={styles.logoImage}
               src={getLogoSrc()}
               alt="Havenova Logo"
-              width={170}
-              height={40}
+              width={400}
+              height={100}
               priority
             />
           </Link>

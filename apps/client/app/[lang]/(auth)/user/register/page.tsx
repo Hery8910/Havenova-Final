@@ -52,7 +52,7 @@ const Register = () => {
   const registerButton = formText.button.register;
 
   const getLogoSrc = () => {
-    if (profile.theme !== 'dark') {
+    if (profile.theme === 'dark') {
       return '/logos/nav-logo-dark.webp';
     } else {
       return '/logos/nav-logo-light.webp';
