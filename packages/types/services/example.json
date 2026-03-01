@@ -1,0 +1,31 @@
+{
+  "clientId": "68b3f0611bf3b163cdbe2970",
+  "userId": "6945495450de00e2c86e222f",
+  "serviceType": "cleaning",
+  "customerType": "private",
+  "serviceAddress": {
+    "street": "Sarah-Kirsch-Straße",
+    "streetNumber": "12",
+    "postalCode": "12629",
+    "district": "Marzahn-Hellersdorf",
+    "floor": "3"
+  },
+  "scheduling": {
+    "day": "Friday",
+    "date": "2026-03-02",
+    "hour": "08:00",
+    "notes": "I work from home, mornings are easiest."
+  },
+  "details": {
+    "frequency": "three_per_month",
+    "discountHintPercent": 10,
+    "property": {
+      "sizeRange": "50_80",
+      "roomsCount": 2,
+      "hasBalcony": true,
+      "hasIndoorStairs": false,
+      "hasPets": false,
+      "details": "Focus on kitchen and bathroom. Please avoid strong chemical smells."
+    }
+  }
+}

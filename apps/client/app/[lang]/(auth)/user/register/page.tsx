@@ -110,7 +110,6 @@ const Register = () => {
         clientId: client._id,
         tosAccepted: true,
         cookiePrefs: storedPrefs,
-        frontendUrl: process.env.NEXT_PUBLIC_BASE_URL!,
       };
 
       // 4) call backend

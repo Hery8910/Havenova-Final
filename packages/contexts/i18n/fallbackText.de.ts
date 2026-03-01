@@ -154,6 +154,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Ungültige Anmeldedaten',
     'Das Passwort ist falsch. Bitte versuchen Sie es erneut.'
   ),
+  USER_LOGIN_INVALID_CREDENTIALS: withClose(
+    'Ungültige Anmeldedaten',
+    'E-Mail oder Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.'
+  ),
   USER_LOGIN_USER_NOT_FOUND: withClose(
     'Benutzer nicht gefunden',
     'Es wurde kein Konto mit diesen Zugangsdaten gefunden.'
@@ -205,6 +209,38 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   USER_UPDATE_PASSWORD_SUCCESS: withClose(
     'Passwort aktualisiert',
     'Ihr Passwort wurde erfolgreich aktualisiert.'
+  ),
+  USER_CHANGE_EMAIL_REQUESTED: withClose(
+    'E-Mail-Änderung angefordert',
+    'Wir haben eine Bestätigungs-E-Mail an Ihre neue Adresse gesendet.'
+  ),
+  USER_CHANGE_EMAIL_CONFIRMED: withClose(
+    'E-Mail erfolgreich geändert',
+    'Ihre E-Mail-Adresse wurde erfolgreich aktualisiert.'
+  ),
+  USER_CHANGE_EMAIL_SAME_EMAIL: withClose(
+    'Keine Änderung erkannt',
+    'Die neue E-Mail-Adresse entspricht bereits Ihrer aktuellen Adresse.'
+  ),
+  USER_EMAIL_ALREADY_IN_USE: withClose(
+    'E-Mail bereits vergeben',
+    'Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet.'
+  ),
+  USER_CHANGE_EMAIL_MISSING_TOKEN: withClose(
+    'Bestätigung fehlgeschlagen',
+    'Der Bestätigungs-Token fehlt.'
+  ),
+  USER_CHANGE_EMAIL_INVALID_TOKEN: withClose(
+    'Ungültiger Bestätigungslink',
+    'Der Link zur E-Mail-Änderung ist ungültig oder beschädigt.'
+  ),
+  USER_CHANGE_EMAIL_TOKEN_EXPIRED: withClose(
+    'Bestätigungslink abgelaufen',
+    'Der Link zur E-Mail-Änderung ist abgelaufen. Bitte starten Sie den Vorgang erneut.'
+  ),
+  USER_CHANGE_EMAIL_STATE_MISMATCH: withClose(
+    'Statuskonflikt',
+    'Der Zustand der E-Mail-Änderung passt nicht mehr. Bitte starten Sie den Vorgang erneut.'
   ),
   USER_LOGIN_EMAIL_NOT_VERIFIED: withClose(
     'E-Mail nicht bestätigt',
@@ -276,6 +312,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   ACCESS_TOKEN_REFRESHED: withClose(
     'Sitzung erneuert',
     'Ihr Zugriffstoken wurde erfolgreich erneuert.'
+  ),
+  CSRF_TOKEN_INVALID: withClose(
+    'Sicherheitsprüfung fehlgeschlagen',
+    'Ihr Sicherheits-Token ist ungültig. Bitte laden Sie die Seite neu und versuchen Sie es erneut.'
   ),
 
   MAGIC_TOKEN_EXPIRED: withClose(
@@ -421,4 +461,4 @@ export const fallbackForgotPasswordLoading = withClose(
   'Passwort-Reset wird vorbereitet…',
   'Bitte warten Sie einen Moment.'
 );
-export const fallbackForgotPasswordSuccess = fallbackPopups.USER_FORGOT_PASSWORD_EMAIL_SENDED;
+export const fallbackForgotPasswordSuccess = fallbackPopups.USER_FORGOT_PASSWORD_EMAIL_SENT;

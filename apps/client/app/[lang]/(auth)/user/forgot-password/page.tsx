@@ -132,7 +132,7 @@ const ForgotPassword = () => {
         const popupData = getPopup(
           popups,
           response.code,
-          'USER_FORGOT_PASSWORD_EMAIL_SENDED',
+          'USER_FORGOT_PASSWORD_EMAIL_SENT',
           fallbackForgotPasswordSuccess
         );
 

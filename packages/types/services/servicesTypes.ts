@@ -100,10 +100,7 @@ export interface KitchenCleaningRequest {
 }
 
 export interface HouseCleaningRequest {
-  id: string;
   serviceType: 'house-cleaning';
-  price: number;
-  estimatedDuration: number;
   icon: string;
   details: BaseServiceDetails & {
     surface: number;

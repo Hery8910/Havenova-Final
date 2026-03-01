@@ -40,7 +40,6 @@ export interface RegisterFormData {
 }
 
 export interface RegisterPayload extends RegisterFormData {
-  frontendUrl: string;
   cookiePrefs?: CookiePrefs;
 }
 
@@ -58,6 +57,7 @@ export interface LoginPayload {
   clientId: string;
   email: string;
   password: string;
+  language?: string;
 }
 
 export interface LoginResponse {
@@ -85,8 +85,6 @@ export interface MagicLoginResponse {
 // ---------------------------
 
 export interface ChangePasswordPayload {
-  userId: string;
-  clientId: string;
   currentPassword: string;
   newPassword: string;
 }
@@ -110,8 +108,8 @@ export interface ForgotPasswordResponse {
 }
 
 export interface ResetPasswordPayload {
-  clientId: string;
-  inviteToken: string;
+  token: string;
+  inviteToken?: string;
   newPassword: string;
 }
 
@@ -145,10 +143,35 @@ export type VerifyEmailResult = { ok: true; language: string; magicToken: string
 export interface ResendVerificationEmailPayload {
   clientId: string;
   email: string;
-  language: string;
+  language?: string;
 }
 
 export interface ResendVerificationEmailResponse {
+  success: boolean;
+  code: string;
+  message?: string;
+}
+
+// ---------------------------
+// CHANGE EMAIL
+// ---------------------------
+
+export interface ChangeEmailPayload {
+  newEmail: string;
+  language?: string;
+}
+
+export interface ChangeEmailResponse {
+  success: boolean;
+  code: string;
+  message?: string;
+}
+
+export interface ChangeEmailConfirmPayload {
+  token: string;
+}
+
+export interface ChangeEmailConfirmResponse {
   success: boolean;
   code: string;
   message?: string;

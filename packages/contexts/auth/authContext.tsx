@@ -294,12 +294,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
     } finally {
       clearUserStorage();
-      setTimeout(() => {
-        saveToStorage(null);
-        const guest = createGuest();
-        setAuthState(guest);
-        saveToStorage(guest);
-      }, 5000);
+      saveToStorage(null);
+      const guest = createGuest();
+      setAuthState(guest);
+      saveToStorage(guest);
     }
   }, [createGuest, showError, showSuccess, closeAlert, popups]);
 

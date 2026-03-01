@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
   fallbackButtons,
@@ -32,11 +31,9 @@ export interface accessDeniedText {
 
 interface ResetPasswordFormData {
   password: string;
-  clientId: string;
 }
 
 const ResetPassword = () => {
-  const { client } = useClient();
   const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
@@ -51,7 +48,7 @@ const ResetPassword = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const inviteToken = searchParams.get('token');
+  const token = searchParams.get('token');
   const status = searchParams.get('status');
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
@@ -65,7 +62,7 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    if (!inviteToken) {
+    if (!token) {
       const popupData = getPopup(
         popups,
         'GLOBAL_INTERNAL_ERROR',
@@ -114,7 +111,7 @@ const ResetPassword = () => {
       });
     }
   }, [
-    inviteToken,
+    token,
     status,
     code,
     http,
@@ -130,7 +127,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      if (!inviteToken || !client?._id) {
+      if (!token) {
         const popupData = getPopup(
           popups,
           'GLOBAL_INTERNAL_ERROR',
@@ -142,7 +139,7 @@ const ResetPassword = () => {
           response: {
             status: 400,
             title: popupData.title,
-            description: popupData.description || 'Missing data or invalid link.',
+            description: popupData.description || 'Missing token or invalid link.',
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onCancel: () => {
@@ -174,8 +171,7 @@ const ResetPassword = () => {
       }
 
       const payload = {
-        clientId: client._id,
-        inviteToken,
+        token,
         newPassword: data.password,
       };
 
@@ -200,7 +196,7 @@ const ResetPassword = () => {
         const popupData = getPopup(
           popups,
           response.code,
-          'USER_PASSWORD_RESET_SUCCESS',
+          'USER_RESET_PASSWORD_SUCCESS',
           fallbackGlobalError
         );
 
@@ -213,7 +209,7 @@ const ResetPassword = () => {
           },
           onCancel: () => {
             closeAlert();
-            router.push('/');
+            router.push(href(lang, '/user/login'));
           },
         });
       }
@@ -261,10 +257,10 @@ const ResetPassword = () => {
         >
           <FormWrapper<ResetPasswordFormData>
             showHintPassword
-            fields={['password', 'clientId'] as const}
+            fields={['password'] as const}
             onSubmit={handleResetPassword}
             button={resetButton}
-            initialValues={{ password: '', clientId: client._id }}
+            initialValues={{ password: '' }}
             loading={loading}
           />
         </section>

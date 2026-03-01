@@ -146,6 +146,10 @@
     "title": "Invalid credentials",
     "description": "The password is incorrect. Please try again."
   },
+  "USER_LOGIN_INVALID_CREDENTIALS": {
+    "title": "Invalid credentials",
+    "description": "Email or password is incorrect. Please try again."
+  },
   "USER_LOGIN_USER_NOT_FOUND": {
     "title": "User not found",
     "description": "No account was found with these credentials."
@@ -246,6 +250,10 @@
     "title": "Session renewed",
     "description": "Your access token has been successfully refreshed."
   },
+  "CSRF_TOKEN_INVALID": {
+    "title": "Security validation failed",
+    "description": "Your session security token is invalid. Please reload and try again."
+  },
 
   "MAGIC_TOKEN_EXPIRED": {
     "title": "Login link expired",
@@ -279,6 +287,38 @@
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Password updated",
     "description": "Your password has been updated successfully."
+  },
+  "USER_CHANGE_EMAIL_REQUESTED": {
+    "title": "Email change requested",
+    "description": "We sent a confirmation email to your new address."
+  },
+  "USER_CHANGE_EMAIL_CONFIRMED": {
+    "title": "Email changed",
+    "description": "Your email address has been updated successfully."
+  },
+  "USER_CHANGE_EMAIL_SAME_EMAIL": {
+    "title": "No changes detected",
+    "description": "The new email address is the same as your current one."
+  },
+  "USER_EMAIL_ALREADY_IN_USE": {
+    "title": "Email already in use",
+    "description": "This email address is already being used by another account."
+  },
+  "USER_CHANGE_EMAIL_MISSING_TOKEN": {
+    "title": "Confirmation failed",
+    "description": "The email change token is missing."
+  },
+  "USER_CHANGE_EMAIL_INVALID_TOKEN": {
+    "title": "Invalid confirmation link",
+    "description": "The email change link is invalid or corrupted."
+  },
+  "USER_CHANGE_EMAIL_TOKEN_EXPIRED": {
+    "title": "Confirmation link expired",
+    "description": "The email change link has expired. Please request a new one."
+  },
+  "USER_CHANGE_EMAIL_STATE_MISMATCH": {
+    "title": "State mismatch",
+    "description": "The email change state is no longer valid. Please restart the process."
   },
   "USER_VERIFY_EMAIL_RESENT": {
     "title": "Verification email resent",

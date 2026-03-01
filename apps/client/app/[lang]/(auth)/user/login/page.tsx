@@ -76,11 +76,10 @@ const Login = () => {
         email: data.email?.trim() || '',
         password: data.password || '',
         clientId: data.clientId || client._id,
+        language: lang,
       };
 
       if (!payload.email || !payload.password || !payload.clientId) {
-        console.log(payload, client);
-
         const popupData = getPopup(
           popups,
           'GLOBAL_INTERNAL_ERROR',
@@ -121,6 +120,33 @@ const Login = () => {
             closeAlert();
           },
         });
+        return;
+      }
+
+      if (response.code === 'USER_LOGIN_EMAIL_NOT_VERIFIED') {
+        const popupData = getPopup(
+          popups,
+          response.code,
+          'USER_LOGIN_EMAIL_NOT_VERIFIED',
+          fallbackGlobalError
+        );
+
+        setAuth({
+          ...(auth || {}),
+          isLogged: false,
+          email: payload.email,
+        });
+
+        showError({
+          response: {
+            status: 200,
+            title: popupData.title,
+            description: popupData.description,
+            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          },
+          onCancel: closeAlert,
+        });
+        return;
       }
       const { user } = response;
 
@@ -154,14 +180,14 @@ const Login = () => {
         },
       });
     } catch (error) {
-      const err = error as { response?: { data?: { code?: string } } };
+      const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: 500,
+          status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
           cancelLabel: popupData.close,

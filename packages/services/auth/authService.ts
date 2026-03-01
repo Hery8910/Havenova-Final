@@ -18,6 +18,10 @@ import {
   ChangePasswordResponse,
   ResendVerificationEmailPayload,
   ResendVerificationEmailResponse,
+  ChangeEmailPayload,
+  ChangeEmailResponse,
+  ChangeEmailConfirmPayload,
+  ChangeEmailConfirmResponse,
 } from '@/packages/types/auth/authTypes';
 
 // ---------------------------
@@ -25,7 +29,7 @@ import {
 // ---------------------------
 
 export const refreshToken = async (): Promise<void> => {
-  await api.post('/api/auth/refresh-token', null, { withCredentials: true });
+  await api.post('/api/auth/refresh-token', {}, { withCredentials: true });
 };
 
 // ---------------------------
@@ -66,7 +70,7 @@ export const getAuthUser = async (): Promise<AuthUser> => {
 export const changePassword = async (
   payload: ChangePasswordPayload
 ): Promise<ChangePasswordResponse> => {
-  const { data } = await api.post<ChangePasswordResponse>('/api/auth/change-password', payload, {
+  const { data } = await api.post<ChangePasswordResponse>('/api/auth/update-password', payload, {
     withCredentials: true,
   });
   return data;
@@ -82,7 +86,10 @@ export const forgotPassword = async (
 export const resetPassword = async (
   payload: ResetPasswordPayload
 ): Promise<ResetPasswordResponse> => {
-  const { data } = await api.post<ResetPasswordResponse>('/api/auth/reset-password', payload);
+  const { data } = await api.post<ResetPasswordResponse>(
+    '/api/auth/reset-password-confirm',
+    payload
+  );
   return data;
 };
 
@@ -93,6 +100,15 @@ export const resetPassword = async (
 export const logoutUser = async (): Promise<ApiResponse<null>> => {
   const { data } = await api.post<ApiResponse<null>>(
     '/api/auth/logout',
+    {},
+    { withCredentials: true }
+  );
+  return data;
+};
+
+export const logoutAllSessions = async (): Promise<ApiResponse<null>> => {
+  const { data } = await api.post<ApiResponse<null>>(
+    '/api/auth/logout-all-sessions',
     {},
     { withCredentials: true }
   );
@@ -117,6 +133,20 @@ export const resendVerificationEmail = async (
     '/api/auth/resend-verification',
     payload
   );
+  return data;
+};
+
+export const changeEmail = async (payload: ChangeEmailPayload): Promise<ChangeEmailResponse> => {
+  const { data } = await api.post<ChangeEmailResponse>('/api/auth/change-email', payload, {
+    withCredentials: true,
+  });
+  return data;
+};
+
+export const confirmChangeEmail = async (
+  payload: ChangeEmailConfirmPayload
+): Promise<ChangeEmailConfirmResponse> => {
+  const { data } = await api.post<ChangeEmailConfirmResponse>('/api/auth/change-email/confirm', payload);
   return data;
 };
 

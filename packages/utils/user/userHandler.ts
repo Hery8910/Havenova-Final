@@ -260,7 +260,7 @@ export function useVerifyEmailActions() {
       const popupData = getPopup(
         popups,
         res.code,
-        'USER_VERIFY_EMAIL_RESENDED',
+        'USER_VERIFY_EMAIL_RESENT',
         fallbackVerifyEmailResended
       );
 

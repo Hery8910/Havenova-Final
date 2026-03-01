@@ -146,6 +146,10 @@
     "title": "Ungültige Anmeldedaten",
     "description": "Das Passwort ist falsch. Bitte versuchen Sie es erneut."
   },
+  "USER_LOGIN_INVALID_CREDENTIALS": {
+    "title": "Ungültige Anmeldedaten",
+    "description": "E-Mail oder Passwort ist nicht korrekt. Bitte versuchen Sie es erneut."
+  },
   "USER_LOGIN_USER_NOT_FOUND": {
     "title": "Benutzer nicht gefunden",
     "description": "Es wurde kein Konto mit diesen Zugangsdaten gefunden."
@@ -246,6 +250,10 @@
     "title": "Sitzung erneuert",
     "description": "Ihr Zugriffstoken wurde erfolgreich erneuert."
   },
+  "CSRF_TOKEN_INVALID": {
+    "title": "Sicherheitsprüfung fehlgeschlagen",
+    "description": "Ihr Sicherheits-Token ist ungültig. Bitte laden Sie die Seite neu und versuchen Sie es erneut."
+  },
 
   "MAGIC_TOKEN_EXPIRED": {
     "title": "Login-Link abgelaufen",
@@ -279,6 +287,38 @@
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Passwort aktualisiert",
     "description": "Ihr Passwort wurde erfolgreich aktualisiert."
+  },
+  "USER_CHANGE_EMAIL_REQUESTED": {
+    "title": "E-Mail-Änderung angefordert",
+    "description": "Wir haben eine Bestätigungs-E-Mail an Ihre neue Adresse gesendet."
+  },
+  "USER_CHANGE_EMAIL_CONFIRMED": {
+    "title": "E-Mail erfolgreich geändert",
+    "description": "Ihre E-Mail-Adresse wurde erfolgreich aktualisiert."
+  },
+  "USER_CHANGE_EMAIL_SAME_EMAIL": {
+    "title": "Keine Änderung erkannt",
+    "description": "Die neue E-Mail-Adresse entspricht bereits Ihrer aktuellen Adresse."
+  },
+  "USER_EMAIL_ALREADY_IN_USE": {
+    "title": "E-Mail bereits vergeben",
+    "description": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet."
+  },
+  "USER_CHANGE_EMAIL_MISSING_TOKEN": {
+    "title": "Bestätigung fehlgeschlagen",
+    "description": "Der Bestätigungs-Token fehlt."
+  },
+  "USER_CHANGE_EMAIL_INVALID_TOKEN": {
+    "title": "Ungültiger Bestätigungslink",
+    "description": "Der Link zur E-Mail-Änderung ist ungültig oder beschädigt."
+  },
+  "USER_CHANGE_EMAIL_TOKEN_EXPIRED": {
+    "title": "Bestätigungslink abgelaufen",
+    "description": "Der Link zur E-Mail-Änderung ist abgelaufen. Bitte starten Sie den Vorgang erneut."
+  },
+  "USER_CHANGE_EMAIL_STATE_MISMATCH": {
+    "title": "Statuskonflikt",
+    "description": "Der Zustand der E-Mail-Änderung passt nicht mehr. Bitte starten Sie den Vorgang erneut."
   },
   "USER_VERIFY_EMAIL_RESENT": {
     "title": "Bestätigungs-E-Mail erneut gesendet",
