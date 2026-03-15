@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { getPopup } from '../../../../../../packages/utils/alertType';
 import AvatarSelector from '../../../../../../packages/components/user/avatarSelector/AvatarSelector';
-import { UpdateUserProfilePayload } from '../../../../../../packages/types';
+import { UpdateUserClientProfileInput, formatUserAddress } from '../../../../../../packages/types';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -24,8 +24,8 @@ import { href } from '../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../packages/components';
 
 type ProfileFormData = Pick<
-  UpdateUserProfilePayload,
-  'clientId' | 'name' | 'address' | 'phone' | 'language'
+  UpdateUserClientProfileInput,
+  'name' | 'phone'
 >;
 export interface ProfileData {
   greeting: string;
@@ -112,7 +112,6 @@ const Profile = () => {
 
       await updateProfile({
         name: data?.name?.trim(),
-        address: data?.address?.trim(),
         phone: data?.phone?.trim(),
       });
       await reloadProfile();
@@ -201,19 +200,19 @@ const Profile = () => {
         </header>
 
         <FormWrapper<ProfileFormData>
-          key={`${userProfile.name ?? ''}-${userProfile.address ?? ''}-${userProfile.phone ?? ''}`}
-          fields={['name', 'address', 'phone'] as const}
+          key={`${userProfile.name ?? ''}-${userProfile.phone ?? ''}-${userProfile.updatedAt ?? ''}`}
+          fields={['name', 'phone'] as const}
           onSubmit={handleProfileUpdate}
           button={editButton}
           initialValues={{
-            clientId: auth.clientId || '',
             name: userProfile.name || '',
-            address: userProfile.address || '',
             phone: userProfile.phone || '',
-            language: userProfile.language || 'de',
           }}
           loading={saving}
         />
+        {userProfile.primaryAddress && (
+          <p>{formatUserAddress(userProfile.primaryAddress)}</p>
+        )}
       </section>
     </div>
   );

@@ -1,0 +1,135 @@
+.panel {
+  position: absolute;
+  inset: 18px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--brand-primary) 8%, white) 0%, white 100%);
+  box-shadow: var(--shadow-lg, 0 20px 40px rgba(0, 0, 0, 0.12));
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headerCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.closeButton {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: white;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.slotList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 10px;
+}
+
+.slotItem {
+  min-width: 0;
+}
+
+.slotButton {
+  width: 100%;
+  padding: 14px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.slotButton:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.available {
+  background: white;
+  color: var(--text-primary);
+}
+
+.available:hover {
+  border-color: var(--brand-primary);
+}
+
+.blocked {
+  background: color-mix(in srgb, var(--surface-border) 45%, white);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+}
+
+.selected {
+  border-color: var(--brand-primary);
+  background: color-mix(in srgb, var(--brand-primary) 15%, white);
+  box-shadow: var(--shadow-sm);
+}
+
+.slotTime {
+  font-weight: 700;
+}
+
+.slotBadge {
+  font-size: 0.78rem;
+  color: inherit;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    inset: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .closeButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

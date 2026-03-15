@@ -1,4 +1,5 @@
 // service.ts
+import type { UserAddress } from '../profile';
 
 // --------------------------------------
 // Tipos generales
@@ -182,7 +183,25 @@ export interface CleaningPropertyDetails {
 }
 
 export interface CleaningRequestDetailsInput {
-  customerType: CleaningCustomerType;
   frequency: CleaningFrequency;
   property: CleaningPropertyDetails;
+}
+
+export type WorkAddressSource = 'primary' | 'saved' | 'new';
+
+export interface WorkAddressSelection {
+  address: UserAddress;
+  source: WorkAddressSource;
+  saveToProfile?: boolean;
+  label?: string;
+}
+
+export interface CleaningRequestSubmission {
+  customerType: CleaningCustomerType;
+  details: CleaningRequestDetailsInput;
+  preferredVisitSlot: {
+    start: Date;
+    end: Date;
+  };
+  workAddress: WorkAddressSelection;
 }

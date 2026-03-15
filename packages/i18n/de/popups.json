@@ -53,6 +53,18 @@
     "title": "Unerwarteter Fehler",
     "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
   },
+  "CLEANING_REQUEST_LOADING": {
+    "title": "Anfrage wird gesendet",
+    "description": "Ihre Reinigungsanfrage wird sicher verarbeitet."
+  },
+  "CLEANING_REQUEST_SUBMITTED": {
+    "title": "Anfrage gesendet",
+    "description": "Ihre Reinigungsanfrage wurde erfolgreich gesendet. Wir melden uns mit dem nächsten Schritt bei Ihnen."
+  },
+  "CLEANING_REQUEST_MISSING_SESSION": {
+    "title": "Anmeldung erforderlich",
+    "description": "Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal."
+  },
   "CATALOG_FOUND": {
     "title": "Katalog geladen",
     "description": "Der globale Aufgaben-Katalog wurde erfolgreich geladen."

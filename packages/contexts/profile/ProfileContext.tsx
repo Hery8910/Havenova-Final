@@ -2,158 +2,183 @@
 
 import {
   createContext,
-  useEffect,
-  useState,
   useCallback,
   useContext,
+  useEffect,
+  useMemo,
   useRef,
-  ReactNode,
+  useState,
+  type ReactNode,
 } from 'react';
-
-import { useAuth } from '../auth/authContext';
-import { refreshToken } from '@havenova/services';
 import Cookies from 'js-cookie';
-
-import { UserClientProfile, ThemeMode } from '@/packages/types/profile/profileTypes';
-import { UpdateUserProfilePayload } from '@/packages/types/profile/profileTypes';
+import { refreshToken } from '@havenova/services';
+import { useAuth } from '../auth/authContext';
+import type {
+  AppLanguage,
+  CreateUserClientProfileInput,
+  ThemeMode,
+  UpdateUserClientProfileInput,
+  UserClientProfile,
+} from '@/packages/types/profile/profileTypes';
 import {
   createUserClientProfile,
   getUserClientProfile,
   updateUserClientProfile,
 } from '@havenova/services';
 
-const PROFILE_STORAGE_KEY = 'hv-profile';
-
 interface ProfileContextProps {
   profile: UserClientProfile;
   loading: boolean;
-
   reloadProfile: () => Promise<void>;
-  updateProfile: (patch: Partial<UserClientProfile>) => Promise<void>;
-
-  setLanguage: (lang: string) => Promise<void>;
+  updateProfile: (patch: UpdateUserClientProfileInput) => Promise<void>;
+  setLanguage: (lang: AppLanguage) => Promise<void>;
   setTheme: (theme: ThemeMode) => Promise<void>;
   setProfileImage: (profileImage: string) => Promise<void>;
 }
+
+const DEFAULT_AVATAR = '/avatars/avatar-1.svg';
+
+const getStoredTheme = (): ThemeMode | null => {
+  if (typeof window === 'undefined') return null;
+  const stored = localStorage.getItem('theme');
+  return stored === 'dark' || stored === 'light' ? stored : null;
+};
+
+const getStoredLanguage = (): AppLanguage | null => {
+  if (typeof window === 'undefined') return null;
+  const stored = Cookies.get('lang');
+  return stored === 'de' || stored === 'en' ? stored : null;
+};
+
+const createEmptyProfile = (overrides?: Partial<UserClientProfile>): UserClientProfile => ({
+  _id: '',
+  userId: '',
+  clientId: '',
+  name: '',
+  phone: '',
+  primaryAddress: undefined,
+  savedAddresses: [],
+  profileImage: DEFAULT_AVATAR,
+  language: getStoredLanguage() ?? 'de',
+  theme: getStoredTheme() ?? 'light',
+  extra: {},
+  createdAt: '',
+  updatedAt: '',
+  ...overrides,
+});
+
+const normalizeProfile = (profile: Partial<UserClientProfile> | null | undefined): UserClientProfile =>
+  createEmptyProfile({
+    ...profile,
+    savedAddresses: profile?.savedAddresses ?? [],
+    extra: profile?.extra ?? {},
+    profileImage: profile?.profileImage ?? DEFAULT_AVATAR,
+  });
+
+const getProfileStorageKey = (clientId?: string | null) => `hv-profile:${clientId || 'guest'}`;
 
 export const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, setAuth } = useAuth();
-  const clientId = auth.clientId;
   const creatingProfileRef = useRef(false);
 
-  const [profile, setProfile] = useState<UserClientProfile | null>(null);
+  const storageKey = useMemo(() => getProfileStorageKey(auth.clientId), [auth.clientId]);
+  const [profile, setProfile] = useState<UserClientProfile>(createEmptyProfile());
   const [loading, setLoading] = useState(true);
   const [isClientReady, setIsClientReady] = useState(false);
 
-  // -------------------
-  // Local Storage Utils
-  // -------------------
-
-  const loadFromStorage = (): UserClientProfile | null => {
+  const loadFromStorage = useCallback((): UserClientProfile | null => {
     if (typeof window === 'undefined') return null;
-    const raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+
+    const raw = localStorage.getItem(storageKey);
     if (!raw) return null;
 
     try {
-      return JSON.parse(raw) as UserClientProfile;
+      return normalizeProfile(JSON.parse(raw) as UserClientProfile);
     } catch {
       return null;
     }
-  };
+  }, [storageKey]);
 
-  const saveToStorage = (value: UserClientProfile | null) => {
-    if (typeof window === 'undefined') return;
-    if (!value) {
-      localStorage.removeItem(PROFILE_STORAGE_KEY);
-      return;
-    }
-    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(value));
-  };
+  const saveToStorage = useCallback(
+    (value: UserClientProfile | null) => {
+      if (typeof window === 'undefined') return;
 
-  // -------------------
-  // Default local profile
-  // -------------------
+      if (!value) {
+        localStorage.removeItem(storageKey);
+        return;
+      }
 
-  const createLocalDefault = (previous?: UserClientProfile | null): UserClientProfile => ({
-    name: previous?.name,
-    phone: previous?.phone,
-    address: previous?.address,
-    profileImage: previous?.profileImage ?? '/avatars/avatar-1.svg',
-    language: previous?.language ?? 'de',
-    theme: previous?.theme ?? 'light',
-  });
-
-  const getStoredTheme = (): ThemeMode | null => {
-    if (typeof window === 'undefined') return null;
-    const stored = localStorage.getItem('theme');
-    return stored === 'dark' || stored === 'light' ? stored : null;
-  };
-
-  const getStoredLanguage = (): string | null => {
-    if (typeof window === 'undefined') return null;
-    const stored = Cookies.get('lang');
-    return stored === 'de' || stored === 'en' ? stored : null;
-  };
-
-  // -------------------
-  // Init hydration guard
-  // -------------------
+      localStorage.setItem(storageKey, JSON.stringify(value));
+    },
+    [storageKey]
+  );
 
   useEffect(() => {
     setIsClientReady(true);
   }, []);
 
-  // -------------------
-  // Initial load
-  // -------------------
-
   useEffect(() => {
     if (!isClientReady) return;
 
-    const stored = loadFromStorage();
+    const storedProfile = loadFromStorage();
+    const nextProfile = storedProfile ?? createEmptyProfile();
 
-    if (stored) {
-      setProfile(stored);
-    } else {
-      const local = createLocalDefault(null);
-      setProfile(local);
-      saveToStorage(local);
-    }
-
+    setProfile(nextProfile);
+    saveToStorage(nextProfile);
     setLoading(false);
-  }, [isClientReady]);
-
-  // -------------------
-  // Persist local
-  // -------------------
+  }, [isClientReady, loadFromStorage, saveToStorage, storageKey]);
 
   useEffect(() => {
-    if (!isClientReady || !profile) return;
+    if (!isClientReady) return;
     saveToStorage(profile);
-  }, [profile, isClientReady]);
+  }, [isClientReady, profile, saveToStorage]);
 
-  // -------------------
-  // Reload profile from backend
-  // -------------------
+  const applyProfile = useCallback(
+    (nextProfile: Partial<UserClientProfile> | null | undefined) => {
+      const normalized = normalizeProfile(nextProfile);
+      setProfile(normalized);
+      saveToStorage(normalized);
+      return normalized;
+    },
+    [saveToStorage]
+  );
+
+  const ensureBackendProfile = useCallback(async () => {
+    const initialProfile: CreateUserClientProfileInput = {
+      name: profile?.name?.trim() || undefined,
+      phone: profile?.phone?.trim() || undefined,
+      profileImage: profile?.profileImage || DEFAULT_AVATAR,
+      language: profile?.language ?? 'de',
+      theme: profile?.theme ?? 'light',
+      savedAddresses: profile?.savedAddresses ?? [],
+      primaryAddress: profile?.primaryAddress,
+      extra: profile?.extra ?? {},
+    };
+
+    const created = await createUserClientProfile(initialProfile);
+    applyProfile(created.profile);
+
+    if (auth.isNewUser) {
+      setAuth({ ...auth, isNewUser: false });
+    }
+  }, [applyProfile, auth, profile, setAuth]);
 
   const reloadProfile = useCallback(async () => {
-    if (!auth.isLogged || auth.role === 'guest' || !clientId) return;
+    if (!auth.isLogged || auth.role === 'guest') return;
 
     try {
       const backendProfile = await getUserClientProfile();
-      const merged = { ...createLocalDefault(profile), ...backendProfile };
-      setProfile(merged);
-      saveToStorage(merged);
+      applyProfile(backendProfile);
 
-      // Ya no es usuario nuevo
       if (auth.isNewUser) {
         setAuth({ ...auth, isNewUser: false });
       }
-    } catch (err: any) {
-      const status = err?.response?.status;
-      const code = err?.response?.data?.code;
+    } catch (error) {
+      const err = error as { response?: { status?: number; data?: { code?: string } } };
+      const status = err.response?.status;
+      const code = err.response?.data?.code;
 
       if (
         (status === 404 || code === 'USER_CLIENT_PROFILE_NOT_FOUND') &&
@@ -163,120 +188,103 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         creatingProfileRef.current = true;
 
         try {
-          // Crear perfil inicial automáticamente
-          const initialProfile: UserClientProfile = {
-            name: profile?.name || '',
-            language: profile?.language ?? 'de',
-            theme: profile?.theme ?? 'light',
-          };
-
-          const payload: UpdateUserProfilePayload = {
-            clientId,
-            role: auth.role,
-            ...initialProfile,
-          };
-
-          const created = await createUserClientProfile(payload);
-          const newProfile = { ...initialProfile, ...created.profile };
-
-          setProfile(newProfile);
-          saveToStorage(newProfile);
-
-          setAuth({ ...auth, isNewUser: false });
+          await ensureBackendProfile();
         } finally {
           creatingProfileRef.current = false;
         }
         return;
       }
 
-      // Si el token expiró, intenta refrescar y reintenta una vez
       if (status === 401 || status === 403) {
         try {
           await refreshToken();
           const backendProfile = await getUserClientProfile();
-          const merged = { ...createLocalDefault(profile), ...backendProfile };
-          setProfile(merged);
-          saveToStorage(merged);
+          applyProfile(backendProfile);
 
           if (auth.isNewUser) {
             setAuth({ ...auth, isNewUser: false });
           }
         } catch {
-          // si vuelve a fallar, no hacemos nada (AuthContext debería manejar la sesión)
+          return;
         }
       }
-
-      // Otros errores → no tocamos nada
     }
-  }, [auth, clientId, profile, setAuth]);
+  }, [applyProfile, auth, ensureBackendProfile, setAuth]);
 
-  // Cuando usuario pasa de guest → logged
   useEffect(() => {
     if (!auth.isLogged || auth.role === 'guest') return;
-    reloadProfile();
-  }, [auth.isLogged, auth.role]);
+    void reloadProfile();
+  }, [auth.isLogged, auth.role, auth.clientId, reloadProfile]);
 
-  // Cuando usuario hace logout → volver a perfil guest/default
   useEffect(() => {
     if (!isClientReady) return;
     if (auth.isLogged && auth.role !== 'guest') return;
-    const lastProfile = profile ?? loadFromStorage();
-    const local = {
-      ...createLocalDefault(null),
-      name: '',
-      phone: '',
-      address: '',
-      language: lastProfile?.language ?? getStoredLanguage() ?? 'de',
-      theme: lastProfile?.theme ?? getStoredTheme() ?? 'light',
-    };
-    setProfile(local);
-    saveToStorage(local);
-  }, [auth.isLogged, auth.role, isClientReady]);
 
-  // -------------------
-  // Update profile
-  // -------------------
+    applyProfile(
+      createEmptyProfile({
+        profileImage: profile?.profileImage || DEFAULT_AVATAR,
+        language: profile?.language ?? getStoredLanguage() ?? 'de',
+        theme: profile?.theme ?? getStoredTheme() ?? 'light',
+      })
+    );
+  }, [applyProfile, auth.isLogged, auth.role, isClientReady]);
 
   const updateProfile = useCallback(
-    async (patch: Partial<UserClientProfile>) => {
-      if (!profile) return;
+    async (patch: UpdateUserClientProfileInput) => {
+      const updatedLocal = normalizeProfile({
+        ...profile,
+        ...patch,
+        savedAddresses: patch.savedAddresses ?? profile.savedAddresses,
+        extra: patch.extra ?? profile.extra,
+      });
 
-      const updatedLocal = { ...profile, ...patch };
-      setProfile(updatedLocal);
-      saveToStorage(updatedLocal);
-      reloadProfile();
-      // Solo sincronizar si está logeado
-      if (auth.isLogged && auth.role !== 'guest') {
-        const payload: UpdateUserProfilePayload = {
-          clientId,
-          role: auth.role,
-          ...updatedLocal,
-        };
-        try {
-          await updateUserClientProfile(payload);
-          reloadProfile();
-        } catch (err: any) {
-          const status = err?.response?.status;
+      applyProfile(updatedLocal);
 
-          if (status === 401 || status === 403) {
-            try {
-              await refreshToken();
-              await updateUserClientProfile(payload);
-            } catch {
-              // si vuelve a fallar, no hacemos nada; AuthContext se encargará de la sesión
-            }
+      if (!auth.isLogged || auth.role === 'guest') return;
+
+      try {
+        const response = await updateUserClientProfile(patch);
+        applyProfile(response.profile);
+      } catch (error) {
+        const err = error as { response?: { status?: number } };
+
+        if (err.response?.status === 404) {
+          const created = await createUserClientProfile({
+            name: updatedLocal.name || undefined,
+            phone: updatedLocal.phone || undefined,
+            primaryAddress: updatedLocal.primaryAddress,
+            savedAddresses: updatedLocal.savedAddresses,
+            profileImage: updatedLocal.profileImage,
+            language: updatedLocal.language,
+            theme: updatedLocal.theme,
+            extra: updatedLocal.extra,
+          });
+          applyProfile(created.profile);
+          return;
+        }
+
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          try {
+            await refreshToken();
+            const response = await updateUserClientProfile(patch);
+            applyProfile(response.profile);
+          } catch {
+            return;
           }
         }
       }
     },
-    [auth, clientId, profile]
+    [applyProfile, auth.isLogged, auth.role, profile]
   );
 
-  const setLanguage = (lang: string) => updateProfile({ language: lang });
-  const setTheme = (theme: ThemeMode) => updateProfile({ theme });
-  const setProfileImage = (profileImage: string) => updateProfile({ profileImage });
+  const setLanguage = useCallback((language: AppLanguage) => updateProfile({ language }), [updateProfile]);
+  const setTheme = useCallback((theme: ThemeMode) => updateProfile({ theme }), [updateProfile]);
+  const setProfileImage = useCallback(
+    (profileImage: string) => updateProfile({ profileImage }),
+    [updateProfile]
+  );
 
-  if (!isClientReady || loading || !profile) return null;
+  if (!isClientReady || loading) return null;
 
   return (
     <ProfileContext.Provider

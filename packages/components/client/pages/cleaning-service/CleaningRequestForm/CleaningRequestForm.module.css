@@ -27,7 +27,7 @@
 
 .form {
   width: 100%;
-  max-width: 500px;
+  max-width: 860px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -49,4 +49,23 @@
 .submitDisabled {
   opacity: 0.62;
   cursor: not-allowed;
+}
+
+.schedulingStep {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.missingConfig {
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, #c74e4e 32%, var(--surface-border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, #c74e4e 8%, white);
+}
+
+.errorText {
+  margin: 0;
+  color: var(--error-700, #9f2d2d);
+  font-size: 0.92rem;
 }

@@ -59,8 +59,10 @@ export default function PropertyDetailsStep({
   onDetailsBlur,
 }: Props) {
   return (
-    <article className={styles.container}>
-      <h3 className={styles.propertyTitle}>{property.title}</h3>
+    <section className={styles.container} aria-labelledby="cleaning-property-details-title">
+      <h3 id="cleaning-property-details-title" className={styles.propertyTitle}>
+        {property.title}
+      </h3>
 
       <label className={styles.field} htmlFor="cleaning-size-range">
         <span className={styles.label}>{property.sizeRangeLabel}</span>
@@ -88,7 +90,7 @@ export default function PropertyDetailsStep({
 
       <label className={styles.field} htmlFor="cleaning-rooms-count">
         <span className={styles.label}>{property.roomsCountLabel}</span>
-        <div
+        <section
           id="cleaning-rooms-count"
           className={styles.counter}
           role="group"
@@ -115,7 +117,7 @@ export default function PropertyDetailsStep({
           >
             +
           </button>
-        </div>
+        </section>
         <span id="cleaning-rooms-count-error" className={styles.error} aria-live="polite">
           {errors.roomsCount || ''}
         </span>
@@ -187,6 +189,6 @@ export default function PropertyDetailsStep({
           {errors.details || ''}
         </span>
       </label>
-    </article>
+    </section>
   );
 }

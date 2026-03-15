@@ -5,15 +5,24 @@ import styles from './CleaningRequestForm.module.css';
 import CustomerFrequencyStep from './CustomerFrequencyStep/CustomerFrequencyStep';
 import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
 import ProcessStepsHeader from './ProcessStepsHeader/ProcessStepsHeader';
+import AvailabilityCalendar from './AvailabilityCalendar/AvailabilityCalendar';
+import WorkAddressSelector from './WorkAddressSelector/WorkAddressSelector';
+import { useClientCalendarSettings } from '../../../../../hooks';
 import {
   CleaningCustomerType,
   CleaningFrequency,
   CleaningRequestDetailsInput,
+  CleaningRequestSubmission,
   PropertySizeRange,
+  WorkAddressSelection,
 } from '../../../../../types/services';
+import type { SelectedCalendarSlot } from '../../../../../types/calendar';
 
 type FieldErrors = Partial<
-  Record<'customerType' | 'frequency' | 'sizeRange' | 'roomsCount' | 'details', string>
+  Record<
+    'customerType' | 'frequency' | 'sizeRange' | 'roomsCount' | 'details' | 'preferredVisitSlot' | 'workAddress',
+    string
+  >
 >;
 
 type FormState = {
@@ -25,7 +34,11 @@ type FormState = {
   hasIndoorStairs: boolean;
   hasPets: boolean;
   details: string;
+  preferredVisitSlot: SelectedCalendarSlot | null;
+  workAddress: WorkAddressSelection | null;
 };
+
+export interface CleaningRequestFormSubmission extends CleaningRequestSubmission {}
 
 export interface CleaningRequestFormTexts {
   process: {
@@ -35,19 +48,15 @@ export interface CleaningRequestFormTexts {
     steps: {
       customerFrequency: {
         heading: string;
-        subheading: string;
       };
       propertyDetails: {
         heading: string;
-        subheading: string;
       };
       scheduling: {
         heading: string;
-        subheading: string;
       };
       serviceAddress: {
         heading: string;
-        subheading: string;
       };
     };
   };
@@ -71,6 +80,29 @@ export interface CleaningRequestFormTexts {
     hasPetsLabel: string;
     detailsLabel: string;
     detailsPlaceholder: string;
+  };
+  scheduling?: {
+    title?: string;
+    description?: string;
+    slotsTitle?: string;
+    noDateSelected?: string;
+    noAvailability?: string;
+    blockedBadge?: string;
+    selectedBadge?: string;
+    availableBadge?: string;
+    closeSlotsLabel?: string;
+    loading?: string;
+    errorPrefix?: string;
+    previousMonth?: string;
+    nextMonth?: string;
+    nonWorkday?: string;
+    blockedDay?: string;
+    availableDay?: string;
+    required?: string;
+    missingClientConfig?: string;
+  };
+  serviceAddress?: {
+    required?: string;
   };
   common: {
     yes: string;
@@ -107,8 +139,9 @@ export default function CleaningRequestForm({
   loading?: boolean;
   canSubmit?: boolean;
   onRequireAuth?: () => void;
-  onSubmit: (data: CleaningRequestDetailsInput) => Promise<void> | void;
+  onSubmit: (data: CleaningRequestFormSubmission) => Promise<void> | void;
 }) {
+  const clientCalendarSettings = useClientCalendarSettings();
   const [values, setValues] = useState<FormState>({
     customerType: 'private',
     frequency: '',
@@ -118,6 +151,8 @@ export default function CleaningRequestForm({
     hasIndoorStairs: false,
     hasPets: false,
     details: '',
+    preferredVisitSlot: null,
+    workAddress: null,
   });
   const [touched, setTouched] = useState<Record<keyof FormState, boolean>>({
     customerType: false,
@@ -128,9 +163,11 @@ export default function CleaningRequestForm({
     hasIndoorStairs: false,
     hasPets: false,
     details: false,
+    preferredVisitSlot: false,
+    workAddress: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
   const errors = useMemo<FieldErrors>(() => {
     const next: FieldErrors = {};
@@ -158,42 +195,99 @@ export default function CleaningRequestForm({
       }
     }
 
+    if (!values.preferredVisitSlot) {
+      next.preferredVisitSlot =
+        texts.scheduling?.required ?? 'Please select a preferred date and time.';
+    }
+
+    if (!values.workAddress) {
+      next.workAddress = texts.serviceAddress?.required ?? 'Please select or enter a work address.';
+    }
+
     return next;
-  }, [texts.errors, values]);
+  }, [texts.errors, texts.scheduling, texts.serviceAddress, values]);
 
   const hasErrors = Object.keys(errors).length > 0;
-  const showError = (field: keyof FieldErrors) => Boolean((submitted || touched[field]) && errors[field]);
+  const showError = (field: keyof FieldErrors) =>
+    Boolean((submitted || touched[field]) && errors[field]);
 
-  const isStepOneValid = Boolean(values.customerType && values.frequency && !errors.customerType && !errors.frequency);
+  const isStepOneValid = Boolean(
+    values.customerType && values.frequency && !errors.customerType && !errors.frequency
+  );
+  const isStepTwoValid = Boolean(
+    values.sizeRange && !errors.sizeRange && !errors.roomsCount && !errors.details
+  );
+  const isStepThreeValid = Boolean(values.preferredVisitSlot && !errors.preferredVisitSlot);
 
   const goToStepTwo = () => {
     setTouched((prev) => ({ ...prev, customerType: true, frequency: true }));
-    if (isStepOneValid) setStep(2);
+    if (isStepOneValid) {
+      setStep(2);
+    }
+  };
+
+  const goToStepThree = () => {
+    setTouched((prev) => ({
+      ...prev,
+      sizeRange: true,
+      roomsCount: true,
+      details: true,
+    }));
+
+    if (isStepTwoValid) {
+      setStep(3);
+    }
+  };
+
+  const goToStepFour = () => {
+    setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+
+    if (isStepThreeValid) {
+      setStep(4);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (step === 1) {
-      goToStepTwo();
-      return;
-    }
 
     if (!canSubmit) {
       onRequireAuth?.();
       return;
     }
 
+    if (step === 1) {
+      goToStepTwo();
+      return;
+    }
+
+    if (step === 2) {
+      goToStepThree();
+      return;
+    }
+
+    if (step === 3) {
+      goToStepFour();
+      return;
+    }
+
     setSubmitted(true);
+    setTouched((prev) => ({ ...prev, preferredVisitSlot: true, workAddress: true }));
 
     if (hasErrors) return;
-    if (!values.customerType || !values.frequency || !values.sizeRange) return;
+    if (
+      !values.customerType ||
+      !values.frequency ||
+      !values.sizeRange ||
+      !values.preferredVisitSlot ||
+      !values.workAddress
+    ) {
+      return;
+    }
 
     const roomsCount = Number(values.roomsCount);
     if (!Number.isInteger(roomsCount)) return;
 
     const payload: CleaningRequestDetailsInput = {
-      customerType: values.customerType,
       frequency: values.frequency,
       property: {
         sizeRange: values.sizeRange,
@@ -205,7 +299,12 @@ export default function CleaningRequestForm({
       },
     };
 
-    await onSubmit(payload);
+    await onSubmit({
+      customerType: values.customerType,
+      details: payload,
+      preferredVisitSlot: values.preferredVisitSlot,
+      workAddress: values.workAddress,
+    });
   };
 
   return (
@@ -218,7 +317,10 @@ export default function CleaningRequestForm({
             customerType={texts.customerType}
             frequency={texts.frequency}
             values={{ customerType: values.customerType, frequency: values.frequency }}
-            errors={{ customerType: showError('customerType') ? errors.customerType : '', frequency: showError('frequency') ? errors.frequency : '' }}
+            errors={{
+              customerType: showError('customerType') ? errors.customerType : '',
+              frequency: showError('frequency') ? errors.frequency : '',
+            }}
             frequencyOrder={FREQUENCY_ORDER}
             onCustomerTypeChange={(customerType) => {
               setValues((prev) => ({ ...prev, customerType }));
@@ -229,7 +331,7 @@ export default function CleaningRequestForm({
               setTouched((prev) => ({ ...prev, frequency: true }));
             }}
           />
-        ) : (
+        ) : step === 2 ? (
           <PropertyDetailsStep
             property={texts.property}
             common={texts.common}
@@ -269,31 +371,85 @@ export default function CleaningRequestForm({
             onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
             onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
           />
+        ) : step === 3 && clientCalendarSettings ? (
+          <section className={styles.schedulingStep} aria-label="Preferred visit scheduling">
+            <AvailabilityCalendar
+              clientId={clientCalendarSettings.clientId}
+              schedule={clientCalendarSettings.schedule}
+              slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
+              value={values.preferredVisitSlot}
+              onChange={(preferredVisitSlot) => {
+                setValues((prev) => ({ ...prev, preferredVisitSlot }));
+                setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+              }}
+              texts={{
+                title: texts.scheduling?.title,
+                description: texts.scheduling?.description,
+                slotsTitle: texts.scheduling?.slotsTitle,
+                noDateSelected: texts.scheduling?.noDateSelected,
+                noAvailability: texts.scheduling?.noAvailability,
+                blockedBadge: texts.scheduling?.blockedBadge,
+                selectedBadge: texts.scheduling?.selectedBadge,
+                availableBadge: texts.scheduling?.availableBadge,
+                closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
+                loading: texts.scheduling?.loading,
+                errorPrefix: texts.scheduling?.errorPrefix,
+                previousMonth: texts.scheduling?.previousMonth,
+                nextMonth: texts.scheduling?.nextMonth,
+                nonWorkday: texts.scheduling?.nonWorkday,
+                blockedDay: texts.scheduling?.blockedDay,
+                availableDay: texts.scheduling?.availableDay,
+              }}
+            />
+
+            {showError('preferredVisitSlot') && (
+              <p className={styles.errorText}>{errors.preferredVisitSlot}</p>
+            )}
+          </section>
+        ) : step === 4 ? (
+          <section className={styles.schedulingStep} aria-label="Service address selection">
+            <WorkAddressSelector
+              value={values.workAddress}
+              onChange={(workAddress) => {
+                setValues((prev) => ({ ...prev, workAddress }));
+                setTouched((prev) => ({ ...prev, workAddress: true }));
+              }}
+            />
+
+            {showError('workAddress') && <p className={styles.errorText}>{errors.workAddress}</p>}
+          </section>
+        ) : (
+          <section className={styles.missingConfig} aria-live="polite">
+            <p className={styles.errorText}>
+              {texts.scheduling?.missingClientConfig ??
+                'Client calendar configuration is unavailable right now.'}
+            </p>
+          </section>
         )}
 
-        <div className={styles.actions}>
-          {step === 2 && (
+        <footer className={styles.actions}>
+          {step > 1 && (
             <button
               type="button"
               className={`button button_ghost ${styles.backButton}`}
-              onClick={() => setStep(1)}
+              onClick={() => setStep((prev) => (prev === 4 ? 3 : prev === 3 ? 2 : 1))}
             >
               {texts.common.back}
             </button>
           )}
 
           <button
-            className={`button ${!canSubmit && step === 2 ? styles.submitDisabled : ''}`}
-            type={step === 2 && !canSubmit ? 'button' : 'submit'}
-            aria-disabled={step === 2 && !canSubmit}
+            className={`button ${!canSubmit ? styles.submitDisabled : ''}`}
+            type={step === 4 && !canSubmit ? 'button' : 'submit'}
+            aria-disabled={step === 4 && !canSubmit}
             disabled={loading}
             onClick={() => {
-              if (step === 2 && !canSubmit) onRequireAuth?.();
+              if (step === 4 && !canSubmit) onRequireAuth?.();
             }}
           >
-            {step === 1 ? texts.common.next : texts.common.submit}
+            {step === 4 ? texts.common.submit : texts.common.next}
           </button>
-        </div>
+        </footer>
       </form>
     </section>
   );

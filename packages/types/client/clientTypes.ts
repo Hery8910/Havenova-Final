@@ -1,3 +1,5 @@
+import type { WeeklySchedule } from '../calendar';
+
 export interface ClientLegalUpdateEntry {
   version?: string;
   updatedAt?: string;
@@ -8,15 +10,8 @@ export interface ClientLegalUpdates {
   cookies?: ClientLegalUpdateEntry;
   terms?: ClientLegalUpdateEntry;
 }
-export interface ClientSchedule {
-  monday: { start: string; end: string };
-  tuesday: { start: string; end: string };
-  wednesday: { start: string; end: string };
-  thursday: { start: string; end: string };
-  friday: { start: string; end: string };
-  saturday?: { start: string; end: string };
-  sunday?: { start: string; end: string };
-}
+
+export type ClientSchedule = WeeklySchedule;
 
 export interface ClientPublicConfig {
   _id: string;
@@ -27,6 +22,7 @@ export interface ClientPublicConfig {
   address?: string;
   legalUpdates: ClientLegalUpdates;
   schedule: ClientSchedule;
+  slotDurationMinutes: number;
 }
 
 export interface ClientContextProps {

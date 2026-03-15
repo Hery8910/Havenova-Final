@@ -1,0 +1,97 @@
+'use client';
+
+import type { UserAddress } from '../../../../../../types/profile';
+import styles from './AddressFormFields.module.css';
+
+type AddressErrors = Partial<Record<keyof UserAddress, string>>;
+
+export interface AddressFormFieldsProps {
+  value: UserAddress;
+  onChange: (value: UserAddress) => void;
+  errors?: AddressErrors;
+  disabled?: boolean;
+}
+
+export default function AddressFormFields({
+  value,
+  onChange,
+  errors,
+  disabled = false,
+}: AddressFormFieldsProps) {
+  const handleFieldChange =
+    (field: keyof UserAddress) =>
+    (event: React.ChangeEvent<HTMLInputElement>) =>
+      onChange({
+        ...value,
+        [field]: event.target.value,
+      });
+
+  return (
+    <section className={styles.grid} aria-label="Address details">
+      <label className={styles.field}>
+        <span className={styles.label}>Street</span>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="address-line1"
+          value={value.street}
+          onChange={handleFieldChange('street')}
+          disabled={disabled}
+        />
+        {errors?.street && <span className={styles.error}>{errors.street}</span>}
+      </label>
+
+      <label className={styles.field}>
+        <span className={styles.label}>Number</span>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="address-line2"
+          value={value.streetNumber}
+          onChange={handleFieldChange('streetNumber')}
+          disabled={disabled}
+        />
+        {errors?.streetNumber && <span className={styles.error}>{errors.streetNumber}</span>}
+      </label>
+
+      <label className={styles.field}>
+        <span className={styles.label}>Postal code</span>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="postal-code"
+          value={value.postalCode}
+          onChange={handleFieldChange('postalCode')}
+          disabled={disabled}
+        />
+        {errors?.postalCode && <span className={styles.error}>{errors.postalCode}</span>}
+      </label>
+
+      <label className={styles.field}>
+        <span className={styles.label}>District</span>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="address-level2"
+          value={value.district}
+          onChange={handleFieldChange('district')}
+          disabled={disabled}
+        />
+        {errors?.district && <span className={styles.error}>{errors.district}</span>}
+      </label>
+
+      <label className={`${styles.field} ${styles.fullWidth}`}>
+        <span className={styles.label}>Floor</span>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="off"
+          value={value.floor || ''}
+          onChange={handleFieldChange('floor')}
+          disabled={disabled}
+        />
+        {errors?.floor && <span className={styles.error}>{errors.floor}</span>}
+      </label>
+    </section>
+  );
+}

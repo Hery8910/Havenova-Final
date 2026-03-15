@@ -1,53 +1,81 @@
-// ---------------------------
-// PERFIL USER
-// ---------------------------
-
-import { AuthRole } from '../auth';
-
+export type AppLanguage = 'de' | 'en';
 export type ThemeMode = 'light' | 'dark';
 
+export interface UserAddress {
+  street: string;
+  streetNumber: string;
+  postalCode: string;
+  district: string;
+  floor?: string;
+}
+
+export interface UserSavedAddress {
+  label?: string;
+  address: UserAddress;
+}
+
 export interface UserClientProfile {
-  name?: string;
-  phone?: string;
-  address?: string;
-  profileImage?: string;
-  createdAt?: string;
-  isVerified?: boolean;
-
-  language: string;
-  theme: ThemeMode;
-}
-
-// ---------------------------
-// WORKER PROFILE
-// ---------------------------
-
-export interface WorkerProfile extends UserClientProfile {
-  skills?: string[];
-  zones?: string[];
-  availability?: any; // Tipar más adelante
-}
-
-// ---------------------------
-// UPDATE PROFILE
-// ---------------------------
-
-export interface UpdateUserProfilePayload {
+  _id: string;
+  userId: string;
   clientId: string;
-  role: AuthRole;
-
   name?: string;
-  address?: string;
   phone?: string;
-  language?: string;
-  theme?: ThemeMode;
+  primaryAddress?: UserAddress;
+  savedAddresses: UserSavedAddress[];
   profileImage?: string;
+  language: AppLanguage;
+  theme: ThemeMode;
+  extra?: Record<string, unknown>;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface UpdateUserProfileResponse {
+export interface CreateUserClientProfileInput {
+  name?: string;
+  phone?: string;
+  primaryAddress?: UserAddress;
+  savedAddresses?: UserSavedAddress[];
+  profileImage?: string;
+  language: AppLanguage;
+  theme: ThemeMode;
+  extra?: Record<string, unknown>;
+}
+
+export interface UpdateUserClientProfileInput {
+  name?: string;
+  phone?: string;
+  primaryAddress?: UserAddress;
+  savedAddresses?: UserSavedAddress[];
+  profileImage?: string;
+  language?: AppLanguage;
+  theme?: ThemeMode;
+  extra?: Record<string, unknown>;
+}
+
+export interface UserClientProfileMutationResponse {
   success: boolean;
   code: string;
   profile: UserClientProfile;
 }
 
-export interface CreateUserProfileResponse extends UpdateUserProfileResponse {}
+export interface DeleteUserClientProfileResponse {
+  success: boolean;
+  code: string;
+  data: {
+    userId: string;
+    clientId: string;
+  };
+}
+
+export function formatUserAddress(address?: UserAddress): string {
+  if (!address) return '';
+
+  return [
+    `${address.street} ${address.streetNumber}`.trim(),
+    address.postalCode,
+    address.district,
+    address.floor ? `Floor ${address.floor}` : '',
+  ]
+    .filter(Boolean)
+    .join(', ');
+}

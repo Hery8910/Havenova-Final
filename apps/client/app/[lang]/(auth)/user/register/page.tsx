@@ -116,9 +116,11 @@ const Register = () => {
       const response = await registerUser(payload);
 
       // 4.1) Persist local profile data so it survives the verify-email flow
+      const profileLanguage = data.language === 'en' ? 'en' : 'de';
+
       await updateProfile({
         name: data.name,
-        language: data.language || 'de',
+        language: profileLanguage,
       });
 
       // 5) success popup

@@ -53,6 +53,18 @@
     "title": "Unexpected error",
     "description": "Something went wrong. Please try again or contact support."
   },
+  "CLEANING_REQUEST_LOADING": {
+    "title": "Sending request",
+    "description": "Your cleaning request is being processed securely."
+  },
+  "CLEANING_REQUEST_SUBMITTED": {
+    "title": "Request sent",
+    "description": "Your cleaning request was submitted successfully. We will contact you with the next step."
+  },
+  "CLEANING_REQUEST_MISSING_SESSION": {
+    "title": "Login required",
+    "description": "Your session is missing required data. Please log in again and try once more."
+  },
   "CATALOG_FOUND": {
     "title": "Catalog loaded",
     "description": "The global task catalog was loaded successfully."

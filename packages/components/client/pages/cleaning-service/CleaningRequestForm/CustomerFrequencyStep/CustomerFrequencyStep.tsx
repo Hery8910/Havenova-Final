@@ -35,22 +35,23 @@ export default function CustomerFrequencyStep({
   onFrequencyChange,
 }: Props) {
   return (
-    <article className={styles.container}>
+    <section className={styles.container} aria-label="Customer and frequency details">
       <fieldset className={styles.group}>
         <legend className={styles.legend}>{customerType.label}</legend>
-        <div className={styles.toggleGrid}>
+        <ul className={styles.toggleGrid}>
           {(Object.keys(customerType.options) as CleaningCustomerType[]).map((type) => (
-            <button
-              key={type}
-              type="button"
-              className={`${styles.choiceButton} ${values.customerType === type ? styles.active : ''}`}
-              aria-pressed={values.customerType === type}
-              onClick={() => onCustomerTypeChange(type)}
-            >
-              {customerType.options[type]}
-            </button>
+            <li key={type}>
+              <button
+                type="button"
+                className={`${styles.choiceButton} ${values.customerType === type ? styles.active : ''}`}
+                aria-pressed={values.customerType === type}
+                onClick={() => onCustomerTypeChange(type)}
+              >
+                {customerType.options[type]}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
         <span className={styles.error} aria-live="polite">
           {errors.customerType || ''}
         </span>
@@ -58,27 +59,28 @@ export default function CustomerFrequencyStep({
 
       <fieldset className={styles.group}>
         <legend className={styles.legend}>{frequency.label}</legend>
-        <div className={styles.frequencyGrid}>
+        <ul className={styles.frequencyGrid}>
           {frequencyOrder.map((freq) => (
-            <button
-              key={freq}
-              type="button"
-              className={`${styles.frequencyButton} ${values.frequency === freq ? styles.active : ''} ${freq === 'three_per_month' ? styles.recommended : ''}`}
-              aria-pressed={values.frequency === freq}
-              onClick={() => onFrequencyChange(freq)}
-            >
-              <span className={styles.frequencyText}>{frequency.options[freq]}</span>
-              <span className={styles.frequencyDiscount}>{frequency.discounts[freq]}</span>
-              {freq === 'three_per_month' && (
-                <span className={styles.badge}>{frequency.recommendedLabel}</span>
-              )}
-            </button>
+            <li key={freq}>
+              <button
+                type="button"
+                className={`${styles.frequencyButton} ${values.frequency === freq ? styles.active : ''} ${freq === 'three_per_month' ? styles.recommended : ''}`}
+                aria-pressed={values.frequency === freq}
+                onClick={() => onFrequencyChange(freq)}
+              >
+                <span className={styles.frequencyText}>{frequency.options[freq]}</span>
+                <span className={styles.frequencyDiscount}>{frequency.discounts[freq]}</span>
+                {freq === 'three_per_month' && (
+                  <span className={styles.badge}>{frequency.recommendedLabel}</span>
+                )}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
         <span className={styles.error} aria-live="polite">
           {errors.frequency || ''}
         </span>
       </fieldset>
-    </article>
+    </section>
   );
 }

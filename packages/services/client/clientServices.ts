@@ -22,7 +22,10 @@ export async function getClient(domain: string): Promise<ClientPublicConfig> {
         wednesday: { start: '00:00', end: '00:00' },
         thursday: { start: '00:00', end: '00:00' },
         friday: { start: '00:00', end: '00:00' },
+        saturday: { start: '00:00', end: '00:00' },
+        sunday: { start: '00:00', end: '00:00' },
       },
+      slotDurationMinutes: 60,
     };
   }
 }

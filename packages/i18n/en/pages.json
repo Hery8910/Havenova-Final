@@ -232,6 +232,33 @@
           "roomsRange": "Rooms count must be between 0 and 50.",
           "detailsTooLong": "Additional details must be 1500 characters or fewer.",
           "unsafeInput": "Please remove unsupported characters or scripts from this field."
+        },
+        "scheduling": {
+          "required": "Please select a preferred date and time.",
+          "missingClientConfig": "Client calendar configuration is unavailable right now."
+        },
+        "serviceAddress": {
+          "required": "Please select or enter a work address."
+        }
+      },
+      "submission": {
+        "loading": {
+          "title": "Sending request",
+          "description": "Your cleaning request is being processed securely."
+        },
+        "success": {
+          "title": "Request sent",
+          "description": "Your cleaning request was submitted successfully. We will contact you with the next step."
+        },
+        "errors": {
+          "missingSession": {
+            "title": "Login required",
+            "description": "Your session is missing required data. Please log in again and try once more."
+          },
+          "unexpected": {
+            "title": "Unexpected error",
+            "description": "Something went wrong. Please try again or contact support."
+          }
         }
       }
     },

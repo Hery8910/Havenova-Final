@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import styles from './page.module.css';
 import { useProfile } from '@/packages/contexts/profile/ProfileContext';
-import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
 import { FormWrapper } from '@/packages/components/user/userForm';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
 import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
+import { formatUserAddress } from '@/packages/types';
 
 export interface ThemeData {
   title: string;
@@ -25,14 +25,11 @@ export interface EditData {
 }
 interface EditFormData {
   name: string;
-  address: string;
   phone: string;
-  clientId: string;
 }
 
 export default function Edit() {
   const { profile, updateProfile, reloadProfile } = useProfile();
-  const { client } = useClient();
   const { texts } = useI18n();
   const popups = texts.popups;
   const edit: EditData = texts.pages.client.user.edit;
@@ -47,7 +44,7 @@ export default function Edit() {
 
   const handleEdit = async (data: EditFormData) => {
     try {
-      if (!data.name || !data.address || !data.phone || !data.clientId) {
+      if (!data.name || !data.phone) {
         setAlert({
           type: 'error',
           title: popups.GLOBAL_INTERNAL_ERROR.title,
@@ -57,7 +54,6 @@ export default function Edit() {
       }
       await updateProfile({
         name: data.name,
-        address: data.address,
         phone: data.phone,
       });
 
@@ -102,17 +98,16 @@ export default function Edit() {
       <article className={styles.article}>
         <h4 className={styles.h4}>{edit.personalInfo}</h4>
         <FormWrapper<EditFormData>
-          fields={['name', 'address', 'phone'] as const}
+          fields={['name', 'phone'] as const}
           onSubmit={handleEdit}
           button={editButton}
           initialValues={{
             name: profile.name || '',
-            address: profile.address || '',
             phone: profile.phone || '',
-            clientId: client?._id || '',
           }}
           loading={false}
         />
+        {profile.primaryAddress && <p>{formatUserAddress(profile.primaryAddress)}</p>}
       </article>
       {alert && (
         <AlertPopup

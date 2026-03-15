@@ -1,0 +1,105 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.description,
+.helper,
+.manualHint {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.optionsGroup {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.legend {
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+}
+
+.optionCard {
+  padding: 14px 16px;
+  border: 1px solid var(--surface-border);
+  border-radius: 14px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.optionSelected {
+  border-color: var(--brand-primary);
+  background: color-mix(in srgb, var(--brand-primary) 10%, white);
+  box-shadow: var(--shadow-sm);
+}
+
+.optionInput {
+  margin: 0 0 6px;
+}
+
+.optionLabel {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.optionHint {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.manualSection {
+  padding: 18px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--brand-primary) 5%, white);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+}
+
+.labelField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.textInput {
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  background: white;
+  color: var(--text-primary);
+}

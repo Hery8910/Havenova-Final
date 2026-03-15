@@ -19,6 +19,7 @@ import { useProfile, useWorker } from '../../../../contexts';
 import { useClient } from '../../../../contexts/client/ClientContext';
 import { useEffect } from 'react';
 import { useAuth } from '../../../../contexts/auth/authContext';
+import { formatUserAddress } from '../../../../types';
 
 interface WrapperProps<T extends Record<string, any>> {
   fields: (FormField & keyof T)[];
@@ -104,6 +105,12 @@ export default function FormWrapper<T extends Record<string, any>>({
   }
 
   const profile = profileContext?.profile ?? workerContext?.worker;
+  const profileAddress =
+    profile && 'primaryAddress' in profile
+      ? formatUserAddress(profile.primaryAddress)
+      : profile && 'address' in profile && typeof profile.address === 'string'
+        ? profile.address
+        : '';
   const { auth } = useAuth();
   const { client } = useClient();
   const router = useRouter();
@@ -131,7 +138,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       name: profile?.name ?? initialValues.name ?? prev.name,
       email: auth?.email || initialValues.email || prev.email,
       phone: profile?.phone ?? initialValues.phone ?? prev.phone,
-      address: profile?.address ?? initialValues.address ?? prev.address,
+      address: profileAddress || initialValues.address || prev.address,
     }));
     // Sync whenever profile/auth/initialValues change to keep form updated
   }, [
@@ -143,7 +150,7 @@ export default function FormWrapper<T extends Record<string, any>>({
     initialValues.language,
     initialValues.name,
     initialValues.phone,
-    profile?.address,
+    profileAddress,
     profile?.language,
     profile?.name,
     profile?.phone,
@@ -250,7 +257,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       name: profile?.name || '',
       email: auth?.email || initialValues.email || '',
       phone: profile?.phone || '',
-      address: profile?.address || '',
+      address: profileAddress || '',
       clientId: client?._id || '',
       language: profile?.language || 'de',
     } as T);

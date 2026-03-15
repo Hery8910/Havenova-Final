@@ -1,67 +1,78 @@
 import api from '../api/api';
-import { ApiResponse } from '@/packages/types/api';
-import {
+import type { ApiResponse } from '@/packages/types/api';
+import type {
+  CreateUserClientProfileInput,
+  DeleteUserClientProfileResponse,
+  UpdateUserClientProfileInput,
   UserClientProfile,
-  UpdateUserProfilePayload,
-  UpdateUserProfileResponse,
-  CreateUserProfileResponse,
+  UserClientProfileMutationResponse,
 } from '@/packages/types/profile/profileTypes';
 
-// ---------------------------
-// GET PROFILE
-// ---------------------------
+const USER_CLIENT_PROFILE_PATH = '/api/home-services/profile';
+
+const normalizeProfile = (profile: UserClientProfile): UserClientProfile => ({
+  ...profile,
+  savedAddresses: profile.savedAddresses ?? [],
+  extra: profile.extra ?? {},
+});
 
 export const getUserClientProfile = async (): Promise<UserClientProfile> => {
-  const { data } = await api.get<ApiResponse<UserClientProfile>>('/api/home-services/profile', {
+  const { data } = await api.get<ApiResponse<UserClientProfile>>(USER_CLIENT_PROFILE_PATH, {
     withCredentials: true,
   });
 
   if (!data.success || !data.data) {
     const status = data.code === 'USER_CLIENT_PROFILE_NOT_FOUND' ? 404 : 500;
-    const error: any = new Error(data.message || 'Profile fetch failed');
+    const error: Error & { response?: { status: number; data: unknown } } = new Error(
+      data.message || 'Profile fetch failed'
+    );
     error.response = { status, data };
     throw error;
   }
 
-  return data.data;
+  return normalizeProfile(data.data);
 };
 
-// ---------------------------
-// UPSERT PROFILE
-// ---------------------------
-
 export const updateUserClientProfile = async (
-  payload: UpdateUserProfilePayload
-): Promise<UpdateUserProfileResponse> => {
-  const { data } = await api.patch<ApiResponse<UserClientProfile>>(
-    '/api/home-services/profile',
-    payload,
-    { withCredentials: true }
-  );
+  payload: UpdateUserClientProfileInput
+): Promise<UserClientProfileMutationResponse> => {
+  const { data } = await api.patch<ApiResponse<UserClientProfile>>(USER_CLIENT_PROFILE_PATH, payload, {
+    withCredentials: true,
+  });
 
   return {
     success: data.success,
     code: data.code,
-    profile: data.data,
+    profile: normalizeProfile(data.data),
   };
 };
 
-// ---------------------------
-// CREATE PROFILE (new users)
-// ---------------------------
-
 export const createUserClientProfile = async (
-  payload: UpdateUserProfilePayload
-): Promise<CreateUserProfileResponse> => {
-  const { data } = await api.post<ApiResponse<UserClientProfile>>(
-    '/api/home-services/profile',
-    payload,
-    { withCredentials: true }
+  payload: CreateUserClientProfileInput
+): Promise<UserClientProfileMutationResponse> => {
+  const { data } = await api.post<ApiResponse<UserClientProfile>>(USER_CLIENT_PROFILE_PATH, payload, {
+    withCredentials: true,
+  });
+
+  return {
+    success: data.success,
+    code: data.code,
+    profile: normalizeProfile(data.data),
+  };
+};
+
+export const deleteUserClientProfile = async (): Promise<DeleteUserClientProfileResponse> => {
+  const { data } = await api.delete<ApiResponse<{ userId: string; clientId: string }>>(
+    USER_CLIENT_PROFILE_PATH,
+    {
+      withCredentials: true,
+      data: {},
+    }
   );
 
   return {
     success: data.success,
     code: data.code,
-    profile: data.data,
+    data: data.data,
   };
 };

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from './Form.module.css';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { LabelsTextProps, PlaceholdersTextProps, FormField } from '../formWrapper/FormWrapper';
-import { AuthUser, UserClientProfile } from '../../../../types';
+import { AuthUser, UserClientProfile, formatUserAddress } from '../../../../types';
 import type { WorkerRecord } from '../../../../types/worker';
 
 interface GenericFormProps<T extends Record<string, any>> {
@@ -47,6 +47,13 @@ export default function Form<T extends Record<string, any>>({
   labels,
   loading,
 }: GenericFormProps<T>) {
+  const profileAddress =
+    profile && 'primaryAddress' in profile
+      ? formatUserAddress(profile.primaryAddress)
+      : profile && 'address' in profile && typeof profile.address === 'string'
+        ? profile.address
+        : '';
+
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       {/* NAME */}
@@ -199,7 +206,7 @@ export default function Form<T extends Record<string, any>>({
             name="address"
             id="address"
             placeholder={placeholder.address}
-            value={formData.address ?? profile?.address ?? ''}
+            value={formData.address ?? profileAddress}
             onChange={onChange}
             onBlur={onBlur}
             autoComplete="address"

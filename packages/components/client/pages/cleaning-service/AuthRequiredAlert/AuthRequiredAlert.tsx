@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './AuthRequiredAlert.module.css';
 import { href } from '../../../../../utils/navigation';
+import { IoClose } from 'react-icons/io5';
 
 interface AuthRequiredAlertTexts {
   title: string;
@@ -29,30 +30,32 @@ export default function AuthRequiredAlert({
       aria-labelledby="cleaning-auth-alert-title"
       aria-describedby="cleaning-auth-alert-description"
     >
-      <button
-        className={`button_close ${styles.closeButton}`}
-        type="button"
-        onClick={onClose}
-        aria-label={texts.closeLabel}
-      >
-        ×
-      </button>
+      <header className={styles.heading}>
+        <button
+          className={`button_close ${styles.closeButton}`}
+          type="button"
+          onClick={onClose}
+          aria-label={texts.closeLabel}
+        >
+          <IoClose />
+        </button>
 
-      <h2 id="cleaning-auth-alert-title" className={styles.title}>
-        {texts.title}
-      </h2>
+        <h2 id="cleaning-auth-alert-title" className={styles.title}>
+          {texts.title}
+        </h2>
+      </header>
       <p id="cleaning-auth-alert-description" className={styles.description}>
         {texts.description}
       </p>
 
-      <div className={styles.actions}>
+      <nav className={styles.actions} aria-label="Authentication actions">
         <Link className={styles.loginLink} href={href(lang, texts.ctas.login.href)}>
           {texts.ctas.login.label}
         </Link>
         <Link className={styles.registerLink} href={href(lang, texts.ctas.register.href)}>
           {texts.ctas.register.label}
         </Link>
-      </div>
+      </nav>
     </aside>
   );
 }

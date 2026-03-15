@@ -232,6 +232,33 @@
           "roomsRange": "Die Raumanzahl muss zwischen 0 und 50 liegen.",
           "detailsTooLong": "Zusätzliche Hinweise dürfen maximal 1500 Zeichen enthalten.",
           "unsafeInput": "Bitte entfernen Sie nicht unterstützte Zeichen oder Skripte aus diesem Feld."
+        },
+        "scheduling": {
+          "required": "Bitte wählen Sie ein bevorzugtes Datum und eine Uhrzeit aus.",
+          "missingClientConfig": "Die Kalenderkonfiguration des Clients ist aktuell nicht verfügbar."
+        },
+        "serviceAddress": {
+          "required": "Bitte wählen Sie eine Einsatzadresse aus oder geben Sie eine neue ein."
+        }
+      },
+      "submission": {
+        "loading": {
+          "title": "Anfrage wird gesendet",
+          "description": "Ihre Reinigungsanfrage wird sicher verarbeitet."
+        },
+        "success": {
+          "title": "Anfrage gesendet",
+          "description": "Ihre Reinigungsanfrage wurde erfolgreich gesendet. Wir melden uns mit dem nächsten Schritt bei Ihnen."
+        },
+        "errors": {
+          "missingSession": {
+            "title": "Anmeldung erforderlich",
+            "description": "Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal."
+          },
+          "unexpected": {
+            "title": "Unerwarteter Fehler",
+            "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
+          }
         }
       }
     },

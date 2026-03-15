@@ -1,74 +1,79 @@
-// src/types/calendar/calendarTypes.ts
-
-export interface Schedule {
-  start: string;
-  end: string;
+export interface DaySchedule {
+  start: string; // HH:mm
+  end: string; // HH:mm
 }
 
-export type DayReason =
+export interface WeeklySchedule {
+  sunday: DaySchedule | null;
+  monday: DaySchedule | null;
+  tuesday: DaySchedule | null;
+  wednesday: DaySchedule | null;
+  thursday: DaySchedule | null;
+  friday: DaySchedule | null;
+  saturday: DaySchedule | null;
+}
+
+export interface ClientCalendarSettings {
+  clientId: string;
+  schedule: WeeklySchedule;
+  slotDurationMinutes: number;
+}
+
+export type BlockReason =
   | 'holiday'
   | 'vacation'
   | 'overbooked'
   | 'manual'
-  | 'previous_month'
+  | 'company_closed'
   | 'other';
 
-export interface Day {
-  date: string; // 'YYYY-MM-DD'
-  weekday: number; // 0 (Sunday) - 6 (Saturday)
-  isWorkday: boolean;
-  blocked: boolean;
-  reason?: DayReason;
-  schedule: Schedule | null;
-  requests: any[]; // TODO: define type later (serviceId, start, end, workers)
-}
-
 export interface BlockedSlot {
-  date: string;
-  start: string;
-  end: string;
-  reason: DayReason;
+  date: string; // YYYY-MM-DD
+  start?: string; // HH:mm
+  end?: string; // HH:mm
+  fullDay?: boolean;
+  reason: BlockReason;
 }
 
-export interface Month {
-  month: number; // 1..12
-  days: Day[];
-  blockedSlots?: BlockedSlot[];
-}
-
-export interface CalendarData {
+export interface MonthlyAvailabilityData {
   clientId: string;
   year: number;
-  months: Month[];
+  month: number; // 1..12
+  blockedSlots: BlockedSlot[];
 }
 
-export interface Schedules {
-  sunday?: Schedule;
-  monday?: Schedule;
-  tuesday?: Schedule;
-  wednesday?: Schedule;
-  thursday?: Schedule;
-  friday?: Schedule;
-  saturday?: Schedule;
+export interface MonthlyAvailabilityResponse {
+  success: boolean;
+  data?: MonthlyAvailabilityData;
+  message?: string;
+  error?: string;
 }
 
-export interface WorkDaySettings {
-  sunday: boolean;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
+export interface CalendarSlot {
+  date: string; // YYYY-MM-DD
+  start: string; // HH:mm
+  end: string; // HH:mm
+  blocked: boolean;
+  reason?: BlockReason;
+  isSelected: boolean;
+}
+
+export interface CalendarDay {
+  date: string; // YYYY-MM-DD
+  weekday: number; // 0..6
+  isWorkday: boolean;
+  isCurrentMonth: boolean;
+  blocked: boolean;
+  reason?: BlockReason;
+  schedule: DaySchedule | null;
+  slots: CalendarSlot[];
+}
+
+export interface SelectedCalendarSlot {
+  start: Date;
+  end: Date;
 }
 
 export interface CalendarError {
   message: string;
-}
-
-export interface CalendarResponse {
-  success: boolean;
-  data?: CalendarData;
-  message?: string;
-  error?: string;
 }
