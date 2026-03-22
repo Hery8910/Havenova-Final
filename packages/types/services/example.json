@@ -2,7 +2,7 @@
   "clientId": "68b3f0611bf3b163cdbe2970",
   "userId": "6945495450de00e2c86e222f",
   "serviceType": "cleaning",
-  "customerType": "private",
+  "customerType": "property_management",
   "serviceAddress": {
     "street": "Sarah-Kirsch-Straße",
     "streetNumber": "12",

@@ -82,11 +82,21 @@ export const ProfileContext = createContext<ProfileContextProps | undefined>(und
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, setAuth } = useAuth();
   const creatingProfileRef = useRef(false);
+  const authRef = useRef(auth);
 
   const storageKey = useMemo(() => getProfileStorageKey(auth.clientId), [auth.clientId]);
   const [profile, setProfile] = useState<UserClientProfile>(createEmptyProfile());
   const [loading, setLoading] = useState(true);
   const [isClientReady, setIsClientReady] = useState(false);
+  const profileRef = useRef(profile);
+
+  useEffect(() => {
+    authRef.current = auth;
+  }, [auth]);
+
+  useEffect(() => {
+    profileRef.current = profile;
+  }, [profile]);
 
   const loadFromStorage = useCallback((): UserClientProfile | null => {
     if (typeof window === 'undefined') return null;
@@ -145,25 +155,34 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     [saveToStorage]
   );
 
+  const clearIsNewUserFlag = useCallback(() => {
+    const currentAuth = authRef.current;
+
+    if (!currentAuth.isNewUser) return;
+
+    setAuth({
+      ...currentAuth,
+      isNewUser: false,
+    });
+  }, [setAuth]);
+
   const ensureBackendProfile = useCallback(async () => {
+    const currentProfile = profileRef.current;
     const initialProfile: CreateUserClientProfileInput = {
-      name: profile?.name?.trim() || undefined,
-      phone: profile?.phone?.trim() || undefined,
-      profileImage: profile?.profileImage || DEFAULT_AVATAR,
-      language: profile?.language ?? 'de',
-      theme: profile?.theme ?? 'light',
-      savedAddresses: profile?.savedAddresses ?? [],
-      primaryAddress: profile?.primaryAddress,
-      extra: profile?.extra ?? {},
+      name: currentProfile?.name?.trim() || undefined,
+      phone: currentProfile?.phone?.trim() || undefined,
+      profileImage: currentProfile?.profileImage || DEFAULT_AVATAR,
+      language: currentProfile?.language ?? 'de',
+      theme: currentProfile?.theme ?? 'light',
+      savedAddresses: currentProfile?.savedAddresses ?? [],
+      primaryAddress: currentProfile?.primaryAddress,
+      extra: currentProfile?.extra ?? {},
     };
 
     const created = await createUserClientProfile(initialProfile);
     applyProfile(created.profile);
-
-    if (auth.isNewUser) {
-      setAuth({ ...auth, isNewUser: false });
-    }
-  }, [applyProfile, auth, profile, setAuth]);
+    clearIsNewUserFlag();
+  }, [applyProfile, clearIsNewUserFlag]);
 
   const reloadProfile = useCallback(async () => {
     if (!auth.isLogged || auth.role === 'guest') return;
@@ -171,18 +190,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     try {
       const backendProfile = await getUserClientProfile();
       applyProfile(backendProfile);
-
-      if (auth.isNewUser) {
-        setAuth({ ...auth, isNewUser: false });
-      }
+      clearIsNewUserFlag();
     } catch (error) {
       const err = error as { response?: { status?: number; data?: { code?: string } } };
       const status = err.response?.status;
       const code = err.response?.data?.code;
+      const currentAuth = authRef.current;
 
       if (
         (status === 404 || code === 'USER_CLIENT_PROFILE_NOT_FOUND') &&
-        auth.isNewUser &&
+        currentAuth.isNewUser &&
         !creatingProfileRef.current
       ) {
         creatingProfileRef.current = true;
@@ -200,16 +217,13 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           await refreshToken();
           const backendProfile = await getUserClientProfile();
           applyProfile(backendProfile);
-
-          if (auth.isNewUser) {
-            setAuth({ ...auth, isNewUser: false });
-          }
+          clearIsNewUserFlag();
         } catch {
           return;
         }
       }
     }
-  }, [applyProfile, auth, ensureBackendProfile, setAuth]);
+  }, [applyProfile, auth.isLogged, auth.role, clearIsNewUserFlag, ensureBackendProfile]);
 
   useEffect(() => {
     if (!auth.isLogged || auth.role === 'guest') return;

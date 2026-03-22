@@ -184,7 +184,8 @@
           "label": "Customer type",
           "options": {
             "private": "Private",
-            "business": "Business"
+            "business": "Business",
+            "property_management": "Property management"
           }
         },
         "frequency": {
@@ -213,6 +214,8 @@
             "over_120": "Over 120 m2"
           },
           "roomsCountLabel": "Number of rooms",
+          "roomsCountDecrementAriaLabel": "Decrease rooms count",
+          "roomsCountIncrementAriaLabel": "Increase rooms count",
           "hasBalconyLabel": "Balcony",
           "hasIndoorStairsLabel": "Indoor stairs",
           "hasPetsLabel": "Pets in property",
@@ -223,8 +226,9 @@
           "yes": "Yes",
           "no": "No",
           "next": "Continue",
+          "review": "Review request",
           "back": "Back",
-          "submit": "Continue with address and date"
+          "submit": "Submit request"
         },
         "errors": {
           "required": "This field is required.",
@@ -234,11 +238,82 @@
           "unsafeInput": "Please remove unsupported characters or scripts from this field."
         },
         "scheduling": {
+          "title": "Choose your preferred visit",
+          "description": "Select a date and then choose one available time slot.",
+          "slotsTitle": "Available times",
+          "noDateSelected": "Select a date to continue.",
+          "noAvailability": "There are no available times for this day.",
+          "blockedBadge": "Blocked",
+          "selectedBadge": "Selected",
+          "availableBadge": "Available",
+          "closeSlotsLabel": "Choose another day",
+          "loading": "Loading availability...",
+          "errorPrefix": "Availability error:",
+          "previousMonth": "Previous month",
+          "nextMonth": "Next month",
+          "monthNavigationAriaLabel": "Calendar month navigation",
+          "weekdayLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          "nonWorkday": "Unavailable",
+          "blockedDay": "Blocked",
+          "availableDay": "Open",
           "required": "Please select a preferred date and time.",
           "missingClientConfig": "Client calendar configuration is unavailable right now."
         },
         "serviceAddress": {
+          "title": "Service address",
+          "description": "Choose your main address, a saved one, or enter a different location for this request.",
+          "loading": "Loading your saved addresses...",
+          "optionsLegend": "Available address options",
+          "useDifferentAddressLabel": "Use a different address",
+          "useDifferentAddressHint": "Enter a new work location for this request.",
+          "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
+          "manualHint": "Enter the address where the visit or inspection should take place.",
+          "saveToProfileLabel": "Save this address to my profile",
+          "savedAddressLabel": "Label",
+          "savedAddressPlaceholder": "Home office, Building A, Parents...",
+          "addressDetailsAriaLabel": "Address details",
+          "fields": {
+            "street": "Street",
+            "streetNumber": "Number",
+            "postalCode": "Postal code",
+            "district": "District",
+            "floor": "Floor"
+          },
+          "stepAriaLabel": "Service address selection",
           "required": "Please select or enter a work address."
+        },
+        "review": {
+          "title": "Final check before sending",
+          "description": "You have completed the 4 steps. Review the details below and submit the cleaning request if everything is correct.",
+          "sections": {
+            "customer": "Customer and frequency",
+            "property": "Property details",
+            "scheduling": "Preferred visit",
+            "address": "Service address"
+          },
+          "labels": {
+            "customerType": "Customer type",
+            "frequency": "Frequency",
+            "sizeRange": "Property size range",
+            "roomsCount": "Rooms count",
+            "hasBalcony": "Balcony",
+            "hasIndoorStairs": "Indoor stairs",
+            "hasPets": "Pets",
+            "details": "Additional details",
+            "visitDate": "Date",
+            "visitTime": "Time slot",
+            "addressSource": "Address source",
+            "addressLabel": "Label",
+            "address": "Address",
+            "saveToProfile": "Save to profile"
+          },
+          "sourceOptions": {
+            "primary": "Primary address",
+            "saved": "Saved address",
+            "new": "New address"
+          },
+          "emptyDetails": "No additional details provided.",
+          "finalNote": "This is the final check before sending. If everything looks correct, you can submit the request now."
         }
       },
       "submission": {
@@ -262,7 +337,204 @@
         }
       }
     },
-    "home-service": {},
+    "home-service": {
+      "hero": {
+        "icon": {
+          "src": "/svg/service.svg",
+          "alt": "Home service icon"
+        },
+        "title": "Practical",
+        "accent": "Home Service",
+        "title2": "in Berlin",
+        "description": "For painting, repairs and installations, furniture assembly, kitchen assembly, and moving help in Berlin. Havenova structures your request so we can quickly understand the scope, access situation, and which profile data should support the next step."
+      },
+      "authAlert": {
+        "title": "Account required to prepare a home service request",
+        "description": "To reuse your contact details and addresses automatically, you need an active Havenova account and a valid session. Log in or create an account in a few steps.",
+        "closeLabel": "Close account required notice",
+        "ctas": {
+          "login": {
+            "label": "Go to login",
+            "href": "/user/login"
+          },
+          "register": {
+            "label": "Create account",
+            "href": "/user/register"
+          }
+        }
+      },
+      "form": {
+        "process": {
+          "title": "Complete your home service request in 4 steps",
+          "description": "Start by selecting the customer type and the kind of service. Then capture the service-specific notes, preferred date, and work address.",
+          "stepLabel": "Step",
+          "steps": {
+            "customerService": {
+              "heading": "Customer and service"
+            },
+            "details": {
+              "heading": "Service details"
+            },
+            "scheduling": {
+              "heading": "Preferred date"
+            },
+            "serviceAddress": {
+              "heading": "Service address"
+            }
+          }
+        },
+        "customerType": {
+          "label": "Customer type",
+          "helper": "Choose the customer group that matches this home service request.",
+          "options": {
+            "private": "Private",
+            "business": "Business",
+            "property_management": "Property management"
+          }
+        },
+        "serviceType": {
+          "label": "Home service type",
+          "helper": "Choose the service that best matches the work you want to request.",
+          "options": {
+            "painting": {
+              "title": "Painting",
+              "description": "Interior or exterior painting work for walls, ceilings, trims, or selected areas."
+            },
+            "repairs-installations": {
+              "title": "Repairs & Installations",
+              "description": "Practical fixes, replacements, fittings, or installation-related work at the property."
+            },
+            "furniture-assembly": {
+              "title": "Furniture Assembly",
+              "description": "Assembly or setup of wardrobes, shelves, beds, tables, and other furniture."
+            },
+            "kitchen-assembly": {
+              "title": "Kitchen Assembly",
+              "description": "Assembly and installation support for kitchen cabinets, units, and related components."
+            },
+            "moving-help": {
+              "title": "Moving Help",
+              "description": "Hands-on moving support for carrying, loading, unloading, or in-property relocation."
+            }
+          }
+        },
+        "serviceDetails": {
+          "title": "Describe the service",
+          "description": "This step adapts to the selected service and captures the key information for the next phase.",
+          "selectedServiceLabel": "Selected service",
+          "detailsLabel": "Service details",
+          "detailsPlaceholder": "Briefly describe the need, the current condition, relevant access details, or anything that should be known before the visit.",
+          "helper": "These notes create the base for the more detailed service flow that will follow.",
+          "painting": {
+            "title": "Painting details",
+            "description": "Tell us what should be painted and the approximate scope so we can prepare the next steps.",
+            "paintScopeLabel": "What needs to be painted?",
+            "paintScopeOptions": {
+              "one_wall": "One wall",
+              "one_room": "One room",
+              "multiple_rooms": "Multiple rooms",
+              "entire_apartment": "Entire apartment"
+            },
+            "roomsCountLabel": "Number of rooms",
+            "roomsCountDecrementAriaLabel": "Decrease room count",
+            "roomsCountIncrementAriaLabel": "Increase room count",
+            "sizeRangeLabel": "Approximate size",
+            "sizeRangeOptions": {
+              "under_50": "Under 50 m2",
+              "50_80": "50 to 80 m2",
+              "80_120": "80 to 120 m2",
+              "over_120": "Over 120 m2"
+            },
+            "descriptionLabel": "Description",
+            "descriptionPlaceholder": "Describe the surfaces, current paint condition, desired finish, access details, or any preparation work that may be needed.",
+            "descriptionHelper": "Include any relevant context that helps estimate effort before the visit.",
+            "photosLabel": "Photos upload",
+            "photosDescription": "A shared photo upload component will be added here for painting and the other home services."
+          },
+          "services": {
+            "painting": {
+              "title": "Painting",
+              "description": "For painting work on walls, ceilings, trims, doors, or other defined surfaces.",
+              "detailsHint": "Mention the area to be painted, approximate size, current condition, and whether colors or materials are already defined."
+            },
+            "repairs-installations": {
+              "title": "Repairs & Installations",
+              "description": "For practical repair tasks, replacements, fittings, or installation work on site.",
+              "detailsHint": "Describe what needs to be repaired or installed, where it is located, and whether any materials or fixtures are already available."
+            },
+            "furniture-assembly": {
+              "title": "Furniture Assembly",
+              "description": "For assembling, positioning, or securing furniture and similar household items.",
+              "detailsHint": "List the furniture pieces, quantities, brand or model if known, and whether assembly instructions are available."
+            },
+            "kitchen-assembly": {
+              "title": "Kitchen Assembly",
+              "description": "For kitchen cabinet assembly, unit placement, and related installation preparation.",
+              "detailsHint": "Share the kitchen layout, what should be assembled or mounted, and whether appliances, plans, or measurements are already available."
+            },
+            "moving-help": {
+              "title": "Moving Help",
+              "description": "For moving-day support, carrying items, loading vehicles, or internal relocations.",
+              "detailsHint": "Describe what needs to be moved, the access situation, floors involved, and whether heavy or bulky items are part of the request."
+            }
+          }
+        },
+        "common": {
+          "next": "Continue",
+          "back": "Back",
+          "submit": "Continue request"
+        },
+        "errors": {
+          "required": "This field is required.",
+          "detailsTooLong": "Service details must be 1500 characters or fewer."
+        },
+        "scheduling": {
+          "title": "Choose your preferred date",
+          "description": "Select a date and then choose one available time slot for the requested service.",
+          "slotsTitle": "Available times",
+          "noDateSelected": "Select a date to continue.",
+          "noAvailability": "There are no available times for this day.",
+          "blockedBadge": "Blocked",
+          "selectedBadge": "Selected",
+          "availableBadge": "Available",
+          "closeSlotsLabel": "Choose another day",
+          "loading": "Loading availability...",
+          "errorPrefix": "Availability error:",
+          "previousMonth": "Previous month",
+          "nextMonth": "Next month",
+          "monthNavigationAriaLabel": "Calendar month navigation",
+          "weekdayLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          "nonWorkday": "Unavailable",
+          "blockedDay": "Blocked",
+          "availableDay": "Open",
+          "required": "Please select a preferred date and time.",
+          "missingClientConfig": "Client calendar configuration is unavailable right now."
+        },
+        "serviceAddress": {
+          "title": "Service address",
+          "description": "Choose your main address, a saved one, or enter a different location for this request.",
+          "loading": "Loading your saved addresses...",
+          "optionsLegend": "Available address options",
+          "useDifferentAddressLabel": "Use a different address",
+          "useDifferentAddressHint": "Enter a new work location for this request.",
+          "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
+          "manualHint": "Enter the address where the requested service should take place.",
+          "saveToProfileLabel": "Save this address to my profile",
+          "savedAddressLabel": "Label",
+          "savedAddressPlaceholder": "Property A, Rear building, Practice...",
+          "addressDetailsAriaLabel": "Address details",
+          "fields": {
+            "street": "Street",
+            "streetNumber": "Number",
+            "postalCode": "Postal code",
+            "district": "District",
+            "floor": "Floor"
+          },
+          "stepAriaLabel": "Service address selection",
+          "required": "Please select or enter a work address."
+        }
+      }
+    },
     "contact": {
       "hero": {
         "title": "Contact uns",
@@ -917,13 +1189,14 @@
         "cancelled": "Cancelled"
       },
       "service": {
-        "furniture-assembly": "Möbelmontage",
-        "kitchen-cleaning": "Küchenreinigung",
-        "house-cleaning": "Wohnungsreinigung",
-        "window-cleaning": "Fensterreinigung",
-        "house-service": "Hausservice",
-        "kitchen-assembly": "Küchenmontage",
-        "inspection": "Inspektion"
+        "painting": "Painting",
+        "repairs-installations": "Repairs & Installations",
+        "furniture-assembly": "Furniture Assembly",
+        "kitchen-cleaning": "Kitchen Cleaning",
+        "house-cleaning": "House Cleaning",
+        "window-cleaning": "Window Cleaning",
+        "kitchen-assembly": "Kitchen Assembly",
+        "moving-help": "Moving Help"
       }
     },
     "support": {

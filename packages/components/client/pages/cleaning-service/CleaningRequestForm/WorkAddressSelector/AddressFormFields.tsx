@@ -8,6 +8,16 @@ type AddressErrors = Partial<Record<keyof UserAddress, string>>;
 export interface AddressFormFieldsProps {
   value: UserAddress;
   onChange: (value: UserAddress) => void;
+  texts?: {
+    addressDetailsAriaLabel?: string;
+    fields?: {
+      street?: string;
+      streetNumber?: string;
+      postalCode?: string;
+      district?: string;
+      floor?: string;
+    };
+  };
   errors?: AddressErrors;
   disabled?: boolean;
 }
@@ -15,6 +25,7 @@ export interface AddressFormFieldsProps {
 export default function AddressFormFields({
   value,
   onChange,
+  texts,
   errors,
   disabled = false,
 }: AddressFormFieldsProps) {
@@ -27,9 +38,9 @@ export default function AddressFormFields({
       });
 
   return (
-    <section className={styles.grid} aria-label="Address details">
+    <section className={styles.grid} aria-label={texts?.addressDetailsAriaLabel ?? 'Address details'}>
       <label className={styles.field}>
-        <span className={styles.label}>Street</span>
+        <span className={styles.label}>{texts?.fields?.street ?? 'Street'}</span>
         <input
           className={styles.input}
           type="text"
@@ -42,7 +53,7 @@ export default function AddressFormFields({
       </label>
 
       <label className={styles.field}>
-        <span className={styles.label}>Number</span>
+        <span className={styles.label}>{texts?.fields?.streetNumber ?? 'Number'}</span>
         <input
           className={styles.input}
           type="text"
@@ -55,7 +66,7 @@ export default function AddressFormFields({
       </label>
 
       <label className={styles.field}>
-        <span className={styles.label}>Postal code</span>
+        <span className={styles.label}>{texts?.fields?.postalCode ?? 'Postal code'}</span>
         <input
           className={styles.input}
           type="text"
@@ -68,7 +79,7 @@ export default function AddressFormFields({
       </label>
 
       <label className={styles.field}>
-        <span className={styles.label}>District</span>
+        <span className={styles.label}>{texts?.fields?.district ?? 'District'}</span>
         <input
           className={styles.input}
           type="text"
@@ -81,7 +92,7 @@ export default function AddressFormFields({
       </label>
 
       <label className={`${styles.field} ${styles.fullWidth}`}>
-        <span className={styles.label}>Floor</span>
+        <span className={styles.label}>{texts?.fields?.floor ?? 'Floor'}</span>
         <input
           className={styles.input}
           type="text"

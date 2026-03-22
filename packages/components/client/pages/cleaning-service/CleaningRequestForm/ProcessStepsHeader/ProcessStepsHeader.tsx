@@ -20,7 +20,7 @@ export default function ProcessStepsHeader({
   currentStep,
   texts,
 }: {
-  currentStep: 1 | 2 | 3 | 4;
+  currentStep: 1 | 2 | 3 | 4 | 5;
   texts: ProcessStepsHeaderTexts;
 }) {
   const orderedSteps: StepText[] = [
@@ -29,6 +29,7 @@ export default function ProcessStepsHeader({
     texts.steps.scheduling,
     texts.steps.serviceAddress,
   ];
+  const visualCurrentStep = currentStep === 5 ? null : currentStep;
 
   return (
     <header className={styles.header} aria-labelledby="cleaning-process-title">
@@ -39,8 +40,8 @@ export default function ProcessStepsHeader({
       <ol className={styles.timeline}>
         {orderedSteps.map((step, index) => {
           const number = (index + 1) as 1 | 2 | 3 | 4;
-          const isActive = number === currentStep;
-          const isCompleted = number < currentStep;
+          const isActive = number === visualCurrentStep;
+          const isCompleted = currentStep === 5 ? true : number < currentStep;
 
           return (
             <li

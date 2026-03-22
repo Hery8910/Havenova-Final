@@ -19,11 +19,32 @@ import styles from './WorkAddressSelector.module.css';
 export interface WorkAddressSelectorProps {
   value: WorkAddressSelection | null;
   onChange: (value: WorkAddressSelection | null) => void;
+  texts?: {
+    title?: string;
+    description?: string;
+    loading?: string;
+    optionsLegend?: string;
+    useDifferentAddressLabel?: string;
+    useDifferentAddressHint?: string;
+    emptyState?: string;
+    manualHint?: string;
+    saveToProfileLabel?: string;
+    savedAddressLabel?: string;
+    savedAddressPlaceholder?: string;
+    addressDetailsAriaLabel?: string;
+    fields?: {
+      street?: string;
+      streetNumber?: string;
+      postalCode?: string;
+      district?: string;
+      floor?: string;
+    };
+  };
 }
 
 type SelectionMode = 'primary' | 'saved' | 'new';
 
-export default function WorkAddressSelector({ value, onChange }: WorkAddressSelectorProps) {
+export default function WorkAddressSelector({ value, onChange, texts }: WorkAddressSelectorProps) {
   const { profile, loading } = useProfile();
   const isInternalSyncRef = useRef(false);
   const addressOptions = useMemo(
@@ -132,20 +153,21 @@ export default function WorkAddressSelector({ value, onChange }: WorkAddressSele
     <section className={styles.section} aria-labelledby="work-address-selector-title">
       <header className={styles.header}>
         <h3 id="work-address-selector-title" className={styles.title}>
-          Service address
+          {texts?.title ?? 'Service address'}
         </h3>
         <p className={styles.description}>
-          Choose your main address, a saved one, or enter a different location for this request.
+          {texts?.description ??
+            'Choose your main address, a saved one, or enter a different location for this request.'}
         </p>
       </header>
 
       {loading ? (
-        <p className={styles.helper}>Loading your saved addresses...</p>
+        <p className={styles.helper}>{texts?.loading ?? 'Loading your saved addresses...'}</p>
       ) : (
         <>
           {hasProfileAddresses ? (
             <fieldset className={styles.optionsGroup}>
-              <legend className={styles.legend}>Available address options</legend>
+              <legend className={styles.legend}>{texts?.optionsLegend ?? 'Available address options'}</legend>
               {addressOptions.map((option) => {
                 const isChecked =
                   (option.source === 'primary' && selectionMode === 'primary') ||
@@ -184,23 +206,28 @@ export default function WorkAddressSelector({ value, onChange }: WorkAddressSele
                     setSelectedOptionId(null);
                   }}
                 />
-                <span className={styles.optionLabel}>Use a different address</span>
-                <span className={styles.optionHint}>Enter a new work location for this request.</span>
+                <span className={styles.optionLabel}>
+                  {texts?.useDifferentAddressLabel ?? 'Use a different address'}
+                </span>
+                <span className={styles.optionHint}>
+                  {texts?.useDifferentAddressHint ?? 'Enter a new work location for this request.'}
+                </span>
               </label>
             </fieldset>
           ) : (
             <p className={styles.helper}>
-              No saved addresses found yet. Enter the service address below and save it if you want.
+              {texts?.emptyState ??
+                'No saved addresses found yet. Enter the service address below and save it if you want.'}
             </p>
           )}
 
           {(selectionMode === 'new' || !hasProfileAddresses) && (
             <section className={styles.manualSection}>
               <p className={styles.manualHint}>
-                Enter the address where the visit or inspection should take place.
+                {texts?.manualHint ?? 'Enter the address where the visit or inspection should take place.'}
               </p>
 
-              <AddressFormFields value={manualAddress} onChange={setManualAddress} />
+              <AddressFormFields value={manualAddress} onChange={setManualAddress} texts={texts} />
 
               <label className={styles.checkboxRow}>
                 <input
@@ -208,18 +235,18 @@ export default function WorkAddressSelector({ value, onChange }: WorkAddressSele
                   checked={saveToProfile}
                   onChange={(event) => setSaveToProfile(event.target.checked)}
                 />
-                <span>Save this address to my profile</span>
+                <span>{texts?.saveToProfileLabel ?? 'Save this address to my profile'}</span>
               </label>
 
               {saveToProfile && (
                 <label className={styles.labelField}>
-                  <span className={styles.label}>Label</span>
+                  <span className={styles.label}>{texts?.savedAddressLabel ?? 'Label'}</span>
                   <input
                     className={styles.textInput}
                     type="text"
                     value={savedAddressLabel}
                     onChange={(event) => setSavedAddressLabel(event.target.value)}
-                    placeholder="Home office, Building A, Parents..."
+                    placeholder={texts?.savedAddressPlaceholder ?? 'Home office, Building A, Parents...'}
                   />
                 </label>
               )}

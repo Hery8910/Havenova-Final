@@ -21,6 +21,7 @@ import {
 } from '../../../../../../packages/contexts/i18n';
 import { createCleaningRequest } from '../../../../../../packages/services';
 import {
+  type CleaningCustomerType,
   PropertySizeRange,
   type UpdateUserClientProfileInput,
   type UserSavedAddress,
@@ -56,21 +57,25 @@ export interface CleaningServicePageTexts {
       steps: {
         customerFrequency: {
           heading: string;
+          ariaLabel?: string;
         };
         propertyDetails: {
           heading: string;
+          ariaLabel?: string;
         };
         scheduling: {
           heading: string;
+          ariaLabel?: string;
         };
         serviceAddress: {
           heading: string;
+          ariaLabel?: string;
         };
       };
     };
     customerType: {
       label: string;
-      options: Record<'private' | 'business', string>;
+      options: Record<CleaningCustomerType, string>;
     };
     frequency: {
       label: string;
@@ -93,6 +98,7 @@ export interface CleaningServicePageTexts {
       yes: string;
       no: string;
       next: string;
+      review: string;
       back: string;
       submit: string;
     };
@@ -104,11 +110,82 @@ export interface CleaningServicePageTexts {
       unsafeInput: string;
     };
     scheduling?: {
+      title?: string;
+      description?: string;
+      slotsTitle?: string;
+      noDateSelected?: string;
+      noAvailability?: string;
+      blockedBadge?: string;
+      selectedBadge?: string;
+      availableBadge?: string;
+      closeSlotsLabel?: string;
+      loading?: string;
+      errorPrefix?: string;
+      previousMonth?: string;
+      nextMonth?: string;
+      nonWorkday?: string;
+      blockedDay?: string;
+      availableDay?: string;
+      monthNavigationAriaLabel?: string;
+      weekdayLabels?: string[];
       required?: string;
       missingClientConfig?: string;
     };
     serviceAddress?: {
+      title?: string;
+      description?: string;
+      loading?: string;
+      optionsLegend?: string;
+      useDifferentAddressLabel?: string;
+      useDifferentAddressHint?: string;
+      emptyState?: string;
+      manualHint?: string;
+      saveToProfileLabel?: string;
+      savedAddressLabel?: string;
+      savedAddressPlaceholder?: string;
+      addressDetailsAriaLabel?: string;
+      fields?: {
+        street?: string;
+        streetNumber?: string;
+        postalCode?: string;
+        district?: string;
+        floor?: string;
+      };
+      stepAriaLabel?: string;
       required?: string;
+    };
+    review: {
+      title: string;
+      description: string;
+      sections: {
+        customer: string;
+        property: string;
+        scheduling: string;
+        address: string;
+      };
+      labels: {
+        customerType: string;
+        frequency: string;
+        sizeRange: string;
+        roomsCount: string;
+        hasBalcony: string;
+        hasIndoorStairs: string;
+        hasPets: string;
+        details: string;
+        visitDate: string;
+        visitTime: string;
+        addressSource: string;
+        addressLabel: string;
+        address: string;
+        saveToProfile: string;
+      };
+      sourceOptions: {
+        primary: string;
+        saved: string;
+        new: string;
+      };
+      emptyDetails: string;
+      finalNote: string;
     };
   };
   submission: {
@@ -133,269 +210,13 @@ export interface CleaningServicePageTexts {
   };
 }
 
-const CLEANING_POPUP_FALLBACKS = {
-  CLEANING_REQUEST_LOADING: {
-    title: 'Anfrage wird gesendet',
-    description: 'Ihre Reinigungsanfrage wird sicher verarbeitet.',
-  },
-  CLEANING_REQUEST_SUBMITTED: {
-    title: 'Anfrage gesendet',
-    description:
-      'Ihre Reinigungsanfrage wurde erfolgreich gesendet. Wir melden uns mit dem nächsten Schritt bei Ihnen.',
-  },
-  CLEANING_REQUEST_MISSING_SESSION: {
-    title: 'Anmeldung erforderlich',
-    description:
-      'Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal.',
-  },
-};
-
-const getCleaningFallbackTexts = (lang: 'de' | 'en'): CleaningServicePageTexts =>
-  lang === 'en'
-    ? {
-        hero: {
-          icon: {
-            src: '/svg/cleaning.svg',
-            alt: 'Cleaning service icon',
-          },
-          title: 'Professional',
-          accent: 'Cleaning Service',
-          title2: 'in Berlin',
-          description:
-            'Flexible, reliable, and tailored to your home or business. Havenova provides structured cleaning support for apartments, offices, and shared properties with clear communication, dependable scheduling, and consistent quality from request to completion.',
-        },
-        authAlert: {
-          title: 'Account required to submit a cleaning request',
-          description:
-            'To send a cleaning service request, you need an active Havenova account and an active session. Please log in if you already have an account, or create one in a few steps.',
-          closeLabel: 'Close account required notice',
-          ctas: {
-            login: { label: 'Go to login', href: '/user/login' },
-            register: { label: 'Create account', href: '/user/register' },
-          },
-        },
-        form: {
-          process: {
-            title: 'Complete your cleaning request in 4 steps',
-            description:
-              'Follow each step to provide the data we need for your first visit planning and service setup.',
-            stepLabel: 'Step',
-            steps: {
-              customerFrequency: { heading: 'Customer and recurrence' },
-              propertyDetails: { heading: 'Property details' },
-              scheduling: { heading: 'First visit date and hour' },
-              serviceAddress: { heading: 'Service address' },
-            },
-          },
-          customerType: {
-            label: 'Customer type',
-            options: { private: 'Private', business: 'Business' },
-          },
-          frequency: {
-            label: 'Preferred frequency',
-            recommendedLabel: 'Most requested',
-            options: {
-              once: 'One-time',
-              two_per_month: '2 times per month',
-              three_per_month: '3 times per month',
-              weekly: 'Weekly',
-            },
-            discounts: {
-              once: '0% discount',
-              two_per_month: '5% discount',
-              three_per_month: '10% discount',
-              weekly: '15% discount',
-            },
-          },
-          property: {
-            title: 'Property details',
-            sizeRangeLabel: 'Property size range',
-            sizeRangeOptions: {
-              under_50: 'Under 50 m2',
-              '50_80': '50 to 80 m2',
-              '80_120': '80 to 120 m2',
-              over_120: 'Over 120 m2',
-            },
-            roomsCountLabel: 'Number of rooms',
-            hasBalconyLabel: 'Balcony',
-            hasIndoorStairsLabel: 'Indoor stairs',
-            hasPetsLabel: 'Pets in property',
-            detailsLabel: 'Additional details (optional)',
-            detailsPlaceholder:
-              'Tell us about special cleaning needs, access notes, or preferences.',
-          },
-          common: {
-            yes: 'Yes',
-            no: 'No',
-            next: 'Continue',
-            back: 'Back',
-            submit: 'Submit request',
-          },
-          errors: {
-            required: 'This field is required.',
-            invalid: 'Please enter a valid value.',
-            roomsRange: 'Rooms count must be between 0 and 50.',
-            detailsTooLong: 'Additional details must be 1500 characters or fewer.',
-            unsafeInput: 'Please remove unsupported characters or scripts from this field.',
-          },
-          scheduling: {
-            required: 'Please select a preferred date and time.',
-            missingClientConfig: 'Client calendar configuration is unavailable right now.',
-          },
-          serviceAddress: {
-            required: 'Please select or enter a work address.',
-          },
-        },
-        submission: {
-          loading: {
-            title: 'Sending request',
-            description: 'Your cleaning request is being processed securely.',
-          },
-          success: {
-            title: 'Request sent',
-            description:
-              'Your cleaning request was submitted successfully. We will contact you with the next step.',
-          },
-          errors: {
-            missingSession: {
-              title: 'Login required',
-              description:
-                'Your session is missing required data. Please log in again and try once more.',
-            },
-            unexpected: {
-              title: 'Unexpected error',
-              description: 'Something went wrong. Please try again or contact support.',
-            },
-          },
-        },
-      }
-    : {
-        hero: {
-          icon: {
-            src: '/svg/cleaning.svg',
-            alt: 'Symbol für Reinigungsservice',
-          },
-          title: 'Professioneller',
-          accent: 'Reinigungsservice',
-          title2: 'in Berlin',
-          description:
-            'Flexibel, zuverlässig und passend für Ihr Zuhause oder Ihr Unternehmen. Havenova bietet strukturierte Reinigungslösungen für Wohnungen, Büros und Gemeinschaftsflächen mit klarer Kommunikation, planbaren Terminen und gleichbleibender Qualität von der Anfrage bis zum Abschluss.',
-        },
-        authAlert: {
-          title: 'Konto erforderlich, um eine Reinigungsanfrage zu senden',
-          description:
-            'Um eine Anfrage für den Reinigungsservice zu senden, benötigen Sie ein aktives Havenova-Konto und eine aktive Anmeldung. Melden Sie sich an, wenn Sie bereits ein Konto haben, oder erstellen Sie in wenigen Schritten ein neues Konto.',
-          closeLabel: 'Hinweis zum erforderlichen Konto schließen',
-          ctas: {
-            login: { label: 'Zum Login', href: '/user/login' },
-            register: { label: 'Konto erstellen', href: '/user/register' },
-          },
-        },
-        form: {
-          process: {
-            title: 'Schließen Sie Ihre Reinigungsanfrage in 4 Schritten ab',
-            description:
-              'Folgen Sie den Schritten, damit wir alle Daten für die Erstbesichtigung und Einsatzplanung erhalten.',
-            stepLabel: 'Schritt',
-            steps: {
-              customerFrequency: { heading: 'Kunde und Häufigkeit' },
-              propertyDetails: { heading: 'Objektdetails' },
-              scheduling: { heading: 'Erstbesuch: Datum und Uhrzeit' },
-              serviceAddress: { heading: 'Einsatzadresse' },
-            },
-          },
-          customerType: {
-            label: 'Kundentyp',
-            options: { private: 'Privat', business: 'Gewerblich' },
-          },
-          frequency: {
-            label: 'Gewünschte Häufigkeit',
-            recommendedLabel: 'Am meisten gefragt',
-            options: {
-              once: 'Einmalig',
-              two_per_month: '2x pro Monat',
-              three_per_month: '3x pro Monat',
-              weekly: 'Wöchentlich',
-            },
-            discounts: {
-              once: '0% Rabatt',
-              two_per_month: '5% Rabatt',
-              three_per_month: '10% Rabatt',
-              weekly: '15% Rabatt',
-            },
-          },
-          property: {
-            title: 'Objektdetails',
-            sizeRangeLabel: 'Flächenbereich',
-            sizeRangeOptions: {
-              under_50: 'Unter 50 m2',
-              '50_80': '50 bis 80 m2',
-              '80_120': '80 bis 120 m2',
-              over_120: 'Über 120 m2',
-            },
-            roomsCountLabel: 'Anzahl der Räume',
-            hasBalconyLabel: 'Balkon',
-            hasIndoorStairsLabel: 'Innenliegende Treppen',
-            hasPetsLabel: 'Haustiere im Objekt',
-            detailsLabel: 'Zusätzliche Hinweise (optional)',
-            detailsPlaceholder:
-              'Teilen Sie uns besondere Reinigungswünsche, Zugangshinweise oder Präferenzen mit.',
-          },
-          common: {
-            yes: 'Ja',
-            no: 'Nein',
-            next: 'Weiter',
-            back: 'Zurück',
-            submit: 'Anfrage absenden',
-          },
-          errors: {
-            required: 'Dieses Feld ist erforderlich.',
-            invalid: 'Bitte geben Sie einen gültigen Wert ein.',
-            roomsRange: 'Die Raumanzahl muss zwischen 0 und 50 liegen.',
-            detailsTooLong: 'Zusätzliche Hinweise dürfen maximal 1500 Zeichen enthalten.',
-            unsafeInput: 'Bitte entfernen Sie nicht unterstützte Zeichen oder Skripte aus diesem Feld.',
-          },
-          scheduling: {
-            required: 'Bitte wählen Sie ein bevorzugtes Datum und eine Uhrzeit aus.',
-            missingClientConfig: 'Die Kalenderkonfiguration des Clients ist aktuell nicht verfügbar.',
-          },
-          serviceAddress: {
-            required: 'Bitte wählen Sie eine Einsatzadresse aus oder geben Sie eine neue ein.',
-          },
-        },
-        submission: {
-          loading: {
-            title: 'Anfrage wird gesendet',
-            description: 'Ihre Reinigungsanfrage wird sicher verarbeitet.',
-          },
-          success: {
-            title: 'Anfrage gesendet',
-            description:
-              'Ihre Reinigungsanfrage wurde erfolgreich gesendet. Wir melden uns mit dem nächsten Schritt bei Ihnen.',
-          },
-          errors: {
-            missingSession: {
-              title: 'Anmeldung erforderlich',
-              description:
-                'Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal.',
-            },
-            unexpected: {
-              title: 'Unerwarteter Fehler',
-              description:
-                'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.',
-            },
-          },
-        },
-      };
-
 export default function CleaningService() {
   const lang = useLang();
   const { auth } = useAuth();
   const { profile, updateProfile } = useProfile();
   const { texts } = useI18n();
   const { showError, showLoading, showSuccess, closeAlert } = useGlobalAlert();
-  const cleaning: CleaningServicePageTexts =
-    texts?.pages?.client?.cleaning ?? getCleaningFallbackTexts(lang);
+  const cleaning = texts.pages.client.cleaning as CleaningServicePageTexts;
   const [isAlertClosed, setIsAlertClosed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formResetKey, setFormResetKey] = useState(0);
@@ -408,9 +229,7 @@ export default function CleaningService() {
         popupTexts,
         'CLEANING_REQUEST_MISSING_SESSION',
         'AUTH_REQUIRED',
-        cleaning.submission.errors.missingSession.title
-          ? cleaning.submission.errors.missingSession
-          : CLEANING_POPUP_FALLBACKS.CLEANING_REQUEST_MISSING_SESSION
+        fallbackPopups.CLEANING_REQUEST_MISSING_SESSION
       );
 
       showError({
@@ -431,9 +250,7 @@ export default function CleaningService() {
       popupTexts,
       'CLEANING_REQUEST_LOADING',
       'GLOBAL_LOADING',
-      cleaning.submission.loading.title
-        ? cleaning.submission.loading
-        : CLEANING_POPUP_FALLBACKS.CLEANING_REQUEST_LOADING
+      fallbackPopups.CLEANING_REQUEST_LOADING
     );
 
     showLoading({
@@ -498,9 +315,7 @@ export default function CleaningService() {
         popupTexts,
         'CLEANING_REQUEST_SUBMITTED',
         'CLEANING_REQUEST_SUBMITTED',
-        cleaning.submission.success.title
-          ? cleaning.submission.success
-          : CLEANING_POPUP_FALLBACKS.CLEANING_REQUEST_SUBMITTED
+        fallbackPopups.CLEANING_REQUEST_SUBMITTED
       );
 
       showSuccess({

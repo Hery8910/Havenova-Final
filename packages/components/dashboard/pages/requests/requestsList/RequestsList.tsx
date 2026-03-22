@@ -20,13 +20,14 @@ export interface RequestStatusTexts {
 }
 
 export interface ServiceTexts {
-  inspection: string;
-  houseService: string;
+  painting: string;
+  repairsInstallations: string;
   kitchenCleaning: string;
   kitchenAssembly: string;
   houseCleaning: string;
   furnitureAssembly: string;
   windowCleaning: string;
+  movingHelp: string;
 }
 
 export interface DashboardRequestsTexts {
@@ -49,6 +50,11 @@ export default function RequestsList({ data, loading, onSelect }: RequestsListPr
   const requestStatus = dashboardTexts.requestStatus;
   const serviceTexts = dashboardTexts.service;
 
+  const getServiceLabel = (serviceType: string) => {
+    const normalizedKey = serviceType.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
+    return serviceTexts[normalizedKey as keyof ServiceTexts] || serviceTexts[serviceType as keyof ServiceTexts] || serviceType;
+  };
+
   if (loading) return <p>{requestsList.title}</p>;
   if (!data.length) return <p>{requestsList.empty}</p>;
 
@@ -69,7 +75,7 @@ export default function RequestsList({ data, loading, onSelect }: RequestsListPr
               <ul className={styles.list}>
                 {req.services?.map((s: string, i: number) => (
                   <li key={i}>
-                    <p>{serviceTexts[s as keyof ServiceTexts] || s}</p>
+                    <p>{getServiceLabel(s)}</p>
                   </li>
                 ))}
               </ul>

@@ -1,0 +1,130 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  font: inherit;
+}
+
+.input option {
+  color: #121212;
+  background: #ffffff;
+}
+
+.textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.counter {
+  display: grid;
+  grid-template-columns: 44px minmax(64px, auto) 44px;
+  gap: 8px;
+  align-items: center;
+}
+
+.counterButton {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 22px;
+  line-height: 1;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.counterButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.counterValue {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+  font-size: var(--font-size-300);
+}
+
+.hint,
+.photosDescription {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.photosPlaceholder {
+  display: flex;
+  align-items: center;
+  min-height: 88px;
+  padding: 16px;
+  border: 1px dashed color-mix(in srgb, var(--surface-border) 85%, #fff);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.photosTitle {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.error {
+  min-height: 20px;
+  color: var(--color-error);
+  font-size: var(--font-size-100);
+}
+
+.counterButton:focus-visible,
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}

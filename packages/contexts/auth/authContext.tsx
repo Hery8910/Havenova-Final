@@ -324,10 +324,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // API
   // -------------------
 
-  const setAuth = (u: AuthUser) => {
+  const setAuth = useCallback((u: AuthUser) => {
     setAuthState(u);
     saveToStorage(u);
-  };
+  }, []);
 
   const registerSessionCallback = useCallback((cb: () => void) => {
     sessionCallbackRef.current = cb;

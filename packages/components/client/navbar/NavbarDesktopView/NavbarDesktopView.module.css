@@ -1,0 +1,141 @@
+.desktopShell {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.desktopLayout {
+  padding: 8px 5dvw;
+  max-width: 1700px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoImage {
+  transition: transform 0.2s ease-in-out;
+}
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logoImage:hover {
+  transform: translateY(-2px);
+}
+
+.navList {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  width: fit-content;
+}
+
+.navActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.profileButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: clamp(18px, 3.5vw, 22px);
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profileButton:hover {
+  transform: translateY(-1px);
+}
+
+.profileButtonOpen {
+  background-color: rgba(7, 104, 201, 0.18);
+}
+
+.profileButton:focus-visible,
+.navLink:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+.desktopDropdown {
+  width: 100%;
+}
+
+.desktopDropdownInner {
+  max-width: 1700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 5dvw 24px;
+}
+
+.userList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.userItem {
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.navLink {
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: clamp(18px, 2.6vw, 20px);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.navLink:hover {
+  background-color: rgba(7, 104, 201, 0.12);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+:global([data-theme='dark']) .profileButton:hover,
+:global([data-theme='dark']) .navLink:hover {
+  background-color: rgba(148, 163, 184, 0.16);
+}
+
+:global([data-theme='dark']) .profileButtonOpen {
+  background-color: rgba(148, 163, 184, 0.22);
+}

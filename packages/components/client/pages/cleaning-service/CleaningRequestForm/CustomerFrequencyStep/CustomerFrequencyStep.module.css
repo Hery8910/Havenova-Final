@@ -14,17 +14,6 @@
   color: var(--text-primary);
   padding: 0 6px;
 }
-
-.toggleGrid {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.choiceButton,
 .frequencyButton {
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
@@ -39,7 +28,6 @@
     background-color 0.2s ease;
 }
 
-.choiceButton:hover,
 .frequencyButton:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
@@ -109,13 +97,6 @@
   background: var(--card-primary-bg);
 }
 
-.error {
-  min-height: 20px;
-  color: var(--color-error);
-  font-size: var(--font-size-100);
-}
-
-.choiceButton:focus-visible,
 .frequencyButton:focus-visible {
   outline: 2px solid var(--brand-primary);
   outline-offset: 2px;

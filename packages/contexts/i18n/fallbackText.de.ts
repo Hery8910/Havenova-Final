@@ -35,6 +35,18 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Unerwarteter Fehler',
     'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.'
   ),
+  CLEANING_REQUEST_LOADING: withClose(
+    'Anfrage wird gesendet',
+    'Ihre Reinigungsanfrage wird sicher verarbeitet.'
+  ),
+  CLEANING_REQUEST_SUBMITTED: withClose(
+    'Anfrage gesendet',
+    'Ihre Reinigungsanfrage wurde erfolgreich gesendet. Wir melden uns mit dem nächsten Schritt bei Ihnen.'
+  ),
+  CLEANING_REQUEST_MISSING_SESSION: withClose(
+    'Anmeldung erforderlich',
+    'Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal.'
+  ),
   ACCESS_TOKEN_EXPIRED: withClose(
     'Sitzung abgelaufen',
     'Ihr Zugriffstoken ist abgelaufen. Bitte melden Sie sich erneut an.'

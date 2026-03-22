@@ -34,6 +34,8 @@ export interface AvailabilityCalendarProps {
       nextMonth: string;
       loading: string;
       errorPrefix: string;
+      monthNavigationAriaLabel: string;
+      weekdayLabels: string[];
       nonWorkday: string;
       blockedDay: string;
       availableDay: string;
@@ -49,6 +51,8 @@ const DEFAULT_TEXTS = {
   nextMonth: 'Next month',
   loading: 'Loading availability...',
   errorPrefix: 'Availability error:',
+  monthNavigationAriaLabel: 'Calendar month navigation',
+  weekdayLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   nonWorkday: 'Unavailable',
   blockedDay: 'Blocked',
   availableDay: 'Open',
@@ -185,7 +189,7 @@ export default function AvailabilityCalendar({
 
       <section className={styles.calendarShell}>
         <section className={styles.calendarPanel} aria-label={copy.title}>
-          <nav className={styles.calendarToolbar} aria-label="Calendar month navigation">
+          <nav className={styles.calendarToolbar} aria-label={copy.monthNavigationAriaLabel}>
             <button type="button" className={styles.navButton} onClick={() => changeVisibleMonth(-1)}>
               {copy.previousMonth}
             </button>
@@ -203,7 +207,7 @@ export default function AvailabilityCalendar({
           )}
 
           <ol className={styles.weekdayRow} aria-hidden="true">
-            {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label) => (
+            {copy.weekdayLabels.map((label) => (
               <li key={label} className={styles.weekdayLabel}>
                 {label}
               </li>

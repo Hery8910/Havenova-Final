@@ -1,2 +1,2 @@
-export { NavbarView } from './NavbarView';
+export { NavbarView } from './NavbarView/NavbarView';
 export { NavbarContainer } from './NavbarContainer';

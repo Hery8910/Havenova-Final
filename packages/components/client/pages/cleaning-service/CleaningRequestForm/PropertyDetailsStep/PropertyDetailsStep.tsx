@@ -7,6 +7,8 @@ type Props = {
     sizeRangeLabel: string;
     sizeRangeOptions: Record<PropertySizeRange, string>;
     roomsCountLabel: string;
+    roomsCountDecrementAriaLabel?: string;
+    roomsCountIncrementAriaLabel?: string;
     hasBalconyLabel: string;
     hasIndoorStairsLabel: string;
     hasPetsLabel: string;
@@ -102,18 +104,18 @@ export default function PropertyDetailsStep({
             type="button"
             className={styles.counterButton}
             onClick={onRoomsDecrement}
-            aria-label="Decrease rooms count"
+            aria-label={property.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
           >
             -
           </button>
           <output className={styles.counterValue} aria-live="polite">
-            {values.roomsCount || '0'}
+            {values.roomsCount || '1'}
           </output>
           <button
             type="button"
             className={styles.counterButton}
             onClick={onRoomsIncrement}
-            aria-label="Increase rooms count"
+            aria-label={property.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
           >
             +
           </button>
@@ -151,7 +153,9 @@ export default function PropertyDetailsStep({
           <span className={styles.switchTrack}>
             <span className={styles.switchThumb} />
           </span>
-          <span className={styles.switchLabel}>{values.hasIndoorStairs ? common.yes : common.no}</span>
+          <span className={styles.switchLabel}>
+            {values.hasIndoorStairs ? common.yes : common.no}
+          </span>
         </button>
       </fieldset>
 

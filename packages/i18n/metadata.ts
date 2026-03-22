@@ -230,6 +230,52 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
       },
     },
   },
+  'home-service': {
+    en: {
+      title: 'Home Service in Berlin | Havenova',
+      description:
+        'Prepare your request for painting, repairs and installations, furniture assembly, kitchen assembly, or moving help in Berlin with Havenova.',
+      keywords:
+        'home service Berlin, painting Berlin, repairs Berlin, installations Berlin, furniture assembly Berlin, kitchen assembly Berlin, moving help Berlin',
+      openGraph: {
+        title: 'Home Service in Berlin | Havenova',
+        description:
+          'Structured requests in Berlin for painting, repairs and installations, furniture assembly, kitchen assembly, and moving help.',
+        type: 'website',
+        url: 'https://havenova.de/en/home-service',
+        images: [
+          {
+            url: 'https://havenova.de/images/og-home.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'Havenova home service in Berlin',
+          },
+        ],
+      },
+    },
+    de: {
+      title: 'Hausservice in Berlin | Havenova',
+      description:
+        'Bereiten Sie Ihre Anfrage für Malerarbeiten, Reparaturen und Installationen, Möbelmontage, Küchenmontage oder Umzugshilfe in Berlin mit Havenova vor.',
+      keywords:
+        'Hausservice Berlin, Maler Berlin, Reparaturen Berlin, Installationen Berlin, Möbelmontage Berlin, Küchenmontage Berlin, Umzugshilfe Berlin',
+      openGraph: {
+        title: 'Hausservice in Berlin | Havenova',
+        description:
+          'Strukturierte Anfragen in Berlin für Malerarbeiten, Reparaturen und Installationen, Möbelmontage, Küchenmontage und Umzugshilfe.',
+        type: 'website',
+        url: 'https://havenova.de/de/home-service',
+        images: [
+          {
+            url: 'https://havenova.de/images/og-home.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'Havenova Hausservice in Berlin',
+          },
+        ],
+      },
+    },
+  },
   profile: {
     en: {
       title: 'My Profile | Havenova',

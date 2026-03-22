@@ -7,12 +7,14 @@ import type { UserAddress } from '../profile';
 export type ServiceStatus = 'submitted' | 'accepted' | 'in progress' | 'completed' | 'cancelled';
 
 export type ServiceType =
-  | 'house-service'
+  | 'painting'
+  | 'repairs-installations'
   | 'kitchen-cleaning'
   | 'kitchen-assembly'
   | 'house-cleaning'
   | 'furniture-assembly'
-  | 'window-cleaning';
+  | 'window-cleaning'
+  | 'moving-help';
 
 // --------------------------------------
 // Base para todos los detalles de servicio
@@ -127,22 +129,47 @@ export interface WindowCleaningRequest {
   };
 }
 
-export interface HouseServiceRequest {
+export interface PaintingRequest {
   id: string;
-  serviceType: 'house-service';
+  serviceType: 'painting';
   price: number;
   estimatedDuration: number;
   icon: string;
   details: BaseServiceDetails & {
-    label: string;
+    area: string;
+    surfaces: string[];
+    colorPreferences?: string;
+    removeOldPaint?: string;
+  };
+}
+
+export interface RepairsInstallationsRequest {
+  id: string;
+  serviceType: 'repairs-installations';
+  price: number;
+  estimatedDuration: number;
+  icon: string;
+  details: BaseServiceDetails & {
     category: string;
-    quantity: number;
+    quantity?: number;
+    materialsProvided?: string;
+    accessNotes?: string;
+  };
+}
+
+export interface MovingHelpRequest {
+  id: string;
+  serviceType: 'moving-help';
+  price: number;
+  estimatedDuration: number;
+  icon: string;
+  details: BaseServiceDetails & {
     area: string;
     length: string;
     rooms: number;
-    ceiling: string;
-    floorType: string;
-    removeOld?: string;
+    floorType?: string;
+    heavyItems?: string[];
+    helpersNeeded?: number;
   };
 }
 
@@ -155,14 +182,16 @@ export type ServiceRequestItem =
   | KitchenCleaningRequest
   | HouseCleaningRequest
   | WindowCleaningRequest
-  | HouseServiceRequest;
+  | PaintingRequest
+  | RepairsInstallationsRequest
+  | MovingHelpRequest;
 
 // --------------------------------------
 // Cleaning request domain (new backend)
 // --------------------------------------
 
 export type CleaningServiceType = 'cleaning';
-export type CleaningCustomerType = 'private' | 'business';
+export type CleaningCustomerType = 'private' | 'business' | 'property_management';
 export type CleaningRequestStatus =
   | 'submitted'
   | 'date_confirmed'

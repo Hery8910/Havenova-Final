@@ -4,9 +4,11 @@ import { useRouter } from 'next/navigation';
 import { useI18n } from '@havenova/contexts/i18n';
 import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
-import { NavbarConfig, NavbarView } from './NavbarView';
+import { NavbarConfig, NavbarView } from './NavbarView/NavbarView';
 import { useAuth } from '../../../contexts/auth/authContext';
 import { useProfile } from '../../../contexts';
+
+type DeviceSize = 'mobile' | 'tablet' | 'desktop';
 
 export function NavbarContainer() {
   const { profile } = useProfile();
@@ -15,7 +17,7 @@ export function NavbarContainer() {
   const router = useRouter();
   const lang = useLang();
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [deviceSize, setDeviceSize] = useState<DeviceSize>('desktop');
   const [menuOpen, setMenuOpen] = useState(false);
 
   const theme = profile?.theme || 'light';
@@ -23,8 +25,16 @@ export function NavbarContainer() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1450);
+      const width = window.innerWidth;
+      if (width < 768) {
+        setDeviceSize('mobile');
+      } else if (width < 1500) {
+        setDeviceSize('tablet');
+      } else {
+        setDeviceSize('desktop');
+      }
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -41,7 +51,7 @@ export function NavbarContainer() {
       auth={auth}
       navbarConfig={navbarConfig}
       theme={theme}
-      isMobile={isMobile}
+      deviceSize={deviceSize}
       menuOpen={menuOpen}
       onToggleMenu={() => setMenuOpen(!menuOpen)}
       onNavigate={handleNavigate}

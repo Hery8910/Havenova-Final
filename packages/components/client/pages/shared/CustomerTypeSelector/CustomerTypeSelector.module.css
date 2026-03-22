@@ -1,0 +1,61 @@
+.group {
+  border: none;
+  padding: 12px;
+}
+
+.legend {
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 6px;
+}
+
+.helper {
+  margin: 6px 6px 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.toggleGrid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.choiceButton {
+  min-height: 42px;
+  padding: 6px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.choiceButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.active {
+  border-color: var(--brand-primary);
+  background: var(--card-primary-bg);
+}
+
+.error {
+  min-height: 20px;
+  color: var(--color-error);
+  font-size: var(--font-size-100);
+}
+
+.choiceButton:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}

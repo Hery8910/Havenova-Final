@@ -455,13 +455,14 @@
           "cancelled": "Storniert"
         },
         "service": {
-          "inspection": "Inspektion",
-          "houseService": "Haushaltsservice",
+          "painting": "Malerarbeiten",
+          "repairsInstallations": "Reparaturen & Installationen",
           "kitchenCleaning": "Küchenreinigung",
           "kitchenAssembly": "Küchenmontage",
           "houseCleaning": "Hausreinigung",
           "furnitureAssembly": "Möbelmontage",
-          "windowCleaning": "Fensterreinigung"
+          "windowCleaning": "Fensterreinigung",
+          "movingHelp": "Umzugshilfe"
         },
         "requestDetails": {
           "button": {

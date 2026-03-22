@@ -7,6 +7,7 @@ import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
 import ProcessStepsHeader from './ProcessStepsHeader/ProcessStepsHeader';
 import AvailabilityCalendar from './AvailabilityCalendar/AvailabilityCalendar';
 import WorkAddressSelector from './WorkAddressSelector/WorkAddressSelector';
+import ReviewStep from './ReviewStep/ReviewStep';
 import { useClientCalendarSettings } from '../../../../../hooks';
 import {
   CleaningCustomerType,
@@ -20,7 +21,13 @@ import type { SelectedCalendarSlot } from '../../../../../types/calendar';
 
 type FieldErrors = Partial<
   Record<
-    'customerType' | 'frequency' | 'sizeRange' | 'roomsCount' | 'details' | 'preferredVisitSlot' | 'workAddress',
+    | 'customerType'
+    | 'frequency'
+    | 'sizeRange'
+    | 'roomsCount'
+    | 'details'
+    | 'preferredVisitSlot'
+    | 'workAddress',
     string
   >
 >;
@@ -48,15 +55,19 @@ export interface CleaningRequestFormTexts {
     steps: {
       customerFrequency: {
         heading: string;
+        ariaLabel?: string;
       };
       propertyDetails: {
         heading: string;
+        ariaLabel?: string;
       };
       scheduling: {
         heading: string;
+        ariaLabel?: string;
       };
       serviceAddress: {
         heading: string;
+        ariaLabel?: string;
       };
     };
   };
@@ -75,6 +86,8 @@ export interface CleaningRequestFormTexts {
     sizeRangeLabel: string;
     sizeRangeOptions: Record<PropertySizeRange, string>;
     roomsCountLabel: string;
+    roomsCountDecrementAriaLabel?: string;
+    roomsCountIncrementAriaLabel?: string;
     hasBalconyLabel: string;
     hasIndoorStairsLabel: string;
     hasPetsLabel: string;
@@ -95,6 +108,8 @@ export interface CleaningRequestFormTexts {
     errorPrefix?: string;
     previousMonth?: string;
     nextMonth?: string;
+    monthNavigationAriaLabel?: string;
+    weekdayLabels?: string[];
     nonWorkday?: string;
     blockedDay?: string;
     availableDay?: string;
@@ -102,13 +117,67 @@ export interface CleaningRequestFormTexts {
     missingClientConfig?: string;
   };
   serviceAddress?: {
+    title?: string;
+    description?: string;
+    loading?: string;
+    optionsLegend?: string;
+    useDifferentAddressLabel?: string;
+    useDifferentAddressHint?: string;
+    emptyState?: string;
+    manualHint?: string;
+    saveToProfileLabel?: string;
+    savedAddressLabel?: string;
+    savedAddressPlaceholder?: string;
+    addressDetailsAriaLabel?: string;
+    fields?: {
+      street?: string;
+      streetNumber?: string;
+      postalCode?: string;
+      district?: string;
+      floor?: string;
+    };
+    stepAriaLabel?: string;
     required?: string;
+  };
+  review: {
+    title: string;
+    description: string;
+    sections: {
+      customer: string;
+      property: string;
+      scheduling: string;
+      address: string;
+    };
+    labels: {
+      customerType: string;
+      frequency: string;
+      sizeRange: string;
+      roomsCount: string;
+      hasBalcony: string;
+      hasIndoorStairs: string;
+      hasPets: string;
+      details: string;
+      visitDate: string;
+      visitTime: string;
+      addressSource: string;
+      addressLabel: string;
+      address: string;
+      saveToProfile: string;
+    };
+    sourceOptions: {
+      primary: string;
+      saved: string;
+      new: string;
+    };
+    emptyDetails: string;
+    finalNote: string;
   };
   common: {
     yes: string;
     no: string;
     submit: string;
     next: string;
+    review: string;
     back: string;
   };
   errors: {
@@ -146,7 +215,7 @@ export default function CleaningRequestForm({
     customerType: 'private',
     frequency: '',
     sizeRange: '',
-    roomsCount: '',
+    roomsCount: '1',
     hasBalcony: false,
     hasIndoorStairs: false,
     hasPets: false,
@@ -167,7 +236,7 @@ export default function CleaningRequestForm({
     workAddress: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
   const errors = useMemo<FieldErrors>(() => {
     const next: FieldErrors = {};
@@ -247,6 +316,14 @@ export default function CleaningRequestForm({
     }
   };
 
+  const goToStepFive = () => {
+    setTouched((prev) => ({ ...prev, workAddress: true }));
+
+    if (!errors.workAddress && values.workAddress) {
+      setStep(5);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -267,6 +344,11 @@ export default function CleaningRequestForm({
 
     if (step === 3) {
       goToStepFour();
+      return;
+    }
+
+    if (step === 4) {
+      goToStepFive();
       return;
     }
 
@@ -372,7 +454,12 @@ export default function CleaningRequestForm({
             onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
           />
         ) : step === 3 && clientCalendarSettings ? (
-          <section className={styles.schedulingStep} aria-label="Preferred visit scheduling">
+          <section
+            className={styles.schedulingStep}
+            aria-label={
+              texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
+            }
+          >
             <AvailabilityCalendar
               clientId={clientCalendarSettings.clientId}
               schedule={clientCalendarSettings.schedule}
@@ -396,6 +483,8 @@ export default function CleaningRequestForm({
                 errorPrefix: texts.scheduling?.errorPrefix,
                 previousMonth: texts.scheduling?.previousMonth,
                 nextMonth: texts.scheduling?.nextMonth,
+                monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
+                weekdayLabels: texts.scheduling?.weekdayLabels,
                 nonWorkday: texts.scheduling?.nonWorkday,
                 blockedDay: texts.scheduling?.blockedDay,
                 availableDay: texts.scheduling?.availableDay,
@@ -407,8 +496,14 @@ export default function CleaningRequestForm({
             )}
           </section>
         ) : step === 4 ? (
-          <section className={styles.schedulingStep} aria-label="Service address selection">
+          <section
+            className={styles.schedulingStep}
+            aria-label={
+              texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
+            }
+          >
             <WorkAddressSelector
+              texts={texts.serviceAddress}
               value={values.workAddress}
               onChange={(workAddress) => {
                 setValues((prev) => ({ ...prev, workAddress }));
@@ -418,6 +513,35 @@ export default function CleaningRequestForm({
 
             {showError('workAddress') && <p className={styles.errorText}>{errors.workAddress}</p>}
           </section>
+        ) : step === 5 &&
+          values.customerType &&
+          values.frequency &&
+          values.sizeRange &&
+          values.preferredVisitSlot &&
+          values.workAddress ? (
+          <ReviewStep
+            texts={texts.review}
+            customerType={{
+              selected: values.customerType,
+              options: texts.customerType.options,
+            }}
+            frequency={{
+              selected: values.frequency,
+              options: texts.frequency.options,
+            }}
+            property={{
+              sizeRange: values.sizeRange,
+              sizeRangeOptions: texts.property.sizeRangeOptions,
+              roomsCount: Number(values.roomsCount),
+              hasBalcony: values.hasBalcony,
+              hasIndoorStairs: values.hasIndoorStairs,
+              hasPets: values.hasPets,
+              details: sanitizeText(values.details) || undefined,
+            }}
+            scheduling={values.preferredVisitSlot}
+            workAddress={values.workAddress}
+            common={texts.common}
+          />
         ) : (
           <section className={styles.missingConfig} aria-live="polite">
             <p className={styles.errorText}>
@@ -432,7 +556,9 @@ export default function CleaningRequestForm({
             <button
               type="button"
               className={`button button_ghost ${styles.backButton}`}
-              onClick={() => setStep((prev) => (prev === 4 ? 3 : prev === 3 ? 2 : 1))}
+              onClick={() =>
+                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
+              }
             >
               {texts.common.back}
             </button>
@@ -440,14 +566,14 @@ export default function CleaningRequestForm({
 
           <button
             className={`button ${!canSubmit ? styles.submitDisabled : ''}`}
-            type={step === 4 && !canSubmit ? 'button' : 'submit'}
-            aria-disabled={step === 4 && !canSubmit}
+            type={step === 5 && !canSubmit ? 'button' : 'submit'}
+            aria-disabled={step === 5 && !canSubmit}
             disabled={loading}
             onClick={() => {
-              if (step === 4 && !canSubmit) onRequireAuth?.();
+              if (step === 5 && !canSubmit) onRequireAuth?.();
             }}
           >
-            {step === 4 ? texts.common.submit : texts.common.next}
+            {step === 5 ? texts.common.submit : step === 4 ? texts.common.review : texts.common.next}
           </button>
         </footer>
       </form>

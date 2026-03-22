@@ -1,5 +1,6 @@
 import styles from './CustomerFrequencyStep.module.css';
 import { CleaningCustomerType, CleaningFrequency } from '../../../../../../types/services';
+import CustomerTypeSelector from '../../../shared/CustomerTypeSelector/CustomerTypeSelector';
 
 type Props = {
   customerType: {
@@ -36,26 +37,13 @@ export default function CustomerFrequencyStep({
 }: Props) {
   return (
     <section className={styles.container} aria-label="Customer and frequency details">
-      <fieldset className={styles.group}>
-        <legend className={styles.legend}>{customerType.label}</legend>
-        <ul className={styles.toggleGrid}>
-          {(Object.keys(customerType.options) as CleaningCustomerType[]).map((type) => (
-            <li key={type}>
-              <button
-                type="button"
-                className={`${styles.choiceButton} ${values.customerType === type ? styles.active : ''}`}
-                aria-pressed={values.customerType === type}
-                onClick={() => onCustomerTypeChange(type)}
-              >
-                {customerType.options[type]}
-              </button>
-            </li>
-          ))}
-        </ul>
-        <span className={styles.error} aria-live="polite">
-          {errors.customerType || ''}
-        </span>
-      </fieldset>
+      <CustomerTypeSelector
+        label={customerType.label}
+        options={customerType.options}
+        value={values.customerType}
+        error={errors.customerType}
+        onChange={onCustomerTypeChange}
+      />
 
       <fieldset className={styles.group}>
         <legend className={styles.legend}>{frequency.label}</legend>

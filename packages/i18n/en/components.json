@@ -2,8 +2,8 @@
   "client": {
     "navbar": {
       "links": [
-        { "label": "Cleaning", "href": "/house-cleaning" },
-        { "label": "Home service", "href": "/cleaning-service" },
+        { "label": "Cleaning", "href": "/cleaning-service" },
+        { "label": "Home service", "href": "/home-service" },
         { "label": "How it works", "href": "/how-it-work" },
         { "label": "Contact", "href": "/contact" },
         { "label": "About", "href": "/about" }
@@ -455,13 +455,14 @@
           "cancelled": "Cancelled"
         },
         "service": {
-          "inspection": "Inspection",
-          "houseService": "Home service",
+          "painting": "Painting",
+          "repairsInstallations": "Repairs & Installations",
           "kitchenCleaning": "Kitchen cleaning",
           "kitchenAssembly": "Kitchen assembly",
           "houseCleaning": "House cleaning",
           "furnitureAssembly": "Furniture assembly",
-          "windowCleaning": "Window cleaning"
+          "windowCleaning": "Window cleaning",
+          "movingHelp": "Moving help"
         },
         "requestDetails": {
           "button": {

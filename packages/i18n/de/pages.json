@@ -184,7 +184,8 @@
           "label": "Kundentyp",
           "options": {
             "private": "Privat",
-            "business": "Gewerblich"
+            "business": "Gewerblich",
+            "property_management": "Hausverwaltung"
           }
         },
         "frequency": {
@@ -213,6 +214,8 @@
             "over_120": "Über 120 m2"
           },
           "roomsCountLabel": "Anzahl der Räume",
+          "roomsCountDecrementAriaLabel": "Raumanzahl verringern",
+          "roomsCountIncrementAriaLabel": "Raumanzahl erhöhen",
           "hasBalconyLabel": "Balkon",
           "hasIndoorStairsLabel": "Innenliegende Treppen",
           "hasPetsLabel": "Haustiere im Objekt",
@@ -223,8 +226,9 @@
           "yes": "Ja",
           "no": "Nein",
           "next": "Weiter",
+          "review": "Zur Prüfung",
           "back": "Zurück",
-          "submit": "Weiter mit Adresse und Termin"
+          "submit": "Anfrage absenden"
         },
         "errors": {
           "required": "Dieses Feld ist erforderlich.",
@@ -234,11 +238,82 @@
           "unsafeInput": "Bitte entfernen Sie nicht unterstützte Zeichen oder Skripte aus diesem Feld."
         },
         "scheduling": {
+          "title": "Wählen Sie Ihren Wunschtermin",
+          "description": "Wählen Sie zuerst ein Datum und anschließend ein verfügbares Zeitfenster.",
+          "slotsTitle": "Verfügbare Zeiten",
+          "noDateSelected": "Wählen Sie ein Datum, um fortzufahren.",
+          "noAvailability": "Für diesen Tag sind keine Zeiten verfügbar.",
+          "blockedBadge": "Blockiert",
+          "selectedBadge": "Ausgewählt",
+          "availableBadge": "Verfügbar",
+          "closeSlotsLabel": "Anderen Tag wählen",
+          "loading": "Verfügbarkeiten werden geladen...",
+          "errorPrefix": "Fehler bei der Verfügbarkeit:",
+          "previousMonth": "Vorheriger Monat",
+          "nextMonth": "Nächster Monat",
+          "monthNavigationAriaLabel": "Navigation für Kalendermonate",
+          "weekdayLabels": ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+          "nonWorkday": "Nicht verfügbar",
+          "blockedDay": "Blockiert",
+          "availableDay": "offen",
           "required": "Bitte wählen Sie ein bevorzugtes Datum und eine Uhrzeit aus.",
           "missingClientConfig": "Die Kalenderkonfiguration des Clients ist aktuell nicht verfügbar."
         },
         "serviceAddress": {
+          "title": "Einsatzadresse",
+          "description": "Wählen Sie Ihre Hauptadresse, eine gespeicherte Adresse oder geben Sie für diese Anfrage einen anderen Ort an.",
+          "loading": "Ihre gespeicherten Adressen werden geladen...",
+          "optionsLegend": "Verfügbare Adressoptionen",
+          "useDifferentAddressLabel": "Andere Adresse verwenden",
+          "useDifferentAddressHint": "Geben Sie für diese Anfrage einen neuen Einsatzort ein.",
+          "emptyState": "Es wurden noch keine gespeicherten Adressen gefunden. Geben Sie unten die Einsatzadresse ein und speichern Sie sie bei Bedarf.",
+          "manualHint": "Geben Sie die Adresse ein, an der der Besuch oder die Besichtigung stattfinden soll.",
+          "saveToProfileLabel": "Diese Adresse in meinem Profil speichern",
+          "savedAddressLabel": "Bezeichnung",
+          "savedAddressPlaceholder": "Homeoffice, Gebäude A, Eltern...",
+          "addressDetailsAriaLabel": "Adressdetails",
+          "fields": {
+            "street": "Straße",
+            "streetNumber": "Hausnummer",
+            "postalCode": "Postleitzahl",
+            "district": "Bezirk",
+            "floor": "Etage"
+          },
+          "stepAriaLabel": "Auswahl der Einsatzadresse",
           "required": "Bitte wählen Sie eine Einsatzadresse aus oder geben Sie eine neue ein."
+        },
+        "review": {
+          "title": "Letzter Check vor dem Absenden",
+          "description": "Sie haben die 4 Schritte abgeschlossen. Kontrollieren Sie jetzt alle Angaben und senden Sie die Reinigungsanfrage ab, wenn alles korrekt ist.",
+          "sections": {
+            "customer": "Kunde und Häufigkeit",
+            "property": "Objektdetails",
+            "scheduling": "Wunschtermin",
+            "address": "Einsatzadresse"
+          },
+          "labels": {
+            "customerType": "Kundentyp",
+            "frequency": "Häufigkeit",
+            "sizeRange": "Flächenbereich",
+            "roomsCount": "Raumanzahl",
+            "hasBalcony": "Balkon",
+            "hasIndoorStairs": "Innenliegende Treppen",
+            "hasPets": "Haustiere",
+            "details": "Zusätzliche Hinweise",
+            "visitDate": "Datum",
+            "visitTime": "Zeitfenster",
+            "addressSource": "Adressquelle",
+            "addressLabel": "Bezeichnung",
+            "address": "Adresse",
+            "saveToProfile": "Im Profil speichern"
+          },
+          "sourceOptions": {
+            "primary": "Hauptadresse",
+            "saved": "Gespeicherte Adresse",
+            "new": "Neue Adresse"
+          },
+          "emptyDetails": "Keine zusätzlichen Hinweise angegeben.",
+          "finalNote": "Dies ist die letzte Prüfung vor dem Versand. Wenn alle Angaben stimmen, können Sie die Anfrage jetzt verbindlich absenden."
         }
       },
       "submission": {
@@ -262,7 +337,204 @@
         }
       }
     },
-    "home-service": {},
+    "home-service": {
+      "hero": {
+        "icon": {
+          "src": "/svg/service.svg",
+          "alt": "Symbol für Hausservice"
+        },
+        "title": "Praktischer",
+        "accent": "Hausservice",
+        "title2": "in Berlin",
+        "description": "Für Malerarbeiten, Reparaturen und Installationen, Möbelmontage, Küchenmontage und Umzugshilfe in Berlin. Havenova strukturiert Ihre Anfrage, damit wir Umfang, Zugangssituation und nutzbare Profildaten schnell erfassen können."
+      },
+      "authAlert": {
+        "title": "Konto erforderlich, um eine Hausservice-Anfrage vorzubereiten",
+        "description": "Um Ihre Kontaktdaten und Adressen automatisch zu übernehmen, benötigen Sie ein aktives Havenova-Konto und eine laufende Sitzung. Melden Sie sich an oder erstellen Sie in wenigen Schritten ein neues Konto.",
+        "closeLabel": "Hinweis zum erforderlichen Konto schließen",
+        "ctas": {
+          "login": {
+            "label": "Zum Login",
+            "href": "/user/login"
+          },
+          "register": {
+            "label": "Konto erstellen",
+            "href": "/user/register"
+          }
+        }
+      },
+      "form": {
+        "process": {
+          "title": "Schließen Sie Ihre Hausservice-Anfrage in 4 Schritten ab",
+          "description": "Wählen Sie zuerst den Kundentyp und die Art des Einsatzes. Danach erfassen wir die servicespezifischen Hinweise, Ihren Wunschtermin und die Einsatzadresse.",
+          "stepLabel": "Schritt",
+          "steps": {
+            "customerService": {
+              "heading": "Kunde und Leistung"
+            },
+            "details": {
+              "heading": "Leistungsdetails"
+            },
+            "scheduling": {
+              "heading": "Wunschtermin"
+            },
+            "serviceAddress": {
+              "heading": "Einsatzadresse"
+            }
+          }
+        },
+        "customerType": {
+          "label": "Kundentyp",
+          "helper": "Wählen Sie die passende Kundengruppe für diesen Hausservice-Einsatz.",
+          "options": {
+            "private": "Privat",
+            "business": "Gewerblich",
+            "property_management": "Hausverwaltung"
+          }
+        },
+        "serviceType": {
+          "label": "Art des Hausservice",
+          "helper": "Wählen Sie die Leistung, die Ihren Bedarf am besten beschreibt.",
+          "options": {
+            "painting": {
+              "title": "Malerarbeiten",
+              "description": "Innen- oder Außenanstriche für Wände, Decken, Leisten oder definierte Flächen."
+            },
+            "repairs-installations": {
+              "title": "Reparaturen & Installationen",
+              "description": "Praktische Reparaturen, Austauscharbeiten, Befestigungen oder Installationsleistungen im Objekt."
+            },
+            "furniture-assembly": {
+              "title": "Möbelmontage",
+              "description": "Aufbau oder Montage von Schränken, Regalen, Betten, Tischen und weiteren Möbeln."
+            },
+            "kitchen-assembly": {
+              "title": "Küchenmontage",
+              "description": "Montage und Einbauunterstützung für Küchenmöbel, Schränke und zugehörige Komponenten."
+            },
+            "moving-help": {
+              "title": "Umzugshilfe",
+              "description": "Praktische Unterstützung beim Tragen, Verladen, Entladen oder Umstellen innerhalb des Objekts."
+            }
+          }
+        },
+        "serviceDetails": {
+          "title": "Beschreiben Sie den Einsatz",
+          "description": "Dieser Schritt passt sich an die gewählte Leistung an und erfasst die wichtigsten Angaben für den nächsten Abschnitt.",
+          "selectedServiceLabel": "Ausgewählte Leistung",
+          "detailsLabel": "Leistungsdetails",
+          "detailsPlaceholder": "Beschreiben Sie kurz den Bedarf, den aktuellen Zustand, Besonderheiten vor Ort oder relevante Zugänge.",
+          "helper": "Diese Angaben bilden die Grundlage für die spätere servicespezifische Detailerfassung.",
+          "painting": {
+            "title": "Details zu Malerarbeiten",
+            "description": "Teilen Sie uns mit, was gestrichen werden soll und wie groß der ungefähre Umfang ist.",
+            "paintScopeLabel": "Was soll gestrichen werden?",
+            "paintScopeOptions": {
+              "one_wall": "Eine Wand",
+              "one_room": "Ein Raum",
+              "multiple_rooms": "Mehrere Räume",
+              "entire_apartment": "Gesamte Wohnung"
+            },
+            "roomsCountLabel": "Anzahl der Räume",
+            "roomsCountDecrementAriaLabel": "Raumanzahl verringern",
+            "roomsCountIncrementAriaLabel": "Raumanzahl erhöhen",
+            "sizeRangeLabel": "Ungefähre Größe",
+            "sizeRangeOptions": {
+              "under_50": "Unter 50 m2",
+              "50_80": "50 bis 80 m2",
+              "80_120": "80 bis 120 m2",
+              "over_120": "Über 120 m2"
+            },
+            "descriptionLabel": "Beschreibung",
+            "descriptionPlaceholder": "Beschreiben Sie die Flächen, den aktuellen Zustand, den gewünschten Anstrich, Zugangssituationen oder notwendige Vorarbeiten.",
+            "descriptionHelper": "Fügen Sie alle relevanten Hinweise hinzu, die den Aufwand vor dem Termin besser einschätzbar machen.",
+            "photosLabel": "Foto-Upload",
+            "photosDescription": "Hier wird später ein gemeinsamer Upload-Baustein für Fotos eingebunden, den auch die anderen Home-Services nutzen."
+          },
+          "services": {
+            "painting": {
+              "title": "Malerarbeiten",
+              "description": "Für Anstriche an Wänden, Decken, Leisten, Türen oder anderen klar definierten Flächen.",
+              "detailsHint": "Nennen Sie den zu streichenden Bereich, die ungefähre Größe, den aktuellen Zustand und ob Farben oder Materialien bereits feststehen."
+            },
+            "repairs-installations": {
+              "title": "Reparaturen & Installationen",
+              "description": "Für praktische Reparaturen, Austauscharbeiten, Befestigungen oder Installationen vor Ort.",
+              "detailsHint": "Beschreiben Sie, was repariert oder installiert werden soll, wo es sich befindet und ob Material oder Bauteile bereits vorhanden sind."
+            },
+            "furniture-assembly": {
+              "title": "Möbelmontage",
+              "description": "Für den Aufbau, die Platzierung oder Sicherung von Möbeln und ähnlicher Einrichtung.",
+              "detailsHint": "Listen Sie die Möbelstücke, Mengen, Marke oder Modell auf und ob eine Montageanleitung vorliegt."
+            },
+            "kitchen-assembly": {
+              "title": "Küchenmontage",
+              "description": "Für den Aufbau von Küchenschränken, das Setzen von Elementen und die Vorbereitung zugehöriger Montageschritte.",
+              "detailsHint": "Teilen Sie die Küchenform, die zu montierenden Elemente und mit, ob Geräte, Pläne oder Maße bereits vorliegen."
+            },
+            "moving-help": {
+              "title": "Umzugshilfe",
+              "description": "Für Unterstützung am Umzugstag, beim Tragen von Gegenständen, beim Be- und Entladen oder beim Umstellen.",
+              "detailsHint": "Beschreiben Sie, was bewegt werden soll, wie die Zugangssituation ist, welche Etagen betroffen sind und ob schwere oder sperrige Gegenstände dazugehören."
+            }
+          }
+        },
+        "common": {
+          "next": "Weiter",
+          "back": "Zurück",
+          "submit": "Anfrage fortsetzen"
+        },
+        "errors": {
+          "required": "Dieses Feld ist erforderlich.",
+          "detailsTooLong": "Die Leistungsdetails dürfen maximal 1500 Zeichen enthalten."
+        },
+        "scheduling": {
+          "title": "Wählen Sie Ihren Wunschtermin",
+          "description": "Wählen Sie zuerst ein Datum und anschließend ein verfügbares Zeitfenster für die gewünschte Leistung.",
+          "slotsTitle": "Verfügbare Zeiten",
+          "noDateSelected": "Wählen Sie ein Datum, um fortzufahren.",
+          "noAvailability": "Für diesen Tag sind keine Zeiten verfügbar.",
+          "blockedBadge": "Blockiert",
+          "selectedBadge": "Ausgewählt",
+          "availableBadge": "Verfügbar",
+          "closeSlotsLabel": "Anderen Tag wählen",
+          "loading": "Verfügbarkeiten werden geladen...",
+          "errorPrefix": "Fehler bei der Verfügbarkeit:",
+          "previousMonth": "Vorheriger Monat",
+          "nextMonth": "Nächster Monat",
+          "monthNavigationAriaLabel": "Navigation für Kalendermonate",
+          "weekdayLabels": ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+          "nonWorkday": "Nicht verfügbar",
+          "blockedDay": "Blockiert",
+          "availableDay": "offen",
+          "required": "Bitte wählen Sie ein bevorzugtes Datum und eine Uhrzeit aus.",
+          "missingClientConfig": "Die Kalenderkonfiguration des Clients ist aktuell nicht verfügbar."
+        },
+        "serviceAddress": {
+          "title": "Einsatzadresse",
+          "description": "Wählen Sie Ihre Hauptadresse, eine gespeicherte Adresse oder geben Sie für diese Anfrage einen anderen Ort an.",
+          "loading": "Ihre gespeicherten Adressen werden geladen...",
+          "optionsLegend": "Verfügbare Adressoptionen",
+          "useDifferentAddressLabel": "Andere Adresse verwenden",
+          "useDifferentAddressHint": "Geben Sie für diese Anfrage einen neuen Einsatzort ein.",
+          "emptyState": "Es wurden noch keine gespeicherten Adressen gefunden. Geben Sie unten die Einsatzadresse ein und speichern Sie sie bei Bedarf.",
+          "manualHint": "Geben Sie die Adresse ein, an der die gewünschte Leistung stattfinden soll.",
+          "saveToProfileLabel": "Diese Adresse in meinem Profil speichern",
+          "savedAddressLabel": "Bezeichnung",
+          "savedAddressPlaceholder": "Objekt A, Hinterhaus, Praxis...",
+          "addressDetailsAriaLabel": "Adressdetails",
+          "fields": {
+            "street": "Straße",
+            "streetNumber": "Hausnummer",
+            "postalCode": "Postleitzahl",
+            "district": "Bezirk",
+            "floor": "Etage"
+          },
+          "stepAriaLabel": "Auswahl der Einsatzadresse",
+          "required": "Bitte wählen Sie eine Einsatzadresse aus oder geben Sie eine neue ein."
+        }
+      }
+    },
     "contact": {
       "hero": {
         "title": "Contact us",
@@ -917,13 +1189,14 @@
         "cancelled": "Storniert"
       },
       "service": {
+        "painting": "Malerarbeiten",
+        "repairs-installations": "Reparaturen & Installationen",
         "furniture-assembly": "Möbelmontage",
         "kitchen-cleaning": "Küchenreinigung",
         "house-cleaning": "Wohnungsreinigung",
         "window-cleaning": "Fensterreinigung",
-        "house-service": "Hausservice",
         "kitchen-assembly": "Küchenmontage",
-        "inspection": "Inspektion"
+        "moving-help": "Umzugshilfe"
       }
     },
     "support": {

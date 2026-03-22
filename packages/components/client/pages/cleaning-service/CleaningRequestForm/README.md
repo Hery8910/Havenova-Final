@@ -2,12 +2,13 @@
 
 ## Purpose
 
-This form collects the frontend draft for a cleaning service request in four sequential steps:
+This form collects the frontend draft for a cleaning service request in five sequential steps:
 
 1. customer type and recurrence
 2. property details
 3. preferred first visit slot
 4. service/work address
+5. request review before final submit
 
 The current implementation does not submit the request to the backend yet.
 It builds the final frontend payload shape that will be sent later.
@@ -42,7 +43,7 @@ Collected fields:
 
 ```ts
 {
-  customerType: 'private' | 'business';
+  customerType: 'private' | 'business' | 'property_management';
 }
 ```
 
@@ -128,13 +129,21 @@ If the user enters a new address, the component may emit:
 
 This is only an intent flag. The component does not persist profile changes itself.
 
+### Step 5: Review Before Submit
+
+The final step summarizes the data that will be sent so the user can verify it before the
+request is submitted.
+
+This review step does not change the payload shape. It is a confirmation layer before the
+final submit action.
+
 ## Final Frontend Submission Shape
 
 The form currently emits this object to the parent page:
 
 ```ts
 interface CleaningRequestFormSubmission {
-  customerType: 'private' | 'business';
+  customerType: 'private' | 'business' | 'property_management';
   details: {
     frequency: 'once' | 'two_per_month' | 'three_per_month' | 'weekly';
     property: {
