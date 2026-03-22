@@ -1,11 +1,13 @@
 'use client';
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import { useI18n } from '../../../../contexts';
 import styles from './NavbarMobileView.module.css';
+import sharedStyles from '../NavbarShared.module.css';
 import { AuthUser, UserClientProfile } from '../../../../types';
-import { NavLinkItem, NavbarConfig } from '../NavbarView/NavbarView';
+import type { NavbarConfig } from '../navbar.types';
+import { getNavbarContent } from '../navbar.shared';
 import { CgMenuLeftAlt, CgProfile } from 'react-icons/cg';
 import { IoIosSettings } from 'react-icons/io';
 import { FiTool } from 'react-icons/fi';
@@ -16,7 +18,6 @@ export interface NavbarMobileViewProps {
   profile: UserClientProfile;
   auth: AuthUser;
   navbarConfig?: NavbarConfig;
-  theme: 'light' | 'dark';
   onNavigate: (href: string) => void;
 }
 
@@ -24,59 +25,21 @@ export function NavbarMobileView({
   profile,
   auth,
   navbarConfig,
-  theme,
   onNavigate,
 }: NavbarMobileViewProps) {
   const { texts } = useI18n();
   const [activeSection, setActiveSection] = useState<NavSection>(null);
-  const [dragOffset, setDragOffset] = useState(0);
   const panelRef = useRef<HTMLElement>(null);
   const bottomBarRef = useRef<HTMLElement>(null);
-  const dragStartYRef = useRef<number | null>(null);
-  const isDraggingRef = useRef(false);
 
   if (!profile) return null;
 
-  const menuLinks: NavLinkItem[] = navbarConfig?.links ?? [
-    { label: 'How it works', href: '/how-it-work' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'About', href: '/about' },
-  ];
-
-  const serviceLinks: NavLinkItem[] = navbarConfig?.services ?? [
-    { label: 'Cleaning', href: '/services/house-cleaning' },
-    { label: 'Maintenance', href: '/services/home-service' },
-  ];
-
-  const avatarTexts = texts?.components?.client?.avatar;
-  const navbarTexts = texts?.components?.client?.navbar;
-  const profileNavTexts = texts?.pages?.client?.user?.profileNav;
-  const editThemeTexts = texts?.pages?.client?.user?.edit?.theme;
-  const menuLabel = navbarConfig?.headers?.about ?? 'Menu';
-  const servicesLabel = navbarConfig?.headers?.services ?? 'Services';
-  const profileButtonLabel = auth?.isLogged ? profileNavTexts?.profile ?? 'Profile' : 'Account';
-  const preferencesLabel = profileNavTexts?.settings ?? 'Preferences';
-  const registerLabel =
-    avatarTexts?.register?.label ?? navbarTexts?.register?.[0]?.label ?? 'Register';
-  const loginLabel = avatarTexts?.login?.label ?? navbarTexts?.register?.[1]?.label ?? 'Login';
-  const editLabel = texts?.pages?.client?.user?.edit?.title ?? 'Edit';
-  const themeLabel = editThemeTexts?.theme ?? 'Theme';
-  const languageLabel = editThemeTexts?.lang ?? 'Language';
-
-  const userLinks: NavLinkItem[] = auth.isLogged
-    ? [
-        { label: profileNavTexts?.profile ?? 'Profile', href: '/profile' },
-        { label: profileNavTexts?.requests ?? 'Requests', href: '/profile/requests' },
-        {
-          label: profileNavTexts?.notifications ?? 'Notifications',
-          href: '/profile/notification',
-        },
-        { label: profileNavTexts?.settings ?? 'Settings', href: '/profile/edit' },
-      ]
-    : [
-        { label: registerLabel, href: '/user/register' },
-        { label: loginLabel, href: '/user/login' },
-      ];
+  const { menuLinks, serviceLinks, userLinks, labels, a11y } = getNavbarContent({
+    texts,
+    navbarConfig,
+    auth,
+  });
+  const profileButtonLabel = auth.isLogged ? labels.profile : labels.account;
 
   const handleNavClick = (href: string) => {
     onNavigate(href);
@@ -98,13 +61,11 @@ export function NavbarMobileView({
       }
 
       setActiveSection(null);
-      setDragOffset(0);
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setActiveSection(null);
-        setDragOffset(0);
       }
     };
 
@@ -117,69 +78,38 @@ export function NavbarMobileView({
     };
   }, [activeSection]);
 
-  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
-    if (!activeSection || event.touches.length !== 1) return;
-
-    dragStartYRef.current = event.touches[0].clientY;
-    isDraggingRef.current = false;
-  };
-
-  const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
-    const startY = dragStartYRef.current;
-
-    if (!activeSection || startY === null || event.touches.length !== 1) return;
-    if ((panelRef.current?.scrollTop ?? 0) > 0) return;
-
-    const nextOffset = Math.max(0, event.touches[0].clientY - startY);
-
-    if (nextOffset <= 0) return;
-
-    isDraggingRef.current = true;
-    setDragOffset(nextOffset);
-  };
-
-  const handleTouchEnd = () => {
-    if (!activeSection) return;
-
-    if (isDraggingRef.current && dragOffset > 100) {
-      setActiveSection(null);
-    }
-
-    dragStartYRef.current = null;
-    isDraggingRef.current = false;
-    setDragOffset(0);
-  };
-
-  const panelStyle: CSSProperties = activeSection
-    ? {
-        transform: `translateY(${dragOffset}px)`,
-        transition: dragOffset > 0 ? 'none' : undefined,
-      }
-    : {};
+  const activePanelLabel =
+    activeSection === 'menu'
+      ? a11y.menuPanel
+      : activeSection === 'auth'
+        ? a11y.accountPanel
+        : activeSection === 'services'
+          ? a11y.servicesPanel
+          : activeSection === 'preferences'
+            ? a11y.preferencesPanel
+            : a11y.mobileNavigation;
 
   return (
-    <section className={styles.mobileNavContainer} aria-label="Mobile navigation">
+    <section className={styles.mobileNavContainer} aria-label={a11y.mobileNavigation}>
       <aside
+        id="mobile-navigation-panel"
         ref={panelRef}
         className={`${styles.mobilePanel} ${activeSection ? styles.mobilePanelOpen : ''}`}
-        aria-label={activeSection ? `${activeSection} menu` : 'Navigation menu'}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchEnd}
-        style={panelStyle}
+        aria-label={activePanelLabel}
       >
         {activeSection === 'menu' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-menu-title">
-            <h2 id="mobile-menu-title" className={styles.mobilePanelTitle}>
-              {menuLabel}
+            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+
+            <h2 id="mobile-menu-title" className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}>
+              {labels.menu}
             </h2>
-            <ul className={styles.mobilePanelList}>
+            <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
               {menuLinks.map((item) => (
                 <li key={item.href}>
                   <button
                     type="button"
-                    className={styles.mobilePanelLink}
+                    className={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink}`}
                     onClick={() => handleNavClick(item.href)}
                   >
                     {item.label}
@@ -192,15 +122,17 @@ export function NavbarMobileView({
 
         {activeSection === 'auth' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-account-title">
-            <h2 id="mobile-account-title" className={styles.mobilePanelTitle}>
+            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+
+            <h2 id="mobile-account-title" className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}>
               {profileButtonLabel}
             </h2>
-            <ul className={styles.mobilePanelList}>
+            <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
               {userLinks.map((item) => (
                 <li key={item.href}>
                   <button
                     type="button"
-                    className={styles.mobilePanelLink}
+                    className={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink}`}
                     onClick={() => handleNavClick(item.href)}
                   >
                     {item.label}
@@ -213,15 +145,20 @@ export function NavbarMobileView({
 
         {activeSection === 'services' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-services-title">
-            <h2 id="mobile-services-title" className={styles.mobilePanelTitle}>
-              {servicesLabel}
+            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+
+            <h2
+              id="mobile-services-title"
+              className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}
+            >
+              {labels.services}
             </h2>
-            <ul className={styles.mobilePanelList}>
+            <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
               {serviceLinks.map((item) => (
                 <li key={item.href}>
                   <button
                     type="button"
-                    className={styles.mobilePanelLink}
+                    className={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink}`}
                     onClick={() => handleNavClick(item.href)}
                   >
                     {item.label}
@@ -233,20 +170,22 @@ export function NavbarMobileView({
         )}
 
         {activeSection === 'preferences' && (
-          <section
-            className={styles.mobilePanelContent}
-            aria-labelledby="mobile-preferences-title"
-          >
-            <h2 id="mobile-preferences-title" className={styles.mobilePanelTitle}>
-              {preferencesLabel}
+          <section className={styles.mobilePanelContent} aria-labelledby="mobile-preferences-title">
+            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+
+            <h2
+              id="mobile-preferences-title"
+              className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}
+            >
+              {labels.preferences}
             </h2>
-            <ul className={styles.mobilePanelPreferences}>
+            <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
               <li className={styles.preferencesItem}>
-                <span className={styles.preferencesLabel}>{themeLabel}</span>
+                <span className={styles.preferencesLabel}>{labels.theme}</span>
                 <ThemeToggler />
               </li>
               <li className={styles.preferencesItem}>
-                <span className={styles.preferencesLabel}>{languageLabel}</span>
+                <span className={styles.preferencesLabel}>{labels.language}</span>
                 <LanguageSwitcher />
               </li>
             </ul>
@@ -257,17 +196,21 @@ export function NavbarMobileView({
       <nav
         ref={bottomBarRef}
         className={styles.mobileBottomBar}
-        aria-label="Mobile navigation sections"
+        aria-label={a11y.mobileNavigationSections}
       >
         <ul className={styles.mobileBottomList}>
           <li>
             <button
               type="button"
-              className={`${styles.mobileNavButton} ${activeSection === 'menu' ? styles.mobileNavButtonActive : ''}`}
-              aria-label={menuLabel}
+              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'menu'
+                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
+                  : ''
+              }`}
+              aria-label={a11y.menuToggle}
               aria-expanded={activeSection === 'menu'}
+              aria-controls="mobile-navigation-panel"
               onClick={() => toggleSection('menu')}
-              title={menuLabel}
             >
               <CgMenuLeftAlt />
             </button>
@@ -276,11 +219,15 @@ export function NavbarMobileView({
           <li>
             <button
               type="button"
-              className={`${styles.mobileNavButton} ${activeSection === 'services' ? styles.mobileNavButtonActive : ''}`}
-              aria-label={servicesLabel}
+              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'services'
+                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
+                  : ''
+              }`}
+              aria-label={a11y.servicesToggle}
               aria-expanded={activeSection === 'services'}
+              aria-controls="mobile-navigation-panel"
               onClick={() => toggleSection('services')}
-              title={servicesLabel}
             >
               <FiTool />
             </button>
@@ -289,11 +236,15 @@ export function NavbarMobileView({
           <li>
             <button
               type="button"
-              className={`${styles.mobileNavButton} ${activeSection === 'auth' ? styles.mobileNavButtonActive : ''}`}
-              aria-label={profileButtonLabel}
+              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'auth'
+                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
+                  : ''
+              }`}
+              aria-label={a11y.profileToggle}
               aria-expanded={activeSection === 'auth'}
+              aria-controls="mobile-navigation-panel"
               onClick={() => toggleSection('auth')}
-              title={profileButtonLabel}
             >
               <CgProfile />
             </button>
@@ -302,11 +253,15 @@ export function NavbarMobileView({
           <li>
             <button
               type="button"
-              className={`${styles.mobileNavButton} ${activeSection === 'preferences' ? styles.mobileNavButtonActive : ''}`}
-              aria-label={preferencesLabel}
+              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'preferences'
+                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
+                  : ''
+              }`}
+              aria-label={a11y.preferencesToggle}
               aria-expanded={activeSection === 'preferences'}
+              aria-controls="mobile-navigation-panel"
               onClick={() => toggleSection('preferences')}
-              title={preferencesLabel}
             >
               <IoIosSettings />
             </button>

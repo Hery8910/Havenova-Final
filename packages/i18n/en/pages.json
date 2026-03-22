@@ -32,6 +32,10 @@
           "label": "Install app",
           "installedLabel": "App installed"
         },
+        "iosCta": {
+          "label": "Install on iPhone",
+          "hint": "On iPhone Safari, tap Share and then choose \"Add to Home Screen\"."
+        },
         "secondaryCta": {
           "label": "How it works"
         },

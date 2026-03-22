@@ -7,7 +7,7 @@ export const metadata: Metadata = {
       { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
       { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: '/apple-touch1-icon.png',
   },
 };
 

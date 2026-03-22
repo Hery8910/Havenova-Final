@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useI18n } from '@havenova/contexts/i18n';
 import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
-import { NavbarConfig, NavbarView } from './NavbarView/NavbarView';
+import { NavbarView } from './NavbarView/NavbarView';
+import type { NavbarConfig } from './navbar.types';
 import { useAuth } from '../../../contexts/auth/authContext';
 import { useProfile } from '../../../contexts';
 
@@ -22,6 +23,8 @@ export function NavbarContainer() {
 
   const theme = profile?.theme || 'light';
   const navbarConfig: NavbarConfig | undefined = texts?.components?.client?.navbar;
+  const mainNavigationLabel =
+    navbarConfig?.accessibility?.mainNavigation ?? 'Main navigation';
 
   useEffect(() => {
     const handleResize = () => {
@@ -56,6 +59,7 @@ export function NavbarContainer() {
       onToggleMenu={() => setMenuOpen(!menuOpen)}
       onNavigate={handleNavigate}
       onCloseMenu={() => setMenuOpen(false)}
+      mainNavigationLabel={mainNavigationLabel}
     />
   );
 }

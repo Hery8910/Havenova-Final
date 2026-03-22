@@ -1,12 +1,20 @@
 {
   "client": {
     "navbar": {
+      "headers": {
+        "services": "Services",
+        "about": "Menü",
+        "profile": "Profil"
+      },
       "links": [
-        { "label": "Reinigung", "href": "/cleaning-service" },
-        { "label": "Hausservice", "href": "/home-service" },
+        { "label": "Home", "href": "/" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
+      ],
+      "services": [
+        { "label": "Reinigung", "href": "/cleaning-service", "image": "", "alt": "" },
+        { "label": "Hausservice", "href": "/home-service", "image": "", "alt": "" }
       ],
       "profile": {
         "label": "Profil",
@@ -21,7 +29,26 @@
           "label": "Login",
           "href": "/user/login"
         }
-      ]
+      ],
+      "accessibility": {
+        "mainNavigation": "Hauptnavigation",
+        "homeLink": "Zur Startseite",
+        "logoAlt": "Havenova Logo",
+        "accountLabel": "Konto",
+        "mobileNavigation": "Mobile Navigation",
+        "mobileNavigationSections": "Bereiche der mobilen Navigation",
+        "openMenu": "Menü öffnen",
+        "closeMenu": "Menü schließen",
+        "profileToggle": "Kontonavigation öffnen",
+        "menuToggle": "Menünavigation öffnen",
+        "servicesToggle": "Servicenavigation öffnen",
+        "preferencesToggle": "Einstellungen öffnen",
+        "menuPanel": "Navigationsbereich Menü",
+        "accountPanel": "Navigationsbereich Konto",
+        "servicesPanel": "Navigationsbereich Services",
+        "preferencesPanel": "Navigationsbereich Einstellungen",
+        "dragHandle": "Griff des Navigationsbereichs"
+      }
     },
     "avatar": {
       "profile": {

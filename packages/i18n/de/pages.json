@@ -32,6 +32,10 @@
           "label": "App installieren",
           "installedLabel": "App installiert"
         },
+        "iosCta": {
+          "label": "Auf dem iPhone installieren",
+          "hint": "Tippe in Safari auf dem iPhone auf „Teilen“ und wähle dann „Zum Home-Bildschirm“."
+        },
         "secondaryCta": {
           "label": "So funktioniert’s"
         },

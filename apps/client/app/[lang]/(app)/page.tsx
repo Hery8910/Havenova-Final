@@ -31,6 +31,7 @@ export interface HomePageTexts {
     title: string;
     description: string;
     primaryCta: { label: string; installedLabel: string };
+    iosCta: { label: string; hint: string };
     secondaryCta: { label: string };
     features: string[];
   };

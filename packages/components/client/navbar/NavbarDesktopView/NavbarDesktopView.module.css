@@ -50,32 +50,11 @@
 }
 
 .profileButton {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-  font-size: clamp(18px, 3.5vw, 22px);
-  border: none;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.profileButton:hover {
-  transform: translateY(-1px);
+  flex-shrink: 0;
 }
 
 .profileButtonOpen {
-  background-color: rgba(7, 104, 201, 0.18);
-}
-
-.profileButton:focus-visible,
-.navLink:focus-visible {
-  outline: 2px solid var(--brand-primary);
-  outline-offset: 2px;
+  background-color: var(--navbar-active-bg);
 }
 
 .desktopDropdown {
@@ -105,37 +84,6 @@
 }
 
 .navLink {
-  text-align: left;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
   width: 100%;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: clamp(18px, 2.6vw, 20px);
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.navLink:hover {
-  background-color: rgba(7, 104, 201, 0.12);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-:global([data-theme='dark']) .profileButton:hover,
-:global([data-theme='dark']) .navLink:hover {
-  background-color: rgba(148, 163, 184, 0.16);
-}
-
-:global([data-theme='dark']) .profileButtonOpen {
-  background-color: rgba(148, 163, 184, 0.22);
+  justify-content: flex-end;
 }

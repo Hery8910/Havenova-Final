@@ -51,6 +51,13 @@
   padding-top: 24px;
 }
 
+.installHint {
+  margin: 16px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 .ctaPrimaryInstall {
   background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-primary-light) 100%);
   border-color: var(--brand-primary);

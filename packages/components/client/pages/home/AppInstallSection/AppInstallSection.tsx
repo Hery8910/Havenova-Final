@@ -32,19 +32,30 @@ const clearInstallFlag = () => {
   document.cookie = `${INSTALL_FLAG_KEY}=; path=/; max-age=0; samesite=lax`;
 };
 
+const isIosBrowser = () => {
+  if (typeof window === 'undefined') return false;
+
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  const isAppleMobile = /iphone|ipad|ipod/.test(userAgent);
+  const isNonSafariBrowser = /crios|fxios|edgios|opr\//.test(userAgent);
+
+  return isAppleMobile && !isNonSafariBrowser;
+};
+
 export default function AppInstallSection({
   texts,
   lang,
 }: {
-  texts: {
-    appInstall: {
-      kicker: string;
-      title: string;
-      description: string;
-      primaryCta: { label: string; installedLabel: string };
-      secondaryCta: { label: string };
-      features: string[];
-    };
+      texts: {
+        appInstall: {
+          kicker: string;
+          title: string;
+          description: string;
+          primaryCta: { label: string; installedLabel: string };
+          iosCta: { label: string; hint: string };
+          secondaryCta: { label: string };
+          features: string[];
+        };
     appInstalled: {
       kicker: string;
       title: string;
@@ -56,6 +67,7 @@ export default function AppInstallSection({
 }) {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isIosManualInstall, setIsIosManualInstall] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia?.('(display-mode: standalone)');
@@ -63,6 +75,9 @@ export default function AppInstallSection({
     const checkInstalled = () => {
       const isStandalone =
         mediaQuery?.matches || (window.navigator as { standalone?: boolean }).standalone;
+
+      setIsIosManualInstall(isIosBrowser() && !isStandalone);
+
       if (isStandalone) {
         setInstallFlag();
       }
@@ -119,6 +134,10 @@ export default function AppInstallSection({
 
   const secondaryHref = href(lang, '/how-it-work');
   const handleInstall = useCallback(async () => {
+    if (isIosManualInstall) {
+      return;
+    }
+
     if (!installPrompt) {
       window.location.assign(secondaryHref);
       return;
@@ -131,12 +150,15 @@ export default function AppInstallSection({
       setInstallFlag();
       setIsInstalled(true);
     }
-  }, [installPrompt, secondaryHref]);
+  }, [installPrompt, isIosManualInstall, secondaryHref]);
 
   const canInstall = Boolean(installPrompt) && !isInstalled;
-  const isUnavailable = !isInstalled && !canInstall;
+  const canInstallOnIos = isIosManualInstall && !isInstalled;
+  const isUnavailable = !isInstalled && !canInstall && !canInstallOnIos;
   const primaryLabel = isInstalled
     ? texts.appInstall.primaryCta.installedLabel
+    : canInstallOnIos
+      ? texts.appInstall.iosCta.label
     : texts.appInstall.primaryCta.label;
   const activeTexts = isInstalled ? texts.appInstalled : texts.appInstall;
 
@@ -161,9 +183,11 @@ export default function AppInstallSection({
               <button
                 type="button"
                 className={`${
-                  canInstall ? styles.ctaPrimaryInstall : styles.ctaPrimaryUnavailable
+                  canInstall || canInstallOnIos
+                    ? styles.ctaPrimaryInstall
+                    : styles.ctaPrimaryUnavailable
                 } button`}
-                onClick={canInstall ? handleInstall : undefined}
+                onClick={canInstall || canInstallOnIos ? handleInstall : undefined}
                 disabled={isInstalled}
                 aria-disabled={isInstalled}
               >
@@ -175,6 +199,7 @@ export default function AppInstallSection({
             </>
           )}
         </div>
+        {canInstallOnIos && <p className={styles.installHint}>{texts.appInstall.iosCta.hint}</p>}
       </div>
     </section>
   );

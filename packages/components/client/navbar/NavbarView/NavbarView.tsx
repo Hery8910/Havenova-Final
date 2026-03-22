@@ -3,42 +3,7 @@ import { AuthUser, UserClientProfile } from '../../../../types';
 import { NavbarDesktopView } from '../NavbarDesktopView/NavbarDesktopView';
 import { NavbarTabletView } from '../NavbarTabletView/NavbarTabletView';
 import { NavbarMobileView } from '../NavbarMobileView/NavbarMobileView';
-
-export interface BaseNavItem {
-  label: string;
-  href: string;
-}
-
-export interface IconNavItem extends BaseNavItem {
-  image: string;
-  alt: string;
-}
-
-export interface NavLinkItem extends BaseNavItem {}
-
-export type ServiceNavItem = IconNavItem;
-export interface SimpleNavItem extends BaseNavItem {}
-
-export interface ProfileNavItem extends BaseNavItem {
-  auth?: string;
-  image?: string;
-  alt?: string;
-}
-
-export type HeadersItem = {
-  services: string;
-  about: string;
-  profile: string;
-};
-
-export interface NavbarConfig {
-  headers?: HeadersItem;
-  links?: NavLinkItem[];
-  services?: ServiceNavItem[];
-  about?: SimpleNavItem[];
-  profile?: ProfileNavItem;
-  register?: ProfileNavItem[];
-}
+import type { NavbarConfig } from '../navbar.types';
 
 export interface NavbarViewProps {
   profile: UserClientProfile;
@@ -50,6 +15,7 @@ export interface NavbarViewProps {
   onToggleMenu: () => void;
   onNavigate: (href: string) => void;
   onCloseMenu: () => void;
+  mainNavigationLabel: string;
 }
 
 export function NavbarView({
@@ -62,11 +28,12 @@ export function NavbarView({
   onToggleMenu,
   onNavigate,
   onCloseMenu,
+  mainNavigationLabel,
 }: NavbarViewProps) {
   if (!profile) return null;
 
   return (
-    <nav className={styles.navbar} aria-label="Main navigation">
+    <nav className={styles.navbar} aria-label={mainNavigationLabel}>
       {deviceSize === 'desktop' && (
         <NavbarDesktopView
           profile={profile}
@@ -95,7 +62,6 @@ export function NavbarView({
           profile={profile}
           auth={auth}
           navbarConfig={navbarConfig}
-          theme={theme}
           onNavigate={onNavigate}
         />
       )}

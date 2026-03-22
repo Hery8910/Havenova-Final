@@ -7,8 +7,10 @@ import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import { useI18n } from '../../../../contexts';
 import styles from './NavbarDesktopView.module.css';
+import sharedStyles from '../NavbarShared.module.css';
 import { AuthUser, UserClientProfile } from '../../../../types';
-import { NavLinkItem, NavbarConfig } from '../NavbarView/NavbarView';
+import type { NavbarConfig } from '../navbar.types';
+import { getNavbarContent, getNavbarLogoSrc } from '../navbar.shared';
 
 export interface NavbarDesktopViewProps {
   profile: UserClientProfile;
@@ -30,62 +32,31 @@ export function NavbarDesktopView({
 
   if (!profile) return null;
 
-  const getLogoSrc = () => {
-    return theme === 'dark' ? '/logos/nav-logo-dark.webp' : '/logos/nav-logo-light.webp';
-  };
-
-  const links: NavLinkItem[] = navbarConfig?.links ?? [
-    { label: 'Cleaning', href: '/services/house-cleaning' },
-    { label: 'Maintenance', href: '/services/home-service' },
-    { label: 'How it works', href: '/how-it-work' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'About', href: '/about' },
-  ];
-
-  const avatarTexts = texts?.components?.client?.avatar;
-  const navbarTexts = texts?.components?.client?.navbar;
-  const profileNavTexts = texts?.pages?.client?.user?.profileNav;
-  const profileLabel = avatarTexts?.profile?.label ?? navbarTexts?.profile?.label ?? 'Profile';
-  const profileAria = avatarTexts?.profile?.ariaLabel ?? profileLabel;
-  const registerLabel =
-    avatarTexts?.register?.label ?? navbarTexts?.register?.[0]?.label ?? 'Register';
-  const loginLabel = avatarTexts?.login?.label ?? navbarTexts?.register?.[1]?.label ?? 'Login';
-  const editLabel = texts?.pages?.client?.user?.edit?.title ?? 'Edit';
-
-  const userLinks: NavLinkItem[] = auth.isLogged
-    ? [
-        { label: profileNavTexts?.profile ?? 'Profile', href: '/profile' },
-        { label: profileNavTexts?.requests ?? 'Requests', href: '/profile/requests' },
-        {
-          label: profileNavTexts?.notifications ?? 'Notifications',
-          href: '/profile/notification',
-        },
-        { label: profileNavTexts?.settings ?? 'Settings', href: '/profile/edit' },
-      ]
-    : [
-        { label: registerLabel, href: '/user/register' },
-        { label: loginLabel, href: '/user/login' },
-      ];
+  const { primaryLinks, userLinks, labels, a11y } = getNavbarContent({
+    texts,
+    navbarConfig,
+    auth,
+  });
 
   return (
-    <div className={styles.desktopShell}>
-      <div className={styles.desktopLayout}>
-        <Link className={styles.logoLink} href="/" aria-label="Homepage">
+    <section className={styles.desktopShell}>
+      <header className={styles.desktopLayout}>
+        <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
           <Image
             className={styles.logoImage}
-            src={getLogoSrc()}
-            alt="Havenova Logo"
+            src={getNavbarLogoSrc(theme)}
+            alt={a11y.logoAlt}
             width={170}
             height={40}
             priority
           />
         </Link>
         <ul className={styles.navList}>
-          {links.map((item) => (
+          {primaryLinks.map((item) => (
             <li key={item.href} className={styles.navItem}>
               <button
                 type="button"
-                className={styles.navLink}
+                className={`${sharedStyles.navLinkButton} ${styles.navLink}`}
                 onClick={() => onNavigate(item.href)}
               >
                 {item.label}
@@ -93,30 +64,32 @@ export function NavbarDesktopView({
             </li>
           ))}
         </ul>
-        <aside className={styles.navActions}>
+        <section className={styles.navActions} aria-label={labels.preferences}>
           <ThemeToggler />
           <LanguageSwitcher />
           <button
             type="button"
-            className={`${styles.profileButton} ${userMenuOpen ? styles.profileButtonOpen : ''}`}
-            aria-label={profileAria}
+            className={`${sharedStyles.iconButton} ${styles.profileButton} ${
+              userMenuOpen ? `${sharedStyles.iconButtonActive} ${styles.profileButtonOpen}` : ''
+            }`}
+            aria-label={a11y.profileToggle}
             aria-expanded={userMenuOpen}
             aria-controls="desktop-user-navigation"
             onClick={() => setUserMenuOpen((prev) => !prev)}
           >
             <CgProfile />
           </button>
-        </aside>
-      </div>
+        </section>
+      </header>
       {userMenuOpen && (
-        <div className={styles.desktopDropdown}>
+        <section className={styles.desktopDropdown} aria-label={a11y.accountPanel}>
           <div className={styles.desktopDropdownInner}>
             <ul id="desktop-user-navigation" className={styles.userList}>
               {userLinks.map((item) => (
                 <li key={item.href} className={styles.userItem}>
                   <button
                     type="button"
-                    className={styles.navLink}
+                    className={`${sharedStyles.navLinkButton} ${styles.navLink}`}
                     onClick={() => {
                       setUserMenuOpen(false);
                       onNavigate(item.href);
@@ -128,8 +101,8 @@ export function NavbarDesktopView({
               ))}
             </ul>
           </div>
-        </div>
+        </section>
       )}
-    </div>
+    </section>
   );
 }
