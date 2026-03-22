@@ -19,6 +19,7 @@ import {
   fallbackGlobalError,
   fallbackPopups,
 } from '../../../../../../packages/contexts/i18n';
+import type { PopupsTexts } from '../../../../../../packages/contexts/alert/alert.types';
 import { createCleaningRequest } from '../../../../../../packages/services';
 import {
   type CleaningCustomerType,
@@ -28,6 +29,18 @@ import {
 } from '../../../../../../packages/types';
 import { getPopup } from '../../../../../../packages/utils';
 import styles from './page.module.css';
+
+interface RequestError {
+  message?: string;
+  response?: {
+    status?: number;
+    data?: {
+      errorCode?: string;
+      code?: string;
+      message?: string;
+    };
+  };
+}
 
 export interface CleaningServicePageTexts {
   hero: {
@@ -221,7 +234,10 @@ export default function CleaningService() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formResetKey, setFormResetKey] = useState(0);
 
-  const popupTexts = texts?.popups ?? ({ ...fallbackPopups, button: fallbackButtons } as any);
+  const popupTexts: PopupsTexts = texts?.popups ?? {
+    ...fallbackPopups,
+    button: fallbackButtons,
+  };
 
   const handleMainFormSubmit = async (payload: CleaningRequestFormSubmission) => {
     if (!auth?.isLogged || !auth.clientId) {
@@ -328,9 +344,10 @@ export default function CleaningService() {
         onCancel: closeAlert,
       });
       setFormResetKey((current) => current + 1);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const requestError = error as RequestError;
       closeAlert();
-      const errorKey = error?.response?.data?.errorCode || error?.response?.data?.code;
+      const errorKey = requestError.response?.data?.errorCode || requestError.response?.data?.code;
       const popupData = getPopup(
         popupTexts,
         errorKey,
@@ -342,12 +359,12 @@ export default function CleaningService() {
 
       showError({
         response: {
-          status: error?.response?.status || 500,
+          status: requestError.response?.status || 500,
           title: popupData.title,
           description:
             popupData.description ||
-            error?.response?.data?.message ||
-            error?.message ||
+            requestError.response?.data?.message ||
+            requestError.message ||
             cleaning.submission.errors.unexpected.description,
           cancelLabel: popupData.close ?? fallbackButtons.close,
         },
