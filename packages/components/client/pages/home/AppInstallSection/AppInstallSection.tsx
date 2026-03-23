@@ -32,14 +32,28 @@ const clearInstallFlag = () => {
   document.cookie = `${INSTALL_FLAG_KEY}=; path=/; max-age=0; samesite=lax`;
 };
 
-const isIosBrowser = () => {
+const isStandaloneMode = () => {
   if (typeof window === 'undefined') return false;
 
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const isAppleMobile = /iphone|ipad|ipod/.test(userAgent);
-  const isNonSafariBrowser = /crios|fxios|edgios|opr\//.test(userAgent);
+  return Boolean(
+    window.matchMedia?.('(display-mode: standalone)').matches ||
+      (window.navigator as { standalone?: boolean }).standalone ||
+      document.referrer.startsWith('android-app://')
+  );
+};
 
-  return isAppleMobile && !isNonSafariBrowser;
+const isIosSafari = () => {
+  if (typeof window === 'undefined') return false;
+
+  const { userAgent, vendor, platform, maxTouchPoints } = window.navigator;
+  const normalizedUserAgent = userAgent.toLowerCase();
+  const isAppleMobile =
+    /iphone|ipad|ipod/.test(normalizedUserAgent) ||
+    (platform === 'MacIntel' && maxTouchPoints > 1);
+  const isWebkitBrowser = /safari/.test(normalizedUserAgent) && /apple/i.test(vendor);
+  const isNonSafariBrowser = /crios|fxios|edgios|opios|opr\//.test(normalizedUserAgent);
+
+  return isAppleMobile && isWebkitBrowser && !isNonSafariBrowser;
 };
 
 export default function AppInstallSection({
@@ -70,18 +84,17 @@ export default function AppInstallSection({
   const [isIosManualInstall, setIsIosManualInstall] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia?.('(display-mode: standalone)');
-
     const checkInstalled = () => {
-      const isStandalone =
-        mediaQuery?.matches || (window.navigator as { standalone?: boolean }).standalone;
+      const isStandalone = isStandaloneMode();
+      const hasInstallFlag = getInstallFlag();
 
-      setIsIosManualInstall(isIosBrowser() && !isStandalone);
-
-      if (isStandalone) {
+      if (isStandalone && !hasInstallFlag) {
         setInstallFlag();
       }
-      setIsInstalled(Boolean(isStandalone) || getInstallFlag());
+
+      const installed = isStandalone || hasInstallFlag;
+      setIsInstalled(installed);
+      setIsIosManualInstall(isIosSafari() && !installed);
     };
 
     checkInstalled();
@@ -99,12 +112,14 @@ export default function AppInstallSection({
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
-    mediaQuery?.addEventListener?.('change', checkInstalled);
+    window.addEventListener('visibilitychange', checkInstalled);
+    window.addEventListener('pageshow', checkInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
-      mediaQuery?.removeEventListener?.('change', checkInstalled);
+      window.removeEventListener('visibilitychange', checkInstalled);
+      window.removeEventListener('pageshow', checkInstalled);
     };
   }, []);
 
@@ -154,7 +169,6 @@ export default function AppInstallSection({
 
   const canInstall = Boolean(installPrompt) && !isInstalled;
   const canInstallOnIos = isIosManualInstall && !isInstalled;
-  const isUnavailable = !isInstalled && !canInstall && !canInstallOnIos;
   const primaryLabel = isInstalled
     ? texts.appInstall.primaryCta.installedLabel
     : canInstallOnIos
@@ -166,7 +180,7 @@ export default function AppInstallSection({
     <section className={styles.appInstall} aria-labelledby="home-app-title">
       <div
         className={`${styles.appCard} card`}
-        data-state={isInstalled ? 'installed' : isUnavailable ? 'unavailable' : 'available'}
+        data-state={isInstalled ? 'installed' : canInstall || canInstallOnIos ? 'available' : 'unavailable'}
       >
         <div className={styles.appContent}>
           <span className={styles.kicker}>{activeTexts.kicker}</span>
@@ -180,19 +194,15 @@ export default function AppInstallSection({
             </Link>
           ) : (
             <>
-              <button
-                type="button"
-                className={`${
-                  canInstall || canInstallOnIos
-                    ? styles.ctaPrimaryInstall
-                    : styles.ctaPrimaryUnavailable
-                } button`}
-                onClick={canInstall || canInstallOnIos ? handleInstall : undefined}
-                disabled={isInstalled}
-                aria-disabled={isInstalled}
-              >
-                {primaryLabel}
-              </button>
+              {(canInstall || canInstallOnIos) && (
+                <button
+                  type="button"
+                  className={`${styles.ctaPrimaryInstall} button`}
+                  onClick={handleInstall}
+                >
+                  {primaryLabel}
+                </button>
+              )}
               <Link className={`${styles.ctaSecondary} button`} href={secondaryHref}>
                 {texts.appInstall.secondaryCta.label}
               </Link>

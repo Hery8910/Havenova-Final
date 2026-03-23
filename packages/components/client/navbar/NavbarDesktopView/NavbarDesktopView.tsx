@@ -39,7 +39,7 @@ export function NavbarDesktopView({
   });
 
   return (
-    <section className={styles.desktopShell}>
+    <section className={`${styles.desktopShell} ${sharedStyles.surfaceGlass}`}>
       <header className={styles.desktopLayout}>
         <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
           <Image

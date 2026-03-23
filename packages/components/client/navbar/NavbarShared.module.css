@@ -1,3 +1,9 @@
+.surfaceGlass {
+  background: var(--navbar-surface-image);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
 .navLinkButton {
   display: inline-flex;
   align-items: center;
@@ -40,7 +46,7 @@
   width: 44px;
   height: 44px;
   border: none;
-  border-radius: 999px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text-primary);
   font-size: clamp(18px, 3vw, 22px);

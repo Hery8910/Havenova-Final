@@ -54,7 +54,7 @@ export function NavbarTabletView({
   };
 
   return (
-    <section className={styles.tabletLayout}>
+    <section className={`${styles.tabletLayout} ${sharedStyles.surfaceGlass}`}>
       <header className={styles.tabletHeader}>
         <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
           <Image

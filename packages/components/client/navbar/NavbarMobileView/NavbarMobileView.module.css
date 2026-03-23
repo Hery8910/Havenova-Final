@@ -13,9 +13,6 @@
   right: 0;
   max-height: calc(100dvh - 50px - env(safe-area-inset-bottom));
   overflow-y: auto;
-  background: var(--navbar-surface-image);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
   isolation: isolate;
   border-top: 1px solid var(--navbar-surface-border);
   box-shadow: var(--shadow-md);
@@ -100,9 +97,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: var(--navbar-surface-image);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
   isolation: isolate;
   border-top: 1px solid var(--navbar-surface-border);
   box-shadow: var(--shadow-md);

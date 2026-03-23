@@ -94,7 +94,9 @@ export function NavbarMobileView({
       <aside
         id="mobile-navigation-panel"
         ref={panelRef}
-        className={`${styles.mobilePanel} ${activeSection ? styles.mobilePanelOpen : ''}`}
+        className={`${styles.mobilePanel} ${sharedStyles.surfaceGlass} ${
+          activeSection ? styles.mobilePanelOpen : ''
+        }`}
         aria-label={activePanelLabel}
       >
         {activeSection === 'menu' && (
@@ -195,7 +197,7 @@ export function NavbarMobileView({
 
       <nav
         ref={bottomBarRef}
-        className={styles.mobileBottomBar}
+        className={`${styles.mobileBottomBar} ${sharedStyles.surfaceGlass}`}
         aria-label={a11y.mobileNavigationSections}
       >
         <ul className={styles.mobileBottomList}>
