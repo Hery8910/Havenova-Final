@@ -1,0 +1,159 @@
+{
+  "home": {
+    "badge": "Digitale Service-Plattform",
+    "title": "Reinigung & Hausservice",
+    "titleAccent": "online anfragen",
+    "titleSuffix": "in wenigen Minuten.",
+    "descriptions": [
+      "Buche professionelle Unterstützung für typische Aufgaben zuhause über eine moderne Plattform, die dir Zeit spart und für klare Abläufe sorgt."
+    ],
+    "ctas": {
+      "primary": {
+        "label": "Reinigung anfragen",
+        "href": "/services/house-cleaning",
+        "ariaLabel": "Formular für Reinigungsservice öffnen"
+      },
+      "secondary": {
+        "label": "Hausservice anfragen",
+        "href": "/services/home-service",
+        "ariaLabel": "Formular für Hausservice öffnen"
+      }
+    },
+    "image": {
+      "src": "/images/header-home-services-berlin.webp",
+      "alt": "Havenova Hausservice-Fachkraft in Berlin",
+      "badgeTitle": "Digitale Plattform",
+      "badgeSubtitle": "Anfragen und Updates an einem Ort",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "actionsLabel": "Aktionen im Startseiten-Hero",
+      "imageCardLabel": "Plattformdetails und Einsatzgebiet"
+    }
+  },
+  "about": {
+    "badge": "Für den Alltag entwickelt",
+    "title": "Ein besserer Weg,",
+    "titleAccent": "Hausservices",
+    "titleSuffix": "zu organisieren.",
+    "descriptions": [
+      "Wir verbinden klassische Dienstleistungen mit moderner Transparenz. Unser Ziel ist es, den gesamten Ablauf von der Anfrage bis zum Abschluss so einfach, zuverlässig und kundenorientiert wie möglich zu gestalten."
+    ],
+    "image": {
+      "src": "/images/header-about-havenova.webp",
+      "alt": "Team und Arbeitsweise von Havenova",
+      "badgeTitle": "Klare Prozesse",
+      "badgeSubtitle": "Service mit Transparenz und Struktur",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "imageCardLabel": "Überblick über Havenova und Einsatzgebiet"
+    }
+  },
+  "howItWorks": {
+    "badge": "Einfacher und transparenter Ablauf",
+    "title": "Von der Anfrage bis zum Einsatz",
+    "titleAccent": "bleibt jeder Schritt",
+    "titleSuffix": "nachvollziehbar.",
+    "descriptions": [
+      "Sende deine Anfrage, teile die wichtigsten Details und lass uns den Auftrag prüfen, bevor wir den passenden nächsten Schritt für dein Zuhause planen."
+    ],
+    "image": {
+      "src": "/images/header-how-it-works.webp",
+      "alt": "Havenova-Ablauf für Hausservices in Berlin",
+      "badgeTitle": "Ein klarer Ablauf",
+      "badgeSubtitle": "Anfragen, Termine und Updates an einem Ort",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "imageCardLabel": "Zusammenfassung des Ablaufs und Einsatzgebiet"
+    }
+  },
+  "contact": {
+    "badge": "Wir sind für dich da",
+    "title": "Sag uns, was du brauchst,",
+    "titleAccent": "und wir zeigen dir",
+    "titleSuffix": "den passenden nächsten Schritt.",
+    "descriptions": [
+      "Ob Frage, Unterstützung oder erster Kontakt: Wir helfen dir schnell und klar weiter.",
+      "Für Serviceanfragen nutze bitte die passenden Serviceformulare."
+    ],
+    "ctas": {
+      "primary": {
+        "label": "Reinigung anfragen",
+        "href": "/services/house-cleaning",
+        "ariaLabel": "Formular für Reinigungsservice öffnen"
+      },
+      "secondary": {
+        "label": "Hausservice anfragen",
+        "href": "/services/home-service",
+        "ariaLabel": "Formular für Hausservice öffnen"
+      }
+    },
+    "image": {
+      "src": "/images/header-contact-havenova.webp",
+      "alt": "Kontaktbereich von Havenova für Fragen und Unterstützung",
+      "badgeTitle": "Direkter Kontakt",
+      "badgeSubtitle": "Fragen, Support und allgemeine Anliegen",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "actionsLabel": "Aktionen im Kontakt-Hero",
+      "imageCardLabel": "Kontaktbereich und Einsatzgebiet"
+    }
+  },
+  "cleaning": {
+    "badge": "Professionelle Reinigungslösungen",
+    "title": "Zuverlässige Reinigung",
+    "titleAccent": "für Zuhause",
+    "titleSuffix": "und Gemeinschaftsflächen in Berlin.",
+    "descriptions": [
+      "Buche praktische Unterstützung für regelmäßige Reinigung, laufende Pflege oder einmalige Einsätze über einen klaren und flexiblen Service."
+    ],
+    "ctas": {
+      "primary": {
+        "label": "So funktioniert’s",
+        "href": "/how-it-work",
+        "ariaLabel": "Mehr über den Ablauf des Reinigungsservice erfahren"
+      }
+    },
+    "image": {
+      "src": "/images/header-cleaning-service.webp",
+      "alt": "Professioneller Reinigungsservice für ein Zuhause in Berlin",
+      "badgeTitle": "Strukturierte Anfrage",
+      "badgeSubtitle": "Klare Angaben schon vor dem ersten Termin",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "actionsLabel": "Aktionen im Reinigungsservice-Hero",
+      "imageCardLabel": "Details zum Reinigungsservice und Einsatzgebiet"
+    }
+  },
+  "homeMaintenance": {
+    "badge": "Praktische Hilfe zuhause",
+    "title": "Hausservice",
+    "titleAccent": "für Reparaturen, Montage",
+    "titleSuffix": "und Alltagsaufgaben in Berlin.",
+    "descriptions": [
+      "Fordere Unterstützung für Möbelmontage, Installationen, Reparaturen, Malerarbeiten oder Umzugshilfe über einen Service an, der Aufgaben zuhause einfacher planbar macht."
+    ],
+    "ctas": {
+      "primary": {
+        "label": "So funktioniert’s",
+        "href": "/how-it-work",
+        "ariaLabel": "Mehr über den Ablauf des Hausservice erfahren"
+      }
+    },
+    "image": {
+      "src": "/images/header-home-maintenance-service.webp",
+      "alt": "Hausservice-Fachkraft bei der Vorbereitung eines Einsatzes in Berlin",
+      "badgeTitle": "Klare nächste Schritte",
+      "badgeSubtitle": "Umfang, Zugang und Termin früh erfasst",
+      "tag": "Berlin & Umgebung"
+    },
+    "a11y": {
+      "actionsLabel": "Aktionen im Hausservice-Hero",
+      "imageCardLabel": "Details zum Hausservice und Einsatzgebiet"
+    }
+  }
+}

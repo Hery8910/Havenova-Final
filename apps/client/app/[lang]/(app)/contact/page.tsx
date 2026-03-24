@@ -1,10 +1,8 @@
 'use client';
 import { FAQSection } from '../../../../../../packages/components';
-import {
-  ContactFormSection,
-  ContactHeroSection,
-} from '../../../../../../packages/components/client/pages/contact';
+import { ContactFormSection } from '../../../../../../packages/components/client/pages/contact';
 import { InfoSection } from '../../../../../../packages/components/client/pages/contact/InfoSection';
+import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
 import { useI18n } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
@@ -14,14 +12,7 @@ interface WeekItem {
   data: string;
 }
 export interface ContactPageTexts {
-  hero: {
-    title: string;
-    subtitle: string;
-    ctas: {
-      cleaning: { label: string; href: string };
-      maintenance: { label: string; href: string };
-    };
-  };
+  hero: PageHeroContent;
 }
 export interface ContactInfoTexts {
   contact: {
@@ -41,7 +32,7 @@ export default function Contact() {
 
   return (
     <main className={styles.main}>
-      <ContactHeroSection texts={contact.hero} lang={lang} />
+      <PageHero texts={contact.hero} lang={lang} />
       <div className={`${styles.wrapper} card`}>
         <ContactFormSection />
         <InfoSection texts={contactInfoTexts} />

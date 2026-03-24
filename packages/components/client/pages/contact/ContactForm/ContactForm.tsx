@@ -152,7 +152,7 @@ export function ContactFormSection() {
           status: 200,
           title: submitLabel,
           description:
-            texts?.pages?.client?.contact?.hero?.subtitle ||
+            texts?.pages?.client?.contact?.hero?.descriptions?.[0] ||
             'Thanks for reaching out. We will reply by email as soon as possible.',
           cancelLabel: texts.popups?.button?.close ?? fallbackButtons.close,
         },

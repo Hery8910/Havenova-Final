@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  AuthRequiredAlert,
-  Hero,
-} from '../../../../../../packages/components/client/pages/cleaning-service';
+import { AuthRequiredAlert } from '../../../../../../packages/components/client/pages/cleaning-service';
 import { HomeServiceRequestForm } from '../../../../../../packages/components/client/pages/home-service';
+import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
 import {
   useAuth,
   useI18n,
@@ -14,16 +12,7 @@ import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
 
 interface HomeServicePageTexts {
-  hero: {
-    icon: {
-      src: string;
-      alt: string;
-    };
-    title: string;
-    accent: string;
-    title2: string;
-    description: string;
-  };
+  hero: PageHeroContent;
   authAlert: {
     title: string;
     description: string;
@@ -54,7 +43,7 @@ export default function HomeService() {
         />
       )}
 
-      <Hero texts={homeService.hero} />
+      <PageHero texts={homeService.hero} lang={lang} />
 
       <section className={styles.content}>
         <article className={styles.panel}>

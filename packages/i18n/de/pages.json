@@ -3,25 +3,31 @@
     "home": {
       "hero": {
         "badge": "Digitale Service-Plattform",
-        "title": "Reinigung & Hausservice –",
-        "titleAccent": "einfach online anfragen.",
-        "subtitle": "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand.",
+        "title": "Reinigung & Hausservice",
+        "titleAccent": "online anfragen",
+        "titleSuffix": "in wenigen Minuten.",
+        "descriptions": [
+          "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand."
+        ],
         "ctas": {
-          "cleaning": {
+          "primary": {
             "label": "Reinigung anfragen",
-            "href": "/services/house-cleaning"
+            "href": "/services/house-cleaning",
+            "ariaLabel": "Formular für Reinigungsservice öffnen"
           },
-          "maintenance": {
+          "secondary": {
             "label": "Hausservice anfragen",
-            "href": "/services/home-service"
+            "href": "/services/home-service",
+            "ariaLabel": "Formular für Hausservice öffnen"
           }
         },
         "image": {
-          "src": "/images/home-hero.webp",
-          "alt": "Havenova – Service in Berlin",
-          "badgeTitle": "Neu: Digitale Plattform",
-          "badgeSubtitle": "Anfragen & Updates an einem Ort",
-          "tag": "Berlin & Umgebung"
+          "src": "/images/header-about-havenova.webp",
+          "alt": "Havenova Hausservice-Fachkraft in Berlin"
+        },
+        "a11y": {
+          "actionsLabel": "Aktionen im Startseiten-Hero",
+          "imageCardLabel": "Plattformdetails und Einsatzgebiet"
         }
       },
       "appInstall": {
@@ -94,9 +100,24 @@
       }
     },
     "about": {
-      "intro": {
-        "title": "Bei Havenova",
-        "description": "Wir verbinden traditionelle Dienstleistungen mit moderner Transparenz. Unser Ziel ist es, den gesamten Prozess – von der Anfrage bis zum Abschluss – so einfach, zuverlässig und kundenorientiert wie möglich zu gestalten."
+      "hero": {
+        "badge": "Für den Alltag entwickelt",
+        "title": "Ein besserer Weg,",
+        "titleAccent": "Hausservices",
+        "titleSuffix": "zu organisieren.",
+        "descriptions": [
+          "Wir verbinden klassische Dienstleistungen mit moderner Transparenz. Unser Ziel ist es, den gesamten Ablauf von der Anfrage bis zum Abschluss so einfach, zuverlässig und kundenorientiert wie möglich zu gestalten."
+        ],
+        "image": {
+          "src": "/images/header-about-havenova.webp",
+          "alt": "Team und Arbeitsweise von Havenova",
+          "badgeTitle": "Klare Prozesse",
+          "badgeSubtitle": "Service mit Transparenz und Struktur",
+          "tag": "Berlin & Umgebung"
+        },
+        "a11y": {
+          "imageCardLabel": "Überblick über Havenova und Einsatzgebiet"
+        }
       },
       "story": {
         "title": "Ein junges Unternehmen mit klarer Vision",
@@ -140,14 +161,23 @@
     },
     "cleaning": {
       "hero": {
-        "icon": {
-          "src": "/svg/cleaning.svg",
-          "alt": "Symbol für Reinigungsservice"
+        "badge": "Professionelle Reinigungslösungen",
+        "title": "Zuverlässige Reinigung",
+        "titleAccent": "für Zuhause",
+        "titleSuffix": "und Gemeinschaftsflächen in Berlin.",
+        "descriptions": [
+          "Flexibel, zuverlässig und passend für Ihr Zuhause oder Ihr Unternehmen. Havenova bietet strukturierte Reinigungslösungen für Wohnungen, Büros und Gemeinschaftsflächen mit klarer Kommunikation, planbaren Terminen und gleichbleibender Qualität von der Anfrage bis zum Abschluss."
+        ],
+        "image": {
+          "src": "/images/header-cleaning-service.webp",
+          "alt": "Professioneller Reinigungsservice für ein Zuhause in Berlin",
+          "badgeTitle": "Strukturierte Anfrage",
+          "badgeSubtitle": "Klare Angaben schon vor dem ersten Termin",
+          "tag": "Berlin & Umgebung"
         },
-        "title": "Professioneller",
-        "accent": "Reinigungsservice",
-        "title2": "in Berlin",
-        "description": "Flexibel, zuverlässig und passend für Ihr Zuhause oder Ihr Unternehmen. Havenova bietet strukturierte Reinigungslösungen für Wohnungen, Büros und Gemeinschaftsflächen mit klarer Kommunikation, planbaren Terminen und gleichbleibender Qualität von der Anfrage bis zum Abschluss."
+        "a11y": {
+          "imageCardLabel": "Details zum Reinigungsservice und Einsatzgebiet"
+        }
       },
       "authAlert": {
         "title": "Konto erforderlich, um eine Reinigungsanfrage zu senden",
@@ -343,14 +373,23 @@
     },
     "home-service": {
       "hero": {
-        "icon": {
-          "src": "/svg/service.svg",
-          "alt": "Symbol für Hausservice"
+        "badge": "Praktische Hilfe zuhause",
+        "title": "Hausservice",
+        "titleAccent": "für Reparaturen, Montage",
+        "titleSuffix": "und Alltagsaufgaben in Berlin.",
+        "descriptions": [
+          "Für Malerarbeiten, Reparaturen und Installationen, Möbelmontage, Küchenmontage und Umzugshilfe in Berlin. Havenova strukturiert Ihre Anfrage, damit wir Umfang, Zugangssituation und nutzbare Profildaten schnell erfassen können."
+        ],
+        "image": {
+          "src": "/images/header-home-maintenance-service.webp",
+          "alt": "Hausservice-Fachkraft bei der Vorbereitung eines Einsatzes in Berlin",
+          "badgeTitle": "Klare nächste Schritte",
+          "badgeSubtitle": "Umfang, Zugang und Termin früh erfasst",
+          "tag": "Berlin & Umgebung"
         },
-        "title": "Praktischer",
-        "accent": "Hausservice",
-        "title2": "in Berlin",
-        "description": "Für Malerarbeiten, Reparaturen und Installationen, Möbelmontage, Küchenmontage und Umzugshilfe in Berlin. Havenova strukturiert Ihre Anfrage, damit wir Umfang, Zugangssituation und nutzbare Profildaten schnell erfassen können."
+        "a11y": {
+          "imageCardLabel": "Details zum Hausservice und Einsatzgebiet"
+        }
       },
       "authAlert": {
         "title": "Konto erforderlich, um eine Hausservice-Anfrage vorzubereiten",
@@ -541,34 +580,57 @@
     },
     "contact": {
       "hero": {
-        "title": "Contact us",
-        "subtitle": "Tell us what you need and we’ll reply by email as soon as possible. For service requests please use the service forms",
+        "badge": "Wir sind für dich da",
+        "title": "Sag uns, was du brauchst,",
+        "titleAccent": "und wir zeigen dir",
+        "titleSuffix": "den passenden nächsten Schritt.",
+        "descriptions": [
+          "Teile uns mit, worum es geht, und wir antworten dir so schnell wie möglich per E-Mail.",
+          "Für Serviceanfragen nutze bitte die passenden Serviceformulare."
+        ],
         "ctas": {
-          "cleaning": {
+          "primary": {
             "label": "Reinigung anfragen",
-            "href": "/services/house-cleaning"
+            "href": "/services/house-cleaning",
+            "ariaLabel": "Formular für Reinigungsservice öffnen"
           },
-          "maintenance": {
+          "secondary": {
             "label": "Hausservice anfragen",
-            "href": "/services/home-service"
+            "href": "/services/home-service",
+            "ariaLabel": "Formular für Hausservice öffnen"
           }
+        },
+        "image": {
+          "src": "/images/header-contact-havenova.webp",
+          "alt": "Kontaktbereich von Havenova für Fragen und Unterstützung",
+          "badgeTitle": "Direkter Kontakt",
+          "badgeSubtitle": "Fragen, Support und allgemeine Anliegen",
+          "tag": "Berlin & Umgebung"
+        },
+        "a11y": {
+          "actionsLabel": "Aktionen im Kontakt-Hero",
+          "imageCardLabel": "Kontaktbereich und Einsatzgebiet"
         }
       }
     },
     "howItWorks": {
       "hero": {
-        "kicker": "Über Havenova",
-        "title": "Hausservices, vereinfacht – für Kund:innen und Serviceteams.",
-        "description": "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hausservice. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können.",
-        "cta": {
-          "label": "So funktioniert’s",
-          "href": "/how-it-work"
-        },
-        "ctaAriaLabel": "Primäre Aktion: So funktioniert’s",
+        "badge": "Über Havenova",
+        "title": "Hausservices, vereinfacht",
+        "titleAccent": "für Kund:innen",
+        "titleSuffix": "und Serviceteams.",
+        "descriptions": [
+          "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hausservice. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können."
+        ],
         "image": {
-          "src": "/images/howItWorks-hero.webp",
-          "alt": "Havenova – Service in Berlin",
-          "badgeTitle": "Berlin & Umgebung"
+          "src": "/images/header-how-it-works.webp",
+          "alt": "Havenova-Ablauf für Hausservices in Berlin",
+          "badgeTitle": "Ein klarer Ablauf",
+          "badgeSubtitle": "Anfragen, Termine und Updates an einem Ort",
+          "tag": "Berlin & Umgebung"
+        },
+        "a11y": {
+          "imageCardLabel": "Zusammenfassung des Ablaufs und Einsatzgebiet"
         }
       },
       "workflow": {
@@ -576,15 +638,15 @@
         "subtitle": "Ein praktischer Ablauf, der Anfragen strukturiert hält – ohne feste Preise oder komplizierte Formulare.",
         "steps": [
           {
-            "title": "Request & review",
+            "title": "Anfrage & Prüfung",
             "description": "Du sendest eine Serviceanfrage mit den relevanten Details. Wir prüfen die Angaben sorgfältig, um deine Anforderungen zu verstehen und den nächsten Schritt vorzubereiten."
           },
           {
-            "title": "Visit & confirmation",
+            "title": "Besichtigung & Bestätigung",
             "description": "Wir besuchen den Einsatzort, um die Details vor Ort zu prüfen. Auf dieser Basis bestätigen wir den Arbeitsumfang und senden dir das finale Angebot."
           },
           {
-            "title": "Service & completion",
+            "title": "Service & Abschluss",
             "description": "Wir führen den Service wie vereinbart durch und halten dich während des gesamten Prozesses informiert. Nach Abschluss senden wir dir die Rechnung."
           }
         ],
@@ -594,7 +656,7 @@
         }
       },
       "benefits": {
-        "title": "Benefits for both sides",
+        "title": "Vorteile für beide Seiten",
         "description": "Diese Plattform wurde entwickelt, um langfristige Beziehungen zwischen Havenova und seinen Kunden aufzubauen — basierend auf Vertrauen, Transparenz und gemeinsam genutzten Informationen. So weißt du jederzeit, was angefragt, vereinbart und umgesetzt wurde. Bereit, deinen ersten Service anzufragen?",
         "ctaAriaLabel": "Aktionen zur Serviceanfrage",
         "ctaCleaning": {

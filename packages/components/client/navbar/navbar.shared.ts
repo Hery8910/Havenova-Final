@@ -58,6 +58,10 @@ function mergePrimaryLinks(menuLinks: NavLinkItem[], serviceLinks: NavLinkItem[]
   const seen = new Set<string>();
 
   return [...serviceLinks, ...menuLinks].filter((item) => {
+    if (item.href === '/') {
+      return false;
+    }
+
     if (seen.has(item.href)) {
       return false;
     }

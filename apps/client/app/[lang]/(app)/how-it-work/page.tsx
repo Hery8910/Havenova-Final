@@ -1,23 +1,14 @@
 'use client';
 
-import { HowItWorksHeroSection } from '../../../../../../packages/components/client/pages/howItWorks/HowItWorksHeroSection';
 import { WorkflowSection } from '../../../../../../packages/components/client/pages/howItWorks/WorkflowSection';
 import { BenefitsSplitSection } from '../../../../../../packages/components/client/pages/howItWorks/BenefitsSplitSection';
+import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
 import { useI18n } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
 
 export interface HowItWorksPageTexts {
-  hero: {
-    kicker: string;
-    title: string;
-    description: string;
-    image: {
-      src: string;
-      alt: string;
-      badgeTitle: string;
-    };
-  };
+  hero: PageHeroContent;
   workflow: {
     title: string;
     subtitle: string;
@@ -42,7 +33,7 @@ export default function HowItWorks() {
 
   return (
     <main className={styles.main}>
-      <HowItWorksHeroSection texts={howItWorks.hero} />
+      <PageHero texts={howItWorks.hero} lang={lang} />
       <WorkflowSection texts={howItWorks.workflow} />
       <BenefitsSplitSection texts={howItWorks.benefits} lang={lang} />
     </main>

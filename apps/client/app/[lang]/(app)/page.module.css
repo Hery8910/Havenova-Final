@@ -1,11 +1,5 @@
 .main {
   display: flex;
   flex-direction: column;
-  padding: 96px 0 120px;
-}
-
-@media (max-width: 640px) {
-  .main {
-    padding: 72px 0 96px;
-  }
+  padding: 0;
 }

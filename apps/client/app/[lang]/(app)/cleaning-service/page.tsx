@@ -5,8 +5,8 @@ import {
   AuthRequiredAlert,
   CleaningRequestForm,
   type CleaningRequestFormSubmission,
-  Hero,
 } from '../../../../../../packages/components/client/pages/cleaning-service';
+import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
 import { useLang } from '../../../../../../packages/hooks';
 import {
   useAuth,
@@ -43,16 +43,7 @@ interface RequestError {
 }
 
 export interface CleaningServicePageTexts {
-  hero: {
-    icon: {
-      src: string;
-      alt: string;
-    };
-    title: string;
-    accent: string;
-    title2: string;
-    description: string;
-  };
+  hero: PageHeroContent;
   authAlert: {
     title: string;
     description: string;
@@ -384,7 +375,7 @@ export default function CleaningService() {
           onClose={() => setIsAlertClosed(true)}
         />
       )}
-      <Hero texts={cleaning.hero} />
+      <PageHero texts={cleaning.hero} lang={lang} />
       <CleaningRequestForm
         key={formResetKey}
         texts={cleaning.form}
