@@ -18,7 +18,7 @@ export default function BenefitsSplitSection({
 }) {
   return (
     <section className={styles.benefits} aria-labelledby="how-it-works-benefits-title">
-      <section className={styles.container} aria-labelledby="how-it-works-benefits-title">
+      <div className={styles.container}>
         <header className={styles.header}>
           <h2 id="how-it-works-benefits-title" className={styles.title}>
             {texts.title}
@@ -48,7 +48,7 @@ export default function BenefitsSplitSection({
             className={styles.image}
           />
         </figure>
-      </section>
+      </div>
     </section>
   );
 }

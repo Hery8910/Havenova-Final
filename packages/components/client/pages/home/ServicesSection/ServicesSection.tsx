@@ -32,15 +32,8 @@ export default function ServicesSection({
         </header>
         <div className={styles.cardGrid}>
           {texts.items.map((item) => {
-            const cardVariant = item.href.includes('house-cleaning')
-              ? 'card--cleaning'
-              : 'card--service';
-            const titleColor = item.href.includes('house-cleaning')
-              ? 'color--cleaning'
-              : 'color--service';
-
             return (
-              <article className={`${styles.card} ${cardVariant}`} key={item.title}>
+              <article className={styles.card} key={item.title}>
                 <div className={styles.cardIcon} aria-hidden="true">
                   <Image className={styles.icon} src={item.icon} alt="" width={40} height={40} />
                 </div>

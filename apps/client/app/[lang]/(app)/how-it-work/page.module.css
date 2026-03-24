@@ -3,9 +3,3 @@
   flex-direction: column;
   gap: clamp(40px, 6vw, 80px);
 }
-
-@media (max-width: 640px) {
-  .main {
-    padding: 56px 0 96px;
-  }
-}

@@ -8,6 +8,20 @@ interface WeekItem {
   data: string;
 }
 
+interface ContactInfoAriaTexts {
+  info: string;
+  quickActions: string;
+  call: string;
+  email: string;
+  whatsapp: string;
+}
+
+interface ContactQuickActionTexts {
+  call: string;
+  email: string;
+  whatsapp: string;
+}
+
 export default function InfoSection({
   texts,
 }: {
@@ -22,7 +36,12 @@ export default function InfoSection({
   };
 }) {
   const { texts: i18nTexts } = useI18n();
-  const contactTexts = i18nTexts?.components?.client?.contact;
+  const contactTexts = i18nTexts?.components?.client?.contact as
+    | {
+        aria?: ContactInfoAriaTexts;
+        quickActions?: ContactQuickActionTexts;
+      }
+    | undefined;
   const ariaTexts = contactTexts?.aria;
   const quickTexts = contactTexts?.quickActions;
 
@@ -52,36 +71,40 @@ export default function InfoSection({
       >
         <h3 className={styles.contactTitle}>{texts?.contact?.title}</h3>
         <ul className={styles.contactList}>
-          <li className={styles.contactItem} key={'1'}>
-            <span className={styles.contactIcon}>
+          <li className={styles.contactItem}>
+            <span className={styles.contactIcon} aria-hidden="true">
               <LuMail />
             </span>
-            <p className={styles.contactLabel}>{texts?.contact?.email}</p>
+            <a className={styles.contactLink} href={mailHref}>
+              {texts?.contact?.email}
+            </a>
           </li>
-          <li className={styles.contactItem} key={'2'}>
-            <span className={styles.contactIcon}>
+          <li className={styles.contactItem}>
+            <span className={styles.contactIcon} aria-hidden="true">
               <LuPhone />
             </span>
-            <p className={styles.contactLabel}>{texts?.contact?.phone}</p>
+            <a className={styles.contactLink} href={telHref}>
+              {texts?.contact?.phone}
+            </a>
           </li>
-          <li className={styles.contactItem} key={'3'}>
-            <span className={styles.contactIcon}>
+          <li className={styles.contactItem}>
+            <span className={styles.contactIcon} aria-hidden="true">
               <LuMapPin />
             </span>
             <p className={styles.contactLabel}>{texts?.contact?.address}</p>
           </li>
-          <li className={styles.contactItem} key={'4'}>
+          <li className={styles.contactItem}>
             <p className={styles.contactLabel}>{texts?.hour?.week.label}</p>
             <p className={styles.contactLabel}>{texts?.hour?.week.data}</p>
           </li>
-          <li className={styles.contactItem} key={'5'}>
+          <li className={styles.contactItem}>
             <p className={styles.contactLabel}>{texts?.hour?.weekend.label}</p>
             <p className={styles.contactLabel}>{texts?.hour?.weekend.data}</p>
           </li>
         </ul>
       </address>
       {hasQuickActions && (
-        <article
+        <nav
           className={styles.quickActions}
           aria-label={ariaTexts?.quickActions || 'Quick contact actions'}
         >
@@ -140,7 +163,7 @@ export default function InfoSection({
               </a>
             )}
           </div>
-        </article>
+        </nav>
       )}
     </section>
   );

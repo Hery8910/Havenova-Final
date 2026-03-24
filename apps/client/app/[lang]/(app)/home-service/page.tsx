@@ -31,7 +31,9 @@ export default function HomeService() {
   const { auth } = useAuth();
   const [isAlertClosed, setIsAlertClosed] = useState(false);
 
-  const homeService = texts.pages.client['home-service'] as HomeServicePageTexts;
+  const homeService = texts?.pages?.client?.['home-service'] as HomeServicePageTexts | undefined;
+
+  if (!homeService) return null;
 
   return (
     <main className={styles.main}>

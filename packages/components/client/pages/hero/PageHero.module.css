@@ -3,14 +3,14 @@
   position: relative;
   overflow: hidden;
   min-height: 100dvh;
-  padding: 0 5dvw;
+  padding: 0 clamp(24px, 5vw, 56px);
 }
 
 .heroPattern {
   position: absolute;
   inset: 0;
   display: block;
-  background-image: radial-gradient(var(--brand-secondary-light) 1px, transparent 1px);
+  background-image: radial-gradient(var(--brand-secondary-6) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.2;
 }
@@ -69,12 +69,12 @@
 }
 
 .heroTitleAccent {
-  color: var(--brand-primary);
+  color: var(--brand-primary-5);
 }
 
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .heroTitleAccent {
-    background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+    background: linear-gradient(90deg, var(--brand-primary-5), var(--brand-secondary-5));
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -107,16 +107,16 @@
 .ctaPrimary {
   width: 100%;
   max-width: 250px;
-  background: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%);
-  border-color: var(--brand-primary);
+  background: linear-gradient(0deg, var(--brand-primary-5) 0%, var(--brand-primary-6) 100%);
+  border-color: var(--brand-primary-5);
   color: var(--text-inverse);
 }
 
 .ctaSecondary {
   width: 100%;
   max-width: 260px;
-  background: linear-gradient(0deg, var(--brand-accent-light) 0%, var(--brand-accent) 100%);
-  border-color: var(--brand-accent);
+  background: linear-gradient(0deg, var(--brand-accent-5) 0%, var(--brand-accent-6) 100%);
+  border-color: var(--brand-accent-5);
   color: var(--text-inverse);
 }
 
@@ -154,10 +154,6 @@
 }
 
 @media (max-width: 640px) {
-  .heroCopy {
-    padding: 0 24px;
-  }
-
   .heroTitle {
     font-size: clamp(32px, 10vw, 44px);
   }

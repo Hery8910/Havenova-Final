@@ -14,28 +14,17 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Home Services',
           },
         ],
       },
       icons: {
-        icon: [
-          { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
-          { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
-          {
-            url: '/favicon-light.svg',
-            media: '(prefers-color-scheme: light)',
-            type: 'image/svg+xml',
-          },
-          {
-            url: '/favicon-dark.svg',
-            media: '(prefers-color-scheme: dark)',
-            type: 'image/svg+xml',
-          },
-        ],
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
       },
     },
     de: {
@@ -44,14 +33,15 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         'Buchen Sie zuverlässige Handwerker-, Reinigungs- und Hausservice in Berlin mit Havenova. Transparent, schnell und professionell.',
       openGraph: {
         title: 'Havenova - Professioneller Hausservice in Berlin',
-        description: 'Entdecken Sie hochwertige Handwerker-, Reinigungs- und Hausservice in Berlin.',
+        description:
+          'Entdecken Sie hochwertige Handwerker-, Reinigungs- und Hausservice in Berlin.',
         type: 'website',
         url: 'https://havenova.de/de',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Hausservice',
           },
         ],
@@ -71,9 +61,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/about',
         images: [
           {
-            url: 'https://havenova.de/images/og-about.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/about-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Team',
           },
         ],
@@ -91,9 +81,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/about',
         images: [
           {
-            url: 'https://havenova.de/images/og-about.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/about-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Team',
           },
         ],
@@ -113,9 +103,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/contact',
         images: [
           {
-            url: 'https://havenova.de/images/og-contact.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/contact-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Contact Havenova',
           },
         ],
@@ -133,9 +123,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/contact',
         images: [
           {
-            url: 'https://havenova.de/images/og-contact.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/contact-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Kontakt Havenova',
           },
         ],
@@ -155,9 +145,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/how-it-work',
         images: [
           {
-            url: 'https://havenova.de/images/og-how-it-works.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/how-it-work-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova workflow overview',
           },
         ],
@@ -175,16 +165,16 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/how-it-work',
         images: [
           {
-            url: 'https://havenova.de/images/og-how-it-works.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/how-it-work-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Ablaufübersicht',
           },
         ],
       },
     },
   },
-  'cleaning-service': {
+  cleaningService: {
     en: {
       title: 'Professional Cleaning Service in Berlin | Havenova',
       description:
@@ -199,9 +189,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/cleaning-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/cleaning-service-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova cleaning service in Berlin',
           },
         ],
@@ -221,16 +211,16 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/cleaning-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/cleaning-service-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Reinigungsservice in Berlin',
           },
         ],
       },
     },
   },
-  'home-service': {
+  homeService: {
     en: {
       title: 'Home Service in Berlin | Havenova',
       description:
@@ -245,9 +235,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/home-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-service-desktop-en.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova home service in Berlin',
           },
         ],
@@ -267,9 +257,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/home-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-home.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-service-desktop-de.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Hausservice in Berlin',
           },
         ],
@@ -518,9 +508,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/privacy-policy',
         images: [
           {
-            url: 'https://havenova.de/images/og-privacy-policy.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Privacy Policy',
           },
         ],
@@ -540,9 +530,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/privacy-policy',
         images: [
           {
-            url: 'https://havenova.de/images/og-privacy-policy.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Datenschutzerklärung',
           },
         ],
@@ -562,9 +552,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/imprint',
         images: [
           {
-            url: 'https://havenova.de/images/og-imprint.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Imprint',
           },
         ],
@@ -582,9 +572,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/imprint',
         images: [
           {
-            url: 'https://havenova.de/images/og-imprint.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Impressum',
           },
         ],
@@ -605,9 +595,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/terms-of-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-terms.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Terms of Service',
           },
         ],
@@ -626,9 +616,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/terms-of-service',
         images: [
           {
-            url: 'https://havenova.de/images/og-terms.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova AGB',
           },
         ],
@@ -649,9 +639,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/cookie-policy',
         images: [
           {
-            url: 'https://havenova.de/images/og-cookies.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Cookie Policy',
           },
         ],
@@ -670,9 +660,9 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/cookie-policy',
         images: [
           {
-            url: 'https://havenova.de/images/og-cookies.jpg',
-            width: 1200,
-            height: 630,
+            url: 'https://havenova.de/screenshots/home-desktop.png',
+            width: 1280,
+            height: 720,
             alt: 'Havenova Cookie-Richtlinie',
           },
         ],

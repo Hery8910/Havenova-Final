@@ -2,17 +2,41 @@
   color-scheme: light;
 
   /* Brand */
-  --brand-primary: hsl(210, 93%, 41%);
-  --brand-secondary: hsl(262, 85%, 47%);
-  --brand-accent: hsl(42, 86%, 63%);
+  --brand-primary-1: hsl(210, 93%, 10%);
+  --brand-secondary-1: #14042f;
+  --brand-accent-1: hsl(42, 86%, 10%);
 
-  --brand-primary-light: hsl(210, 93%, 50%);
-  --brand-secondary-light: hsl(262, 85%, 50%);
-  --brand-accent-light: hsl(42, 86%, 50%);
+  --brand-primary-2: hsl(210, 93%, 20%);
+  --brand-secondary-2: hsl(262, 85%, 20%);
+  --brand-accent-2: hsl(42, 86%, 20%);
 
-  --brand-primary-dark: hsl(210, 93%, 25%);
-  --brand-secondary-dark: hsl(262, 85%, 25%);
-  --brand-accent-dark: hsl(42, 86%, 25%);
+  --brand-primary-3: hsl(210, 93%, 30%);
+  --brand-secondary-3: hsl(262, 85%, 30%);
+  --brand-accent-3: hsl(42, 86%, 30%);
+
+  --brand-primary-4: hsl(210, 93%, 40%);
+  --brand-secondary-4: hsl(262, 85%, 40%);
+  --brand-accent-4: hsl(42, 86%, 40%);
+
+  --brand-primary-5: #0980f6;
+  --brand-secondary-5: hsl(262, 85%, 50%);
+  --brand-accent-5: #edab12;
+
+  --brand-primary-6: hsl(210, 93%, 60%);
+  --brand-secondary-6: hsl(262, 85%, 60%);
+  --brand-accent-6: hsl(42, 86%, 60%);
+
+  --brand-primary-7: hsl(210, 93%, 70%);
+  --brand-secondary-7: hsl(262, 85%, 70%);
+  --brand-accent-7: hsl(42, 86%, 70%);
+
+  --brand-primary-8: hsl(210, 93%, 80%);
+  --brand-secondary-8: #c0a1f7;
+  --brand-accent-8: hsl(42, 86%, 80%);
+
+  --brand-primary-9: hsl(210, 93%, 90%);
+  --brand-secondary-9: #e0d0fb;
+  --brand-accent-9: hsl(42, 86%, 90%);
 
   --card-primary: hsla(210, 72%, 75%, 0.2);
   --card-primary-bg: hsla(210, 97%, 75%, 0.3);
@@ -96,12 +120,12 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --brand-primary-light: hsl(210, 93%, 50%);
-  --brand-secondary-light: hsl(262, 85%, 50%);
-  --brand-accent-light: hsl(42, 86%, 50%);
+  --brand-primary-light: #0980f6;
+  --brand-secondary-light: #6313ec;
+  --brand-accent-light: #edab12;
 
   --brand-primary-dark: hsl(210, 93%, 25%);
-  --brand-secondary-dark: hsl(262, 85%, 25%);
+  --brand-secondary-dark: #310a76;
   --brand-accent-dark: hsl(42, 86%, 25%);
 
   --page-primary-1: #170635ff;

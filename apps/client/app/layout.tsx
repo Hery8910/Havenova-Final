@@ -3,11 +3,9 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   manifest: '/site.webmanifest',
   icons: {
-    icon: [
-      { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
-      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
-    ],
-    apple: '/apple-touch1-icon.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 

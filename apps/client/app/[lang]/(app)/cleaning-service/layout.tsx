@@ -6,7 +6,7 @@ export async function generateMetadata({
 }: {
   params: { lang: 'de' | 'en' };
 }): Promise<Metadata> {
-  return getPageMetadata(params.lang, 'cleaning-service');
+  return getPageMetadata(params.lang, 'cleaningService');
 }
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

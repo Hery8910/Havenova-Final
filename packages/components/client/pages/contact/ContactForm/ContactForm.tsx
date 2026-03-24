@@ -19,6 +19,33 @@ type ContactFormState = {
   message: string;
 };
 
+interface ContactFormTexts {
+  labels?: {
+    name?: string;
+    email?: string;
+    subject?: string;
+    message?: string;
+  };
+  placeholders?: {
+    name?: string;
+    email?: string;
+    subject?: string;
+    message?: string;
+  };
+  error?: {
+    name?: { required?: string };
+    email?: { required?: string; invalid?: string };
+    subject?: { required?: string };
+    message?: { required?: string; tooShort?: string; tooLong?: string };
+  };
+  subjects?: {
+    contact?: string[];
+  };
+  button?: {
+    contact?: string;
+  };
+}
+
 const DEFAULT_SUBJECTS = [
   'Pricing question',
   'Service request',
@@ -36,7 +63,7 @@ export function ContactFormSection() {
   const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
-  const formTexts = texts?.components?.client?.form;
+  const formTexts = texts?.components?.client?.form as ContactFormTexts | undefined;
   const labels = formTexts?.labels;
   const placeholders = formTexts?.placeholders;
   const errorTexts = formTexts?.error;
@@ -203,7 +230,7 @@ export function ContactFormSection() {
       <article className={styles.card}>
         <h3 id="contact-form-title">{submitLabel}</h3>
 
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <form className={styles.form} onSubmit={handleSubmit} noValidate aria-busy={submitting}>
           <div className={styles.row}>
             <label className={styles.field} htmlFor="contact-name">
               <span className={styles.label}>{labels?.name ?? 'Name'}</span>

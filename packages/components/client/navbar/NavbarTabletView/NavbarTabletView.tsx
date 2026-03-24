@@ -59,10 +59,10 @@ export function NavbarTabletView({
         <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
           <Image
             className={styles.logoImage}
-            src={getNavbarLogoSrc(theme)}
+            src={'/logos/navbar-logo.webp'}
             alt={a11y.logoAlt}
-            width={170}
-            height={40}
+            width={180}
+            height={42}
             priority
           />
         </Link>

@@ -6,31 +6,31 @@
   "start_url": "/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
-  "background_color": "#fff9ec",
-  "theme_color": "#0769ca",
+  "background_color": "#e0d0fb",
+  "theme_color": "#0980f6",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/android-chrome1-192x192.png",
+      "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/android-chrome1-512x512.png",
+      "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/apple-touch1-icon.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     }
   ],
   "screenshots": [
     {
-      "src": "/screenshots/home-desktop.png",
+      "src": "/screenshots/home-desktop-de.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

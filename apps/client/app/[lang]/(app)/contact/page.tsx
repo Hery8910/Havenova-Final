@@ -30,6 +30,8 @@ export default function Contact() {
   const contact: ContactPageTexts = texts?.pages?.client?.contact;
   const contactInfoTexts: ContactInfoTexts = texts?.components?.client?.footer;
 
+  if (!contact || !contactInfoTexts) return null;
+
   return (
     <main className={styles.main}>
       <PageHero texts={contact.hero} lang={lang} />

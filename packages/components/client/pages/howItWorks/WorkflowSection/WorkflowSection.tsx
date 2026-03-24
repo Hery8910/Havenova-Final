@@ -12,7 +12,7 @@ export default function WorkflowSection({
 }) {
   return (
     <section className={styles.workflow} aria-labelledby="how-it-works-workflow-title">
-      <section className={styles.container} aria-labelledby="how-it-works-workflow-title">
+      <div className={styles.container}>
         <header className={styles.header}>
           <h2 id="how-it-works-workflow-title" className={styles.title}>
             {texts.title}
@@ -36,7 +36,7 @@ export default function WorkflowSection({
           <h3 className={styles.noteTitle}>{texts.note.title}</h3>
           <p className={styles.noteDescription}>{texts.note.description}</p>
         </aside>
-      </section>
+      </div>
     </section>
   );
 }
