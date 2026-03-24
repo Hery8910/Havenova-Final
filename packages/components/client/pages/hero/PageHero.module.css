@@ -51,10 +51,6 @@
   gap: 8px;
   padding: 6px 12px;
   border-radius: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--text-primary);
   background: var(--card-primary-bg);
   border: 1px solid var(--card-primary-bg);
@@ -62,9 +58,7 @@
 
 .heroTitle {
   margin: 0;
-  font-weight: 800;
   color: var(--text-primary);
-  line-height: 1.1;
   max-width: 500px;
 }
 
@@ -94,7 +88,6 @@
 .heroDescription {
   margin: 0;
   color: var(--text-secondary);
-  line-height: 1.2;
   max-width: 500px;
 }
 
@@ -151,16 +144,6 @@
   border: 4px solid var(--glass-bg);
   background: var(--glass-bg);
   opacity: 0.75;
-}
-
-@media (max-width: 640px) {
-  .heroTitle {
-    font-size: clamp(32px, 10vw, 44px);
-  }
-
-  .heroDescription {
-    font-size: 16px;
-  }
 }
 
 @media (min-width: 1025px) {

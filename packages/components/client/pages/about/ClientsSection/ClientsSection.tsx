@@ -17,7 +17,7 @@ export default function ClientsSection({
   return (
     <section className={styles.section} aria-labelledby="about-clients-title">
       <div className={styles.container}>
-        <h2 id="about-clients-title" className={styles.title}>
+        <h2 id="about-clients-title" className={`${styles.title} type-title-lg`}>
           {texts.title}
         </h2>
         <ul className={styles.list}>
@@ -35,10 +35,13 @@ export default function ClientsSection({
                   style={{ backgroundImage: `url(${item.image})` }}
                 />
                 <div className={styles.content}>
-                  <h3 id={`about-client-title-${index}`} className={styles.cardTitle}>
+                  <h3 id={`about-client-title-${index}`} className={`${styles.cardTitle} type-title-sm`}>
                     {item.title}
                   </h3>
-                  <p id={`about-client-description-${index}`} className={styles.cardDescription}>
+                  <p
+                    id={`about-client-description-${index}`}
+                    className={`${styles.cardDescription} type-body-sm`}
+                  >
                     {item.description}
                   </p>
                 </div>
@@ -47,7 +50,7 @@ export default function ClientsSection({
           ))}
         </ul>
       </div>
-      <p id="about-clients-close-description" className={styles.closing}>
+      <p id="about-clients-close-description" className={`${styles.closing} type-body-md`}>
         {texts.closing}
       </p>
     </section>

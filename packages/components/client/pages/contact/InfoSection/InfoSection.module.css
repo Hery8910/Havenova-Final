@@ -78,7 +78,7 @@
 }
 
 .contactIcon {
-  font-size: clamp(16px, 1.6vw, 20px);
+  font-size: var(--type-body-lg-size);
 }
 
 .quickActions {

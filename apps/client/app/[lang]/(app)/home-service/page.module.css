@@ -34,25 +34,17 @@
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.06);
   color: #0f172a;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .title {
   margin: 0;
   color: #0f172a;
-  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-  line-height: 1.1;
 }
 
 .description {
   margin: 0;
   max-width: 70ch;
   color: #334155;
-  font-size: 1rem;
-  line-height: 1.7;
 }
 
 .statusRow {
@@ -64,8 +56,6 @@
 
 .statusLabel {
   color: #475569;
-  font-size: 0.92rem;
-  font-weight: 600;
 }
 
 .statusBadge {
@@ -73,8 +63,6 @@
   align-items: center;
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 700;
 }
 
 .statusLoggedIn {
@@ -109,8 +97,6 @@
 
 .label {
   color: #334155;
-  font-size: 0.9rem;
-  font-weight: 700;
 }
 
 .input,
@@ -132,7 +118,6 @@
 .textarea {
   min-height: 7.5rem;
   resize: vertical;
-  line-height: 1.6;
 }
 
 .savedAddresses {
@@ -146,13 +131,11 @@
 .savedAddressesTitle {
   margin: 0;
   color: #0f172a;
-  font-size: 1rem;
 }
 
 .savedAddressesDescription {
   margin: 0;
   color: #475569;
-  line-height: 1.6;
 }
 
 .savedAddressesList {
@@ -174,12 +157,10 @@
   display: block;
   margin-bottom: 0.3rem;
   color: #0f172a;
-  font-weight: 700;
 }
 
 .savedAddressValue {
   color: #475569;
-  line-height: 1.55;
 }
 
 .nextStep {
@@ -192,13 +173,11 @@
 .nextStepTitle {
   margin: 0;
   color: #0f172a;
-  font-size: 1rem;
 }
 
 .nextStepDescription {
   margin: 0;
   color: #475569;
-  line-height: 1.65;
 }
 
 @media (max-width: 768px) {

@@ -183,9 +183,9 @@ export default function AppInstallSection({
         data-state={isInstalled ? 'installed' : canInstall || canInstallOnIos ? 'available' : 'unavailable'}
       >
         <div className={styles.appContent}>
-          <span className={styles.kicker}>{activeTexts.kicker}</span>
-          <h2 id="home-app-title">{activeTexts.title}</h2>
-          <p className={styles.sectionSubtitle}>{activeTexts.description}</p>
+          <span className={`${styles.kicker} type-label`}>{activeTexts.kicker}</span>
+          <h2 id="home-app-title" className="type-title-xl">{activeTexts.title}</h2>
+          <p className={`${styles.sectionSubtitle} type-body-lg`}>{activeTexts.description}</p>
         </div>
         <div className={styles.appCtas}>
           {isInstalled ? (
@@ -209,7 +209,9 @@ export default function AppInstallSection({
             </>
           )}
         </div>
-        {canInstallOnIos && <p className={styles.installHint}>{texts.appInstall.iosCta.hint}</p>}
+        {canInstallOnIos && (
+          <p className={`${styles.installHint} type-body-sm`}>{texts.appInstall.iosCta.hint}</p>
+        )}
       </div>
     </section>
   );

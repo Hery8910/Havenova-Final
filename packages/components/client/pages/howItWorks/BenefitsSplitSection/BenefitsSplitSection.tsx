@@ -20,10 +20,10 @@ export default function BenefitsSplitSection({
     <section className={styles.benefits} aria-labelledby="how-it-works-benefits-title">
       <div className={styles.container}>
         <header className={styles.header}>
-          <h2 id="how-it-works-benefits-title" className={styles.title}>
+          <h2 id="how-it-works-benefits-title" className={`${styles.title} type-title-lg`}>
             {texts.title}
           </h2>
-          <p className={styles.subtitle}>{texts.description}</p>
+          <p className={`${styles.subtitle} type-body-lg`}>{texts.description}</p>
           <nav className={styles.heroCtas} aria-label={texts.ctaAriaLabel}>
             <Link
               className={`${styles.ctaPrimary} button`}

@@ -1,17 +1,12 @@
 .appInstall {
-  padding: 0 5dvw;
+  padding: 32px 5dvw;
 }
 .sectionTitle {
   color: var(--text-primary);
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 800;
-  line-height: 1.2;
   margin: 0;
 }
 .sectionSubtitle {
   color: var(--text-secondary);
-  font-size: clamp(16px, 2.5vw, 18px);
-  line-height: 1.6;
   margin: 0;
 }
 .kicker {
@@ -21,10 +16,6 @@
   gap: 8px;
   padding: 6px 12px;
   border-radius: 4px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 700;
   color: var(--color-secondary);
   background: var(--card-secondary);
   border: 1px solid var(--card-secondary-bg);
@@ -54,13 +45,11 @@
 .installHint {
   margin: 16px 0 0;
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
 }
 
 .ctaPrimaryInstall {
-  background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-primary-light) 100%);
-  border-color: var(--brand-primary);
+  background: linear-gradient(0deg, var(--brand-primary-5) 0%, var(--brand-primary-6) 100%);
+  border-color: var(--brand-primary-5);
   color: var(--text-inverse);
 }
 .ctaPrimaryUnavailable {
@@ -70,8 +59,8 @@
   box-shadow: none;
 }
 .ctaSecondary {
-  background: linear-gradient(0deg, var(--brand-secondary) 0%, var(--brand-secondary-light) 100%);
-  border-color: var(--brand-secondary);
+  background: linear-gradient(0deg, var(--brand-accent-5) 0%, var(--brand-accent-6) 100%);
+  border-color: var(--brand-accent-5);
   color: var(--text-inverse);
 }
 .ctaPrimary:hover,
@@ -92,7 +81,7 @@
 }
 .ctaPrimary:focus-visible,
 .ctaGhost:focus-visible {
-  outline: 2px solid var(--brand-primary);
+  outline: 2px solid var(--brand-primary-5);
   outline-offset: 2px;
 }
 .chipList {
@@ -108,7 +97,6 @@
   border-radius: 999px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  font-size: 14px;
   color: var(--text-secondary);
 }
 

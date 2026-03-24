@@ -1,5 +1,5 @@
 .workflow {
-  padding: clamp(48px, 7vw, 96px) 0;
+  padding: 0 5dvw;
   position: relative;
 }
 .container {
@@ -23,14 +23,10 @@
 .title {
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(24px, 3.6vw, 36px);
-  font-weight: 800;
 }
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
-  font-size: clamp(16px, 2.4vw, 18px);
-  line-height: 1.6;
 }
 .stepsGrid {
   list-style: none;
@@ -69,23 +65,19 @@
   width: 34px;
   height: 34px;
   border-radius: var(--radius-sm);
-  background: var(--brand-accent);
+  background: var(--brand-accent-5);
   color: var(--text-inverse);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
 }
 .stepTitle {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
   color: var(--text-primary);
 }
 .stepDescription {
   margin: 0;
   color: var(--text-secondary);
-  line-height: 1.5;
 }
 .note {
   padding: 22px;
@@ -100,13 +92,10 @@
 .noteTitle {
   color: var(--color-warning);
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
 }
 .noteDescription {
   color: var(--text-primary);
   margin: 0;
-  line-height: 1.6;
 }
 
 @media (max-width: 760px) {

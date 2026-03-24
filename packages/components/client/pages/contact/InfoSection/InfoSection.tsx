@@ -69,13 +69,13 @@ export default function InfoSection({
         className={`${styles.contact} card`}
         aria-label={ariaTexts?.info || 'Contact information'}
       >
-        <h3 className={styles.contactTitle}>{texts?.contact?.title}</h3>
+        <h3 className={`${styles.contactTitle} type-title-sm`}>{texts?.contact?.title}</h3>
         <ul className={styles.contactList}>
           <li className={styles.contactItem}>
             <span className={styles.contactIcon} aria-hidden="true">
               <LuMail />
             </span>
-            <a className={styles.contactLink} href={mailHref}>
+            <a className={`${styles.contactLink} type-body-sm`} href={mailHref}>
               {texts?.contact?.email}
             </a>
           </li>
@@ -83,7 +83,7 @@ export default function InfoSection({
             <span className={styles.contactIcon} aria-hidden="true">
               <LuPhone />
             </span>
-            <a className={styles.contactLink} href={telHref}>
+            <a className={`${styles.contactLink} type-body-sm`} href={telHref}>
               {texts?.contact?.phone}
             </a>
           </li>
@@ -91,15 +91,15 @@ export default function InfoSection({
             <span className={styles.contactIcon} aria-hidden="true">
               <LuMapPin />
             </span>
-            <p className={styles.contactLabel}>{texts?.contact?.address}</p>
+            <p className={`${styles.contactLabel} type-body-sm`}>{texts?.contact?.address}</p>
           </li>
           <li className={styles.contactItem}>
-            <p className={styles.contactLabel}>{texts?.hour?.week.label}</p>
-            <p className={styles.contactLabel}>{texts?.hour?.week.data}</p>
+            <p className={`${styles.contactLabel} type-body-sm`}>{texts?.hour?.week.label}</p>
+            <p className={`${styles.contactLabel} type-body-sm`}>{texts?.hour?.week.data}</p>
           </li>
           <li className={styles.contactItem}>
-            <p className={styles.contactLabel}>{texts?.hour?.weekend.label}</p>
-            <p className={styles.contactLabel}>{texts?.hour?.weekend.data}</p>
+            <p className={`${styles.contactLabel} type-body-sm`}>{texts?.hour?.weekend.label}</p>
+            <p className={`${styles.contactLabel} type-body-sm`}>{texts?.hour?.weekend.data}</p>
           </li>
         </ul>
       </address>

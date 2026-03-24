@@ -508,7 +508,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/privacy-policy',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/privacy-policy-en.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Privacy Policy',
@@ -530,7 +530,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/privacy-policy',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/privacy-policy-de.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Datenschutzerklärung',
@@ -552,7 +552,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/imprint',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/imprint-en.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Imprint',
@@ -572,7 +572,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/imprint',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/imprint-de.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Impressum',
@@ -595,7 +595,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/terms-of-service',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/terms-of-service-en.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Terms of Service',
@@ -616,7 +616,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/terms-of-service',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/terms-of-service-de.png',
             width: 1280,
             height: 720,
             alt: 'Havenova AGB',
@@ -639,7 +639,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/en/legal/cookie-policy',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/cookie-policy-en.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Cookie Policy',
@@ -660,7 +660,7 @@ export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
         url: 'https://havenova.de/de/legal/cookie-policy',
         images: [
           {
-            url: 'https://havenova.de/screenshots/home-desktop.png',
+            url: 'https://havenova.de/screenshots/cookie-policy-de.png',
             width: 1280,
             height: 720,
             alt: 'Havenova Cookie-Richtlinie',

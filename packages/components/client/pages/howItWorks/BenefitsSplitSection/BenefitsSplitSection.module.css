@@ -24,14 +24,10 @@
 .title {
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(24px, 3.6vw, 36px);
-  font-weight: 800;
 }
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
-  font-size: clamp(16px, 2.4vw, 18px);
-  line-height: 1.6;
 }
 .heroCtas {
   display: flex;
@@ -40,13 +36,13 @@
 }
 
 .ctaPrimary {
-  background: var(--brand-primary);
+  background: var(--brand-primary-5);
   color: var(--text-inverse);
 }
 .ctaSecondary {
-  background: var(--brand-accent);
+  background: var(--brand-accent-5);
   color: var(--text-inverse);
-  border-color: var(--brand-accent);
+  border-color: var(--brand-accent-5);
 }
 .imageWrapper {
   position: relative;

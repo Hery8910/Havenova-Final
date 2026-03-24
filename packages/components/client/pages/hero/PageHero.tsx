@@ -75,12 +75,15 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
         <div className={joinClasses(styles.heroGrid, classNames?.grid)}>
           <header className={joinClasses(styles.heroCopy, classNames?.copy)}>
             {texts.badge && (
-              <span className={joinClasses(styles.heroBadge, classNames?.badge)}>
+              <span className={joinClasses(styles.heroBadge, 'type-label', classNames?.badge)}>
                 {texts.badge}
               </span>
             )}
 
-            <h1 id={titleId} className={joinClasses(styles.heroTitle, classNames?.title)}>
+            <h1
+              id={titleId}
+              className={joinClasses(styles.heroTitle, 'type-display-md', classNames?.title)}
+            >
               {texts.title}
               {texts.titleAccent && (
                 <>
@@ -104,7 +107,11 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
               {texts.descriptions.map((description) => (
                 <p
                   key={description}
-                  className={joinClasses(styles.heroDescription, classNames?.description)}
+                  className={joinClasses(
+                    styles.heroDescription,
+                    'type-body-lg',
+                    classNames?.description
+                  )}
                 >
                   {description}
                 </p>
