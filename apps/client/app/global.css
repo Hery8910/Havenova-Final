@@ -3,8 +3,8 @@
 
   /* Brand */
   --brand-primary: hsl(210, 93%, 41%);
-  --brand-secondary: #5e12e0;
-  --brand-accent: #f2c150;
+  --brand-secondary: hsl(262, 85%, 47%);
+  --brand-accent: hsl(42, 86%, 63%);
 
   --brand-primary-light: hsl(210, 93%, 50%);
   --brand-secondary-light: hsl(262, 85%, 50%);

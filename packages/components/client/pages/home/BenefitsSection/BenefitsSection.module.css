@@ -4,17 +4,6 @@
   margin: 0 auto;
   padding: 0 24px;
 }
-.container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('/images/testimonials-background.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.4;
-  z-index: 0;
-}
 .sectionTitle {
   color: var(--text-primary);
   font-size: clamp(28px, 4vw, 40px);

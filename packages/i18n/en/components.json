@@ -14,7 +14,7 @@
       ],
       "services": [
         { "label": "Cleaning", "href": "/cleaning-service", "image": "", "alt": "" },
-        { "label": "Maintenance", "href": "/home-service", "image": "", "alt": "" }
+        { "label": "Home service", "href": "/home-service", "image": "", "alt": "" }
       ],
       "profile": {
         "label": "Profile",
