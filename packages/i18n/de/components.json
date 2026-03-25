@@ -121,6 +121,7 @@
         "email": "E-Mail",
         "password": "Passwort",
         "forgotPassword": "Passwort vergessen?",
+        "resetPassword": "Passwort zurücksetzen",
         "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
         "tosPrefix": "Ich habe die ",
         "tosTerms": "AGB",

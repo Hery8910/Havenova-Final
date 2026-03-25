@@ -53,75 +53,67 @@ const ResetPassword = () => {
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
 
-  const getLogoSrc = () => {
-    if (profile.theme === 'dark') {
-      return '/logos/nav-logo-dark.webp';
-    } else {
-      return '/logos/nav-logo-light.webp';
-    }
-  };
+  // useEffect(() => {
+  //   if (!token) {
+  //     const popupData = getPopup(
+  //       popups,
+  //       'GLOBAL_INTERNAL_ERROR',
+  //       'GLOBAL_INTERNAL_ERROR',
+  //       fallbackGlobalError
+  //     );
 
-  useEffect(() => {
-    if (!token) {
-      const popupData = getPopup(
-        popups,
-        'GLOBAL_INTERNAL_ERROR',
-        'GLOBAL_INTERNAL_ERROR',
-        fallbackGlobalError
-      );
+  //     showError({
+  //       response: {
+  //         status: 500,
+  //         title: popupData.title,
+  //         description: popupData.description,
+  //         cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+  //       },
+  //       onCancel: () => {
+  //         closeAlert();
+  //         router.push(href(lang, '/'));
+  //       },
+  //     });
 
-      showError({
-        response: {
-          status: 500,
-          title: popupData.title,
-          description: popupData.description,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-        },
-        onCancel: () => {
-          closeAlert();
-          router.push(href(lang, '/'));
-        },
-      });
+  //     return;
+  //   }
 
-      return;
-    }
+  //   if (status === 'error') {
+  //     const popupData = getPopup(
+  //       popups,
+  //       code || undefined,
+  //       'GLOBAL_INTERNAL_ERROR',
+  //       fallbackGlobalError
+  //     );
 
-    if (status === 'error') {
-      const popupData = getPopup(
-        popups,
-        code || undefined,
-        'GLOBAL_INTERNAL_ERROR',
-        fallbackGlobalError
-      );
-
-      showError({
-        response: {
-          status: http || 400,
-          title: popupData.title,
-          description:
-            popupData.description ||
-            texts.popups.GLOBAL_INTERNAL_ERROR.description ||
-            'Invalid or expired link.',
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-        },
-        onCancel: () => {
-          closeAlert();
-          router.push('/');
-        },
-      });
-    }
-  }, [
-    token,
-    status,
-    code,
-    http,
-    popups,
-    router,
-    showError,
-    closeAlert,
-    lang,
-    texts.popups.GLOBAL_INTERNAL_ERROR.description,
-  ]);
+  //     showError({
+  //       response: {
+  //         status: http || 400,
+  //         title: popupData.title,
+  //         description:
+  //           popupData.description ||
+  //           texts.popups.GLOBAL_INTERNAL_ERROR.description ||
+  //           'Invalid or expired link.',
+  //         cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+  //       },
+  //       onCancel: () => {
+  //         closeAlert();
+  //         router.push('/');
+  //       },
+  //     });
+  //   }
+  // }, [
+  //   token,
+  //   status,
+  //   code,
+  //   http,
+  //   popups,
+  //   router,
+  //   showError,
+  //   closeAlert,
+  //   lang,
+  //   texts.popups.GLOBAL_INTERNAL_ERROR.description,
+  // ]);
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
     setLoading(true);
@@ -234,27 +226,28 @@ const ResetPassword = () => {
 
   return (
     <main className={styles.main} aria-labelledby="reset-title" aria-describedby="reset-desc">
-      <div className={styles.wrapper} role="region" aria-labelledby="reset-title">
-        <header className={styles.header}>
-          <Link className={styles.logoLink} href="/" aria-label="Homepage">
-            <Image
-              className={styles.logoImage}
-              src={getLogoSrc()}
-              alt="Havenova Logo"
-              width={170}
-              height={40}
-              priority
-            />
-          </Link>
-        </header>
+      <section
+        className={`${styles.section} card`}
+        aria-labelledby="reset-title"
+        aria-describedby="reset-desc"
+        aria-busy={loading}
+        role="form"
+      >
+        <Link className={styles.logoLink} href="/" aria-label="Homepage">
+          <Image
+            className={styles.logoImage}
+            src={'/logos/navbar-logo.webp'}
+            alt="Havenova Logo"
+            width={300}
+            height={70}
+            priority
+          />
+        </Link>
+        <article className={styles.article}>
+          <h1 id={formText.labels.resetPassword} className={styles.h1}>
+            {formText.labels.resetPassword}
+          </h1>
 
-        <section
-          className={styles.section}
-          aria-labelledby="reset-title"
-          aria-describedby="reset-desc"
-          aria-busy={loading}
-          role="form"
-        >
           <FormWrapper<ResetPasswordFormData>
             showHintPassword
             fields={['password'] as const}
@@ -263,8 +256,8 @@ const ResetPassword = () => {
             initialValues={{ password: '' }}
             loading={loading}
           />
-        </section>
-      </div>
+        </article>
+      </section>
     </main>
   );
 };

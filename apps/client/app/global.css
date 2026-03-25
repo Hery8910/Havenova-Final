@@ -138,8 +138,8 @@
   --bg-success: rgba(71, 170, 68, 0.38);
   --color-error: #e6492d;
   --bg-error: rgba(230, 73, 45, 0.38);
-  --color-warning: #f6ab2f;
-  --bg-warning: rgba(246, 171, 47, 0.38);
+  --color-warning: hsl(37, 92%, 57%, 0.7);
+  --bg-warning: hsla(37, 92%, 57%, 0.38);
   --color-info: #2690a5;
   --bg-info: rgba(38, 144, 165, 0.38);
 }
@@ -180,7 +180,7 @@
   --surface-3: rgba(2, 25, 34, 0.8);
   --surface-border: rgba(94, 18, 224, 0.2);
 
-  --glass-bg: hsla(214, 54%, 15%, 0.9);
+  --glass-bg: hsla(214, 54%, 15%, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
 
   --shadow-sm: 0 2px 10px rgba(7, 7, 7, 0.45);
@@ -472,8 +472,8 @@ p {
 }
 .btn--solid,
 .button {
-  background: linear-gradient(0deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%);
-  border-color: var(--brand-primary);
+  background: linear-gradient(0deg, var(--brand-primary-5) 0%, var(--brand-primary-6) 100%);
+  border-color: var(--brand-primary-5);
 }
 .btn--solid:hover,
 .button:hover {

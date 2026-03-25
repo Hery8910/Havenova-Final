@@ -180,9 +180,15 @@
         }
       },
       "authAlert": {
-        "title": "Account required to submit a cleaning request",
-        "description": "To send a cleaning service request, you need an active Havenova account and an active session. Please log in if you already have an account, or create one in a few steps.",
+        "title": "Account required",
+        "description": "You need an active Havenova account to send a cleaning request. Log in or create one in a few steps.",
         "closeLabel": "Close account required notice",
+        "a11y": {
+          "dialogLabel": "Login required notice",
+          "actionsLabel": "Authentication actions",
+          "loginLabel": "Go to the login page",
+          "registerLabel": "Go to the account creation page"
+        },
         "ctas": {
           "login": {
             "label": "Go to login",
@@ -392,9 +398,15 @@
         }
       },
       "authAlert": {
-        "title": "Account required to prepare a home service request",
-        "description": "To reuse your contact details and addresses automatically, you need an active Havenova account and a valid session. Log in or create an account in a few steps.",
+        "title": "Account required",
+        "description": "You need an active Havenova account to prepare a home service request. Log in or create one in a few steps.",
         "closeLabel": "Close account required notice",
+        "a11y": {
+          "dialogLabel": "Login required notice",
+          "actionsLabel": "Authentication actions",
+          "loginLabel": "Go to the login page",
+          "registerLabel": "Go to the account creation page"
+        },
         "ctas": {
           "login": {
             "label": "Go to login",

@@ -1,6 +1,6 @@
 // packages/components/alert/alertWrapper/AlertWrapper.tsx
 'use client';
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { AlertPopup, AlertPopupSkeleton } from '../alertPopup';
 import { getAlertType } from '../../../utils/alertType';
 import type { AlertPopupProps } from '../alertPopup/AlertPopup';
@@ -14,19 +14,16 @@ interface AlertWrapperProps {
 }
 
 export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWrapperProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCancel();
+      if (e.key === 'Escape' && !response?.loading) onCancel();
     },
-    [onCancel]
+    [onCancel, response?.loading]
   );
 
   useEffect(() => {
     if (!response) return;
     document.addEventListener('keydown', handleKeyDown);
-    containerRef.current?.focus();
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -35,7 +32,6 @@ export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWra
   if (!response) return <AlertPopupSkeleton />;
 
   const type = getAlertType(response.status);
-  const hasConfirm = !!onConfirm && !!response.confirmLabel;
 
   return (
     <AlertPopup

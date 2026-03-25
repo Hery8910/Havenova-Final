@@ -5,6 +5,11 @@
     "close": "Close",
     "reload": "Reload"
   },
+  "a11y": {
+    "close": "Close popup",
+    "dialog": "Alert dialog",
+    "loading": "Loading message"
+  },
   "ACCESS_TOKEN_EXPIRED": {
     "title": "Session expired",
     "description": "Your access token has expired. Please log in again."

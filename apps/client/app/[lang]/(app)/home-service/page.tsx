@@ -17,6 +17,12 @@ interface HomeServicePageTexts {
     title: string;
     description: string;
     closeLabel: string;
+    a11y: {
+      dialogLabel: string;
+      actionsLabel: string;
+      loginLabel: string;
+      registerLabel: string;
+    };
     ctas: {
       login: { label: string; href: string };
       register: { label: string; href: string };

@@ -180,9 +180,15 @@
         }
       },
       "authAlert": {
-        "title": "Konto erforderlich, um eine Reinigungsanfrage zu senden",
-        "description": "Um eine Anfrage für den Reinigungsservice zu senden, benötigen Sie ein aktives Havenova-Konto und eine aktive Anmeldung. Melden Sie sich an, wenn Sie bereits ein Konto haben, oder erstellen Sie in wenigen Schritten ein neues Konto.",
+        "title": "Konto erforderlich",
+        "description": "Für eine Reinigungsanfrage brauchen Sie ein aktives Havenova-Konto. Melden Sie sich an oder erstellen Sie in wenigen Schritten ein Konto.",
         "closeLabel": "Hinweis zum erforderlichen Konto schließen",
+        "a11y": {
+          "dialogLabel": "Hinweis zur erforderlichen Anmeldung",
+          "actionsLabel": "Aktionen zur Anmeldung",
+          "loginLabel": "Zur Login-Seite gehen",
+          "registerLabel": "Zur Kontoerstellung gehen"
+        },
         "ctas": {
           "login": {
             "label": "Zum Login",
@@ -392,9 +398,15 @@
         }
       },
       "authAlert": {
-        "title": "Konto erforderlich, um eine Hausservice-Anfrage vorzubereiten",
-        "description": "Um Ihre Kontaktdaten und Adressen automatisch zu übernehmen, benötigen Sie ein aktives Havenova-Konto und eine laufende Sitzung. Melden Sie sich an oder erstellen Sie in wenigen Schritten ein neues Konto.",
+        "title": "Konto erforderlich",
+        "description": "Für eine Hausservice-Anfrage brauchen Sie ein aktives Havenova-Konto. Melden Sie sich an oder erstellen Sie in wenigen Schritten ein Konto.",
         "closeLabel": "Hinweis zum erforderlichen Konto schließen",
+        "a11y": {
+          "dialogLabel": "Hinweis zur erforderlichen Anmeldung",
+          "actionsLabel": "Aktionen zur Anmeldung",
+          "loginLabel": "Zur Login-Seite gehen",
+          "registerLabel": "Zur Kontoerstellung gehen"
+        },
         "ctas": {
           "login": {
             "label": "Zum Login",

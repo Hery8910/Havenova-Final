@@ -11,6 +11,13 @@ export interface PopupsTexts {
     accept: string;
     continue: string;
     close: string;
+    reload?: string;
+  };
+
+  a11y?: {
+    close: string;
+    dialog: string;
+    loading: string;
   };
 
   GLOBAL_LOADING?: PopupText;
@@ -64,4 +71,4 @@ export interface PopupsTexts {
   WORKER_LOAD_FAILED?: PopupText;
 }
 
-export type PopupCode = Exclude<keyof PopupsTexts, 'button'>;
+export type PopupCode = Exclude<keyof PopupsTexts, 'button' | 'a11y'>;

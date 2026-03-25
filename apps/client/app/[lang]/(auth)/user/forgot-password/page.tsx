@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import styles from './page.module.css';
+import styles from '../userAuth.module.css';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
@@ -53,14 +53,6 @@ const ForgotPassword = () => {
   const formText = texts.components.client.form;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
-
-  const getLogoSrc = () => {
-    if (profile.theme === 'dark') {
-      return '/logos/nav-logo-dark.webp';
-    } else {
-      return '/logos/nav-logo-light.webp';
-    }
-  };
 
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {
     try {
@@ -168,32 +160,28 @@ const ForgotPassword = () => {
 
   return (
     <main className={styles.main}>
-      <Link className={styles.logoLink} href="/" aria-label="Homepage">
-        <Image
-          className={styles.logoImage}
-          src={getLogoSrc()}
-          alt="Havenova Logo"
-          width={400}
-          height={100}
-          priority
-        />
-      </Link>
-      <div className={styles.wrapper}>
-        <header className={styles.header}>
+      <section
+        className={`${styles.section} card`}
+        aria-labelledby={headingId}
+        aria-describedby={descriptionId}
+        aria-busy={loading}
+        role="form"
+      >
+        <Link className={styles.logoLink} href="/" aria-label="Homepage">
+          <Image
+            className={styles.logoImage}
+            src={'/logos/navbar-logo.webp'}
+            alt="Havenova Logo"
+            width={300}
+            height={70}
+            priority
+          />
+        </Link>
+        <article className={styles.article}>
           <h1 id={headingId} className={styles.h1}>
             {forgotPasswordText.title}
           </h1>
-          <p id={descriptionId} className={styles.p}>
-            * {forgotPasswordText.info}
-          </p>
-        </header>
-        <section
-          className={styles.section}
-          aria-labelledby={headingId}
-          aria-describedby={descriptionId}
-          aria-busy={loading}
-          role="form"
-        >
+
           <FormWrapper<ForgotPasswordPayload>
             fields={['email', 'language', 'clientId'] as const}
             onSubmit={handleForgotPassword}
@@ -205,11 +193,11 @@ const ForgotPassword = () => {
             }}
             loading={loading}
           />
-          <p style={srOnly} role="status" aria-live="polite">
-            {loading ? fallbackForgotPasswordLoading.description : ''}
-          </p>
-        </section>
-      </div>
+        </article>
+        <p id={descriptionId} className={styles.p}>
+          {forgotPasswordText.info}
+        </p>
+      </section>
     </main>
   );
 };

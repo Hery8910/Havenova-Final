@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  max-width: 860px;
+  max-width: 700px;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -8,8 +8,8 @@
 
 .card {
   width: 100%;
-  max-width: 700px;
-  padding: 24px;
+  max-width: 650px;
+  padding: 24px 0;
   display: grid;
   gap: 24px;
 }
@@ -82,6 +82,10 @@
 }
 
 @media (max-width: 720px) {
+  .section {
+    border-radius: 0;
+    border: none;
+  }
   .card {
     padding: 20px;
   }

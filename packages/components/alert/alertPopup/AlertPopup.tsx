@@ -1,6 +1,8 @@
 'use client';
+import { useEffect, useId, useRef } from 'react';
 import Image from 'next/image';
 import styles from './AlertPopup.module.css';
+import { useI18n } from '../../../contexts/i18n';
 import { AlertType } from '../../../utils/alertType';
 
 export interface AlertPopupProps {
@@ -24,7 +26,11 @@ export default function AlertPopup({
   onCancel,
   loading = false,
 }: AlertPopupProps) {
-  // Mapeo simple solo para las rutas de imagen
+  const { texts } = useI18n();
+  const titleId = useId();
+  const descriptionId = useId();
+  const dialogRef = useRef<HTMLElement | null>(null);
+
   const imageMap: Record<string, string> = {
     success: '/alert/success.svg',
     error: '/alert/error.svg',
@@ -32,26 +38,70 @@ export default function AlertPopup({
     info: '/alert/info.svg',
   };
 
-  // Determinamos el estado visual real. Si carga, forzamos el estilo 'loading'
   const currentType = loading ? 'loading' : type;
   const hasConfirm = !loading && !!onConfirm && !!confirmLabel;
-  const hasCancel = !loading && !!onCancel && !!cancelLabel; // Opcional: ocultar cancelar si no hay label
+  const hasCancel = !loading && !!onCancel && !!cancelLabel;
+  const primaryAction = hasConfirm
+    ? {
+        label: confirmLabel,
+        onClick: onConfirm,
+        className: styles.btnConfirm,
+      }
+    : hasCancel
+      ? {
+          label: cancelLabel,
+          onClick: onCancel,
+          className: styles.btnCancel,
+        }
+      : null;
+
+  const closeLabel = texts.popups?.a11y?.close ?? 'Close popup';
+  const dialogLabel = texts.popups?.a11y?.dialog ?? 'Alert dialog';
+  const loadingLabel = texts.popups?.a11y?.loading ?? 'Loading message';
+
+  useEffect(() => {
+    if (!loading) {
+      dialogRef.current?.focus();
+    }
+  }, [loading]);
+
+  const handleOverlayClick = () => {
+    if (!loading) onCancel?.();
+  };
 
   return (
-    <div className={`${styles.overlay} card--glass`}>
+    <div className={`${styles.overlay} card--glass`} onClick={handleOverlayClick}>
       <section
-        role={hasConfirm ? 'dialog' : 'alertdialog'}
+        ref={dialogRef}
+        role="dialog"
         aria-modal="true"
-        aria-labelledby="alert-title"
-        aria-describedby="alert-description"
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        aria-roledescription={dialogLabel}
+        aria-busy={loading}
+        tabIndex={-1}
         className={styles.card}
-        // 👇 Aquí ocurre la magia: pasamos el tipo al CSS
         data-type={currentType}
+        onClick={(event) => event.stopPropagation()}
       >
-        {/* Contenedor del Icono (Squircle flotante) */}
-        <div className={loading ? styles.loadingWrapper : styles.iconWrapper}>
+        {!loading && onCancel && (
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={onCancel}
+            aria-label={closeLabel}
+          >
+            <span aria-hidden="true">x</span>
+          </button>
+        )}
+
+        <div
+          className={loading ? styles.loadingWrapper : styles.iconWrapper}
+          role={loading ? 'status' : undefined}
+          aria-label={loading ? loadingLabel : undefined}
+        >
           {loading ? (
-            <svg className={styles.spinner} viewBox="0 0 50 50">
+            <svg className={styles.spinner} viewBox="0 0 50 50" aria-hidden="true">
               <circle
                 className={styles.spinnerPath}
                 cx="25"
@@ -64,7 +114,8 @@ export default function AlertPopup({
           ) : (
             <Image
               src={imageMap[type]}
-              alt={`${type} icon`}
+              alt=""
+              aria-hidden="true"
               width={40}
               height={40}
               className={styles.iconImage}
@@ -72,29 +123,23 @@ export default function AlertPopup({
           )}
         </div>
 
-        {/* Contenido de Texto */}
         <article className={styles.content}>
-          <h4 id="alert-title" className={styles.title}>
+          <h4 id={titleId} className={styles.title}>
             {title}
           </h4>
-          <p id="alert-description" className={styles.description}>
+          <p id={descriptionId} className={styles.description}>
             {description}
           </p>
 
-          {/* Botones (solo si no está cargando) */}
-          {!loading && (
+          {!loading && primaryAction && (
             <div className={styles.actions}>
-              {hasCancel && (
-                <button onClick={onCancel} className={styles.btnCancel}>
-                  {cancelLabel || 'Cancel'}
-                </button>
-              )}
-
-              {hasConfirm && (
-                <button onClick={onConfirm} className={styles.btnConfirm}>
-                  {confirmLabel || 'Confirm'}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={primaryAction.onClick}
+                className={primaryAction.className}
+              >
+                {primaryAction.label}
+              </button>
             </div>
           )}
         </article>

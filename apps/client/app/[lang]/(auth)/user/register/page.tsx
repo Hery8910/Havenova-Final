@@ -51,13 +51,6 @@ const Register = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
 
-  const getLogoSrc = () => {
-    if (profile.theme === 'dark') {
-      return '/logos/nav-logo-dark.webp';
-    } else {
-      return '/logos/nav-logo-light.webp';
-    }
-  };
 
   const handleRegister = async (data: RegisterFormData) => {
     try {
@@ -173,43 +166,41 @@ const Register = () => {
 
   return (
     <main className={styles.main} aria-labelledby="register-title" aria-describedby="register-desc">
-      <div className={styles.wrapper} role="region" aria-labelledby="register-title">
+      <section className={`${styles.section} card`}>
         <header className={styles.header}>
           <Link className={styles.logoLink} href="/" aria-label="Homepage">
             <Image
               className={styles.logoImage}
-              src={getLogoSrc()}
+              src={'/logos/navbar-logo.webp'}
               alt="Havenova Logo"
-              width={170}
-              height={40}
+              width={300}
+              height={70}
               priority
             />
           </Link>
         </header>
-        <section className={styles.section}>
-          <FormWrapper<RegisterFormData>
-            showHintPassword
-            fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
-            onSubmit={handleRegister}
-            button={registerButton}
-            initialValues={{
-              name: '',
-              email: '',
-              password: '',
-              tosAccepted: false,
-              language: '',
-              clientId: '',
-            }}
-            loading={loading}
-          />
-          <aside className={styles.aside}>
-            <p className={styles.header_p}>{register?.cta.title}</p>
-            <Link className={styles.link} href={register?.cta.url}>
-              {register?.cta.label}
-            </Link>
-          </aside>
-        </section>
-      </div>
+        <FormWrapper<RegisterFormData>
+          showHintPassword
+          fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
+          onSubmit={handleRegister}
+          button={registerButton}
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            tosAccepted: false,
+            language: '',
+            clientId: '',
+          }}
+          loading={loading}
+        />
+        <aside className={styles.aside}>
+          <p className={styles.header_p}>{register?.cta.title}</p>
+          <Link className={styles.link} href={register?.cta.url}>
+            {register?.cta.label}
+          </Link>
+        </aside>
+      </section>
     </main>
   );
 };

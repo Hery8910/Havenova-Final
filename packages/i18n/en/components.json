@@ -121,6 +121,7 @@
         "email": "Email",
         "password": "Password",
         "forgotPassword": "Forgot Password?",
+        "resetPassword": "Reset Password",
         "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
         "tosPrefix": "I have read and accept the ",
         "tosTerms": "Terms of Service",

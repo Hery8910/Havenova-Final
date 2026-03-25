@@ -226,7 +226,7 @@ export function ContactFormSection() {
     (touched[field] || submitted) && errors[field];
 
   return (
-    <section className={styles.section} aria-labelledby="contact-form-title">
+    <section className={`${styles.section} card`} aria-labelledby="contact-form-title">
       <article className={styles.card}>
         <h3 id="contact-form-title" className="type-title-md">
           {submitLabel}
@@ -250,7 +250,11 @@ export function ContactFormSection() {
                 aria-describedby="contact-name-error"
                 required
               />
-              <span id="contact-name-error" className={`${styles.error} type-caption`} aria-live="polite">
+              <span
+                id="contact-name-error"
+                className={`${styles.error} type-caption`}
+                aria-live="polite"
+              >
                 {showFieldError('name') ?? ''}
               </span>
             </label>

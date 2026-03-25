@@ -2,7 +2,10 @@
 import { FAQSection } from '../../../../../../packages/components';
 import { ContactFormSection } from '../../../../../../packages/components/client/pages/contact';
 import { InfoSection } from '../../../../../../packages/components/client/pages/contact/InfoSection';
-import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
+import {
+  PageHero,
+  type PageHeroContent,
+} from '../../../../../../packages/components/client/pages/hero';
 import { useI18n } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
@@ -35,7 +38,7 @@ export default function Contact() {
   return (
     <main className={styles.main}>
       <PageHero texts={contact.hero} lang={lang} />
-      <div className={`${styles.wrapper} card`}>
+      <div className={styles.wrapper}>
         <ContactFormSection />
         <InfoSection texts={contactInfoTexts} />
       </div>

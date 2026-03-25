@@ -5,6 +5,11 @@
     "close": "Schließen",
     "reload": "Neu laden"
   },
+  "a11y": {
+    "close": "Popup schließen",
+    "dialog": "Hinweisdialog",
+    "loading": "Lademeldung"
+  },
   "ACCESS_TOKEN_EXPIRED": {
     "title": "Sitzung abgelaufen",
     "description": "Ihr Zugriffstoken ist abgelaufen. Bitte melden Sie sich erneut an."

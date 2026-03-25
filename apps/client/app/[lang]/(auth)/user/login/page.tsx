@@ -207,12 +207,12 @@ const Login = () => {
       aria-labelledby="login-title"
       aria-describedby={login?.cta?.title ? 'login-cta' : undefined}
     >
-      <div className={styles.wrapper} role="region" aria-labelledby="login-title">
+      <section className={`${styles.section} card`}>
         <header className={styles.header}>
           <Link className={styles.logoLink} href="/" aria-label="Homepage">
             <Image
               className={styles.logoImage}
-              src={getLogoSrc()}
+              src={'/logos/navbar-logo.webp'}
               alt="Havenova Logo"
               width={400}
               height={100}
@@ -220,29 +220,27 @@ const Login = () => {
             />
           </Link>
         </header>
-        <section className={styles.section}>
-          <FormWrapper<LoginPayload>
-            fields={['email', 'password', 'clientId'] as const}
-            onSubmit={handleLogin}
-            button={loginButton}
-            showForgotPassword
-            initialValues={{
-              clientId: client._id,
-              email,
-              password: '',
-            }}
-            loading={loading}
-          />
-          <aside className={styles.aside}>
-            <p id={'login-cta'} className={styles.header_p}>
-              {login.cta.title}
-            </p>
-            <Link className={styles.link} href={login.cta.url}>
-              {login.cta.label}
-            </Link>
-          </aside>
-        </section>
-      </div>
+        <FormWrapper<LoginPayload>
+          fields={['email', 'password', 'clientId'] as const}
+          onSubmit={handleLogin}
+          button={loginButton}
+          showForgotPassword
+          initialValues={{
+            clientId: client._id,
+            email,
+            password: '',
+          }}
+          loading={loading}
+        />
+        <aside className={styles.aside}>
+          <p id={'login-cta'} className={styles.header_p}>
+            {login.cta.title}
+          </p>
+          <Link className={styles.link} href={login.cta.url}>
+            {login.cta.label}
+          </Link>
+        </aside>
+      </section>
     </main>
   );
 };
