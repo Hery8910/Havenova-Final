@@ -48,14 +48,6 @@ const Login = () => {
   const login: LoginData = texts?.pages?.client.user.login;
   const loginButton = formText.button.login;
 
-  const getLogoSrc = () => {
-    if (profile.theme === 'dark') {
-      return '/logos/nav-logo-dark.webp';
-    } else {
-      return '/logos/nav-logo-light.webp';
-    }
-  };
-
   const handleLogin = async (data: LoginPayload) => {
     try {
       setLoading(true);

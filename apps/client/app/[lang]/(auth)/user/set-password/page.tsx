@@ -53,67 +53,67 @@ const ResetPassword = () => {
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     const popupData = getPopup(
-  //       popups,
-  //       'GLOBAL_INTERNAL_ERROR',
-  //       'GLOBAL_INTERNAL_ERROR',
-  //       fallbackGlobalError
-  //     );
+  useEffect(() => {
+    if (!token) {
+      const popupData = getPopup(
+        popups,
+        'GLOBAL_INTERNAL_ERROR',
+        'GLOBAL_INTERNAL_ERROR',
+        fallbackGlobalError
+      );
 
-  //     showError({
-  //       response: {
-  //         status: 500,
-  //         title: popupData.title,
-  //         description: popupData.description,
-  //         cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-  //       },
-  //       onCancel: () => {
-  //         closeAlert();
-  //         router.push(href(lang, '/'));
-  //       },
-  //     });
+      showError({
+        response: {
+          status: 500,
+          title: popupData.title,
+          description: popupData.description,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+        },
+        onCancel: () => {
+          closeAlert();
+          router.push(href(lang, '/'));
+        },
+      });
 
-  //     return;
-  //   }
+      return;
+    }
 
-  //   if (status === 'error') {
-  //     const popupData = getPopup(
-  //       popups,
-  //       code || undefined,
-  //       'GLOBAL_INTERNAL_ERROR',
-  //       fallbackGlobalError
-  //     );
+    if (status === 'error') {
+      const popupData = getPopup(
+        popups,
+        code || undefined,
+        'GLOBAL_INTERNAL_ERROR',
+        fallbackGlobalError
+      );
 
-  //     showError({
-  //       response: {
-  //         status: http || 400,
-  //         title: popupData.title,
-  //         description:
-  //           popupData.description ||
-  //           texts.popups.GLOBAL_INTERNAL_ERROR.description ||
-  //           'Invalid or expired link.',
-  //         cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-  //       },
-  //       onCancel: () => {
-  //         closeAlert();
-  //         router.push('/');
-  //       },
-  //     });
-  //   }
-  // }, [
-  //   token,
-  //   status,
-  //   code,
-  //   http,
-  //   popups,
-  //   router,
-  //   showError,
-  //   closeAlert,
-  //   lang,
-  //   texts.popups.GLOBAL_INTERNAL_ERROR.description,
-  // ]);
+      showError({
+        response: {
+          status: http || 400,
+          title: popupData.title,
+          description:
+            popupData.description ||
+            texts.popups.GLOBAL_INTERNAL_ERROR.description ||
+            'Invalid or expired link.',
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+        },
+        onCancel: () => {
+          closeAlert();
+          router.push('/');
+        },
+      });
+    }
+  }, [
+    token,
+    status,
+    code,
+    http,
+    popups,
+    router,
+    showError,
+    closeAlert,
+    lang,
+    texts.popups.GLOBAL_INTERNAL_ERROR.description,
+  ]);
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
     setLoading(true);
