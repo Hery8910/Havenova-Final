@@ -12,7 +12,6 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
-  useProfile,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { loginUser } from '../../../../../../../packages/services';

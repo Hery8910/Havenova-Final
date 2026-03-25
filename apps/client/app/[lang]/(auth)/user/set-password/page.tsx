@@ -8,7 +8,6 @@ import {
   fallbackGlobalError,
   fallbackGlobalLoading,
   useGlobalAlert,
-  useProfile,
 } from '@/packages/contexts';
 import { FormWrapper } from '@/packages/components/user/userForm';
 import { getPopup } from '@/packages/utils/alertType';
