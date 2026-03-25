@@ -34,7 +34,6 @@ interface ResetPasswordFormData {
 }
 
 const ResetPassword = () => {
-  const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();

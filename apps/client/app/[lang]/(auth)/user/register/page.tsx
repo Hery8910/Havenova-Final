@@ -40,7 +40,7 @@ const Register = () => {
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
-  const { profile, updateProfile } = useProfile();
+  const { updateProfile } = useProfile();
 
   const { texts } = useI18n();
   const [loading, setLoading] = useState(false);
@@ -50,7 +50,6 @@ const Register = () => {
   const formText = texts.components.client.form;
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
-
 
   const handleRegister = async (data: RegisterFormData) => {
     try {

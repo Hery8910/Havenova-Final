@@ -33,7 +33,6 @@ export interface LoginData {
 
 const Login = () => {
   const { client } = useClient();
-  const { profile } = useProfile();
   const { auth, setAuth } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
