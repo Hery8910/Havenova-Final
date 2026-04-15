@@ -31,7 +31,6 @@ export interface AuthUser {
 // ---------------------------
 
 export interface RegisterFormData {
-  name: string;
   email: string;
   password: string;
   language: string;

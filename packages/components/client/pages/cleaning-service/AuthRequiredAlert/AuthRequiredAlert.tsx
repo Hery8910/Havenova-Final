@@ -45,14 +45,6 @@ export default function AuthRequiredAlert({
               <h2 id="cleaning-auth-alert-title" className={styles.title}>
                 {texts.title}
               </h2>
-              <Image
-                src={'/alert/warning.svg'}
-                alt=""
-                aria-hidden="true"
-                width={25}
-                height={25}
-                className={styles.iconImage}
-              />
             </div>
 
             <button

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
@@ -37,6 +37,7 @@ export interface RegisterData {
 }
 
 const Register = () => {
+
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
@@ -95,7 +96,6 @@ const Register = () => {
       const storedPrefs = loadCookiePrefs() ?? getPrefsFromLocalStorage() ?? defaultPrefs();
 
       const payload: RegisterPayload = {
-        name: data.name,
         email: data.email,
         password: data.password,
         language: data.language,
@@ -111,7 +111,6 @@ const Register = () => {
       const profileLanguage = data.language === 'en' ? 'en' : 'de';
 
       await updateProfile({
-        name: data.name,
         language: profileLanguage,
       });
 
@@ -170,21 +169,20 @@ const Register = () => {
           <Link className={styles.logoLink} href="/" aria-label="Homepage">
             <Image
               className={styles.logoImage}
-              src={'/logos/navbar-logo.webp'}
+              src={'/logos/logo-vertical-dark.webp'}
               alt="Havenova Logo"
-              width={300}
-              height={70}
+              width={250}
+              height={125}
               priority
             />
           </Link>
         </header>
         <FormWrapper<RegisterFormData>
           showHintPassword
-          fields={['name', 'email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
+          fields={['email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
           onSubmit={handleRegister}
           button={registerButton}
           initialValues={{
-            name: '',
             email: '',
             password: '',
             tosAccepted: false,

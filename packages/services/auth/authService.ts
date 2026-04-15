@@ -37,7 +37,9 @@ export const refreshToken = async (): Promise<void> => {
 // ---------------------------
 
 export const registerUser = async (payload: RegisterPayload): Promise<RegisterResponse> => {
-  const { data } = await api.post<RegisterResponse>('/api/auth/register', payload);
+  const { data } = await api.post<RegisterResponse>('/api/auth/register', payload, {
+    withCredentials: true,
+  });
   return data;
 };
 
@@ -79,7 +81,9 @@ export const changePassword = async (
 export const forgotPassword = async (
   payload: ForgotPasswordPayload
 ): Promise<ForgotPasswordResponse> => {
-  const { data } = await api.post<ForgotPasswordResponse>('/api/auth/forgot-password', payload);
+  const { data } = await api.post<ForgotPasswordResponse>('/api/auth/forgot-password', payload, {
+    withCredentials: true,
+  });
   return data;
 };
 
@@ -131,7 +135,10 @@ export const resendVerificationEmail = async (
 ): Promise<ResendVerificationEmailResponse> => {
   const { data } = await api.post<ResendVerificationEmailResponse>(
     '/api/auth/resend-verification',
-    payload
+    payload,
+    {
+      withCredentials: true,
+    }
   );
   return data;
 };

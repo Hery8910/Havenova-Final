@@ -19,6 +19,7 @@ import type {
   ThemeMode,
   UpdateUserClientProfileInput,
   UserClientProfile,
+  UserNotificationPreferences,
 } from '@/packages/types/profile/profileTypes';
 import {
   createUserClientProfile,
@@ -36,7 +37,26 @@ interface ProfileContextProps {
   setProfileImage: (profileImage: string) => Promise<void>;
 }
 
-const DEFAULT_AVATAR = '/avatars/avatar-1.svg';
+const DEFAULT_AVATAR = '/avatars/avatar-1.png';
+
+const getDefaultNotificationPreferences = (): UserNotificationPreferences => ({
+  inApp: {
+    enabled: true,
+    required: true,
+  },
+  email: {
+    important: {
+      enabled: true,
+      required: true,
+    },
+    reminders: {
+      enabled: false,
+    },
+    promotional: {
+      enabled: false,
+    },
+  },
+});
 
 const getStoredTheme = (): ThemeMode | null => {
   if (typeof window === 'undefined') return null;
@@ -61,18 +81,76 @@ const createEmptyProfile = (overrides?: Partial<UserClientProfile>): UserClientP
   profileImage: DEFAULT_AVATAR,
   language: getStoredLanguage() ?? 'de',
   theme: getStoredTheme() ?? 'light',
+  notificationPreferences: getDefaultNotificationPreferences(),
   extra: {},
   createdAt: '',
   updatedAt: '',
   ...overrides,
 });
 
-const normalizeProfile = (profile: Partial<UserClientProfile> | null | undefined): UserClientProfile =>
+const normalizeNotificationPreferences = (
+  notificationPreferences?: Partial<UserNotificationPreferences>
+): UserNotificationPreferences => {
+  const defaults = getDefaultNotificationPreferences();
+
+  return {
+    ...defaults,
+    ...notificationPreferences,
+    inApp: {
+      ...defaults.inApp,
+      ...notificationPreferences?.inApp,
+    },
+    email: {
+      ...defaults.email,
+      ...notificationPreferences?.email,
+      important: {
+        ...defaults.email.important,
+        ...notificationPreferences?.email?.important,
+      },
+      reminders: {
+        ...defaults.email.reminders,
+        ...notificationPreferences?.email?.reminders,
+      },
+      promotional: {
+        ...defaults.email.promotional,
+        ...notificationPreferences?.email?.promotional,
+      },
+    },
+  };
+};
+
+const mergeNotificationPreferences = (
+  current: UserNotificationPreferences,
+  patch?: UpdateUserClientProfileInput['notificationPreferences']
+): UserNotificationPreferences =>
+  normalizeNotificationPreferences({
+    ...current,
+    email: {
+      ...current.email,
+      ...patch?.email,
+      reminders: {
+        ...current.email.reminders,
+        ...patch?.email?.reminders,
+      },
+      promotional: {
+        ...current.email.promotional,
+        ...patch?.email?.promotional,
+      },
+    },
+  });
+
+const normalizeProfile = (
+  profile: Partial<UserClientProfile> | null | undefined,
+  identity?: { userId?: string; clientId?: string }
+): UserClientProfile =>
   createEmptyProfile({
     ...profile,
+    userId: profile?.userId || identity?.userId || '',
+    clientId: profile?.clientId || identity?.clientId || '',
     savedAddresses: profile?.savedAddresses ?? [],
     extra: profile?.extra ?? {},
     profileImage: profile?.profileImage ?? DEFAULT_AVATAR,
+    notificationPreferences: normalizeNotificationPreferences(profile?.notificationPreferences),
   });
 
 const getProfileStorageKey = (clientId?: string | null) => `hv-profile:${clientId || 'guest'}`;
@@ -83,6 +161,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, setAuth } = useAuth();
   const creatingProfileRef = useRef(false);
   const authRef = useRef(auth);
+  const lastStorageKeyRef = useRef<string | null>(null);
 
   const storageKey = useMemo(() => getProfileStorageKey(auth.clientId), [auth.clientId]);
   const [profile, setProfile] = useState<UserClientProfile>(createEmptyProfile());
@@ -105,7 +184,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (!raw) return null;
 
     try {
-      return normalizeProfile(JSON.parse(raw) as UserClientProfile);
+      return normalizeProfile(JSON.parse(raw) as UserClientProfile, {
+        userId: authRef.current.userId,
+        clientId: authRef.current.clientId,
+      });
     } catch {
       return null;
     }
@@ -132,11 +214,21 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!isClientReady) return;
 
+    if (lastStorageKeyRef.current && lastStorageKeyRef.current !== storageKey) {
+      localStorage.removeItem(lastStorageKeyRef.current);
+    }
+
     const storedProfile = loadFromStorage();
-    const nextProfile = storedProfile ?? createEmptyProfile();
+    const nextProfile =
+      storedProfile ??
+      normalizeProfile(undefined, {
+        userId: authRef.current.userId,
+        clientId: authRef.current.clientId,
+      });
 
     setProfile(nextProfile);
     saveToStorage(nextProfile);
+    lastStorageKeyRef.current = storageKey;
     setLoading(false);
   }, [isClientReady, loadFromStorage, saveToStorage, storageKey]);
 
@@ -147,13 +239,35 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const applyProfile = useCallback(
     (nextProfile: Partial<UserClientProfile> | null | undefined) => {
-      const normalized = normalizeProfile(nextProfile);
+      const normalized = normalizeProfile(nextProfile, {
+        userId: authRef.current.userId,
+        clientId: authRef.current.clientId,
+      });
       setProfile(normalized);
       saveToStorage(normalized);
       return normalized;
     },
     [saveToStorage]
   );
+
+  useEffect(() => {
+    if (!isClientReady) return;
+    if (!auth.userId && !auth.clientId) return;
+
+    setProfile((current) => {
+      const nextProfile = normalizeProfile(current, {
+        userId: auth.userId,
+        clientId: auth.clientId,
+      });
+
+      if (nextProfile.userId === current.userId && nextProfile.clientId === current.clientId) {
+        return current;
+      }
+
+      saveToStorage(nextProfile);
+      return nextProfile;
+    });
+  }, [auth.clientId, auth.userId, isClientReady, saveToStorage]);
 
   const clearIsNewUserFlag = useCallback(() => {
     const currentAuth = authRef.current;
@@ -176,6 +290,12 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       theme: currentProfile?.theme ?? 'light',
       savedAddresses: currentProfile?.savedAddresses ?? [],
       primaryAddress: currentProfile?.primaryAddress,
+      notificationPreferences: {
+        email: {
+          reminders: currentProfile?.notificationPreferences?.email?.reminders,
+          promotional: currentProfile?.notificationPreferences?.email?.promotional,
+        },
+      },
       extra: currentProfile?.extra ?? {},
     };
 
@@ -183,6 +303,19 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     applyProfile(created.profile);
     clearIsNewUserFlag();
   }, [applyProfile, clearIsNewUserFlag]);
+
+  const handleProfileBootstrapError = useCallback((error: unknown) => {
+    const err = error as {
+      response?: { status?: number; data?: { code?: string; message?: string } };
+      message?: string;
+    };
+
+    console.error('Profile bootstrap failed', {
+      status: err.response?.status,
+      code: err.response?.data?.code,
+      message: err.response?.data?.message ?? err.message,
+    });
+  }, []);
 
   const reloadProfile = useCallback(async () => {
     if (!auth.isLogged || auth.role === 'guest') return;
@@ -206,6 +339,8 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
         try {
           await ensureBackendProfile();
+        } catch (createError) {
+          handleProfileBootstrapError(createError);
         } finally {
           creatingProfileRef.current = false;
         }
@@ -223,7 +358,14 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     }
-  }, [applyProfile, auth.isLogged, auth.role, clearIsNewUserFlag, ensureBackendProfile]);
+  }, [
+    applyProfile,
+    auth.isLogged,
+    auth.role,
+    clearIsNewUserFlag,
+    ensureBackendProfile,
+    handleProfileBootstrapError,
+  ]);
 
   useEffect(() => {
     if (!auth.isLogged || auth.role === 'guest') return;
@@ -235,22 +377,48 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (auth.isLogged && auth.role !== 'guest') return;
 
     applyProfile(
-      createEmptyProfile({
-        profileImage: profile?.profileImage || DEFAULT_AVATAR,
-        language: profile?.language ?? getStoredLanguage() ?? 'de',
-        theme: profile?.theme ?? getStoredTheme() ?? 'light',
-      })
+      normalizeProfile(
+        {
+          profileImage: profile?.profileImage || DEFAULT_AVATAR,
+          language: profile?.language ?? getStoredLanguage() ?? 'de',
+          theme: profile?.theme ?? getStoredTheme() ?? 'light',
+        },
+        {
+          userId: auth.userId,
+          clientId: auth.clientId,
+        }
+      )
     );
-  }, [applyProfile, auth.isLogged, auth.role, isClientReady]);
+  }, [
+    applyProfile,
+    auth.clientId,
+    auth.isLogged,
+    auth.role,
+    auth.userId,
+    isClientReady,
+    profile?.language,
+    profile?.profileImage,
+    profile?.theme,
+  ]);
 
   const updateProfile = useCallback(
     async (patch: UpdateUserClientProfileInput) => {
-      const updatedLocal = normalizeProfile({
-        ...profile,
-        ...patch,
-        savedAddresses: patch.savedAddresses ?? profile.savedAddresses,
-        extra: patch.extra ?? profile.extra,
-      });
+      const updatedLocal = normalizeProfile(
+        {
+          ...profile,
+          ...patch,
+          savedAddresses: patch.savedAddresses ?? profile.savedAddresses,
+          notificationPreferences: mergeNotificationPreferences(
+            profile.notificationPreferences,
+            patch.notificationPreferences
+          ),
+          extra: patch.extra ?? profile.extra,
+        },
+        {
+          userId: auth.userId,
+          clientId: auth.clientId,
+        }
+      );
 
       applyProfile(updatedLocal);
 
@@ -263,17 +431,28 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         const err = error as { response?: { status?: number } };
 
         if (err.response?.status === 404) {
-          const created = await createUserClientProfile({
-            name: updatedLocal.name || undefined,
-            phone: updatedLocal.phone || undefined,
-            primaryAddress: updatedLocal.primaryAddress,
-            savedAddresses: updatedLocal.savedAddresses,
-            profileImage: updatedLocal.profileImage,
-            language: updatedLocal.language,
-            theme: updatedLocal.theme,
-            extra: updatedLocal.extra,
-          });
-          applyProfile(created.profile);
+          try {
+            const created = await createUserClientProfile({
+              name: updatedLocal.name || undefined,
+              phone: updatedLocal.phone || undefined,
+              primaryAddress: updatedLocal.primaryAddress,
+              savedAddresses: updatedLocal.savedAddresses,
+              profileImage: updatedLocal.profileImage,
+              language: updatedLocal.language,
+              theme: updatedLocal.theme,
+              notificationPreferences: {
+                email: {
+                  reminders: updatedLocal.notificationPreferences.email.reminders,
+                  promotional: updatedLocal.notificationPreferences.email.promotional,
+                },
+              },
+              extra: updatedLocal.extra,
+            });
+            applyProfile(created.profile);
+            clearIsNewUserFlag();
+          } catch (createError) {
+            handleProfileBootstrapError(createError);
+          }
           return;
         }
 
@@ -288,10 +467,20 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     },
-    [applyProfile, auth.isLogged, auth.role, profile]
+    [
+      applyProfile,
+      auth.isLogged,
+      auth.role,
+      clearIsNewUserFlag,
+      handleProfileBootstrapError,
+      profile,
+    ]
   );
 
-  const setLanguage = useCallback((language: AppLanguage) => updateProfile({ language }), [updateProfile]);
+  const setLanguage = useCallback(
+    (language: AppLanguage) => updateProfile({ language }),
+    [updateProfile]
+  );
   const setTheme = useCallback((theme: ThemeMode) => updateProfile({ theme }), [updateProfile]);
   const setProfileImage = useCallback(
     (profileImage: string) => updateProfile({ profileImage }),

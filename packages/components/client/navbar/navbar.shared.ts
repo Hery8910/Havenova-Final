@@ -50,10 +50,6 @@ export interface ResolvedNavbarContent {
   a11y: ResolvedNavbarAccessibility;
 }
 
-export function getNavbarLogoSrc(theme: 'light' | 'dark') {
-  return theme === 'dark' ? '/logos/nav-logo-dark.webp' : '/logos/nav-logo-light.webp';
-}
-
 function mergePrimaryLinks(menuLinks: NavLinkItem[], serviceLinks: NavLinkItem[]) {
   const seen = new Set<string>();
 
@@ -87,13 +83,11 @@ function resolveAccessibility(
     profileToggle: accessibility?.profileToggle ?? 'Open account navigation',
     menuToggle: accessibility?.menuToggle ?? 'Open menu navigation',
     servicesToggle: accessibility?.servicesToggle ?? 'Open services navigation',
-    preferencesToggle:
-      accessibility?.preferencesToggle ?? 'Open preferences navigation',
+    preferencesToggle: accessibility?.preferencesToggle ?? 'Open preferences navigation',
     menuPanel: accessibility?.menuPanel ?? 'Menu navigation panel',
     accountPanel: accessibility?.accountPanel ?? 'Account navigation panel',
     servicesPanel: accessibility?.servicesPanel ?? 'Services navigation panel',
-    preferencesPanel:
-      accessibility?.preferencesPanel ?? 'Preferences navigation panel',
+    preferencesPanel: accessibility?.preferencesPanel ?? 'Preferences navigation panel',
     dragHandle: accessibility?.dragHandle ?? 'Navigation panel handle',
   };
 }

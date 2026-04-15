@@ -721,7 +721,13 @@
         "ariaLabel": "User area",
         "verified": "Verified",
         "verifiedAria": "Account verified",
-        "missingName": "Your name"
+        "missingName": "Your name",
+        "completion": {
+          "title": "Profile progress",
+          "info": "Complete the missing details to improve your booking and communication flow.",
+          "progressAriaLabel": "Profile completion progress",
+          "percentageAriaLabel": "Profile completion percentage"
+        }
       },
       "profileNav": {
         "profile": "Profile",
@@ -758,7 +764,94 @@
         },
         "notLoggedInTitle": "You are not logged in",
         "notLoggedInText": "To access and manage your profile, please log in to your Havenova account. This way, you can view your personal information, track your service requests, and update your preferences.",
-        "loginButton": "Log in to your account"
+        "loginButton": "Log in to your account",
+        "details": {
+          "eyebrow": "Profile details",
+          "title": "Your information",
+          "description": "Review your current data and update your contact and address details when needed.",
+          "editButton": "Edit",
+          "cancelButton": "Cancel",
+          "saveButton": "Save changes",
+          "tableAriaLabel": "User profile details",
+          "formAriaLabel": "Edit user profile details",
+          "emptyValue": "Not provided",
+          "labels": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "primaryAddress": "Primary address",
+            "additionalAddress": "Additional address"
+          },
+          "form": {
+            "primaryAddressTitle": "Primary address",
+            "primaryAddressAriaLabel": "Main profile address details",
+            "secondaryAddressesTitle": "Secondary addresses",
+            "secondaryAddressAriaLabel": "Secondary address details",
+            "secondaryAddressTitle": "Additional address",
+            "addSecondaryAddressQuestion": "Do you want to add another address?",
+            "addSecondaryAddressButton": "Add address",
+            "removeSecondaryAddressButton": "Remove",
+            "addressDetailsAriaLabel": "Address details",
+            "saving": "Saving...",
+            "fields": {
+              "street": "Street",
+              "streetNumber": "Number",
+              "postalCode": "Postal code",
+              "district": "District",
+              "floor": "Floor"
+            },
+            "errors": {
+              "required": "This field is required."
+            }
+          }
+        },
+        "preferences": {
+          "eyebrow": "Preferences",
+          "title": "Your preferences",
+          "description": "Adjust the language, theme and notification preferences for your account.",
+          "sections": {
+            "language": {
+              "title": "Language",
+              "description": "Choose the language used across your account.",
+              "buttonLabel": "Language switcher",
+              "switchToEnglish": "Switch language to English",
+              "switchToGerman": "Switch language to German",
+              "englishVisible": "EN",
+              "germanVisible": "DE"
+            },
+            "theme": {
+              "title": "Theme",
+              "description": "Switch between light and dark appearance.",
+              "buttonLabel": "Toggle color theme",
+              "lightMode": "Light mode",
+              "darkMode": "Dark mode"
+            },
+            "notifications": {
+              "title": "Notifications",
+              "description": "Review which notifications are required and which ones you can manage.",
+              "requiredBadge": "Required",
+              "inApp": {
+                "title": "In-app notifications",
+                "description": "These notifications are always enabled inside the app.",
+                "ariaLabel": "In-app notifications enabled and required"
+              },
+              "important": {
+                "title": "Important email notifications",
+                "description": "Important account emails stay enabled for security and service updates.",
+                "ariaLabel": "Important email notifications enabled and required"
+              },
+              "reminders": {
+                "title": "Reminder emails",
+                "description": "Turn reminder emails on if you want to receive reminders for your bookings.",
+                "ariaLabel": "Toggle reminder email notifications",
+                "enabled": "Reminder emails enabled.",
+                "disabled": "Reminder emails disabled.",
+                "saving": "Saving reminder preference...",
+                "error": "We could not update your reminder notifications."
+              }
+            }
+          }
+        }
       }
     },
     "legal": {

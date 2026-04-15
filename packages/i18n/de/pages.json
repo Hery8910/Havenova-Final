@@ -721,7 +721,13 @@
         "ariaLabel": "Benutzerbereich",
         "verified": "Verifiziert",
         "verifiedAria": "Konto verifiziert",
-        "missingName": "Ihr Name"
+        "missingName": "Ihr Name",
+        "completion": {
+          "title": "Profilfortschritt",
+          "info": "Ergänzen Sie die fehlenden Angaben, um Ihren Buchungs- und Kommunikationsablauf zu verbessern.",
+          "progressAriaLabel": "Fortschritt der Profilvervollständigung",
+          "percentageAriaLabel": "Prozentsatz der Profilvervollständigung"
+        }
       },
       "profileNav": {
         "profile": "Profil",
@@ -758,7 +764,94 @@
         },
         "notLoggedInTitle": "Sie sind nicht eingeloggt",
         "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
-        "loginButton": "Zum Login"
+        "loginButton": "Zum Login",
+        "details": {
+          "eyebrow": "Profildetails",
+          "title": "Ihre Informationen",
+          "description": "Prüfen Sie Ihre aktuellen Daten und aktualisieren Sie bei Bedarf Ihre Kontakt- und Adressangaben.",
+          "editButton": "Bearbeiten",
+          "cancelButton": "Abbrechen",
+          "saveButton": "Änderungen speichern",
+          "tableAriaLabel": "Benutzerprofildetails",
+          "formAriaLabel": "Benutzerprofildetails bearbeiten",
+          "emptyValue": "Nicht angegeben",
+          "labels": {
+            "name": "Name",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "primaryAddress": "Hauptadresse",
+            "additionalAddress": "Weitere Adresse"
+          },
+          "form": {
+            "primaryAddressTitle": "Hauptadresse",
+            "primaryAddressAriaLabel": "Details der Hauptadresse im Profil",
+            "secondaryAddressesTitle": "Weitere Adressen",
+            "secondaryAddressAriaLabel": "Details einer weiteren Adresse",
+            "secondaryAddressTitle": "Weitere Adresse",
+            "addSecondaryAddressQuestion": "Möchten Sie eine weitere Adresse hinzufügen?",
+            "addSecondaryAddressButton": "Adresse hinzufügen",
+            "removeSecondaryAddressButton": "Entfernen",
+            "addressDetailsAriaLabel": "Adressdetails",
+            "saving": "Wird gespeichert...",
+            "fields": {
+              "street": "Straße",
+              "streetNumber": "Hausnummer",
+              "postalCode": "Postleitzahl",
+              "district": "Bezirk",
+              "floor": "Etage"
+            },
+            "errors": {
+              "required": "Dieses Feld ist erforderlich."
+            }
+          }
+        },
+        "preferences": {
+          "eyebrow": "Präferenzen",
+          "title": "Ihre Präferenzen",
+          "description": "Passen Sie Sprache, Design und Benachrichtigungseinstellungen für Ihr Konto an.",
+          "sections": {
+            "language": {
+              "title": "Sprache",
+              "description": "Wählen Sie die Sprache, die in Ihrem Konto verwendet wird.",
+              "buttonLabel": "Sprachumschalter",
+              "switchToEnglish": "Sprache auf Englisch umstellen",
+              "switchToGerman": "Sprache auf Deutsch umstellen",
+              "englishVisible": "EN",
+              "germanVisible": "DE"
+            },
+            "theme": {
+              "title": "Design",
+              "description": "Wechseln Sie zwischen hellem und dunklem Erscheinungsbild.",
+              "buttonLabel": "Farbschema umschalten",
+              "lightMode": "Heller Modus",
+              "darkMode": "Dunkler Modus"
+            },
+            "notifications": {
+              "title": "Benachrichtigungen",
+              "description": "Prüfen Sie, welche Benachrichtigungen erforderlich sind und welche Sie selbst steuern können.",
+              "requiredBadge": "Erforderlich",
+              "inApp": {
+                "title": "Benachrichtigungen in der App",
+                "description": "Diese Benachrichtigungen sind in der App immer aktiviert.",
+                "ariaLabel": "Benachrichtigungen in der App sind aktiviert und erforderlich"
+              },
+              "important": {
+                "title": "Wichtige E-Mail-Benachrichtigungen",
+                "description": "Wichtige Konto-E-Mails bleiben aus Sicherheits- und Servicegründen aktiviert.",
+                "ariaLabel": "Wichtige E-Mail-Benachrichtigungen sind aktiviert und erforderlich"
+              },
+              "reminders": {
+                "title": "Erinnerungs-E-Mails",
+                "description": "Aktivieren Sie Erinnerungs-E-Mails, wenn Sie Erinnerungen zu Ihren Buchungen erhalten möchten.",
+                "ariaLabel": "Erinnerungs-E-Mail-Benachrichtigungen umschalten",
+                "enabled": "Erinnerungs-E-Mails aktiviert.",
+                "disabled": "Erinnerungs-E-Mails deaktiviert.",
+                "saving": "Erinnerungseinstellung wird gespeichert...",
+                "error": "Die Erinnerungs-Benachrichtigungen konnten nicht aktualisiert werden."
+              }
+            }
+          }
+        }
       }
     },
     "legal": {

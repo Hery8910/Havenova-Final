@@ -11,6 +11,7 @@ import { getNavbarContent } from '../navbar.shared';
 import { CgMenuLeftAlt, CgProfile } from 'react-icons/cg';
 import { IoIosSettings } from 'react-icons/io';
 import { FiTool } from 'react-icons/fi';
+import Image from 'next/image';
 
 type NavSection = 'menu' | 'auth' | 'services' | 'preferences' | null;
 
@@ -101,9 +102,15 @@ export function NavbarMobileView({
       >
         {activeSection === 'menu' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-menu-title">
-            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+            <span
+              className={`${sharedStyles.panelHandle} ${styles.panelHandle}`}
+              aria-hidden="true"
+            />
 
-            <h2 id="mobile-menu-title" className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}>
+            <h2
+              id="mobile-menu-title"
+              className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}
+            >
               {labels.menu}
             </h2>
             <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
@@ -124,9 +131,15 @@ export function NavbarMobileView({
 
         {activeSection === 'auth' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-account-title">
-            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+            <span
+              className={`${sharedStyles.panelHandle} ${styles.panelHandle}`}
+              aria-hidden="true"
+            />
 
-            <h2 id="mobile-account-title" className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}>
+            <h2
+              id="mobile-account-title"
+              className={`${sharedStyles.panelTitle} ${styles.mobilePanelTitle}`}
+            >
               {profileButtonLabel}
             </h2>
             <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
@@ -147,7 +160,10 @@ export function NavbarMobileView({
 
         {activeSection === 'services' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-services-title">
-            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+            <span
+              className={`${sharedStyles.panelHandle} ${styles.panelHandle}`}
+              aria-hidden="true"
+            />
 
             <h2
               id="mobile-services-title"
@@ -173,7 +189,10 @@ export function NavbarMobileView({
 
         {activeSection === 'preferences' && (
           <section className={styles.mobilePanelContent} aria-labelledby="mobile-preferences-title">
-            <span className={`${sharedStyles.panelHandle} ${styles.panelHandle}`} aria-hidden="true" />
+            <span
+              className={`${sharedStyles.panelHandle} ${styles.panelHandle}`}
+              aria-hidden="true"
+            />
 
             <h2
               id="mobile-preferences-title"
@@ -214,7 +233,14 @@ export function NavbarMobileView({
               aria-controls="mobile-navigation-panel"
               onClick={() => toggleSection('menu')}
             >
-              <CgMenuLeftAlt />
+              <Image
+                className={styles.tabletImage}
+                src="/logos/logo-small-dark.webp"
+                alt={a11y.logoAlt}
+                width={25}
+                height={25}
+                priority
+              />
             </button>
           </li>
 

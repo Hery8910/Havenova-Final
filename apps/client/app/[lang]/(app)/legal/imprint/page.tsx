@@ -9,33 +9,34 @@ export default function ImprintPage() {
   const { texts } = useI18n();
 
   const imprintTexts = texts?.pages?.client?.legal?.imprint;
+  const identity = client?.identity;
 
   if (!imprintTexts) return null;
 
   const providerItems = [
     {
       label: imprintTexts.providerSection.fields.companyName,
-      value: client?.companyName ?? imprintTexts.providerSection.fallbacks.companyName,
+      value: identity?.companyName ?? imprintTexts.providerSection.fallbacks.companyName,
     },
     {
       label: imprintTexts.providerSection.fields.address,
-      value: client?.address ?? imprintTexts.providerSection.fallbacks.address,
+      value: identity?.address ?? imprintTexts.providerSection.fallbacks.address,
       isAddress: true,
     },
     {
       label: imprintTexts.providerSection.fields.email,
-      value: client?.contactEmail ?? imprintTexts.providerSection.fallbacks.email,
+      value: identity?.contactEmail ?? imprintTexts.providerSection.fallbacks.email,
       isEmail: true,
     },
     {
       label: imprintTexts.providerSection.fields.phone,
-      value: client?.phone ?? imprintTexts.providerSection.fallbacks.phone,
+      value: identity?.phone ?? imprintTexts.providerSection.fallbacks.phone,
     },
   ].filter((item) => Boolean(item.value));
 
   const responsibleAddress =
     imprintTexts.responsibleSection.address ||
-    client?.address ||
+    identity?.address ||
     imprintTexts.providerSection.fallbacks.address;
 
   return (

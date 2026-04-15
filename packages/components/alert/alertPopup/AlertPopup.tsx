@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from './AlertPopup.module.css';
 import { useI18n } from '../../../contexts/i18n';
 import { AlertType } from '../../../utils/alertType';
+import { IoClose } from 'react-icons/io5';
 
 export interface AlertPopupProps {
   type: AlertType;
@@ -66,11 +67,11 @@ export default function AlertPopup({
   }, [loading]);
 
   const handleOverlayClick = () => {
-    if (!loading) onCancel?.();
+    if (hasCancel) onCancel?.();
   };
 
   return (
-    <div className={`${styles.overlay} card--glass`} onClick={handleOverlayClick}>
+    <div className={`${styles.overlay} card`} onClick={handleOverlayClick}>
       <section
         ref={dialogRef}
         role="dialog"
@@ -84,65 +85,75 @@ export default function AlertPopup({
         data-type={currentType}
         onClick={(event) => event.stopPropagation()}
       >
-        {!loading && onCancel && (
+        {hasCancel && (
           <button
             type="button"
             className={styles.closeButton}
             onClick={onCancel}
             aria-label={closeLabel}
           >
-            <span aria-hidden="true">x</span>
+            <span aria-hidden="true">
+              <IoClose />
+            </span>
           </button>
         )}
+        <aside className={styles.aside}>
+          <div
+            className={loading ? styles.loadingWrapper : styles.iconWrapper}
+            role={loading ? 'status' : undefined}
+            aria-label={loading ? loadingLabel : undefined}
+          >
+            {loading ? (
+              <svg className={styles.spinner} viewBox="0 0 50 50" aria-hidden="true">
+                <circle
+                  className={styles.spinnerTrack}
+                  cx="25"
+                  cy="25"
+                  r="20"
+                  fill="none"
+                  strokeWidth="6"
+                />
+                <circle
+                  className={styles.spinnerArc}
+                  cx="25"
+                  cy="25"
+                  r="20"
+                  fill="none"
+                  strokeWidth="6"
+                ></circle>
+              </svg>
+            ) : (
+              <Image
+                src={imageMap[type]}
+                alt=""
+                aria-hidden="true"
+                width={40}
+                height={40}
+                className={styles.iconImage}
+              />
+            )}
+          </div>
 
-        <div
-          className={loading ? styles.loadingWrapper : styles.iconWrapper}
-          role={loading ? 'status' : undefined}
-          aria-label={loading ? loadingLabel : undefined}
-        >
-          {loading ? (
-            <svg className={styles.spinner} viewBox="0 0 50 50" aria-hidden="true">
-              <circle
-                className={styles.spinnerPath}
-                cx="25"
-                cy="25"
-                r="20"
-                fill="none"
-                strokeWidth="8"
-              ></circle>
-            </svg>
-          ) : (
-            <Image
-              src={imageMap[type]}
-              alt=""
-              aria-hidden="true"
-              width={40}
-              height={40}
-              className={styles.iconImage}
-            />
-          )}
-        </div>
-
-        <article className={styles.content}>
-          <h4 id={titleId} className={styles.title}>
-            {title}
-          </h4>
-          <p id={descriptionId} className={styles.description}>
-            {description}
-          </p>
-
-          {!loading && primaryAction && (
-            <div className={styles.actions}>
-              <button
-                type="button"
-                onClick={primaryAction.onClick}
-                className={primaryAction.className}
-              >
-                {primaryAction.label}
-              </button>
-            </div>
-          )}
-        </article>
+          <article className={styles.content}>
+            <h4 id={titleId} className={styles.title}>
+              {title}
+            </h4>
+            <p id={descriptionId} className={styles.description}>
+              {description}
+            </p>
+          </article>
+        </aside>
+        {!loading && primaryAction && (
+          <div className={styles.actions}>
+            <button
+              type="button"
+              onClick={primaryAction.onClick}
+              className={primaryAction.className}
+            >
+              {primaryAction.label}
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );

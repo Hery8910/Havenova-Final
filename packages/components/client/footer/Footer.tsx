@@ -67,9 +67,9 @@ export function Footer() {
       <Link className={styles.logoLink} href="/" aria-label="Go to homepage">
         <Image
           className={styles.logoImage}
-          src="/logos/nav-logo-dark.webp"
+          src="/logos/logo-dark.webp"
           alt="Havenova Logo"
-          width={150}
+          width={200}
           height={50}
           priority
         />

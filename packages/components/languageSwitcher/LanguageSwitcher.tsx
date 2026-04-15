@@ -1,13 +1,26 @@
 'use client';
 import styles from './LanguageSwitcher.module.css';
-import { IoLanguage } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useProfile, useWorker } from '../../contexts';
 import Image from 'next/image';
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  ariaLabel?: string;
+  switchToEnglishLabel?: string;
+  switchToGermanLabel?: string;
+  englishVisibleLabel?: string;
+  germanVisibleLabel?: string;
+}
+
+export default function LanguageSwitcher({
+  ariaLabel,
+  switchToEnglishLabel,
+  switchToGermanLabel,
+  englishVisibleLabel,
+  germanVisibleLabel,
+}: LanguageSwitcherProps) {
   let profileContext: ReturnType<typeof useProfile> | null = null;
   let workerContext: ReturnType<typeof useWorker> | null = null;
 
@@ -45,26 +58,40 @@ export default function LanguageSwitcher() {
   return (
     <section>
       {currentLang === 'en' ? (
-        <button className={styles.button} onClick={() => switchLang('de')}>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => switchLang('de')}
+          aria-label={switchToGermanLabel ?? ariaLabel ?? 'Switch language to German'}
+          title={switchToGermanLabel ?? ariaLabel ?? 'Switch language to German'}
+        >
           <Image
             className={styles.logo}
             src="/images/germany.png"
-            alt="Germany Flag icon"
+            alt=""
             width={20}
             height={20}
+            aria-hidden="true"
           />
-          De
+          {germanVisibleLabel ?? 'DE'}
         </button>
       ) : (
-        <button className={styles.button} onClick={() => switchLang('en')}>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => switchLang('en')}
+          aria-label={switchToEnglishLabel ?? ariaLabel ?? 'Switch language to English'}
+          title={switchToEnglishLabel ?? ariaLabel ?? 'Switch language to English'}
+        >
           <Image
             className={styles.logo}
             src="/images/uk.png"
-            alt="Germany Flag icon"
+            alt=""
             width={20}
             height={20}
+            aria-hidden="true"
           />
-          En
+          {englishVisibleLabel ?? 'EN'}
         </button>
       )}
     </section>

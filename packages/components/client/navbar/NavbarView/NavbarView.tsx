@@ -22,7 +22,6 @@ export function NavbarView({
   profile,
   auth,
   navbarConfig,
-  theme,
   deviceSize,
   menuOpen,
   onToggleMenu,
@@ -39,7 +38,6 @@ export function NavbarView({
           profile={profile}
           auth={auth}
           navbarConfig={navbarConfig}
-          theme={theme}
           onNavigate={onNavigate}
         />
       )}
@@ -49,7 +47,6 @@ export function NavbarView({
           profile={profile}
           auth={auth}
           navbarConfig={navbarConfig}
-          theme={theme}
           menuOpen={menuOpen}
           onToggleMenu={onToggleMenu}
           onNavigate={onNavigate}

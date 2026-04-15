@@ -12,8 +12,8 @@ export function useClientCalendarSettings(): ClientCalendarSettings | null {
       client
         ? {
             clientId: client._id,
-            schedule: client.schedule,
-            slotDurationMinutes: client.slotDurationMinutes,
+            schedule: client.operations.schedule,
+            slotDurationMinutes: client.modules.homeServices?.config?.slotDurationMinutes ?? 60,
           }
         : null,
     [client]

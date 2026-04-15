@@ -34,8 +34,14 @@ export default async function LangLayout({
   children: React.ReactNode;
   params: { lang: 'de' | 'en' };
 }) {
-  const domain = 'havenova.de';
-  const client = await getClient(domain);
+  const tenantKey = process.env.NEXT_PUBLIC_TENANT_KEY ?? 'tnk_demo_havenova';
+  let client: Awaited<ReturnType<typeof getClient>> | null = null;
+
+  try {
+    client = await getClient(tenantKey);
+  } catch (error) {
+    console.error('⚠️ Could not load client:', error);
+  }
 
   return (
     <html lang={params.lang} data-theme="light">

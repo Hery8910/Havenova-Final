@@ -10,13 +10,12 @@ import styles from './NavbarTabletView.module.css';
 import sharedStyles from '../NavbarShared.module.css';
 import { AuthUser, UserClientProfile } from '../../../../types';
 import type { NavbarConfig } from '../navbar.types';
-import { getNavbarContent, getNavbarLogoSrc } from '../navbar.shared';
+import { getNavbarContent } from '../navbar.shared';
 
 export interface NavbarTabletViewProps {
   profile: UserClientProfile;
   auth: AuthUser;
   navbarConfig?: NavbarConfig;
-  theme: 'light' | 'dark';
   menuOpen: boolean;
   onToggleMenu: () => void;
   onNavigate: (href: string) => void;
@@ -27,7 +26,6 @@ export function NavbarTabletView({
   profile,
   auth,
   navbarConfig,
-  theme,
   menuOpen,
   onToggleMenu,
   onNavigate,
@@ -59,10 +57,10 @@ export function NavbarTabletView({
         <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
           <Image
             className={styles.logoImage}
-            src={'/logos/navbar-logo.webp'}
+            src={'/logos/logo-dark.webp'}
             alt={a11y.logoAlt}
-            width={180}
-            height={42}
+            width={200}
+            height={50}
             priority
           />
         </Link>

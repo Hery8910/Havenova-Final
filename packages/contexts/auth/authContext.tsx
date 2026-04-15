@@ -20,7 +20,6 @@ import { getPopup } from '@havenova/utils';
 import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
-const PROFILE_STORAGE_KEY = 'hv-profile';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
 
 interface AuthContextProps {
@@ -77,8 +76,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const clearUserStorage = () => {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(AUTH_STORAGE_KEY);
-    localStorage.removeItem(PROFILE_STORAGE_KEY);
     localStorage.removeItem(WORKER_STORAGE_KEY);
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith('hv-profile:'))
+      .forEach((key) => localStorage.removeItem(key));
   };
 
   // -------------------------
@@ -240,10 +241,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (stored) {
       setAuthState(stored);
-      // Si ya existía en storage y no es guest, no es un usuario nuevo
-      if (stored.role !== 'guest') {
-        setAuthState({ ...stored, isNewUser: false });
-      }
       if (stored.role !== 'guest') {
         setLoading(true);
         refreshAuth().finally(() => setLoading(false));

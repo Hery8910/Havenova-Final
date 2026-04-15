@@ -10,6 +10,8 @@ import {
   PageHero,
   PageHeroContent,
 } from '../../../../../packages/components/client/pages/hero/PageHero';
+import { useGlobalAlert } from '../../../../../packages/contexts';
+import { useEffect } from 'react';
 
 export interface HomePageTexts {
   hero: PageHeroContent;

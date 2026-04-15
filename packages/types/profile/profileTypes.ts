@@ -14,6 +14,31 @@ export interface UserSavedAddress {
   address: UserAddress;
 }
 
+export interface UserRequiredNotificationChannel {
+  enabled: true;
+  required: true;
+}
+
+export interface UserOptionalNotificationChannel {
+  enabled: boolean;
+}
+
+export interface UserNotificationPreferences {
+  inApp: UserRequiredNotificationChannel;
+  email: {
+    important: UserRequiredNotificationChannel;
+    reminders: UserOptionalNotificationChannel;
+    promotional: UserOptionalNotificationChannel;
+  };
+}
+
+export interface UserNotificationPreferencesInput {
+  email?: {
+    reminders?: UserOptionalNotificationChannel;
+    promotional?: UserOptionalNotificationChannel;
+  };
+}
+
 export interface UserClientProfile {
   _id: string;
   userId: string;
@@ -25,6 +50,7 @@ export interface UserClientProfile {
   profileImage?: string;
   language: AppLanguage;
   theme: ThemeMode;
+  notificationPreferences: UserNotificationPreferences;
   extra?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
@@ -38,6 +64,7 @@ export interface CreateUserClientProfileInput {
   profileImage?: string;
   language: AppLanguage;
   theme: ThemeMode;
+  notificationPreferences?: UserNotificationPreferencesInput;
   extra?: Record<string, unknown>;
 }
 
@@ -49,6 +76,7 @@ export interface UpdateUserClientProfileInput {
   profileImage?: string;
   language?: AppLanguage;
   theme?: ThemeMode;
+  notificationPreferences?: UserNotificationPreferencesInput;
   extra?: Record<string, unknown>;
 }
 

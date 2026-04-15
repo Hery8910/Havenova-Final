@@ -159,10 +159,10 @@ const ForgotPassword = () => {
         <Link className={styles.logoLink} href="/" aria-label="Homepage">
           <Image
             className={styles.logoImage}
-            src={'/logos/navbar-logo.webp'}
+            src={'/logos/logo-vertical-dark.webp'}
             alt="Havenova Logo"
-            width={300}
-            height={70}
+            width={250}
+            height={125}
             priority
           />
         </Link>

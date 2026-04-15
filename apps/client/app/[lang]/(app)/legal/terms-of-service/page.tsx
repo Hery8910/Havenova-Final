@@ -86,9 +86,7 @@ export default function TermsOfServicePage() {
 
   if (!client || !terms) return null;
 
-  const { legalUpdates } = client;
-
-  if (!legalUpdates) return null;
+  const legalUpdates = client.legal?.updates;
 
   function formatDate(dateString: string): string {
     if (!dateString) return '';
@@ -214,7 +212,7 @@ export default function TermsOfServicePage() {
           <p>
             <strong>{terms.changes.meta.lastUpdated}</strong>
           </p>
-          <p>{formatDate(legalUpdates?.terms?.updatedAt || '')}</p>
+          <p>{formatDate(String(legalUpdates?.terms?.updatedAt ?? ''))}</p>
         </aside>
       </section>
     </main>

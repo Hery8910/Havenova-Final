@@ -202,10 +202,10 @@ const Login = () => {
           <Link className={styles.logoLink} href="/" aria-label="Homepage">
             <Image
               className={styles.logoImage}
-              src={'/logos/navbar-logo.webp'}
+              src={'/logos/logo-vertical-dark.webp'}
               alt="Havenova Logo"
-              width={400}
-              height={100}
+              width={250}
+              height={125}
               priority
             />
           </Link>

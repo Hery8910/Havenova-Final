@@ -46,11 +46,11 @@ export default async function LangLayout({
   children: React.ReactNode;
   params: { lang: 'de' | 'en' };
 }) {
-  const domain: string = 'havenova.de';
+  const tenantKey = process.env.NEXT_PUBLIC_TENANT_KEY ?? 'tnk_demo_havenova';
   let client: ClientPublicConfig | null = null;
 
   try {
-    client = await getClient(domain);
+    client = await getClient(tenantKey);
   } catch (error) {
     console.error('⚠️ Could not load client:', error);
   }
@@ -62,8 +62,8 @@ export default async function LangLayout({
       className={`${poppins.variable} ${roboto.variable}`}
     >
       <body>
-        <AlertProvider>
-          <I18nProvider initialLanguage={params.lang}>
+        <I18nProvider initialLanguage={params.lang}>
+          <AlertProvider>
             <ClientProvider initialClient={client}>
               <AuthProvider>
                 <ProfileProvider>
@@ -74,8 +74,8 @@ export default async function LangLayout({
                 </ProfileProvider>
               </AuthProvider>
             </ClientProvider>
-          </I18nProvider>
-        </AlertProvider>
+          </AlertProvider>
+        </I18nProvider>
       </body>
     </html>
   );

@@ -6,8 +6,6 @@ export interface LoadingData {
 }
 
 const Loading: React.FC<LoadingData> = ({ theme }) => {
-  const backgroundImage = theme === 'light' ? '/logos/nav-logo-dark.webp' : '/logos/nav-logo-light.webp';
-
   return (
     <main className={styles.loadingContainer} role="status" aria-live="polite" aria-busy="true">
       <aside className={styles.loadingWrapper} aria-hidden="true">
@@ -15,10 +13,10 @@ const Loading: React.FC<LoadingData> = ({ theme }) => {
       </aside>
       <div className={styles.logoWrapper}>
         <Image
-          src={backgroundImage}
+          src={'/logos/logo-dark.webp'}
           alt="Havenova Logo"
-          width={300}
-          height={75}
+          width={200}
+          height={50}
           className={styles.logo}
           priority={true}
           fetchPriority="auto"

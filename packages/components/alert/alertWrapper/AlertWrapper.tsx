@@ -1,7 +1,7 @@
 // packages/components/alert/alertWrapper/AlertWrapper.tsx
 'use client';
 import React, { useEffect, useCallback } from 'react';
-import { AlertPopup, AlertPopupSkeleton } from '../alertPopup';
+import { AlertPopup } from '../alertPopup';
 import { getAlertType } from '../../../utils/alertType';
 import type { AlertPopupProps } from '../alertPopup/AlertPopup';
 
@@ -14,11 +14,13 @@ interface AlertWrapperProps {
 }
 
 export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWrapperProps) {
+  const isDismissible = !!response && !response.loading && !!response.cancelLabel;
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !response?.loading) onCancel();
+      if (e.key === 'Escape' && isDismissible) onCancel();
     },
-    [onCancel, response?.loading]
+    [isDismissible, onCancel]
   );
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWra
     };
   }, [response, handleKeyDown]);
 
-  if (!response) return <AlertPopupSkeleton />;
+  if (!response) return null;
 
   const type = getAlertType(response.status);
 

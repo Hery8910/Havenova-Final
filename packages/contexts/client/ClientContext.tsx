@@ -1,11 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
-import {
-  ClientLegalUpdates,
-  ClientPublicConfig,
-  ClientContextProps,
-} from '../../types/client/clientTypes';
+import { ClientPublicConfig, ClientContextProps } from '../../types/client/clientTypes';
 import Loading from '@havenova/components/loading/Loading';
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '../i18n';
@@ -13,36 +9,6 @@ import { getPopup } from '@havenova/utils';
 import { fallbackButtons, fallbackPopups } from '../i18n';
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
-
-type LegacyLegalUpdates = {
-  lastPrivacyUpdate?: string;
-  lastCookiesUpdate?: string;
-  lastTermsUpdate?: string;
-};
-
-function normalizeLegalUpdates(
-  legalUpdates?: ClientLegalUpdates | LegacyLegalUpdates | null
-): ClientLegalUpdates {
-  if (!legalUpdates) return {};
-
-  const legacy = legalUpdates as LegacyLegalUpdates;
-  const modern = legalUpdates as ClientLegalUpdates;
-
-  return {
-    privacy: {
-      ...modern.privacy,
-      updatedAt: modern.privacy?.updatedAt ?? legacy.lastPrivacyUpdate,
-    },
-    cookies: {
-      ...modern.cookies,
-      updatedAt: modern.cookies?.updatedAt ?? legacy.lastCookiesUpdate,
-    },
-    terms: {
-      ...modern.terms,
-      updatedAt: modern.terms?.updatedAt ?? legacy.lastTermsUpdate,
-    },
-  };
-}
 
 export function ClientProvider({
   children,
@@ -59,15 +25,7 @@ export function ClientProvider({
   const popups = texts?.popups ?? {};
 
   useEffect(() => {
-    // Si initialClient viene desde el layout (como tú haces), esto ya resuelve todo
-    if (initialClient) {
-      const normalizedClient = {
-        ...initialClient,
-        legalUpdates: normalizeLegalUpdates(initialClient.legalUpdates),
-      };
-      setClient(normalizedClient);
-    }
-
+    setClient(initialClient);
     setLoading(false);
   }, [initialClient]);
 
@@ -103,9 +61,8 @@ export function ClientProvider({
     });
   }, [client, closeAlert, loading, showConfirm, popups]);
 
-  // Estado de carga → NO renderiza nada
   if (loading) {
-    return <Loading theme={'light'} />; // o tu componente Loading
+    return <Loading theme={'light'} />;
   }
 
   if (!client) {

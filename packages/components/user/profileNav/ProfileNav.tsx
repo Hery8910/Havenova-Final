@@ -9,10 +9,10 @@ import { useLang } from '../../../hooks';
 import { usePathname } from 'next/navigation';
 
 const routes = [
-  { key: 'profile', path: '/user/profile', icon: <FaUser aria-hidden /> },
-  { key: 'requests', path: '/user/profile/requests', icon: <FaListUl aria-hidden /> },
-  { key: 'notifications', path: '/user/profile/notification', icon: <FaBell aria-hidden /> },
-  { key: 'settings', path: '/user/profile/settings', icon: <FaCog aria-hidden /> },
+  { key: 'profile', path: '/profile', icon: <FaUser aria-hidden /> },
+  { key: 'requests', path: '/profile/requests', icon: <FaListUl aria-hidden /> },
+  { key: 'notifications', path: '/profile/notifications', icon: <FaBell aria-hidden /> },
+  { key: 'settings', path: '/profile/settings', icon: <FaCog aria-hidden /> },
 ];
 
 interface ProfileNavProps {
@@ -26,7 +26,7 @@ export function ProfileNav({ className }: ProfileNavProps) {
   const labels = texts.pages.client.user.profileNav;
 
   return (
-    <nav className={`${styles.nav} ${className ?? ''}`.trim()} aria-label="Profil Navigation">
+    <nav className={`${styles.nav} card ${className ?? ''}`.trim()} aria-label="Profil Navigation">
       <ul className={styles.list}>
         {routes.map((item) => {
           const active = pathname?.startsWith(href(lang, item.path));

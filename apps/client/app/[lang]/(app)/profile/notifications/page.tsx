@@ -1,10 +1,10 @@
 'use client';
 // import styles from "./page.module.css";
 
-export default function Notification() {
+export default function Notifications() {
   return (
     <section>
-      <h2>Notification</h2>
+      <h2>Notifications</h2>
     </section>
   );
 }

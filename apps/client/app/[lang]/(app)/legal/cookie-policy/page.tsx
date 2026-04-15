@@ -93,9 +93,7 @@ export default function CookiesPolicyPage() {
 
   if (!client || !cookies) return null;
 
-  const { legalUpdates } = client;
-
-  if (!legalUpdates) return null;
+  const legalUpdates = client.legal?.updates;
 
   return (
     <main className={styles.main}>
@@ -239,7 +237,7 @@ export default function CookiesPolicyPage() {
           </p>
           <p>
             <em>
-              {formatMessageAge(legalUpdates?.cookies?.updatedAt || '', {
+              {formatMessageAge(String(legalUpdates?.cookies?.updatedAt ?? ''), {
                 relativeTime,
                 locale: language,
               })}

@@ -4,7 +4,13 @@ import { useProfile, useWorker } from '../../contexts';
 import styles from './ThemeToggler.module.css';
 import Image from 'next/image';
 
-const ThemeToggler = () => {
+interface ThemeTogglerProps {
+  ariaLabel?: string;
+  darkLabel?: string;
+  lightLabel?: string;
+}
+
+const ThemeToggler = ({ ariaLabel, darkLabel, lightLabel }: ThemeTogglerProps) => {
   let profileContext: ReturnType<typeof useProfile> | null = null;
   let workerContext: ReturnType<typeof useWorker> | null = null;
 
@@ -40,22 +46,31 @@ const ThemeToggler = () => {
 
   return (
     <button
+      type="button"
       className={`${styles.toggleButton} ${theme === 'dark' ? styles.dark : ''}`}
       onClick={toggleTheme}
-      aria-label="Toggle theme"
+      aria-label={
+        ariaLabel ??
+        (theme === 'dark'
+          ? `Switch to ${lightLabel ?? 'light mode'}`
+          : `Switch to ${darkLabel ?? 'dark mode'}`)
+      }
+      title={theme === 'dark' ? lightLabel ?? 'Light mode' : darkLabel ?? 'Dark mode'}
+      aria-pressed={theme === 'dark'}
     >
       <div className={styles.iconsWrapper}>
         <span className={styles.moon}>
           <Image
             className={styles.logo}
             src="/svg/moon.svg"
-            alt="Moon icon"
+            alt=""
             width={20}
             height={20}
+            aria-hidden="true"
           />
         </span>
         <span className={styles.sun}>
-          <Image className={styles.logo} src="/svg/sun.svg" alt="Sun icon" width={20} height={20} />
+          <Image className={styles.logo} src="/svg/sun.svg" alt="" width={20} height={20} aria-hidden="true" />
         </span>
       </div>
     </button>

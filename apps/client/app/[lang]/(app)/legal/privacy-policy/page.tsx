@@ -106,9 +106,7 @@ export default function PrivacyPolicyPage() {
 
   if (!client || !privacy) return null;
 
-  const { legalUpdates } = client;
-
-  if (!legalUpdates) return null;
+  const legalUpdates = client.legal?.updates;
 
   function formatDate(dateString: string): string {
     if (!dateString) return '';
@@ -312,7 +310,7 @@ export default function PrivacyPolicyPage() {
           <p>
             <strong>{privacy.changes.meta.lastUpdated}</strong>
           </p>
-          <p>{formatDate(legalUpdates?.privacy?.updatedAt || '')}</p>
+          <p>{formatDate(String(legalUpdates?.privacy?.updatedAt ?? ''))}</p>
         </aside>
       </section>
 
