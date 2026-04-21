@@ -721,7 +721,8 @@
         "ariaLabel": "Benutzerbereich",
         "verified": "Verifiziert",
         "verifiedAria": "Konto verifiziert",
-        "missingName": "Ihr Name",
+        "missingName": "Fehlender Name",
+        "greeting": "Willkommen zurück 👋",
         "completion": {
           "title": "Profilfortschritt",
           "info": "Ergänzen Sie die fehlenden Angaben, um Ihren Buchungs- und Kommunikationsablauf zu verbessern.",
@@ -745,11 +746,12 @@
         }
       },
       "profile": {
-        "greeting": "Hallo,",
+        "title": "Kontoeinstellungen",
         "manageAccount": "Verwalten Sie Ihre Kontoeinstellungen und sehen Sie Ihre Profildaten ein.",
         "memberSince": "Mitglied seit:",
         "verified": "Verifiziert",
         "name": "Name:",
+        "nameEmpty": "Fehlender Name",
         "address": "Adresse:",
         "phone": "Telefon:",
         "email": "E-Mail:",
@@ -780,14 +782,13 @@
             "email": "E-Mail",
             "phone": "Telefon",
             "primaryAddress": "Hauptadresse",
-            "additionalAddress": "Weitere Adresse"
+            "additionalAddress": "Adresse"
           },
           "form": {
             "primaryAddressTitle": "Hauptadresse",
             "primaryAddressAriaLabel": "Details der Hauptadresse im Profil",
-            "secondaryAddressesTitle": "Weitere Adressen",
             "secondaryAddressAriaLabel": "Details einer weiteren Adresse",
-            "secondaryAddressTitle": "Weitere Adresse",
+            "secondaryAddressTitle": "Adresse",
             "addSecondaryAddressQuestion": "Möchten Sie eine weitere Adresse hinzufügen?",
             "addSecondaryAddressButton": "Adresse hinzufügen",
             "removeSecondaryAddressButton": "Entfernen",
@@ -807,29 +808,26 @@
         },
         "preferences": {
           "eyebrow": "Präferenzen",
-          "title": "Ihre Präferenzen",
-          "description": "Passen Sie Sprache, Design und Benachrichtigungseinstellungen für Ihr Konto an.",
           "sections": {
             "language": {
-              "title": "Sprache",
-              "description": "Wählen Sie die Sprache, die in Ihrem Konto verwendet wird.",
-              "buttonLabel": "Sprachumschalter",
+              "title": "Sprache:",
+              "subtitle": "Sprache umstellen",
+              "lang": "Deutsch",
               "switchToEnglish": "Sprache auf Englisch umstellen",
               "switchToGerman": "Sprache auf Deutsch umstellen",
               "englishVisible": "EN",
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Design",
-              "description": "Wechseln Sie zwischen hellem und dunklem Erscheinungsbild.",
+              "title": "Design:",
               "buttonLabel": "Farbschema umschalten",
               "lightMode": "Heller Modus",
-              "darkMode": "Dunkler Modus"
+              "darkMode": "Dunkler Modus",
+              "light": "Heller Modus",
+              "dark": "Dunkler Modus"
             },
             "notifications": {
               "title": "Benachrichtigungen",
-              "description": "Prüfen Sie, welche Benachrichtigungen erforderlich sind und welche Sie selbst steuern können.",
-              "requiredBadge": "Erforderlich",
               "inApp": {
                 "title": "Benachrichtigungen in der App",
                 "description": "Diese Benachrichtigungen sind in der App immer aktiviert.",
@@ -844,9 +842,6 @@
                 "title": "Erinnerungs-E-Mails",
                 "description": "Aktivieren Sie Erinnerungs-E-Mails, wenn Sie Erinnerungen zu Ihren Buchungen erhalten möchten.",
                 "ariaLabel": "Erinnerungs-E-Mail-Benachrichtigungen umschalten",
-                "enabled": "Erinnerungs-E-Mails aktiviert.",
-                "disabled": "Erinnerungs-E-Mails deaktiviert.",
-                "saving": "Erinnerungseinstellung wird gespeichert...",
                 "error": "Die Erinnerungs-Benachrichtigungen konnten nicht aktualisiert werden."
               }
             }
@@ -859,7 +854,7 @@
         "hero": {
           "headline1": "Datenschutzerklärung",
           "headline2": "Transparenz und Datenschutz",
-          "subtitle": "Diese Datenschutzerklärung erläutert, wie personenbezogene Daten auf dieser Plattform verarbeitet werden, die technisch von Maped Solutions UG betrieben wird.",
+          "subtitle": "Diese Datenschutzerklärung erläutert, wie personenbezogene Daten im Zusammenhang mit dieser Plattform und den darüber angebotenen Diensten verarbeitet werden. Die Plattform wird technisch von Maped Solutions (Einzelunternehmen) betrieben.",
           "image": {
             "src": "/images/privacy-hero.png",
             "alt": "Datenschutz und Datensicherheit"
@@ -869,11 +864,15 @@
           "title": "Überblick",
           "intro": "Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert darüber, wer für die Datenverarbeitung verantwortlich ist, zu welchen Zwecken und auf welcher Rechtsgrundlage Daten verarbeitet werden und welche Rechte Ihnen zustehen.",
           "bullets": [
-            "Verantwortlicher: Der jeweilige Kunde dieser Plattform (Art. 4 Nr. 7 DSGVO).",
-            "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
-            "Rechtsgrundlagen: Vertragserfüllung (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f).",
-            "Bevorzugte Datenverarbeitung: Europäische Union.",
-            "Datenübermittlungen in Drittländer nur mit geeigneten Garantien (SCC)."
+            "Für die dienstbezogene Leistung gegenüber Endnutzern ist in der Regel der jeweilige Kunde Verantwortlicher im Sinne von Art. 4 Nr. 7 DSGVO.",
+            "Maped Solutions (Einzelunternehmen) unterstützt den technischen Betrieb der Plattform und kann je nach Verarbeitungskontext als Auftragsverarbeiter, eigener Verantwortlicher oder gemeinsam Verantwortlicher tätig werden.",
+            "Die Plattform nutzt eine globale Basiskonto-Struktur für Authentifizierung, Sicherheit und technische Kontoverwaltung; dienstbezogene Profile und operative Beziehungen werden getrennt je Kunde bzw. Service geführt.",
+            "Rechtsgrundlagen können insbesondere Art. 6 Abs. 1 lit. a, b, c und f DSGVO sein, abhängig von der jeweiligen Verarbeitung.",
+            "Datenübermittlungen außerhalb des EWR erfolgen nur, soweit dies erforderlich ist und geeignete Garantien bestehen.",
+            "Die konkrete datenschutzrechtliche Rolle von Maped Solutions hängt vom jeweiligen Verarbeitungskontext ab.",
+            "Für plattformweite Funktionen wie Authentifizierung, Sicherheit und technischen Betrieb kann Maped Solutions als eigener Verantwortlicher handeln.",
+            "Für die Verarbeitung personenbezogener Daten im Zusammenhang mit den vom jeweiligen Kunden angebotenen Dienstleistungen handelt Maped Solutions in der Regel als Auftragsverarbeiter im Auftrag des jeweiligen Kunden.",
+            "In einzelnen Fällen können auch gemeinsame Verantwortlichkeiten bestehen."
           ],
           "cta": {
             "label": "Kontakt zum Verantwortlichen",
@@ -881,14 +880,14 @@
           }
         },
         "roles": {
-          "title": "Verantwortliche Stellen",
+          "title": "Rollen und datenschutzrechtliche Verantwortlichkeiten",
           "controller": {
-            "title": "Verantwortlicher",
-            "body": "Verantwortlicher im Sinne der DSGVO ist das Unternehmen, das die Dienstleistungen über diese Plattform anbietet. Dieses Unternehmen entscheidet über Zwecke und Mittel der Datenverarbeitung. Die Kontaktdaten sind dem Impressum zu entnehmen."
+            "title": "Rolle des jeweiligen Kunden",
+            "body": "Soweit personenbezogene Daten zur Anbahnung, Durchführung und Verwaltung der jeweils angebotenen Dienstleistung verarbeitet werden, ist regelmäßig der jeweilige Kunde Verantwortlicher. Dies betrifft insbesondere die operative Betreuung von Nutzern, Anfragen, Terminen, Aufträgen, Abrechnungen und vergleichbaren servicebezogenen Abläufen."
           },
           "processor": {
-            "title": "Auftragsverarbeiter",
-            "body": "Maped Solutions UG handelt als Auftragsverarbeiter gemäß Art. 28 DSGVO. Maped Solutions UG betreibt und wartet die Plattform technisch und verarbeitet personenbezogene Daten ausschließlich auf Weisung des Verantwortlichen."
+            "title": "Rolle von Maped Solutions (Einzelunternehmen)",
+            "body": "Maped Solutions betreibt die Plattform technisch und unterstützt den sicheren Betrieb, die Authentifizierung, die Infrastruktur, Missbrauchsprävention und Schutzmaßnahmen. In diesen Zusammenhängen kann Maped Solutions je nach konkreter Verarbeitung nicht nur als Auftragsverarbeiter, sondern auch als eigener Verantwortlicher oder gemeinsam Verantwortlicher handeln. Eine pauschale Beschränkung auf eine ausschließliche Weisungsverarbeitung gilt daher nicht für alle Kontexte."
           },
           "links": [
             {
@@ -900,6 +899,10 @@
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             }
           ]
+        },
+        "accountStructure": {
+          "title": "Globale Konten und dienstbezogene Profile",
+          "body": "Die Plattform kann eine zentrale Basiskonto-Struktur verwenden, damit sich dieselbe Person bei mehreren Diensten oder Kunden authentifizieren kann. Innerhalb der einzelnen Dienste werden jedoch getrennte Beziehungen und Profile geführt. Ein dienstbezogenes Profil wird daher nicht automatisch mit allen anderen Nutzungen der Plattform gleichgesetzt."
         },
         "purposesAndLegalBases": {
           "title": "Zwecke und Rechtsgrundlagen",
@@ -946,9 +949,11 @@
           "items": [
             "Identifikations- und Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer, Anschrift).",
             "Zugangs- und Sicherheitsdaten (verschlüsselte Passwörter, Rollen, Spracheinstellungen).",
+            "Kontodaten der plattformweiten Authentifizierung.",
             "Angaben zu Serviceanfragen (Beschreibungen, Orte).",
             "Vertrags- und Zahlungsdaten (Rechnungen, Zahlungen über Drittanbieter).",
-            "Technische Daten (IP-Adresse, Geräteinformationen, Server-Logs, technisch notwendige Cookies)."
+            "Technische Daten (IP-Adresse, Geräteinformationen, Server-Logs, technisch notwendige Cookies).",
+            "Zweckgebundene Mindestdaten in einzelnen fachlichen Datensätzen (z. B. zur Dokumentation, Abrechnung oder Erfüllung gesetzlicher Pflichten)."
           ]
         },
         "thirdParties": {
@@ -1016,8 +1021,8 @@
           "body": "Es werden geeignete technische und organisatorische Maßnahmen gemäß Art. 32 DSGVO eingesetzt, darunter verschlüsselte Passwörter, sichere Datenübertragung (HTTPS/TLS), rollenbasierte Zugriffskontrollen sowie Firewall- und CDN-Schutz."
         },
         "cookies": {
-          "title": "Cookies",
-          "body": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse- oder Marketing-Cookies eingesetzt.",
+          "title": "Cookies und vergleichbare Technologien",
+          "body": "Diese Plattform verwendet derzeit ausschließlich technisch notwendige Cookies und vergleichbare technische Speicher- und Zugriffstechnologien. Soweit solche Technologien für Authentifizierung, Sicherheit, Sitzungssteuerung, Spracheinstellungen oder andere technisch notwendige Funktionen erforderlich sind, werden sie für den sicheren Betrieb der Plattform eingesetzt. Analyse- oder Trackingfunktionen werden derzeit nicht verwendet. Sollten künftig nicht notwendige Statistik- oder Analysefunktionen eingeführt werden, erfolgt ihr Einsatz nur auf der hierfür erforderlichen Rechtsgrundlage, insbesondere nach vorheriger Einwilligung, soweit diese erforderlich ist.",
           "cta": {
             "label": "Cookie-Richtlinie ansehen",
             "href": "/legal/cookie-policy"
@@ -1032,11 +1037,24 @@
             "Widerruf einer Einwilligung (Art. 7 Abs. 3), sofern die Verarbeitung auf Einwilligung beruht.",
             "Beschwerde bei einer Aufsichtsbehörde (Art. 77)."
           ],
-          "howTo": "Anfragen sind an den jeweiligen Verantwortlichen zu richten. Wir können eine Identifikation verlangen und beantworten Anfragen grundsätzlich innerhalb eines Monats."
+          "howTo": "Anfragen sind grundsätzlich an den jeweiligen Verantwortlichen zu richten. Maped Solutions kann die technische Bearbeitung solcher Anfragen unterstützen, insbesondere bei Anfragen zur plattformweiten Authentifizierung, Sicherheit oder Kontoverwaltung. Wir können eine Identifikation verlangen und beantworten oder unterstützen die Bearbeitung von Anfragen grundsätzlich innerhalb eines Monats."
+        },
+        "accountDeletion": {
+          "title": "Löschung eines dienstbezogenen Kontos",
+          "body": "Wenn Sie Ihr Konto in einem konkreten Dienst oder bei einem konkreten Kunden löschen, wird grundsätzlich das zugehörige dienstbezogene Profil gelöscht und die aktive Beziehung zu diesem Dienst beendet oder deaktiviert. Eine darüber hinaus bestehende Basiskonto-Struktur für Authentifizierung oder andere aktive Beziehungen zu weiteren Kunden oder Diensten bleibt hiervon grundsätzlich unberührt. Soweit in anderen Fachdomänen noch minimale Restdaten erforderlich sind, etwa für Abrechnung, rechtliche Nachweise, Dokumentation oder gesetzliche Aufbewahrungspflichten, bleiben nur diese für den jeweiligen Zweck notwendigen Daten erhalten. Solche Restdaten werden nicht zur Wiederherstellung oder Reaktivierung des gelöschten Profils verwendet."
         },
         "retention": {
           "title": "Speicherdauer",
-          "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies zur Erfüllung der Zwecke und gesetzlicher Verpflichtungen erforderlich ist. Danach erfolgt eine Löschung oder Anonymisierung."
+          "body": "Personenbezogene Daten werden nur so lange gespeichert, wie dies für den jeweiligen Zweck erforderlich ist. Wird ein dienstbezogenes Profil gelöscht, werden dieses Profil und die zugehörige aktive Dienstbeziehung grundsätzlich entfernt oder deaktiviert. Soweit andere Fachdomänen aus gesetzlichen, dokumentarischen oder abrechnungsbezogenen Gründen minimale Snapshots oder Restdaten benötigen, werden nur diese zweckgebundenen Daten für die jeweils erforderliche Dauer aufbewahrt. Diese Restdaten reichen nicht aus, um das gelöschte Profil wiederherzustellen.",
+          "additional": {
+            "title": "Die konkrete Speicherdauer richtet sich insbesondere nach:",
+            "bullets": [
+              "gesetzlichen Aufbewahrungspflichten,",
+              "abrechnungsbezogenen Anforderungen,",
+              "sowie der Notwendigkeit zur Geltendmachung oder Verteidigung von Rechtsansprüchen."
+            ],
+            "close": "Nach Wegfall dieser Zwecke werden Daten gelöscht oder, soweit möglich, anonymisiert."
+          }
         },
         "additionalInformation": {
           "title": "Weitere Informationen nach Art. 13 DSGVO",
@@ -1061,7 +1079,7 @@
         },
         "internationalTransfers": {
           "title": "Datenübermittlung in Drittländer",
-          "body": "Sofern Daten außerhalb des EWR verarbeitet werden, erfolgt dies ausschließlich unter Anwendung geeigneter Garantien, insbesondere der Standardvertragsklauseln der Europäischen Kommission."
+          "body": "Sofern Daten außerhalb des EWR verarbeitet werden, erfolgt dies ausschließlich unter Anwendung geeigneter Garantien, insbesondere der Standardvertragsklauseln der Europäischen Kommission. Soweit erforderlich, werden ergänzende technische, vertragliche oder organisatorische Maßnahmen getroffen, um ein angemessenes Datenschutzniveau sicherzustellen."
         },
         "changes": {
           "title": "Änderungen dieser Datenschutzerklärung",
@@ -1088,7 +1106,7 @@
         "hero": {
           "headline1": "Cookie-Richtlinie",
           "headline2": "Verwendung technisch notwendiger Cookies",
-          "subtitle": "Diese Cookie-Richtlinie erläutert, wie und warum auf dieser Plattform Cookies eingesetzt werden, die technisch von Maped Solutions UG betrieben wird.",
+          "subtitle": "Diese Richtlinie erläutert den Einsatz von Cookies und vergleichbaren Technologien auf dieser Plattform, die technisch von Maped Solutions (Einzelunternehmen) betrieben wird.",
           "image": {
             "src": "/images/cookies-hero.png",
             "alt": "Cookies und Datenschutzeinstellungen"
@@ -1096,34 +1114,38 @@
         },
         "overview": {
           "title": "Überblick",
-          "intro": "Diese Plattform verwendet ausschließlich technisch notwendige Cookies, die für den sicheren Betrieb und grundlegende Funktionen erforderlich sind. Es werden keine Analyse-, Tracking- oder Marketing-Cookies eingesetzt.",
+          "intro": "Diese Plattform verwendet derzeit ausschließlich technisch notwendige Cookies und vergleichbare Technologien, etwa Browser-Speicher, um Anmeldung, Sicherheit, Spracheinstellungen, Sitzungsverwaltung und andere Kernfunktionen bereitzustellen. Statistik- oder Analysefunktionen werden derzeit nicht eingesetzt. Sollten künftig nicht notwendige Technologien hinzukommen, werden diese nur auf der dafür einschlägigen Rechtsgrundlage, insbesondere nach vorheriger Einwilligung, verwendet, soweit diese erforderlich ist.",
           "bullets": [
-            "Ausschließlich technisch notwendige Cookies.",
-            "Keine Analyse- oder Marketing-Cookies.",
-            "Keine Profilbildung oder Nutzerverfolgung.",
-            "Cookies können über die Browsereinstellungen verwaltet werden."
+            "Technisch notwendige Cookies und vergleichbare Technologien unterstützen Kernfunktionen der Plattform.",
+            "Analyse- oder Trackingfunktionen werden derzeit nicht verwendet.",
+            "Es findet keine werbliche oder marketingbezogene Verfolgung statt.",
+            "Cookies und lokale Speichertechnologien können über Browser- und Plattform-Einstellungen verwaltet werden."
           ],
           "cta": {
-            "label": "Cookie-Einstellungen",
+            "label": "Cookie-Hinweise anzeigen",
             "action": "openCookieBanner"
           }
         },
         "whatAreCookies": {
-          "title": "Was sind Cookies?",
-          "body": "Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen grundlegende Funktionen wie sichere Anmeldung, Navigation und Schutz vor Missbrauch."
+          "title": "Was sind Cookies und vergleichbare Technologien?",
+          "body": "Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert oder ausgelesen werden können. Daneben kann die Plattform vergleichbare Technologien wie Browser-Speicher verwenden. Solche Technologien unterstützen unter anderem sichere Anmeldung, Navigation, Sitzungsverwaltung und Schutz vor Missbrauch."
         },
         "types": {
-          "title": "Welche Arten von Cookies werden verwendet?",
+          "title": "Welche Cookies und vergleichbaren Technologien werden verwendet?",
           "items": [
             {
-              "name": "Technisch notwendige Cookies",
-              "description": "Diese Cookies sind erforderlich, um den sicheren und ordnungsgemäßen Betrieb der Plattform zu gewährleisten, z. B. für Authentifizierung, Sicherheit und Sitzungsverwaltung. Sie können nicht deaktiviert werden."
+              "name": "Technisch notwendige Technologien",
+              "description": "Technisch notwendige Cookies oder vergleichbare Speichermechanismen können verwendet werden, um Authentifizierung, Sicherheit, Sitzungsverwaltung, Spracheinstellungen und vergleichbare Kernfunktionen bereitzustellen."
+            },
+            {
+              "name": "Derzeit keine Statistik- oder Analysefunktionen",
+              "description": "Derzeit werden keine nicht notwendigen Statistik- oder Analysefunktionen eingesetzt. Sollten solche Funktionen künftig eingeführt werden, werden sie nur auf der dafür einschlägigen Rechtsgrundlage, insbesondere nach vorheriger Einwilligung, aktiviert, soweit diese erforderlich ist."
             }
           ]
         },
         "thirdParties": {
           "title": "Drittanbieter",
-          "body": "Es werden keine Cookies von Drittanbietern zu Analyse-, Tracking- oder Marketingzwecken eingesetzt. Externe Dienstleister können technisch notwendige Cookies setzen, sofern dies für den Betrieb der Plattform erforderlich ist.",
+          "body": "Externe technische Dienstleister können im erforderlichen Umfang an der Bereitstellung der Plattform beteiligt sein. Soweit dabei Cookies oder vergleichbare Technologien verwendet werden, beschränkt sich dies derzeit auf technisch notwendige Funktionen. Sollten künftig nicht notwendige Statistik- oder Analysefunktionen über Drittdienste eingesetzt werden, erfolgt dies nur auf der dafür einschlägigen Rechtsgrundlage, insbesondere nach vorheriger Einwilligung, soweit diese erforderlich ist.",
           "table": {
             "headers": {
               "name": "Anbieter",
@@ -1134,19 +1156,20 @@
           }
         },
         "localStorage": {
-          "title": "Verwendung von localStorage",
-          "body": "Zusätzlich zu Cookies kann der lokale Speicher des Browsers (localStorage) verwendet werden, um technische Einstellungen wie Sprache oder Designpräferenzen zu speichern. Diese Daten verbleiben ausschließlich auf Ihrem Endgerät und werden nicht an Dritte übermittelt."
+          "title": "Browser-Speicher und vergleichbare Technologien",
+          "body": "Zusätzlich zu Cookies kann die Plattform lokale Browser-Speichertechnologien wie localStorage verwenden, um technische Präferenzen oder Zustände auf Ihrem Endgerät zu speichern. Diese Informationen dienen der technischen Bereitstellung und Nutzerführung und werden nicht allein deshalb an Dritte übermittelt, weil sie lokal gespeichert sind."
         },
         "management": {
-          "title": "Verwaltung von Cookies",
-          "intro": "Sie können Cookies jederzeit über die Einstellungen Ihres Browsers verwalten oder löschen. Die Deaktivierung technisch notwendiger Cookies kann jedoch die Funktionalität der Plattform einschränken.",
+          "title": "Verwaltung von Cookies und Speichertechnologien",
+          "intro": "Sie können Cookies jederzeit über die Einstellungen Ihres Browsers verwalten oder löschen. Auch lokal gespeicherte Informationen können Sie in Ihrem Browser oder auf Ihrem Gerät entfernen. Die Deaktivierung technisch notwendiger Technologien kann jedoch die Funktionalität der Plattform einschränken.",
           "methods": [
             "Verwaltung von Cookies über die Browsereinstellungen.",
             "Löschen bereits gespeicherter Cookies im Browser.",
-            "Einschränkung oder Blockierung von Cookies über Browserfunktionen."
+            "Einschränkung oder Blockierung von Cookies über Browserfunktionen.",
+            "Entfernen lokal gespeicherter Einstellungen auf dem Endgerät."
           ],
           "cta": {
-            "label": "Cookie-Banner erneut öffnen",
+            "label": "Cookie-Hinweise erneut öffnen",
             "action": "openCookieBanner"
           },
           "links": [
@@ -1170,7 +1193,7 @@
         },
         "legalBasis": {
           "title": "Rechtsgrundlage",
-          "body": "Der Einsatz technisch notwendiger Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und funktionsfähigen Betrieb der Plattform)."
+          "body": "Soweit der Zugriff auf oder die Speicherung von Informationen auf Ihrem Endgerät für die technisch notwendige Bereitstellung der Plattform erforderlich ist, erfolgt dies auf Grundlage von § 25 TDDDG für unbedingt erforderliche Technologien. Soweit hierbei personenbezogene Daten weiterverarbeitet werden, stützt sich diese Verarbeitung regelmäßig auf Art. 6 Abs. 1 lit. b oder lit. f DSGVO. Nicht notwendige Statistik- oder Analysefunktionen werden derzeit nicht eingesetzt; sollten sie künftig eingeführt werden, erfolgt ihr Einsatz nur auf der dafür einschlägigen Grundlage, insbesondere auf Basis einer Einwilligung nach § 25 TDDDG und Art. 6 Abs. 1 lit. a DSGVO, soweit diese erforderlich ist."
         },
         "changes": {
           "title": "Änderungen dieser Cookie-Richtlinie",
@@ -1207,10 +1230,10 @@
           "title": "Geltungsbereich",
           "intro": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der über diese Plattform bereitgestellten Funktionen und Dienste.",
           "bullets": [
-            "Die Plattform wird technisch durch Maped Solutions UG betrieben.",
-            "Die angebotenen Dienstleistungen werden durch den jeweiligen Kunden erbracht.",
-            "Maped Solutions UG erbringt keine eigenen Endkundendienstleistungen.",
-            "Abweichende Bedingungen finden nur Anwendung, wenn sie ausdrücklich vereinbart wurden."
+            "Die Plattform wird technisch von Maped Solutions (Einzelunternehmen) betrieben.",
+            "Die jeweiligen Dienste gegenüber Endnutzern werden in der Regel durch den jeweiligen Kunden erbracht.",
+            "Die Plattform kann eine globale Basiskonto-Struktur für Authentifizierung und Sicherheit verwenden.",
+            "Dienstbezogene Profile, operative Beziehungen und fachliche Vorgänge werden getrennt je Kunde oder Service geführt."
           ]
         },
         "definitions": {
@@ -1230,13 +1253,21 @@
             },
             {
               "term": "Anbieter",
-              "definition": "Maped Solutions UG als technischer Betreiber der Plattform."
+              "definition": "Maped Solutions (Einzelunternehmen) als technischer Betreiber der Plattform."
+            },
+            {
+              "term": "Basiskonto",
+              "definition": "Das plattformweite Konto, das der Authentifizierung, Kontosicherheit und der technischen Verwaltung des Zugangs dienen kann."
+            },
+            {
+              "term": "Dienstbezogenes Profil",
+              "definition": "Das Profil, das innerhalb eines konkreten Kunden- oder Servicekontexts geführt wird und nicht automatisch für andere Dienste gilt."
             }
           ]
         },
         "serviceDescription": {
           "title": "Leistungsbeschreibung",
-          "body": "Maped Solutions UG stellt dem Kunden eine betriebsbereite Softwareplattform (Version 1.0) zur Verfügung. Die Leistung umfasst den technischen Betrieb, die Wartung sowie fortlaufende Optimierung der Plattform.",
+          "body": "Maped Solutions (Einzelunternehmen) stellt dem Kunden eine betriebsbereite Softwareplattform zur Verfügung. Die Leistung umfasst den technischen Betrieb, die Wartung sowie die fortlaufende Optimierung der Plattform.",
           "note": "Die Plattform ist kein Vermittlungs- oder Ausführungsdienst für die angebotenen Dienstleistungen."
         },
         "optimization": {
@@ -1254,7 +1285,7 @@
         },
         "availability": {
           "title": "Verfügbarkeit",
-          "body": "Maped Solutions UG ist bemüht, eine hohe Verfügbarkeit der Plattform sicherzustellen. Eine durchgehende oder unterbrechungsfreie Verfügbarkeit kann jedoch nicht garantiert werden."
+          "body": "Maped Solutions (Einzelunternehmen) ist bemüht, eine hohe Verfügbarkeit der Plattform sicherzustellen. Eine durchgehende oder unterbrechungsfreie Verfügbarkeit kann jedoch nicht garantiert werden."
         },
         "externalContractors": {
           "title": "Externe Dienstleister",
@@ -1262,7 +1293,7 @@
         },
         "liability": {
           "title": "Haftung",
-          "body": "Maped Solutions UG haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen. Bei einfacher Fahrlässigkeit haftet Maped Solutions UG nur bei Verletzung wesentlicher Vertragspflichten und beschränkt auf den vorhersehbaren Schaden.",
+          "body": "Maped Solutions (Einzelunternehmen) haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen. Bei einfacher Fahrlässigkeit haftet Maped Solutions nur bei Verletzung wesentlicher Vertragspflichten und beschränkt auf den vorhersehbaren Schaden.",
           "limitations": [
             "Keine Haftung für Leistungen des Kunden oder externer Dienstleister.",
             "Keine Haftung für Datenverluste, sofern angemessene Sicherungsmaßnahmen getroffen wurden.",
@@ -1271,15 +1302,15 @@
         },
         "payments": {
           "title": "Zahlungen",
-          "body": "Zahlungen und Abrechnungen erfolgen auf Grundlage der zwischen Maped Solutions UG und dem Kunden geschlossenen Vereinbarungen. Die Plattform selbst stellt keine Zahlungsdienstleistung dar."
+          "body": "Zahlungen und Abrechnungen erfolgen auf Grundlage der zwischen Maped Solutions (Einzelunternehmen) und dem Kunden geschlossenen Vereinbarungen. Die Plattform selbst stellt keine Zahlungsdienstleistung dar."
         },
         "termination": {
           "title": "Beendigung der Nutzung",
-          "body": "Das Nutzungsverhältnis kann von beiden Parteien unter Einhaltung der vereinbarten Fristen beendet werden. Gesetzliche Kündigungsrechte bleiben unberührt."
+          "body": "Die Nutzung eines konkreten Dienstes oder die Beziehung zu einem konkreten Kunden kann nach den jeweils anwendbaren Bedingungen beendet werden. Die Beendigung eines einzelnen Dienstes führt nicht automatisch zur Löschung anderer aktiver Beziehungen oder weiterer dienstbezogener Profile derselben Person. Einzelheiten zur datenschutzrechtlichen Löschung ergeben sich aus der Datenschutzerklärung."
         },
         "dataProtection": {
           "title": "Datenschutz",
-          "body": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung dieser Plattform sowie den geltenden datenschutzrechtlichen Vorschriften."
+          "body": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung dieser Plattform. Diese unterscheidet zwischen der plattformweiten Kontoführung, dienstbezogenen Profilen und weiteren fachlichen Datensätzen mit eigenständigen Aufbewahrungszwecken."
         },
         "governingLaw": {
           "title": "Anwendbares Recht",
@@ -1287,7 +1318,7 @@
         },
         "changes": {
           "title": "Änderungen der AGB",
-          "body": "Maped Solutions UG behält sich vor, diese AGB aus rechtlichen oder betrieblichen Gründen zu ändern. Die jeweils aktuelle Fassung ist auf dieser Plattform einsehbar.",
+          "body": "Maped Solutions (Einzelunternehmen) behält sich vor, diese Nutzungsbedingungen aus rechtlichen oder betrieblichen Gründen zu ändern. Die jeweils aktuelle Fassung ist auf dieser Plattform einsehbar.",
           "meta": {
             "lastUpdated": "Zuletzt aktualisiert:"
           }
@@ -1296,43 +1327,34 @@
       "imprint": {
         "hero": {
           "headline1": "Impressum",
-          "headline2": "Angaben gemäß § 5 TMG",
-          "subtitle": "Diese Seite enthält die gesetzlich vorgeschriebenen Angaben zum Anbieter dieser Website."
+          "headline2": "Angaben gemäß § 5 DDG",
+          "subtitle": "Diese Seite enthält die gesetzlich erforderlichen Angaben zum Anbieter dieses digitalen Dienstes."
         },
         "providerSection": {
           "heading": "Anbieterinformationen",
-          "description": "Angaben zum Anbieter gemäß den geltenden europäischen Rechtsvorschriften:",
+          "description": "Diensteanbieter dieser Website ist Heriberto Santana, handelnd unter Maped Solutions.",
           "fields": {
             "companyName": "Unternehmen",
+            "owner": "Inhaber",
             "address": "Adresse",
             "email": "E-Mail",
             "phone": "Telefon"
           },
-          "fallbacks": {
-            "companyName": "Havenova",
-            "address": "Stollberger Str.43, 12627 Berlin",
-            "email": "contact@havenova.com",
-            "phone": "+49 000 0000000"
+          "values": {
+            "companyName": "Maped Solutions",
+            "owner": "Heriberto Santana",
+            "address": "Sarah-Kirsch-Str. 5, 12629 Berlin",
+            "email": "contact@mapedsolutions.com",
+            "phone": "+49 177 7312 606"
           }
-        },
-        "responsibleSection": {
-          "heading": "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
-          "description": "Verantwortlich für die Inhalte dieser Seite ist:",
-          "name": "Hasan Al Al-Hayyawi",
-          "address": "Stollberger Str.43, 12627 Berlin"
         },
         "liabilitySection": {
           "heading": "Haftungsausschluss",
           "text": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
         },
         "odrSection": {
-          "heading": "Online-Streitbeilegung (OS)",
-          "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:",
-          "link": {
-            "label": "https://ec.europa.eu/consumers/odr",
-            "href": "https://ec.europa.eu/consumers/odr"
-          },
-          "note": "Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+          "heading": "Verbraucherstreitbeilegung",
+          "text": "Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
         }
       }
     }

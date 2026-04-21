@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
 import { RegisterFormData, RegisterPayload } from '../../../../../../../packages/types';
-import { FormWrapper } from '../../../../../../../packages/components/user/userForm';
+import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 import {
   fallbackButtons,
   fallbackGlobalError,

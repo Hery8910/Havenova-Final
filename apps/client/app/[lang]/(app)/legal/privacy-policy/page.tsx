@@ -31,6 +31,10 @@ export interface PrivacyPageTexts {
     };
     links: { label: string; href: string }[];
   };
+  accountStructure: {
+    title: string;
+    body: string;
+  };
   purposesAndLegalBases: {
     title: string;
     intro: string;
@@ -71,7 +75,19 @@ export interface PrivacyPageTexts {
     items: string[];
     howTo: string;
   };
-  retention: { title: string; body: string };
+  accountDeletion: {
+    title: string;
+    body: string;
+  };
+  retention: {
+    title: string;
+    body: string;
+    additional: {
+      title: string;
+      bullets: string[];
+      close: string;
+    };
+  };
   internationalTransfers: { title: string; body: string };
   additionalInformation: {
     title: string;
@@ -163,6 +179,11 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className={styles.section}>
+        <h3 className={styles.h3}>{privacy.accountStructure.title}</h3>
+        <p>{privacy.accountStructure.body}</p>
+      </section>
+
+      <section className={styles.section}>
         <h3 className={styles.h3}>{privacy.purposesAndLegalBases.title}</h3>
         <p>{privacy.purposesAndLegalBases.intro}</p>
         <ul className={styles.ul}>
@@ -212,47 +233,47 @@ export default function PrivacyPolicyPage() {
           <p>{privacy.thirdParties.subtitle}</p>
           <p>{privacy.thirdParties.intro}</p>
 
-        <div className={styles.table_wrapper}>
-          <table className={styles.table}>
-            <caption className={styles.visually_hidden}>{privacy.thirdParties.title}</caption>
-            <thead className={styles.thead}>
-              <tr className={styles.tr}>
-              <th className={styles.th} scope="col">
-                {privacy.thirdParties.table.headers.name}
-              </th>
-              <th className={styles.th} scope="col">
-                {privacy.thirdParties.table.headers.purpose}
-              </th>
-              <th className={styles.th} scope="col">
-                {privacy.thirdParties.table.headers.region}
-              </th>
-              <th className={styles.th} scope="col">
-                {privacy.thirdParties.table.headers.privacy}
-              </th>
-              </tr>
-            </thead>
-            <tbody className={styles.body}>
-              {privacy.thirdParties.table.body.map((item) => (
-                <tr className={styles.tr} key={item.name}>
-                  <td className={styles.td}>{item.name}</td>
-                  <td className={styles.td}>{item.purpose}</td>
-                  <td className={styles.td}>{item.region}</td>
-                  <td className={styles.td}>
-                    <Link
-                      className={styles.link}
-                      href={item.privacyUrl.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.privacyUrl.label} <FiExternalLink />
-                    </Link>
-                  </td>
+          <div className={styles.table_wrapper}>
+            <table className={styles.table}>
+              <caption className={styles.visually_hidden}>{privacy.thirdParties.title}</caption>
+              <thead className={styles.thead}>
+                <tr className={styles.tr}>
+                  <th className={styles.th} scope="col">
+                    {privacy.thirdParties.table.headers.name}
+                  </th>
+                  <th className={styles.th} scope="col">
+                    {privacy.thirdParties.table.headers.purpose}
+                  </th>
+                  <th className={styles.th} scope="col">
+                    {privacy.thirdParties.table.headers.region}
+                  </th>
+                  <th className={styles.th} scope="col">
+                    {privacy.thirdParties.table.headers.privacy}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody className={styles.body}>
+                {privacy.thirdParties.table.body.map((item) => (
+                  <tr className={styles.tr} key={item.name}>
+                    <td className={styles.td}>{item.name}</td>
+                    <td className={styles.td}>{item.purpose}</td>
+                    <td className={styles.td}>{item.region}</td>
+                    <td className={styles.td}>
+                      <Link
+                        className={styles.link}
+                        href={item.privacyUrl.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.privacyUrl.label} <FiExternalLink />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       }
 
       <section className={styles.section}>
@@ -282,8 +303,22 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className={styles.section}>
+        <h3 className={styles.h3}>{privacy.accountDeletion.title}</h3>
+        <p>{privacy.accountDeletion.body}</p>
+      </section>
+
+      <section className={styles.section}>
         <h3 className={styles.h3}>{privacy.retention.title}</h3>
         <p>{privacy.retention.body}</p>
+        <p>{privacy.retention.additional.title}</p>
+        <ul className={styles.ul}>
+          {privacy.retention.additional.bullets.map((bullet, i) => (
+            <li className={styles.purpose_li} key={i}>
+              <p>{bullet}</p>
+            </li>
+          ))}
+        </ul>
+        <p>{privacy.retention.additional.close}</p>
       </section>
 
       <section className={styles.section}>

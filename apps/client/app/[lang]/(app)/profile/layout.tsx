@@ -16,9 +16,13 @@ export async function generateMetadata({
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className={styles.layout}>
-      <ProfileHeader />
-      <ProfileNav />
-      {children}
+      <header className={`  ${styles.header} card`}>
+        <ProfileHeader />
+      </header>
+      <nav className={styles.nav} aria-label="Profile navigation">
+        <ProfileNav />
+      </nav>
+      <section className={styles.section}>{children}</section>
     </main>
   );
 }

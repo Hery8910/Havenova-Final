@@ -28,7 +28,9 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Access forbidden",
-    "description": "You do not have permission to perform this action."
+    "description": "You do not have permission to perform this action.",
+    "confirm": "Go to home",
+    "close": "Close"
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Login required to continue",
@@ -56,7 +58,9 @@
   },
   "GLOBAL_INTERNAL_ERROR": {
     "title": "Unexpected error",
-    "description": "Something went wrong. Please try again or contact support."
+    "description": "Something went wrong. Please try again or contact support.",
+    "confirm": "Retry",
+    "close": "Close"
   },
   "CLEANING_REQUEST_LOADING": {
     "title": "Sending request",
@@ -114,6 +118,10 @@
     "title": "Client updated successfully",
     "description": "The client data was updated successfully."
   },
+  "CLIENT_UPDATED": {
+    "title": "Client updated successfully",
+    "description": "The client data was updated successfully."
+  },
   "CLIENT_UPDATE_FAILED": {
     "title": "Client update failed",
     "description": "An unexpected error occurred while updating the client."
@@ -128,9 +136,10 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client not found",
-    "description": "The specified client does not exist."
+    "description": "The specified client does not exist.",
+    "confirm": "Go to home",
+    "close": "Close"
   },
-
   "USER_REGISTER_SUCCESS": {
     "title": "Registration successful",
     "description": "Your account has been created! We have sent you an email to confirm your address. Please check your inbox."
@@ -237,7 +246,12 @@
     "title": "Session loaded",
     "description": "Your session information has been loaded."
   },
-
+  "PROFILE_ADDRESS_DELETE_CONFIRM": {
+    "title": "Delete address?",
+    "description": "This action is permanent. You will not be able to recover this address after deleting it.",
+    "confirm": "Delete address",
+    "close": "Cancel"
+  },
   "USER_CLIENT_NOT_FOUND": {
     "title": "Client association not found",
     "description": "The user is not associated with this client."
@@ -250,7 +264,6 @@
     "title": "Cookie settings updated",
     "description": "Your cookie preferences have been saved successfully."
   },
-
   "REFRESH_TOKEN_MISSING": {
     "title": "Reauthentication required",
     "description": "Your session is no longer valid. Please log in again."
@@ -271,7 +284,6 @@
     "title": "Security validation failed",
     "description": "Your session security token is invalid. Please reload and try again."
   },
-
   "MAGIC_TOKEN_EXPIRED": {
     "title": "Login link expired",
     "description": "The magic login link has expired. Please request a new one."
@@ -284,7 +296,6 @@
     "title": "Login successful",
     "description": "You have been logged in successfully."
   },
-
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
     "title": "Reset link sent",
     "description": "We have emailed you a link to reset your password. Please check your inbox."
@@ -441,5 +452,181 @@
   "WORKER_UPDATED": {
     "title": "Worker updated",
     "description": "The worker has been updated successfully."
+  },
+  "AUTH_ACCESS_TOKEN_EXPIRED": {
+    "title": "Session expired",
+    "description": "Your access token has expired. Please log in again."
+  },
+  "AUTH_ACCESS_TOKEN_INVALID": {
+    "title": "Invalid access token",
+    "description": "Your access token is invalid. Please log in again."
+  },
+  "AUTH_ACCESS_TOKEN_MISSING": {
+    "title": "Missing access token",
+    "description": "Your access token is missing. Please log in again."
+  },
+  "AUTH_CLIENT_ADMIN_REQUIRED": {
+    "title": "Client admin required",
+    "description": "You need client admin permissions to perform this action."
+  },
+  "AUTH_SUPERADMIN_REQUIRED": {
+    "title": "Superadmin required",
+    "description": "You need superadmin permissions to perform this action."
+  },
+  "AUTH_CURRENT_PASSWORD_INVALID": {
+    "title": "Invalid current password",
+    "description": "The current password is incorrect. Please try again."
+  },
+  "AUTH_INVALID_CREDENTIALS": {
+    "title": "Invalid credentials",
+    "description": "The provided credentials are invalid."
+  },
+  "CLIENT_CLIENT_NOT_FOUND": {
+    "title": "Client not found",
+    "description": "The requested client could not be found."
+  },
+  "CLIENT_DOMAIN_EXISTS": {
+    "title": "Domain already in use",
+    "description": "A client with this domain already exists."
+  },
+  "CLIENT_ID_REQUIRED": {
+    "title": "Client ID required",
+    "description": "A valid client ID is required."
+  },
+  "CLIENT_UPDATE_FIELD_NOT_ALLOWED": {
+    "title": "Field update not allowed",
+    "description": "One or more fields cannot be updated."
+  },
+  "COMPANY_EMAIL_EXISTS": {
+    "title": "Email already in use",
+    "description": "A company with this email already exists."
+  },
+  "COMPANY_NAME_EXISTS": {
+    "title": "Company name already in use",
+    "description": "A company with this name already exists."
+  },
+  "CONTACT_CREATE_FAILED": {
+    "title": "Message not sent",
+    "description": "We could not create the contact message. Please try again."
+  },
+  "CONTACT_DELETE_FAILED": {
+    "title": "Delete failed",
+    "description": "We could not delete the contact message. Please try again."
+  },
+  "CONTACT_LIST_FAILED": {
+    "title": "Messages not loaded",
+    "description": "We could not load contact messages. Please try again."
+  },
+  "CONTACT_MESSAGE_NOT_FOUND": {
+    "title": "Message not found",
+    "description": "The requested contact message could not be found."
+  },
+  "CONTACT_NOTIFICATION_FAILED": {
+    "title": "Notification failed",
+    "description": "We could not send the contact notification. Please try again."
+  },
+  "CONTACT_RESPONSE_FAILED": {
+    "title": "Response failed",
+    "description": "We could not send the response to this contact message."
+  },
+  "EMAIL_DELIVERY_FAILED": {
+    "title": "Email delivery failed",
+    "description": "We could not deliver the email. Please try again later."
+  },
+  "NO_AUTH_USER": {
+    "title": "User session missing",
+    "description": "No authenticated user was found for this session."
+  },
+  "NOTIFICATION_FORBIDDEN_TARGET": {
+    "title": "Invalid notification target",
+    "description": "You do not have permission to target this user."
+  },
+  "NOTIFICATION_NOT_FOUND": {
+    "title": "Notification not found",
+    "description": "The requested notification could not be found."
+  },
+  "USER_CLIENT_PROFILE_EXISTS": {
+    "title": "Profile already exists",
+    "description": "A client profile already exists for this user."
+  },
+  "USER_CLIENT_PROFILE_NOT_FOUND": {
+    "title": "Profile not found",
+    "description": "The requested client profile could not be found."
+  },
+  "AUTH_VERIFY_EMAIL_TOKEN_EXPIRED": {
+    "title": "Verification link expired",
+    "description": "The email verification token has expired. Please request a new one."
+  },
+  "AUTH_VERIFY_EMAIL_TOKEN_INVALID": {
+    "title": "Invalid verification link",
+    "description": "The email verification token is invalid or corrupted."
+  },
+  "COMPANY_CREATED": {
+    "title": "Company created",
+    "description": "The company has been created successfully."
+  },
+  "CONTACT_MESSAGE_CREATED": {
+    "title": "Message sent",
+    "description": "The contact message has been created successfully."
+  },
+  "CONTACT_MESSAGE_DELETED": {
+    "title": "Message deleted",
+    "description": "The contact message has been deleted."
+  },
+  "CONTACT_MESSAGE_RESPONDED": {
+    "title": "Response sent",
+    "description": "The response to the contact message was sent successfully."
+  },
+  "CONTACT_MESSAGES_DELETED": {
+    "title": "Messages deleted",
+    "description": "The selected contact messages were deleted."
+  },
+  "NOTIFICATION_ADMIN_LIST": {
+    "title": "Notifications loaded",
+    "description": "Admin notifications were retrieved successfully."
+  },
+  "NOTIFICATION_CREATED": {
+    "title": "Notification created",
+    "description": "The notification has been created successfully."
+  },
+  "NOTIFICATION_DELETED": {
+    "title": "Notification deleted",
+    "description": "The notification has been deleted."
+  },
+  "NOTIFICATION_LIST": {
+    "title": "Notifications loaded",
+    "description": "Notifications were retrieved successfully."
+  },
+  "NOTIFICATION_MARKED_ALL_READ": {
+    "title": "All notifications marked as read",
+    "description": "All notifications were marked as read."
+  },
+  "NOTIFICATION_MARKED_READ": {
+    "title": "Notification marked as read",
+    "description": "The notification was marked as read."
+  },
+  "NOTIFICATION_MARKED_SEEN": {
+    "title": "Notification marked as seen",
+    "description": "The notification was marked as seen."
+  },
+  "NOTIFICATION_UNREAD_COUNT": {
+    "title": "Unread count loaded",
+    "description": "The unread notification count was retrieved successfully."
+  },
+  "USER_CLIENT_PROFILE_CREATED": {
+    "title": "Profile created",
+    "description": "The client profile has been created successfully."
+  },
+  "USER_CLIENT_PROFILE_DELETED": {
+    "title": "Profile deleted",
+    "description": "The client profile has been deleted."
+  },
+  "USER_CLIENT_PROFILE_FOUND": {
+    "title": "Profile loaded",
+    "description": "The client profile was retrieved successfully."
+  },
+  "USER_CLIENT_PROFILE_UPDATED": {
+    "title": "Profile updated",
+    "description": "The client profile has been updated successfully."
   }
 }

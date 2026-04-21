@@ -721,7 +721,8 @@
         "ariaLabel": "User area",
         "verified": "Verified",
         "verifiedAria": "Account verified",
-        "missingName": "Your name",
+        "missingName": "Missing name",
+        "greeting": "Welcome back 👋",
         "completion": {
           "title": "Profile progress",
           "info": "Complete the missing details to improve your booking and communication flow.",
@@ -745,11 +746,12 @@
         }
       },
       "profile": {
-        "greeting": "Hi,",
+        "title": "Account settings",
         "manageAccount": "Manage your account settings, and view your profile information.",
         "memberSince": "Member since:",
         "verified": "Verified",
         "name": "Name:",
+        "nameEmpty": "Missing name",
         "address": "Address:",
         "phone": "Phone:",
         "email": "Email:",
@@ -780,14 +782,13 @@
             "email": "Email",
             "phone": "Phone",
             "primaryAddress": "Primary address",
-            "additionalAddress": "Additional address"
+            "additionalAddress": "Address"
           },
           "form": {
             "primaryAddressTitle": "Primary address",
             "primaryAddressAriaLabel": "Main profile address details",
-            "secondaryAddressesTitle": "Secondary addresses",
             "secondaryAddressAriaLabel": "Secondary address details",
-            "secondaryAddressTitle": "Additional address",
+            "secondaryAddressTitle": "Address",
             "addSecondaryAddressQuestion": "Do you want to add another address?",
             "addSecondaryAddressButton": "Add address",
             "removeSecondaryAddressButton": "Remove",
@@ -807,29 +808,26 @@
         },
         "preferences": {
           "eyebrow": "Preferences",
-          "title": "Your preferences",
-          "description": "Adjust the language, theme and notification preferences for your account.",
           "sections": {
             "language": {
-              "title": "Language",
-              "description": "Choose the language used across your account.",
-              "buttonLabel": "Language switcher",
+              "title": "Language:",
+              "subtitle": "Switch language",
+              "lang": "English",
               "switchToEnglish": "Switch language to English",
               "switchToGerman": "Switch language to German",
               "englishVisible": "EN",
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Theme",
-              "description": "Switch between light and dark appearance.",
+              "title": "Theme:",
               "buttonLabel": "Toggle color theme",
               "lightMode": "Light mode",
-              "darkMode": "Dark mode"
+              "darkMode": "Dark mode",
+              "light": "Light mode",
+              "dark": "Dark mode"
             },
             "notifications": {
               "title": "Notifications",
-              "description": "Review which notifications are required and which ones you can manage.",
-              "requiredBadge": "Required",
               "inApp": {
                 "title": "In-app notifications",
                 "description": "These notifications are always enabled inside the app.",
@@ -844,9 +842,6 @@
                 "title": "Reminder emails",
                 "description": "Turn reminder emails on if you want to receive reminders for your bookings.",
                 "ariaLabel": "Toggle reminder email notifications",
-                "enabled": "Reminder emails enabled.",
-                "disabled": "Reminder emails disabled.",
-                "saving": "Saving reminder preference...",
                 "error": "We could not update your reminder notifications."
               }
             }
@@ -859,7 +854,7 @@
         "hero": {
           "headline1": "Privacy Policy",
           "headline2": "Transparency and Data Protection",
-          "subtitle": "This Privacy Policy explains how personal data is processed on this platform, which is technically operated by Maped Solutions UG.",
+          "subtitle": "This Privacy Policy explains how personal data is processed in connection with this platform and the services offered through it. The platform is technically operated by Maped Solutions (sole proprietorship).",
           "image": {
             "src": "/images/privacy-hero.png",
             "alt": "Data protection and security"
@@ -869,11 +864,15 @@
           "title": "Overview",
           "intro": "Protecting personal data is important to us. This Privacy Policy explains who is responsible for data processing, for which purposes data is processed, and what rights users have.",
           "bullets": [
-            "Data Controller: The respective client operating this platform (Art. 4(7) GDPR).",
-            "Data Processor: Maped Solutions UG (Art. 28 GDPR).",
-            "Legal bases: Contract performance (Art. 6(1)(b)), legal obligation (Art. 6(1)(c)), legitimate interest (Art. 6(1)(f)).",
-            "Preferred data processing location: European Union.",
-            "International transfers only with appropriate safeguards (SCC)."
+            "For the service relationship with end users, the respective client will usually act as the controller within the meaning of Art. 4(7) GDPR.",
+            "Maped Solutions (sole proprietorship) supports the technical operation of the platform and may act, depending on the processing context, as a processor, an independent controller, or a joint controller.",
+            "The platform uses a global base account structure for authentication, security, and technical account administration; service-specific profiles and operational relationships are managed separately for each client or service.",
+            "Depending on the specific processing activity, legal bases may in particular include Art. 6(1)(a), (b), (c), and (f) GDPR.",
+            "Transfers outside the EEA take place only where necessary and subject to appropriate safeguards.",
+            "The specific data protection role of Maped Solutions depends on the respective processing context.",
+            "Maped Solutions can act as its own responsible entity for platform-wide functions such as authentication, security, and technical operation.",
+            "For the processing of personal data in connection with the services offered by the respective customer, Maped Solutions generally acts as a data processor on behalf of the respective customer.",
+            "In some cases, joint responsibilities may also exist."
           ],
           "cta": {
             "label": "Contact the Controller",
@@ -881,14 +880,14 @@
           }
         },
         "roles": {
-          "title": "Responsible Parties",
+          "title": "Roles and data protection responsibilities",
           "controller": {
-            "title": "Data Controller",
-            "body": "The data controller within the meaning of the GDPR is the company offering services through this platform. This company determines the purposes and means of data processing. Contact details are provided in the Imprint."
+            "title": "Role of the respective client",
+            "body": "Where personal data is processed for the initiation, performance, and administration of the specific service offered, the respective client will generally be the controller. This includes, in particular, the operational handling of users, requests, appointments, work orders, billing, and similar service-related processes."
           },
           "processor": {
-            "title": "Data Processor",
-            "body": "Maped Solutions UG acts as a data processor pursuant to Art. 28 GDPR. It operates and maintains the platform technically and processes personal data solely on the instructions of the controller."
+            "title": "Role of Maped Solutions (sole proprietorship)",
+            "body": "Maped Solutions technically operates the platform and supports secure operation, authentication, infrastructure, abuse prevention, and protective measures. In these contexts, Maped Solutions may, depending on the specific processing activity, act not only as a processor but also as an independent controller or joint controller. It would therefore be inaccurate to describe all processing as being carried out exclusively on the client’s instructions."
           },
           "links": [
             {
@@ -900,6 +899,10 @@
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             }
           ]
+        },
+        "accountStructure": {
+          "title": "Global accounts and service-specific profiles",
+          "body": "The platform may use a central base account structure so that the same person can authenticate across multiple services or clients. However, separate relationships and profiles are maintained within each individual service. A profile for one service is therefore not automatically identical to all other uses of the platform."
         },
         "purposesAndLegalBases": {
           "title": "Purposes and Legal Bases",
@@ -946,9 +949,11 @@
           "items": [
             "Identification and contact data (name, email address, phone number, address).",
             "Account and security data (encrypted passwords, roles, language settings).",
+            "Platform authentication account data.",
             "Service request data (descriptions, locations).",
             "Contractual and payment data (invoices, payments via third parties).",
-            "Technical data (IP address, device information, server logs, strictly necessary cookies)."
+            "Technical data (IP address, device information, server logs, strictly necessary cookies).",
+            "Purpose-bound minimum data in individual technical datasets (e.g. for documentation, billing or fulfillment of legal obligations)."
           ]
         },
         "thirdParties": {
@@ -1016,8 +1021,8 @@
           "body": "Appropriate technical and organizational measures pursuant to Art. 32 GDPR are implemented, including encrypted passwords, secure data transmission (HTTPS/TLS), role-based access control, and firewall/CDN protection."
         },
         "cookies": {
-          "title": "Cookies",
-          "body": "This platform uses only strictly necessary cookies required for secure operation and core functionality. No analytics or marketing cookies are used.",
+          "title": "Cookies and comparable technologies",
+          "body": "This platform currently uses only strictly necessary cookies and comparable technical storage and access technologies. Where such technologies are required for authentication, security, session control, language settings, or other strictly necessary functions, they are used to ensure the secure operation of the platform. Analytics or tracking functions are not currently used. If non-essential statistics or analytics functions are introduced in the future, they will be used only on the legal basis required for that purpose, in particular after prior consent where required.",
           "cta": {
             "label": "View Cookie Policy",
             "href": "/legal/cookie-policy"
@@ -1032,11 +1037,24 @@
             "Withdrawal of consent (Art. 7(3)) where processing is based on consent.",
             "Right to lodge a complaint with a supervisory authority (Art. 77)."
           ],
-          "howTo": "Requests must be addressed to the respective data controller. We may request identification and generally respond within one month."
+          "howTo": "Requests should generally be addressed to the respective data controller. Maped Solutions may provide technical assistance in handling such requests, in particular where they relate to platform-wide authentication, security, or account administration. We may request identification and generally respond, or assist with the response, within one month."
+        },
+        "accountDeletion": {
+          "title": "Deletion of a service-specific account",
+          "body": "If you delete your account for a specific service or client, the related service-specific profile will generally be deleted and the active relationship with that service will be ended or deactivated. Any underlying base account structure used for authentication, or other active relationships with other clients or services, will generally remain unaffected. Where other functional domains still require minimal residual data, for example for invoicing, legal documentation, evidentiary purposes, or statutory retention obligations, only the data necessary for that separate purpose will be retained. Such residual data will not be used to recover or reactivate the deleted profile."
         },
         "retention": {
           "title": "Data Retention",
-          "body": "Personal data is stored only for as long as necessary to fulfill the stated purposes and legal obligations. Thereafter, data is deleted or anonymized."
+          "body": "Personal data is retained only for as long as necessary for the relevant purpose. If a service-specific profile is deleted, that profile and the related active service relationship will generally be removed or deactivated. Where other functional domains require minimal snapshots or residual records for legal, evidentiary, documentation, or billing purposes, only that purpose-bound data will be kept for the required retention period. Such residual data is not sufficient to reconstruct the deleted profile.",
+          "additional": {
+            "tilte": "The specific storage duration depends in particular on:",
+            "bullets": [
+              "statutory retention obligations",
+              "billing-related requirements",
+              "as well as the need to assert or defend legal claims."
+            ],
+            "close": "Once these purposes cease to apply, data will be deleted or, where possible, anonymized."
+          }
         },
         "additionalInformation": {
           "title": "Additional Information under Art. 13 GDPR",
@@ -1061,7 +1079,7 @@
         },
         "internationalTransfers": {
           "title": "International Data Transfers",
-          "body": "If personal data is processed outside the EEA, this occurs exclusively with appropriate safeguards, in particular the Standard Contractual Clauses approved by the European Commission."
+          "body": "If personal data is processed outside the EEA, this occurs exclusively with appropriate safeguards, in particular the Standard Contractual Clauses approved by the European Commission. Where necessary, supplementary technical, contractual, or organizational measures are implemented to ensure an adequate level of data protection."
         },
         "changes": {
           "title": "Changes to this Privacy Policy",
@@ -1088,7 +1106,7 @@
         "hero": {
           "headline1": "Cookie Policy",
           "headline2": "Use of Strictly Necessary Cookies",
-          "subtitle": "This Cookie Policy explains how and why cookies are used on this platform, which is technically operated by Maped Solutions UG.",
+          "subtitle": "This policy explains the use of cookies and comparable technologies on this platform, which is technically operated by Maped Solutions (sole proprietorship).",
           "image": {
             "src": "/images/cookies-hero.png",
             "alt": "Cookies and privacy settings"
@@ -1096,34 +1114,38 @@
         },
         "overview": {
           "title": "Overview",
-          "intro": "This platform uses only strictly necessary cookies required for secure operation and essential functionality. No analytics, tracking, or marketing cookies are used.",
+          "intro": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used. If non-essential technologies are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
           "bullets": [
-            "Only strictly necessary cookies are used.",
-            "No analytics or marketing cookies.",
-            "No user profiling or tracking.",
-            "Cookies can be managed through browser settings."
+            "Strictly necessary cookies and comparable technologies support core platform functions.",
+            "Analytics or tracking functions are not currently used.",
+            "No advertising or marketing tracking is carried out.",
+            "Cookies and local storage technologies can be managed through browser and platform settings."
           ],
           "cta": {
-            "label": "Cookie settings",
+            "label": "View cookie information",
             "action": "openCookieBanner"
           }
         },
         "whatAreCookies": {
-          "title": "What are cookies?",
-          "body": "Cookies are small text files stored on your device when you visit a website. They enable essential functions such as secure login, navigation, and protection against misuse."
+          "title": "What are cookies and comparable technologies?",
+          "body": "Cookies are small text files that may be stored on or read from your device. In addition, the platform may use comparable technologies such as browser storage. These technologies support, among other things, secure login, navigation, session management, and protection against misuse."
         },
         "types": {
-          "title": "What types of cookies are used?",
+          "title": "What cookies and comparable technologies are used?",
           "items": [
             {
-              "name": "Strictly necessary cookies",
-              "description": "These cookies are required to ensure the secure and proper operation of the platform, such as authentication, security, and session management. They cannot be disabled."
+              "name": "Strictly necessary technologies",
+              "description": "Strictly necessary cookies or comparable storage mechanisms may be used to provide authentication, security, session management, language settings, and similar core functions."
+            },
+            {
+              "name": "Currently no statistics or analytics features",
+              "description": "No non-essential statistics or analytics features are currently used. If such features are introduced in the future, they will be activated only on the legal basis applicable to that purpose, in particular after prior consent where required."
             }
           ]
         },
         "thirdParties": {
           "title": "Third-party services",
-          "body": "No third-party cookies are used for analytics, tracking, or marketing purposes. External service providers may set technically necessary cookies if required for platform operation.",
+          "body": "External technical service providers may be involved where necessary to provide the platform. Where cookies or comparable technologies are used in that context, this is currently limited to strictly necessary functions. If non-essential statistics or analytics features are introduced through third-party services in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
           "table": {
             "headers": {
               "name": "Provider",
@@ -1134,19 +1156,20 @@
           }
         },
         "localStorage": {
-          "title": "Use of localStorage",
-          "body": "In addition to cookies, the browser’s localStorage may be used to store technical preferences such as language or theme settings. This data remains on your device and is not shared with third parties."
+          "title": "Browser storage and comparable technologies",
+          "body": "In addition to cookies, the platform may use local browser storage technologies such as localStorage to store technical preferences or states on your device. This information is used for technical delivery and user guidance and is not shared with third parties merely because it is stored locally."
         },
         "management": {
-          "title": "Managing cookies",
-          "intro": "You can manage or delete cookies at any time via your browser settings. Disabling strictly necessary cookies may affect the functionality of the platform.",
+          "title": "Managing cookies and storage technologies",
+          "intro": "You can manage or delete cookies at any time via your browser settings. You can also remove locally stored information in your browser or on your device. Disabling strictly necessary technologies may affect the functionality of the platform.",
           "methods": [
             "Manage cookies through browser settings.",
             "Delete stored cookies via the browser.",
-            "Restrict or block cookies using browser features."
+            "Restrict or block cookies using browser features.",
+            "Remove locally stored settings from your device."
           ],
           "cta": {
-            "label": "Reopen cookie banner",
+            "label": "Reopen cookie information",
             "action": "openCookieBanner"
           },
           "links": [
@@ -1170,7 +1193,7 @@
         },
         "legalBasis": {
           "title": "Legal basis",
-          "body": "Strictly necessary cookies are used based on Art. 6(1)(f) GDPR (legitimate interest in ensuring secure and functional operation of the platform)."
+          "body": "Where access to or storage of information on your device is required for the technically necessary provision of the platform, this takes place on the basis of Section 25 TDDDG for strictly necessary technologies. Where personal data is further processed in that context, such processing will generally rely on Art. 6(1)(b) or (f) GDPR. Non-essential statistics or analytics functions are not currently used; if they are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular on the basis of consent under Section 25 TDDDG and Art. 6(1)(a) GDPR where required."
         },
         "changes": {
           "title": "Changes to this Cookie Policy",
@@ -1207,10 +1230,10 @@
           "title": "Scope",
           "intro": "These Terms of Service apply to the use of the functions and services provided through this platform.",
           "bullets": [
-            "The platform is technically operated by Maped Solutions UG.",
-            "Services are provided by the respective client.",
-            "Maped Solutions UG does not provide end-user services.",
-            "Deviating terms apply only if explicitly agreed."
+            "The platform is technically operated by Maped Solutions (sole proprietorship).",
+            "The respective end-user services are generally provided by the respective client.",
+            "The platform may use a global base account structure for authentication and security.",
+            "Service-specific profiles, operational relationships, and functional records are maintained separately for each client or service."
           ]
         },
         "definitions": {
@@ -1230,13 +1253,21 @@
             },
             {
               "term": "Provider",
-              "definition": "Maped Solutions UG as the technical operator of the platform."
+              "definition": "Maped Solutions (sole proprietorship) as the technical operator of the platform."
+            },
+            {
+              "term": "Base account",
+              "definition": "The platform-wide account that may be used for authentication, account security, and technical access administration."
+            },
+            {
+              "term": "Service-specific profile",
+              "definition": "The profile maintained within a specific client or service context and not automatically applicable to other services."
             }
           ]
         },
         "serviceDescription": {
           "title": "Service Description",
-          "body": "Maped Solutions UG provides the client with a production-ready software platform (Version 1.0). The service includes technical operation, maintenance, and continuous optimization.",
+          "body": "Maped Solutions (sole proprietorship) provides the client with a production-ready software platform. The service includes technical operation, maintenance, and continuous optimization.",
           "note": "The platform does not act as a service provider or intermediary for the services offered."
         },
         "optimization": {
@@ -1254,7 +1285,7 @@
         },
         "availability": {
           "title": "Availability",
-          "body": "Maped Solutions UG strives to ensure high platform availability. Continuous or uninterrupted availability cannot be guaranteed."
+          "body": "Maped Solutions (sole proprietorship) strives to ensure high platform availability. Continuous or uninterrupted availability cannot be guaranteed."
         },
         "externalContractors": {
           "title": "External Contractors",
@@ -1262,7 +1293,7 @@
         },
         "liability": {
           "title": "Liability",
-          "body": "Maped Solutions UG is liable only for damages caused by intent or gross negligence. In cases of slight negligence, liability is limited to breaches of essential contractual obligations and foreseeable damages.",
+          "body": "Maped Solutions (sole proprietorship) is liable only for damages caused by intent or gross negligence. In cases of slight negligence, liability is limited to breaches of essential contractual obligations and foreseeable damages.",
           "limitations": [
             "No liability for services provided by the client or external contractors.",
             "No liability for data loss if appropriate backup measures were in place.",
@@ -1271,15 +1302,15 @@
         },
         "payments": {
           "title": "Payments",
-          "body": "Payments and billing are governed by the agreements concluded between Maped Solutions UG and the client. The platform itself does not provide payment services."
+          "body": "Payments and billing are governed by the agreements concluded between Maped Solutions (sole proprietorship) and the client. The platform itself does not provide payment services."
         },
         "termination": {
           "title": "Termination",
-          "body": "The usage relationship may be terminated by either party in accordance with the agreed notice periods. Statutory termination rights remain unaffected."
+          "body": "Use of a specific service or the relationship with a specific client may be terminated in accordance with the applicable terms. Terminating one service does not automatically delete other active relationships or other service-specific profiles of the same person. Details regarding data deletion are set out in the Privacy Policy."
         },
         "dataProtection": {
           "title": "Data Protection",
-          "body": "Personal data is processed in accordance with the Privacy Policy of this platform and applicable data protection laws."
+          "body": "Personal data is processed in accordance with this platform’s Privacy Policy. That policy distinguishes between platform-wide account management, service-specific profiles, and other functional records with their own retention purposes."
         },
         "governingLaw": {
           "title": "Governing Law",
@@ -1287,7 +1318,7 @@
         },
         "changes": {
           "title": "Changes to these Terms",
-          "body": "Maped Solutions UG reserves the right to amend these Terms for legal or operational reasons. The current version is available on this platform.",
+          "body": "Maped Solutions (sole proprietorship) reserves the right to amend these Terms for legal or operational reasons. The current version is available on this platform.",
           "meta": {
             "lastUpdated": "Last updated:"
           }
@@ -1296,43 +1327,34 @@
       "imprint": {
         "hero": {
           "headline1": "Imprint",
-          "headline2": "Information pursuant to § 5 TMG",
-          "subtitle": "This page contains the legally required information about the provider of this website."
+          "headline2": "Information pursuant to § 5 DDG",
+          "subtitle": "This page contains the legally required information about the provider of this digital service."
         },
         "providerSection": {
           "heading": "Service Provider Information",
-          "description": "Provider details as required by applicable European laws:",
+          "description": "The service provider for this website is Heriberto Santana, trading as Maped Solutions.",
           "fields": {
             "companyName": "Company",
+            "owner": "Owner",
             "address": "Address",
             "email": "Email",
             "phone": "Phone"
           },
-          "fallbacks": {
-            "companyName": "Havenova",
-            "address": "Stollberger Str.43, 12627 Berlin",
-            "email": "contact@havenova.com",
-            "phone": "+49 000 0000000"
+          "values": {
+            "companyName": "Maped Solutions",
+            "owner": "Heriberto Santana",
+            "address": "Sarah-Kirsch-Str. 5, 12629 Berlin",
+            "email": "contact@mapedsolutions.com",
+            "phone": "+49 177 7312 606"
           }
-        },
-        "responsibleSection": {
-          "heading": "Responsible for Content pursuant to § 55 Abs. 2 RStV",
-          "description": "The person responsible for the content of this website is:",
-          "name": "Hasan Al Al-Hayyawi",
-          "address": "Stollberger Str.43, 12627 Berlin"
         },
         "liabilitySection": {
           "heading": "Disclaimer",
           "text": "Despite careful content control, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content."
         },
         "odrSection": {
-          "heading": "Online Dispute Resolution (ODR)",
-          "text": "The European Commission provides a platform for online dispute resolution (ODR):",
-          "link": {
-            "label": "https://ec.europa.eu/consumers/odr",
-            "href": "https://ec.europa.eu/consumers/odr"
-          },
-          "note": "We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
+          "heading": "Consumer dispute resolution",
+          "text": "We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
         }
       }
     }

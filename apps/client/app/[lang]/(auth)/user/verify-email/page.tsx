@@ -16,7 +16,7 @@ import {
 } from '../../../../../../../packages/contexts';
 import { useLang } from '../../../../../../../packages/hooks';
 
-import { FormWrapper } from '../../../../../../../packages/components/user/userForm';
+import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 import styles from '../userAuth.module.css';
 import { ResendVerificationEmailPayload } from '../../../../../../../packages/types';
 import { getPopup } from '../../../../../../../packages/utils/alertType';

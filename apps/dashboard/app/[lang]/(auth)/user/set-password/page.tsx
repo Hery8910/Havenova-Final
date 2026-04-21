@@ -9,7 +9,7 @@ import {
   fallbackGlobalLoading,
   useGlobalAlert,
 } from '@/packages/contexts';
-import { FormWrapper } from '@/packages/components/user/userForm';
+import { FormWrapper } from '@/packages/components/client/user/auth';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
 import styles from './page.module.css';

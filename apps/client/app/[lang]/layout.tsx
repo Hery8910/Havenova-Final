@@ -2,9 +2,15 @@
 import '../global.css';
 import { Poppins, Roboto } from 'next/font/google';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { ClientPublicConfig } from '../../../../packages/types';
 import { getPageMetadata } from '../../../../packages/utils/metadata';
-import { getClient } from '../../../../packages/services';
+import {
+  assertAllowedAppHost,
+  getClient,
+  resolveRequestHost,
+  resolveTenantKey,
+} from '../../../../packages/services';
 import {
   AlertProvider,
   AuthProvider,
@@ -46,12 +52,20 @@ export default async function LangLayout({
   children: React.ReactNode;
   params: { lang: 'de' | 'en' };
 }) {
-  const tenantKey = process.env.NEXT_PUBLIC_TENANT_KEY ?? 'tnk_demo_havenova';
+  const requestHost = resolveRequestHost(headers());
+  assertAllowedAppHost(requestHost);
+  const tenantKey = resolveTenantKey();
   let client: ClientPublicConfig | null = null;
+  let clientError: { status: number; code?: string; message?: string } | null = null;
 
   try {
     client = await getClient(tenantKey);
-  } catch (error) {
+  } catch (error: any) {
+    clientError = {
+      status: error?.response?.status ?? 500,
+      code: error?.response?.data?.code,
+      message: error?.response?.data?.message ?? error?.message,
+    };
     console.error('⚠️ Could not load client:', error);
   }
 
@@ -64,7 +78,7 @@ export default async function LangLayout({
       <body>
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>
-            <ClientProvider initialClient={client}>
+            <ClientProvider initialClient={client} initialError={clientError}>
               <AuthProvider>
                 <ProfileProvider>
                   <CookiesProvider>

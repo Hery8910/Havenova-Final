@@ -42,19 +42,7 @@ export default function AlertPopup({
   const currentType = loading ? 'loading' : type;
   const hasConfirm = !loading && !!onConfirm && !!confirmLabel;
   const hasCancel = !loading && !!onCancel && !!cancelLabel;
-  const primaryAction = hasConfirm
-    ? {
-        label: confirmLabel,
-        onClick: onConfirm,
-        className: styles.btnConfirm,
-      }
-    : hasCancel
-      ? {
-          label: cancelLabel,
-          onClick: onCancel,
-          className: styles.btnCancel,
-        }
-      : null;
+  const hasActions = hasConfirm || hasCancel;
 
   const closeLabel = texts.popups?.a11y?.close ?? 'Close popup';
   const dialogLabel = texts.popups?.a11y?.dialog ?? 'Alert dialog';
@@ -143,15 +131,18 @@ export default function AlertPopup({
             </p>
           </article>
         </aside>
-        {!loading && primaryAction && (
+        {!loading && hasActions && (
           <div className={styles.actions}>
-            <button
-              type="button"
-              onClick={primaryAction.onClick}
-              className={primaryAction.className}
-            >
-              {primaryAction.label}
-            </button>
+            {hasCancel && (
+              <button type="button" onClick={onCancel} className={styles.btnCancel}>
+                {cancelLabel}
+              </button>
+            )}
+            {hasConfirm && (
+              <button type="button" onClick={onConfirm} className={styles.btnConfirm}>
+                {confirmLabel}
+              </button>
+            )}
           </div>
         )}
       </section>

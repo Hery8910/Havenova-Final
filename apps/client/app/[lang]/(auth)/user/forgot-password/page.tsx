@@ -13,7 +13,7 @@ import {
   useProfile,
 } from '@/packages/contexts';
 import { useLang } from '@/packages/hooks';
-import { FormWrapper } from '@/packages/components/user/userForm';
+import { FormWrapper } from '@/packages/components/client/user/auth';
 import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';

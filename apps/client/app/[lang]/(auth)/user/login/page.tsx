@@ -18,7 +18,7 @@ import { loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { href } from '../../../../../../../packages/utils';
-import { FormWrapper } from '../../../../../../../packages/components';
+import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 import Image from 'next/image';
 
 export interface LoginData {

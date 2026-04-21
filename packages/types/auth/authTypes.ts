@@ -8,7 +8,8 @@ export type AuthRole = 'guest' | 'user' | 'worker' | 'admin';
 export type AuthStatus = 'active' | 'invited' | 'blocked';
 
 export interface AuthUser {
-  userId: string;
+  authId: string;
+  userClientId: string;
   clientId: string;
   email: string;
 
@@ -21,9 +22,23 @@ export interface AuthUser {
   // para el flujo de perfil automático
   isNewUser?: boolean;
 
+  // compatibilidad transitoria con consumidores que aún esperan `userId`
+  userId: string;
+
   // legales
   tosAccepted?: boolean;
   cookiePrefs?: CookiePrefs;
+}
+
+export interface AuthSessionApiUser {
+  authId: string;
+  userClientId: string;
+  clientId: string;
+  email: string;
+  role: AuthRole;
+  status?: AuthStatus;
+  isVerified: boolean;
+  isNewUser?: boolean;
 }
 
 // ---------------------------
@@ -61,7 +76,7 @@ export interface LoginPayload {
 
 export interface LoginResponse {
   success: boolean;
-  user: AuthUser;
+  user?: AuthUser;
   code?: string;
 }
 
@@ -75,7 +90,7 @@ export interface MagicLoginPayload {
 
 export interface MagicLoginResponse {
   success: boolean;
-  user: AuthUser;
+  user?: AuthUser;
   code?: string;
 }
 

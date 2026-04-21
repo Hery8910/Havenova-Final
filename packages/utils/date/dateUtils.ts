@@ -46,6 +46,13 @@ const formatRelative = (
   return template.includes('{count}') ? template.replace('{count}', String(count)) : template;
 };
 
+export const formatNumericDate = (value: string | Date) => {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+};
+
 export const formatMessageAge = (
   value: string | Date,
   options: FormatMessageAgeOptions = {},

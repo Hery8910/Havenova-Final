@@ -183,7 +183,7 @@
     },
     "cookieBanner": {
       "title": "Cookies on this website",
-      "description": "We use only essential cookies required for the website to function. We do not use analytics or advertising cookies and we do not collect any data beyond what is necessary for internal operation.",
+      "description": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used.",
       "acceptAll": "Accept all",
       "rejectAll": "Only necessary",
       "close": "Understood",

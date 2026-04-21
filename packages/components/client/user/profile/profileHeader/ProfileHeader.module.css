@@ -1,0 +1,131 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.aside {
+  height: max-content;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.image {
+  padding: 2px;
+  border-radius: 50%;
+  border: 2px solid var(--text-secondary);
+  box-shadow: var(--shadow-md);
+}
+.avatarWrapper {
+  padding: 16px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 2px;
+  border: 2px solid var(--text-secondary);
+}
+
+.greeting {
+  font-size: var(--type-title-lg-size);
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 600;
+}
+.name,
+.missingName {
+  font-size: var(--type-title-sm-size);
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.missingName {
+  color: var(--color-error);
+}
+.article {
+  min-width: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.email {
+  margin: 0;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  flex: 0 1 320px;
+  width: min(100%, 320px);
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.badge {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-success);
+  color: var(--color-success);
+  border: 1px solid var(--bg-success);
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .meta {
+    width: 100%;
+    justify-items: stretch;
+  }
+
+  .badge {
+    justify-self: start;
+  }
+}
+
+@media (min-width: 768px) {
+  .avatarWrapper {
+    padding: 16px 32px;
+  }
+  .heroImg {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    mask-image: linear-gradient(270deg, black 10%, transparent 100%);
+  }
+}

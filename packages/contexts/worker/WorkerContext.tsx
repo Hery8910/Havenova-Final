@@ -11,7 +11,7 @@ import {
 } from 'react';
 import Cookies from 'js-cookie';
 import { useGlobalAlert } from '../alert';
-import { useI18n, fallbackPopups } from '../i18n';
+import { useI18n, getI18nFallbacks } from '../i18n';
 import { useAuth } from '../auth/authContext';
 import { getWorkerProfile, refreshToken, updateWorkerProfile } from '@havenova/services';
 import { getPopup } from '@havenova/utils';
@@ -39,7 +39,8 @@ export const WorkerContext = createContext<WorkerContextProps | undefined>(undef
 export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const { auth } = useAuth();
   const { showError, closeAlert } = useGlobalAlert();
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
+  const { fallbackPopups } = getI18nFallbacks(language);
   const popups = texts?.popups ?? {};
   const clientId = auth.clientId;
   const [worker, setWorker] = useState<WorkerRecord | null>(null);

@@ -1,13 +1,28 @@
 .layout {
   margin: 0 auto;
   padding: 100px 5dvw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 250px auto;
   min-height: 100dvh;
-  height: auto;
   width: 100%;
-  gap: 8px;
-  position: relative;
+  max-width: 1200px;
+}
+.header {
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
+  margin: 0 auto;
+  width: 100%;
+  padding: 16px 32px;
+}
+.nav {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 250px;
+}
+.section {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
 }

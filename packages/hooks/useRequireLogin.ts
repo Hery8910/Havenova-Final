@@ -3,13 +3,12 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { fallbackButtons } from '../contexts';
+import { getI18nFallbacks } from '../contexts';
 import { useGlobalAlert } from '../contexts/alert';
 import { useI18n } from '../contexts/i18n';
 import { useAuth } from '../contexts/auth/authContext';
 import { useLang } from './useLang';
 import { href } from '../utils/navigation';
-import { fallbackPopups } from '../contexts/i18n/fallbackText.de';
 import { getPopup } from '../utils/alertType/getPopup';
 
 /**
@@ -23,6 +22,7 @@ export const useRequireLogin = () => {
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
+  const { fallbackButtons, fallbackPopups } = getI18nFallbacks(lang);
   const popups = texts.popups;
 
   useEffect(() => {

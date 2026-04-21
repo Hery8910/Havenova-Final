@@ -1,2 +1,2 @@
-export { UserNav as AvatarView } from '../userNav/userNav';
-export type { UserNavProps as AvatarViewProps } from '../userNav/userNav';
+export { UserNav as AvatarView } from '../../client/user/profile/userNav/userNav';
+export type { UserNavProps as AvatarViewProps } from '../../client/user/profile/userNav/userNav';

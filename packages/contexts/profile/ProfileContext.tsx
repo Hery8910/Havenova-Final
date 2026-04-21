@@ -72,8 +72,10 @@ const getStoredLanguage = (): AppLanguage | null => {
 
 const createEmptyProfile = (overrides?: Partial<UserClientProfile>): UserClientProfile => ({
   _id: '',
+  userClientId: '',
   userId: '',
   clientId: '',
+  contactEmail: '',
   name: '',
   phone: '',
   primaryAddress: undefined,
@@ -141,12 +143,16 @@ const mergeNotificationPreferences = (
 
 const normalizeProfile = (
   profile: Partial<UserClientProfile> | null | undefined,
-  identity?: { userId?: string; clientId?: string }
+  identity?: { userClientId?: string; userId?: string; clientId?: string }
 ): UserClientProfile =>
   createEmptyProfile({
     ...profile,
-    userId: profile?.userId || identity?.userId || '',
+    userClientId:
+      profile?.userClientId || identity?.userClientId || profile?.userId || identity?.userId || '',
+    userId:
+      profile?.userId || identity?.userId || profile?.userClientId || identity?.userClientId || '',
     clientId: profile?.clientId || identity?.clientId || '',
+    contactEmail: profile?.contactEmail ?? '',
     savedAddresses: profile?.savedAddresses ?? [],
     extra: profile?.extra ?? {},
     profileImage: profile?.profileImage ?? DEFAULT_AVATAR,
@@ -185,6 +191,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       return normalizeProfile(JSON.parse(raw) as UserClientProfile, {
+        userClientId: authRef.current.userClientId,
         userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
@@ -222,6 +229,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     const nextProfile =
       storedProfile ??
       normalizeProfile(undefined, {
+        userClientId: authRef.current.userClientId,
         userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
@@ -240,6 +248,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const applyProfile = useCallback(
     (nextProfile: Partial<UserClientProfile> | null | undefined) => {
       const normalized = normalizeProfile(nextProfile, {
+        userClientId: authRef.current.userClientId,
         userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
@@ -252,22 +261,26 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isClientReady) return;
-    if (!auth.userId && !auth.clientId) return;
+    if (!auth.userClientId && !auth.userId && !auth.clientId) return;
 
     setProfile((current) => {
       const nextProfile = normalizeProfile(current, {
+        userClientId: auth.userClientId,
         userId: auth.userId,
         clientId: auth.clientId,
       });
 
-      if (nextProfile.userId === current.userId && nextProfile.clientId === current.clientId) {
+      if (
+        nextProfile.userClientId === current.userClientId &&
+        nextProfile.clientId === current.clientId
+      ) {
         return current;
       }
 
       saveToStorage(nextProfile);
       return nextProfile;
     });
-  }, [auth.clientId, auth.userId, isClientReady, saveToStorage]);
+  }, [auth.clientId, auth.userClientId, auth.userId, isClientReady, saveToStorage]);
 
   const clearIsNewUserFlag = useCallback(() => {
     const currentAuth = authRef.current;
@@ -384,6 +397,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           theme: profile?.theme ?? getStoredTheme() ?? 'light',
         },
         {
+          userClientId: auth.userClientId,
           userId: auth.userId,
           clientId: auth.clientId,
         }
@@ -394,6 +408,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     auth.clientId,
     auth.isLogged,
     auth.role,
+    auth.userClientId,
     auth.userId,
     isClientReady,
     profile?.language,
@@ -415,6 +430,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           extra: patch.extra ?? profile.extra,
         },
         {
+          userClientId: auth.userClientId,
           userId: auth.userId,
           clientId: auth.clientId,
         }

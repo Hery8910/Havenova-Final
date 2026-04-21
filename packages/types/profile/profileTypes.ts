@@ -41,8 +41,10 @@ export interface UserNotificationPreferencesInput {
 
 export interface UserClientProfile {
   _id: string;
+  userClientId: string;
   userId: string;
   clientId: string;
+  contactEmail?: string;
   name?: string;
   phone?: string;
   primaryAddress?: UserAddress;
@@ -78,6 +80,22 @@ export interface UpdateUserClientProfileInput {
   theme?: ThemeMode;
   notificationPreferences?: UserNotificationPreferencesInput;
   extra?: Record<string, unknown>;
+}
+
+/**
+ * Representa los valores del formulario de edición de perfil del usuario.
+ * Este contrato está diseñado para ser utilizado por componentes de formulario
+ * y desacopla la UI de la estructura de la API (`UpdateUserClientProfileInput`).
+ */
+export interface ProfileFormValues {
+  name: string;
+  phone: string;
+  notificationPreferences: {
+    email: {
+      reminders: { enabled: boolean };
+      promotional: { enabled: boolean };
+    };
+  };
 }
 
 export interface UserClientProfileMutationResponse {

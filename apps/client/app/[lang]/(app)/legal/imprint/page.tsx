@@ -2,42 +2,39 @@
 
 import Link from 'next/link';
 import styles from './page.module.css';
-import { useClient, useI18n } from '../../../../../../../packages/contexts';
+import { useI18n } from '../../../../../../../packages/contexts';
 
 export default function ImprintPage() {
-  const { client } = useClient();
   const { texts } = useI18n();
 
   const imprintTexts = texts?.pages?.client?.legal?.imprint;
-  const identity = client?.identity;
 
   if (!imprintTexts) return null;
 
   const providerItems = [
     {
       label: imprintTexts.providerSection.fields.companyName,
-      value: identity?.companyName ?? imprintTexts.providerSection.fallbacks.companyName,
+      value: imprintTexts.providerSection.values.companyName,
+    },
+    {
+      label: imprintTexts.providerSection.fields.owner,
+      value: imprintTexts.providerSection.values.owner,
     },
     {
       label: imprintTexts.providerSection.fields.address,
-      value: identity?.address ?? imprintTexts.providerSection.fallbacks.address,
+      value: imprintTexts.providerSection.values.address,
       isAddress: true,
     },
     {
       label: imprintTexts.providerSection.fields.email,
-      value: identity?.contactEmail ?? imprintTexts.providerSection.fallbacks.email,
+      value: imprintTexts.providerSection.values.email,
       isEmail: true,
     },
     {
       label: imprintTexts.providerSection.fields.phone,
-      value: identity?.phone ?? imprintTexts.providerSection.fallbacks.phone,
+      value: imprintTexts.providerSection.values.phone,
     },
   ].filter((item) => Boolean(item.value));
-
-  const responsibleAddress =
-    imprintTexts.responsibleSection.address ||
-    identity?.address ||
-    imprintTexts.providerSection.fallbacks.address;
 
   return (
     <main className={styles.body}>
@@ -70,15 +67,6 @@ export default function ImprintPage() {
       </section>
 
       <section className={styles.section}>
-        <h3>{imprintTexts.responsibleSection.heading}</h3>
-        <p>{imprintTexts.responsibleSection.description}</p>
-        <p className={styles.responsible_name}>{imprintTexts.responsibleSection.name}</p>
-        {responsibleAddress ? (
-          <address className={styles.address}>{responsibleAddress}</address>
-        ) : null}
-      </section>
-
-      <section className={styles.section}>
         <h3>{imprintTexts.liabilitySection.heading}</h3>
         <p>{imprintTexts.liabilitySection.text}</p>
       </section>
@@ -86,15 +74,6 @@ export default function ImprintPage() {
       <section className={styles.section}>
         <h3>{imprintTexts.odrSection.heading}</h3>
         <p>{imprintTexts.odrSection.text}</p>
-        <Link
-          className={styles.link}
-          href={imprintTexts.odrSection.link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {imprintTexts.odrSection.link.label}
-        </Link>
-        <p>{imprintTexts.odrSection.note}</p>
       </section>
     </main>
   );

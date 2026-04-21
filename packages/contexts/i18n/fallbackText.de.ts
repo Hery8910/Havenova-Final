@@ -31,9 +31,11 @@ const withConfirmAndClose = (
 });
 
 export const fallbackPopups: Record<string, PopupFallback> = {
-  GLOBAL_INTERNAL_ERROR: withClose(
+  GLOBAL_INTERNAL_ERROR: withConfirmAndClose(
     'Unerwarteter Fehler',
-    'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.'
+    'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.',
+    'Erneut versuchen',
+    'Schließen'
   ),
   CLEANING_REQUEST_LOADING: withClose(
     'Anfrage wird gesendet',
@@ -47,14 +49,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Anmeldung erforderlich',
     'Ihre Sitzung enthält nicht alle erforderlichen Daten. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal.'
   ),
-  ACCESS_TOKEN_EXPIRED: withClose(
-    'Sitzung abgelaufen',
-    'Ihr Zugriffstoken ist abgelaufen. Bitte melden Sie sich erneut an.'
-  ),
-  NO_ACCESS_TOKEN: withClose(
-    'Zugriffstoken fehlt',
-    'Es wurde kein gültiges Zugriffstoken gefunden. Bitte melden Sie sich erneut an.'
-  ),
   AUTH_NOT_LOGGED_IN: withClose(
     'Anmeldung erforderlich',
     'Sie müssen angemeldet sein, um diese Aktion durchzuführen.'
@@ -63,9 +57,11 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Anmeldung erforderlich',
     'Sie müssen angemeldet sein, um diese Aktion auszuführen.'
   ),
-  AUTH_FORBIDDEN: withClose(
+  AUTH_FORBIDDEN: withConfirmAndClose(
     'Zugriff verboten',
-    'Sie haben keine Berechtigung, diese Aktion auszuführen.'
+    'Sie haben keine Berechtigung, diese Aktion auszuführen.',
+    'Zur Startseite',
+    'Schließen'
   ),
   AUTH_BLOCKED: withClose(
     'Konto gesperrt',
@@ -80,10 +76,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Es konnte kein passender Benutzer gefunden werden.'
   ),
 
-  CLIENT_CREATE_SUCCESS: withClose(
-    'Kunde erfolgreich erstellt',
-    'Der Kunde wurde erfolgreich im System angelegt.'
-  ),
   CLIENT_CREATE_DOMAIN_EXISTS: withClose(
     'Domain bereits vergeben',
     'Ein Kunde mit dieser Domain existiert bereits.'
@@ -104,10 +96,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Client nicht gefunden',
     'Der angeforderte Client konnte nicht gefunden werden.'
   ),
-  CLIENT_FETCH_FAILED: withClose(
-    'Fehler beim Laden des Clients',
-    'Beim Abrufen des Clients ist ein unerwarteter Fehler aufgetreten.'
-  ),
   CLIENT_FETCH_DASHBOARD_SUCCESS: withClose(
     'Client-Dashboard erfolgreich geladen',
     'Die Dashboard-Daten des Clients wurden erfolgreich abgerufen.'
@@ -116,7 +104,7 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Client geladen',
     'Öffentliche Client-Daten wurden erfolgreich abgerufen.'
   ),
-  CLIENT_UPDATE_SUCCESS: withClose(
+  CLIENT_UPDATED: withClose(
     'Client erfolgreich aktualisiert',
     'Die Client-Daten wurden erfolgreich aktualisiert.'
   ),
@@ -132,7 +120,12 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Client stimmt nicht',
     'Der angegebene Client stimmt nicht mit Ihrer Sitzung überein.'
   ),
-  CLIENT_NOT_FOUND: withClose('Client nicht gefunden', 'Der angegebene Client existiert nicht.'),
+  CLIENT_NOT_FOUND: withConfirmAndClose(
+    'Client nicht gefunden',
+    'Der angegebene Client existiert nicht.',
+    'Zur Startseite',
+    'Schließen'
+  ),
 
   USER_REGISTER_SUCCESS: withClose(
     'Registrierung erfolgreich',
@@ -166,25 +159,13 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Ungültige Anmeldedaten',
     'Das Passwort ist falsch. Bitte versuchen Sie es erneut.'
   ),
-  USER_LOGIN_INVALID_CREDENTIALS: withClose(
-    'Ungültige Anmeldedaten',
-    'E-Mail oder Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.'
-  ),
   USER_LOGIN_USER_NOT_FOUND: withClose(
     'Benutzer nicht gefunden',
     'Es wurde kein Konto mit diesen Zugangsdaten gefunden.'
   ),
-  USER_EMAIL_ALREADY_REGISTERED: withClose(
-    'E-Mail bereits registriert',
-    'Diese E-Mail ist bereits registriert. Bitte melden Sie sich an, um fortzufahren.'
-  ),
   USER_VERIFY_EMAIL_SUCCESS: withClose(
     'E-Mail erfolgreich bestätigt',
     'Ihre E-Mail-Adresse wurde erfolgreich verifiziert.'
-  ),
-  USER_VERIFY_EMAIL_RESENDED: withClose(
-    'Bestätigungs-E-Mail erneut gesendet',
-    'Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie erneut Ihren Posteingang.'
   ),
   USER_VERIFY_EMAIL_RESENT: withClose(
     'Bestätigungs-E-Mail erneut gesendet',
@@ -197,10 +178,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   USER_VERIFY_EMAIL_VERIFIED: withClose(
     'E-Mail bereits bestätigt',
     'Ihre E-Mail war bereits verifiziert. Sie können fortfahren.'
-  ),
-  USER_FORGOT_PASSWORD_EMAIL_SENDED: withClose(
-    'Reset-Link gesendet',
-    'Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach.'
   ),
   USER_FORGOT_PASSWORD_EMAIL_SENT: withClose(
     'Reset-Link gesendet',
@@ -292,6 +269,12 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Sie wurden auf allen Geräten abgemeldet.'
   ),
   AUTH_GET_SUCCESS: withClose('Sitzung geladen', 'Ihre Sitzungsinformationen wurden geladen.'),
+  PROFILE_ADDRESS_DELETE_CONFIRM: withConfirmAndClose(
+    'Adresse löschen?',
+    'Diese Aktion ist endgültig. Sie können diese Adresse nach dem Löschen nicht wiederherstellen.',
+    'Adresse löschen',
+    'Abbrechen'
+  ),
 
   USER_CLIENT_NOT_FOUND: withClose(
     'Zugehörigkeit nicht gefunden',
@@ -460,7 +443,7 @@ export const fallbackTosNotAccepted = fallbackPopups.USER_TOS_NOT_ACCEPTED;
 export const fallbackEmailEmpty = fallbackPopups.USER_LOGIN_MISSING_EMAIL;
 export const fallbackPasswordEmpty = fallbackPopups.USER_LOGIN_MISSING_PASSWORD;
 export const fallbackVerifyEmailSuccess = fallbackPopups.USER_VERIFY_EMAIL_SUCCESS;
-export const fallbackVerifyEmailResended = fallbackPopups.USER_VERIFY_EMAIL_RESENDED;
+export const fallbackVerifyEmailResent = fallbackPopups.USER_VERIFY_EMAIL_RESENT;
 export const fallbackExpiredToken = fallbackPopups.USER_VERIFY_EXPIRED_TOKEN;
 export const fallbackInvalidToken = fallbackPopups.USER_VERIFY_INVALID_TOKEN;
 export const fallbackLoginSuccess = fallbackPopups.USER_LOGIN_SUCCESS;

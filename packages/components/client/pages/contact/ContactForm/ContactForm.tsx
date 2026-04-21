@@ -4,12 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import styles from './ContactForm.module.css';
 import { createContactMessage } from '../../../../../services/contact';
 import { useAuth, useGlobalAlert, useI18n, useProfile } from '../../../../../contexts';
-import {
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackGlobalLoading,
-  fallbackPopups,
-} from '../../../../../contexts/i18n';
+import { getI18nFallbacks } from '../../../../../contexts/i18n';
 import { getPopup } from '../../../../../utils/alertType';
 
 type ContactFormState = {
@@ -58,7 +53,9 @@ const isValidEmail = (value: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim().toLowerCase());
 
 export function ContactFormSection() {
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
+  const { fallbackButtons, fallbackGlobalError, fallbackGlobalLoading, fallbackPopups } =
+    getI18nFallbacks(language);
   const { auth } = useAuth();
   const { profile } = useProfile();
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();

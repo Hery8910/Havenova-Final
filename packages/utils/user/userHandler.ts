@@ -2,12 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import {
-  fallbackGlobalError,
-  fallbackButtons,
-  fallbackExpiredToken,
-  fallbackInvalidToken,
-  fallbackVerifyEmailResended,
-  fallbackGlobalLoading,
+  getI18nFallbacks,
   useGlobalAlert,
   useAuth,
 } from '../../contexts';
@@ -23,6 +18,14 @@ export function useVerifyEmailActions() {
   const { auth, setAuth } = useAuth();
   const router = useRouter();
   const lang = useLang();
+  const {
+    fallbackGlobalError,
+    fallbackButtons,
+    fallbackExpiredToken,
+    fallbackInvalidToken,
+    fallbackVerifyEmailResent,
+    fallbackGlobalLoading,
+  } = getI18nFallbacks(lang);
 
   // -----------------------
   //  handleVerifyEmail
@@ -261,7 +264,7 @@ export function useVerifyEmailActions() {
         popups,
         res.code,
         'USER_VERIFY_EMAIL_RESENT',
-        fallbackVerifyEmailResended
+        fallbackVerifyEmailResent
       );
 
       showSuccess({

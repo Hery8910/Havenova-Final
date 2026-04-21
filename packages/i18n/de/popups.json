@@ -28,7 +28,9 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Zugriff verboten",
-    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen."
+    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
+    "confirm": "Zur Startseite",
+    "close": "Schließen"
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
@@ -56,7 +58,9 @@
   },
   "GLOBAL_INTERNAL_ERROR": {
     "title": "Unerwarteter Fehler",
-    "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."
+    "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.",
+    "confirm": "Erneut versuchen",
+    "close": "Schließen"
   },
   "CLEANING_REQUEST_LOADING": {
     "title": "Anfrage wird gesendet",
@@ -114,6 +118,10 @@
     "title": "Client erfolgreich aktualisiert",
     "description": "Die Client-Daten wurden erfolgreich aktualisiert."
   },
+  "CLIENT_UPDATED": {
+    "title": "Client erfolgreich aktualisiert",
+    "description": "Die Client-Daten wurden erfolgreich aktualisiert."
+  },
   "CLIENT_UPDATE_FAILED": {
     "title": "Fehler beim Aktualisieren des Clients",
     "description": "Beim Aktualisieren des Clients ist ein unerwarteter Fehler aufgetreten."
@@ -128,9 +136,10 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client nicht gefunden",
-    "description": "Der angegebene Client existiert nicht."
+    "description": "Der angegebene Client existiert nicht.",
+    "confirm": "Zur Startseite",
+    "close": "Schließen"
   },
-
   "USER_REGISTER_SUCCESS": {
     "title": "Registrierung erfolgreich",
     "description": "Wir haben Ihnen eine E-Mail zur Bestätigung Ihrer Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang."
@@ -237,7 +246,12 @@
     "title": "Sitzung geladen",
     "description": "Ihre Sitzungsinformationen wurden geladen."
   },
-
+  "PROFILE_ADDRESS_DELETE_CONFIRM": {
+    "title": "Adresse löschen?",
+    "description": "Diese Aktion ist endgültig. Sie können diese Adresse nach dem Löschen nicht wiederherstellen.",
+    "confirm": "Adresse löschen",
+    "close": "Abbrechen"
+  },
   "USER_CLIENT_NOT_FOUND": {
     "title": "Zugehörigkeit nicht gefunden",
     "description": "Der Benutzer ist diesem Client nicht zugeordnet."
@@ -250,7 +264,6 @@
     "title": "Cookie-Einstellungen aktualisiert",
     "description": "Ihre Cookie-Einstellungen wurden erfolgreich gespeichert."
   },
-
   "REFRESH_TOKEN_MISSING": {
     "title": "Erneute Anmeldung erforderlich",
     "description": "Ihre Sitzung ist nicht mehr gültig. Bitte melden Sie sich erneut an."
@@ -271,7 +284,6 @@
     "title": "Sicherheitsprüfung fehlgeschlagen",
     "description": "Ihr Sicherheits-Token ist ungültig. Bitte laden Sie die Seite neu und versuchen Sie es erneut."
   },
-
   "MAGIC_TOKEN_EXPIRED": {
     "title": "Login-Link abgelaufen",
     "description": "Der Magic-Login-Link ist abgelaufen. Bitte fordern Sie einen neuen an."
@@ -284,7 +296,6 @@
     "title": "Login erfolgreich",
     "description": "Sie wurden erfolgreich eingeloggt."
   },
-
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
     "title": "Reset-Link gesendet",
     "description": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach."
@@ -441,5 +452,181 @@
   "WORKER_UPDATED": {
     "title": "Mitarbeiter aktualisiert",
     "description": "Der Mitarbeiter wurde erfolgreich aktualisiert."
+  },
+  "AUTH_ACCESS_TOKEN_EXPIRED": {
+    "title": "Sitzung abgelaufen",
+    "description": "Ihr Zugriffstoken ist abgelaufen. Bitte melden Sie sich erneut an."
+  },
+  "AUTH_ACCESS_TOKEN_INVALID": {
+    "title": "Ungültiges Zugriffstoken",
+    "description": "Ihr Zugriffstoken ist ungültig. Bitte melden Sie sich erneut an."
+  },
+  "AUTH_ACCESS_TOKEN_MISSING": {
+    "title": "Zugriffstoken fehlt",
+    "description": "Ihr Zugriffstoken fehlt. Bitte melden Sie sich erneut an."
+  },
+  "AUTH_CLIENT_ADMIN_REQUIRED": {
+    "title": "Client-Admin erforderlich",
+    "description": "Sie benötigen Client-Admin-Rechte, um diese Aktion auszuführen."
+  },
+  "AUTH_SUPERADMIN_REQUIRED": {
+    "title": "Superadmin erforderlich",
+    "description": "Sie benötigen Superadmin-Rechte, um diese Aktion auszuführen."
+  },
+  "AUTH_CURRENT_PASSWORD_INVALID": {
+    "title": "Aktuelles Passwort ungültig",
+    "description": "Das aktuelle Passwort ist falsch. Bitte versuchen Sie es erneut."
+  },
+  "AUTH_INVALID_CREDENTIALS": {
+    "title": "Ungültige Anmeldedaten",
+    "description": "Die angegebenen Zugangsdaten sind ungültig."
+  },
+  "CLIENT_CLIENT_NOT_FOUND": {
+    "title": "Client nicht gefunden",
+    "description": "Der angeforderte Client konnte nicht gefunden werden."
+  },
+  "CLIENT_DOMAIN_EXISTS": {
+    "title": "Domain bereits vergeben",
+    "description": "Ein Client mit dieser Domain existiert bereits."
+  },
+  "CLIENT_ID_REQUIRED": {
+    "title": "Client-ID erforderlich",
+    "description": "Eine gültige Client-ID ist erforderlich."
+  },
+  "CLIENT_UPDATE_FIELD_NOT_ALLOWED": {
+    "title": "Feld darf nicht geändert werden",
+    "description": "Ein oder mehrere Felder dürfen nicht aktualisiert werden."
+  },
+  "COMPANY_EMAIL_EXISTS": {
+    "title": "E-Mail bereits vergeben",
+    "description": "Ein Unternehmen mit dieser E-Mail existiert bereits."
+  },
+  "COMPANY_NAME_EXISTS": {
+    "title": "Unternehmensname bereits vergeben",
+    "description": "Ein Unternehmen mit diesem Namen existiert bereits."
+  },
+  "CONTACT_CREATE_FAILED": {
+    "title": "Nachricht nicht gesendet",
+    "description": "Die Kontaktanfrage konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+  },
+  "CONTACT_DELETE_FAILED": {
+    "title": "Löschen fehlgeschlagen",
+    "description": "Die Kontaktanfrage konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+  },
+  "CONTACT_LIST_FAILED": {
+    "title": "Nachrichten nicht geladen",
+    "description": "Kontaktanfragen konnten nicht geladen werden. Bitte versuchen Sie es erneut."
+  },
+  "CONTACT_MESSAGE_NOT_FOUND": {
+    "title": "Nachricht nicht gefunden",
+    "description": "Die angeforderte Kontaktanfrage konnte nicht gefunden werden."
+  },
+  "CONTACT_NOTIFICATION_FAILED": {
+    "title": "Benachrichtigung fehlgeschlagen",
+    "description": "Die Kontaktbenachrichtigung konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+  },
+  "CONTACT_RESPONSE_FAILED": {
+    "title": "Antwort fehlgeschlagen",
+    "description": "Die Antwort auf diese Kontaktanfrage konnte nicht gesendet werden."
+  },
+  "EMAIL_DELIVERY_FAILED": {
+    "title": "E-Mail-Versand fehlgeschlagen",
+    "description": "Die E-Mail konnte nicht zugestellt werden. Bitte versuchen Sie es später erneut."
+  },
+  "NO_AUTH_USER": {
+    "title": "Benutzersitzung fehlt",
+    "description": "Für diese Sitzung wurde kein authentifizierter Benutzer gefunden."
+  },
+  "NOTIFICATION_FORBIDDEN_TARGET": {
+    "title": "Ungültiges Benachrichtigungsziel",
+    "description": "Sie haben keine Berechtigung für dieses Benachrichtigungsziel."
+  },
+  "NOTIFICATION_NOT_FOUND": {
+    "title": "Benachrichtigung nicht gefunden",
+    "description": "Die angeforderte Benachrichtigung konnte nicht gefunden werden."
+  },
+  "USER_CLIENT_PROFILE_EXISTS": {
+    "title": "Profil existiert bereits",
+    "description": "Für diesen Benutzer existiert bereits ein Client-Profil."
+  },
+  "USER_CLIENT_PROFILE_NOT_FOUND": {
+    "title": "Profil nicht gefunden",
+    "description": "Das angeforderte Client-Profil konnte nicht gefunden werden."
+  },
+  "AUTH_VERIFY_EMAIL_TOKEN_EXPIRED": {
+    "title": "Bestätigungslink abgelaufen",
+    "description": "Der Token zur E-Mail-Bestätigung ist abgelaufen. Bitte fordern Sie einen neuen an."
+  },
+  "AUTH_VERIFY_EMAIL_TOKEN_INVALID": {
+    "title": "Ungültiger Bestätigungslink",
+    "description": "Der Token zur E-Mail-Bestätigung ist ungültig oder beschädigt."
+  },
+  "COMPANY_CREATED": {
+    "title": "Unternehmen erstellt",
+    "description": "Das Unternehmen wurde erfolgreich erstellt."
+  },
+  "CONTACT_MESSAGE_CREATED": {
+    "title": "Nachricht gesendet",
+    "description": "Die Kontaktanfrage wurde erfolgreich erstellt."
+  },
+  "CONTACT_MESSAGE_DELETED": {
+    "title": "Nachricht gelöscht",
+    "description": "Die Kontaktanfrage wurde gelöscht."
+  },
+  "CONTACT_MESSAGE_RESPONDED": {
+    "title": "Antwort gesendet",
+    "description": "Die Antwort auf die Kontaktanfrage wurde erfolgreich gesendet."
+  },
+  "CONTACT_MESSAGES_DELETED": {
+    "title": "Nachrichten gelöscht",
+    "description": "Die ausgewählten Kontaktanfragen wurden gelöscht."
+  },
+  "NOTIFICATION_ADMIN_LIST": {
+    "title": "Benachrichtigungen geladen",
+    "description": "Admin-Benachrichtigungen wurden erfolgreich geladen."
+  },
+  "NOTIFICATION_CREATED": {
+    "title": "Benachrichtigung erstellt",
+    "description": "Die Benachrichtigung wurde erfolgreich erstellt."
+  },
+  "NOTIFICATION_DELETED": {
+    "title": "Benachrichtigung gelöscht",
+    "description": "Die Benachrichtigung wurde gelöscht."
+  },
+  "NOTIFICATION_LIST": {
+    "title": "Benachrichtigungen geladen",
+    "description": "Benachrichtigungen wurden erfolgreich geladen."
+  },
+  "NOTIFICATION_MARKED_ALL_READ": {
+    "title": "Alle Benachrichtigungen als gelesen markiert",
+    "description": "Alle Benachrichtigungen wurden als gelesen markiert."
+  },
+  "NOTIFICATION_MARKED_READ": {
+    "title": "Benachrichtigung als gelesen markiert",
+    "description": "Die Benachrichtigung wurde als gelesen markiert."
+  },
+  "NOTIFICATION_MARKED_SEEN": {
+    "title": "Benachrichtigung als gesehen markiert",
+    "description": "Die Benachrichtigung wurde als gesehen markiert."
+  },
+  "NOTIFICATION_UNREAD_COUNT": {
+    "title": "Anzahl ungelesener Benachrichtigungen geladen",
+    "description": "Die Anzahl ungelesener Benachrichtigungen wurde erfolgreich geladen."
+  },
+  "USER_CLIENT_PROFILE_CREATED": {
+    "title": "Profil erstellt",
+    "description": "Das Client-Profil wurde erfolgreich erstellt."
+  },
+  "USER_CLIENT_PROFILE_DELETED": {
+    "title": "Profil gelöscht",
+    "description": "Das Client-Profil wurde gelöscht."
+  },
+  "USER_CLIENT_PROFILE_FOUND": {
+    "title": "Profil geladen",
+    "description": "Das Client-Profil wurde erfolgreich geladen."
+  },
+  "USER_CLIENT_PROFILE_UPDATED": {
+    "title": "Profil aktualisiert",
+    "description": "Das Client-Profil wurde erfolgreich aktualisiert."
   }
 }

@@ -2,11 +2,7 @@ import { useState } from 'react';
 import styles from './ContactMessageResponder.module.css';
 import { ContactMessage } from '@/packages/types';
 import { respondContactMessage } from '../../../../packages/services/contact';
-import { useGlobalAlert, useI18n } from '../../../../packages/contexts';
-import {
-  fallbackGlobalError,
-  fallbackGlobalLoading,
-} from '../../../../packages/contexts/i18n/fallbackText.de';
+import { getI18nFallbacks, useGlobalAlert, useI18n } from '../../../../packages/contexts';
 import { getPopup } from '../../../utils';
 
 interface ContactMessageResponderProps {
@@ -26,7 +22,8 @@ export function ContactMessageResponder({
   onClose,
   onSubmitted,
 }: ContactMessageResponderProps) {
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
+  const { fallbackGlobalError, fallbackGlobalLoading } = getI18nFallbacks(language);
   const responderTexts = texts.components?.dashboard?.pages?.contactMessages?.responder;
 
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();

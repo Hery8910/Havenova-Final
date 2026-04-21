@@ -13,7 +13,7 @@ import React, {
 import { useClient } from '../client/ClientContext';
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
-import { fallbackButtons, fallbackLogoutSuccess, fallbackPopups } from '../i18n';
+import { getI18nFallbacks } from '../i18n';
 import { AuthRole, AuthUser } from '@/packages/types/auth/authTypes';
 import { useRouter } from 'next/navigation';
 import { getPopup } from '@havenova/utils';
@@ -21,6 +21,29 @@ import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
+
+type PartialAuthUser = Partial<AuthUser> & {
+  authId?: string;
+  userClientId?: string;
+  userId?: string;
+};
+
+const isSameAuthState = (left: AuthUser | null, right: AuthUser) => {
+  if (!left) return false;
+
+  return (
+    left.authId === right.authId &&
+    left.userClientId === right.userClientId &&
+    left.userId === right.userId &&
+    left.clientId === right.clientId &&
+    left.email === right.email &&
+    left.role === right.role &&
+    left.status === right.status &&
+    left.isVerified === right.isVerified &&
+    left.isLogged === right.isLogged &&
+    left.isNewUser === right.isNewUser
+  );
+};
 
 interface AuthContextProps {
   auth: AuthUser;
@@ -39,6 +62,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const router = useRouter();
   const { texts, language } = useI18n();
+  const { fallbackButtons, fallbackLogoutError, fallbackLogoutSuccess, fallbackPopups } =
+    getI18nFallbacks(language);
   const popups = texts.popups;
   const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
 
@@ -49,6 +74,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const sessionCallbackRef = useRef<(() => void) | null>(null);
   const isRefreshingRef = useRef(false);
 
+  const normalizeAuthState = useCallback(
+    (value?: PartialAuthUser | null, overrides?: Partial<AuthUser>): AuthUser => {
+      const sessionIdentity = value?.userClientId || value?.userId || '';
+
+      return {
+        authId: value?.authId || '',
+        userClientId: sessionIdentity,
+        userId: sessionIdentity,
+        clientId: value?.clientId || clientId,
+        email: value?.email || '',
+        role: value?.role || 'guest',
+        status: value?.status || 'active',
+        isVerified: value?.isVerified ?? false,
+        isLogged: value?.isLogged ?? false,
+        isNewUser: value?.isNewUser ?? true,
+        tosAccepted: value?.tosAccepted,
+        cookiePrefs: value?.cookiePrefs,
+        ...overrides,
+      };
+    },
+    [clientId]
+  );
+
   // -------------------
   // Local Storage Utils
   // -------------------
@@ -58,7 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
     if (!raw) return null;
     try {
-      return JSON.parse(raw) as AuthUser;
+      return normalizeAuthState(JSON.parse(raw) as PartialAuthUser);
     } catch {
       return null;
     }
@@ -87,33 +135,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // -------------------------
 
   const createGuest = useCallback((): AuthUser => {
-    // Si hay datos previos, úsalos como base (similar a createLocalDefault en perfil)
     const stored = loadFromStorage();
-    const base: Partial<AuthUser> = stored
-      ? {
-          userId: stored.userId,
-          clientId: stored.clientId,
-          email: stored.email,
-          role: stored.role,
-          status: stored.status,
-          isVerified: stored.isVerified,
-          cookiePrefs: stored.cookiePrefs,
-          isNewUser: stored.isNewUser,
-        }
-      : {};
-
-    return {
-      userId: base.userId || '',
-      clientId: base.clientId || clientId,
-      email: base.email || '',
-      role: base.role || 'guest',
+    return normalizeAuthState(stored, {
+      authId: '',
+      userClientId: '',
+      userId: '',
+      role: 'guest',
       isLogged: false,
-      isVerified: base.isVerified ?? false,
-      status: base.status || 'active',
-      cookiePrefs: base.cookiePrefs,
-      isNewUser: base.isNewUser ?? true,
-    };
-  }, [clientId]);
+      clientId: stored?.clientId || clientId,
+    });
+  }, [clientId, normalizeAuthState]);
 
   // -------------------
   // Init hydration guard
@@ -143,7 +174,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       const stored = loadFromStorage();
       const setFromBackend = (backendAuth: AuthUser) => {
-        const finalAuth = { ...backendAuth, isLogged: true, isNewUser: false };
+        const finalAuth = normalizeAuthState(backendAuth, {
+          isLogged: true,
+          isNewUser: false,
+        });
         setAuthState(finalAuth);
         saveToStorage(finalAuth);
       };
@@ -219,7 +253,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         // Other errors
         if (stored) {
-          setAuthState(stored);
+          setAuthState(normalizeAuthState(stored));
           return;
         }
         setGuest();
@@ -238,9 +272,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!isClientReady) return;
 
     const stored = loadFromStorage();
+    const normalizedStored = stored ? normalizeAuthState(stored) : null;
 
-    if (stored) {
-      setAuthState(stored);
+    if (normalizedStored) {
+      setAuthState((current) => (isSameAuthState(current, normalizedStored) ? current : normalizedStored));
       if (stored.role !== 'guest') {
         setLoading(true);
         refreshAuth().finally(() => setLoading(false));
@@ -248,7 +283,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } else {
       const guest = createGuest();
-      setAuthState(guest);
+      setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
       saveToStorage(guest);
     }
 
@@ -278,7 +313,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
       });
     } catch {
-      const popup = getPopup(popups, 'LOGOUT_FAILED', 'LOGOUT_FAILED', fallbackLogoutSuccess);
+      const popup = getPopup(popups, 'LOGOUT_FAILED', 'LOGOUT_FAILED', fallbackLogoutError);
 
       showError({
         response: {
@@ -322,9 +357,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // -------------------
 
   const setAuth = useCallback((u: AuthUser) => {
-    setAuthState(u);
-    saveToStorage(u);
-  }, []);
+    const normalized = normalizeAuthState(u);
+    setAuthState(normalized);
+    saveToStorage(normalized);
+  }, [normalizeAuthState]);
 
   const registerSessionCallback = useCallback((cb: () => void) => {
     sessionCallbackRef.current = cb;
@@ -358,6 +394,7 @@ export const useRequireRole = (expectedRole: AuthRole) => {
   const { auth, loading } = useAuth();
   const { showError, closeAlert } = useGlobalAlert();
   const { texts, language } = useI18n();
+  const { fallbackPopups } = getI18nFallbacks(language);
   const router = useRouter();
   const didNotifyRef = useRef(false);
 

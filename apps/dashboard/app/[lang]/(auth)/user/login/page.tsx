@@ -20,7 +20,7 @@ import { loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { href } from '../../../../../../../packages/utils';
 import { LoginPayload } from '../../../../../../../packages/types';
-import { FormWrapper } from '../../../../../../../packages/components';
+import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 
 export interface LoginData {
   title: string;

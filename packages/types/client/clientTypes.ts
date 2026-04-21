@@ -1,4 +1,5 @@
 import type { WeeklySchedule } from '../calendar';
+import type { ApiResponse } from '../api';
 
 export const CLIENT_MODULES = ['homeServices', 'rideHailing', 'restaurant'] as const;
 export type ClientModuleName = (typeof CLIENT_MODULES)[number];
@@ -262,11 +263,16 @@ export type ClientLegalUpdates = ClientLegal['updates'];
 
 export type ClientSchedule = WeeklySchedule;
 
-// Compatibility alias used by current frontend context.
-export type ClientPublicConfig = ClientTenantBootstrapView &
+// Tenant bootstrap is the canonical public client payload. Keep the legacy alias
+// while some frontend consumers still import ClientPublicConfig.
+export type ClientBootstrapConfig = ClientTenantBootstrapView &
   Partial<Pick<ClientPublicView, 'publicProfile' | 'legal'>>;
 
+export type ClientPublicConfig = ClientBootstrapConfig;
+export type ClientBootstrapResponse = ApiResponse<ClientBootstrapConfig>;
+export type ClientDashboardResponse = ApiResponse<ClientDashboardView>;
+
 export interface ClientContextProps {
-  client: ClientPublicConfig;
+  client: ClientBootstrapConfig;
   loading: boolean;
 }

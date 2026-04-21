@@ -2,6 +2,7 @@ import api from '../api/api';
 import { ApiResponse } from '@/packages/types/api';
 import {
   AuthUser,
+  AuthSessionApiUser,
   RegisterPayload,
   RegisterResponse,
   LoginPayload,
@@ -23,6 +24,38 @@ import {
   ChangeEmailConfirmPayload,
   ChangeEmailConfirmResponse,
 } from '@/packages/types/auth/authTypes';
+
+type AuthEnvelope<TUser> = {
+  success: boolean;
+  code?: string;
+  message?: string;
+  user?: TUser;
+};
+
+const normalizeAuthUser = (user: AuthSessionApiUser): AuthUser => ({
+  authId: user.authId,
+  userClientId: user.userClientId,
+  clientId: user.clientId,
+  email: user.email,
+  role: user.role,
+  status: user.status,
+  isVerified: user.isVerified,
+  isNewUser: user.isNewUser,
+  isLogged: true,
+  // compatibilidad transitoria para el resto del frontend
+  userId: user.userClientId,
+});
+
+const requireAuthUser = (
+  user: AuthSessionApiUser | undefined,
+  fallbackMessage: string
+): AuthSessionApiUser => {
+  if (!user) {
+    throw new Error(fallbackMessage);
+  }
+
+  return user;
+};
 
 // ---------------------------
 // REFRESH
@@ -48,10 +81,15 @@ export const registerUser = async (payload: RegisterPayload): Promise<RegisterRe
 // ---------------------------
 
 export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> => {
-  const { data } = await api.post<LoginResponse>('/api/auth/login', payload, {
+  const { data } = await api.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/login', payload, {
     withCredentials: true,
   });
-  return data;
+
+  return {
+    success: data.success,
+    code: data.code,
+    user: data.user ? normalizeAuthUser(data.user) : undefined,
+  };
 };
 
 // ---------------------------
@@ -59,10 +97,10 @@ export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> =
 // ---------------------------
 
 export const getAuthUser = async (): Promise<AuthUser> => {
-  const { data } = await api.get<ApiResponse<AuthUser>>('/api/auth/me', {
+  const { data } = await api.get<AuthEnvelope<AuthSessionApiUser>>('/api/auth/me', {
     withCredentials: true,
   });
-  return data.user;
+  return normalizeAuthUser(requireAuthUser(data.user, 'Auth session payload is missing user data.'));
 };
 
 // ---------------------------
@@ -153,7 +191,10 @@ export const changeEmail = async (payload: ChangeEmailPayload): Promise<ChangeEm
 export const confirmChangeEmail = async (
   payload: ChangeEmailConfirmPayload
 ): Promise<ChangeEmailConfirmResponse> => {
-  const { data } = await api.post<ChangeEmailConfirmResponse>('/api/auth/change-email/confirm', payload);
+  const { data } = await api.post<ChangeEmailConfirmResponse>(
+    '/api/auth/change-email/confirm',
+    payload
+  );
   return data;
 };
 
@@ -164,8 +205,13 @@ export const confirmChangeEmail = async (
 export const magicLoginRequest = async (
   payload: MagicLoginPayload
 ): Promise<MagicLoginResponse> => {
-  const { data } = await api.post<MagicLoginResponse>('/api/auth/magic-login', payload, {
+  const { data } = await api.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/magic-login', payload, {
     withCredentials: true,
   });
-  return data;
+
+  return {
+    success: data.success,
+    code: data.code,
+    user: data.user ? normalizeAuthUser(data.user) : undefined,
+  };
 };
