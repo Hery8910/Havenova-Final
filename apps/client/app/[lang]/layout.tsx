@@ -38,10 +38,17 @@ export default async function LangLayout({
   let clientError: { status: number; code?: string; message?: string } | null = null;
   let tenantKey: string | null = null;
   const allowVisualFallback = process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true';
+  const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
 
   try {
     tenantKey = resolveTenantKey();
-    initialClient = await getClient(tenantKey);
+
+    if (allowVisualFallback && isBuildPhase) {
+      initialClient = createVisualFallbackClient(tenantKey);
+      console.warn('⚠️ Using visual fallback client during production build.');
+    } else {
+      initialClient = await getClient(tenantKey);
+    }
   } catch (error: unknown) {
     const resolvedError = error as TenantBootstrapError;
     clientError = {
