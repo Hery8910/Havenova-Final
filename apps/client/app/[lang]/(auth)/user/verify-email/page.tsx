@@ -227,6 +227,7 @@ const VerifyEmailPage = () => {
     loadingMsg.login,
     loadingMsg.verifyEmail,
     popups,
+    refreshAuth,
     router,
     showError,
     showLoading,
