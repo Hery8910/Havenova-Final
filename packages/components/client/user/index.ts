@@ -1,2 +1,10 @@
 export * from './auth';
-export * from './profile';
+export * from './profile/avatarSelector';
+export { Form as ProfileForm } from './profile/profileForm/form';
+export { FormWrapper as ProfileFormWrapper } from './profile/profileForm/formWrapper';
+export * from './profile/profileCompletionBadge';
+export * from './profile/profileHeader/ProfileHeader';
+export * from './profile/profileNav/ProfileNav';
+export * from './profile/userNav';
+export * from './profile/userPreferencesCard/UserPreferencesCard';
+export * from './profile/userProfileDetailsManager';

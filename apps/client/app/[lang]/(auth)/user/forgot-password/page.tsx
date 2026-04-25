@@ -19,6 +19,9 @@ import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { href } from '@/packages/utils/navigation';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface ForgotPasswordData {
   title: string;
@@ -31,6 +34,7 @@ const ForgotPassword = () => {
   const descriptionId = 'forgot-password-description';
 
   const { client } = useClient();
+  const router = useRouter();
   const { texts } = useI18n();
   const { auth } = useAuth();
   const { profile } = useProfile();
@@ -40,6 +44,7 @@ const ForgotPassword = () => {
 
   const popups = texts.popups;
   const formText = texts.components.client.form;
+  const navText = texts.components.client.navbar.accessibility;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
 
@@ -50,7 +55,7 @@ const ForgotPassword = () => {
       if (!client?._id) {
         const popupData = getPopup(
           popups,
-          'GLOBAL_INTERNAL_ERROR',
+          'CLIENT_MISSING_CLIENT_ID',
           'GLOBAL_INTERNAL_ERROR',
           fallbackGlobalError
         );
@@ -72,10 +77,10 @@ const ForgotPassword = () => {
         clientId: data.clientId || client._id,
       };
 
-      if (!payload.email || !payload.language || !payload.clientId) {
+      if (!payload.clientId) {
         const popupData = getPopup(
           popups,
-          'GLOBAL_INTERNAL_ERROR',
+          'CLIENT_MISSING_CLIENT_ID',
           'GLOBAL_INTERNAL_ERROR',
           fallbackGlobalError
         );
@@ -109,37 +114,70 @@ const ForgotPassword = () => {
 
       const response = await forgotPassword(payload);
 
-      if (response.success) {
+      if (!response.success) {
         const popupData = getPopup(
           popups,
           response.code,
-          'USER_FORGOT_PASSWORD_EMAIL_SENT',
-          fallbackForgotPasswordSuccess
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
         );
 
-        showSuccess({
+        showError({
           response: {
-            status: 200,
+            status: 400,
             title: popupData.title,
             description: popupData.description,
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onCancel: closeAlert,
         });
+        return;
       }
+
+      const popupData = getPopup(
+        popups,
+        response.code,
+        'USER_FORGOT_PASSWORD_EMAIL_SENT',
+        fallbackForgotPasswordSuccess
+      );
+
+      showSuccess({
+        response: {
+          status: 200,
+          title: popupData.title,
+          description: popupData.description,
+          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+        },
+        onConfirm: () => {
+          closeAlert();
+          router.push(href(lang, '/user/login'));
+        },
+        onCancel: closeAlert,
+      });
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const canRetry = !code || (err.response?.status ?? 500) >= 500;
 
       showError({
         response: {
           status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: canRetry
+            ? popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload
+            : undefined,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
+        onConfirm: canRetry
+          ? () => {
+              closeAlert();
+              void handleForgotPassword(data);
+            }
+          : undefined,
         onCancel: closeAlert,
       });
     } finally {
@@ -148,46 +186,56 @@ const ForgotPassword = () => {
   };
 
   return (
-    <main className={styles.main}>
-      <section
-        className={`${styles.section} card`}
-        aria-labelledby={headingId}
-        aria-describedby={descriptionId}
-        aria-busy={loading}
-        role="form"
-      >
-        <Link className={styles.logoLink} href="/" aria-label="Homepage">
-          <Image
-            className={styles.logoImage}
-            src={'/logos/logo-vertical-dark.webp'}
-            alt="Havenova Logo"
-            width={250}
-            height={125}
-            priority
-          />
-        </Link>
-        <article className={styles.article}>
-          <h1 id={headingId} className={styles.h1}>
+    <section
+      className={styles.authSection}
+      aria-labelledby={headingId}
+      aria-describedby={descriptionId}
+    >
+      <header className={styles.authHeader}>
+        <Image
+          className={styles.logoImage}
+          src={'/logos/vertical-logo-auth.webp'}
+          alt="Havenova Logo"
+          width={100}
+          height={100}
+          priority
+        />
+
+        <div className={styles.authHeaderText}>
+          <h1 id={headingId} className={styles.authTitle}>
             {forgotPasswordText.title}
           </h1>
+          <p id={descriptionId} className={styles.authDescription}>
+            {forgotPasswordText.info}
+          </p>
+        </div>
+      </header>
 
-          <FormWrapper<ForgotPasswordPayload>
-            fields={['email', 'language', 'clientId'] as const}
-            onSubmit={handleForgotPassword}
-            button={forgotButton}
-            initialValues={{
-              clientId: client?._id || '',
-              email: auth?.email || '',
-              language: profile?.language || lang || 'de',
-            }}
-            loading={loading}
-          />
-        </article>
-        <p id={descriptionId} className={styles.p}>
-          {forgotPasswordText.info}
-        </p>
-      </section>
-    </main>
+      <div className={styles.authFormContainer}>
+        <FormWrapper<ForgotPasswordPayload>
+          fields={['email', 'language', 'clientId'] as const}
+          onSubmit={handleForgotPassword}
+          button={forgotButton}
+          initialValues={{
+            clientId: client?._id || '',
+            email: auth?.email || '',
+            language: profile?.language || lang || 'de',
+          }}
+          loading={loading}
+        />
+      </div>
+
+      <footer className={styles.authFooter}>
+        <div className={styles.authFooterActions}>
+          <Link className={styles.link} href={href(lang, '/user/login')}>
+            {formText.button.login}
+          </Link>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
+          </Link>
+        </div>
+      </footer>
+    </section>
   );
 };
 

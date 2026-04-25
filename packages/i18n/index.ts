@@ -10,6 +10,12 @@ import en_loadings from './en/loadings.json';
 import en_pages from './en/pages.json';
 import en_components from './en/components.json';
 
+import es_common from './es/common.json';
+import es_popups from './es/popups.json';
+import es_loadings from './es/loadings.json';
+import es_pages from './es/pages.json';
+import es_components from './es/components.json';
+
 export const resources = {
   de: {
     ...de_common,
@@ -24,6 +30,13 @@ export const resources = {
     loadings: en_loadings,
     pages: en_pages,
     components: en_components,
+  },
+  es: {
+    ...es_common,
+    popups: es_popups,
+    loadings: es_loadings,
+    pages: es_pages,
+    components: es_components,
   },
 };
 

@@ -21,6 +21,7 @@ import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
+const AUTH_REQUEST_TIMEOUT_MS = 8000;
 
 type PartialAuthUser = Partial<AuthUser> & {
   authId?: string;
@@ -43,6 +44,25 @@ const isSameAuthState = (left: AuthUser | null, right: AuthUser) => {
     left.isLogged === right.isLogged &&
     left.isNewUser === right.isNewUser
   );
+};
+
+const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> => {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error(message));
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  }
 };
 
 interface AuthContextProps {
@@ -176,7 +196,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const setFromBackend = (backendAuth: AuthUser) => {
         const finalAuth = normalizeAuthState(backendAuth, {
           isLogged: true,
-          isNewUser: false,
+          isNewUser: backendAuth.isNewUser ?? stored?.isNewUser ?? false,
         });
         setAuthState(finalAuth);
         saveToStorage(finalAuth);
@@ -189,7 +209,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
 
       try {
-        const backendAuth = await getAuthUser();
+        const backendAuth = await withTimeout(
+          getAuthUser(),
+          AUTH_REQUEST_TIMEOUT_MS,
+          'Auth bootstrap timed out.'
+        );
         setFromBackend(backendAuth);
       } catch (err: any) {
         const status = err?.response?.status;
@@ -197,8 +221,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // TOKEN EXPIRED
         if (status === 401 || status === 403) {
           try {
-            await refreshToken();
-            const backendAuth = await getAuthUser();
+            await withTimeout(
+              refreshToken(),
+              AUTH_REQUEST_TIMEOUT_MS,
+              'Auth refresh token request timed out.'
+            );
+            const backendAuth = await withTimeout(
+              getAuthUser(),
+              AUTH_REQUEST_TIMEOUT_MS,
+              'Auth bootstrap timed out after refresh.'
+            );
             setFromBackend(backendAuth);
             return;
           } catch {
@@ -275,10 +307,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const normalizedStored = stored ? normalizeAuthState(stored) : null;
 
     if (normalizedStored) {
-      setAuthState((current) => (isSameAuthState(current, normalizedStored) ? current : normalizedStored));
-      if (stored.role !== 'guest') {
-        setLoading(true);
-        refreshAuth().finally(() => setLoading(false));
+      setAuthState((current) =>
+        isSameAuthState(current, normalizedStored) ? current : normalizedStored
+      );
+      if (normalizedStored.role !== 'guest') {
+        void refreshAuth().finally(() => {
+          setLoading(false);
+        });
         return;
       }
     } else {
@@ -366,12 +401,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     sessionCallbackRef.current = cb;
   }, []);
 
-  if (!isClientReady || loading || !auth) return null;
+  const authValue = auth ?? createGuest();
 
   return (
     <AuthContext.Provider
       value={{
-        auth,
+        auth: authValue,
         loading,
         setAuth,
         refreshAuth,

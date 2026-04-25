@@ -13,7 +13,6 @@ import {
   fallbackGlobalError,
   fallbackLoadingMessages,
   fallbackPopups,
-  useAuth,
   useGlobalAlert,
   useI18n,
   useProfile,
@@ -21,14 +20,14 @@ import {
 import { useLang } from '../../../../../../packages/hooks';
 import { useRequireLogin } from '../../../../../../packages/hooks/useRequireLogin';
 import { href } from '../../../../../../packages/utils';
-import { FormWrapper } from '../../../../../../packages/components/client/user/auth';
+import { FormWrapper } from '../../../../../../packages/components/client/user/profile';
 
 type ProfileFormData = Pick<
   UpdateUserClientProfileInput,
   'name' | 'phone'
 >;
 export interface ProfileData {
-  greeting: string;
+  greeting?: string;
   manageAccount: string;
   memberSince: string;
   verified: string;
@@ -60,7 +59,6 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
 
   const { profile: userProfile, updateProfile, reloadProfile } = useProfile();
-  const { auth } = useAuth();
   const { showError, showConfirm, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -69,7 +67,7 @@ const Profile = () => {
 
   const handleProfileUpdate = async (data: ProfileFormData) => {
     try {
-      if (!auth?.isLogged || auth.role === 'guest') {
+      if (!userProfile.userClientId || !userProfile.clientId) {
         const popupData = getPopup(
           popups,
           'USER_NEED_TO_LOGIN',
@@ -180,7 +178,7 @@ const Profile = () => {
             />
             <AvatarSelector />
           </div>
-          <p>{auth.email}</p>
+          <p>{userProfile.contactEmail}</p>
           <p>
             {profileTexts?.memberSince}{' '}
             {userProfile?.createdAt ? new Date(userProfile.createdAt).toLocaleDateString() : ''}

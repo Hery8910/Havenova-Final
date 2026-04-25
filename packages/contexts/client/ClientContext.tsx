@@ -1,13 +1,14 @@
 'use client';
 
-import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { ClientPublicConfig, ClientContextProps } from '../../types/client/clientTypes';
 import Loading from '@havenova/components/loading/Loading';
-import { useGlobalAlert } from '../alert';
 import { useI18n } from '../i18n';
 import { getPopup } from '@havenova/utils';
 import { getI18nFallbacks } from '../i18n';
 import { useRouter } from 'next/navigation';
+import { ClientBootstrapFallback } from './ClientBootstrapFallback';
+import { getClient } from '../../services/client/clientServices';
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -70,88 +71,117 @@ export function ClientProvider({
   children,
   initialClient,
   initialError,
+  tenantKey,
 }: {
   children: ReactNode;
   initialClient: ClientPublicConfig | null;
   initialError?: ClientBootstrapError | null;
+  tenantKey?: string | null;
 }) {
-  const [client, setClient] = useState<ClientPublicConfig | null>(null);
-  const [loading, setLoading] = useState(true);
-  const didNotifyRef = useRef(false);
+  const [client, setClient] = useState<ClientPublicConfig | null>(initialClient);
+  const [loading, setLoading] = useState(!initialClient && !initialError);
+  const [bootstrapError, setBootstrapError] = useState<ClientBootstrapError | null>(
+    initialError ?? null
+  );
   const { texts, language } = useI18n();
   const { fallbackButtons, fallbackPopups } = getI18nFallbacks(language);
-  const { showError, showConfirm, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const popups = texts?.popups ?? {};
 
   useEffect(() => {
     setClient(initialClient);
-    setLoading(false);
-  }, [initialClient]);
+    setBootstrapError(initialError ?? null);
 
-  useEffect(() => {
-    if (loading || client || didNotifyRef.current) return;
-    didNotifyRef.current = true;
-
-    const status = initialError?.status ?? 500;
-    const code = resolveBootstrapCode(initialError);
-    const popup = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackPopups.GLOBAL_INTERNAL_ERROR);
-    const alertKind = classifyBootstrapError(status, code);
-
-    if (alertKind === 'not_found' || alertKind === 'forbidden') {
-      showConfirm({
-        response: {
-          status,
-          title: popup.title,
-          description: popup.description,
-          confirmLabel:
-            popup.confirm ?? popups?.button?.continue ?? fallbackButtons.continue,
-          cancelLabel: popup.close ?? popups?.button?.close ?? fallbackButtons.close,
-        },
-        onConfirm: () => {
-          closeAlert();
-          router.push(`/${language}`);
-        },
-        onCancel: closeAlert,
-      });
+    if (initialClient || initialError) {
+      setLoading(false);
       return;
     }
 
-    if (alertKind === 'retryable') {
-      showConfirm({
-        response: {
-          status,
-          title: popup.title,
-          description: popup.description,
-          confirmLabel: popup.confirm ?? popups?.button?.reload ?? fallbackButtons.reload,
-          cancelLabel: popup.close ?? popups?.button?.close ?? fallbackButtons.close,
-        },
-        onConfirm: () => {
-          closeAlert();
-          window.location.reload();
-        },
-        onCancel: closeAlert,
-      });
-      return;
-    }
+    let cancelled = false;
 
-    showError({
-      response: {
-        status,
-        title: popup.title,
-        description: popup.description,
-        cancelLabel: popup.close ?? popups?.button?.close ?? fallbackButtons.close,
-      },
-      onCancel: closeAlert,
-    });
-  }, [client, closeAlert, loading, showConfirm, showError, popups, initialError, router, language]);
+    const bootstrapClient = async () => {
+      try {
+        const resolvedClient = await getClient(tenantKey ?? undefined);
+        if (!cancelled) {
+          setClient(resolvedClient);
+          setBootstrapError(null);
+        }
+      } catch (error: any) {
+        if (!cancelled) {
+          setBootstrapError({
+            status: error?.response?.status ?? 500,
+            code: error?.response?.data?.code,
+            message: error?.response?.data?.message ?? error?.message,
+          });
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    void bootstrapClient();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [initialClient, initialError, tenantKey]);
 
   if (loading) {
     return <Loading theme={'light'} />;
   }
 
   if (!client) {
-    return null;
+    const status = bootstrapError?.status ?? 500;
+    const code = resolveBootstrapCode(bootstrapError);
+    const popup = getPopup(
+      popups,
+      code,
+      'GLOBAL_INTERNAL_ERROR',
+        fallbackPopups.GLOBAL_INTERNAL_ERROR
+    );
+    const alertKind = classifyBootstrapError(status, code);
+    const meta =
+      process.env.NODE_ENV !== 'production'
+        ? [code, bootstrapError?.message].filter(Boolean).join(' · ')
+        : undefined;
+
+    if (alertKind === 'not_found' || alertKind === 'forbidden') {
+      return (
+        <ClientBootstrapFallback
+          title={popup.title}
+          description={popup.description}
+          primaryLabel={popup.confirm ?? popups?.button?.continue ?? fallbackButtons.continue}
+          onPrimary={() => router.push(`/${language}`)}
+          meta={meta}
+        />
+      );
+    }
+
+    if (alertKind === 'retryable') {
+      return (
+        <ClientBootstrapFallback
+          title={popup.title}
+          description={popup.description}
+          primaryLabel={popup.confirm ?? popups?.button?.reload ?? fallbackButtons.reload}
+          onPrimary={() => window.location.reload()}
+          secondaryLabel={popups?.button?.continue ?? fallbackButtons.continue}
+          onSecondary={() => router.push(`/${language}`)}
+          meta={meta}
+        />
+      );
+    }
+
+    return (
+      <ClientBootstrapFallback
+        title={popup.title}
+        description={popup.description}
+        primaryLabel={popups?.button?.continue ?? fallbackButtons.continue}
+        onPrimary={() => router.push(`/${language}`)}
+        meta={meta}
+      />
+    );
   }
 
   return (

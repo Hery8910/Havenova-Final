@@ -142,13 +142,36 @@ export interface VerifyEmailPayload {
 }
 
 export interface VerifyEmailResponse {
-  status: 'success' | 'expired' | 'invalid';
+  success: boolean;
   code: string;
   magicToken?: string;
   language?: string;
+  message?: string;
 }
 
-export type VerifyEmailResult = { ok: true; language: string; magicToken: string } | { ok: false };
+export type VerifyEmailResult =
+  | {
+      ok: true;
+      language: string;
+      code?: string;
+      magicToken?: string;
+    }
+  | {
+      ok: false;
+      code?: string;
+      status?: number;
+    };
+
+export type MagicLoginResult =
+  | {
+      ok: true;
+      code?: string;
+    }
+  | {
+      ok: false;
+      code?: string;
+      status?: number;
+    };
 
 // ---------------------------
 // RESEND VERIFICATION EMAIL

@@ -20,6 +20,16 @@
   --navbar-surface-border: var(--glass-border);
 }
 
+.navbarPlaceholder {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 72px;
+  pointer-events: none;
+  z-index: 9;
+}
+
 :global([data-theme='dark']) .navbar {
   --navbar-hover-bg: rgba(148, 163, 184, 0.16);
   --navbar-active-bg: rgba(148, 163, 184, 0.22);
@@ -34,5 +44,11 @@
     bottom: 0;
     padding-top: 0;
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .navbarPlaceholder {
+    top: auto;
+    bottom: 0;
+    min-height: calc(48px + env(safe-area-inset-bottom));
   }
 }

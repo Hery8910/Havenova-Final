@@ -1,25 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from '../form';
 import {
-  validateName,
   validateEmail,
-  validatePhone,
   validatePassword,
-  validateAddress,
-  validateMessage,
   validateTosAccepted,
-} from '../../../../../../utils/validators/userFormValidator';
+} from '../../../../../../utils/validators/authFormValidator';
 import { useI18n } from '../../../../../../contexts/i18n';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../../../hooks/useLang';
 import { href } from '../../../../../../utils/navigation';
-import { useProfile, useWorker } from '../../../../../../contexts';
 import { useClient } from '../../../../../../contexts/client/ClientContext';
-import { useEffect } from 'react';
 import { useAuth } from '../../../../../../contexts/auth/authContext';
-import { formatUserAddress } from '../../../../../../types';
 
 interface WrapperProps<T extends Record<string, any>> {
   fields: (FormField & keyof T)[];
@@ -30,39 +23,21 @@ interface WrapperProps<T extends Record<string, any>> {
   initialValues: T;
   loading: boolean;
 }
-type ValidateField =
-  | 'name'
-  | 'email'
-  | 'phone'
-  | 'password'
-  | 'address'
-  | 'serviceAddress'
-  | 'message'
-  | 'tosAccepted';
+type ValidateField = 'email' | 'password' | 'tosAccepted';
 
 export type FormField =
-  | 'name'
   | 'email'
-  | 'phone'
   | 'password'
-  | 'address'
-  | 'serviceAddress'
-  | 'message'
   | 'language'
   | 'clientId'
   | 'tosAccepted';
 
 export interface PlaceholdersTextProps {
-  name: string;
   email: string;
   password: string;
-  address: string;
-  phone: string;
-  message: string;
 }
 
 export interface LabelsTextProps {
-  name: string;
   email: string;
   password: string;
   forgotPassword: string;
@@ -72,9 +47,8 @@ export interface LabelsTextProps {
   tosConnector: string;
   tosPrivacy: string;
   tosSuffix: string;
-  address: string;
-  phone: string;
-  message: string;
+  showPassword: string;
+  hidePassword: string;
 }
 
 export default function FormWrapper<T extends Record<string, any>>({
@@ -87,30 +61,6 @@ export default function FormWrapper<T extends Record<string, any>>({
   loading,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
-  let profileContext: ReturnType<typeof useProfile> | null = null;
-  let workerContext: ReturnType<typeof useWorker> | null = null;
-
-  try {
-    profileContext = useProfile();
-  } catch {
-    // ProfileContext not available, fall back to worker.
-  }
-
-  if (!profileContext) {
-    try {
-      workerContext = useWorker();
-    } catch {
-      // WorkerContext not available.
-    }
-  }
-
-  const profile = profileContext?.profile ?? workerContext?.worker;
-  const profileAddress =
-    profile && 'primaryAddress' in profile
-      ? formatUserAddress(profile.primaryAddress)
-      : profile && 'address' in profile && typeof profile.address === 'string'
-        ? profile.address
-        : '';
   const { auth } = useAuth();
   const { client } = useClient();
   const router = useRouter();
@@ -134,26 +84,15 @@ export default function FormWrapper<T extends Record<string, any>>({
       ...prev,
       ...initialValues,
       clientId: client?._id || initialValues.clientId || '',
-      language: profile?.language || initialValues.language || 'de',
-      name: profile?.name ?? initialValues.name ?? prev.name,
+      language: initialValues.language || 'de',
       email: auth?.email || initialValues.email || prev.email,
-      phone: profile?.phone ?? initialValues.phone ?? prev.phone,
-      address: profileAddress || initialValues.address || prev.address,
     }));
-    // Sync whenever profile/auth/initialValues change to keep form updated
   }, [
     auth?.email,
     client?._id,
-    initialValues.address,
     initialValues.clientId,
     initialValues.email,
     initialValues.language,
-    initialValues.name,
-    initialValues.phone,
-    profileAddress,
-    profile?.language,
-    profile?.name,
-    profile?.phone,
   ]);
 
   const passwordValidator = (value: string): string[] => {
@@ -164,13 +103,8 @@ export default function FormWrapper<T extends Record<string, any>>({
   };
 
   const validators: Record<ValidateField, (value: any) => string[]> = {
-    name: validateName,
     email: validateEmail,
-    phone: validatePhone,
     password: passwordValidator,
-    address: validateAddress,
-    serviceAddress: validateAddress, // o tu validador
-    message: validateMessage,
     tosAccepted: validateTosAccepted,
   };
 
@@ -223,6 +157,7 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formElement = e.currentTarget;
 
     const newErrors: Partial<Record<FormField, string>> = {};
 
@@ -245,6 +180,14 @@ export default function FormWrapper<T extends Record<string, any>>({
             .map(([key]) => [key, true])
         ),
       }));
+
+      const firstInvalidField = fields.find((field) => Boolean(newErrors[field]));
+      if (firstInvalidField) {
+        const input = formElement.elements.namedItem(firstInvalidField);
+        if (input instanceof HTMLElement) {
+          input.focus();
+        }
+      }
       return;
     }
 
@@ -254,12 +197,9 @@ export default function FormWrapper<T extends Record<string, any>>({
 
     setFormData({
       ...initialValues,
-      name: profile?.name || '',
       email: auth?.email || initialValues.email || '',
-      phone: profile?.phone || '',
-      address: profileAddress || '',
       clientId: client?._id || '',
-      language: profile?.language || 'de',
+      language: initialValues.language || 'de',
     } as T);
     setErrors({});
     setTouched({});
@@ -267,8 +207,6 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   return (
     <Form
-      auth={auth}
-      profile={profile ?? null}
       fields={fields}
       formData={formData}
       errors={errors}

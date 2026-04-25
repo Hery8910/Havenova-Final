@@ -1,6 +1,51 @@
 {
   "client": {
     "navbar": {
+      "accountMenuTitle": "User Account",
+      "session": {
+        "logoutLabel": "Logout"
+      },
+      "languageSwitcher": {
+        "title": "Language",
+        "openButtonLabel": "Open language selector",
+        "closeButtonLabel": "Close language selector",
+        "currentLanguageLabel": "Current language",
+        "currentTag": "Current",
+        "options": {
+          "de": {
+            "label": "Deutsch",
+            "shortLabel": "DE",
+            "switchLabel": "Switch language to German"
+          },
+          "en": {
+            "label": "English",
+            "shortLabel": "EN",
+            "switchLabel": "Switch language to English"
+          },
+          "es": {
+            "label": "Español",
+            "shortLabel": "ES",
+            "switchLabel": "Switch language to Spanish"
+          }
+        }
+      },
+      "preferences": {
+        "title": "Preferences",
+        "theme": "Theme",
+        "language": "Language",
+        "themeToggle": {
+          "buttonLabel": "Theme",
+          "darkMode": "Dark mode",
+          "lightMode": "Light mode"
+        }
+      },
+      "accountLinks": {
+        "profile": "Profile",
+        "requests": "Requests",
+        "workRequests": "Work requests",
+        "notifications": "Notifications",
+        "settings": "Settings"
+      },
       "headers": {
         "services": "Services",
         "about": "Menu",
@@ -26,7 +71,7 @@
           "href": "/user/register"
         },
         {
-          "label": "Login",
+          "label": "Log in",
           "href": "/user/login"
         }
       ],
@@ -120,9 +165,12 @@
         "name": "Name",
         "email": "Email",
         "password": "Password",
+        "errorSummary": "Please review the highlighted fields.",
         "forgotPassword": "Forgot Password?",
         "resetPassword": "Reset Password",
         "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password",
         "tosPrefix": "I have read and accept the ",
         "tosTerms": "Terms of Service",
         "tosConnector": " and the ",
@@ -184,10 +232,24 @@
     "cookieBanner": {
       "title": "Cookies on this website",
       "description": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used.",
+      "statusLabel": "Cookies",
+      "categoriesTitle": "Cookie settings",
+      "necessaryTitle": "Strictly necessary cookies",
+      "necessaryDescription": "These cookies and comparable storage technologies are required for login, security, language settings and core platform functions. They cannot be disabled.",
+      "alwaysOn": "Always on",
+      "statsDescription": "Allow analytics cookies if you want to help us understand platform usage and improve the experience when these features are enabled.",
       "acceptAll": "Accept all",
       "rejectAll": "Only necessary",
+      "saveSelection": "Save selection",
       "close": "Understood",
-      "enableStats": "Enable analytics cookies"
+      "enableStats": "Analytics cookies",
+      "a11y": {
+        "dialog": "Cookie preferences dialog",
+        "close": "Close cookie preferences",
+        "settings": "Cookie preference actions",
+        "necessary": "Strictly necessary cookies are always enabled",
+        "statistics": "Enable or disable analytics cookies"
+      }
     },
     "footer": {
       "headers": {

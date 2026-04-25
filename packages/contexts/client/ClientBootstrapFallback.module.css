@@ -1,0 +1,68 @@
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(900px circle at 20% 10%, rgba(7, 104, 201, 0.12), transparent 55%),
+    radial-gradient(700px circle at 80% 85%, rgba(94, 18, 224, 0.1), transparent 50%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f7 55%, #e7ecf3 100%);
+}
+
+.card {
+  width: min(100%, 560px);
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(7, 104, 201, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 44px rgba(19, 19, 19, 0.14);
+  display: grid;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #616161;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  line-height: 1.15;
+  color: #222;
+}
+
+.description {
+  margin: 0;
+  color: #474747;
+  line-height: 1.6;
+}
+
+.meta {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(7, 104, 201, 0.08);
+  color: #4f4f4f;
+  font-size: 0.9375rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primary,
+.secondary {
+  min-width: 160px;
+}
+
+.secondary {
+  border: 1px solid rgba(7, 104, 201, 0.18);
+  background: transparent;
+  color: #222;
+}

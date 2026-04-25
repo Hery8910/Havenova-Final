@@ -1,15 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import styles from './ProfileNav.module.css';
 import { FaUser, FaBell, FaListUl, FaCog } from 'react-icons/fa';
-import { href } from '../../../../../utils';
-import { useAuth, useI18n } from '../../../../../contexts';
-import { useLang } from '../../../../../hooks';
-import { usePathname } from 'next/navigation';
 import { FaBriefcase } from 'react-icons/fa6';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { LuLogOut } from 'react-icons/lu';
+import { useAuth } from '../../../../../contexts/auth/authContext';
+import { useI18n } from '../../../../../contexts/i18n/I18nContext';
+import { useLang } from '../../../../../hooks/useLang';
+import { href } from '../../../../../utils/navigation';
+import styles from './ProfileNav.module.css';
 
 const routes = [
   { key: 'overview', path: '/profile', icon: <FaUser aria-hidden /> },
@@ -27,11 +27,11 @@ export function ProfileNav() {
   const lang = useLang();
   const pathname = usePathname();
   const labels = texts.pages.client.user.profileNav;
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isCollapsed = false;
   const active = pathname?.startsWith(href(lang, settings.path));
 
   return (
-    <div className={`${styles.wrapper} card`} role="navigation">
+    <div className={`${styles.wrapper} glass-panel--base`} role="navigation">
       <ul className={styles.list}>
         {routes.map((item) => {
           const active =

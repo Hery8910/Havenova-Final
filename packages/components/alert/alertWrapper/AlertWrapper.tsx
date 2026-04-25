@@ -4,16 +4,26 @@ import React, { useEffect, useCallback } from 'react';
 import { AlertPopup } from '../alertPopup';
 import { getAlertType } from '../../../utils/alertType';
 import type { AlertPopupProps } from '../alertPopup/AlertPopup';
+import type { AlertVisualState } from '../../../contexts/alert/useAlert';
 
-type AlertResponse = Omit<AlertPopupProps, 'type' | 'onConfirm' | 'onCancel'> & { status: number };
+type AlertResponse = Omit<AlertPopupProps, 'type' | 'onConfirm' | 'onCancel'> & {
+  status: number;
+  variant?: AlertVisualState;
+};
 
 interface AlertWrapperProps {
   response: AlertResponse | null;
+  isOpen?: boolean;
   onCancel: () => void;
   onConfirm?: () => void;
 }
 
-export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWrapperProps) {
+export default function AlertWrapper({
+  response,
+  isOpen = true,
+  onCancel,
+  onConfirm,
+}: AlertWrapperProps) {
   const isDismissible = !!response && !response.loading && !!response.cancelLabel;
 
   const handleKeyDown = useCallback(
@@ -38,6 +48,8 @@ export default function AlertWrapper({ response, onCancel, onConfirm }: AlertWra
   return (
     <AlertPopup
       type={type}
+      variant={response.variant}
+      isOpen={isOpen}
       title={response.title}
       description={response.description}
       cancelLabel={response.cancelLabel}

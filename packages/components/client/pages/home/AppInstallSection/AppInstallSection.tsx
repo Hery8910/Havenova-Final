@@ -179,7 +179,7 @@ export default function AppInstallSection({
   return (
     <section className={styles.appInstall} aria-labelledby="home-app-title">
       <div
-        className={`${styles.appCard} card`}
+        className={`${styles.appCard} glass-panel--base`}
         data-state={isInstalled ? 'installed' : canInstall || canInstallOnIos ? 'available' : 'unavailable'}
       >
         <div className={styles.appContent}>

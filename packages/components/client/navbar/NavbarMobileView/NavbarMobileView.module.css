@@ -1,22 +1,39 @@
 .mobileNavContainer {
+  --mobile-nav-gap-bottom: max(14px, env(safe-area-inset-bottom));
+  --mobile-bottom-bar-height: 48px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
+
+.mobileBrandLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
 .mobilePanel {
   width: 100%;
+  max-width: 90dvw;
+  margin: 0 auto;
+  padding: 8px 24px 24px;
   position: fixed;
-  bottom: 50px;
+  bottom: calc(var(--mobile-bottom-bar-height) + var(--mobile-nav-gap-bottom) + 12px);
   left: 0;
   right: 0;
-  max-height: calc(100dvh - 50px - env(safe-area-inset-bottom));
+  max-height: calc(100dvh - var(--mobile-bottom-bar-height) - 96px - var(--mobile-nav-gap-bottom));
   overflow-y: auto;
   isolation: isolate;
   border-top: 1px solid var(--navbar-surface-border);
   box-shadow: var(--shadow-md);
-  padding: 0 16px 16px;
   gap: 0;
   opacity: 0;
   transform: translateY(100%);
@@ -27,7 +44,7 @@
     transform 0.3s ease,
     pointer-events 0.3s ease;
   will-change: transform;
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--radius-md);
 }
 
 .mobilePanelOpen {
@@ -54,8 +71,23 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 16px;
+}
+
+.mobilePanelHeader {
+  margin-bottom: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--navbar-surface-border);
+}
+
+.mobilePanelTitle {
+  margin: 0;
+  text-align: left;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .mobilePanelList {
@@ -65,40 +97,70 @@
   gap: 8px;
 }
 
+.mobilePanelFeature {
+  width: 100%;
+}
+
 .mobilePanelLink {
   width: 100%;
 }
 
-.mobilePanelPreferences {
-  display: flex;
-  flex-direction: column;
+.mobilePanelLinkWithIcon {
+  display: inline-flex;
+  align-items: center;
   gap: 12px;
+  min-height: 52px;
+  padding: 0;
+}
+
+.mobilePanelIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+.mobilePanelImage {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .preferencesItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 0;
 }
 
 .preferencesLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .mobileBottomBar {
   position: fixed;
-  bottom: 0;
+  bottom: var(--mobile-nav-gap-bottom);
   left: 0;
   right: 0;
-  height: 50px;
+  min-height: var(--mobile-bottom-bar-height);
+  margin: 0 5dvw;
   padding: 0;
-  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   justify-content: space-around;
   align-items: center;
   isolation: isolate;
-  border-top: 1px solid var(--navbar-surface-border);
+  border: 1px solid var(--navbar-surface-border);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   z-index: 12;
 }
@@ -106,20 +168,36 @@
 .mobileBottomList {
   width: 100%;
   list-style: none;
-  margin: 0;
+
   padding: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
+.mobileBottomItem {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+
 .mobileNavButton {
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  max-width: 84px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobileNavButtonActive {
   background-color: var(--navbar-active-bg);
+}
+
+.bottomBarLogo {
+  width: 24px;
+  height: 24px;
 }
 
 .mobileNavButton svg {
@@ -129,4 +207,16 @@
 
 .panelHandle {
   margin-top: 12px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

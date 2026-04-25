@@ -35,7 +35,7 @@ const CookiesContext = createContext<CookiesContextValue | null>(null);
 
 export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [prefs, setPrefs] = useState<CookiePrefs>(defaultPrefs());
-  const [showBanner, setShowBanner] = useState<boolean>(true);
+  const [showBanner, setShowBanner] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
   // Carga inicial desde cookie/localStorage

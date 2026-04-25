@@ -29,7 +29,7 @@ export default function DashboardHeader() {
   const profileButtonLabel = profileName ? `${profileLabel}: ${profileName}` : profileLabel;
 
   return (
-    <section className={`${styles.section} card--glass`} aria-labelledby={sectionTitleId}>
+    <section className={`${styles.section} glass-panel--base`} aria-labelledby={sectionTitleId}>
       <h4 id={sectionTitleId} className={styles.h4}>
         {title}
       </h4>

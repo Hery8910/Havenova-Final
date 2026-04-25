@@ -1,65 +1,69 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useI18n } from '@havenova/contexts/i18n';
 import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
-import { NavbarView } from './NavbarView/NavbarView';
 import type { NavbarConfig } from './navbar.types';
 import { useAuth } from '../../../contexts/auth/authContext';
 import { useProfile } from '../../../contexts';
-
-type DeviceSize = 'mobile' | 'tablet' | 'desktop';
+import { getNavbarContent } from './navbar.shared';
+import { useDeviceSize } from './hooks/useDeviceSize';
+import { NavbarDesktopView } from './NavbarDesktopView/NavbarDesktopView';
+import { NavbarTabletView } from './NavbarTabletView/NavbarTabletView';
+import { NavbarMobileView } from './NavbarMobileView/NavbarMobileView';
+import styles from './NavbarContainer.module.css';
 
 export function NavbarContainer() {
   const { profile } = useProfile();
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
+  const deviceSize = useDeviceSize();
 
-  const [deviceSize, setDeviceSize] = useState<DeviceSize>('desktop');
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const theme = profile?.theme || 'light';
   const navbarConfig: NavbarConfig | undefined = texts?.components?.client?.navbar;
   const mainNavigationLabel =
     navbarConfig?.accessibility?.mainNavigation ?? 'Main navigation';
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setDeviceSize('mobile');
-      } else if (width < 1500) {
-        setDeviceSize('tablet');
-      } else {
-        setDeviceSize('desktop');
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const navbarContent = getNavbarContent({
+    texts,
+    navbarConfig,
+    auth,
+  });
 
   const handleNavigate = (path: string) => {
     router.push(href(lang, path));
-    setMenuOpen(false);
   };
 
+  if (!profile) return null;
+
+  if (!deviceSize) {
+    return <nav className={styles.navbarPlaceholder} aria-hidden="true" />;
+  }
+
   return (
-    <NavbarView
-      profile={profile}
-      auth={auth}
-      navbarConfig={navbarConfig}
-      theme={theme}
-      deviceSize={deviceSize}
-      menuOpen={menuOpen}
-      onToggleMenu={() => setMenuOpen(!menuOpen)}
-      onNavigate={handleNavigate}
-      onCloseMenu={() => setMenuOpen(false)}
-      mainNavigationLabel={mainNavigationLabel}
-    />
+    <nav className={styles.navbar} aria-label={mainNavigationLabel}>
+      {deviceSize === 'desktop' && (
+        <NavbarDesktopView content={navbarContent} onNavigate={handleNavigate} onLogout={logout} />
+      )}
+
+      {deviceSize === 'tablet' && (
+        <NavbarTabletView
+          auth={auth}
+          content={navbarContent}
+          onNavigate={handleNavigate}
+          onLogout={logout}
+        />
+      )}
+
+      {deviceSize === 'mobile' && (
+        <NavbarMobileView
+          auth={auth}
+          content={navbarContent}
+          onNavigate={handleNavigate}
+          onLogout={logout}
+        />
+      )}
+    </nav>
   );
 }

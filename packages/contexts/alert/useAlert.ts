@@ -2,8 +2,11 @@
 import { useState, useCallback } from 'react';
 import type { AlertPopupProps } from '@havenova/components/alert/alertPopup/AlertPopup';
 
+export type AlertVisualState = 'loading' | 'error' | 'success' | 'confirm' | 'warning' | 'info';
+
 export type AlertPayload = Omit<AlertPopupProps, 'type' | 'onConfirm' | 'onCancel'> & {
   status: number;
+  variant?: AlertVisualState;
 };
 
 export interface AlertConfig {
@@ -49,6 +52,7 @@ export function useAlertBase(): AlertHookReturn {
         title: response.title,
         description: response.description,
         loading: true,
+        variant: 'loading',
         cancelLabel: '',
       },
       onCancel: () => {}, // loading nunca se cancela
@@ -61,6 +65,7 @@ export function useAlertBase(): AlertHookReturn {
         response: {
           ...response,
           status: response.status ?? 400,
+          variant: response.variant ?? 'error',
           cancelLabel: response.cancelLabel ?? 'Close',
         },
         onCancel: onCancel ?? closeAlert,
@@ -76,6 +81,7 @@ export function useAlertBase(): AlertHookReturn {
         response: {
           ...response,
           status: response.status ?? 200,
+          variant: response.variant ?? 'success',
           cancelLabel: response.cancelLabel ?? 'Close',
         },
         onCancel: onCancel ?? closeAlert,
@@ -91,6 +97,7 @@ export function useAlertBase(): AlertHookReturn {
         response: {
           ...response,
           status: response.status ?? 200,
+          variant: 'confirm',
           confirmLabel: response.confirmLabel || 'Confirm',
           cancelLabel: response.cancelLabel ?? 'Cancel',
         },

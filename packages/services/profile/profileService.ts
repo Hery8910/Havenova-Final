@@ -32,6 +32,7 @@ const defaultNotificationPreferences = (): UserNotificationPreferences => ({
 
 const normalizeProfile = (profile: UserClientProfile): UserClientProfile => ({
   ...profile,
+  contactEmail: profile.contactEmail ?? '',
   savedAddresses: profile.savedAddresses ?? [],
   notificationPreferences: {
     ...defaultNotificationPreferences(),

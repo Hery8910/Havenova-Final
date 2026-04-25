@@ -20,9 +20,11 @@ import { LoginPayload } from '../../../../../../../packages/types';
 import { href } from '../../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 import Image from 'next/image';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface LoginData {
   title: string;
+  description?: string;
   cta: { title: string; label: string; url: string };
   forgotPassword?: { title: string; label: string; url: string };
   image?: { src: string; alt: string };
@@ -42,11 +44,19 @@ const Login = () => {
 
   const popups = texts.popups;
   const formText = texts.components.client.form;
+  const navText = texts.components.client.navbar.accessibility;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.client.user.login;
   const loginButton = formText.button.login;
 
   const handleLogin = async (data: LoginPayload) => {
+    const payload: LoginPayload = {
+      email: data.email?.trim() || '',
+      password: data.password || '',
+      clientId: data.clientId || client._id,
+      language: lang,
+    };
+
     try {
       setLoading(true);
 
@@ -62,17 +72,11 @@ const Login = () => {
       });
 
       setEmail(data.email);
-      const payload: LoginPayload = {
-        email: data.email?.trim() || '',
-        password: data.password || '',
-        clientId: data.clientId || client._id,
-        language: lang,
-      };
 
-      if (!payload.email || !payload.password || !payload.clientId) {
+      if (!payload.clientId) {
         const popupData = getPopup(
           popups,
-          'GLOBAL_INTERNAL_ERROR',
+          'CLIENT_MISSING_CLIENT_ID',
           'GLOBAL_INTERNAL_ERROR',
           fallbackGlobalError
         );
@@ -82,7 +86,7 @@ const Login = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close,
+            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -90,28 +94,6 @@ const Login = () => {
       }
 
       const response = await loginUser(payload);
-
-      if (!response?.user) {
-        const popupData = getPopup(
-          popups,
-          'GLOBAL_INTERNAL_ERROR',
-          'GLOBAL_INTERNAL_ERROR',
-          fallbackGlobalError
-        );
-
-        showError({
-          response: {
-            status: 500,
-            title: popupData.title,
-            description: popupData.description,
-            cancelLabel: popupData.close,
-          },
-          onCancel: () => {
-            closeAlert();
-          },
-        });
-        return;
-      }
 
       if (response.code === 'USER_LOGIN_EMAIL_NOT_VERIFIED') {
         const popupData = getPopup(
@@ -129,11 +111,60 @@ const Login = () => {
 
         showError({
           response: {
-            status: 200,
+            status: 403,
             title: popupData.title,
             description: popupData.description,
+            confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
+          onConfirm: () => {
+            router.push(href(lang, '/user/verify-email'));
+            closeAlert();
+          },
+          onCancel: closeAlert,
+        });
+        return;
+      }
+
+      if (!response?.user) {
+        const popupData = getPopup(
+          popups,
+          response?.code,
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
+        const onConfirm =
+          response?.code === 'USER_LOGIN_INVALID_PASSWORD'
+            ? () => {
+                closeAlert();
+                router.push(href(lang, '/user/forgot-password'));
+              }
+            : response?.code === 'USER_LOGIN_USER_NOT_FOUND'
+              ? () => {
+                  closeAlert();
+                  router.push(href(lang, '/user/register'));
+                }
+              : () => {
+                  closeAlert();
+                  void handleLogin(payload);
+                };
+
+        showError({
+          response: {
+            status:
+              response?.code === 'USER_LOGIN_USER_NOT_FOUND'
+                ? 404
+                : response?.code === 'USER_LOGIN_INVALID_PASSWORD'
+                  ? 401
+                  : 500,
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel:
+              popupData.confirm ??
+              (response?.code ? popups.button?.continue ?? fallbackButtons.continue : popups.button?.reload ?? fallbackButtons.reload),
+            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          },
+          onConfirm,
           onCancel: closeAlert,
         });
         return;
@@ -174,17 +205,38 @@ const Login = () => {
       const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const canRetry = !code || (err.response?.status ?? 500) >= 500;
+      const onConfirm =
+        code === 'USER_LOGIN_INVALID_PASSWORD'
+          ? () => {
+              closeAlert();
+              router.push(href(lang, '/user/forgot-password'));
+            }
+          : code === 'USER_LOGIN_USER_NOT_FOUND'
+            ? () => {
+                closeAlert();
+                router.push(href(lang, '/user/register'));
+              }
+            : canRetry
+              ? () => {
+                  closeAlert();
+                  void handleLogin(payload);
+                }
+              : undefined;
 
       showError({
         response: {
           status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: popupData.close,
+          confirmLabel: onConfirm
+            ? popupData.confirm ??
+              (canRetry ? popups.button?.reload ?? fallbackButtons.reload : undefined)
+            : undefined,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
-        onCancel: () => {
-          closeAlert();
-        },
+        onConfirm,
+        onCancel: closeAlert,
       });
     } finally {
       setLoading(false);
@@ -192,24 +244,32 @@ const Login = () => {
   };
 
   return (
-    <main
-      className={styles.main}
+    <section
+      className={styles.authSection}
       aria-labelledby="login-title"
-      aria-describedby={login?.cta?.title ? 'login-cta' : undefined}
+      aria-describedby="login-description"
     >
-      <section className={`${styles.section} card`}>
-        <header className={styles.header}>
-          <Link className={styles.logoLink} href="/" aria-label="Homepage">
-            <Image
-              className={styles.logoImage}
-              src={'/logos/logo-vertical-dark.webp'}
-              alt="Havenova Logo"
-              width={250}
-              height={125}
-              priority
-            />
-          </Link>
-        </header>
+      <header className={styles.authHeader}>
+        <Image
+          className={styles.logoImage}
+          src={'/logos/vertical-logo-auth.webp'}
+          alt="Havenova Logo"
+          width={100}
+          height={100}
+          priority
+        />
+
+        <div className={styles.authHeaderText}>
+          <h1 id="login-title" className={styles.authTitle}>
+            {login.title || 'Sign in'}
+          </h1>
+          <p id="login-description" className={styles.authDescription}>
+            {login.description || 'Access your account and manage your requests.'}
+          </p>
+        </div>
+      </header>
+
+      <div className={styles.authFormContainer}>
         <FormWrapper<LoginPayload>
           fields={['email', 'password', 'clientId'] as const}
           onSubmit={handleLogin}
@@ -222,16 +282,22 @@ const Login = () => {
           }}
           loading={loading}
         />
-        <aside className={styles.aside}>
-          <p id={'login-cta'} className={styles.header_p}>
-            {login.cta.title}
+      </div>
+
+      <footer className={styles.authFooter}>
+        <div className={styles.authFooterActions}>
+          <p className={styles.authFooterText}>
+            {login.cta.title}{' '}
+            <Link className={styles.link} href={login.cta.url}>
+              {login.cta.label}
+            </Link>
           </p>
-          <Link className={styles.link} href={login.cta.url}>
-            {login.cta.label}
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
           </Link>
-        </aside>
-      </section>
-    </main>
+        </div>
+      </footer>
+    </section>
   );
 };
 

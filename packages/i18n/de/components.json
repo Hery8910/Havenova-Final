@@ -1,13 +1,58 @@
 {
   "client": {
     "navbar": {
+      "accountMenuTitle": "Benutzerkonto",
+      "session": {
+        "logoutLabel": "Abmelden"
+      },
+      "languageSwitcher": {
+        "title": "Sprache",
+        "openButtonLabel": "Sprachauswahl öffnen",
+        "closeButtonLabel": "Sprachauswahl schließen",
+        "currentLanguageLabel": "Aktuelle Sprache",
+        "currentTag": "Aktiv",
+        "options": {
+          "de": {
+            "label": "Deutsch",
+            "shortLabel": "DE",
+            "switchLabel": "Sprache auf Deutsch umstellen"
+          },
+          "en": {
+            "label": "English",
+            "shortLabel": "EN",
+            "switchLabel": "Sprache auf Englisch umstellen"
+          },
+          "es": {
+            "label": "Español",
+            "shortLabel": "ES",
+            "switchLabel": "Sprache auf Spanisch umstellen"
+          }
+        }
+      },
+      "preferences": {
+        "title": "Einstellungen",
+        "theme": "Design",
+        "language": "Sprache",
+        "themeToggle": {
+          "buttonLabel": "Design",
+          "darkMode": "Dunkler Modus",
+          "lightMode": "Heller Modus"
+        }
+      },
+      "accountLinks": {
+        "profile": "Profil",
+        "requests": "Anfragen",
+        "workRequests": "Arbeitsaufträge",
+        "notifications": "Benachrichtigungen",
+        "settings": "Einstellungen"
+      },
       "headers": {
-        "services": "Services",
+        "services": "Dienstleistungen",
         "about": "Menü",
         "profile": "Profil"
       },
       "links": [
-        { "label": "Home", "href": "/" },
+        { "label": "Startseite", "href": "/" },
         { "label": "So funktioniert’s", "href": "/how-it-work" },
         { "label": "Kontakt", "href": "/contact" },
         { "label": "Über uns", "href": "/about" }
@@ -26,7 +71,7 @@
           "href": "/user/register"
         },
         {
-          "label": "Login",
+          "label": "Anmelden",
           "href": "/user/login"
         }
       ],
@@ -45,7 +90,7 @@
         "preferencesToggle": "Einstellungen öffnen",
         "menuPanel": "Navigationsbereich Menü",
         "accountPanel": "Navigationsbereich Konto",
-        "servicesPanel": "Navigationsbereich Services",
+        "servicesPanel": "Navigationsbereich Dienstleistungen",
         "preferencesPanel": "Navigationsbereich Einstellungen",
         "dragHandle": "Griff des Navigationsbereichs"
       }
@@ -120,9 +165,12 @@
         "name": "Name",
         "email": "E-Mail",
         "password": "Passwort",
+        "errorSummary": "Bitte prüfen Sie die markierten Felder.",
         "forgotPassword": "Passwort vergessen?",
         "resetPassword": "Passwort zurücksetzen",
         "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",
+        "showPassword": "Passwort anzeigen",
+        "hidePassword": "Passwort verbergen",
         "tosPrefix": "Ich habe die ",
         "tosTerms": "AGB",
         "tosConnector": " und die ",
@@ -184,10 +232,24 @@
     "cookieBanner": {
       "title": "Cookies auf dieser Website",
       "description": "Diese Plattform verwendet derzeit ausschließlich technisch notwendige Cookies und vergleichbare Technologien, etwa Browser-Speicher, um Anmeldung, Sicherheit, Spracheinstellungen, Sitzungsverwaltung und andere Kernfunktionen bereitzustellen. Statistik- oder Analysefunktionen werden derzeit nicht eingesetzt.",
+      "statusLabel": "Cookies",
+      "categoriesTitle": "Cookie-Einstellungen",
+      "necessaryTitle": "Technisch notwendige Cookies",
+      "necessaryDescription": "Diese Cookies und vergleichbaren Speichertechnologien sind für Anmeldung, Sicherheit, Spracheinstellungen und zentrale Plattformfunktionen erforderlich. Sie können nicht deaktiviert werden.",
+      "alwaysOn": "Immer aktiv",
+      "statsDescription": "Erlauben Sie Statistik-Cookies, wenn Sie uns helfen möchten, die Nutzung der Plattform besser zu verstehen und das Erlebnis zu verbessern, sobald diese Funktionen aktiviert sind.",
       "acceptAll": "Alle akzeptieren",
       "rejectAll": "Nur notwendige",
+      "saveSelection": "Auswahl speichern",
       "close": "Verstanden",
-      "enableStats": "Statistik-Cookies aktivieren"
+      "enableStats": "Statistik-Cookies",
+      "a11y": {
+        "dialog": "Dialog für Cookie-Einstellungen",
+        "close": "Cookie-Einstellungen schließen",
+        "settings": "Aktionen für Cookie-Einstellungen",
+        "necessary": "Technisch notwendige Cookies sind immer aktiviert",
+        "statistics": "Statistik-Cookies aktivieren oder deaktivieren"
+      }
     },
     "footer": {
       "headers": {

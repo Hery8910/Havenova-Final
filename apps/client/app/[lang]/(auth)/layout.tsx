@@ -1,15 +1,11 @@
-import React from 'react';
-import { Metadata } from 'next';
-import { getPageMetadata } from '../../../../../packages/utils/metadata';
+// apps/client/app/[lang]/(auth)/layout.tsx
+import { ReactNode } from 'react';
+import styles from './user/userAuth.module.css'; // Ajusta la ruta a tu CSS
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { lang: 'de' | 'en' };
-}): Promise<Metadata> {
-  return getPageMetadata(params.lang, 'auth');
-}
-
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function AuthLayout({ children }: { children: ReactNode }) {
+  return (
+    <main className={`bg-pattern-squares ${styles.authMainLayout}`}>
+      <div className={`glass-panel--service-primary ${styles.authCardWrapper}`}>{children}</div>
+    </main>
+  );
 }

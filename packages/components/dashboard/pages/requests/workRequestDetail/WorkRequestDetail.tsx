@@ -67,7 +67,7 @@ export default function WorkRequestDetail({ request, onClose, onUpdated }: WorkR
   };
 
   return (
-    <section className={`${styles.section} card`}>
+    <section className={`${styles.section} glass-panel--base`}>
       <header className={styles.header}>
         <h3>Work Request Details</h3>
         <button type="button" onClick={onClose}>

@@ -33,8 +33,8 @@ export default function ServicesSection({
         <div className={styles.cardGrid}>
           {texts.items.map((item) => {
             const serviceCardClass = item.href.includes('cleaning')
-              ? 'card--cleaning'
-              : 'card--service';
+              ? 'glass-panel--service-primary'
+              : 'glass-panel--service-secondary';
 
             return (
               <article className={`${styles.card} ${serviceCardClass}`} key={item.title}>

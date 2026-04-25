@@ -45,7 +45,7 @@ export function UserNav({ isMobile }: UserNavProps) {
       title: detailsLabel,
       links: [
         { href: '/profile', label: detailsLabel },
-        { href: '/profile/edit', label: editLabel },
+        { href: '/profile/settings', label: editLabel },
       ],
     },
     {
@@ -54,11 +54,11 @@ export function UserNav({ isMobile }: UserNavProps) {
     },
     {
       title: notificationsLabel,
-      links: [{ href: '/profile/notification', label: notificationsLabel }],
+      links: [{ href: '/profile/notifications', label: notificationsLabel }],
     },
     {
       title: settingsLabel,
-      links: [{ href: '/profile/edit', label: settingsLabel }],
+      links: [{ href: '/profile/settings', label: settingsLabel }],
     },
   ];
 

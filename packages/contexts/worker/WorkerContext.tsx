@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
   ReactNode,
@@ -36,12 +37,14 @@ interface WorkerContextProps {
 
 export const WorkerContext = createContext<WorkerContextProps | undefined>(undefined);
 
+export const useOptionalWorkerContext = () => useContext(WorkerContext);
+
 export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const { auth } = useAuth();
   const { showError, closeAlert } = useGlobalAlert();
   const { texts, language } = useI18n();
   const { fallbackPopups } = getI18nFallbacks(language);
-  const popups = texts?.popups ?? {};
+  const popups = useMemo(() => texts?.popups ?? {}, [texts]);
   const clientId = auth.clientId;
   const [worker, setWorker] = useState<WorkerRecord | null>(null);
   const [loading, setLoading] = useState(true);
@@ -50,6 +53,9 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const notFoundRef = useRef(false);
   const didNotifyRef = useRef(false);
   const workerRef = useRef<WorkerRecord | null>(null);
+  const globalInternalErrorFallback = fallbackPopups.GLOBAL_INTERNAL_ERROR;
+  const workerLoadFailedFallback =
+    fallbackPopups.WORKER_LOAD_FAILED ?? fallbackPopups.GLOBAL_INTERNAL_ERROR;
 
   const loadFromStorage = (): WorkerRecord | null => {
     if (typeof window === 'undefined') return null;
@@ -71,20 +77,23 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem(WORKER_STORAGE_KEY, JSON.stringify(value));
   };
 
-  const createLocalDefault = (previous?: WorkerRecord | null): WorkerRecord => ({
-    userId: previous?.userId ?? '',
-    clientId: previous?.clientId ?? clientId ?? '',
-    email: previous?.email ?? auth.email ?? '',
-    name: previous?.name ?? '',
-    phone: previous?.phone,
-    address: previous?.address,
-    profileImage: previous?.profileImage ?? '/avatars/avatar-1.svg',
-    language: previous?.language ?? 'de',
-    theme: previous?.theme ?? 'light',
-    extra: previous?.extra,
-    createdAt: previous?.createdAt,
-    updatedAt: previous?.updatedAt,
-  });
+  const createLocalDefault = useCallback(
+    (previous?: WorkerRecord | null): WorkerRecord => ({
+      userId: previous?.userId ?? '',
+      clientId: previous?.clientId ?? clientId ?? '',
+      email: previous?.email ?? auth.email ?? '',
+      name: previous?.name ?? '',
+      phone: previous?.phone,
+      address: previous?.address,
+      profileImage: previous?.profileImage ?? '/avatars/avatar-1.svg',
+      language: previous?.language ?? 'de',
+      theme: previous?.theme ?? 'light',
+      extra: previous?.extra,
+      createdAt: previous?.createdAt,
+      updatedAt: previous?.updatedAt,
+    }),
+    [auth.email, clientId]
+  );
 
   const getStoredTheme = (): ThemeMode | null => {
     if (typeof window === 'undefined') return null;
@@ -95,7 +104,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const getStoredLanguage = (): WorkerLanguage | null => {
     if (typeof window === 'undefined') return null;
     const stored = Cookies.get('lang');
-    return stored === 'de' || stored === 'en' ? stored : null;
+    return stored === 'de' || stored === 'en' || stored === 'es' ? stored : null;
   };
 
   useEffect(() => {
@@ -114,12 +123,20 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
       saveToStorage(local);
     }
     setLoading(false);
-  }, [isClientReady]);
+  }, [createLocalDefault, isClientReady]);
 
   useEffect(() => {
     if (!isClientReady || !worker) return;
     saveToStorage(worker);
   }, [worker, isClientReady]);
+
+  useEffect(() => {
+    if (!isClientReady) return;
+    if (!worker?.theme) return;
+
+    document.documentElement.setAttribute('data-theme', worker.theme);
+    localStorage.setItem('theme', worker.theme);
+  }, [isClientReady, worker?.theme]);
 
   useEffect(() => {
     workerRef.current = worker;
@@ -152,14 +169,14 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
             popups,
             'WORKER_LOAD_FAILED',
             'GLOBAL_INTERNAL_ERROR',
-            fallbackPopups.WORKER_LOAD_FAILED ?? fallbackPopups.GLOBAL_INTERNAL_ERROR
+            workerLoadFailedFallback
           );
           showError({
             response: {
               status: 404,
               title: popup.title,
               description: popup.description,
-              cancelLabel: popup.close ?? fallbackPopups.GLOBAL_INTERNAL_ERROR.close,
+              cancelLabel: popup.close ?? globalInternalErrorFallback.close,
             },
             onCancel: closeAlert,
           });
@@ -182,7 +199,16 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       isRefreshingRef.current = false;
     }
-  }, [auth.isLogged, auth.role, clientId]);
+  }, [
+    auth.isLogged,
+    auth.role,
+    closeAlert,
+    createLocalDefault,
+    globalInternalErrorFallback,
+    popups,
+    showError,
+    workerLoadFailedFallback,
+  ]);
 
   useEffect(() => {
     if (!auth.isLogged || auth.role === 'guest') return;
@@ -207,7 +233,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     };
     setWorker(local);
     saveToStorage(local);
-  }, [auth.isLogged, auth.role, isClientReady]);
+  }, [auth.isLogged, auth.role, createLocalDefault, isClientReady, worker]);
 
   const updateWorker = useCallback(
     async (patch: UpdateWorkerProfilePayload) => {

@@ -92,23 +92,23 @@ Esto permite:
 
 ### Fase 1. Documentación y tipado
 
-- [ ] documentar contrato real de `AuthContext`
+- [x] documentar contrato real de `AuthContext`
 - [x] decidir si `AuthUser` expone `authId` y/o `userClientId` explícitos o si se adapta a un modelo frontend reducido de sesión
 - [x] introducir `authId` y `userClientId` en el modelo frontend de sesión
 - [ ] eliminar la ambigüedad actual de `userId`
-- [ ] documentar explícitamente que `auth` no es owner del perfil
+- [x] documentar explícitamente que `auth` no es owner del perfil
 
 ### Fase 2. Modelo frontend
 
 - [x] actualizar [authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts) para reflejar el payload backend real
 - [x] revisar [authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts) para tipar correctamente `GET /api/auth/me`
 - [x] adaptar `login` y `magic login` a envelope tipado con normalización de sesión
-- [ ] adaptar `refreshAuth` al contrato real
+- [x] adaptar `refreshAuth` al contrato real
 - [ ] decidir si `AuthUser.userId` se elimina o se reemplaza por una identidad de sesión explícita
 
 ### Fase 3. Responsabilidad del contexto
 
-- [ ] mantener en `auth` solo:
+- [x] mantener en `auth` solo:
   - identidad de sesión
   - estado de autenticación
   - rol
@@ -316,7 +316,6 @@ Completado en esta fase:
 
 Pendiente para la siguiente fase:
 
-- propagar el modelo nuevo a `AuthContext`
 - eliminar dependencia activa de `userId`
 - corregir formularios y consumidores de `auth.email`
 
@@ -330,6 +329,24 @@ Completado adicionalmente en esta iteración:
   - `packages/components/client/user/auth/*`
   - `packages/components/client/user/profile/*`
   - guía: [packages/components/client/user/README.md](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/README.md)
+
+Pendiente real a partir del estado actual:
+
+- siguen existiendo consumidores de `auth.email` como dato de presentación, por ejemplo [profile page](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:183)
+- `userId` sigue vivo como alias de compatibilidad en `auth`, `profile`, `worker` y varios payloads de UI
+
+Actualización:
+
+- la vista principal de perfil ya migró a `profile.contactEmail`
+- `auth.email` sigue quedando pendiente solo en consumidores secundarios o donde el dato sigue siendo de sesión
+
+Completado en la separación inicial de formularios:
+
+- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx) ya depende solo de `useAuth()` y `useClient()`
+- [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx) ya no renderiza `name`, `phone`, `address` ni otros campos de perfil
+- se creó una variante de perfil separada en:
+  - `packages/components/client/user/profile/profileForm/*`
+- las pantallas de profile dejaron de importar el form desde la carpeta de auth
 
 ## Estado Actual Del Formulario Compartido
 
@@ -393,9 +410,11 @@ Componente afectado principal:
 
 ### Fase A. Separación de ownership
 
-- [ ] crear una variante o capa específica para formularios de autenticación
-- [ ] crear una variante o capa específica para formularios de perfil
-- [ ] dejar `Form` como componente presentacional puro o dividirlo por dominio si no compensa seguir compartiendo markup
+- [x] crear una separación física inicial para formularios/componentes de autenticación
+- [x] crear una separación física inicial para componentes de perfil
+- [x] crear una variante o capa específica para formularios de autenticación
+- [x] crear una variante o capa específica para formularios de perfil
+- [x] dividir el formulario por dominio para evitar que auth siga compartiendo markup y estado con profile
 
 ### Fase B. Contratos tipados por dominio
 
@@ -409,32 +428,77 @@ Componente afectado principal:
 
 ### Fase C. Estado e inicialización
 
-- [ ] eliminar de formularios auth la dependencia de `useProfile()` y `useWorker()`
+- [x] eliminar de formularios auth la dependencia de `useProfile()` y `useWorker()`
 - [ ] pasar `initialValues` explícitos desde cada página/container
 - [ ] decidir si `clientId` se inyecta desde container o si sigue siendo un hidden/runtime field de auth
 
 ### Fase D. Validadores
 
-- [ ] separar validadores por dominio:
+- [x] separar validadores por dominio:
   - `authFormValidator`
   - `profileFormValidator`
   - `contactFormValidator`
 - [ ] revisar reglas de nombre/teléfono para no imponer restricciones innecesarias
-- [ ] evitar reutilizar el validador de password fuerte en login
+- [x] evitar reutilizar el validador de password fuerte en login
 - [ ] deduplicar address/serviceAddress
 
 ### Fase E. Accesibilidad
 
-- [ ] internacionalizar labels accesibles del toggle de password
-- [ ] revisar `autocomplete` por caso:
+- [x] internacionalizar labels accesibles del toggle de password
+- [x] revisar `autocomplete` por caso:
   - login: `current-password`
   - register/reset: `new-password`
-- [ ] mover foco al primer error de validación
-- [ ] añadir un error summary o patrón de anuncio más robusto cuando haya varios errores
-- [ ] revisar asociación `aria-describedby` y mensajes de ayuda/error
+- [x] mover foco al primer error de validación
+- [x] añadir un error summary o patrón de anuncio más robusto cuando haya varios errores
+- [x] revisar asociación `aria-describedby` y mensajes de ayuda/error
 
 ### Fase F. Tests
 
 - [ ] tests de validadores separados por dominio
-- [ ] tests RTL para formularios auth sin `ProfileContext`
+- [x] tests RTL para formularios auth sin `ProfileContext`
 - [ ] tests RTL para formularios de profile sin `AuthContext` como fuente de datos de presentación
+
+## Próximo Paso Recomendado
+
+El siguiente paso de trabajo debería ser cerrar el ownership del formulario de auth:
+
+1. recortar [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx) para que dependa solo de `useAuth()` y `useClient()`
+2. sacar de [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx) los campos de perfil (`name`, `phone`, `address`)
+3. dejar el contrato de auth limitado a:
+   - `email`
+   - `password`
+   - `clientId`
+   - `language`
+   - `tosAccepted`
+4. después separar validadores de auth vs profile, y recién ahí entrar en accesibilidad y tests del form
+
+Razón:
+
+- hoy el mayor acoplamiento ya no está en `AuthContext`
+- está en el formulario compartido y en cómo hidrata datos de `profile`/`worker` durante flows de auth
+
+Estado tras este paso:
+
+- ese acoplamiento principal ya quedó eliminado del formulario de auth
+- el siguiente bloque de trabajo debe centrarse en:
+  1. revisar restricciones de validación por dominio
+  2. extender tests a validadores y formularios de profile
+  3. reducir compatibilidad transitoria donde ya no haga falta
+
+Completado adicionalmente en esta iteración:
+
+- se añadieron módulos separados:
+  - `packages/utils/validators/authFormValidator/*`
+  - `packages/utils/validators/profileFormValidator/*`
+  - `packages/utils/validators/contactFormValidator/*`
+- `userFormValidator` queda como capa de compatibilidad transitoria
+- se añadieron tests RTL del formulario auth en:
+  - [tests/jest/components/auth-form.test.jsx](/home/heriberto/Escritorio/Havenova/havenova/tests/jest/components/auth-form.test.jsx)
+- el formulario auth ahora:
+  - mueve foco al primer campo inválido
+  - muestra un resumen de errores accesible
+  - usa `aria-describedby` coherente entre hint y error de password
+  - expone labels accesibles localizados para mostrar/ocultar contraseña
+- la suite actual pasa:
+  - `npm run -s test:contexts:ui`
+  - `npm run -s test:client-context`

@@ -1,7 +1,11 @@
 import { Locale, resources } from '@havenova/i18n';
-import { PopupsTexts, PopupText } from '../alert/alert.types';
+import { PopupsTexts, PopupText, PopupCode } from '../alert/alert.types';
 
 type PopupFallback = PopupText;
+type PopupFallbackMap = { [K in PopupCode]-?: PopupFallback } & {
+  button?: PopupsTexts['button'];
+  a11y?: PopupsTexts['a11y'];
+};
 
 type LoadingMessagesFallback = typeof resources.de.loadings.message;
 
@@ -12,7 +16,7 @@ type I18nFallbackBundle = {
     close: string;
     reload: string;
   };
-  fallbackPopups: Record<string, PopupFallback> & PopupsTexts;
+  fallbackPopups: PopupFallbackMap;
   fallbackLoadingMessages: LoadingMessagesFallback;
   fallbackGlobalError: PopupFallback;
   fallbackRegisterSuccess: PopupFallback;
@@ -60,6 +64,19 @@ const localeDefaults = {
       close: 'Close',
     },
   },
+  es: {
+    buttons: {
+      accept: 'Aceptar',
+      continue: 'Continuar',
+      close: 'Cerrar',
+      reload: 'Recargar',
+    },
+    forgotPasswordLoading: {
+      title: 'Preparando el restablecimiento de la contrasena…',
+      description: 'Espera un momento, por favor.',
+      close: 'Cerrar',
+    },
+  },
 } satisfies Record<
   Locale,
   {
@@ -69,22 +86,23 @@ const localeDefaults = {
 >;
 
 const popupByCode = (
-  popups: Record<string, PopupFallback> & PopupsTexts,
-  code: keyof PopupsTexts | string,
+  popups: PopupFallbackMap,
+  code: PopupCode | string,
   fallback: PopupFallback
 ): PopupFallback => {
-  const value = popups[code as keyof typeof popups];
+  const value = (popups as unknown as Partial<Record<string, PopupFallback>>)[code];
   if (value && typeof value === 'object' && 'title' in value && 'description' in value) {
     return value as PopupFallback;
   }
   return fallback;
 };
 
-const resolveLocale = (language?: string): Locale => (language === 'en' ? 'en' : 'de');
+const resolveLocale = (language?: string): Locale =>
+  language === 'en' || language === 'es' ? language : 'de';
 
 const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
   const texts = resources[locale] ?? resources.de;
-  const popups = texts.popups as Record<string, PopupFallback> & PopupsTexts;
+  const popups = texts.popups as unknown as PopupFallbackMap;
   const defaultButtons = localeDefaults[locale].buttons;
 
   const fallbackButtons = {
@@ -95,11 +113,18 @@ const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
   };
 
   const fallbackGlobalError = popupByCode(popups, 'GLOBAL_INTERNAL_ERROR', {
-    title: locale === 'en' ? 'Unexpected error' : 'Unerwarteter Fehler',
+    title:
+      locale === 'en'
+        ? 'Unexpected error'
+        : locale === 'es'
+          ? 'Error inesperado'
+          : 'Unerwarteter Fehler',
     description:
       locale === 'en'
         ? 'An unexpected error occurred. Please try again later or contact support.'
-        : 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.',
+        : locale === 'es'
+          ? 'Ocurrio un error inesperado. Intentalo de nuevo mas tarde o contacta con soporte.'
+          : 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.',
     close: fallbackButtons.close,
     confirm: fallbackButtons.reload,
   });
@@ -143,6 +168,7 @@ const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
 const fallbackBundles = {
   de: buildFallbackBundle('de'),
   en: buildFallbackBundle('en'),
+  es: buildFallbackBundle('es'),
 } satisfies Record<Locale, I18nFallbackBundle>;
 
 export const getI18nFallbacks = (language?: string): I18nFallbackBundle =>

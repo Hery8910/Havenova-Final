@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getPageMetadata } from '../../../../../../../packages/utils/metadata';
+import { getPageMetadata } from '@/packages/utils/metadata';
 
 export async function generateMetadata({
   params,

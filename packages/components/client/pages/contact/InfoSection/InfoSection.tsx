@@ -66,7 +66,7 @@ export default function InfoSection({
   return (
     <section className={styles.contactSection}>
       <address
-        className={`${styles.contact} card`}
+        className={`${styles.contact} glass-panel--base`}
         aria-label={ariaTexts?.info || 'Contact information'}
       >
         <h3 className={`${styles.contactTitle} type-title-sm`}>{texts?.contact?.title}</h3>

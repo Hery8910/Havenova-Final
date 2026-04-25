@@ -1,0 +1,224 @@
+.form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 32px;
+}
+.errorSummary {
+  width: 100%;
+  border: 1px solid rgba(200, 45, 45, 0.28);
+  background: rgba(200, 45, 45, 0.08);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.errorSummaryTitle {
+  margin: 0 0 8px;
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 700;
+}
+.errorSummaryList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+.label {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.input {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  width: 100%;
+  font-size: clamp(14px, 1.6vw, 17px);
+  border: 1px solid var(--bg-card-3);
+  color: var(--text-primary);
+  background-color: var(--surface-3);
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 30px -16px rgba(7, 104, 201, 0.16);
+}
+.input::placeholder {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: var(--text-secondary);
+  font-family: var(--font-family-main);
+}
+.input:focus-visible {
+  outline: 1px solid var(--bg-card-3);
+  outline-offset: 1px;
+  background-color: var(--bg-card-1);
+  box-shadow: 0 0 0 4px rgba(7, 104, 201, 0.16);
+}
+.article {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.div {
+  width: 100%;
+  position: relative;
+}
+.show {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: var(--text-secondary);
+  padding: 4px;
+  border-radius: 50%;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.show:focus-visible {
+  outline: none;
+  background-color: rgba(7, 104, 201, 0.08);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+.forgotPassword {
+  z-index: 3;
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: clamp(12px, 1.6vw, 14px);
+  font-weight: 500;
+  font-style: italic;
+}
+.forgotPassword:hover {
+  color: var(--brand-primary);
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 🔹 Ocultamos el checkbox real, pero accesible */
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 🔹 Estilo del cuadrado */
+.customCheckbox {
+  width: 30px;
+  height: 21px;
+  border: 2px solid var(--text-secondary);
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 🔹 El check (antes invisible) */
+.customCheckbox::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 17px;
+  border-right: 3px solid var(--brand-primary-5);
+  border-bottom: 3px solid var(--brand-primary-5);
+  transform: rotate(45deg) scale(0);
+  top: -5px;
+  left: 8px;
+  transition: transform 0.2s ease-in-out;
+  opacity: 0;
+}
+
+/* 🔹 Cuando está marcado */
+.checkboxInput:checked + .customCheckbox {
+  background-color: transparent;
+  border-color: var(--brand-primary-5);
+}
+
+.checkboxInput:checked + .customCheckbox::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
+
+/* 🔹 Texto */
+.checkboxText {
+  color: var(--text-primary);
+  font-size: clamp(14px, 2vw, 16px);
+}
+.policyLink {
+  color: var(--brand-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.policyLink:hover {
+  text-decoration-thickness: 2px;
+}
+.policyLink:focus-visible {
+  outline: 2px solid var(--brand-primary-5);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.feedback {
+  min-height: clamp(12px, 3vw, 16px);
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.hint,
+.error {
+  color: var(--color-warning);
+  font-size: clamp(12px, 3vw, 15px);
+  font-style: italic;
+}
+.error {
+  color: var(--color-error);
+}
+
+/* oculto pero ocupa espacio */
+.hidden {
+  display: none;
+  pointer-events: none;
+}
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 8px;
+  display: inline-block;
+}
+.button {
+  width: 100%;
+  align-self: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

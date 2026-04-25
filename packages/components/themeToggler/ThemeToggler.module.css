@@ -1,34 +1,99 @@
 .toggleButton {
-  width: 36px;
-  height: 36px;
-  overflow: hidden;
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-.toggleButton:hover {
-  transform: translateY(-2px);
-}
-.toggleButton:focus {
-  outline: none;
-}
-.iconsWrapper {
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.6s ease-in-out;
-}
-
-.dark .iconsWrapper {
-  transform: rotate(180deg);
-}
-
-.moon,
-.sun {
-  display: flex;
-  justify-content: center;
+  width: fit-content;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  height: 36px;
+  justify-content: center;
+  min-width: 44px;
+  max-width: 150px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  padding: 0;
+}
+
+.toggleButtonWithValue {
+  gap: 8px;
+}
+
+.iconViewport {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: auto;
+}
+
+.iconSlot {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  transition:
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.8s ease,
+    filter 0.8s ease;
+  will-change: transform, opacity;
+}
+
+.icon {
+  font-size: 1.4rem;
+}
+
+.currentValue {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sunSlot {
+  transform: translateY(140%) rotate(-120deg);
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.moonSlot {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.isDark .sunSlot {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.isDark .moonSlot {
+  transform: translateY(-140%) rotate(120deg);
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.isLight .sunSlot {
+  transform: translateY(140%) rotate(-120deg);
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.isLight .moonSlot {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconSlot {
+    transition: opacity 0.2s ease;
+  }
+
+  .sunSlot,
+  .moonSlot,
+  .isDark .sunSlot,
+  .isDark .moonSlot,
+  .isLight .sunSlot,
+  .isLight .moonSlot {
+    transform: none;
+    filter: none;
+  }
 }

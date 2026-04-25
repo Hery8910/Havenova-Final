@@ -685,7 +685,7 @@
     "user": {
       "register": {
         "title": "Konto erstellen",
-        "description": "Werden Sie Teil von Havenova und buchen Sie Ihren ersten Service.",
+        "description": "Erstellen Sie Ihr Konto, um Services anzufragen und zu verwalten.",
         "cta": {
           "title": "Sie haben bereits ein Konto?",
           "label": "Jetzt einloggen",
@@ -694,6 +694,7 @@
       },
       "login": {
         "title": "Willkommen zurück",
+        "description": "Greifen Sie auf Ihr Konto zu und verwalten Sie Ihre Anfragen.",
         "cta": {
           "title": "Sie haben noch kein Konto?",
           "label": "Zu Anmeldung",
@@ -709,12 +710,12 @@
       },
       "forgotPasswordText": {
         "title": "Setze dein Passwort zurück",
-        "info": "Um ein neues Passwort zu erstellen, gib bitte deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts. Folge den Anweisungen in der E-Mail, um ein neues Passwort für dein Konto festzulegen.",
+        "info": "Gib deine E-Mail-Adresse ein und wir senden dir einen Link.",
         "button": "Link zum Zurücksetzen senden"
       },
       "resetPasswordText": {
         "title": "Neues Passwort festlegen",
-        "info": "Bitte gib dein neues Passwort ein. Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "info": "Wähle ein neues Passwort für dein Konto.",
         "button": "Passwort speichern"
       },
       "profileHeader": {
@@ -737,8 +738,8 @@
         "settings": "Einstellungen"
       },
       "verifyEmail": {
-        "title": "E-Mail-Verifizierung",
-        "info": "Wenn Sie keine E-Mail erhalten haben, versuchen Sie es bitte erneut.",
+        "title": "E-Mail bestätigen",
+        "info": "Prüfen Sie Ihren Posteingang oder fordern Sie eine neue E-Mail an.",
         "input": {
           "placeholder": "E-Mail-Adresse",
           "button": "E-Mail erneut senden.",

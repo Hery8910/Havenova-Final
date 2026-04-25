@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const SUPPORTED = ['de', 'en'] as const;
+const SUPPORTED = ['de', 'en', 'es'] as const;
 const DEFAULT_LANG = 'de';
 
 export function middleware(req: NextRequest) {
@@ -30,7 +30,11 @@ export function middleware(req: NextRequest) {
 
   // 2) Accept-Language
   const header = req.headers.get('accept-language') || '';
-  const preferred = header.toLowerCase().startsWith('de') ? 'de' : 'en';
+  const preferred = header.toLowerCase().startsWith('de')
+    ? 'de'
+    : header.toLowerCase().startsWith('es')
+      ? 'es'
+      : 'en';
 
   // 3) Fallback
   const lang = SUPPORTED.includes(preferred as any) ? preferred : DEFAULT_LANG;

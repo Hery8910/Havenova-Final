@@ -1,15 +1,18 @@
 //form.tsx
 
 import Link from 'next/link';
+import { useMemo } from 'react';
 import styles from './Form.module.css';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
-import { LabelsTextProps, PlaceholdersTextProps, FormField } from '../formWrapper/FormWrapper';
-import { AuthUser, UserClientProfile, formatUserAddress } from '../../../../../../types';
-import type { WorkerRecord } from '../../../../../../types/worker';
+import {
+  LabelsTextProps,
+  PlaceholdersTextProps,
+  FormField,
+} from '../formWrapper/FormWrapper';
+import { useLang } from '../../../../../../hooks/useLang';
+import { href } from '../../../../../../utils/navigation';
 
 interface GenericFormProps<T extends Record<string, any>> {
-  auth: AuthUser | null;
-  profile: UserClientProfile | WorkerRecord | null;
   fields: FormField[];
   formData: T;
   errors: Record<string, string>;
@@ -29,7 +32,6 @@ interface GenericFormProps<T extends Record<string, any>> {
 }
 
 export default function Form<T extends Record<string, any>>({
-  profile,
   fields,
   formData,
   errors,
@@ -47,51 +49,16 @@ export default function Form<T extends Record<string, any>>({
   labels,
   loading,
 }: GenericFormProps<T>) {
-  const profileAddress =
-    profile && 'primaryAddress' in profile
-      ? formatUserAddress(profile.primaryAddress)
-      : profile && 'address' in profile && typeof profile.address === 'string'
-        ? profile.address
-        : '';
+  const lang = useLang();
+
+  const passwordDescriptionId = useMemo(() => {
+    if (touched.password && errors.password) return 'password-error';
+    if (showHintPassword) return 'password-hint';
+    return undefined;
+  }, [errors.password, showHintPassword, touched.password]);
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
-      {/* NAME */}
-      {fields.includes('name') && (
-        <div className={styles.wrapper}>
-          <label className={styles.label} htmlFor="name">
-            {labels.name}
-          </label>
-          <input
-            className={styles.input}
-            type="text"
-            name="name"
-            id="name"
-            placeholder={placeholder.name}
-            value={formData.name ?? profile?.name ?? ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            autoComplete="name"
-            required
-            aria-invalid={Boolean(touched.name && errors.name)}
-            aria-describedby="name-error"
-          />
-          <p
-            className={
-              touched.name && errors.name
-                ? `${styles.feedback} ${styles.error}`
-                : `${styles.feedback} ${styles.hidden}`
-            }
-            id="name-error"
-            role="status"
-            aria-live="polite"
-          >
-            {touched.name && errors.name ? errors.name : '\u00A0'}
-          </p>
-        </div>
-      )}
-
-      {/* EMAIL */}
       {fields.includes('email') && (
         <div className={styles.wrapper}>
           <label className={styles.label} htmlFor="email">
@@ -109,7 +76,7 @@ export default function Form<T extends Record<string, any>>({
             autoComplete="email"
             required
             aria-invalid={Boolean(touched.email && errors.email)}
-            aria-describedby="email-error"
+            aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
           />
           <p
             className={
@@ -155,147 +122,47 @@ export default function Form<T extends Record<string, any>>({
               value={formData.password || ''}
               onChange={onChange}
               onBlur={onBlur}
-              autoComplete="off"
+              autoComplete={showHintPassword ? 'new-password' : 'current-password'}
               required
               aria-invalid={Boolean(touched.password && errors.password)}
-              aria-describedby="password-hint"
+              aria-describedby={passwordDescriptionId}
             />
             <button
               className={styles.show}
               type="button"
               onClick={onTogglePassword}
               aria-pressed={showPassword}
-              aria-label="Toggle password visibility"
+              aria-label={showPassword ? labels.hidePassword : labels.showPassword}
             >
               {showPassword ? <ImEye /> : <ImEyeBlocked />}
             </button>
           </div>
 
-          <p
-            className={
-              touched.password && errors.password
-                ? `${styles.feedback} ${styles.error}`
-                : showHintPassword
-                  ? `${styles.feedback} ${styles.hint}`
-                  : `${styles.feedback} ${styles.hidden}`
-            }
-            id="password-hint"
-            role="status"
-            aria-live="polite"
-          >
-            {
-              touched.password && errors.password
-                ? errors.password
-                : showHintPassword
-                  ? labels.passwordHint
-                  : '\u00A0' /* espacio duro para mantener altura */
-            }
-          </p>
+          {touched.password && errors.password ? (
+            <p
+              className={`${styles.feedback} ${styles.error}`}
+              id="password-error"
+              role="status"
+              aria-live="polite"
+            >
+              {errors.password}
+            </p>
+          ) : showHintPassword ? (
+            <p
+              className={`${styles.feedback} ${styles.hint}`}
+              id="password-hint"
+              role="status"
+              aria-live="polite"
+            >
+              {labels.passwordHint}
+            </p>
+          ) : (
+            <p className={`${styles.feedback} ${styles.hidden}`} aria-hidden="true">
+              {'\u00A0'}
+            </p>
+          )}
         </div>
       )}
-
-      {/* ADDRESS */}
-      {fields.includes('address') && (
-        <div className={styles.wrapper}>
-          <label className={styles.label} htmlFor="address">
-            {labels.address}
-          </label>
-          <input
-            className={styles.input}
-            type="text"
-            name="address"
-            id="address"
-            placeholder={placeholder.address}
-            value={formData.address ?? profileAddress}
-            onChange={onChange}
-            onBlur={onBlur}
-            autoComplete="address"
-            aria-invalid={Boolean(touched.address && errors.address)}
-            aria-describedby="address-error"
-          />
-          <p
-            className={
-              touched.address && errors.address
-                ? `${styles.feedback} ${styles.error}`
-                : `${styles.feedback} ${styles.hidden}`
-            }
-            id="address-error"
-            role="status"
-            aria-live="polite"
-          >
-            {touched.address && errors.address ? errors.address : '\u00A0'}
-          </p>
-        </div>
-      )}
-
-      {/* PHONE */}
-      {fields.includes('phone') && (
-        <div className={styles.wrapper}>
-          <label className={styles.label} htmlFor="phone">
-            {labels.phone}
-          </label>
-          <input
-            className={styles.input}
-            type="tel"
-            name="phone"
-            id="phone"
-            placeholder={placeholder.phone}
-            value={formData.phone ?? profile?.phone ?? ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            autoComplete="tel"
-            aria-invalid={Boolean(touched.phone && errors.phone)}
-            aria-describedby="phone-error"
-          />
-          <p
-            className={
-              touched.phone && errors.phone
-                ? `${styles.feedback} ${styles.error}`
-                : `${styles.feedback} ${styles.hidden}`
-            }
-            id="phone-error"
-            role="status"
-            aria-live="polite"
-          >
-            {touched.phone && errors.phone ? errors.phone : '\u00A0'}
-          </p>
-        </div>
-      )}
-
-      {/* MESSAGE */}
-      {fields.includes('message') && (
-        <div className={styles.wrapper}>
-          <label className={styles.label} htmlFor="message">
-            {labels.message}
-          </label>
-          <textarea
-            className={styles.input}
-            name="message"
-            id="message"
-            placeholder={placeholder.message}
-            value={formData.message || ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            rows={4}
-            aria-invalid={Boolean(touched.message && errors.message)}
-            aria-describedby="message-error"
-          />
-          <p
-            className={
-              touched.message && errors.message
-                ? `${styles.feedback} ${styles.error}`
-                : `${styles.feedback} ${styles.hidden}`
-            }
-            id="message-error"
-            role="status"
-            aria-live="polite"
-          >
-            {touched.message && errors.message ? errors.message : '\u00A0'}
-          </p>
-        </div>
-      )}
-
-      {/* ✅ CHECKBOX TOS (solo en register → showHintPassword) */}
       {fields.includes('tosAccepted') && (
         <div className={styles.checkboxWrapper}>
           <label className={styles.checkboxLabel} htmlFor="tosAccepted">
@@ -307,16 +174,16 @@ export default function Form<T extends Record<string, any>>({
               onChange={onChange}
               className={styles.checkboxInput}
               aria-invalid={Boolean(touched.tosAccepted && errors.tosAccepted)}
-              aria-describedby="tos-error"
+              aria-describedby={errors.tosAccepted ? 'tos-error' : undefined}
             />
             <span className={styles.customCheckbox}></span>
             <span className={styles.checkboxText}>
               {labels.tosPrefix}
-              <Link className={styles.policyLink} href="/legal/terms-of-service">
+              <Link className={styles.policyLink} href={href(lang, '/legal/terms-of-service')}>
                 {labels.tosTerms}
               </Link>
               {labels.tosConnector}
-              <Link className={styles.policyLink} href="/legal/privacy-policy">
+              <Link className={styles.policyLink} href={href(lang, '/legal/privacy-policy')}>
                 {labels.tosPrivacy}
               </Link>
               {labels.tosSuffix}

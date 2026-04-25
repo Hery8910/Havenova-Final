@@ -66,7 +66,7 @@ export default function RequestsList({ data, loading, onSelect }: RequestsListPr
           className={`${styles.card} ${styles[req.status.replace(' ', '-')]}`}
           onClick={() => onSelect && onSelect(req._id)}
         >
-          <div className={`${styles.wrapper} card`}>
+          <div className={`${styles.wrapper} glass-panel--base`}>
             <header className={styles.left}>
               <p>
                 <strong>Id. {req._id || '—'}</strong>

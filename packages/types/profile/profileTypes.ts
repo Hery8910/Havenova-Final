@@ -1,4 +1,4 @@
-export type AppLanguage = 'de' | 'en';
+export type AppLanguage = 'de' | 'en' | 'es';
 export type ThemeMode = 'light' | 'dark';
 
 export interface UserAddress {
@@ -44,7 +44,7 @@ export interface UserClientProfile {
   userClientId: string;
   userId: string;
   clientId: string;
-  contactEmail?: string;
+  contactEmail: string;
   name?: string;
   phone?: string;
   primaryAddress?: UserAddress;

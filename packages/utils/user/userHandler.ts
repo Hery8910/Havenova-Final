@@ -8,7 +8,7 @@ import {
 } from '../../contexts';
 import { PopupsTexts } from '../../contexts/alert/alert.types';
 import { magicLoginRequest, resendVerificationEmail, verifyEmailRequest } from '../../services';
-import { ResendVerificationEmailPayload, VerifyEmailResult } from '../../types';
+import { MagicLoginResult, ResendVerificationEmailPayload, VerifyEmailResult } from '../../types';
 import { getPopup } from '../alertType';
 import { useLang } from '../../hooks';
 import { href } from '../navigation';
@@ -36,46 +36,21 @@ export function useVerifyEmailActions() {
   ): Promise<VerifyEmailResult & { isExpired?: boolean }> => {
     try {
       const response = await verifyEmailRequest({ token });
-      const { status, code, magicToken, language } = response;
+      const { success, code, magicToken, language } = response;
 
-      // 1) SUCCESS
-      if (status === 'success') {
-        if (!magicToken) {
-          const popupData = getPopup(
-            popups,
-            'GLOBAL_INTERNAL_ERROR',
-            'GLOBAL_INTERNAL_ERROR',
-            fallbackGlobalError
-          );
-
-          showError({
-            response: {
-              status: 500,
-              title: popupData.title,
-              description: popupData.description,
-              cancelLabel: popupData.close,
-            },
-            onCancel: () => {
-              closeAlert();
-              router.push(href(lang, '/'));
-            },
-          });
-
-          return { ok: false };
-        }
-
+      if (success) {
         return {
           ok: true,
-          magicToken,
+          code,
+          magicToken: magicToken || undefined,
           language: language || 'de',
         };
       }
 
-      // 2) EXPIRED
-      if (status === 'expired') {
+      if (code === 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED' || code === 'USER_VERIFY_EXPIRED_TOKEN') {
         const popupData = getPopup(
           popups,
-          'USER_VERIFY_EXPIRED_TOKEN',
+          code,
           'USER_VERIFY_EXPIRED_TOKEN',
           fallbackExpiredToken
         );
@@ -85,18 +60,25 @@ export function useVerifyEmailActions() {
             status: 401,
             title: popupData.title,
             description: popupData.description,
+            confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
             cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
+          onConfirm: closeAlert,
           onCancel: () => {
             closeAlert();
           },
         });
 
-        return { ok: false, isExpired: true };
+        return { ok: false, code, status: 401, isExpired: true };
       }
 
-      // 3) INVALID (token corrupto, user not found, etc.)
-      if (status === 'invalid') {
+      if (
+        code === 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' ||
+        code === 'USER_VERIFY_INVALID_TOKEN' ||
+        code === 'USER_VERIFY_MISSING_TOKEN' ||
+        code === 'AUTH_USER_NOT_FOUND' ||
+        code === 'USER_CLIENT_NOT_FOUND'
+      ) {
         const popupData = getPopup(
           popups,
           code || 'USER_VERIFY_INVALID_TOKEN',
@@ -109,7 +91,12 @@ export function useVerifyEmailActions() {
             status: 400,
             title: popupData.title,
             description: popupData.description,
+            confirmLabel: popupData.confirm ?? fallbackButtons.continue,
             cancelLabel: popups.button?.close ?? fallbackButtons.close,
+          },
+          onConfirm: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
           },
           onCancel: () => {
             closeAlert();
@@ -117,13 +104,12 @@ export function useVerifyEmailActions() {
           },
         });
 
-        return { ok: false };
+        return { ok: false, code, status: 400 };
       }
 
-      // 4) Cualquier cosa rara
       const popupData = getPopup(
         popups,
-        'GLOBAL_INTERNAL_ERROR',
+        code,
         'GLOBAL_INTERNAL_ERROR',
         fallbackGlobalError
       );
@@ -133,7 +119,12 @@ export function useVerifyEmailActions() {
           status: 500,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
           cancelLabel: popupData.close,
+        },
+        onConfirm: () => {
+          closeAlert();
+          router.refresh();
         },
         onCancel: () => {
           closeAlert();
@@ -141,21 +132,82 @@ export function useVerifyEmailActions() {
         },
       });
 
-      return { ok: false };
+      return { ok: false, code: code || 'GLOBAL_INTERNAL_ERROR', status: 500 };
     } catch (error: any) {
-      const popupData = getPopup(
-        popups,
-        'GLOBAL_INTERNAL_ERROR',
-        'GLOBAL_INTERNAL_ERROR',
-        fallbackGlobalError
-      );
+      const code = error?.response?.data?.code;
+      const status = error?.response?.status ?? 500;
+
+      if (code === 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED' || code === 'USER_VERIFY_EXPIRED_TOKEN') {
+        const popupData = getPopup(
+          popups,
+          code,
+          'USER_VERIFY_EXPIRED_TOKEN',
+          fallbackExpiredToken
+        );
+
+        showError({
+          response: {
+            status,
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel: popupData.confirm ?? fallbackButtons.continue,
+            cancelLabel: popups.button?.close ?? fallbackButtons.close,
+          },
+          onConfirm: closeAlert,
+          onCancel: closeAlert,
+        });
+
+        return { ok: false, code, status, isExpired: true };
+      }
+
+      if (
+        code === 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' ||
+        code === 'USER_VERIFY_INVALID_TOKEN' ||
+        code === 'USER_VERIFY_MISSING_TOKEN' ||
+        code === 'AUTH_USER_NOT_FOUND' ||
+        code === 'USER_CLIENT_NOT_FOUND'
+      ) {
+        const popupData = getPopup(
+          popups,
+          code,
+          'USER_VERIFY_INVALID_TOKEN',
+          fallbackInvalidToken
+        );
+
+        showError({
+          response: {
+            status,
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel: popupData.confirm ?? fallbackButtons.continue,
+            cancelLabel: popups.button?.close ?? fallbackButtons.close,
+          },
+          onConfirm: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
+          },
+          onCancel: () => {
+            closeAlert();
+            router.push(href(lang, '/'));
+          },
+        });
+
+        return { ok: false, code, status };
+      }
+
+      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: 500,
+          status,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
           cancelLabel: popupData.close,
+        },
+        onConfirm: () => {
+          closeAlert();
+          router.refresh();
         },
         onCancel: () => {
           closeAlert();
@@ -163,32 +215,39 @@ export function useVerifyEmailActions() {
         },
       });
 
-      return { ok: false };
+      return { ok: false, code, status };
     }
   };
 
   // -----------------------
   //  handleMagicLogin
   // -----------------------
-  const handleMagicLogin = async (popups: PopupsTexts, magicToken: string): Promise<boolean> => {
+  const handleMagicLogin = async (
+    popups: PopupsTexts,
+    magicToken: string
+  ): Promise<MagicLoginResult> => {
     try {
       const res = await magicLoginRequest({ token: magicToken });
 
-      // Por si acaso, validamos que venga user
-      if (!res?.user) {
+      if (!res?.success || !res?.user) {
         const popupData = getPopup(
           popups,
-          'GLOBAL_INTERNAL_ERROR',
+          res?.code,
           'GLOBAL_INTERNAL_ERROR',
           fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 500,
+            status: 401,
             title: popupData.title,
             description: popupData.description,
+            confirmLabel: popupData.confirm ?? fallbackButtons.reload,
             cancelLabel: popupData.close,
+          },
+          onConfirm: () => {
+            closeAlert();
+            router.refresh();
           },
           onCancel: () => {
             closeAlert();
@@ -196,38 +255,46 @@ export function useVerifyEmailActions() {
           },
         });
 
-        return false;
+        return { ok: false, code: res?.code, status: 401 };
       }
 
       const { user } = res;
 
-      // Mapeo al tipo de tu contexto Auth
-      // Ajusta las propiedades al tipo real de AuthUser
       setAuth({
-        ...(auth || {}), // conservas language, theme, etc. si ya existían
-        isLogged: true,
+        authId: user.authId,
+        userClientId: user.userClientId,
         userId: user.userId,
         clientId: user.clientId,
         email: user.email,
         role: user.role,
+        status: user.status,
         isVerified: user.isVerified,
+        isLogged: true,
         isNewUser: true,
+        tosAccepted: auth?.tosAccepted,
+        cookiePrefs: auth?.cookiePrefs,
       });
 
       // El success de login no lo mostramos aquí, lo dejas a la página verify-email
       // para mantener el patrón que ya tienes: 3 loadings + popup final.
-      return true;
+      return { ok: true, code: res.code };
     } catch (err: any) {
       const code = err?.response?.data?.code;
+      const status = err?.response?.status ?? 401;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: 401,
+          status,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
           cancelLabel: popupData.close,
+        },
+        onConfirm: () => {
+          closeAlert();
+          router.refresh();
         },
         onCancel: () => {
           closeAlert();
@@ -235,7 +302,7 @@ export function useVerifyEmailActions() {
         },
       });
 
-      return false;
+      return { ok: false, code, status };
     }
   };
 
@@ -272,26 +339,30 @@ export function useVerifyEmailActions() {
           status: 200,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: popupData.confirm ?? fallbackButtons.continue,
           cancelLabel: popupData.close,
         },
+        onConfirm: closeAlert,
         onCancel: () => {
           closeAlert();
         },
       });
     } catch (e: any) {
-      const popupData = getPopup(
-        popups,
-        'GLOBAL_INTERNAL_ERROR',
-        'GLOBAL_INTERNAL_ERROR',
-        fallbackGlobalError
-      );
+      const code = e?.response?.data?.code;
+      const status = e?.response?.status ?? 500;
+      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
       showError({
         response: {
-          status: 500,
+          status,
           title: popupData.title,
           description: popupData.description,
+          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
           cancelLabel: popupData.close,
+        },
+        onConfirm: () => {
+          closeAlert();
+          void handleResendEmail(popups, data);
         },
         onCancel: () => {
           closeAlert();

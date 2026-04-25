@@ -1,7 +1,7 @@
 // types/worker.ts
 import { ThemeMode } from '../profile/profileTypes';
 
-export type WorkerLanguage = 'de' | 'en';
+export type WorkerLanguage = 'de' | 'en' | 'es';
 
 export interface WorkerRecord {
   id?: string;

@@ -74,7 +74,7 @@ export default function Sidebar() {
 
   return (
     <nav
-      className={`${styles.sidebar} card--glass`}
+      className={`${styles.sidebar} glass-panel--base`}
       aria-label="Sidebar navigation"
       id="dashboard-sidebar"
     >

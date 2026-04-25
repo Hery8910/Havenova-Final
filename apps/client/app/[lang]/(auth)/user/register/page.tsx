@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
@@ -9,9 +9,7 @@ import { FormWrapper } from '../../../../../../../packages/components/client/use
 import {
   fallbackButtons,
   fallbackGlobalError,
-  fallbackLoadingSubmit,
   fallbackRegisterSuccess,
-  fallbackTosNotAccepted,
   useGlobalAlert,
   useProfile,
 } from '../../../../../../../packages/contexts';
@@ -26,6 +24,7 @@ import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
 import Image from 'next/image';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface RegisterData {
   title: string;
@@ -37,7 +36,6 @@ export interface RegisterData {
 }
 
 const Register = () => {
-
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
@@ -48,7 +46,12 @@ const Register = () => {
 
   const popups = texts.popups;
   const register: RegisterData = texts?.pages?.client.user.register;
+  const navText = texts.components.client.navbar.accessibility;
   const formText = texts.components.client.form;
+  const registerLoading = texts.loadings?.loading?.REGISTER_LOADING_SUBMIT ?? {
+    title: 'Processing your registration…',
+    description: 'Please wait a moment.',
+  };
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
 
@@ -57,42 +60,15 @@ const Register = () => {
       setLoading(true);
 
       // 1) Loading
-      const loadingData = getPopup(
-        popups,
-        'REGISTER_LOADING_SUBMIT',
-        'REGISTER_LOADING_SUBMIT',
-        fallbackLoadingSubmit
-      );
-
       showLoading({
         response: {
           status: 102,
-          title: loadingData.title,
-          description: loadingData.description,
+          title: registerLoading.title,
+          description: registerLoading.description,
         },
       });
 
-      // 2) Validación mínima UX
-      if (!data.tosAccepted) {
-        const popupData = getPopup(
-          popups,
-          'USER_TOS_NOT_ACCEPTED',
-          'USER_TOS_NOT_ACCEPTED',
-          fallbackTosNotAccepted
-        );
-
-        return showError({
-          response: {
-            status: 400,
-            title: popupData.title,
-            description: popupData.description,
-            cancelLabel: popupData.close,
-          },
-          onCancel: closeAlert,
-        });
-      }
-
-      // 3) payload
+      // 2) payload
       const storedPrefs = loadCookiePrefs() ?? getPrefsFromLocalStorage() ?? defaultPrefs();
 
       const payload: RegisterPayload = {
@@ -104,17 +80,50 @@ const Register = () => {
         cookiePrefs: storedPrefs,
       };
 
-      // 4) call backend
+      // 3) call backend
       const response = await registerUser(payload);
 
-      // 4.1) Persist local profile data so it survives the verify-email flow
+      if (!response?.success) {
+        const popupData = getPopup(
+          popups,
+          response?.code,
+          'GLOBAL_INTERNAL_ERROR',
+          fallbackGlobalError
+        );
+
+        showError({
+          response: {
+            status: 400,
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel: popupData.confirm,
+            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          },
+          onConfirm:
+            response?.code === 'USER_REGISTER_ALREADY_REGISTERED'
+              ? () => {
+                  router.push(href(lang, '/user/login'));
+                  closeAlert();
+                }
+              : response?.code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
+                ? () => {
+                    router.push(href(lang, '/user/forgot-password'));
+                    closeAlert();
+                  }
+                : undefined,
+          onCancel: closeAlert,
+        });
+        return;
+      }
+
+      // 3.1) Persist local profile data so it survives the verify-email flow
       const profileLanguage = data.language === 'en' ? 'en' : 'de';
 
       await updateProfile({
         language: profileLanguage,
       });
 
-      // 5) success popup
+      // 4) success popup
       const popupData = getPopup(
         popups,
         response.code,
@@ -140,22 +149,48 @@ const Register = () => {
         },
       });
     } catch (error) {
-      const err = error as { response?: { data?: { code?: string } } };
+      const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const shouldStayOnPage =
+        code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD' ||
+        code === 'USER_REGISTER_ALREADY_REGISTERED' ||
+        code === 'USER_EMAIL_ALREADY_REGISTERED' ||
+        (err.response?.status ?? 500) < 500;
+      const onConfirm =
+        code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_REGISTERED'
+          ? () => {
+              router.push(href(lang, '/user/login'));
+              closeAlert();
+            }
+          : code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
+            ? () => {
+                router.push(href(lang, '/user/forgot-password'));
+                closeAlert();
+              }
+            : (err.response?.status ?? 500) >= 500
+              ? () => {
+                  closeAlert();
+                  void handleRegister(data);
+                }
+              : undefined;
 
       showError({
         response: {
-          status: 500,
+          status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: popupData.close,
+          confirmLabel: onConfirm ? popupData.confirm : undefined,
+          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
-        onCancel: () => {
-          router.push(href(lang, '/'));
-          closeAlert();
-        },
+        onConfirm,
+        onCancel: shouldStayOnPage
+          ? closeAlert
+          : () => {
+              router.push(href(lang, '/'));
+              closeAlert();
+            },
       });
     } finally {
       setLoading(false);
@@ -163,20 +198,32 @@ const Register = () => {
   };
 
   return (
-    <main className={styles.main} aria-labelledby="register-title" aria-describedby="register-desc">
-      <section className={`${styles.section} card`}>
-        <header className={styles.header}>
-          <Link className={styles.logoLink} href="/" aria-label="Homepage">
-            <Image
-              className={styles.logoImage}
-              src={'/logos/logo-vertical-dark.webp'}
-              alt="Havenova Logo"
-              width={250}
-              height={125}
-              priority
-            />
-          </Link>
-        </header>
+    <section
+      className={styles.authSection}
+      aria-labelledby="register-title"
+      aria-describedby="register-description"
+    >
+      <header className={styles.authHeader}>
+        <Image
+          className={styles.logoImage}
+          src={'/logos/vertical-logo-auth.webp'}
+          alt="Havenova Logo"
+          width={100}
+          height={100}
+          priority
+        />
+
+        <div className={styles.authHeaderText}>
+          <h1 id="register-title" className={styles.authTitle}>
+            {register?.title || 'Create account'}
+          </h1>
+          <p id="register-description" className={styles.authDescription}>
+            {register?.description || 'Create your account to request and manage services.'}
+          </p>
+        </div>
+      </header>
+
+      <div className={styles.authFormContainer}>
         <FormWrapper<RegisterFormData>
           showHintPassword
           fields={['email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
@@ -191,14 +238,22 @@ const Register = () => {
           }}
           loading={loading}
         />
-        <aside className={styles.aside}>
-          <p className={styles.header_p}>{register?.cta.title}</p>
-          <Link className={styles.link} href={register?.cta.url}>
-            {register?.cta.label}
+      </div>
+
+      <footer className={styles.authFooter}>
+        <div className={styles.authFooterActions}>
+          <p className={styles.authFooterText}>
+            {register?.cta.title}{' '}
+            <Link className={styles.link} href={register?.cta.url}>
+              {register?.cta.label}
+            </Link>
+          </p>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
           </Link>
-        </aside>
-      </section>
-    </main>
+        </div>
+      </footer>
+    </section>
   );
 };
 

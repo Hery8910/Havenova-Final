@@ -1,0 +1,35 @@
+{
+  "loading": {
+    "REGISTER_LOADING_SUBMIT": {
+      "title": "Processing your registration…",
+      "description": "Please wait a moment."
+    }
+  },
+  "message": {
+    "verifyEmail": {
+      "title": "Verifying your email…",
+      "description": "Please wait while we confirm your verification link."
+    },
+    "login": {
+      "title": "Logging you in…",
+      "description": "We are preparing your session. This may take a moment."
+    },
+    "createUser": {
+      "title": "Loading your account…",
+      "description": "We are setting up your profile and preferences."
+    },
+    "accessDenied": {
+      "title": "Oops, something is missing!",
+      "description": "Access to this page is restricted.You do not have the required permissions."
+    },
+    "logout": {
+      "title": "Successfully logged out",
+      "description": "You have been logged out of your account.",
+      "close": "Close",
+      "errorTexts": {
+        "title": "Logout failed",
+        "description": "An error occurred while logging out. Please try again."
+      }
+    }
+  }
+}

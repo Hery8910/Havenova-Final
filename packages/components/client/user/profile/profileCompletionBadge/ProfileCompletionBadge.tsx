@@ -58,7 +58,7 @@ export function ProfileCompletionBadge({ profile, texts }: ProfileCompletionBadg
   const percentageAriaLabel = texts?.percentageAriaLabel ?? 'Profile completion percentage';
 
   return (
-    <section className={`${styles.badge} card--cleaning`} aria-labelledby={titleId}>
+    <section className={`${styles.badge} glass-panel--service-primary`} aria-labelledby={titleId}>
       <p id={titleId} className={styles.title}>
         {title}
       </p>

@@ -16,7 +16,7 @@ import type {
 } from '../../../../../../types';
 import { formatUserAddress } from '../../../../../../types';
 import { getPopup } from '../../../../../../utils/alertType';
-import { validateName, validatePhone } from '../../../../../../utils/validators/userFormValidator';
+import { validateName, validatePhone } from '../../../../../../utils/validators/profileFormValidator';
 import { UserProfileDetailsForm } from '../form';
 import { UserProfileDetailsSummary } from '../summary';
 import type {

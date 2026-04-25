@@ -1,6 +1,12 @@
+import type { IconType } from 'react-icons';
+
 export interface BaseNavItem {
   label: string;
   href: string;
+  icon?: IconType;
+  img?: string;
+  image?: string;
+  alt?: string;
 }
 
 export interface IconNavItem extends BaseNavItem {
@@ -16,8 +22,6 @@ export interface SimpleNavItem extends BaseNavItem {}
 
 export interface ProfileNavItem extends BaseNavItem {
   auth?: string;
-  image?: string;
-  alt?: string;
 }
 
 export interface HeadersItem {
@@ -46,6 +50,16 @@ export interface NavbarAccessibilityConfig {
   dragHandle?: string;
 }
 
+export interface NavbarBrandingConfig {
+  homeHref?: string;
+  desktopLogoSrc?: string;
+  mobileLogoSrc?: string;
+  desktopLogoWidth?: number;
+  desktopLogoHeight?: number;
+  mobileLogoWidth?: number;
+  mobileLogoHeight?: number;
+}
+
 export interface NavbarConfig {
   headers?: HeadersItem;
   links?: NavLinkItem[];
@@ -54,4 +68,5 @@ export interface NavbarConfig {
   profile?: ProfileNavItem;
   register?: ProfileNavItem[];
   accessibility?: NavbarAccessibilityConfig;
+  branding?: NavbarBrandingConfig;
 }

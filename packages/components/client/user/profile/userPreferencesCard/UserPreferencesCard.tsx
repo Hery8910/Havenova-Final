@@ -109,13 +109,7 @@ export function UserPreferencesCard() {
             <p className={styles.switchLabel}>
               {preferenceTexts?.sections?.language?.subtitle ?? 'Switch language'}
             </p>
-            <LanguageSwitcher
-              ariaLabel={preferenceTexts?.sections?.language?.buttonLabel}
-              switchToEnglishLabel={preferenceTexts?.sections?.language?.switchToEnglish}
-              switchToGermanLabel={preferenceTexts?.sections?.language?.switchToGerman}
-              englishVisibleLabel={preferenceTexts?.sections?.language?.englishVisible}
-              germanVisibleLabel={preferenceTexts?.sections?.language?.germanVisible}
-            />
+            <LanguageSwitcher />
           </div>
         </aside>
 

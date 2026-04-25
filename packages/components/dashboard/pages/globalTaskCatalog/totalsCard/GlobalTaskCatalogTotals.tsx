@@ -17,15 +17,15 @@ interface GlobalTaskCatalogTotalsProps {
 
 const GlobalTaskCatalogTotals = ({ totals, texts }: GlobalTaskCatalogTotalsProps) => (
   <section className={styles.section}>
-    <article className={`${styles.card} card`}>
+    <article className={`${styles.card} glass-panel--base`}>
       <span className={styles.label}>{texts.bundles}</span>
       <span className={styles.value}>{totals.bundles}</span>
     </article>
-    <article className={`${styles.card} card`}>
+    <article className={`${styles.card} glass-panel--base`}>
       <span className={styles.label}>{texts.steps}</span>
       <span className={styles.value}>{totals.steps}</span>
     </article>
-    <article className={`${styles.card} card`}>
+    <article className={`${styles.card} glass-panel--base`}>
       <span className={styles.label}>{texts.billables}</span>
       <span className={styles.value}>{totals.billables}</span>
     </article>

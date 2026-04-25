@@ -204,7 +204,7 @@ export default function AvatarSelector() {
           >
             <article
               ref={dialogRef}
-              className={`${styles.article} card`}
+              className={`${styles.article} glass-panel--base`}
               role="dialog"
               aria-modal="true"
               aria-labelledby={dialogTitleId}

@@ -67,7 +67,7 @@ const getStoredTheme = (): ThemeMode | null => {
 const getStoredLanguage = (): AppLanguage | null => {
   if (typeof window === 'undefined') return null;
   const stored = Cookies.get('lang');
-  return stored === 'de' || stored === 'en' ? stored : null;
+  return stored === 'de' || stored === 'en' || stored === 'es' ? stored : null;
 };
 
 const createEmptyProfile = (overrides?: Partial<UserClientProfile>): UserClientProfile => ({
@@ -163,8 +163,10 @@ const getProfileStorageKey = (clientId?: string | null) => `hv-profile:${clientI
 
 export const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
 
+export const useOptionalProfileContext = () => useContext(ProfileContext);
+
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  const { auth, setAuth } = useAuth();
+  const { auth, loading: authLoading, setAuth } = useAuth();
   const creatingProfileRef = useRef(false);
   const authRef = useRef(auth);
   const lastStorageKeyRef = useRef<string | null>(null);
@@ -244,6 +246,14 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (!isClientReady) return;
     saveToStorage(profile);
   }, [isClientReady, profile, saveToStorage]);
+
+  useEffect(() => {
+    if (!isClientReady) return;
+    if (!profile?.theme) return;
+
+    document.documentElement.setAttribute('data-theme', profile.theme);
+    localStorage.setItem('theme', profile.theme);
+  }, [isClientReady, profile?.theme]);
 
   const applyProfile = useCallback(
     (nextProfile: Partial<UserClientProfile> | null | undefined) => {
@@ -345,7 +355,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
       if (
         (status === 404 || code === 'USER_CLIENT_PROFILE_NOT_FOUND') &&
-        currentAuth.isNewUser &&
         !creatingProfileRef.current
       ) {
         creatingProfileRef.current = true;
@@ -381,9 +390,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!auth.isLogged || auth.role === 'guest') return;
     void reloadProfile();
-  }, [auth.isLogged, auth.role, auth.clientId, reloadProfile]);
+  }, [auth.clientId, auth.isLogged, auth.role, authLoading, reloadProfile]);
 
   useEffect(() => {
     if (!isClientReady) return;
@@ -485,8 +495,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     },
     [
       applyProfile,
+      auth.clientId,
       auth.isLogged,
       auth.role,
+      auth.userClientId,
+      auth.userId,
       clearIsNewUserFlag,
       handleProfileBootstrapError,
       profile,
@@ -502,8 +515,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     (profileImage: string) => updateProfile({ profileImage }),
     [updateProfile]
   );
-
-  if (!isClientReady || loading) return null;
 
   return (
     <ProfileContext.Provider

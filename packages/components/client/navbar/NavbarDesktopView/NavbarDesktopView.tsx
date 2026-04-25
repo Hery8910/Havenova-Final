@@ -1,106 +1,131 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
-import { useI18n } from '../../../../contexts';
 import styles from './NavbarDesktopView.module.css';
 import sharedStyles from '../NavbarShared.module.css';
-import { AuthUser, UserClientProfile } from '../../../../types';
-import type { NavbarConfig } from '../navbar.types';
-import { getNavbarContent } from '../navbar.shared';
+import type { ResolvedNavbarContent } from '../navbar.shared';
+import { NavbarBrand } from '../components/NavbarBrand';
+import { NavbarAccountContent } from '../components/NavbarAccountContent';
+import { NavbarLinkList } from '../components/NavbarLinkList';
+import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 
 export interface NavbarDesktopViewProps {
-  profile: UserClientProfile;
-  auth: AuthUser;
-  navbarConfig?: NavbarConfig;
+  content: ResolvedNavbarContent;
   onNavigate: (href: string) => void;
+  onLogout: () => Promise<void>;
+  bellSlot?: (() => JSX.Element) | null;
 }
 
 export function NavbarDesktopView({
-  profile,
-  auth,
-  navbarConfig,
+  content,
   onNavigate,
+  onLogout,
+  bellSlot,
 }: NavbarDesktopViewProps) {
-  const { texts } = useI18n();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const profileSlotRef = useRef<HTMLDivElement>(null);
+  const accountPanelId = useId();
+  const accountTitleId = useId();
+  const { branding, primaryLinks, userLinks, labels, preferences, session, a11y } = content;
+  const BellSlot = bellSlot;
+  const closeUserMenu = useCallback(() => {
+    setUserMenuOpen(false);
+  }, []);
 
-  if (!profile) return null;
-
-  const { primaryLinks, userLinks, labels, a11y } = getNavbarContent({
-    texts,
-    navbarConfig,
-    auth,
+  useDismissibleLayer({
+    enabled: userMenuOpen,
+    refs: [profileSlotRef],
+    onDismiss: closeUserMenu,
   });
 
   return (
-    <section className={`${styles.desktopShell} ${sharedStyles.surfaceGlass}`}>
+    <div className={styles.desktopShell}>
       <header className={styles.desktopLayout}>
-        <Link className={styles.logoLink} href="/" aria-label={a11y.homeLink}>
-          <Image
-            className={styles.logoImage}
-            src={'/logos/logo-dark.webp'}
-            alt={a11y.logoAlt}
-            width={200}
-            height={50}
-            priority
-          />
-        </Link>
-        <ul className={styles.navList}>
-          {primaryLinks.map((item) => (
-            <li key={item.href} className={styles.navItem}>
+        <NavbarBrand
+          linkClassName={styles.logoLink}
+          imageClassName={styles.logoImage}
+          ariaLabel={a11y.homeLink}
+          logoAlt={a11y.logoAlt}
+          href={branding.homeHref}
+          logoSrc={branding.desktopLogoSrc}
+          width={branding.desktopLogoWidth}
+          height={branding.desktopLogoHeight}
+        />
+        <NavbarLinkList
+          items={primaryLinks}
+          onItemClick={onNavigate}
+          listClassName={styles.navList}
+          itemClassName={styles.navItem}
+          buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
+          hideIcons
+        />
+        <section className={styles.navActions} aria-label={labels.preferences}>
+          <div className={styles.utilityActions}>
+            <ThemeToggler display="icon" labels={preferences.themeToggle} />
+            <LanguageSwitcher
+              presentation="dropdown"
+              triggerDisplay="icon"
+              labels={preferences.languageSwitcher}
+            />
+          </div>
+          <div className={styles.accountActions}>
+            {BellSlot ? (
+              <div className={styles.notificationSlot}>
+                <BellSlot />
+              </div>
+            ) : null}
+            <div className={styles.profileSlot} ref={profileSlotRef}>
               <button
                 type="button"
-                className={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-                onClick={() => onNavigate(item.href)}
+                className={`${sharedStyles.iconButton} ${styles.profileButton} ${
+                  userMenuOpen ? `${sharedStyles.iconButtonActive} ${styles.profileButtonOpen}` : ''
+                }`}
+                aria-label={a11y.profileToggle}
+                aria-expanded={userMenuOpen}
+                aria-controls={accountPanelId}
+                onClick={() => setUserMenuOpen((prev) => !prev)}
               >
-                {item.label}
+                <CgProfile />
+                <span className={styles.srOnly}>{labels.profile}</span>
               </button>
-            </li>
-          ))}
-        </ul>
-        <section className={styles.navActions} aria-label={labels.preferences}>
-          <ThemeToggler />
-          <LanguageSwitcher />
-          <button
-            type="button"
-            className={`${sharedStyles.iconButton} ${styles.profileButton} ${
-              userMenuOpen ? `${sharedStyles.iconButtonActive} ${styles.profileButtonOpen}` : ''
-            }`}
-            aria-label={a11y.profileToggle}
-            aria-expanded={userMenuOpen}
-            aria-controls="desktop-user-navigation"
-            onClick={() => setUserMenuOpen((prev) => !prev)}
-          >
-            <CgProfile />
-          </button>
-        </section>
-      </header>
-      {userMenuOpen && (
-        <section className={styles.desktopDropdown} aria-label={a11y.accountPanel}>
-          <div className={styles.desktopDropdownInner}>
-            <ul id="desktop-user-navigation" className={styles.userList}>
-              {userLinks.map((item) => (
-                <li key={item.href} className={styles.userItem}>
-                  <button
-                    type="button"
-                    className={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-                    onClick={() => {
-                      setUserMenuOpen(false);
-                      onNavigate(item.href);
-                    }}
+              {userMenuOpen && (
+                <div className={styles.desktopDropdown}>
+                  <nav
+                    id={accountPanelId}
+                    className={`glass-panel--base ${styles.accountNavigation}`}
+                    aria-labelledby={accountTitleId}
                   >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    <div className={styles.accountHeader}>
+                      <h2 id={accountTitleId} className={styles.accountTitle}>
+                        {session.accountMenuTitle}
+                      </h2>
+                    </div>
+                    <NavbarAccountContent
+                      authIsLogged={session.isLoggedIn}
+                      userLinks={userLinks}
+                      logoutLabel={session.logoutLabel}
+                      onItemClick={(href) => {
+                        closeUserMenu();
+                        onNavigate(href);
+                      }}
+                      onLogoutClick={() => {
+                        closeUserMenu();
+                        void onLogout();
+                      }}
+                      listClassName={styles.userList}
+                      itemClassName={styles.userItem}
+                      buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
+                      iconClassName={styles.linkIcon}
+                    />
+                  </nav>
+                </div>
+              )}
+            </div>
           </div>
         </section>
-      )}
-    </section>
+      </header>
+    </div>
   );
 }

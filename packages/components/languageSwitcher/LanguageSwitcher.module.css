@@ -1,17 +1,128 @@
-.button {
-  background-color: transparent;
-  border: none;
-  font-size: clamp(18px, 3.5vw, 22px);
-  font-weight: 600;
-  text-shadow: var(--shadow-dark);
-  display: flex;
-  justify-content: center;
+.switcher {
+  width: fit-content;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: inherit;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  justify-content: space-around;
+  min-width: 44px;
+  max-width: 150px;
+  width: 100%;
+  border-radius: var(--radius-sm);
 }
-.button:hover {
-  transform: translateY(-2px);
+
+.trigger {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: var(--radius-sm);
+}
+
+.triggerWithValue {
+  gap: 8px;
+  padding-inline: 10px 12px;
+}
+
+.triggerValue {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 24px);
+  right: 0;
+  z-index: 20;
+  min-width: 280px;
+}
+
+.modalRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modalBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 18, 28, 0.38);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.panel {
+  position: relative;
+  padding: 18px;
+  border-radius: var(--radius-md);
+}
+
+.modalPanel {
+  width: min(100%, 320px);
+  max-height: min(70dvh, 420px);
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg, var(--shadow-md));
+}
+
+.header {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--navbar-surface-border);
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.optionButton {
+  gap: 10px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.optionButtonCurrent {
+  background-color: var(--navbar-active-bg);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.optionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--brand-primary) 12%, transparent);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.optionLabel {
+  flex: 1 1 auto;
+}
+
+.currentTag {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
 }

@@ -142,15 +142,21 @@
   },
   "USER_REGISTER_SUCCESS": {
     "title": "Registrierung erfolgreich",
-    "description": "Wir haben Ihnen eine E-Mail zur Bestätigung Ihrer Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang."
+    "description": "Ihr Konto wurde erstellt. Bitte prüfen Sie Ihren Posteingang und bestätigen Sie Ihre E-Mail.",
+    "confirm": "Weiter",
+    "close": "Schließen"
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
     "title": "Account bereits aktiv",
-    "description": "Sie haben bereits ein aktives Konto. Bitte melden Sie sich an."
+    "description": "Für diese E-Mail existiert bereits ein aktiver Account.",
+    "confirm": "Zum Login",
+    "close": "Schließen"
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
     "title": "Passwort erforderlich",
-    "description": "Dieser Account existiert bereits. Bitte geben Sie Ihr aktuelles Passwort ein oder setzen Sie es zurück."
+    "description": "Dieses Konto existiert bereits. Geben Sie das richtige Passwort ein oder setzen Sie es zurück.",
+    "confirm": "Passwort zurücksetzen",
+    "close": "Erneut versuchen"
   },
   "USER_BLOCKED": {
     "title": "Zugriff verweigert",
@@ -158,7 +164,8 @@
   },
   "USER_TOS_NOT_ACCEPTED": {
     "title": "AGB nicht akzeptiert",
-    "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um fortzufahren."
+    "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um die Registrierung fortzusetzen.",
+    "close": "Schließen"
   },
   "USER_LOGIN_MISSING_EMAIL": {
     "title": "E-Mail erforderlich",
@@ -170,15 +177,20 @@
   },
   "USER_LOGIN_INVALID_PASSWORD": {
     "title": "Ungültige Anmeldedaten",
-    "description": "Das Passwort ist falsch. Bitte versuchen Sie es erneut."
+    "description": "Das Passwort ist falsch. Versuchen Sie es erneut oder setzen Sie es zurück.",
+    "confirm": "Passwort zurücksetzen",
+    "close": "Erneut versuchen"
   },
   "USER_LOGIN_INVALID_CREDENTIALS": {
     "title": "Ungültige Anmeldedaten",
-    "description": "E-Mail oder Passwort ist nicht korrekt. Bitte versuchen Sie es erneut."
+    "description": "E-Mail oder Passwort sind nicht korrekt. Prüfen Sie Ihre Eingaben und versuchen Sie es erneut.",
+    "close": "Erneut versuchen"
   },
   "USER_LOGIN_USER_NOT_FOUND": {
     "title": "Benutzer nicht gefunden",
-    "description": "Es wurde kein Konto mit diesen Zugangsdaten gefunden."
+    "description": "Für diese Zugangsdaten wurde kein Konto gefunden.",
+    "confirm": "Konto erstellen",
+    "close": "Schließen"
   },
   "USER_EMAIL_ALREADY_REGISTERED": {
     "title": "E-Mail bereits registriert",
@@ -186,7 +198,9 @@
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "E-Mail erfolgreich bestätigt",
-    "description": "Ihre E-Mail-Adresse wurde erfolgreich verifiziert."
+    "description": "Ihre E-Mail wurde bestätigt. Sie können jetzt zum Login weitergehen.",
+    "confirm": "Zum Login",
+    "close": "Schließen"
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
     "title": "Reset-Link gesendet",
@@ -206,11 +220,15 @@
   },
   "USER_RESET_PASSWORD_INVALID_TOKEN": {
     "title": "Ungültiger Reset-Link",
-    "description": "Der Passwort-Reset-Link ist ungültig. Bitte fordern Sie einen neuen an."
+    "description": "Dieser Reset-Link ist ungültig. Fordern Sie einen neuen an, um fortzufahren.",
+    "confirm": "Neuen Link anfordern",
+    "close": "Schließen"
   },
   "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
     "title": "Reset-Link abgelaufen",
-    "description": "Ihr Passwort-Reset-Link ist abgelaufen. Bitte fordern Sie einen neuen an."
+    "description": "Dieser Reset-Link ist abgelaufen. Fordern Sie einen neuen an, um fortzufahren.",
+    "confirm": "Neuen Link anfordern",
+    "close": "Schließen"
   },
   "VALIDATION_ERROR": {
     "title": "Validierungsfehler",
@@ -298,19 +316,27 @@
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
     "title": "Reset-Link gesendet",
-    "description": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach."
+    "description": "Wir haben Ihnen einen Reset-Link per E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.",
+    "confirm": "Zum Login",
+    "close": "Schließen"
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
     "title": "E-Mail nicht bestätigt",
-    "description": "Bitte bestätigen Sie Ihre E-Mail, um fortzufahren. Prüfen Sie Ihr Postfach."
+    "description": "Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Bei Bedarf können Sie die Verifizierungsseite öffnen.",
+    "confirm": "Zur Verifizierung",
+    "close": "Schließen"
   },
   "USER_LOGIN_SUCCESS": {
     "title": "Login erfolgreich",
-    "description": "Sie wurden erfolgreich eingeloggt."
+    "description": "Sie wurden erfolgreich angemeldet.",
+    "confirm": "Weiter",
+    "close": "Schließen"
   },
   "USER_RESET_PASSWORD_SUCCESS": {
     "title": "Passwort zurückgesetzt",
-    "description": "Ihr Passwort wurde aktualisiert. Bitte melden Sie sich mit dem neuen Passwort an."
+    "description": "Ihr Passwort wurde aktualisiert. Gehen Sie jetzt zum Login.",
+    "confirm": "Zum Login",
+    "close": "Schließen"
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Passwort aktualisiert",
@@ -350,15 +376,21 @@
   },
   "USER_VERIFY_EMAIL_RESENT": {
     "title": "Bestätigungs-E-Mail erneut gesendet",
-    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet."
+    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.",
+    "confirm": "Weiter",
+    "close": "Schließen"
   },
   "USER_VERIFY_EXPIRED_TOKEN": {
     "title": "Bestätigungslink abgelaufen",
-    "description": "Ihr Bestätigungslink ist abgelaufen. Bitte fordern Sie einen neuen an."
+    "description": "Dieser Bestätigungslink ist abgelaufen. Fordern Sie eine neue Bestätigungs-E-Mail an.",
+    "confirm": "Weiter",
+    "close": "Schließen"
   },
   "USER_VERIFY_INVALID_TOKEN": {
     "title": "Ungültiger Bestätigungslink",
-    "description": "Der Bestätigungslink ist ungültig oder beschädigt."
+    "description": "Dieser Bestätigungslink ist ungültig oder beschädigt.",
+    "confirm": "Zur Startseite",
+    "close": "Schließen"
   },
   "OBJECT_ADDRESS_EXISTS": {
     "title": "Adresse bereits vergeben",

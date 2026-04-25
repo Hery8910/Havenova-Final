@@ -10,3 +10,4 @@ export * from './propertyManager';
 export * from './object';
 export * from './globalTaskCatalog';
 export * from './worker';
+export * from './notification';

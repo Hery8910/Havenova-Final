@@ -43,17 +43,17 @@ Conclusión:
 
 ### Inconsistencias detectadas
 
-1. El tipo frontend no incluye el email del perfil
-- [profileTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/profile/profileTypes.ts) no declara `contactEmail`
-- esto desalineaa el contrato respecto al backend
+1. El tipo frontend ya incluye `contactEmail`, pero faltaba cerrar su uso
+- [profileTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/profile/profileTypes.ts) ya declara `contactEmail`
+- el trabajo pendiente real estaba en volverlo estable en servicio/contexto y migrar consumidores de UI
 
-2. El servicio normaliza un perfil incompleto respecto al backend
-- [profileService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/profile/profileService.ts) no preserva `contactEmail`
-- aunque el backend lo devuelva, el frontend no lo modela explícitamente
+2. El servicio necesitaba preservar `contactEmail` de forma explícita
+- [profileService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/profile/profileService.ts) ya normaliza `contactEmail`
+- eso evita que el dato se pierda en la normalización frontend
 
-3. El contexto no expone `contactEmail`
-- [ProfileContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/profile/ProfileContext.tsx) construye `createEmptyProfile()` y `normalizeProfile()` sin campo de email
-- el perfil local queda sin ese dato aunque backend ya lo soporte
+3. El contexto ya expone `contactEmail`
+- [ProfileContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/profile/ProfileContext.tsx) ya lo incluye en `createEmptyProfile()` y `normalizeProfile()`
+- faltaba fijarlo con tests y dejar de depender de `auth.email` en la UI de perfil
 
 4. La identidad base del perfil debe reflejar la nueva decisión de dominio
 - el frontend sigue usando `userId` como identidad interna del perfil
@@ -69,6 +69,14 @@ Conclusión:
 - hoy el proyecto reutiliza `FormWrapper` y piezas de `userForm` tanto en auth como en profile
 - eso ya funciona, pero falta separar correctamente qué parte pertenece a autenticación y cuál a edición de perfil
 - esto complica validaciones, mantenimiento y tests
+ 
+Estado actualizado:
+
+- la separación física y funcional inicial ya se completó:
+  - `packages/components/client/user/auth/userForm/*`
+  - `packages/components/client/user/profile/profileForm/*`
+- el formulario de profile ya no depende de `AuthContext`
+- los validadores de profile ya viven en `packages/utils/validators/profileFormValidator/*`
 
 ## Decisión de diseño propuesta
 
@@ -87,41 +95,45 @@ Los componentes pueden mostrarlo como “email” en UI, pero el modelo debería
 
 ### Fase 1. Tipos y contrato
 
-- [ ] añadir `contactEmail` a `UserClientProfile`
+- [x] añadir `contactEmail` a `UserClientProfile`
 - [ ] revisar si `DeleteUserClientProfileResponse` y otros tipos siguen usando `userId` o deben cambiar a una identidad más coherente con la nueva decisión de dominio
 - [ ] alinear el identity model de perfil con la decisión actual del proyecto y con el backend real donde aplique
 - [ ] documentar explícitamente que el perfil no depende de `auth` como owner semántico
 
 ### Fase 2. Servicio
 
-- [ ] asegurar que [profileService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/profile/profileService.ts) preserve `contactEmail`
+- [x] asegurar que [profileService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/profile/profileService.ts) preserve `contactEmail`
 - [ ] verificar que el create/get/update response contract se tipa con el payload real
 
 ### Fase 3. Contexto
 
-- [ ] incluir `contactEmail` en `createEmptyProfile()`
-- [ ] incluir `contactEmail` en `normalizeProfile()`
-- [ ] preservar `contactEmail` en `applyProfile()`
+- [x] incluir `contactEmail` en `createEmptyProfile()`
+- [x] incluir `contactEmail` en `normalizeProfile()`
+- [x] preservar `contactEmail` en `applyProfile()`
 - [ ] asegurar que el perfil guest/local no invente un email si no existe sesión
 
 ### Fase 4. Consumidores
 
-- [ ] migrar componentes de presentación desde `auth.email` a `profile.contactEmail`
+- [x] migrar la vista principal de perfil desde `auth.email` a `profile.contactEmail`
+- [ ] migrar componentes de presentación restantes desde `auth.email` a `profile.contactEmail`
 - [ ] revisar `WorkerContext` para decidir si debe seguir usando `auth.email` o si necesita su propia fuente de perfil de worker
 - [ ] revisar formularios/contact/support donde hoy se mezcla `auth.email` con datos de perfil
 
 ### Fase 5. Formularios de perfil
 
-- [ ] separar explícitamente el formulario de perfil del formulario de autenticación
-- [ ] revisar `FormWrapper`, `userForm` y validators compartidos para decidir qué piezas se quedan como shared y cuáles pasan a profile
-- [ ] corregir formularios actuales de edición de perfil para que su contrato quede alineado con `ProfileContext`
-- [ ] evitar que reglas de auth condicionen la UX del formulario de perfil
+- [x] separar explícitamente el formulario de perfil del formulario de autenticación
+- [x] revisar `FormWrapper`, `userForm` y validators compartidos para decidir qué piezas se quedan como shared y cuáles pasan a profile
+- [x] corregir formularios actuales de edición de perfil para que su contrato quede alineado con `ProfileContext`
+- [x] evitar que reglas de auth condicionen la UX del formulario de perfil
+- [x] suavizar validaciones de profile para nombres internacionales, teléfonos con formato flexible y direcciones más realistas
 
 ### Fase 6. Tests
 
-- [ ] tests de tipos/servicio para `contactEmail`
-- [ ] tests de `ProfileContext` para bootstrap, persistencia y exposición del email
+- [x] tests de tipos/servicio para `contactEmail`
+- [x] tests de `ProfileContext` para bootstrap, persistencia y exposición del email
 - [ ] tests de integración `AuthProvider + ProfileProvider` para comprobar que el perfil no depende de renderizar `auth.email`
+- [x] tests RTL del formulario de profile sin `AuthContext`
+- [x] tests unitarios de validadores por dominio
 
 ## Riesgos
 
@@ -137,3 +149,37 @@ Conviene analizar `auth` y `profile` juntos, pero implementarlos en dos tareas c
 3. corregir separación de formularios auth/profile como parte del cierre de ambos dominios
 
 Eso reduce riesgo porque el ownership del email depende de ambos dominios.
+
+## Estado actual de implementación
+
+Completado en esta fase:
+
+- existe un formulario de profile dedicado en:
+  - [packages/components/client/user/profile/profileForm](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileForm)
+- el formulario de profile ya:
+  - renderiza solo campos de profile
+  - no depende de `AuthContext`
+  - mueve el foco al primer error
+  - expone resumen de errores accesible
+- los validadores de profile están separados de auth/contact en:
+  - [packages/utils/validators/profileFormValidator](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/validators/profileFormValidator)
+- las reglas se flexibilizaron para:
+  - nombres internacionales
+  - teléfonos con separadores/formatos comunes
+  - direcciones más largas y con caracteres Unicode
+- hay cobertura de tests en:
+  - [tests/jest/components/profile-form.test.jsx](/home/heriberto/Escritorio/Havenova/havenova/tests/jest/components/profile-form.test.jsx)
+  - [tests/jest/validators/form-validators.test.jsx](/home/heriberto/Escritorio/Havenova/havenova/tests/jest/validators/form-validators.test.jsx)
+  - [tests/jest/contexts/profile-context.test.jsx](/home/heriberto/Escritorio/Havenova/havenova/tests/jest/contexts/profile-context.test.jsx)
+  - [tests/client-context/client-contracts.test.mjs](/home/heriberto/Escritorio/Havenova/havenova/tests/client-context/client-contracts.test.mjs)
+- `contactEmail` ya quedó:
+  - tipado como campo explícito del perfil
+  - preservado por el servicio
+  - expuesto por el contexto
+  - consumido por la vista principal de perfil sin fallback a `auth.email`
+
+Pendiente principal a partir de ahora:
+
+1. migrar consumidores secundarios de UI desde `auth.email` a `profile.contactEmail`
+2. revisar identidad de perfil (`userId`/`userClientId`) con la nueva decisión de dominio
+3. decidir el contrato final de delete/responses del perfil

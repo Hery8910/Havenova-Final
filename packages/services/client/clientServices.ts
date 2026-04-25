@@ -30,7 +30,9 @@ export async function getClient(
   }
 
   const safeTenantKey = encodeURIComponent(normalizedTenantKey);
-  const { data } = await api.get<ClientBootstrapResponse>(`/api/clients/tenant/${safeTenantKey}`);
+  const { data } = await api.get<ClientBootstrapResponse>(`/api/clients/tenant/${safeTenantKey}`, {
+    timeout: 8000,
+  });
 
   if (!data?.success || !data?.data) {
     throw toClientResponseError(data?.message || 'Client bootstrap fetch failed', data);

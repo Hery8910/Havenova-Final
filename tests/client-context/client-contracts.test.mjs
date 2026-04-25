@@ -30,6 +30,14 @@ const authTypesSource = fs.readFileSync(
   'packages/types/auth/authTypes.ts',
   'utf8'
 );
+const profileTypesSource = fs.readFileSync(
+  'packages/types/profile/profileTypes.ts',
+  'utf8'
+);
+const profileServiceSource = fs.readFileSync(
+  'packages/services/profile/profileService.ts',
+  'utf8'
+);
 
 test('tenant resolver keeps the expected fallback chain', () => {
   assert.match(tenantResolverSource, /NEXT_PUBLIC_TENANT_KEY/);
@@ -90,4 +98,10 @@ test('auth service normalizes session payloads to the frontend auth model with c
   assert.match(authServiceSource, /userId: user\.userClientId/);
   assert.match(authServiceSource, /AuthEnvelope<AuthSessionApiUser>/);
   assert.match(authServiceSource, /Auth session payload is missing user data\./);
+});
+
+test('profile contract keeps contactEmail explicit across types and service normalization', () => {
+  assert.match(profileTypesSource, /contactEmail: string/);
+  assert.match(profileServiceSource, /contactEmail: profile\.contactEmail \?\? ''/);
+  assert.match(profileServiceSource, /normalizeProfile/);
 });

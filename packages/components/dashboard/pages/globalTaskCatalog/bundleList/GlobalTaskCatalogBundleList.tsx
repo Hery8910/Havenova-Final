@@ -114,7 +114,7 @@ const GlobalTaskCatalogBundleList = ({
               return (
                 <li
                   key={bundle.bundleId}
-                  className={`${styles.card} card`}
+                  className={`${styles.card} glass-panel--base`}
                   onClick={() => onSelect(bundle.bundleId)}
                 >
                   <header className={styles.cardHeader}>

@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import styles from './ProfileHeader.module.css';
-import { ProfileCompletionBadge } from '../profileCompletionBadge/ProfileCompletionBadge';
-import { useAuth, useI18n, useProfile } from '../../../../../contexts';
-import AvatarSelector from '../avatarSelector/AvatarSelector';
+import { useAuth } from '../../../../../contexts/auth/authContext';
+import { useI18n } from '../../../../../contexts/i18n/I18nContext';
+import { useProfile } from '../../../../../contexts/profile/ProfileContext';
 
 export function ProfileHeader() {
   const { profile } = useProfile();
@@ -17,7 +17,6 @@ export function ProfileHeader() {
 
   const greeting = labels?.greeting || 'Willkommen zurück,';
   const name = profile?.name || labels?.missingName;
-  const email = auth?.email || '—';
   const verified = auth?.isVerified ?? 'Verifiziert';
 
   const avatarAlt = profile.name

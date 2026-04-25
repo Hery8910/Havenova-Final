@@ -118,7 +118,7 @@ const GlobalTaskCatalogDetails = ({
             ) : (
               <ul className={styles.stepsList}>
                 {selectedBundle.steps.map((step) => (
-                  <li key={step._id} className={`${styles.stepCard} card`}>
+                  <li key={step._id} className={`${styles.stepCard} glass-panel--base`}>
                     <header className={styles.stepHeader}>
                       <h6>{step.title}</h6>
                       <StatusBadge
