@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 import { useProfile } from '../../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
@@ -27,7 +27,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
-const VerifyEmailPage = () => {
+const VerifyEmailPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -316,4 +316,10 @@ const VerifyEmailPage = () => {
   );
 };
 
-export default VerifyEmailPage;
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyEmailPageContent />
+    </Suspense>
+  );
+}

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
@@ -33,7 +33,7 @@ interface ResetPasswordFormData {
   password: string;
 }
 
-const ResetPassword = () => {
+const ResetPasswordContent = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -322,4 +322,10 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={null}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
