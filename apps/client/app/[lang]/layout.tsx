@@ -7,6 +7,7 @@ import { getClient } from '../../../../packages/services/client/clientServices';
 import { AlertProvider } from '../../../../packages/contexts/alert/AlertContext';
 import { AuthProvider } from '../../../../packages/contexts/auth/authContext';
 import { ClientProvider } from '../../../../packages/contexts/client/ClientContext';
+import { createVisualFallbackClient } from '../../../../packages/contexts/client/clientVisualFallback';
 import { CookiesProvider } from '../../../../packages/contexts/cookies/CookiesContext';
 import { I18nProvider } from '../../../../packages/contexts/i18n/I18nContext';
 import { ProfileProvider } from '../../../../packages/contexts/profile/ProfileContext';
@@ -36,6 +37,7 @@ export default async function LangLayout({
   let initialClient: ClientPublicConfig | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
   let tenantKey: string | null = null;
+  const allowVisualFallback = process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true';
 
   try {
     tenantKey = resolveTenantKey();
@@ -48,6 +50,12 @@ export default async function LangLayout({
       message: resolvedError?.response?.data?.message ?? resolvedError?.message,
     };
     console.error('⚠️ Could not load client:', resolvedError);
+
+    if (allowVisualFallback) {
+      initialClient = createVisualFallbackClient(tenantKey ?? 'tnk_visual_fallback');
+      clientError = null;
+      console.warn('⚠️ Using visual fallback client because tenant bootstrap failed.');
+    }
   }
 
   return (

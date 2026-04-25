@@ -109,9 +109,9 @@ export function ClientProvider({
       } catch (error: any) {
         if (!cancelled) {
           setBootstrapError({
-            status: error?.response?.status ?? 500,
-            code: error?.response?.data?.code,
-            message: error?.response?.data?.message ?? error?.message,
+          status: error?.response?.status ?? 500,
+          code: error?.response?.data?.code,
+          message: error?.response?.data?.message ?? error?.message,
           });
         }
       } finally {
