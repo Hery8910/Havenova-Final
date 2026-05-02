@@ -5,7 +5,7 @@ export default function HeroSection({
   lang,
 }: {
   texts: PageHeroContent;
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
 }) {
   return <PageHero texts={texts} lang={lang} />;
 }

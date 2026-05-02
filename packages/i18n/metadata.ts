@@ -1,7 +1,8 @@
 // packages/i18n/metadata.ts
 import { Metadata } from 'next';
+import type { Locale } from './index';
 
-export const pageMetadata: Record<string, Record<'de' | 'en', Metadata>> = {
+export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
   home: {
     en: {
       title: 'Havenova - Your Trusted Home Service Partner in Berlin',

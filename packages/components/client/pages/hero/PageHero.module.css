@@ -1,82 +1,69 @@
 .hero {
-  margin: 0;
+  margin-top: calc(var(--navbar-height-desktop) + env(safe-area-inset-top));
   position: relative;
   overflow: hidden;
-  min-height: 100dvh;
-  padding: 0 clamp(24px, 5vw, 56px);
-}
-
-.heroPattern {
-  position: absolute;
-  inset: 0;
-  display: block;
-  background-image: radial-gradient(var(--brand-secondary-6) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity: 0.2;
+  isolation: isolate;
+  width: 100%;
+  min-height: var(--hero-height-desktop);
+  background: var(--bg-base);
 }
 
 .container {
+  position: relative;
   width: 100%;
-  min-height: 100dvh;
-  max-width: 1400px;
+  min-height: inherit;
   margin: 0 auto;
 }
 
-.heroGrid {
+.heroMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+}
+
+.heroMediaFrame {
+  position: relative;
+  width: min(100%, 1600px);
+  height: 100%;
+  margin-inline: auto;
+}
+
+.heroContent {
   position: relative;
   z-index: 1;
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100dvh;
+  align-items: flex-end;
+  min-height: inherit;
+  width: min(100%, 1600px);
+  margin-inline: auto;
+  padding: clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px);
 }
 
 .heroCopy {
-  width: 100%;
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  max-width: 700px;
-  height: 100dvh;
-  min-height: 100dvh;
+  justify-content: flex-end;
+  gap: 18px;
+  width: min(100%, 640px);
+  min-height: inherit;
+  padding-block: clamp(48px, 10dvh, 112px) clamp(24px, 5dvh, 56px);
 }
 
 .heroBadge {
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  color: var(--text-primary);
-  background: var(--card-primary-bg);
-  border: 1px solid var(--card-primary-bg);
 }
 
 .heroTitle {
   margin: 0;
-  color: var(--text-primary);
-  max-width: 500px;
-}
-
-.heroTitleAccent {
-  color: var(--brand-primary-5);
-}
-
-@supports ((background-clip: text) or (-webkit-background-clip: text)) {
-  .heroTitleAccent {
-    background: linear-gradient(90deg, var(--brand-primary-5), var(--brand-secondary-5));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-}
-
-.heroTitleSuffix {
-  color: var(--text-primary);
+  max-width: 11ch;
+  color: var(--text-main);
+  font-size: clamp(3.2rem, 7vw, 6.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
 }
 
 .heroDescriptions {
@@ -87,85 +74,129 @@
 
 .heroDescription {
   margin: 0;
-  color: var(--text-secondary);
-  max-width: 500px;
+  max-width: 35ch;
+  line-height: 1.4;
 }
 
 .heroCtas {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-}
-
-.ctaPrimary {
-  width: 100%;
-  max-width: 250px;
-  background: linear-gradient(0deg, var(--brand-primary-5) 0%, var(--brand-primary-6) 100%);
-  border-color: var(--brand-primary-5);
-  color: var(--text-inverse);
-}
-
-.ctaSecondary {
-  width: 100%;
-  max-width: 260px;
-  background: linear-gradient(0deg, var(--brand-accent-5) 0%, var(--brand-accent-6) 100%);
-  border-color: var(--brand-accent-5);
-  color: var(--text-inverse);
-}
-
-.heroImageWrap {
-  display: none;
-  position: relative;
-  width: 100%;
-  flex: 1 1 0;
-  min-width: 0;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  min-height: 70dvh;
-  border-radius: 16px;
-}
-
-.heroImageFrame {
-  position: relative;
-  width: min(100%, 512px);
-  max-width: 512px;
-  height: 70dvh;
-  overflow: hidden;
-  border-radius: 16px;
-
-  box-shadow: var(--shadow-md);
+  gap: 14px;
+  padding-top: 6px;
 }
 
 .heroImage {
-  display: block;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 4px solid var(--glass-bg);
-  background: var(--glass-bg);
-  opacity: 0.75;
+  object-fit: fill;
+  object-position: center center;
 }
 
-@media (min-width: 1025px) {
-  .heroGrid {
-    gap: 48px;
+@media (max-width: 1499px) {
+  .hero {
+    margin-top: calc(var(--navbar-height-tablet) + env(safe-area-inset-top));
+    min-height: var(--hero-height-tablet);
+  }
+
+  .heroContent {
+    align-items: flex-end;
   }
 
   .heroCopy {
-    width: auto;
-    max-width: none;
-    flex: 1 1 50%;
+    width: min(100%, 760px);
+    min-height: var(--hero-height-tablet);
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 768px) {
+  .heroImage {
+    opacity: 0.5;
+    object-fit: cover;
+    object-position: 72% center;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.92) 40%,
+      black 50%,
+      black 70%,
+      rgba(0, 0, 0, 0.92) 82%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.92) 40%,
+      black 50%,
+      black 70%,
+      rgba(0, 0, 0, 0.92) 82%,
+      transparent 100%
+    );
   }
 
-  .heroImageWrap {
-    display: flex;
-    width: auto;
-    flex: 1 1 50%;
-    align-self: stretch;
-  }
-
-  .heroImageFrame {
+  .cta {
     width: 100%;
-    max-width: none;
+    max-width: 250px;
+  }
+  :global([data-theme='dark']) .heroImage {
+    opacity: 0.34;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    margin-top: 0;
+    min-height: 100dvh;
+    background: var(--bg-base);
+  }
+
+  .heroContent {
+    align-items: center;
+    padding: 28px 18px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .heroCopy {
+    width: 100%;
+    min-height: calc(100dvh - calc(88px + env(safe-area-inset-bottom)));
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    padding-block: 36px 20px;
+    text-align: center;
+  }
+
+  .heroBadge {
+    align-self: center;
+  }
+
+  .heroTitle {
+    max-width: 14ch;
+    font-size: clamp(2.35rem, 14vw, 4rem);
+    line-height: 0.92;
+  }
+
+  .heroDescriptions {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .heroDescription {
+    max-width: 30ch;
+  }
+
+  .heroCtas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: min(100%, 300px);
+    margin: 16px auto 0;
+  }
+
+  .heroImage {
+    object-fit: cover;
+    opacity: 0.4;
+    object-position: right center;
+  }
+
+  :global([data-theme='dark']) .heroImage {
+    opacity: 0.34;
   }
 }

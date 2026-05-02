@@ -3,11 +3,9 @@
     "home": {
       "hero": {
         "badge": "Digitale Service-Plattform",
-        "title": "Reinigung & Hausservice",
-        "titleAccent": "online anfragen",
-        "titleSuffix": "in wenigen Minuten.",
+        "title": "Finden Sie schnell die richtige Hilfe",
         "descriptions": [
-          "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein individuelles Angebot. Transparent, zuverlässig und ohne unnötigen Aufwand."
+          "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein passendes Angebot. Klar, zuverlässig und einfach ab dem ersten Schritt."
         ],
         "ctas": {
           "primary": {
@@ -22,18 +20,17 @@
           }
         },
         "image": {
-          "src": "/images/header-about-havenova.webp",
+          "src": "/images/home.png",
           "alt": "Havenova Hausservice-Fachkraft in Berlin"
         },
         "a11y": {
-          "actionsLabel": "Aktionen im Startseiten-Hero",
-          "imageCardLabel": "Plattformdetails und Einsatzgebiet"
+          "actionsLabel": "Aktionen im Startseiten-Hero"
         }
       },
       "appInstall": {
         "kicker": "PWA · Installierbar",
         "title": "Installiere Havenova als App – auf jedem Gerät.",
-        "description": "Nutze Havenova wie eine native App: schneller Zugriff, bessere Performance und ein klarer Überblick über deine Anfragen – am Handy, Tablet oder Desktop.",
+        "description": "Nutze Havenova wie eine native App: schneller Zugriff, bessere Leistung und ein klarer Überblick über deine Anfragen – auf Handy, Tablet oder Desktop.",
         "primaryCta": {
           "label": "App installieren",
           "installedLabel": "App installiert"
@@ -50,7 +47,7 @@
       "appInstalled": {
         "kicker": "App bereit",
         "title": "Havenova ist einsatzbereit.",
-        "description": "Alles eingerichtet. Verwalte deine Services, verfolge Anfragen und behalte den Überblick – alles an einem Ort.",
+        "description": "Alles ist bereit. Verwalte deine Services, verfolge Anfragen und behalte die Kontrolle – alles an einem Ort.",
         "primaryCta": {
           "label": "So funktioniert’s"
         }
@@ -61,14 +58,14 @@
         "items": [
           {
             "title": "Reinigung",
-            "description": "Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Allgemeinflächen – flexibel, gründlich und passend zu deinem Bedarf.",
+            "description": "Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Gemeinschaftsflächen – passend zu deinem Bedarf.",
             "ctaLabel": "Jetzt bestellen",
             "href": "/services/house-cleaning",
             "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Hausservice",
-            "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe rund ums Zuhause – schnell organisiert, transparent abgestimmt.",
+            "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe zu Hause – schnell organisiert und klar abgestimmt.",
             "ctaLabel": "Jetzt bestellen",
             "href": "/services/home-service",
             "icon": "/svg/service.svg"
@@ -78,7 +75,7 @@
       "benefits": {
         "kicker": "Vorteile",
         "title": "Für Kund:innen angenehm – für das Team effizient.",
-        "description": "Havenova reduziert Hin-und-her, macht Anfragen klarer und sorgt für einen sauberen Ablauf: weniger Missverständnisse, schnelleres Angebot, bessere Planung.",
+        "description": "Havenova reduziert Hin und Her, macht Anfragen klarer und hält Abläufe sauber: weniger Missverständnisse, schnellere Angebote, bessere Planung.",
         "items": [
           {
             "title": "Klare Anfragen",
@@ -86,7 +83,7 @@
           },
           {
             "title": "Schnellere Angebote",
-            "description": "Weniger Rückfragen, schnelleres Matching, bessere Reaktionszeit."
+            "description": "Weniger Rückfragen, schnelleres Matching und bessere Reaktionszeiten."
           },
           {
             "title": "Bessere Planung",

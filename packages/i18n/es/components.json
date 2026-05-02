@@ -230,25 +230,11 @@
       ]
     },
     "cookieBanner": {
-      "title": "Cookies on this website",
-      "description": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used.",
-      "statusLabel": "Cookies",
-      "categoriesTitle": "Cookie settings",
-      "necessaryTitle": "Strictly necessary cookies",
-      "necessaryDescription": "These cookies and comparable storage technologies are required for login, security, language settings and core platform functions. They cannot be disabled.",
-      "alwaysOn": "Always on",
-      "statsDescription": "Allow analytics cookies if you want to help us understand platform usage and improve the experience when these features are enabled.",
-      "acceptAll": "Accept all",
-      "rejectAll": "Only necessary",
-      "saveSelection": "Save selection",
-      "close": "Understood",
-      "enableStats": "Analytics cookies",
+      "title": "Cookies en este sitio web",
+      "description": "Esta plataforma utiliza únicamente cookies estrictamente necesarias y tecnologías equivalentes, como el almacenamiento del navegador, para gestionar el inicio de sesión, la seguridad, el idioma, la sesión y otras funciones esenciales. Actualmente no utilizamos cookies de estadísticas ni de analítica.",
+      "close": "Entendido",
       "a11y": {
-        "dialog": "Cookie preferences dialog",
-        "close": "Close cookie preferences",
-        "settings": "Cookie preference actions",
-        "necessary": "Strictly necessary cookies are always enabled",
-        "statistics": "Enable or disable analytics cookies"
+        "close": "Cerrar aviso de cookies"
       }
     },
     "footer": {

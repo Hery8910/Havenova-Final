@@ -1,27 +1,22 @@
 import { useId } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IoLocationOutline } from 'react-icons/io5';
 import styles from './PageHero.module.css';
 import { href } from '../../../../utils';
 
 type HeroClassNameSlot =
   | 'root'
-  | 'pattern'
   | 'container'
-  | 'grid'
+  | 'media'
+  | 'mediaFrame'
+  | 'content'
   | 'copy'
   | 'badge'
   | 'title'
-  | 'titleAccent'
-  | 'titleSuffix'
   | 'descriptions'
   | 'description'
   | 'ctas'
-  | 'imageWrap'
-  | 'imageFrame'
-  | 'image'
-  | 'imageCard';
+  | 'image';
 
 export interface PageHeroAction {
   label: string;
@@ -40,8 +35,6 @@ export interface PageHeroImage {
 export interface PageHeroContent {
   badge?: string;
   title: string;
-  titleAccent?: string;
-  titleSuffix?: string;
   descriptions: string[];
   ctas?: {
     primary?: PageHeroAction;
@@ -56,7 +49,7 @@ export interface PageHeroContent {
 
 export interface PageHeroProps {
   texts: PageHeroContent;
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
   classNames?: Partial<Record<HeroClassNameSlot, string>>;
 }
 
@@ -65,17 +58,42 @@ const joinClasses = (...classNames: Array<string | undefined | false>) =>
 
 export function PageHero({ texts, lang, classNames }: PageHeroProps) {
   const titleId = useId();
+  const descriptionId = useId();
   const ctas = [texts.ctas?.primary, texts.ctas?.secondary].filter(Boolean) as PageHeroAction[];
+  const hasDescriptions = texts.descriptions.length > 0;
+  const actionsLabel = texts.a11y?.actionsLabel;
 
   return (
-    <section className={joinClasses(styles.hero, classNames?.root)} aria-labelledby={titleId}>
-      <span className={joinClasses(styles.heroPattern, classNames?.pattern)} aria-hidden="true" />
-
+    <section
+      className={joinClasses(styles.hero, classNames?.root)}
+      aria-labelledby={titleId}
+      aria-describedby={hasDescriptions ? descriptionId : undefined}
+    >
       <div className={joinClasses(styles.container, classNames?.container)}>
-        <div className={joinClasses(styles.heroGrid, classNames?.grid)}>
+        <div className={joinClasses(styles.heroMedia, classNames?.media)}>
+          <div className={joinClasses(styles.heroMediaFrame, classNames?.mediaFrame)}>
+            <Image
+              className={joinClasses(styles.heroImage, classNames?.image)}
+              src={texts.image.src}
+              alt={texts.image.alt}
+              fill
+              priority={texts.image.priority ?? true}
+              sizes="100vw"
+            />
+          </div>
+        </div>
+
+        <div className={joinClasses(styles.heroContent, classNames?.content)}>
           <header className={joinClasses(styles.heroCopy, classNames?.copy)}>
             {texts.badge && (
-              <span className={joinClasses(styles.heroBadge, 'type-label', classNames?.badge)}>
+              <span
+                className={joinClasses(
+                  styles.heroBadge,
+                  'badge',
+                  'badge--primary',
+                  classNames?.badge
+                )}
+              >
                 {texts.badge}
               </span>
             )}
@@ -85,25 +103,12 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
               className={joinClasses(styles.heroTitle, 'type-display-md', classNames?.title)}
             >
               {texts.title}
-              {texts.titleAccent && (
-                <>
-                  {' '}
-                  <span className={joinClasses(styles.heroTitleAccent, classNames?.titleAccent)}>
-                    {texts.titleAccent}
-                  </span>
-                </>
-              )}
-              {texts.titleSuffix && (
-                <>
-                  {' '}
-                  <span className={joinClasses(styles.heroTitleSuffix, classNames?.titleSuffix)}>
-                    {texts.titleSuffix}
-                  </span>
-                </>
-              )}
             </h1>
 
-            <div className={joinClasses(styles.heroDescriptions, classNames?.descriptions)}>
+            <div
+              id={hasDescriptions ? descriptionId : undefined}
+              className={joinClasses(styles.heroDescriptions, classNames?.descriptions)}
+            >
               {texts.descriptions.map((description) => (
                 <p
                   key={description}
@@ -121,7 +126,7 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
             {ctas.length > 0 && (
               <nav
                 className={joinClasses(styles.heroCtas, classNames?.ctas)}
-                aria-label={texts.a11y?.actionsLabel}
+                aria-label={actionsLabel}
               >
                 {ctas.map((cta, index) => {
                   const isPrimary = cta.variant ? cta.variant === 'primary' : index === 0;
@@ -130,9 +135,9 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
                     <Link
                       key={`${cta.href}-${cta.label}`}
                       className={joinClasses(
-                        isPrimary ? styles.ctaPrimary : styles.ctaSecondary,
+                        isPrimary ? 'btn--primary' : 'btn--secondary',
                         'button',
-                        cta.className
+                        `${styles.cta}`
                       )}
                       href={href(lang, cta.href)}
                       aria-label={cta.ariaLabel}
@@ -144,19 +149,6 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
               </nav>
             )}
           </header>
-
-          <figure className={joinClasses(styles.heroImageWrap, classNames?.imageWrap)}>
-            <div className={joinClasses(styles.heroImageFrame, classNames?.imageFrame)}>
-              <Image
-                className={joinClasses(styles.heroImage, classNames?.image)}
-                src={texts.image.src}
-                alt={texts.image.alt}
-                fill
-                priority={texts.image.priority ?? true}
-                sizes="(max-width: 1024px) 0px, 50vw"
-              />
-            </div>
-          </figure>
         </div>
       </div>
     </section>

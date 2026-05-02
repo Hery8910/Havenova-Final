@@ -3,11 +3,9 @@
     "home": {
       "hero": {
         "badge": "Digital service platform",
-        "title": "Cleaning & home service",
-        "titleAccent": "requested online",
-        "titleSuffix": "in minutes.",
+        "title": "Find The Right Help Fast",
         "descriptions": [
-          "Choose your service, send your request in minutes, and receive a tailored offer. Transparent, reliable, and without extra effort."
+          "Choose your service, send your request in minutes, and receive a tailored offer. Clear, reliable, and easy from the first step."
         ],
         "ctas": {
           "primary": {
@@ -22,12 +20,11 @@
           }
         },
         "image": {
-          "src": "/images/header-about-havenova.webp",
+          "src": "/images/home.png",
           "alt": "Havenova home service professional in Berlin"
         },
         "a11y": {
-          "actionsLabel": "Homepage hero actions",
-          "imageCardLabel": "Platform details and service coverage"
+          "actionsLabel": "Homepage hero actions"
         }
       },
       "appInstall": {
@@ -61,14 +58,14 @@
         "items": [
           {
             "title": "Cleaning",
-            "description": "Reliable cleaning for apartments, stairwells, and common areas — tailored to your needs.",
+            "description": "Reliable cleaning for apartments, stairwells, and shared areas — adapted to your needs.",
             "ctaLabel": "Order now",
             "href": "/services/house-cleaning",
             "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Home service",
-            "description": "Small repairs, upkeep, and practical help at home — quickly arranged and transparently coordinated.",
+            "description": "Small repairs, upkeep, and practical help at home — quickly arranged and clearly coordinated.",
             "ctaLabel": "Order now",
             "href": "/services/home-service",
             "icon": "/svg/service.svg"
@@ -78,15 +75,15 @@
       "benefits": {
         "kicker": "Benefits",
         "title": "Comfortable for customers — efficient for the team.",
-        "description": "Havenova reduces back-and-forth, clarifies requests, and keeps workflows clean: fewer misunderstandings, faster quotes, better planning.",
+        "description": "Havenova reduces back-and-forth, clarifies requests, and keeps workflows clean: fewer misunderstandings, faster offers, better planning.",
         "items": [
           {
             "title": "Clear requests",
             "description": "Forms collect exactly the information needed — without stress."
           },
           {
-            "title": "Faster quotes",
-            "description": "Fewer follow-ups, quicker matching, better response times."
+            "title": "Faster offers",
+            "description": "Fewer follow-ups, quicker matching, and better response times."
           },
           {
             "title": "Better planning",

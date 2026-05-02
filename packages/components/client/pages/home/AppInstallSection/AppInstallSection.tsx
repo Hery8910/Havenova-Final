@@ -77,7 +77,7 @@ export default function AppInstallSection({
       primaryCta: { label: string };
     };
   };
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
 }) {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);

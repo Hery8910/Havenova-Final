@@ -232,23 +232,9 @@
     "cookieBanner": {
       "title": "Cookies auf dieser Website",
       "description": "Diese Plattform verwendet derzeit ausschließlich technisch notwendige Cookies und vergleichbare Technologien, etwa Browser-Speicher, um Anmeldung, Sicherheit, Spracheinstellungen, Sitzungsverwaltung und andere Kernfunktionen bereitzustellen. Statistik- oder Analysefunktionen werden derzeit nicht eingesetzt.",
-      "statusLabel": "Cookies",
-      "categoriesTitle": "Cookie-Einstellungen",
-      "necessaryTitle": "Technisch notwendige Cookies",
-      "necessaryDescription": "Diese Cookies und vergleichbaren Speichertechnologien sind für Anmeldung, Sicherheit, Spracheinstellungen und zentrale Plattformfunktionen erforderlich. Sie können nicht deaktiviert werden.",
-      "alwaysOn": "Immer aktiv",
-      "statsDescription": "Erlauben Sie Statistik-Cookies, wenn Sie uns helfen möchten, die Nutzung der Plattform besser zu verstehen und das Erlebnis zu verbessern, sobald diese Funktionen aktiviert sind.",
-      "acceptAll": "Alle akzeptieren",
-      "rejectAll": "Nur notwendige",
-      "saveSelection": "Auswahl speichern",
       "close": "Verstanden",
-      "enableStats": "Statistik-Cookies",
       "a11y": {
-        "dialog": "Dialog für Cookie-Einstellungen",
-        "close": "Cookie-Einstellungen schließen",
-        "settings": "Aktionen für Cookie-Einstellungen",
-        "necessary": "Technisch notwendige Cookies sind immer aktiviert",
-        "statistics": "Statistik-Cookies aktivieren oder deaktivieren"
+        "close": "Cookie-Hinweis schließen"
       }
     },
     "footer": {

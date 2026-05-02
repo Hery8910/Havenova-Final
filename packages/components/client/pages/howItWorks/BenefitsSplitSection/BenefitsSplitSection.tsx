@@ -14,7 +14,7 @@ export default function BenefitsSplitSection({
     ctaHomeServices: { label: string; href: string };
     ctaAriaLabel: string;
   };
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
 }) {
   return (
     <section className={styles.benefits} aria-labelledby="how-it-works-benefits-title">

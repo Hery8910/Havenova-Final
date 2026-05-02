@@ -26,7 +26,7 @@ export default function AuthRequiredAlert({
   onClose,
 }: {
   texts: AuthRequiredAlertTexts;
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
   onClose: () => void;
 }) {
   return (

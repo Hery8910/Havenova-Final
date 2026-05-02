@@ -4,7 +4,7 @@ import { getPageMetadata } from '../../../../../../../packages/utils/metadata';
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: 'de' | 'en' };
+  params: { lang: 'de' | 'en' | 'es' };
 }): Promise<Metadata> {
   return getPageMetadata(params.lang, 'setPassword');
 }

@@ -1,26 +1,23 @@
 'use client';
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useCookies } from '@havenova/contexts/cookies';
 import { useI18n } from '@havenova/contexts/i18n';
 import { CookieBannerView } from './CookieBannerView';
 
 export function CookieBannerContainer() {
-  const { prefs, showBanner, acceptAll, rejectAll, saveSelection, closeBanner, loading } =
-    useCookies();
+  const { showBanner, loading, saveSelection } = useCookies();
   const { texts } = useI18n();
 
-  const [stats, setStats] = useState(prefs?.consent.statistics ?? false);
   const [isRendered, setIsRendered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dialogRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descriptionId = useId();
-  const settingsId = useId();
   const cookieTexts = texts?.components?.client.cookieBanner;
 
-  useEffect(() => {
-    setStats(prefs?.consent.statistics ?? false);
-  }, [prefs?.consent.statistics]);
+  const handleAcknowledge = useCallback(() => {
+    saveSelection({ statistics: false });
+  }, [saveSelection]);
 
   useEffect(() => {
     if (isOpen) {
@@ -45,15 +42,54 @@ export function CookieBannerContainer() {
   useEffect(() => {
     if (!isRendered) return;
 
+    const dialog = dialogRef.current;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    const getFocusableElements = () => {
+      if (!dialog) return [];
+
+      return Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => !element.hasAttribute('hidden') && element.getAttribute('aria-hidden') !== 'true');
+    };
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        closeBanner();
+        handleAcknowledge();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = getFocusableElements();
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        dialog?.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (event.shiftKey && activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isRendered, closeBanner]);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [handleAcknowledge, isRendered]);
 
   if (!cookieTexts || loading || !isRendered) return null;
 
@@ -64,13 +100,7 @@ export function CookieBannerContainer() {
       dialogRef={dialogRef}
       titleId={titleId}
       descriptionId={descriptionId}
-      settingsId={settingsId}
-      stats={stats}
-      onToggleStats={setStats}
-      onSave={() => saveSelection({ statistics: stats })}
-      onReject={rejectAll}
-      onAccept={acceptAll}
-      onClose={closeBanner}
+      onAcknowledge={handleAcknowledge}
     />
   );
 }

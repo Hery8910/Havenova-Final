@@ -19,7 +19,7 @@ export default function ServicesSection({
       icon: string;
     }[];
   };
-  lang: 'de' | 'en';
+  lang: 'de' | 'en' | 'es';
 }) {
   return (
     <section className={styles.services} aria-labelledby="home-services-title">

@@ -7,8 +7,6 @@ import type {
 import api from '../api/api';
 import { resolveTenantKey } from './tenantResolver';
 
-export const DEFAULT_CLIENT_TENANT_KEY = resolveTenantKey();
-
 const buildAuthHeaders = (accessToken?: string) =>
   accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined;
 
@@ -22,7 +20,7 @@ const toClientResponseError = (message: string, responseData: unknown, status = 
 };
 
 export async function getClient(
-  tenantKey: string = DEFAULT_CLIENT_TENANT_KEY
+  tenantKey: string = resolveTenantKey()
 ): Promise<ClientBootstrapConfig> {
   const normalizedTenantKey = tenantKey.trim();
   if (normalizedTenantKey.length < 8) {

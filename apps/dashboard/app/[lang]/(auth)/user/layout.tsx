@@ -20,13 +20,13 @@ import {
 } from '../../../../../../packages/services';
 
 export async function generateStaticParams() {
-  return [{ lang: 'de' }, { lang: 'en' }];
+  return [{ lang: 'de' }, { lang: 'en' }, { lang: 'es' }];
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: 'de' | 'en' };
+  params: { lang: 'de' | 'en' | 'es' };
 }): Promise<Metadata> {
   return {
     title: params.lang === 'de' ? 'Dashboard | Havenova' : 'Dashboard | Havenova',
@@ -38,7 +38,7 @@ export default async function LangLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: 'de' | 'en' };
+  params: { lang: 'de' | 'en' | 'es' };
 }) {
   const requestHost = resolveRequestHost(headers());
   assertAllowedAppHost(requestHost);

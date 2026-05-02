@@ -2,99 +2,101 @@
   "client": {
     "home": {
       "hero": {
-        "badge": "Digital service platform",
-        "title": "Cleaning & home service",
-        "titleAccent": "requested online",
-        "titleSuffix": "in minutes.",
+        "badge": "Plataforma digital de servicios",
+        "title": "Encuentra la ayuda adecuada ",
         "descriptions": [
-          "Choose your service, send your request in minutes, and receive a tailored offer. Transparent, reliable, and without extra effort."
+          "Elige tu servicio, envía tu solicitud en pocos minutos y recibe una propuesta a medida. Claro, fiable y fácil desde el primer paso."
         ],
         "ctas": {
           "primary": {
-            "label": "Request cleaning",
+            "label": "Solicitar limpieza",
             "href": "/services/house-cleaning",
-            "ariaLabel": "Request a cleaning service"
+            "ariaLabel": "Solicitar un servicio de limpieza"
           },
           "secondary": {
-            "label": "Request home service",
+            "label": "Solicitar ayuda en casa",
             "href": "/services/home-service",
-            "ariaLabel": "Request a home service"
+            "ariaLabel": "Solicitar un servicio de ayuda en casa"
           }
         },
         "image": {
-          "src": "/images/header-about-havenova.webp",
-          "alt": "Havenova home service professional in Berlin"
+          "src": "/images/home.png",
+          "alt": "Profesional de servicios para el hogar de Havenova en Berlín"
         },
         "a11y": {
-          "actionsLabel": "Homepage hero actions",
-          "imageCardLabel": "Platform details and service coverage"
+          "actionsLabel": "Acciones del hero de la página de inicio"
         }
       },
       "appInstall": {
-        "kicker": "PWA · Installable",
-        "title": "Install Havenova as an app — on any device.",
-        "description": "Use Havenova like a native app: faster access, better performance, and a clear overview of your requests — on mobile, tablet, or desktop.",
+        "kicker": "PWA · Instalable",
+        "title": "Instala Havenova como app — en cualquier dispositivo.",
+        "description": "Usa Havenova como una app nativa: acceso más rápido, mejor rendimiento y una vista clara de tus solicitudes — en móvil, tablet o escritorio.",
         "primaryCta": {
-          "label": "Install app",
-          "installedLabel": "App installed"
+          "label": "Instalar app",
+          "installedLabel": "App instalada"
         },
         "iosCta": {
-          "label": "Install on iPhone",
-          "hint": "On iPhone Safari, tap Share and then choose \"Add to Home Screen\"."
+          "label": "Instalar en iPhone",
+          "hint": "En Safari para iPhone, toca «Compartir» y luego elige «Añadir a pantalla de inicio»."
         },
         "secondaryCta": {
-          "label": "How it works"
+          "label": "Cómo funciona"
         },
-        "features": ["Fast launch", "Updates & status", "Mobile-first", "Everything in one place"]
+        "features": [
+          "Inicio rápido",
+          "Actualizaciones y estado",
+          "Primero móvil",
+          "Todo en un lugar"
+        ]
       },
       "appInstalled": {
-        "kicker": "App ready",
-        "title": "Havenova is ready to use.",
-        "description": "You’re all set. Manage your home service, track requests, and stay in control — all from one place.",
+        "kicker": "App lista",
+        "title": "Havenova está lista para usarse.",
+        "description": "Todo está preparado. Gestiona tus servicios, sigue tus solicitudes y mantén el control — todo desde un solo lugar.",
         "primaryCta": {
-          "label": "How it works"
+          "label": "Cómo funciona"
         }
       },
       "services": {
-        "title": "Our services",
-        "subtitle": "Two clear paths — choose the right service and send your request in minutes.",
+        "title": "Nuestros servicios",
+        "subtitle": "Dos caminos claros — elige el servicio adecuado y envía tu solicitud en pocos minutos.",
         "items": [
           {
-            "title": "Cleaning",
-            "description": "Reliable cleaning for apartments, stairwells, and common areas — tailored to your needs.",
-            "ctaLabel": "Order now",
+            "title": "Limpieza",
+            "description": "Limpieza fiable para pisos, escaleras y zonas comunes — adaptada a lo que necesitas.",
+            "ctaLabel": "Pedir ahora",
             "href": "/services/house-cleaning",
             "icon": "/svg/cleaning.svg"
           },
           {
-            "title": "Home service",
-            "description": "Small repairs, upkeep, and practical help at home — quickly arranged and transparently coordinated.",
-            "ctaLabel": "Order now",
+            "title": "Ayuda en casa",
+            "description": "Pequeñas reparaciones, mantenimiento y ayuda práctica en casa — organizados con rapidez y claridad.",
+            "ctaLabel": "Pedir ahora",
             "href": "/services/home-service",
             "icon": "/svg/service.svg"
           }
         ]
       },
       "benefits": {
-        "kicker": "Benefits",
-        "title": "Comfortable for customers — efficient for the team.",
-        "description": "Havenova reduces back-and-forth, clarifies requests, and keeps workflows clean: fewer misunderstandings, faster quotes, better planning.",
+        "kicker": "Ventajas",
+        "title": "Cómodo para clientes — eficiente para el equipo.",
+        "description": "Havenova reduce idas y vueltas, aclara las solicitudes y mantiene un flujo limpio: menos malentendidos, ofertas más rápidas y mejor planificación.",
         "items": [
           {
-            "title": "Clear requests",
-            "description": "Forms collect exactly the information needed — without stress."
+            "title": "Solicitudes claras",
+            "description": "Los formularios reúnen justo la información necesaria — sin estrés."
           },
           {
-            "title": "Faster quotes",
-            "description": "Fewer follow-ups, quicker matching, better response times."
+            "title": "Ofertas más rápidas",
+            "description": "Menos preguntas de seguimiento, asignación más rápida y mejores tiempos de respuesta."
           },
           {
-            "title": "Better planning",
-            "description": "Services can be prioritized and coordinated with clarity."
+            "title": "Mejor planificación",
+            "description": "Los servicios se pueden priorizar y coordinar con claridad."
           },
           {
-            "title": "Transparency",
-            "description": "Status and communication in one place — clear for both sides."
+            "title": "Transparencia",
+            "description": "Estado y comunicación en un solo lugar — claro para ambas partes."
           }
         ]
       }

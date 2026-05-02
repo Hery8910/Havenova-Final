@@ -1,5 +1,4 @@
 'use client';
-import styles from './page.module.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLang } from '../../../../../packages/hooks';
@@ -12,13 +11,13 @@ const Dashboard = () => {
   const lang = useLang();
   const isAllowed = useRequireRole('admin');
 
-  if (!isAllowed) return null;
-
   useEffect(() => {
     if (auth && !auth.isLogged) {
       router.replace(href(lang, '/user/login'));
     }
   }, [auth, lang, router]);
+
+  if (!isAllowed) return null;
 
   if (!auth || !auth.isLogged) return null;
 

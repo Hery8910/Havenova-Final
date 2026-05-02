@@ -67,7 +67,7 @@ export default function AlertPopup({
 
   const renderMedia = () => {
     if (loading) {
-      return <span className={styles.spinner} aria-hidden="true" />;
+      return <span className={`${styles.spinner} app-anim-spin`} aria-hidden="true" />;
     }
 
     if (isConfirm) {
@@ -133,7 +133,7 @@ export default function AlertPopup({
 
   return (
     <div
-      className={`${styles.overlay} ${!isOpen ? styles.overlayClosing : ''}`}
+      className={`${styles.overlay} ${isOpen ? 'app-anim-overlay-enter' : 'app-anim-overlay-exit'}`}
       onClick={handleOverlayClick}
     >
       <section
@@ -145,7 +145,7 @@ export default function AlertPopup({
         aria-roledescription={dialogLabel}
         aria-busy={loading}
         tabIndex={-1}
-        className={`${styles.card} ${styles[`card--${currentState}`] ?? ''} ${!isOpen ? styles.cardClosing : ''}`}
+        className={`${styles.card} ${styles[`card--${currentState}`] ?? ''} ${isOpen ? 'app-anim-modal-enter' : 'app-anim-modal-exit'}`}
         onClick={(event) => event.stopPropagation()}
       >
         {hasCancel && (
@@ -175,7 +175,9 @@ export default function AlertPopup({
           </p>
         </article>
         {!loading && hasActions && (
-          <div className={`${styles.actions} ${!isOpen ? styles.actionsClosing : ''}`}>
+          <div
+            className={`${styles.actions} ${isOpen ? 'app-anim-content-enter' : 'app-anim-content-exit'}`}
+          >
             {hasCancel && (
               <button type="button" onClick={onCancel} className={styles.btnSecondary}>
                 {cancelLabel}

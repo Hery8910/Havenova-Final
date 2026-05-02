@@ -8,11 +8,6 @@
   background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  animation: overlayFadeIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.overlayClosing {
-  animation: overlayFadeOut 0.24s ease-out forwards;
 }
 
 .card {
@@ -34,11 +29,6 @@
     inset 0 1px 1px rgba(255, 255, 255, 1),
     inset 0 -4px 8px rgba(255, 255, 255, 0.3);
   transform-origin: center center;
-  animation: popupEnter 0.56s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.cardClosing {
-  animation: popupExit 0.24s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .card:focus,
@@ -223,12 +213,7 @@
   gap: 12px;
   margin-top: auto;
   padding-top: 32px;
-  animation: alertFadeIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
   opacity: 0;
-}
-
-.actionsClosing {
-  animation: alertFadeOut 0.18s ease-out forwards;
 }
 
 .btnPrimary,
@@ -306,96 +291,12 @@
   border: 3px solid rgba(2, 132, 199, 0.18);
   border-top-color: var(--color-info);
   border-radius: 50%;
-  animation: alertSpin 0.85s linear infinite;
-}
-
-@keyframes overlayFadeIn {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-}
-
-@keyframes overlayFadeOut {
-  from {
-    opacity: 1;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-  to {
-    opacity: 0;
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
-  }
-}
-
-@keyframes popupEnter {
-  from {
-    opacity: 0;
-    transform: translateY(24px) scale(0.94);
-  }
-  65% {
-    opacity: 1;
-    transform: translateY(-3px) scale(1.01);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes popupExit {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(14px) scale(0.97);
-  }
-}
-
-@keyframes alertSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes alertFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes alertFadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(6px);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .overlay,
-  .overlayClosing,
   .card,
-  .cardClosing,
   .actions,
-  .actionsClosing,
   .spinner {
     animation: none !important;
     transition: none !important;

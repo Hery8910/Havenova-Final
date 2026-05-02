@@ -9,7 +9,7 @@ import styles from './layout.module.css';
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: 'de' | 'en' };
+  params: { lang: 'de' | 'en' | 'es' };
 }): Promise<Metadata> {
   return getPageMetadata(params.lang, 'profile');
 }

@@ -25,7 +25,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 72px;
+  min-height: calc(var(--navbar-height-desktop) + env(safe-area-inset-top));
   pointer-events: none;
   z-index: 9;
 }
@@ -36,6 +36,12 @@
   --navbar-surface-bg: var(--glass-bg);
   --navbar-surface-image: radial-gradient(circle, var(--nav), var(--nav-1));
   --navbar-surface-border: var(--glass-border);
+}
+
+@media (max-width: 1499px) {
+  .navbarPlaceholder {
+    min-height: calc(var(--navbar-height-tablet) + env(safe-area-inset-top));
+  }
 }
 
 @media (max-width: 767px) {

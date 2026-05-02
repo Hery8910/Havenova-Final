@@ -1,17 +1,21 @@
 .tabletShell {
   --tablet-dropdown-offset: 24px;
+  min-height: var(--navbar-height-tablet);
   width: 100%;
   position: relative;
 }
 
 .tabletLayout {
+  box-sizing: border-box;
   position: relative;
   isolation: isolate;
   width: 100%;
-  padding: 8px 5dvw;
+  min-height: var(--navbar-height-tablet);
+  padding: 0 5dvw;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: center;
 }
 
 .tabletLayout::before {
@@ -30,6 +34,7 @@
 
 .tabletHeader {
   width: 100%;
+  min-height: var(--navbar-height-tablet);
   display: flex;
   justify-content: space-between;
   align-items: center;
