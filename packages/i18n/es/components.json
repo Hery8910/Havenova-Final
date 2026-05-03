@@ -58,8 +58,8 @@
         { "label": "Acerca de", "href": "/about" }
       ],
       "services": [
-        { "label": "Limpieza", "href": "/cleaning-service", "image": "", "alt": "" },
-        { "label": "Servicio para el hogar", "href": "/home-service", "image": "", "alt": "" }
+        { "label": "Servicio de limpieza", "href": "/cleaning-service", "image": "", "alt": "" },
+        { "label": "Servicio al hogar", "href": "/home-service", "image": "", "alt": "" }
       ],
       "profile": {
         "label": "Perfil",
@@ -259,8 +259,8 @@
         }
       },
       "links": [
-        { "label": "Cleaning", "href": "/cleaning-service" },
-        { "label": "Home service", "href": "/home-service" },
+        { "label": "Servicio de limpieza", "href": "/cleaning-service" },
+        { "label": "Servicio al hogar", "href": "/home-service" },
         { "label": "How it works", "href": "/how-it-work" },
         { "label": "Contact", "href": "/contact" },
         { "label": "About", "href": "/about" }

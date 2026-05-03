@@ -4,6 +4,7 @@ import styles from './page.module.css';
 import { useI18n } from '../../../../../packages/contexts/i18n/I18nContext';
 import { useLang } from '../../../../../packages/hooks/useLang';
 import { AppInstallSection } from '../../../../../packages/components/client/pages/home/AppInstallSection';
+import type { AppInstallSectionTexts } from '../../../../../packages/components/client/pages/home/AppInstallSection';
 import { ServicesSection } from '../../../../../packages/components/client/pages/home/ServicesSection';
 import { BenefitsSection } from '../../../../../packages/components/client/pages/home/BenefitsSection';
 import {
@@ -13,21 +14,8 @@ import {
 
 export interface HomePageTexts {
   hero: PageHeroContent;
-  appInstall: {
-    kicker: string;
-    title: string;
-    description: string;
-    primaryCta: { label: string; installedLabel: string };
-    iosCta: { label: string; hint: string };
-    secondaryCta: { label: string };
-    features: string[];
-  };
-  appInstalled: {
-    kicker: string;
-    title: string;
-    description: string;
-    primaryCta: { label: string };
-  };
+  appInstall: AppInstallSectionTexts['appInstall'];
+  appInstalled: AppInstallSectionTexts['appInstalled'];
   services: {
     title: string;
     subtitle: string;

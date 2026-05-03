@@ -4,9 +4,8 @@ import {
   FaClipboardList,
   FaListCheck,
   FaRegEnvelope,
-  FaRegUser,
 } from 'react-icons/fa6';
-import { FaBroom, FaScrewdriverWrench } from 'react-icons/fa6';
+import { LuLogIn } from 'react-icons/lu';
 import { HiHome } from 'react-icons/hi2';
 import { RiBuilding2Line } from 'react-icons/ri';
 import type { AuthUser } from '../../../types';
@@ -19,6 +18,7 @@ import type {
   NavLinkItem,
 } from './navbar.types';
 import { FaCog } from 'react-icons/fa';
+import { CgProfile } from 'react-icons/cg';
 
 const DEFAULT_MENU_LINKS: NavLinkItem[] = [
   { label: 'Home', href: '/', icon: HiHome },
@@ -226,7 +226,7 @@ export function getNavbarContent({
         {
           label: navbarAccountLinkTexts?.profile ?? 'Profile',
           href: '/profile',
-          icon: FaRegUser,
+          icon: CgProfile,
         },
         {
           label: navbarAccountLinkTexts?.requests ?? 'Requests',
@@ -250,8 +250,8 @@ export function getNavbarContent({
         },
       ]
     : [
-        { label: registerLabel, href: '/user/register', icon: FaRegUser },
-        { label: loginLabel, href: '/user/login', icon: FaRegUser },
+        { label: registerLabel, href: '/user/register', icon: CgProfile },
+        { label: loginLabel, href: '/user/login', icon: LuLogIn },
       ];
 
   return {

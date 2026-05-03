@@ -1,9 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import styles from './AppInstallSection.module.css';
 import { href } from '../../../../../utils/navigation';
+import { useAuth } from '../../../../../contexts';
+import { AppInstalledCard } from './AppInstalledCard';
+import { AppNotInstalledCard } from './AppNotInstalledCard';
+import type {
+  AppInstallSectionTexts,
+  AppInstallState,
+  AppNotInstalledState,
+} from './AppInstallSection.types';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -18,7 +25,10 @@ const getInstallFlag = () => {
     typeof window !== 'undefined' && window.localStorage?.getItem(INSTALL_FLAG_KEY) === 'true';
   const hasCookie =
     typeof document !== 'undefined' &&
-    document.cookie?.split('; ').some((cookie) => cookie === `${INSTALL_FLAG_KEY}=true`);
+    document.cookie
+      ?.split(';')
+      .map((cookie) => cookie.trim())
+      .some((cookie) => cookie.startsWith(`${INSTALL_FLAG_KEY}=`) && cookie.endsWith('true'));
   return hasLocalStorage || hasCookie;
 };
 
@@ -56,105 +66,124 @@ const isIosSafari = () => {
   return isAppleMobile && isWebkitBrowser && !isNonSafariBrowser;
 };
 
+const getPlatformInstallState = (hasPrompt: boolean): Exclude<AppInstallState, 'installed'> => {
+  if (isIosSafari()) {
+    return 'ios-manual';
+  }
+
+  return hasPrompt ? 'installable' : 'unavailable';
+};
+
+const getInstalledRelatedApps = async () => {
+  try {
+    const relatedApps = await (
+      navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> }
+    ).getInstalledRelatedApps?.();
+    return Array.isArray(relatedApps) && relatedApps.length > 0;
+  } catch {
+    return false;
+  }
+};
+
+const resolveInstallState = async (
+  hasPrompt: boolean
+): Promise<AppInstallState> => {
+  const hasStoredInstallFlag = getInstallFlag();
+  const standalone = isStandaloneMode();
+  if (standalone) {
+    setInstallFlag();
+    return 'installed';
+  }
+
+  const hasRelatedApps = await getInstalledRelatedApps();
+  if (hasRelatedApps) {
+    setInstallFlag();
+    return 'installed';
+  }
+
+  // Keep the persisted flag as a weak positive signal unless the browser
+  // explicitly exposes the install prompt again, which is a strong hint that
+  // the app is no longer installed for this environment.
+  if (hasStoredInstallFlag && !hasPrompt) {
+    return 'installed';
+  }
+
+  if (hasStoredInstallFlag && hasPrompt) {
+    clearInstallFlag();
+  }
+
+  return getPlatformInstallState(hasPrompt);
+};
+
 export default function AppInstallSection({
   texts,
   lang,
 }: {
-      texts: {
-        appInstall: {
-          kicker: string;
-          title: string;
-          description: string;
-          primaryCta: { label: string; installedLabel: string };
-          iosCta: { label: string; hint: string };
-          secondaryCta: { label: string };
-          features: string[];
-        };
-    appInstalled: {
-      kicker: string;
-      title: string;
-      description: string;
-      primaryCta: { label: string };
-    };
-  };
+  texts: AppInstallSectionTexts;
   lang: 'de' | 'en' | 'es';
 }) {
+  const { auth } = useAuth();
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-  const [isIosManualInstall, setIsIosManualInstall] = useState(false);
+  const [installState, setInstallState] = useState<AppInstallState>('unavailable');
+  const [isResolved, setIsResolved] = useState(false);
 
-  useEffect(() => {
-    const checkInstalled = () => {
-      const isStandalone = isStandaloneMode();
-      const hasInstallFlag = getInstallFlag();
+  useLayoutEffect(() => {
+    let active = true;
 
-      if (isStandalone && !hasInstallFlag) {
-        setInstallFlag();
-      }
-
-      const installed = isStandalone || hasInstallFlag;
-      setIsInstalled(installed);
-      setIsIosManualInstall(isIosSafari() && !installed);
+    const syncInstallState = async (promptAvailable: boolean) => {
+      const nextState = await resolveInstallState(promptAvailable);
+      if (!active) return;
+      setInstallState(nextState);
+      setIsResolved(true);
     };
 
-    checkInstalled();
+    void syncInstallState(Boolean(installPrompt));
 
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-      setInstallPrompt(event as BeforeInstallPromptEvent);
+      const nextPrompt = event as BeforeInstallPromptEvent;
+      setInstallPrompt(nextPrompt);
+      setInstallState((current) => (current === 'installed' ? current : 'installable'));
+      setIsResolved(true);
     };
 
     const handleAppInstalled = () => {
       setInstallFlag();
-      setIsInstalled(true);
+      setInstallState('installed');
       setInstallPrompt(null);
+    };
+
+    const handleLifecycleValidation = () => {
+      void syncInstallState(Boolean(installPrompt));
+    };
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key && event.key !== INSTALL_FLAG_KEY) {
+        return;
+      }
+      void syncInstallState(Boolean(installPrompt));
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
-    window.addEventListener('visibilitychange', checkInstalled);
-    window.addEventListener('pageshow', checkInstalled);
+    window.addEventListener('visibilitychange', handleLifecycleValidation);
+    window.addEventListener('pageshow', handleLifecycleValidation);
+    window.addEventListener('focus', handleLifecycleValidation);
+    window.addEventListener('storage', handleStorage);
 
     return () => {
+      active = false;
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
-      window.removeEventListener('visibilitychange', checkInstalled);
-      window.removeEventListener('pageshow', checkInstalled);
+      window.removeEventListener('visibilitychange', handleLifecycleValidation);
+      window.removeEventListener('pageshow', handleLifecycleValidation);
+      window.removeEventListener('focus', handleLifecycleValidation);
+      window.removeEventListener('storage', handleStorage);
     };
-  }, []);
+  }, [installPrompt]);
 
-  useEffect(() => {
-    const checkRelatedApps = async () => {
-      try {
-        if (getInstallFlag()) {
-          setIsInstalled(true);
-          return;
-        }
-        const relatedApps = await (
-          navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> }
-        ).getInstalledRelatedApps?.();
-        if (!relatedApps) {
-          return;
-        }
-        if (relatedApps.length > 0) {
-          setInstallFlag();
-          setIsInstalled(true);
-        }
-      } catch {
-        // Ignore unsupported or blocked APIs.
-      }
-    };
-    checkRelatedApps();
-  }, []);
-
-  const secondaryHref = href(lang, '/how-it-work');
   const handleInstall = useCallback(async () => {
-    if (isIosManualInstall) {
-      return;
-    }
-
     if (!installPrompt) {
-      window.location.assign(secondaryHref);
       return;
     }
 
@@ -163,56 +192,76 @@ export default function AppInstallSection({
     setInstallPrompt(null);
     if (choice.outcome === 'accepted') {
       setInstallFlag();
-      setIsInstalled(true);
+      setInstallState('installed');
     }
-  }, [installPrompt, isIosManualInstall, secondaryHref]);
+  }, [installPrompt]);
 
-  const canInstall = Boolean(installPrompt) && !isInstalled;
-  const canInstallOnIos = isIosManualInstall && !isInstalled;
-  const primaryLabel = isInstalled
-    ? texts.appInstall.primaryCta.installedLabel
-    : canInstallOnIos
-      ? texts.appInstall.iosCta.label
-    : texts.appInstall.primaryCta.label;
-  const activeTexts = isInstalled ? texts.appInstalled : texts.appInstall;
+  const installedContent =
+    auth.isLogged
+      ? {
+          ...texts.appInstalled.loggedIn,
+          ctas: texts.appInstalled.loggedIn.ctas.map((cta) => ({
+            ...cta,
+            href: href(lang, cta.href),
+          })),
+        }
+      : {
+          ...texts.appInstalled.guest,
+          ctas: texts.appInstalled.guest.ctas.map((cta) => ({
+            ...cta,
+            href: href(lang, cta.href),
+          })),
+        };
+
+  const notInstalledState: AppNotInstalledState =
+    installState === 'installed' ? 'unavailable' : installState;
+  const notInstalledContent =
+    notInstalledState === 'installable'
+      ? texts.appInstall.installable
+      : notInstalledState === 'ios-manual'
+        ? texts.appInstall.iosManual
+        : {
+            ...texts.appInstall.unavailable,
+            cta: {
+              ...texts.appInstall.unavailable.cta,
+              href: href(lang, texts.appInstall.unavailable.cta.href),
+            },
+          };
+
+  if (!isResolved) {
+    return (
+      <section className={styles.appInstall} aria-hidden="true">
+        <div className={`${styles.appCard} ${styles.appSkeleton}`}>
+          <div className={styles.titleBlock}>
+            <span className={styles.skeletonTitle} />
+            <span className={styles.skeletonTitleShort} />
+          </div>
+          <div className={styles.copyBlock}>
+            <span className={styles.skeletonLine} />
+            <span className={styles.skeletonLineShort} />
+            <div className={styles.skeletonActions}>
+              <span className={styles.skeletonButton} />
+              <span className={styles.skeletonButtonAlt} />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.appInstall} aria-labelledby="home-app-title">
-      <div
-        className={`${styles.appCard} glass-panel--base`}
-        data-state={isInstalled ? 'installed' : canInstall || canInstallOnIos ? 'available' : 'unavailable'}
-      >
-        <div className={styles.appContent}>
-          <span className={`${styles.kicker} type-label`}>{activeTexts.kicker}</span>
-          <h2 id="home-app-title" className="type-title-xl">{activeTexts.title}</h2>
-          <p className={`${styles.sectionSubtitle} type-body-lg`}>{activeTexts.description}</p>
-        </div>
-        <div className={styles.appCtas}>
-          {isInstalled ? (
-            <Link className={`${styles.ctaSecondary} button`} href={secondaryHref}>
-              {texts.appInstalled.primaryCta.label}
-            </Link>
-          ) : (
-            <>
-              {(canInstall || canInstallOnIos) && (
-                <button
-                  type="button"
-                  className={`${styles.ctaPrimaryInstall} button`}
-                  onClick={handleInstall}
-                >
-                  {primaryLabel}
-                </button>
-              )}
-              <Link className={`${styles.ctaSecondary} button`} href={secondaryHref}>
-                {texts.appInstall.secondaryCta.label}
-              </Link>
-            </>
-          )}
-        </div>
-        {canInstallOnIos && (
-          <p className={`${styles.installHint} type-body-sm`}>{texts.appInstall.iosCta.hint}</p>
-        )}
-      </div>
+      {installState === 'installed' ? (
+        <AppInstalledCard content={installedContent} />
+      ) : (
+        <AppNotInstalledCard
+          state={notInstalledState}
+          content={notInstalledContent}
+          onInstall={() => {
+            void handleInstall();
+          }}
+        />
+      )}
     </section>
   );
 }

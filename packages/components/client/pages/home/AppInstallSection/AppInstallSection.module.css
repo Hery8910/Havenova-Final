@@ -1,104 +1,330 @@
 .appInstall {
-  padding: 128px 5dvw 200px;
-}
-.sectionTitle {
-  color: var(--text-primary);
-  margin: 0;
-}
-.sectionSubtitle {
-  color: var(--text-secondary);
-  margin: 0;
-}
-.kicker {
-  max-width: fit-content;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  color: var(--color-secondary);
-  background: var(--card-secondary);
-  border: 1px solid var(--card-secondary-bg);
-}
-.appInstall {
   display: flex;
   justify-content: center;
   background: transparent;
-}
-.appCard {
-  width: 100%;
-  max-width: 800px;
-  padding: 32px;
-}
-.appContent {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.appCtas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 24px;
+  padding: 128px 5dvw 200px;
 }
 
-.installHint {
-  margin: 16px 0 0;
+.appCard {
+  width: 100%;
+  max-width: fit-content;
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleBlock,
+.copyBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBlock {
+  order: 1;
+  gap: 12px;
+  justify-content: flex-start;
+  width: fit-content;
+}
+
+.copyBlock {
+  width: 100%;
+  max-width: 350px;
+  order: 2;
+  gap: 16px;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.titleBlock :global(.type-title-xl) {
+  margin: 0;
+  max-width: 10ch;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.titleBlock :global(.type-display-md) {
+  margin: 0;
+  max-width: 9ch;
+  color: var(--text-primary);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.sectionSubtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 44ch;
+  line-height: 1.45;
+  text-align: end;
+}
+
+.appCtas {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.actionButton {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   color: var(--text-secondary);
 }
 
-.ctaPrimaryInstall {
-  background: linear-gradient(0deg, var(--brand-primary-5) 0%, var(--brand-primary-6) 100%);
-  border-color: var(--brand-primary-5);
-  color: var(--text-inverse);
+.appInstalledCard,
+.appNotInstalledCard {
+  grid-template-columns: minmax(280px, 350px) auto;
+  grid-template-areas:
+    'copy title'
+    'support support';
+  justify-content: space-between;
+  column-gap: 20px;
 }
-.ctaPrimaryUnavailable {
+
+.appSkeleton {
+  grid-template-columns: minmax(280px, 350px) auto;
+  grid-template-areas:
+    'copy title'
+    'support support';
+  justify-content: center;
+  column-gap: 20px;
+  padding-inline: 0;
+  background: transparent;
   border: none;
-  background: var(--surface-2);
-  color: var(--text-muted);
   box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-.ctaSecondary {
-  background: linear-gradient(0deg, var(--brand-accent-5) 0%, var(--brand-accent-6) 100%);
-  border-color: var(--brand-accent-5);
-  color: var(--text-inverse);
+
+.appInstalledCard .titleBlock,
+.appNotInstalledCard .titleBlock,
+.appSkeleton .titleBlock {
+  grid-area: title;
+  justify-self: start;
 }
-.ctaPrimary:hover,
+
+.appInstalledCard .copyBlock,
+.appNotInstalledCard .copyBlock,
+.appSkeleton .copyBlock {
+  grid-area: copy;
+  justify-self: start;
+}
+
+.appSkeleton .copyBlock {
+  gap: 18px;
+}
+
+.supportBar {
+  grid-area: support;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 12px 12px 20px;
+  border-radius: var(--radius-md);
+}
+
+.skeletonTitle,
+.skeletonTitleShort,
+.skeletonLine,
+.skeletonLineShort,
+.skeletonButton,
+.skeletonButtonAlt,
+.skeletonSupportText,
+.skeletonSupportButton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.skeletonTitle::after,
+.skeletonTitleShort::after,
+.skeletonLine::after,
+.skeletonLineShort::after,
+.skeletonButton::after,
+.skeletonButtonAlt::after,
+.skeletonSupportText::after,
+.skeletonSupportButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  animation: appSkeleton 1.5s ease-in-out infinite;
+}
+
+.skeletonTitle {
+  width: min(100%, 320px);
+  height: 52px;
+}
+
+.skeletonTitleShort {
+  width: min(100%, 220px);
+  height: 52px;
+}
+
+.skeletonLine {
+  width: min(100%, 340px);
+  height: 18px;
+}
+
+.skeletonLineShort {
+  width: min(100%, 290px);
+  height: 18px;
+}
+
+.skeletonActions {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.skeletonButton,
+.skeletonButtonAlt {
+  width: 100%;
+  height: 48px;
+}
+
+.skeletonSupportBar {
+  grid-area: support;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 12px 12px 20px;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%),
+    var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+.skeletonSupportText {
+  width: min(100%, 420px);
+  height: 18px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.skeletonSupportButton {
+  width: 164px;
+  height: 44px;
+}
+
+.supportInfo {
+  margin: 0;
+  color: var(--text-secondary);
+  width: 100%;
+  max-width: 420px;
+}
+
+.actionButton:hover,
 .ctaGhost:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
 
-.ctaPrimaryUnavailable:hover {
-  transform: none;
-  box-shadow: none;
-}
-.ctaPrimaryInstalled:disabled {
-  cursor: not-allowed;
-}
-.ctaPrimaryUnavailable:disabled {
-  cursor: not-allowed;
-}
-.ctaPrimary:focus-visible,
+.actionButton:focus-visible,
 .ctaGhost:focus-visible {
   outline: 2px solid var(--brand-primary-5);
   outline-offset: 2px;
 }
-.chipList {
-  margin: 24px 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+
+@media (min-width: 768px) {
+  .titleBlock,
+  .copyBlock {
+    min-height: 100%;
+  }
 }
-.chip {
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
+
+@media (max-width: 767px) {
+  .appCard {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    gap: 18px;
+  }
+
+  .appInstalledCard,
+  .appNotInstalledCard,
+  .appSkeleton {
+    grid-template-areas:
+      'title'
+      'copy'
+      'support';
+  }
+
+  .titleBlock {
+    gap: 10px;
+  }
+
+  .titleBlock :global(.type-title-xl),
+  .titleBlock :global(.type-display-md) {
+    max-width: 12ch;
+  }
+
+  .copyBlock {
+    gap: 18px;
+    max-width: 100%;
+    align-items: flex-start;
+  }
+
+  .sectionSubtitle {
+    text-align: start;
+  }
+
+  .appCtas {
+    justify-content: flex-start;
+  }
+
+  .supportBar {
+    padding: 16px 18px;
+  }
+
+  .actionButton {
+    width: 100%;
+  }
+
+  .skeletonActions {
+    flex-direction: column;
+  }
+
+  .skeletonButton,
+  .skeletonButtonAlt,
+  .skeletonSupportButton {
+    width: 100%;
+  }
+
+  .skeletonSupportBar {
+    align-items: stretch;
+    padding: 16px 18px;
+  }
 }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .appInstalledCard,
+  .appNotInstalledCard,
+  .appSkeleton {
+    grid-template-columns: minmax(260px, 320px) auto;
+    gap: 20px;
+  }
+}
+
+@keyframes appSkeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 @media (min-width: 1280px) {
   .appInstall {
     padding: 200px 10dvw;

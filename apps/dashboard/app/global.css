@@ -806,6 +806,19 @@ p {
 .button:active {
   transform: translateY(0);
 }
+.btn--secondary {
+  background: var(--brand-secondary);
+  border-color: var(--brand-secondary);
+  color: var(--text-inverse);
+}
+.btn--secondary:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+  background: var(--brand-secondary-light);
+}
+.btn--secondary:active {
+  transform: translateY(0);
+}
 .btn--outline,
 .button_invert {
   background: transparent;
@@ -818,10 +831,12 @@ p {
   transform: translateY(-1px);
   background: var(--surface-2);
 }
+
 .btn--ghost {
-  background: transparent;
-  border-color: transparent;
-  color: var(--text-main);
+  background: var(--glass-bg);
+  background-image: var(--gradient-glass-general);
+  border: 1px solid var(--glass-border);
+  color: var(--text-dark-secondary-fixed);
   box-shadow: none;
 }
 .btn--ghost:hover {
@@ -965,8 +980,8 @@ p {
 
 .glass-panel--base {
   border-radius: var(--radius-card);
-  background: var(--glass-bg);
   background-image: var(--gradient-glass-general);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);

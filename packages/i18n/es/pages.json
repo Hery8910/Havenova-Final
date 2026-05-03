@@ -3,20 +3,20 @@
     "home": {
       "hero": {
         "badge": "Plataforma digital de servicios",
-        "title": "Encuentra la ayuda adecuada ",
+        "title": "Encuentra la ayuda adecuada rápido",
         "descriptions": [
           "Elige tu servicio, envía tu solicitud en pocos minutos y recibe una propuesta a medida. Claro, fiable y fácil desde el primer paso."
         ],
         "ctas": {
           "primary": {
-            "label": "Solicitar limpieza",
-            "href": "/services/house-cleaning",
+            "label": "Servicio de limpieza",
+            "href": "/cleaning-service",
             "ariaLabel": "Solicitar un servicio de limpieza"
           },
           "secondary": {
-            "label": "Solicitar ayuda en casa",
-            "href": "/services/home-service",
-            "ariaLabel": "Solicitar un servicio de ayuda en casa"
+            "label": "Servicio al hogar",
+            "href": "/home-service",
+            "ariaLabel": "Solicitar un servicio al hogar"
           }
         },
         "image": {
@@ -28,33 +28,52 @@
         }
       },
       "appInstall": {
-        "kicker": "PWA · Instalable",
-        "title": "Instala Havenova como app — en cualquier dispositivo.",
-        "description": "Usa Havenova como una app nativa: acceso más rápido, mejor rendimiento y una vista clara de tus solicitudes — en móvil, tablet o escritorio.",
-        "primaryCta": {
-          "label": "Instalar app",
-          "installedLabel": "App instalada"
+        "installable": {
+          "title": "Instala Havenova en tu dispositivo.",
+          "description": "Abre Havenova más rápido y mantén el acceso a tus solicitudes siempre a mano cuando lo necesites.",
+          "info": "Puedes instalar la app directamente desde este navegador y acceder con un solo toque.",
+          "cta": {
+            "label": "Instalar app"
+          }
         },
-        "iosCta": {
-          "label": "Instalar en iPhone",
-          "hint": "En Safari para iPhone, toca «Compartir» y luego elige «Añadir a pantalla de inicio»."
+        "iosManual": {
+          "title": "Instala Havenova en tu dispositivo.",
+          "description": "Abre Havenova más rápido y mantén el acceso a tus solicitudes siempre a mano cuando lo necesites.",
+          "info": "En Safari, toca Compartir y luego Añadir a pantalla de inicio para instalar la app."
         },
-        "secondaryCta": {
-          "label": "Cómo funciona"
-        },
-        "features": [
-          "Inicio rápido",
-          "Actualizaciones y estado",
-          "Primero móvil",
-          "Todo en un lugar"
-        ]
+        "unavailable": {
+          "title": "Descubre cómo funciona Havenova.",
+          "description": "Consulta el flujo de solicitud y gestión para entender mejor cómo usar la plataforma paso a paso.",
+          "cta": {
+            "label": "Cómo funciona",
+            "href": "/how-it-work"
+          }
+        }
       },
       "appInstalled": {
-        "kicker": "App lista",
-        "title": "Havenova está lista para usarse.",
-        "description": "Todo está preparado. Gestiona tus servicios, sigue tus solicitudes y mantén el control — todo desde un solo lugar.",
-        "primaryCta": {
-          "label": "Cómo funciona"
+        "loggedIn": {
+          "title": "Tu espacio de perfil está listo.",
+          "description": "Accede a tu perfil para revisar tus datos, actualizar tu información y gestionar tu cuenta en un solo lugar.",
+          "ctas": [
+            {
+              "label": "Ir a mi perfil",
+              "href": "/profile"
+            }
+          ]
+        },
+        "guest": {
+          "title": "Tu acceso a tu perfil está listo.",
+          "description": "Inicia sesión o crea una cuenta para guardar tus datos, gestionar tu perfil y acceder más rápido cuando lo necesites.",
+          "ctas": [
+            {
+              "label": "Crear cuenta",
+              "href": "/user/register"
+            },
+            {
+              "label": "Iniciar sesión",
+              "href": "/user/login"
+            }
+          ]
         }
       },
       "services": {
@@ -62,17 +81,17 @@
         "subtitle": "Dos caminos claros — elige el servicio adecuado y envía tu solicitud en pocos minutos.",
         "items": [
           {
-            "title": "Limpieza",
+            "title": "Servicio de limpieza",
             "description": "Limpieza fiable para pisos, escaleras y zonas comunes — adaptada a lo que necesitas.",
             "ctaLabel": "Pedir ahora",
-            "href": "/services/house-cleaning",
+            "href": "/cleaning-service",
             "icon": "/svg/cleaning.svg"
           },
           {
-            "title": "Ayuda en casa",
+            "title": "Servicio al hogar",
             "description": "Pequeñas reparaciones, mantenimiento y ayuda práctica en casa — organizados con rapidez y claridad.",
             "ctaLabel": "Pedir ahora",
-            "href": "/services/home-service",
+            "href": "/home-service",
             "icon": "/svg/service.svg"
           }
         ]
@@ -103,101 +122,85 @@
     },
     "about": {
       "hero": {
-        "badge": "Built for everyday life",
-        "title": "A better way",
-        "titleAccent": "to organize",
-        "titleSuffix": "home services.",
+        "badge": "Confianza construida con claridad y cuidado",
+        "title": "Por qué el servicio del hogar puede sentirse más fácil",
         "descriptions": [
-          "We combine traditional services with modern transparency. Our goal is to make the entire process, from request to completion, as simple, reliable, and customer-focused as possible."
+          "Descubre cómo Havenova combina un servicio cercano, una comunicación clara y una mejora digital continua para crear una experiencia más transparente para sus clientes en todo Berlín."
         ],
         "image": {
-          "src": "/images/header-about-havenova.webp",
-          "alt": "Havenova team and way of working",
-          "badgeTitle": "Clear processes",
-          "badgeSubtitle": "Service with transparency and structure",
-          "tag": "Berlin & surrounding area"
-        },
-        "a11y": {
-          "imageCardLabel": "Overview of Havenova and service area"
+          "src": "/images/about.png",
+          "alt": "Profesional de servicio para el hogar de Havenova en Berlín"
         }
       },
       "story": {
-        "title": "A Young Company with a Clear Vision",
+        "title": "Una empresa joven con una visión clara",
         "paragraphs": [
-          "Havenova was founded in 2023 with a clear idea: to offer home cleaning and home service in Berlin with the customer at the center.",
-          "From the beginning, the company has worked to stand out by focusing on customer experience and maintaining clear and professional communication at every stage of the service.",
-          "In its first years, Havenova has actively participated in the development of this digital platform together with Maped Solutions. This tool was created to simplify service requests, improve communication, and offer full transparency to users.",
-          "Our focus remains the same: to improve every day, adapt to the needs of our clients, and continue developing digital solutions that benefit both customers and companies in the sector."
+          "Havenova nació en 2023 con una idea clara: ofrecer servicio de limpieza y servicio al hogar en Berlín con el cliente en el centro.",
+          "Desde el principio, la empresa ha trabajado para diferenciarse poniendo el foco en la experiencia del cliente y manteniendo una comunicación clara y profesional en cada etapa del servicio.",
+          "En sus primeros años, Havenova ha participado activamente en el desarrollo de esta plataforma digital junto con Maped Solutions. Esta herramienta se creó para simplificar las solicitudes de servicio, mejorar la comunicación y ofrecer total transparencia a los usuarios.",
+          "Nuestro enfoque sigue siendo el mismo: mejorar cada día, adaptarnos a las necesidades de nuestros clientes y seguir desarrollando soluciones digitales que beneficien tanto a los clientes como a las empresas del sector."
         ]
       },
       "clients": {
-        "title": "Who we work with",
+        "title": "Con quién trabajamos",
         "items": [
           {
-            "title": "Private properties",
-            "description": "We work with tenants and homeowners who want a reliable way to request cleaning or home service, track each job, and keep a clear record of everything that has been done.",
+            "title": "Viviendas particulares",
+            "description": "Trabajamos con inquilinos y propietarios que buscan una forma fiable de solicitar servicio de limpieza o servicio al hogar, seguir cada trabajo y mantener un registro claro de todo lo realizado.",
             "image": "/images/private-properties.webp",
-            "imageAlt": "Residential building in a private neighborhood"
+            "imageAlt": "Edificio residencial en una zona privada"
           },
           {
-            "title": "Property management",
-            "description": "We support property management companies by structuring service requests, improving communication, and keeping a transparent overview of home service and cleaning across multiple properties.",
+            "title": "Administración de fincas",
+            "description": "Apoyamos a las empresas de administración de fincas estructurando las solicitudes, mejorando la comunicación y manteniendo una visión transparente del servicio al hogar y del servicio de limpieza en varios inmuebles.",
             "image": "/images/property-management.webp",
-            "imageAlt": "Multi-unit residential building facade"
+            "imageAlt": "Fachada de un edificio residencial de varias viviendas"
           },
           {
-            "title": "Offices and practices",
-            "description": "We help offices and professional practices manage recurring cleaning and home service with clear schedules, documented work, and minimal administrative effort.",
+            "title": "Oficinas y consultas",
+            "description": "Ayudamos a oficinas y consultas profesionales a gestionar servicios recurrentes de limpieza y servicio al hogar con horarios claros, trabajos documentados y el mínimo esfuerzo administrativo.",
             "image": "/images/practices.webp",
-            "imageAlt": "Modern office meeting area"
+            "imageAlt": "Zona de reuniones en una oficina moderna"
           },
           {
-            "title": "Small businesses",
-            "description": "We work with small businesses that need dependable cleaning or home service, offering a simple process to request help, follow progress, and keep everything organized.",
+            "title": "Pequeñas empresas",
+            "description": "Trabajamos con pequeñas empresas que necesitan servicio de limpieza o servicio al hogar de forma fiable, con un proceso sencillo para pedir ayuda, seguir el progreso y mantener todo organizado.",
             "image": "/images/businesses.webp",
-            "imageAlt": "Small retail storefront interior"
+            "imageAlt": "Interior de un pequeño local comercial"
           }
         ],
-        "closing": "Our focus is on clarity, organization, and long-term reliability."
+        "closing": "Nuestro enfoque está en la claridad, la organización y la fiabilidad a largo plazo."
       }
     },
     "cleaning": {
       "hero": {
-        "badge": "Professional cleaning support",
-        "title": "Reliable cleaning",
-        "titleAccent": "for homes",
-        "titleSuffix": "and shared spaces in Berlin.",
+        "badge": "Una presentación clara de la experiencia de limpieza",
+        "title": "Espacios limpios, sin complicaciones diarias",
         "descriptions": [
-          "Flexible, reliable, and tailored to your home or business. Havenova provides structured cleaning support for apartments, offices, and shared properties with clear communication, dependable scheduling, and consistent quality from request to completion."
+          "Descubre un servicio de limpieza basado en la fiabilidad, la comunicación clara y una experiencia más fluida desde la primera solicitud hasta el resultado final."
         ],
         "image": {
-          "src": "/images/header-cleaning-service.webp",
-          "alt": "Professional cleaning service prepared for a home in Berlin",
-          "badgeTitle": "Structured request flow",
-          "badgeSubtitle": "Clear details before the first visit",
-          "tag": "Berlin & surrounding area"
-        },
-        "a11y": {
-          "imageCardLabel": "Cleaning service details and service area"
+          "src": "/images/cleaning.png",
+          "alt": "Profesional de limpieza preparado para una vivienda en Berlín"
         }
       },
       "authAlert": {
-        "title": "Account required",
-        "description": "You need an active Havenova account to send a cleaning request. Log in or create one in a few steps.",
-        "closeLabel": "Close account required notice",
+        "title": "Cuenta obligatoria",
+        "description": "Necesitas una cuenta activa de Havenova para enviar una solicitud de limpieza. Inicia sesión o crea una cuenta en pocos pasos.",
+        "closeLabel": "Cerrar aviso de cuenta obligatoria",
         "a11y": {
-          "dialogLabel": "Login required notice",
-          "actionsLabel": "Authentication actions",
-          "loginLabel": "Go to the login page",
-          "registerLabel": "Go to the account creation page"
+          "dialogLabel": "Aviso de inicio de sesión obligatorio",
+          "actionsLabel": "Acciones de autenticación",
+          "loginLabel": "Ir a la página de inicio de sesión",
+          "registerLabel": "Ir a la página de creación de cuenta"
         },
         "ctas": {
           "login": {
-            "label": "Go to login",
+            "label": "Ir al inicio de sesión",
             "href": "/user/login"
           },
           "register": {
-            "label": "Create account",
+            "label": "Crear cuenta",
             "href": "/user/register"
           }
         }
@@ -381,41 +384,33 @@
     },
     "home-service": {
       "hero": {
-        "badge": "Practical help at home",
-        "title": "Home service",
-        "titleAccent": "for repairs, assembly,",
-        "titleSuffix": "and everyday tasks in Berlin.",
+        "badge": "Ayuda práctica en casa",
+        "title": "Reparaciones, montajes y tareas diarias",
         "descriptions": [
-          "For painting, repairs and installations, furniture assembly, kitchen assembly, and moving help in Berlin. Havenova structures your request so we can quickly understand the scope, access situation, and which profile data should support the next step."
+          "Para pintura, reparaciones e instalaciones, montaje de muebles y cocinas, y ayuda en mudanzas en Berlín. Havenova estructura tu solicitud para entender rápido el alcance, el acceso y los siguientes pasos."
         ],
         "image": {
           "src": "/images/header-home-maintenance-service.webp",
-          "alt": "Home service professional preparing repair work in Berlin",
-          "badgeTitle": "Clear next steps",
-          "badgeSubtitle": "Scope, access, and timing captured early",
-          "tag": "Berlin & surrounding area"
-        },
-        "a11y": {
-          "imageCardLabel": "Home service details and service area"
+          "alt": "Profesional de servicio para el hogar preparando un trabajo de reparación en Berlín"
         }
       },
       "authAlert": {
-        "title": "Account required",
-        "description": "You need an active Havenova account to prepare a home service request. Log in or create one in a few steps.",
-        "closeLabel": "Close account required notice",
+        "title": "Cuenta obligatoria",
+        "description": "Necesitas una cuenta activa de Havenova para preparar una solicitud de servicio para el hogar. Inicia sesión o crea una cuenta en pocos pasos.",
+        "closeLabel": "Cerrar aviso de cuenta obligatoria",
         "a11y": {
-          "dialogLabel": "Login required notice",
-          "actionsLabel": "Authentication actions",
-          "loginLabel": "Go to the login page",
-          "registerLabel": "Go to the account creation page"
+          "dialogLabel": "Aviso de inicio de sesión obligatorio",
+          "actionsLabel": "Acciones de autenticación",
+          "loginLabel": "Ir a la página de inicio de sesión",
+          "registerLabel": "Ir a la página de creación de cuenta"
         },
         "ctas": {
           "login": {
-            "label": "Go to login",
+            "label": "Ir al inicio de sesión",
             "href": "/user/login"
           },
           "register": {
-            "label": "Create account",
+            "label": "Crear cuenta",
             "href": "/user/register"
           }
         }
@@ -594,92 +589,77 @@
     },
     "contact": {
       "hero": {
-        "badge": "We’re here to help",
-        "title": "Tell us what you need",
-        "titleAccent": "and we’ll guide you",
-        "titleSuffix": "to the right next step.",
+        "badge": "Estamos aquí para ayudarte",
+        "title": "Preguntas, ideas, déjanos saber",
         "descriptions": [
-          "Tell us what you need and we’ll reply by email as soon as possible.",
-          "For service requests, please use the dedicated service forms."
+          "Esta página es para preguntas generales, consultas relacionadas con la empresa y conversaciones más amplias. Si desea solicitar un servicio, nuestros formularios específicos de Servicio de limpieza y Servicio al hogar le guiarán con mayor precisión."
         ],
         "ctas": {
           "primary": {
-            "label": "Request cleaning",
-            "href": "/services/house-cleaning",
-            "ariaLabel": "Open the cleaning request form"
+            "label": "Solicitar servicio de limpieza",
+            "href": "/cleaning-service",
+            "ariaLabel": "Abrir el formulario de solicitud de limpieza"
           },
           "secondary": {
-            "label": "Request home service",
-            "href": "/services/home-service",
-            "ariaLabel": "Open the home service request form"
+            "label": "Solicitar servicio al hogar",
+            "href": "/home-service",
+            "ariaLabel": "Abrir el formulario de solicitud de servicio para el hogar"
           }
         },
         "image": {
           "src": "/images/header-contact-havenova.webp",
-          "alt": "Havenova customer support contact hero",
-          "badgeTitle": "Direct contact",
-          "badgeSubtitle": "Questions, support, and general enquiries",
-          "tag": "Berlin & surrounding area"
+          "alt": "Área de contacto de Havenova para consultas y soporte"
         },
         "a11y": {
-          "actionsLabel": "Contact hero actions",
-          "imageCardLabel": "Contact details and service area"
+          "actionsLabel": "Acciones del hero de contacto"
         }
       }
     },
     "howItWorks": {
       "hero": {
-        "badge": "About Havenova",
-        "title": "Home services, simplified",
-        "titleAccent": "for customers",
-        "titleSuffix": "and service teams.",
+        "badge": "Sobre Havenova",
+        "title": "Simplificamos el servicio para nuestros clientes",
         "descriptions": [
-          "Havenova is the company behind this platform for cleaning and home service. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently."
+          "Havenova es la empresa detrás de esta plataforma de servicio de limpieza y servicio al hogar. Ayudamos a crear un flujo claro para que los clientes pidan ayuda en minutos y las empresas gestionen solicitudes, citas y actualizaciones con eficiencia."
         ],
         "image": {
           "src": "/images/header-how-it-works.webp",
-          "alt": "Havenova workflow for home services in Berlin",
-          "badgeTitle": "One clear workflow",
-          "badgeSubtitle": "Requests, scheduling, and updates in one place",
-          "tag": "Berlin & surrounding area"
-        },
-        "a11y": {
-          "imageCardLabel": "Workflow summary and service area"
+          "alt": "Flujo de trabajo de Havenova para servicios del hogar en Berlín"
         }
       },
       "workflow": {
-        "title": "How the workflow works",
-        "subtitle": "A practical flow that keeps requests structured — without forcing fixed prices or complicated forms.",
+        "title": "Cómo funciona el proceso",
+        "subtitle": "Un flujo práctico que mantiene las solicitudes estructuradas, sin imponer precios fijos ni formularios complicados.",
         "steps": [
           {
-            "title": "Request & review",
-            "description": "You send a service request with the relevant details. We review the information carefully to understand your needs and prepare the next step."
+            "title": "Solicitud y revisión",
+            "description": "Envías una solicitud con los detalles relevantes. Revisamos la información con atención para entender tus necesidades y preparar el siguiente paso."
           },
           {
-            "title": "Visit & confirmation",
-            "description": "We visit the location to check the details on site. Based on this visit, we confirm the scope of the work and send you the final offer."
+            "title": "Visita y confirmación",
+            "description": "Visitamos el lugar para comprobar los detalles sobre el terreno. Con base en esa visita, confirmamos el alcance del trabajo y te enviamos la oferta final."
           },
           {
-            "title": "Service & completion",
-            "description": "We carry out the service as agreed and keep you informed throughout the process. Once everything is completed, we send you the invoice."
+            "title": "Servicio y cierre",
+            "description": "Realizamos el servicio según lo acordado y te mantenemos informado durante todo el proceso. Cuando todo está terminado, te enviamos la factura."
           }
         ],
         "note": {
-          "title": "Why we don’t show fixed prices on the website?",
-          "description": "Many home services depend on context (size, condition, materials, access, time). Havenova keeps requests structured so the company can price fairly — and the customer knows exactly what is included."
+          "title": "¿Por qué no mostramos precios fijos en la web?",
+          "description": "Muchos servicios para el hogar dependen del contexto: tamaño, estado, materiales, acceso y tiempo. Havenova mantiene las solicitudes estructuradas para que la empresa pueda presupuestar con justicia y el cliente sepa exactamente qué está incluido."
         }
       },
       "benefits": {
-        "title": "Benefits for both sides",
-        "description": "This platform was created to build long-term relationships between Havenova and its customers, based on trust, clarity, and shared information. It ensures you always know what was requested, what was agreed, and what was delivered. Ready to request your first service?",
-        "ctaAriaLabel": "Service request actions",
+        "title": "Ventajas para ambas partes",
+        "description": "Esta plataforma se creó para construir relaciones duraderas entre Havenova y sus clientes, basadas en confianza, claridad e información compartida. Así siempre sabes qué se solicitó, qué se acordó y qué se entregó. ¿Listo para pedir tu primer servicio?",
+        "ctaAriaLabel": "Acciones para solicitar un servicio",
         "ctaCleaning": {
-          "label": "Request cleaning",
-          "href": "/services/house-cleaning"
+          "label": "Solicitar servicio de limpieza",
+          "href": "/cleaning-service"
         },
         "ctaHomeServices": {
-          "label": "Request home service",
-          "href": "/services/home-service"
+          "label": "Solicitar servicio al hogar",
+          "href": "/home-service"
         }
       }
     },

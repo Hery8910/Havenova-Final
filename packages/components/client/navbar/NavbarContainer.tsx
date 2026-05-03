@@ -6,7 +6,6 @@ import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
 import type { NavbarConfig } from './navbar.types';
 import { useAuth } from '../../../contexts/auth/authContext';
-import { useProfile } from '../../../contexts';
 import { getNavbarContent } from './navbar.shared';
 import { useDeviceSize } from './hooks/useDeviceSize';
 import { NavbarDesktopView } from './NavbarDesktopView/NavbarDesktopView';
@@ -15,7 +14,6 @@ import { NavbarMobileView } from './NavbarMobileView/NavbarMobileView';
 import styles from './NavbarContainer.module.css';
 
 export function NavbarContainer() {
-  const { profile } = useProfile();
   const { auth, logout } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
@@ -35,10 +33,29 @@ export function NavbarContainer() {
     router.push(href(lang, path));
   };
 
-  if (!profile) return null;
-
   if (!deviceSize) {
-    return <nav className={styles.navbarPlaceholder} aria-hidden="true" />;
+    return (
+      <nav className={styles.navbarPlaceholder} aria-hidden="true">
+        <div className={`${styles.navbarShell} glass-panel--base`}>
+          <div className={styles.navbarShellBrand} />
+          <div className={styles.navbarShellLinks}>
+            <span className={styles.navbarShellItem} />
+            <span className={styles.navbarShellItem} />
+            <span className={styles.navbarShellItem} />
+          </div>
+          <div className={styles.navbarShellActions}>
+            <span className={styles.navbarShellAction} />
+            <span className={styles.navbarShellAction} />
+          </div>
+        </div>
+        <div className={`${styles.navbarShellMobile} glass-panel--base`}>
+          <span className={styles.navbarShellMobileItem} />
+          <span className={styles.navbarShellMobileItem} />
+          <span className={styles.navbarShellMobileItem} />
+          <span className={styles.navbarShellMobileItem} />
+        </div>
+      </nav>
+    );
   }
 
   return (
