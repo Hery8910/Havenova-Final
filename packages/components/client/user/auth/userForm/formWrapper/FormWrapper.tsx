@@ -25,12 +25,7 @@ interface WrapperProps<T extends Record<string, any>> {
 }
 type ValidateField = 'email' | 'password' | 'tosAccepted';
 
-export type FormField =
-  | 'email'
-  | 'password'
-  | 'language'
-  | 'clientId'
-  | 'tosAccepted';
+export type FormField = 'email' | 'password' | 'language' | 'clientId' | 'tosAccepted';
 
 export interface PlaceholdersTextProps {
   email: string;
@@ -46,7 +41,6 @@ export interface LabelsTextProps {
   tosTerms: string;
   tosConnector: string;
   tosPrivacy: string;
-  tosSuffix: string;
   showPassword: string;
   hidePassword: string;
 }

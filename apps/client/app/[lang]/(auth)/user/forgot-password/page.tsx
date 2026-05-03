@@ -168,7 +168,7 @@ const ForgotPassword = () => {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: canRetry
-            ? popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload
+            ? (popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload)
             : undefined,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
@@ -192,23 +192,12 @@ const ForgotPassword = () => {
       aria-describedby={descriptionId}
     >
       <header className={styles.authHeader}>
-        <Image
-          className={styles.logoImage}
-          src={'/logos/vertical-logo-auth.webp'}
-          alt="Havenova Logo"
-          width={100}
-          height={100}
-          priority
-        />
-
-        <div className={styles.authHeaderText}>
-          <h1 id={headingId} className={styles.authTitle}>
-            {forgotPasswordText.title}
-          </h1>
-          <p id={descriptionId} className={styles.authDescription}>
-            {forgotPasswordText.info}
-          </p>
-        </div>
+        <h1 id={headingId} className={styles.authTitle}>
+          {forgotPasswordText.title}
+        </h1>
+        <p id={descriptionId} className={styles.authDescription}>
+          {forgotPasswordText.info}
+        </p>
       </header>
 
       <div className={styles.authFormContainer}>

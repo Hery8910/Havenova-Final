@@ -192,12 +192,7 @@ const VerifyEmailPageContent = () => {
         const err = error as { response?: { data?: { code?: string }; status?: number } };
         const code = err.response?.data?.code;
 
-        const popupData = getPopup(
-          popups,
-          code,
-          'GLOBAL_INTERNAL_ERROR',
-          fallbackGlobalError
-        );
+        const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
 
         showError({
           response: {
@@ -264,23 +259,12 @@ const VerifyEmailPageContent = () => {
       aria-describedby="verify-desc"
     >
       <header className={styles.authHeader}>
-        <Image
-          className={styles.logoImage}
-          src={'/logos/vertical-logo-auth.webp'}
-          alt="Havenova Logo"
-          width={100}
-          height={100}
-          priority
-        />
-
-        <div className={styles.authHeaderText}>
-          <h1 id="verify-title" className={styles.authTitle}>
-            {verifyText.title}
-          </h1>
-          <p id="verify-desc" className={styles.authDescription}>
-            {verifyText.info}
-          </p>
-        </div>
+        <h1 id="verify-title" className={styles.authTitle}>
+          {verifyText.title}
+        </h1>
+        <p id="verify-desc" className={styles.authDescription}>
+          {verifyText.info}
+        </p>
       </header>
 
       <div className={styles.authFormContainer}>

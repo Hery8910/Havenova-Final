@@ -23,20 +23,15 @@
 }
 
 .authHeader {
+  padding-top: 64px;
   width: 100%;
+  margin: 0 auto;
+  max-width: 35ch;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: var(--spacing-4);
-}
-
-.authHeaderText {
-  width: 100%;
-  max-width: 28rem;
-  display: grid;
-  gap: var(--spacing-2);
-  padding-bottom: var(--spacing-3);
 }
 
 .authTitle {

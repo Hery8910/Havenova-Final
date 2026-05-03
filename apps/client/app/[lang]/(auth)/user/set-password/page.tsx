@@ -190,7 +190,7 @@ const ResetPasswordContent = () => {
             confirmLabel:
               response.code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
               response.code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED'
-                ? popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue
+                ? (popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue)
                 : undefined,
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
@@ -236,7 +236,8 @@ const ResetPasswordContent = () => {
       const code = err.response?.data?.code;
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
       const canRequestNewLink =
-        code === 'USER_RESET_PASSWORD_INVALID_TOKEN' || code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED';
+        code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
+        code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED';
       const canRetry = !code || (err.response?.status ?? 500) >= 500;
 
       showError({
@@ -246,10 +247,10 @@ const ResetPasswordContent = () => {
           description: popupData.description,
           confirmLabel:
             canRequestNewLink || canRetry
-              ? popupData.confirm ??
+              ? (popupData.confirm ??
                 (canRequestNewLink
-                  ? popups.button?.continue ?? fallbackButtons.continue
-                  : popups.button?.reload ?? fallbackButtons.reload)
+                  ? (popups.button?.continue ?? fallbackButtons.continue)
+                  : (popups.button?.reload ?? fallbackButtons.reload)))
               : undefined,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
@@ -278,23 +279,12 @@ const ResetPasswordContent = () => {
       aria-describedby="reset-password-description"
     >
       <header className={styles.authHeader}>
-        <Image
-          className={styles.logoImage}
-          src={'/logos/vertical-logo-auth.webp'}
-          alt="Havenova Logo"
-          width={100}
-          height={100}
-          priority
-        />
-
-        <div className={styles.authHeaderText}>
-          <h1 id="reset-password-title" className={styles.authTitle}>
-            {resetPasswordText.title || formText.labels.resetPassword}
-          </h1>
-          <p id="reset-password-description" className={styles.authDescription}>
-            {resetPasswordText.info}
-          </p>
-        </div>
+        <h1 id="reset-password-title" className={styles.authTitle}>
+          {resetPasswordText.title || formText.labels.resetPassword}
+        </h1>
+        <p id="reset-password-description" className={styles.authDescription}>
+          {resetPasswordText.info}
+        </p>
       </header>
 
       <div className={styles.authFormContainer}>

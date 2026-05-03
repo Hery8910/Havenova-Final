@@ -204,23 +204,12 @@ const Register = () => {
       aria-describedby="register-description"
     >
       <header className={styles.authHeader}>
-        <Image
-          className={styles.logoImage}
-          src={'/logos/vertical-logo-auth.webp'}
-          alt="Havenova Logo"
-          width={100}
-          height={100}
-          priority
-        />
-
-        <div className={styles.authHeaderText}>
-          <h1 id="register-title" className={styles.authTitle}>
-            {register?.title || 'Create account'}
-          </h1>
-          <p id="register-description" className={styles.authDescription}>
-            {register?.description || 'Create your account to request and manage services.'}
-          </p>
-        </div>
+        <h1 id="register-title" className={styles.authTitle}>
+          {register?.title || 'Create account'}
+        </h1>
+        <p id="register-description" className={styles.authDescription}>
+          {register?.description || 'Create your account to request and manage services.'}
+        </p>
       </header>
 
       <div className={styles.authFormContainer}>

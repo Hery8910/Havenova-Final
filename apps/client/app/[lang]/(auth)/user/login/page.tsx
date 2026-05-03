@@ -161,7 +161,9 @@ const Login = () => {
             description: popupData.description,
             confirmLabel:
               popupData.confirm ??
-              (response?.code ? popups.button?.continue ?? fallbackButtons.continue : popups.button?.reload ?? fallbackButtons.reload),
+              (response?.code
+                ? (popups.button?.continue ?? fallbackButtons.continue)
+                : (popups.button?.reload ?? fallbackButtons.reload)),
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onConfirm,
@@ -230,8 +232,8 @@ const Login = () => {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: onConfirm
-            ? popupData.confirm ??
-              (canRetry ? popups.button?.reload ?? fallbackButtons.reload : undefined)
+            ? (popupData.confirm ??
+              (canRetry ? (popups.button?.reload ?? fallbackButtons.reload) : undefined))
             : undefined,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
@@ -250,23 +252,12 @@ const Login = () => {
       aria-describedby="login-description"
     >
       <header className={styles.authHeader}>
-        <Image
-          className={styles.logoImage}
-          src={'/logos/vertical-logo-auth.webp'}
-          alt="Havenova Logo"
-          width={100}
-          height={100}
-          priority
-        />
-
-        <div className={styles.authHeaderText}>
-          <h1 id="login-title" className={styles.authTitle}>
-            {login.title || 'Sign in'}
-          </h1>
-          <p id="login-description" className={styles.authDescription}>
-            {login.description || 'Access your account and manage your requests.'}
-          </p>
-        </div>
+        <h1 id="login-title" className={styles.authTitle}>
+          {login.title || 'Sign in'}
+        </h1>
+        <p id="login-description" className={styles.authDescription}>
+          {login.description || 'Access your account and manage your requests.'}
+        </p>
       </header>
 
       <div className={styles.authFormContainer}>

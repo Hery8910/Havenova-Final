@@ -172,7 +172,7 @@
 }
 
 .feedback {
-  min-height: 1rem;
+  min-height: 0.8rem;
   margin-top: 2px;
   margin-bottom: 0;
 }
@@ -187,9 +187,11 @@
 }
 
 .hidden {
+  max-height: 0.8rem;
   visibility: hidden;
 }
 .button {
-  width: 100%;
+  width: fit-content;
+  padding: 8px 32px;
   align-self: center;
 }

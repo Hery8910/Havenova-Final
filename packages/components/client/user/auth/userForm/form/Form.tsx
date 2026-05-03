@@ -186,7 +186,7 @@ export default function Form<T extends Record<string, any>>({
               <Link className={styles.policyLink} href={href(lang, '/legal/privacy-policy')}>
                 {labels.tosPrivacy}
               </Link>
-              {labels.tosSuffix}
+              
             </span>
           </label>
 

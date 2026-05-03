@@ -39,10 +39,10 @@ export default function ServicesSection({
             return (
               <article className={`${styles.card} ${serviceCardClass}`} key={item.title}>
                 <div className={styles.cardIcon} aria-hidden="true">
+                  <h3 className={`${styles.cardTitle} type-title-md`}>{item.title}</h3>
                   <Image className={styles.icon} src={item.icon} alt="" width={40} height={40} />
                 </div>
                 <aside className={styles.cardAside}>
-                  <h3 className={`${styles.cardTitle} type-title-sm`}>{item.title}</h3>
                   <p className={`${styles.cardText} type-body-sm`}>{item.description}</p>
                   <Link className={`${styles.cardLink} type-body-sm`} href={href(lang, item.href)}>
                     {item.ctaLabel}{' '}
