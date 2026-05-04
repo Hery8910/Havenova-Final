@@ -116,9 +116,6 @@
 }
 
 @media (max-width: 900px) {
-  .services::before {
-    opacity: 0.2;
-  }
   .services {
     height: max-content;
   }

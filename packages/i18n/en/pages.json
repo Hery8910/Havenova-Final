@@ -390,7 +390,7 @@
           "For painting, repairs and installations, furniture and kitchen assembly, and moving help in Berlin. Havenova structures your request so we can quickly understand the scope, access situation, and next steps."
         ],
         "image": {
-          "src": "/images/header-home-maintenance-service.webp",
+          "src": "/images/home-service.png",
           "alt": "Home service professional preparing repair work in Berlin"
         }
       },
@@ -607,7 +607,7 @@
           }
         },
         "image": {
-          "src": "/images/header-contact-havenova.webp",
+          "src": "/images/contact.png",
           "alt": "Havenova customer support contact hero"
         },
         "a11y": {
@@ -623,7 +623,7 @@
           "Havenova is the company behind this platform for cleaning and home service. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently."
         ],
         "image": {
-          "src": "/images/header-how-it-works.webp",
+          "src": "/images/how-it-works.png",
           "alt": "Havenova workflow for home services in Berlin"
         }
       },

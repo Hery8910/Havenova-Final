@@ -390,7 +390,7 @@
           "Für Malerarbeiten, Reparaturen und Installationen, Möbel- und Küchenmontage sowie Umzugshilfe in Berlin. Havenova strukturiert Ihre Anfrage, damit wir Umfang, Zugangssituation und die nächsten Schritte schnell einordnen können."
         ],
         "image": {
-          "src": "/images/header-home-maintenance-service.webp",
+          "src": "/images/home-service.png",
           "alt": "Hausservice-Fachkraft bei der Vorbereitung eines Einsatzes in Berlin"
         }
       },
@@ -607,7 +607,7 @@
           }
         },
         "image": {
-          "src": "/images/header-contact-havenova.webp",
+          "src": "/images/contact.png",
           "alt": "Kontaktbereich von Havenova für Fragen und Unterstützung"
         },
         "a11y": {
@@ -623,7 +623,7 @@
           "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hausservice. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können."
         ],
         "image": {
-          "src": "/images/header-how-it-works.webp",
+          "src": "/images/how-it-works.png",
           "alt": "Havenova-Ablauf für Hausservices in Berlin"
         }
       },

@@ -1,8 +1,13 @@
 .container {
   width: 100%;
   max-width: 1200px;
+  padding: clamp(56px, 8vw, 96px) 5dvw;
   margin: 0 auto;
-  padding: 200px 5dvw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
 }
 .sectionTitle {
   color: var(--text-primary);
@@ -12,17 +17,7 @@
   color: var(--text-secondary);
   margin: 0;
 }
-.kicker {
-  align-self: flex-start;
-  padding: 6px 12px;
-  border-radius: 4px;
-  color: var(--text-primary);
-  background: var(--card-primary-bg);
-  border: 1px solid var(--card-primary-bg);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
+
 .benefits {
   padding: clamp(56px, 8vw, 96px) 0;
   position: relative;
@@ -33,49 +28,49 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 64px;
 }
 .benefitsCopy {
   display: flex;
   flex-direction: column;
-  max-width: 520px;
+  max-width: 450px;
 }
 .benefitsCards {
+  max-width: 450px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
 }
 .benefitItem {
   margin: 0;
   width: 100%;
 }
 .benefitCard {
-  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) 0;
+  gap: 24px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.benefitCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+.benefitHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+.benefitIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
 }
 
 .benefitTitle {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--text-primary);
 }
 .benefitText {
   margin: 0;
   color: var(--text-secondary);
-}
-
-@media (max-width: 900px) {
-  .benefitsGrid {
-    flex-direction: column;
-    gap: 32px;
-  }
-  .benefitsCards {
-    max-width: 500px;
-    margin: 0 auto;
-  }
 }

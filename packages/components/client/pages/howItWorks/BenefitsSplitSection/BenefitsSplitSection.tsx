@@ -26,13 +26,13 @@ export default function BenefitsSplitSection({
           <p className={`${styles.subtitle} type-body-lg`}>{texts.description}</p>
           <nav className={styles.heroCtas} aria-label={texts.ctaAriaLabel}>
             <Link
-              className={`${styles.ctaPrimary} button`}
+              className={`${styles.ctaPrimary} btn--primary button`}
               href={href(lang, texts.ctaCleaning.href)}
             >
               {texts.ctaCleaning.label}
             </Link>
             <Link
-              className={`${styles.ctaSecondary} button`}
+              className={`${styles.ctaSecondary} btn--secondary button`}
               href={href(lang, texts.ctaHomeServices.href)}
             >
               {texts.ctaHomeServices.label}
@@ -41,9 +41,9 @@ export default function BenefitsSplitSection({
         </header>
         <figure className={styles.imageWrapper} aria-hidden="true">
           <Image
-            src={'/images/benefits.webp'}
+            src={'/images/benefits.png'}
             alt=""
-            width={500}
+            width={550}
             height={350}
             className={styles.image}
           />

@@ -390,7 +390,7 @@
           "Para pintura, reparaciones e instalaciones, montaje de muebles y cocinas, y ayuda en mudanzas en Berlín. Havenova estructura tu solicitud para entender rápido el alcance, el acceso y los siguientes pasos."
         ],
         "image": {
-          "src": "/images/header-home-maintenance-service.webp",
+          "src": "/images/home-service.png",
           "alt": "Profesional de servicio para el hogar preparando un trabajo de reparación en Berlín"
         }
       },
@@ -607,7 +607,7 @@
           }
         },
         "image": {
-          "src": "/images/header-contact-havenova.webp",
+          "src": "/images/contact.png",
           "alt": "Área de contacto de Havenova para consultas y soporte"
         },
         "a11y": {
@@ -623,7 +623,7 @@
           "Havenova es la empresa detrás de esta plataforma de servicio de limpieza y servicio al hogar. Ayudamos a crear un flujo claro para que los clientes pidan ayuda en minutos y las empresas gestionen solicitudes, citas y actualizaciones con eficiencia."
         ],
         "image": {
-          "src": "/images/header-how-it-works.webp",
+          "src": "/images/how-it-works.png",
           "alt": "Flujo de trabajo de Havenova para servicios del hogar en Berlín"
         }
       },
