@@ -24,7 +24,6 @@ import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { useVerifyEmailActions } from '../../../../../../../packages/utils';
 import Link from 'next/link';
-import Image from 'next/image';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 const VerifyEmailPageContent = () => {

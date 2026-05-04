@@ -23,7 +23,6 @@ import { registerUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
-import Image from 'next/image';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface RegisterData {

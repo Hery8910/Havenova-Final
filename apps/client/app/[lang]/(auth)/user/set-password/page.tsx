@@ -16,7 +16,6 @@ import styles from '../userAuth.module.css';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { useLang } from '../../../../../../../packages/hooks';
 import Link from 'next/link';
-import Image from 'next/image';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface ResetPasswordData {

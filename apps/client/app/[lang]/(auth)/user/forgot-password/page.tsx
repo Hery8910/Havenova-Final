@@ -18,7 +18,6 @@ import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { href } from '@/packages/utils/navigation';
 import { IoMdArrowRoundBack } from 'react-icons/io';

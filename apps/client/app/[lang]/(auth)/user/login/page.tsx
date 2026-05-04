@@ -19,7 +19,6 @@ import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { href } from '../../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
-import Image from 'next/image';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface LoginData {
