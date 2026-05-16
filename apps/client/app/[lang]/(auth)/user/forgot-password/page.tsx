@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import styles from '../userAuth.module.css';
+import Image from 'next/image';
 import { useClient } from '@/packages/contexts/client/ClientContext';
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
@@ -20,8 +21,8 @@ import { ForgotPasswordPayload } from '@/packages/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { href } from '@/packages/utils/navigation';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { PopupCode } from '@/packages/contexts/alert/alert.types';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface ForgotPasswordData {
   title: string;
@@ -220,16 +221,26 @@ const ForgotPassword = () => {
       aria-labelledby={headingId}
       aria-describedby={descriptionId}
     >
-      <header className={styles.authHeader}>
-        <h1 id={headingId} className={styles.authTitle}>
-          {forgotPasswordText.title}
-        </h1>
-        <p id={descriptionId} className={styles.authDescription}>
-          {forgotPasswordText.info}
-        </p>
-      </header>
-
+      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
+        <Image
+          className={styles.authBrandImage}
+          src="/logos/logo-horizontal.png"
+          alt={navText.logoAlt}
+          width={800}
+          height={200}
+          priority
+        />
+      </Link>
       <div className={styles.authFormContainer}>
+        <header className={styles.authHeader}>
+          <h1 id={headingId} className={styles.authTitle}>
+            {forgotPasswordText.title}
+          </h1>
+          <p id={descriptionId} className={styles.authDescription}>
+            {forgotPasswordText.info}
+          </p>
+        </header>
+
         <FormWrapper<ForgotPasswordPayload>
           fields={['email', 'language', 'clientId'] as const}
           onSubmit={handleForgotPassword}

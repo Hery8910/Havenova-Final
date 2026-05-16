@@ -1,6 +1,7 @@
 'use client';
 import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
@@ -16,8 +17,8 @@ import styles from '../userAuth.module.css';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { useLang } from '../../../../../../../packages/hooks';
 import Link from 'next/link';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { PopupCode } from '@/packages/contexts/alert/alert.types';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface ResetPasswordData {
   title: string;
@@ -257,13 +258,8 @@ const ResetPasswordContent = () => {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
         },
         onConfirm: () => {
-          closeAlert();
-          router.push(href(lang, '/user/login'));
-        },
-        onCancel: () => {
           closeAlert();
           router.push(href(lang, '/user/login'));
         },
@@ -320,16 +316,26 @@ const ResetPasswordContent = () => {
       aria-labelledby="reset-password-title"
       aria-describedby="reset-password-description"
     >
-      <header className={styles.authHeader}>
-        <h1 id="reset-password-title" className={styles.authTitle}>
-          {resetPasswordText.title || formText.labels.resetPassword}
-        </h1>
-        <p id="reset-password-description" className={styles.authDescription}>
-          {resetPasswordText.info}
-        </p>
-      </header>
-
+      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
+        <Image
+          className={styles.authBrandImage}
+          src="/logos/logo-horizontal.png"
+          alt={navText.logoAlt}
+          width={800}
+          height={200}
+          priority
+        />
+      </Link>
       <div className={styles.authFormContainer}>
+        <header className={styles.authHeader}>
+          <h1 id="reset-password-title" className={styles.authTitle}>
+            {resetPasswordText.title || formText.labels.resetPassword}
+          </h1>
+          <p id="reset-password-description" className={styles.authDescription}>
+            {resetPasswordText.info}
+          </p>
+        </header>
+
         <FormWrapper<ResetPasswordFormData>
           showHintPassword
           fields={['password'] as const}

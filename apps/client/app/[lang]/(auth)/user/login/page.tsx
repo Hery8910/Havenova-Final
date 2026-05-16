@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -19,8 +20,8 @@ import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { href } from '../../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface LoginData {
   title: string;
@@ -233,13 +234,12 @@ const Login = () => {
             status: failureAction?.status ?? (canRetry ? 500 : 400),
             title: popupData.title,
             description: popupData.description,
-            confirmLabel:
-              onConfirm
-                ? (popupData.confirm ??
-                  (canRetry
-                    ? (popups.button?.reload ?? fallbackButtons.reload)
-                    : (popups.button?.continue ?? fallbackButtons.continue)))
-                : undefined,
+            confirmLabel: onConfirm
+              ? (popupData.confirm ??
+                (canRetry
+                  ? (popups.button?.reload ?? fallbackButtons.reload)
+                  : (popups.button?.continue ?? fallbackButtons.continue)))
+              : undefined,
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onConfirm,
@@ -279,12 +279,7 @@ const Login = () => {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
-      const popupData = getPopup(
-        popups,
-        code,
-        getLoginPopupDefaultKey(code),
-        fallbackGlobalError
-      );
+      const popupData = getPopup(popups, code, getLoginPopupDefaultKey(code), fallbackGlobalError);
       const canRetry = !code || (err.response?.status ?? 500) >= 500;
       const failureAction = getLoginFailureAction(code);
       const onConfirm =
@@ -298,7 +293,7 @@ const Login = () => {
 
       showError({
         response: {
-          status: failureAction?.status ?? (err.response?.status ?? 500),
+          status: failureAction?.status ?? err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
           confirmLabel: onConfirm
@@ -323,16 +318,26 @@ const Login = () => {
       aria-labelledby="login-title"
       aria-describedby="login-description"
     >
-      <header className={styles.authHeader}>
-        <h1 id="login-title" className={styles.authTitle}>
-          {login.title || 'Sign in'}
-        </h1>
-        <p id="login-description" className={styles.authDescription}>
-          {login.description || 'Access your account and manage your requests.'}
-        </p>
-      </header>
-
+      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
+        <Image
+          className={styles.authBrandImage}
+          src="/logos/logo-horizontal.png"
+          alt={navText.logoAlt}
+          width={800}
+          height={200}
+          priority
+        />
+      </Link>
       <div className={styles.authFormContainer}>
+        <header className={styles.authHeader}>
+          <h1 id="login-title" className={styles.authTitle}>
+            {login.title || 'Sign in'}
+          </h1>
+          <p id="login-description" className={styles.authDescription}>
+            {login.description || 'Access your account and manage your requests.'}
+          </p>
+        </header>
+
         <FormWrapper<LoginPayload>
           fields={['email', 'password', 'clientId'] as const}
           onSubmit={handleLogin}

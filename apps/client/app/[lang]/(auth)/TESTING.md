@@ -1,15 +1,16 @@
-# Manual Testing Guide for `apps/client/app/[lang]/(auth)`
+# Manual de Testing para `apps/client/app/[lang]/(auth)`
 
-This document is the working guide for manual visual and functional testing of the auth route in `apps/client`.
+Este documento define la base operativa para las pruebas manuales de la ruta `apps/client/app/[lang]/(auth)` en `apps/client`.
 
-Goal of this phase:
+Su propósito no es solo comprobar que “funciona”, sino dejar un proceso reutilizable para futuras revisiones previas a despliegue, con foco en:
 
-- validate the normal auth flows without forcing missing `clientId`, broken permissions, or tampered tokens
-- confirm that the first connection to the client is stable on every run
-- verify that the UI, texts, alerts, redirects, and backend logs all match the expected behavior
-- register each case in a consistent way so the final review is based on evidence, not memory
+- funcionamiento normal de los flujos críticos
+- seguridad esencial del sistema
+- consistencia de alerts, redirects y estados de sesión
+- correlación entre UI, red y logs del backend
+- documentación basada en evidencia
 
-Related files:
+Archivos relacionados:
 
 - [README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/README.md)
 - [packages/contexts/alert/README.md](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/alert/README.md)
@@ -17,637 +18,456 @@ Related files:
 - [packages/services/auth/authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts)
 - [packages/utils/user/userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
 
-## Scope of This Phase
+## Objetivo
 
-This guide covers only normal scenarios:
+Antes de un despliegue, esta batería debe permitir responder con evidencia a estas preguntas:
 
-- cold load of auth pages
-- register with a new user
-- login with expected states
-- verify email with a valid flow
+- los flujos de auth funcionan de forma estable en condiciones normales
+- el sistema responde de forma segura ante datos faltantes, corruptos o manipulados
+- los alerts muestran la acción correcta y no exponen CTAs innecesarios
+- la primera conexión y el bootstrap del cliente no rompen la experiencia
+- el frontend, la red y el backend cuentan la misma historia
+
+## Alcance
+
+Este manual se divide en dos suites principales:
+
+1. `Pruebas funcionales`
+2. `Pruebas de seguridad esenciales`
+
+Incluye:
+
+- carga inicial de páginas auth
+- register
+- login
+- verify email
 - resend verification email
 - forgot password
-- reset password with a valid token
+- reset password
+- estados de bootstrap
+- alerts del flujo
+- redirects
+- lectura de logs backend
+- documentación de evidencia
 
-This guide does not cover yet:
+No cubre todavía:
 
-- forced missing `clientId`
-- manual cookie corruption
-- missing permissions
-- invalid or tampered tokens
-- backend shutdown / intentional 5xx simulations
+- pentesting profundo
+- auditoría de infraestructura
+- revisión de cabeceras HTTP a nivel de hardening completo
+- pruebas de carga
+- automatización visual completa
 
-## Test Philosophy
+## Principios de ejecución
 
-Every case starts from the first connection to the client again.
+### 1. Estado inicial declarado
 
-That means:
+No todas las pruebas deben comenzar desde cero.
 
-- open the page from a clean browser state
-- let the initial tenant bootstrap happen again
-- record the first backend requests again
-- only then execute the specific auth action for the case
+En vez de imponer un único punto de partida, cada caso debe declarar explícitamente su estado inicial:
 
-Important:
+- `cold`: navegador limpio, sin cookies, sin local storage, sin session storage
+- `warm-anonymous`: hay datos locales, pero sin sesión válida
+- `warm-authenticated`: existe sesión previa válida
+- `expired-session`: existen cookies o tokens vencidos
+- `corrupted-client-state`: storage o cookies inconsistentes o corruptos
+- `tampered-state`: parámetros, tokens o valores manipulados manualmente
 
-- the backend user created in previous cases may stay in the database
-- the browser state must still be reset before each case
-- if a case depends on an already-created user, keep the account but clear local browser state
+Regla:
 
-## Environment Preparation
+- si el caso no declara su estado inicial, el caso no está bien especificado
 
-For every case:
+### 2. Evidencia antes que memoria
 
-1. Open backend logs and keep them visible.
-2. Open browser DevTools.
-3. In `Network`, enable `Preserve log`.
-4. Clear browser state for the client app:
-   - cookies
-   - local storage
-   - session storage
-5. Confirm these auth-related keys are gone before starting:
-   - `hv-auth`
-   - `hv-worker-profile`
-   - any key starting with `hv-profile:`
-6. Start the case by directly opening the target auth route.
+Cada resultado debe apoyarse en:
 
-Recommended test data:
+- captura visual o nota precisa
+- secuencia de requests en DevTools
+- eventos backend relevantes
+- conclusión final del caso
 
-- one fresh user email for registration
-- one unverified account
-- one verified account
-- one account with a recently changed password
+### 3. Correlación temporal
 
-Suggested naming pattern:
+Toda observación importante debe poder correlacionarse por tiempo entre:
+
+- acción del usuario
+- cambio en UI
+- request en frontend
+- evento en backend
+
+### 4. Datos sensibles
+
+Al documentar resultados:
+
+- no copiar tokens completos
+- no copiar cookies completas
+- no pegar passwords
+- no registrar emails reales de usuarios externos
+
+Usar:
+
+- cuentas de prueba controladas
+- hashes o valores truncados cuando haga falta
+
+## Preparación del entorno
+
+Antes de cualquier sesión de testing:
+
+1. Confirmar rama actual y commit.
+2. Confirmar entorno backend y frontend.
+3. Abrir DevTools.
+4. En `Network`, activar `Preserve log`.
+5. Abrir logs del backend y dejarlos visibles.
+6. Preparar carpeta o documento de evidencia de la corrida.
+
+Datos de prueba recomendados:
+
+- un usuario nuevo
+- un usuario no verificado
+- un usuario verificado
+- un usuario con password recién cambiada
+- un usuario bloqueado, si el entorno de prueba lo permite
+
+Patrón sugerido:
 
 - `auth.test+register.001@example.com`
 - `auth.test+verify.001@example.com`
 - `auth.test+reset.001@example.com`
+- `auth.test+blocked.001@example.com`
 
-## What to Record in Every Case
+## Estados iniciales del navegador
 
-Record all of this for each run:
+### Estado `cold`
 
-- date and time
-- environment and branch
-- route used for the first load
-- language used
-- browser and viewport
-- email used in the case
-- whether the first client bootstrap succeeded cleanly
-- whether the page layout looked correct before interaction
-- whether the alert texts were concise and stable in height
-- whether the redirects matched the expected route
-- relevant backend events and codes
-- final result: `pass`, `pass with notes`, or `fail`
+Usar cuando se quiera validar:
 
-## Common UI Checklist
+- bootstrap inicial
+- primera conexión
+- register desde cero
+- login desde cero
+- visual inicial de una página auth
 
-Check these items in every auth page before submitting anything:
+Acciones:
 
-- logo is visible and centered
-- title is visible
-- description is visible and short
-- form spacing is even
-- no text overlaps or wrapping glitches
-- inputs, labels, and helper text align correctly
-- footer links are visible and ordered correctly
-- mobile and desktop typography feel proportional
-- no alert opens on initial render unless the route explicitly requires it
+1. borrar cookies
+2. borrar local storage
+3. borrar session storage
+4. verificar que ya no existan claves de auth
 
-## Common Alert Checklist
+Claves relevantes a revisar:
 
-For every alert shown during a case:
+- `hv-auth`
+- `hv-worker-profile`
+- cualquier clave que empiece por `hv-profile:`
 
-- title is short and understandable
-- description is concise
-- buttons fit without wrapping badly
-- the component does not jump excessively in height between `loading` and `success/error`
-- the primary CTA matches the expected user next step
-- `close` only closes
-- `continue` or `retry` does something meaningful
+### Estado `warm-authenticated`
 
-## Common Backend Signals
+Usar cuando se quiera validar:
 
-These are the main backend requests expected in normal auth testing:
+- refresh token
+- recuperación de sesión
+- comportamiento de `/api/auth/me`
+- redirects o bootstrap con sesión existente
 
-- `GET /api/clients/tenant/:tenantKey`
-- `GET /api/auth/me`
-- `POST /api/auth/refresh-token`
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `POST /api/auth/verify-email`
-- `POST /api/auth/magic-login`
-- `POST /api/auth/resend-verification`
-- `POST /api/auth/forgot-password`
-- `POST /api/auth/reset-password-confirm`
+### Estado `corrupted-client-state`
 
-Examples of relevant log events you may see:
+Usar cuando se quiera validar:
+
+- resistencia a storage inconsistente
+- recuperación ante datos inválidos
+- ausencia de bloqueos del cliente por estado local roto
+
+Ejemplos:
+
+- `hv-auth` incompleto
+- `hv-auth` con role incoherente
+- `hv-profile:*` de otro usuario
+- storage válido para un cliente, cookies válidas para otro
+
+## Cómo leer y documentar logs del backend
+
+### Objetivo
+
+Los logs no se revisan “por si acaso”. Se revisan para verificar que el backend responde al caso que se está ejecutando y que la UI reacciona de forma coherente.
+
+### Qué registrar de cada evento
+
+De cada evento relevante, documentar:
+
+- `at`
+- `event`
+- `level`
+- `domain`
+- `outcome`
+- `reasonCode`, si existe
+- `route`
+- `method`
+- `requestId`
+- `metadata` relevante
+
+No hace falta copiar el JSON entero en todos los casos. Lo importante es resumir la secuencia útil.
+
+### Regla de interpretación
+
+Un log solo es útil si coincide con:
+
+- el momento de la acción
+- la ruta evaluada
+- el estado inicial declarado
+- el cambio visible en UI
+
+### Ejemplo de análisis
+
+Ejemplo recibido:
+
+```json
+{"at":"2026-05-16T10:04:56.502Z","event":"CLIENT_PUBLIC_FETCH_SUCCESS","route":"/api/clients/tenant/tnk_demo_havenova","method":"GET","outcome":"success"}
+{"at":"2026-05-16T10:05:02.018Z","event":"AUTH_ACCESS_DENIED","reasonCode":"AUTH_ACCESS_TOKEN_MISSING","route":"/api/auth/me","method":"GET","outcome":"failure"}
+{"at":"2026-05-16T10:05:02.143Z","event":"AUTH_REFRESH_SUCCEEDED","route":"/api/auth/refresh-token","method":"POST","outcome":"success"}
+{"at":"2026-05-16T10:05:02.211Z","event":"AUTH_ME_FETCHED","route":"/api/auth/me","method":"GET","outcome":"success"}
+{"at":"2026-05-16T10:05:02.317Z","event":"PROFILE_FETCH_SUCCESS","route":"/api/home-services/profile","method":"GET","outcome":"success"}
+```
+
+Lectura correcta:
+
+1. el tenant bootstrap fue correcto
+2. el primer `GET /api/auth/me` no tenía access token válido
+3. el sistema recuperó sesión mediante refresh token
+4. el segundo `GET /api/auth/me` ya devolvió identidad válida
+5. después se pudo cargar el perfil
+
+Conclusión:
+
+- esto no corresponde a un caso `cold`
+- corresponde a un caso `warm-authenticated` o `expired-session`
+- el comportamiento es sano si la UI no mostró error bloqueante y terminó autenticada
+
+Cómo documentarlo:
+
+```md
+Estado inicial: warm-authenticated
+Secuencia backend:
+1. CLIENT_PUBLIC_FETCH_SUCCESS
+2. AUTH_ACCESS_DENIED reasonCode=AUTH_ACCESS_TOKEN_MISSING
+3. AUTH_REFRESH_SUCCEEDED
+4. AUTH_ME_FETCHED
+5. PROFILE_FETCH_SUCCESS
+Conclusión:
+- el bootstrap recuperó sesión correctamente
+- no se considera fallo
+```
+
+### Señales backend base a esperar
+
+En pruebas normales pueden aparecer:
 
 - `CLIENT_PUBLIC_FETCH_SUCCESS`
 - `AUTH_ACCESS_DENIED`
 - `AUTH_REFRESH_SUCCEEDED`
 - `AUTH_ME_FETCHED`
-- auth success/failure events for register, login, verify email, forgot password, reset password
+- `PROFILE_FETCH_SUCCESS`
+- eventos de register, login, verify, forgot y reset
 
-Interpretation rule:
+Interpretación:
 
-- always compare the log sequence with the route and the exact action performed
-- a log is only useful if it matches the moment the UI changed
+- `AUTH_ACCESS_DENIED` no siempre es un fallo del caso
+- puede formar parte de un flujo esperado de bootstrap o refresh
+- siempre debe leerse en secuencia, no de forma aislada
 
-## Baseline for the First Connection
+## Cómo documentar cada caso
 
-Before evaluating any auth form, confirm that the first connection itself is stable.
-
-Expected baseline for a clean anonymous browser:
-
-1. The client bootstrap succeeds.
-2. The target page renders without broken layout.
-3. If auth bootstrap runs, anonymous access may produce an auth denial or a guest fallback path.
-4. No blocking error alert should appear on a normal auth page cold load.
-
-Minimum expected backend stability signal:
-
-- one successful public client fetch for the tenant
-
-If the first load is already unstable, stop that case and mark it separately as:
-
-- `bootstrap unstable`
-
-## Test Cases
-
-## Case 1. Cold Load on Register Page
-
-Purpose:
-
-- validate the first connection from a clean state
-- validate the register page layout before any action
-
-Route:
-
-- `/{lang}/user/register`
-
-Preconditions:
-
-- no browser auth state
-- backend account not required yet
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/register`.
-3. Wait until the page is fully rendered.
-4. Do not submit anything yet.
-5. Inspect layout on desktop.
-6. Inspect layout on mobile width.
-
-Expected UI:
-
-- page renders without modal alerts
-- title and description are visible
-- register form is centered
-- TOS checkbox block is aligned
-- footer shows login and home navigation clearly
-
-Expected backend/network:
-
-- `GET /api/clients/tenant/:tenantKey` succeeds
-- auth bootstrap may call `GET /api/auth/me`
-- if there is no valid session, anonymous auth handling must not break the page
-
-Record:
-
-- whether the first request chain was stable
-- whether the page is visually ready without interaction
-
-## Case 2. Successful Registration of a New User
-
-Purpose:
-
-- validate the standard register flow for a brand new user
-
-Route:
-
-- `/{lang}/user/register`
-
-Preconditions:
-
-- use a new email not registered before
-- browser state must be clean before opening the page
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/register`.
-3. Fill email.
-4. Fill a valid password.
-5. Accept TOS.
-6. Submit the form.
-7. Observe loading alert.
-8. Observe success alert.
-9. Continue with the CTA shown in the alert.
-
-Expected UI:
-
-- no local validation error if the form is valid
-- one loading alert appears during submit
-- one success alert appears after backend success
-- texts are concise
-- buttons are stable and visible
-- final redirect matches the current frontend behavior
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/register`
-- no fake or duplicated submit
-- no unrelated auth error should interrupt the flow
-
-Notes to capture:
-
-- exact success message shown
-- final route after confirm/cancel
-- whether the created account is still unverified after registration
-
-## Case 3. Login Attempt With an Unverified Account
-
-Purpose:
-
-- validate the normal business branch where the account exists but email is not verified yet
-
-Route:
-
-- `/{lang}/user/login`
-
-Preconditions:
-
-- account created in Case 2
-- email not verified yet
-- browser state cleared before the case
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/login`.
-3. Enter the unverified account email and password.
-4. Submit.
-5. Observe the alert.
-6. Use the primary CTA if shown.
-
-Expected UI:
-
-- loading alert during submit
-- error alert indicating email verification is required
-- alert CTA guides the user to the verify-email page
-- no generic internal error message
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/login`
-- backend should return the unverified-email branch, not a generic failure
-
-Expected navigation:
-
-- primary action should take the user to `/{lang}/user/verify-email`
-
-## Case 4. Verify Email From a Valid Link
-
-Purpose:
-
-- validate the normal verify-email flow from a real token
-
-Route:
-
-- `/{lang}/user/verify-email?token=...`
-
-Preconditions:
-
-- unverified account exists
-- valid verification email was received
-- use a real token from the email
-- clear browser state before opening the link
-
-Steps:
-
-1. Clear browser state.
-2. Open the real verification link directly.
-3. Do not interact immediately.
-4. Let the page run the automatic flow.
-5. Observe all alert transitions.
-6. Confirm the final success state.
-
-Expected UI:
-
-- verify page loads correctly first
-- automatic loading states appear in sequence
-- final success alert is shown
-- the user is redirected according to current frontend behavior
-- no contradictory error after a successful verification
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/verify-email`
-- if backend returns `magicToken`, then `POST /api/auth/magic-login`
-- auth session refresh/bootstrap may also happen after magic login
-
-Special observation:
-
-- note whether the flow shows multiple loading states
-- note whether the alert height stays visually controlled between transitions
-
-## Case 5. Resend Verification Email
-
-Purpose:
-
-- validate the manual resend flow on the verify-email page
-
-Route:
-
-- `/{lang}/user/verify-email`
-
-Preconditions:
-
-- unverified account exists
-- browser state cleared before the case
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/verify-email`.
-3. Fill the email if it is not already present.
-4. Submit resend.
-5. Observe loading and success states.
-
-Expected UI:
-
-- page content is visible even before submitting
-- resend action shows a loading alert
-- success alert confirms the email was sent again
-- CTA and close behavior are clear
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/resend-verification`
-
-Notes to capture:
-
-- whether the email field is prefilled or not
-- whether the success message is concise
-
-## Case 6. Successful Login With a Verified User
-
-Purpose:
-
-- validate the normal login flow for a verified account
-
-Route:
-
-- `/{lang}/user/login`
-
-Preconditions:
-
-- use a verified user account
-- clear browser state before the case
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/login`.
-3. Enter valid credentials.
-4. Submit.
-5. Observe loading.
-6. Observe success.
-7. Confirm final redirect.
-
-Expected UI:
-
-- clean loading alert
-- success alert with concise message
-- no unexpected intermediate error
-- redirect to the expected post-login route
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/login`
-- authenticated bootstrap may follow with `GET /api/auth/me`
-
-Notes to capture:
-
-- whether the first authenticated page after login renders correctly
-- whether any profile-related fetch fails after login
-
-## Case 7. Forgot Password Request
-
-Purpose:
-
-- validate the normal request-reset-link flow
-
-Route:
-
-- `/{lang}/user/forgot-password`
-
-Preconditions:
-
-- use an existing account email
-- clear browser state before the case
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/forgot-password`.
-3. Enter the account email.
-4. Submit.
-5. Observe loading.
-6. Observe success.
-7. Use the CTA if present.
-
-Expected UI:
-
-- page layout is stable before submit
-- one loading alert
-- one success alert
-- CTA should make sense for the next user step
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/forgot-password`
-
-Notes to capture:
-
-- exact success copy
-- whether the user is guided back to login
-
-## Case 8. Reset Password With a Valid Token
-
-Purpose:
-
-- validate the normal password reset completion flow
-
-Route:
-
-- `/{lang}/user/set-password?token=...`
-
-Preconditions:
-
-- a valid reset email exists
-- use a real reset token
-- clear browser state before opening the link
-
-Steps:
-
-1. Clear browser state.
-2. Open the real reset link directly.
-3. Confirm the page renders correctly.
-4. Enter a valid new password.
-5. Submit.
-6. Observe loading.
-7. Observe success.
-8. Follow the alert CTA.
-
-Expected UI:
-
-- page renders without error if the token is valid
-- no local validation error for a valid password
-- loading alert during submit
-- success alert after backend confirmation
-- redirect to login after success
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/reset-password-confirm`
-
-## Case 9. Login With the New Password
-
-Purpose:
-
-- confirm that the password reset is effective and the account can log in normally
-
-Route:
-
-- `/{lang}/user/login`
-
-Preconditions:
-
-- password was changed successfully in Case 8
-- browser state cleared before the case
-
-Steps:
-
-1. Clear browser state.
-2. Open `/{lang}/user/login`.
-3. Enter the account email.
-4. Enter the new password.
-5. Submit.
-6. Observe loading and success.
-
-Expected UI:
-
-- normal login success path
-- no message related to the old password
-- redirect works
-
-Expected backend/network:
-
-- successful client bootstrap first
-- `POST /api/auth/login`
-- optional authenticated bootstrap after login
-
-## Per-Case Record Template
-
-Copy this block for every run:
+Cada caso debe registrarse con esta plantilla:
 
 ```md
-### Case:
+Caso ID:
+Fecha y hora:
+Entorno:
+Branch / commit:
+Ruta inicial:
+Idioma:
+Browser:
+Viewport:
+Estado inicial:
+Datos de prueba:
 
-- Date:
-- Environment:
-- Branch/commit:
-- Language:
-- Browser:
-- Viewport:
-- Start route:
-- Test email:
+Objetivo:
 
-#### First connection
+Pasos ejecutados:
+1.
+2.
+3.
 
-- Client bootstrap stable: yes / no
-- First backend events:
-- Notes:
+Resultado esperado:
 
-#### UI before action
+Resultado observado:
 
-- Layout correct: yes / no
-- Texts concise: yes / no
-- Responsive correct: yes / no
-- Notes:
+Alert observada:
 
-#### Action result
+Redirect observado:
 
-- Requests triggered:
-- Alerts shown:
-- Final route:
-- Expected behavior matched: yes / no
-- Notes:
+Red / requests relevantes:
 
-#### Backend logs
+Logs backend relevantes:
+1.
+2.
+3.
 
-- Main events:
-- Any mismatch with UI:
+Evidencia:
+- screenshot:
+- network:
+- notas:
 
-#### Final status
+Resultado final:
+- pass
+- pass with notes
+- fail
 
-- Result: pass / pass with notes / fail
-- Follow-up needed:
+Observaciones / follow-up:
 ```
 
-## Final Analysis Template
+## Dónde guardar la evidencia
 
-When all cases are finished, summarize with this matrix:
+La evidencia de cada corrida debe quedar agrupada por fecha.
 
-| Case | First connection stable | UI correct | Alert copy correct | Redirect correct | Backend logs aligned | Result |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 |  |  |  |  |  |  |
-| 2 |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |
-| 4 |  |  |  |  |  |  |
-| 5 |  |  |  |  |  |  |
-| 6 |  |  |  |  |  |  |
-| 7 |  |  |  |  |  |  |
-| 8 |  |  |  |  |  |  |
-| 9 |  |  |  |  |  |  |
+Convención sugerida:
 
-Questions to answer after the matrix is filled:
+- `apps/client/app/[lang]/(auth)/test-evidence/`
 
-1. Is the first tenant bootstrap stable in every case?
-2. Do the auth pages remain visually consistent across desktop and mobile?
-3. Are alert messages short enough to avoid disruptive UI jumps?
-4. Does every normal failure or branch guide the user to the next correct route?
-5. Do backend logs confirm the same story that the UI is telling?
-6. Which mismatches are visual only, and which are functional?
+Estructura sugerida:
 
-## Suggested Order of Execution
+- `YYYY-MM-DD-run-01/notes.md`
+- `YYYY-MM-DD-run-01/screenshots/`
+- `YYYY-MM-DD-run-01/network/`
 
-Run the cases in this order:
+Si la evidencia se guarda fuera del repo, dejar la ruta exacta en el reporte final de la corrida.
 
-1. Case 1
-2. Case 2
-3. Case 3
-4. Case 5
-5. Case 4
-6. Case 6
-7. Case 7
-8. Case 8
-9. Case 9
+Estructura base ya preparada en el repo:
 
-Why this order:
+- [test-evidence/README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/test-evidence/README.md)
+- [2026-05-16-run-01/README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/test-evidence/2026-05-16-run-01/README.md)
+- [2026-05-16-run-01/session-context.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/test-evidence/2026-05-16-run-01/session-context.md)
+- [2026-05-16-run-01/summaries/technical-summary.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/test-evidence/2026-05-16-run-01/summaries/technical-summary.md)
+- [test-evidence/_templates/](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/test-evidence/_templates/)
 
-- it starts from a truly new user
-- it keeps the unverified and verified states separate
-- it avoids mixing the password reset flow too early
-- it makes backend log review easier because the account history is more understandable
+## Checklist común de UI
+
+Antes de interactuar en cada página auth:
+
+- logo visible y centrado
+- título visible
+- descripción visible
+- spacing coherente
+- sin solapamientos
+- labels e inputs alineados
+- footer visible
+- tipografía proporcionada en desktop y mobile
+- ningún alert inesperado al cargar, salvo que el caso lo requiera
+
+## Checklist común del Alert
+
+Para cada alert observada:
+
+- título breve y entendible
+- descripción clara
+- altura estable
+- CTA primaria alineada con el siguiente paso real
+- no hay CTAs duplicadas con el mismo destino
+- `close` solo cierra
+- `continue` lleva a un paso lógico
+- `retry` repite una acción útil
+- overlay y `Escape` solo cierran cuando el estado es dismissible
+
+## Suite 1. Pruebas funcionales
+
+Objetivo:
+
+- validar funcionamiento normal
+- validar bootstrap estable
+- validar continuidad del flujo de usuario
+
+Casos mínimos:
+
+1. cold load en register
+2. registro exitoso de usuario nuevo
+3. login exitoso de usuario verificado
+4. login de usuario no verificado
+5. verify-email con token válido
+6. reenvío de email de verificación
+7. forgot-password exitoso
+8. reset-password con token válido
+9. recuperación de sesión en `warm-authenticated`
+
+Para cada caso funcional definir:
+
+- estado inicial
+- precondiciones
+- pasos
+- alert esperada
+- redirect esperado
+- secuencia backend esperada
+
+## Suite 2. Pruebas de seguridad esenciales
+
+Objetivo:
+
+- validar que el sistema falle de forma controlada
+- validar que la UI no exponga rutas o acciones incorrectas
+- validar que el backend rechace estados inválidos sin romper el cliente
+
+Casos mínimos a cubrir:
+
+1. `clientId` ausente
+2. `clientId` manipulado
+3. token de verify-email inválido
+4. token de verify-email expirado
+5. token de reset-password inválido
+6. token de reset-password expirado
+7. `hv-auth` corrupto
+8. storage cruzado entre usuarios
+9. sesión expirada con refresh correcto
+10. sesión expirada sin refresh válido
+11. query params manipulados
+12. submit repetido durante loading
+13. respuesta 500 en login
+14. respuesta 500 en register
+15. respuesta 500 en reset-password
+16. replay de enlace de verify/reset
+17. usuario bloqueado
+18. acceso con estado local incoherente entre cookies y storage
+
+Qué debe verificarse especialmente:
+
+- no hay crash del cliente
+- no hay fuga innecesaria de detalles internos
+- la alert muestra la acción correcta
+- el redirect no deja al usuario en un estado ambiguo
+- backend y frontend mantienen coherencia
+
+## Criterio de cierre antes de despliegue
+
+La revisión de auth no debería considerarse cerrada hasta cumplir esto:
+
+1. suite funcional ejecutada
+2. suite de seguridad esencial ejecutada
+3. evidencia registrada
+4. incidencias clasificadas
+5. revisión del alert completada
+6. validación visual pendiente identificada o cerrada
+
+## Estado actual del plan
+
+Con este documento, el siguiente orden de trabajo recomendado es:
+
+1. convertir los casos funcionales actuales en casos numerados completos
+2. añadir el detalle operativo de los casos de seguridad esencial
+3. ejecutar una primera corrida manual con evidencia
+4. revisar visualmente `(auth)`
+5. añadir tests visuales de `(auth)`
+
+## Próxima tarea
+
+La siguiente implementación sobre este manual debe ser:
+
+- detallar los casos funcionales uno por uno
+- detallar los casos de seguridad esenciales uno por uno
+- preparar la primera carpeta de evidencia de prueba

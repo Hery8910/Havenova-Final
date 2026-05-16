@@ -7,6 +7,7 @@ import { useI18n } from '../../../contexts/i18n/I18nContext';
 import AlertPopup from '../../alert/alertPopup/AlertPopup';
 import { createWorkerProfile } from '../../../services/worker';
 import type { CreateWorkerProfilePayload, WorkerRecord } from '../../../types/worker/workerTypes';
+import type { AlertVisualState } from '../../../contexts/alert/useAlert';
 
 interface WorkerCreateFormProps {
   title?: string;
@@ -19,7 +20,7 @@ const WorkerCreateForm = ({ title = 'Crear trabajador', onCreated }: WorkerCreat
   const { client } = useClient();
   const { language } = useI18n();
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    variant: Extract<AlertVisualState, 'success' | 'error'>;
     title: string;
     description: string;
   } | null>(null);
@@ -74,7 +75,7 @@ const WorkerCreateForm = ({ title = 'Crear trabajador', onCreated }: WorkerCreat
 
       const worker = await createWorkerProfile(payload);
       setAlert({
-        type: 'success',
+        variant: 'success',
         title: 'Trabajador creado',
         description: 'El perfil fue creado correctamente.',
       });
@@ -82,7 +83,7 @@ const WorkerCreateForm = ({ title = 'Crear trabajador', onCreated }: WorkerCreat
       onCreated?.(worker);
     } catch (error: any) {
       setAlert({
-        type: 'error',
+        variant: 'error',
         title: 'No se pudo crear el trabajador',
         description: 'Intenta de nuevo o revisa los datos ingresados.',
       });
@@ -202,11 +203,15 @@ const WorkerCreateForm = ({ title = 'Crear trabajador', onCreated }: WorkerCreat
 
       {alert && (
         <AlertPopup
-          type={alert.type}
+          variant={alert.variant}
           title={alert.title}
           description={alert.description}
-          cancelLabel="Cerrar"
-          onCancel={() => setAlert(null)}
+          media={{
+            kind: 'image',
+            src: `/alert/${alert.variant}.svg`,
+            alt: alert.variant === 'success' ? 'Success' : 'Error',
+          }}
+          primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}
         />
       )}
     </section>

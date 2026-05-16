@@ -4,11 +4,7 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import styles from './Form.module.css';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
-import {
-  LabelsTextProps,
-  PlaceholdersTextProps,
-  FormField,
-} from '../formWrapper/FormWrapper';
+import { LabelsTextProps, PlaceholdersTextProps, FormField } from '../formWrapper/FormWrapper';
 import { useLang } from '../../../../../../hooks/useLang';
 import { href } from '../../../../../../utils/navigation';
 
@@ -69,7 +65,7 @@ export default function Form<T extends Record<string, any>>({
             {labels.email}
           </label>
           <input
-            className={styles.input}
+            className="input"
             type="email"
             name="email"
             id="email"
@@ -119,7 +115,7 @@ export default function Form<T extends Record<string, any>>({
 
           <div className={styles.div}>
             <input
-              className={styles.input}
+              className="input"
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"

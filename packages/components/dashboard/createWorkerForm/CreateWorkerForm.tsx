@@ -8,6 +8,7 @@ import { useI18n } from '../../../contexts/i18n/I18nContext';
 import AlertPopup from '../../alert/alertPopup/AlertPopup';
 import { createWorkerProfile } from '../../../services/worker';
 import { CreateWorkerProfilePayload } from '../../../types/worker/workerTypes';
+import type { AlertVisualState } from '../../../contexts/alert/useAlert';
 
 type FormState = Omit<CreateWorkerProfilePayload, 'clientId'>;
 
@@ -28,7 +29,7 @@ const CreateWorkerForm = () => {
   });
 
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    variant: Extract<AlertVisualState, 'success' | 'error'>;
     title: string;
     description: string;
   } | null>(null);
@@ -73,7 +74,7 @@ const CreateWorkerForm = () => {
       await createWorkerProfile(payload);
       const popupData = popups?.WORKER_CREATED || {};
       setAlert({
-        type: 'success',
+        variant: 'success',
         title: popupData.title || 'Mitarbeiter erstellt',
         description:
           popupData.description || 'Der Mitarbeiter wurde erfolgreich erstellt.',
@@ -93,7 +94,7 @@ const CreateWorkerForm = () => {
         const errorKey = error.response.data.errorCode || error.response.data.code;
         const popupData = errorKey ? (popups as Record<string, any>)?.[errorKey] || {} : {};
         setAlert({
-          type: 'error',
+          variant: 'error',
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
           description:
             popupData.description ||
@@ -102,7 +103,7 @@ const CreateWorkerForm = () => {
         });
       } else {
         setAlert({
-          type: 'error',
+          variant: 'error',
           title: popups.GLOBAL_INTERNAL_ERROR.title,
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
@@ -184,11 +185,15 @@ const CreateWorkerForm = () => {
 
       {alert && (
         <AlertPopup
-          type={alert.type}
+          variant={alert.variant}
           title={alert.title}
           description={alert.description}
-          cancelLabel="Cerrar"
-          onCancel={() => setAlert(null)}
+          media={{
+            kind: 'image',
+            src: `/alert/${alert.variant}.svg`,
+            alt: alert.variant === 'success' ? 'Success' : 'Error',
+          }}
+          primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}
         />
       )}
     </section>

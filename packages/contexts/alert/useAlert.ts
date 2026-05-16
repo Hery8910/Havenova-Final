@@ -1,34 +1,48 @@
 'use client';
 import { useState, useCallback } from 'react';
-import type { AlertPopupProps } from '@havenova/components/alert/alertPopup/AlertPopup';
 
 export type AlertVisualState = 'loading' | 'error' | 'success' | 'confirm' | 'warning' | 'info';
 
-export type AlertPayload = Omit<AlertPopupProps, 'type' | 'onConfirm' | 'onCancel'> & {
-  status: number;
-  variant?: AlertVisualState;
-};
+type AlertActionableState = Exclude<AlertVisualState, 'loading'>;
+
+interface AlertPayloadBase {
+  status?: number;
+  title: string;
+  description: string;
+}
+
+export interface LoadingAlertPayload extends AlertPayloadBase {
+  variant: 'loading';
+}
+
+export interface ActionAlertPayload extends AlertPayloadBase {
+  variant?: AlertActionableState;
+  confirmLabel?: string;
+  cancelLabel?: string;
+}
+
+export type AlertPayload = LoadingAlertPayload | ActionAlertPayload;
 
 export interface AlertConfig {
   response: AlertPayload;
-  onCancel: () => void;
+  onCancel?: () => void;
   onConfirm?: () => void;
 }
 
 type ShowBaseArgs = {
-  response: AlertPayload;
+  response: ActionAlertPayload;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
 
 type ShowConfirmArgs = {
-  response: AlertPayload & { confirmLabel: string; cancelLabel?: string };
+  response: ActionAlertPayload & { confirmLabel: string; cancelLabel?: string };
   onConfirm: () => void;
   onCancel?: () => void;
 };
 
 type ShowLoadingArgs = {
-  response: AlertPayload;
+  response: Omit<LoadingAlertPayload, 'variant'> & { status?: number };
 };
 
 type AlertHookReturn = {
@@ -45,50 +59,72 @@ export function useAlertBase(): AlertHookReturn {
 
   const closeAlert = useCallback(() => setAlert(null), []);
 
+  const createActionAlert = useCallback(
+    ({
+      response,
+      onCancel,
+      onConfirm,
+      fallbackStatus,
+      fallbackVariant,
+      fallbackCancelLabel,
+    }: ShowBaseArgs & {
+      fallbackStatus: number;
+      fallbackVariant: AlertActionableState;
+      fallbackCancelLabel?: string;
+    }): AlertConfig => ({
+      response: {
+        ...response,
+        status: response.status ?? fallbackStatus,
+        variant: response.variant ?? fallbackVariant,
+        cancelLabel: response.cancelLabel ?? fallbackCancelLabel,
+      },
+      onCancel: onCancel ?? (response.cancelLabel ?? fallbackCancelLabel ? closeAlert : undefined),
+      onConfirm,
+    }),
+    [closeAlert]
+  );
+
   const showLoading = useCallback(({ response }: ShowLoadingArgs) => {
     setAlert({
       response: {
         status: response.status ?? 102,
         title: response.title,
         description: response.description,
-        loading: true,
         variant: 'loading',
-        cancelLabel: '',
       },
-      onCancel: () => {}, // loading nunca se cancela
     });
   }, []);
 
   const showError = useCallback(
     ({ response, onCancel, onConfirm }: ShowBaseArgs) => {
-      setAlert({
-        response: {
-          ...response,
-          status: response.status ?? 400,
-          variant: response.variant ?? 'error',
-          cancelLabel: response.cancelLabel ?? 'Close',
-        },
-        onCancel: onCancel ?? closeAlert,
-        onConfirm,
-      });
+      setAlert(
+        createActionAlert({
+          response,
+          onCancel,
+          onConfirm,
+          fallbackStatus: 400,
+          fallbackVariant: 'error',
+          fallbackCancelLabel: 'Close',
+        })
+      );
     },
-    [closeAlert]
+    [createActionAlert]
   );
 
   const showSuccess = useCallback(
     ({ response, onCancel, onConfirm }: ShowBaseArgs) => {
-      setAlert({
-        response: {
-          ...response,
-          status: response.status ?? 200,
-          variant: response.variant ?? 'success',
-          cancelLabel: response.cancelLabel ?? 'Close',
-        },
-        onCancel: onCancel ?? closeAlert,
-        onConfirm,
-      });
+      setAlert(
+        createActionAlert({
+          response,
+          onCancel,
+          onConfirm,
+          fallbackStatus: 200,
+          fallbackVariant: 'success',
+          fallbackCancelLabel: 'Close',
+        })
+      );
     },
-    [closeAlert]
+    [createActionAlert]
   );
 
   const showConfirm = useCallback(

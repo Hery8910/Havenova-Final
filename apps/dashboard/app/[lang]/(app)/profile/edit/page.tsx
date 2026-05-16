@@ -9,6 +9,7 @@ import { FormWrapper } from '@/packages/components/client/user/profile';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
 import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
 import { formatUserAddress } from '@/packages/types';
+import type { AlertVisualState } from '@/packages/contexts/alert/useAlert';
 
 export interface ThemeData {
   title: string;
@@ -37,7 +38,7 @@ export default function Edit() {
   const editButton = formText.button.edit;
 
   const [alert, setAlert] = useState<{
-    type: 'success' | 'error';
+    variant: Extract<AlertVisualState, 'success' | 'error'>;
     title: string;
     description: string;
   } | null>(null);
@@ -46,7 +47,7 @@ export default function Edit() {
     try {
       if (!data.name || !data.phone) {
         setAlert({
-          type: 'error',
+          variant: 'error',
           title: popups.GLOBAL_INTERNAL_ERROR.title,
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
@@ -58,7 +59,7 @@ export default function Edit() {
       });
 
       setAlert({
-        type: 'success',
+        variant: 'success',
         title: popups.AUTH_GET_SUCCESS.title,
         description: popups.AUTH_GET_SUCCESS.description,
       });
@@ -68,7 +69,7 @@ export default function Edit() {
       }, 3000);
     } catch {
       setAlert({
-        type: 'error',
+        variant: 'error',
         title: popups.GLOBAL_INTERNAL_ERROR.title,
         description: popups.GLOBAL_INTERNAL_ERROR.description,
       });
@@ -111,10 +112,15 @@ export default function Edit() {
       </article>
       {alert && (
         <AlertPopup
-          type={alert.type}
+          variant={alert.variant}
           title={alert.title}
           description={alert.description}
-          onCancel={() => setAlert(null)}
+          media={{
+            kind: 'image',
+            src: `/alert/${alert.variant}.svg`,
+            alt: alert.variant === 'success' ? 'Success' : 'Error',
+          }}
+          primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}
         />
       )}
     </section>

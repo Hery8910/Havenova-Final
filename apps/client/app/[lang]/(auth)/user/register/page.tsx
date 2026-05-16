@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
 import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
 import { RegisterFormData, RegisterPayload } from '../../../../../../../packages/types';
@@ -24,8 +25,8 @@ import { registerUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface RegisterData {
   title: string;
@@ -48,8 +49,8 @@ const Register = () => {
 
   const popups = texts.popups;
   const register: RegisterData = texts?.pages?.client.user.register;
-  const navText = texts.components.client.navbar.accessibility;
   const formText = texts.components.client.form;
+  const navText = texts.components.client.navbar.accessibility;
   const registerLoading = texts.loadings?.loading?.REGISTER_LOADING_SUBMIT ?? {
     title: 'Processing your registration…',
     description: 'Please wait a moment.',
@@ -97,7 +98,12 @@ const Register = () => {
   };
 
   const openRegisterSuccess = (email: string, clientId: string) => {
-    const popupData = getPopup(popups, 'USER_REGISTER_SUCCESS', 'USER_REGISTER_SUCCESS', fallbackRegisterSuccess);
+    const popupData = getPopup(
+      popups,
+      'USER_REGISTER_SUCCESS',
+      'USER_REGISTER_SUCCESS',
+      fallbackRegisterSuccess
+    );
 
     setAuth({
       ...(auth || {}),
@@ -114,13 +120,8 @@ const Register = () => {
         title: popupData.title,
         description: popupData.description,
         confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-        cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
       },
       onConfirm: () => {
-        router.push(href(lang, '/user/verify-email'));
-        closeAlert();
-      },
-      onCancel: () => {
         router.push(href(lang, '/user/verify-email'));
         closeAlert();
       },
@@ -213,8 +214,7 @@ const Register = () => {
         code === 'USER_EMAIL_ALREADY_IN_USE' ||
         (err.response?.status ?? 500) < 500;
       const onConfirm =
-        code === 'USER_REGISTER_ALREADY_REGISTERED' ||
-        code === 'USER_EMAIL_ALREADY_IN_USE'
+        code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_IN_USE'
           ? () => {
               router.push(href(lang, '/user/login'));
               closeAlert();
@@ -258,16 +258,26 @@ const Register = () => {
       aria-labelledby="register-title"
       aria-describedby="register-description"
     >
-      <header className={styles.authHeader}>
-        <h1 id="register-title" className={styles.authTitle}>
-          {register?.title || 'Create account'}
-        </h1>
-        <p id="register-description" className={styles.authDescription}>
-          {register?.description || 'Create your account to request and manage services.'}
-        </p>
-      </header>
-
+      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
+        <Image
+          className={styles.authBrandImage}
+          src="/logos/logo-horizontal.png"
+          alt={navText.logoAlt}
+          width={800}
+          height={200}
+          priority
+        />
+      </Link>
       <div className={styles.authFormContainer}>
+        <header className={styles.authHeader}>
+          <h1 id="register-title" className={styles.authTitle}>
+            {register?.title || 'Create account'}
+          </h1>
+          <p id="register-description" className={styles.authDescription}>
+            {register?.description || 'Create your account to request and manage services.'}
+          </p>
+        </header>
+
         <FormWrapper<RegisterFormData>
           showHintPassword
           fields={['email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
@@ -291,10 +301,10 @@ const Register = () => {
             <Link className={styles.link} href={register?.cta.url}>
               {register?.cta.label}
             </Link>
+            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+              <IoMdArrowRoundBack /> {navText.homeLink}
+            </Link>
           </p>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
-            <IoMdArrowRoundBack /> {navText.homeLink}
-          </Link>
         </div>
       </footer>
     </section>

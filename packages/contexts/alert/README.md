@@ -61,18 +61,18 @@ El payload que consume el contexto es:
 
 ```ts
 type AlertPayload = {
-  status: number;
+  status?: number;
   title: string;
   description: string;
+  variant?: 'loading' | 'error' | 'success' | 'confirm' | 'warning' | 'info';
   confirmLabel?: string;
   cancelLabel?: string;
-  loading?: boolean;
 };
 ```
 
 Handlers:
 
-- `onCancel`: acción secundaria o cierre
+- `onCancel`: acción secundaria o cierre cuando la alerta es dismissible
 - `onConfirm`: acción principal
 
 ## Estados funcionales soportados
@@ -83,11 +83,11 @@ Se usa para bloquear el flujo mientras hay una operación en curso.
 
 Comportamiento actual:
 
-- fuerza `loading: true`
+- fuerza `variant: 'loading'`
 - no renderiza acciones
 - no permite cerrar con overlay
 - no permite cerrar con `Escape`
-- hoy usa `onCancel: () => {}` internamente
+- no necesita handler cancelable interno
 
 Ejemplo:
 
@@ -231,7 +231,7 @@ const popupData = getPopup(
 En [AlertPopup.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/alert/alertPopup/AlertPopup.tsx) y [AlertWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/alert/alertWrapper/AlertWrapper.tsx):
 
 - usa portal global sobre `document.body`
-- el contenedor se comporta como `role="dialog"`
+- el contenedor usa `role="dialog"` para loading y `role="alertdialog"` para estados interactivos
 - el foco se mueve al diálogo cuando no está en loading
 - `Escape` cierra solo si el popup es dismissible
 - click en overlay cierra solo si existe `cancel`
@@ -241,7 +241,7 @@ En [AlertPopup.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/compon
 Definición actual de “dismissible”:
 
 - no está en loading
-- tiene `cancelLabel`
+- tiene `cancelLabel` y `onCancel`
 
 ## Patrón recomendado de uso
 
@@ -298,7 +298,7 @@ En [register/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/
 
 - muestra loading al enviar
 - muestra error por validación de TOS antes del request
-- muestra success final con `confirm` y `cancel`
+- muestra success final con una sola acción primaria hacia verify-email
 - en ciertos errores decide si quedarse en la página o redirigir
 
 Patrón observado:
@@ -483,9 +483,9 @@ El contexto sí soporta reintentos porque acepta `onConfirm`, pero no existe una
 
 Hoy eso queda a criterio de cada página.
 
-### 6. Loading usa `onCancel: () => {}`
+### 6. Loading ya no necesita handler dummy
 
-Funciona para bloquear el cierre, pero expresa una intención implícita. Sería más limpio que el estado loading estuviera tipado como no cancelable sin handler dummy.
+El estado loading ya está tipado como no cancelable y no depende de `onCancel` para bloquear el cierre.
 
 ## Convenciones recomendadas para la próxima revisión
 
@@ -619,3 +619,163 @@ Hoy `alert` ya funciona como infraestructura global de feedback, pero todavía n
 - o separar visualmente loading, feedback y confirmación
 
 Mientras esa decisión no se cierre, este README debería usarse como criterio de consistencia para cualquier página nueva o refactor de autenticación.
+
+## Auditoría de Migración
+
+### Estado actual detectado
+
+1. El contrato visual base ya fue migrado.
+
+- `AlertPopup` ya responde a un contrato presentacional explícito
+- el patrón actual sí está modelado como tres layouts válidos:
+  - `media + mensaje`
+  - `media + mensaje + 1 CTA`
+  - `media + mensaje + 2 CTA`
+- `AlertWrapper` ahora es quien traduce estado funcional a media, acciones y dismiss
+
+2. El botón de cierre superior ya fue retirado.
+
+- el cierre vive ahora en los CTAs del footer cuando corresponde
+- eso simplifica foco, jerarquía visual y navegación por teclado
+
+3. Los estilos principales ya están alineados con `global.css`.
+
+- `AlertPopup.module.css` ya usa tokens globales y primitivos como `card` y `button`
+- el layout responsive, spacing y tipografía ya están montados sobre el sistema actual
+- todavía conviene validar visualmente ambos shells (`client` y `dashboard`) antes de darlo por cerrado a nivel UX
+
+4. La capa funcional del contexto quedó mejor integrada, pero aún conserva herencia en la API.
+
+- `AlertProvider` y `AlertWrapper` ya centralizan bien una sola alerta global
+- `AlertWrapper` ya expresa el layout final esperado con media y acciones explícitas
+- `useAlertBase()` todavía conserva la convivencia entre `status` y `variant`
+- los defaults de labels siguen siendo parte del contexto, aunque ya están centralizados
+
+5. La estrategia de media ya usa assets reales para estados no-loading.
+
+- `AlertPopup` ya no renderiza SVG inline
+- los assets activos están en:
+  - `apps/client/public/alert/{success,error,warning,info}.svg`
+  - `apps/dashboard/public/alert/{success,error,warning,info}.svg`
+- `loading` sigue resuelto con spinner controlado, que es coherente con el objetivo actual
+
+6. La accesibilidad mejoró, pero aún no la daría por cerrada.
+
+- hay foco inicial en el diálogo cuando no está loading
+- `Escape` y overlay dismiss dependen de que la alerta sea dismissible
+- loading se anuncia desde la media con `role="status"`
+- ya se revisaron los flujos de `(auth)` para evitar CTAs redundantes o combinaciones inconsistentes
+- falta validación visual y de tabulación final en flujos reales
+
+### Riesgos actuales antes de despliegue
+
+- divergencia semántica entre `status` HTTP y `variant` visual si ambas fuentes siguen conviviendo
+- defaults hardcodeados de labels (`Close`, `Cancel`, `Confirm`) todavía repartidos en `useAlertBase()`
+- falta de validación funcional en todos los flujos reales que consumen el contexto
+
+## Estado por fase
+
+### Fase 1. Redefinir el contrato visual
+
+Estado: completada.
+
+- `AlertPopup` ya usa el contrato visual nuevo
+- `AlertWrapper` traduce estado funcional a layout, media y acciones
+- el botón de cierre superior salió del componente
+
+### Fase 2. Sustituir media inline por assets reales
+
+Estado: completada.
+
+- los estados `success`, `error`, `warning`, `confirm` e `info` usan assets o media explícita
+- `loading` mantiene spinner, que sigue siendo el comportamiento esperado
+
+### Fase 3. Reescribir estilos sobre `global.css`
+
+Estado: completada con validación visual pendiente.
+
+- la migración técnica a tokens y primitivos globales ya está hecha
+- falta revisión visual final en los flujos más usados
+
+### Fase 4. Limpiar la API del contexto
+
+Estado: completada para el alcance actual.
+
+- `AlertWrapper` y `AlertPopup` ya quedaron desacoplados del contrato antiguo
+- `loading` ya se expresa con `variant: 'loading'`, no con flag separado
+- `onCancel` ya no es obligatorio a nivel interno para estados no dismissibles
+- los defaults funcionales quedaron centralizados en `useAlertBase()`
+
+### Fase 5. Cerrar accesibilidad
+
+Estado: completada para el alcance técnico.
+
+- foco inicial, dismiss por `Escape` y overlay, y anuncio de loading ya están implementados
+- la semántica del diálogo quedó separada entre loading (`dialog`) y alertas interactivas (`alertdialog`)
+- los flujos de `(auth)` ya fueron revisados para evitar CTAs redundantes y acciones duplicadas
+- queda pendiente la revisión visual final y los tests visuales de `(auth)`
+
+### Fase 6. Documentación final
+
+Estado: en curso.
+
+- este README ya refleja mejor el estado real
+- faltará una pasada final cuando se cierre la validación visual y los tests visuales
+
+## Plan de Migración
+
+### Fase 1. Redefinir el contrato visual
+
+- formalizar las 3 configuraciones válidas:
+  - `media + mensaje`
+  - `media + mensaje + 1 CTA`
+  - `media + mensaje + 2 CTA`
+- mapear cada estado funcional a una de esas configuraciones
+- retirar el botón de cierre superior del contrato del componente
+
+### Fase 2. Sustituir media inline por assets reales
+
+- usar los SVG de `public/alert` para:
+  - `success`
+  - `error`
+  - `warning`
+  - `info`
+- mantener `loading` con spinner/animación controlada
+- unificar la estrategia para `client` y `dashboard`
+
+### Fase 3. Reescribir estilos sobre `global.css`
+
+- migrar `AlertPopup.module.css` a los tokens globales actuales
+- usar primitivos globales de `card` y `button` donde aporte consistencia
+- rehacer spacing, radios, overlay y responsive con `--space-*`, `--radius-*`, `--type-*`
+- alinear el glass effect al sistema visual actual
+
+### Fase 4. Limpiar la API del contexto
+
+- asegurar que cualquier cambio futuro preserve la coherencia entre `showLoading`, `showError`, `showSuccess` y `showConfirm`
+- mantener centralizados los defaults funcionales del contexto
+
+### Fase 5. Cerrar accesibilidad
+
+- redefinir dismiss por overlay
+- redefinir dismiss por `Escape`
+- validar foco inicial por variante
+- revisar anuncio accesible de loading y auto-redirect
+- confirmar orden de tabulación tras eliminar el close button
+
+### Fase 6. Documentación final
+
+- dejar este README alineado con la implementación final
+- documentar:
+  - arquitectura
+  - variantes válidas
+  - reglas de uso por estado
+  - dependencias con `AlertContext`
+  - uso de assets SVG por app
+
+## Orden recomendado
+
+1. Cerrar accesibilidad y comportamiento dismiss en flujos reales.
+2. Validar visualmente el componente en recorridos de `auth`, `client` y `dashboard`.
+3. Añadir los tests visuales de `(auth)` junto con la validación visual final.
+4. Hacer una pasada final de documentación cuando el comportamiento UX quede estable.

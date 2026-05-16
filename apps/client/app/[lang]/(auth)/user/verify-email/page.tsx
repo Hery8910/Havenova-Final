@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 import { useProfile } from '../../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
@@ -24,8 +25,8 @@ import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { useVerifyEmailActions } from '../../../../../../../packages/utils';
 import Link from 'next/link';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 const VerifyEmailPageContent = () => {
   const AUTO_REDIRECT_MS = 4000;
@@ -64,16 +65,19 @@ const VerifyEmailPageContent = () => {
     }
   }, []);
 
-  const getAutoRedirectDescription = useCallback((baseDescription: string) => {
-    const redirectCopy =
-      lang === 'de'
-        ? 'Sie werden in wenigen Sekunden zur Startseite weitergeleitet.'
-        : lang === 'es'
-          ? 'Serás redirigido a la página de inicio en unos segundos.'
-          : 'You will be redirected to the homepage in a few seconds.';
+  const getAutoRedirectDescription = useCallback(
+    (baseDescription: string) => {
+      const redirectCopy =
+        lang === 'de'
+          ? 'Sie werden in wenigen Sekunden zur Startseite weitergeleitet.'
+          : lang === 'es'
+            ? 'Serás redirigido a la página de inicio en unos segundos.'
+            : 'You will be redirected to the homepage in a few seconds.';
 
-    return `${baseDescription} ${redirectCopy}`.trim();
-  }, [lang]);
+      return `${baseDescription} ${redirectCopy}`.trim();
+    },
+    [lang]
+  );
 
   const scheduleHomeRedirect = useCallback(() => {
     clearRedirectTimeout();
@@ -315,16 +319,26 @@ const VerifyEmailPageContent = () => {
       aria-labelledby="verify-title"
       aria-describedby="verify-desc"
     >
-      <header className={styles.authHeader}>
-        <h1 id="verify-title" className={styles.authTitle}>
-          {verifyText.title}
-        </h1>
-        <p id="verify-desc" className={styles.authDescription}>
-          {verifyText.info}
-        </p>
-      </header>
-
+      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
+        <Image
+          className={styles.authBrandImage}
+          src="/logos/logo-horizontal.png"
+          alt={navText.logoAlt}
+          width={800}
+          height={200}
+          priority
+        />
+      </Link>
       <div className={styles.authFormContainer}>
+        <header className={styles.authHeader}>
+          <h1 id="verify-title" className={styles.authTitle}>
+            {verifyText.title}
+          </h1>
+          <p id="verify-desc" className={styles.authDescription}>
+            {verifyText.info}
+          </p>
+        </header>
+
         <FormWrapper<ResendVerificationEmailPayload>
           fields={['email', 'language', 'clientId'] as const}
           onSubmit={onResendSubmit}

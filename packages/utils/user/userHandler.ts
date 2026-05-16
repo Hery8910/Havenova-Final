@@ -120,13 +120,9 @@ export function useVerifyEmailActions() {
             status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
             cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
-          onConfirm: closeAlert,
-          onCancel: () => {
-            closeAlert();
-          },
+          onCancel: closeAlert,
         });
 
         return { ok: false, code, status: errorConfig.status, isExpired: true };
@@ -141,13 +137,8 @@ export function useVerifyEmailActions() {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
-            cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
           onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/'));
-          },
-          onCancel: () => {
             closeAlert();
             router.push(href(lang, '/'));
           },
@@ -196,10 +187,8 @@ export function useVerifyEmailActions() {
             status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm ?? fallbackButtons.continue,
             cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
-          onConfirm: closeAlert,
           onCancel: closeAlert,
         });
 
@@ -215,13 +204,8 @@ export function useVerifyEmailActions() {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
-            cancelLabel: popups.button?.close ?? fallbackButtons.close,
           },
           onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/'));
-          },
-          onCancel: () => {
             closeAlert();
             router.push(href(lang, '/'));
           },
@@ -407,13 +391,9 @@ export function useVerifyEmailActions() {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm ?? fallbackButtons.continue,
           cancelLabel: popupData.close,
         },
-        onConfirm: closeAlert,
-        onCancel: () => {
-          closeAlert();
-        },
+        onCancel: closeAlert,
       });
     } catch (e: any) {
       const code = e?.response?.data?.code;
