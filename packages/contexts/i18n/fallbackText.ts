@@ -148,8 +148,16 @@ const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
       'USER_VERIFY_EMAIL_RESENT',
       fallbackGlobalError
     ),
-    fallbackExpiredToken: popupByCode(popups, 'USER_VERIFY_EXPIRED_TOKEN', fallbackGlobalError),
-    fallbackInvalidToken: popupByCode(popups, 'USER_VERIFY_INVALID_TOKEN', fallbackGlobalError),
+    fallbackExpiredToken: popupByCode(
+      popups,
+      'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED',
+      fallbackGlobalError
+    ),
+    fallbackInvalidToken: popupByCode(
+      popups,
+      'AUTH_VERIFY_EMAIL_TOKEN_INVALID',
+      fallbackGlobalError
+    ),
     fallbackLoginSuccess: popupByCode(popups, 'USER_LOGIN_SUCCESS', fallbackGlobalError),
     fallbackLogoutSuccess: popupByCode(popups, 'LOGOUT_SUCCESS', fallbackGlobalError),
     fallbackLogoutConfirm: popupByCode(popups, 'LOGOUT_CONFIRM', fallbackGlobalError),

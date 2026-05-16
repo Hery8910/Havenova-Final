@@ -207,7 +207,7 @@
       },
       "form": {
         "process": {
-          "title": "Complete your cleaning request in 4 steps",
+          "title": "Complete your cleaning request in 5 steps",
           "description": "Follow each step to provide the data we need for your first visit planning and service setup.",
           "stepLabel": "Step",
           "steps": {
@@ -229,8 +229,7 @@
           "label": "Customer type",
           "options": {
             "private": "Private",
-            "business": "Business",
-            "property_management": "Property management"
+            "business": "Business"
           }
         },
         "frequency": {
@@ -329,7 +328,7 @@
         },
         "review": {
           "title": "Final check before sending",
-          "description": "You have completed the 4 steps. Review the details below and submit the cleaning request if everything is correct.",
+          "description": "You have completed the 5 steps. Review the details below and submit the cleaning request if everything is correct.",
           "sections": {
             "customer": "Customer and frequency",
             "property": "Property details",
@@ -440,8 +439,7 @@
           "helper": "Choose the customer group that matches this home service request.",
           "options": {
             "private": "Private",
-            "business": "Business",
-            "property_management": "Property management"
+            "business": "Business"
           }
         },
         "serviceType": {

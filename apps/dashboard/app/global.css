@@ -4,17 +4,6 @@
   /* ==========================================
      1. PALETA DE COLORES (Brand)
      ========================================== */
-  --brand-primary-2: hsl(210, 93%, 20%);
-  --brand-primary-4: hsl(210, 93%, 40%);
-  --brand-primary-5: #0980f6;
-  --brand-primary-6: hsl(210, 93%, 60%);
-  --brand-secondary-2: hsl(262, 85%, 20%);
-  --brand-secondary-4: hsl(262, 85%, 40%);
-  --brand-secondary-5: hsl(262, 85%, 50%);
-  --brand-secondary-6: hsl(262, 85%, 60%);
-  --brand-accent-2: hsl(42, 86%, 20%);
-  --brand-accent-5: #edab12;
-  --brand-accent-6: hsl(42, 86%, 60%);
   --brand-primary: #0980f6;
   --brand-secondary: #6313ec;
   --brand-accent: #edab12;
@@ -166,8 +155,8 @@
      ========================================== */
   --gradient-glass-general: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0.1)
+    rgba(157, 157, 157, 0.4),
+    rgba(157, 157, 157, 0.1)
   );
   --gradient-glass-primary: linear-gradient(
     135deg,

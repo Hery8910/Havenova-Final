@@ -1,5 +1,6 @@
 'use client';
-import { useCallback, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
@@ -10,6 +11,7 @@ import { NavbarBrand } from '../components/NavbarBrand';
 import { NavbarAccountContent } from '../components/NavbarAccountContent';
 import { NavbarLinkList } from '../components/NavbarLinkList';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
+import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 
 export interface NavbarDesktopViewProps {
   content: ResolvedNavbarContent;
@@ -18,34 +20,73 @@ export interface NavbarDesktopViewProps {
   bellSlot?: (() => JSX.Element) | null;
 }
 
+type DropdownPosition = {
+  top: number;
+  right: number;
+};
+
 export function NavbarDesktopView({
   content,
   onNavigate,
   onLogout,
   bellSlot,
 }: NavbarDesktopViewProps) {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({
+    top: 0,
+    right: 0,
+  });
   const profileSlotRef = useRef<HTMLDivElement>(null);
+  const accountPanelRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const accountPanelId = useId();
   const accountTitleId = useId();
   const { branding, primaryLinks, userLinks, labels, preferences, session, a11y } = content;
   const BellSlot = bellSlot;
-  const closeUserMenu = useCallback(() => {
-    setUserMenuOpen(false);
+  const { activePanel, visiblePanel, closePanel, togglePanel, isPanelOpen } =
+    useNavbarPanelState<'account'>();
+  const userMenuOpen = isPanelOpen('account');
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   useDismissibleLayer({
     enabled: userMenuOpen,
-    refs: [profileSlotRef],
-    onDismiss: closeUserMenu,
+    refs: [profileSlotRef, accountPanelRef],
+    onDismiss: closePanel,
   });
+
+  useLayoutEffect(() => {
+    if (!userMenuOpen) return;
+
+    const updateDropdownPosition = () => {
+      const triggerRect = triggerRef.current?.getBoundingClientRect();
+
+      if (!triggerRect) return;
+
+      setDropdownPosition({
+        top: triggerRect.bottom + 24,
+        right: window.innerWidth - triggerRect.right,
+      });
+    };
+
+    updateDropdownPosition();
+    window.addEventListener('resize', updateDropdownPosition);
+    window.addEventListener('scroll', updateDropdownPosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updateDropdownPosition);
+      window.removeEventListener('scroll', updateDropdownPosition, true);
+    };
+  }, [userMenuOpen]);
 
   return (
     <div className={styles.desktopShell}>
-      <header className={styles.desktopLayout}>
+      <header className={` ${styles.desktopLayout} card--neutral`}>
         <NavbarBrand
-          linkClassName={styles.logoLink}
-          imageClassName={styles.logoImage}
+          linkClassName={sharedStyles.logoLink}
+          imageClassName={sharedStyles.logoImage}
           ariaLabel={a11y.homeLink}
           logoAlt={a11y.logoAlt}
           href={branding.homeHref}
@@ -53,14 +94,7 @@ export function NavbarDesktopView({
           width={branding.desktopLogoWidth}
           height={branding.desktopLogoHeight}
         />
-        <NavbarLinkList
-          items={primaryLinks}
-          onItemClick={onNavigate}
-          listClassName={styles.navList}
-          itemClassName={styles.navItem}
-          buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-          hideIcons
-        />
+        <NavbarLinkList items={primaryLinks} onItemClick={onNavigate} variant="inline" hideIcons />
         <section className={styles.navActions} aria-label={labels.preferences}>
           <div className={styles.utilityActions}>
             <ThemeToggler display="icon" labels={preferences.themeToggle} />
@@ -72,32 +106,52 @@ export function NavbarDesktopView({
           </div>
           <div className={styles.accountActions}>
             {BellSlot ? (
-              <div className={styles.notificationSlot}>
+              <div className={sharedStyles.notificationSlot}>
                 <BellSlot />
               </div>
             ) : null}
             <div className={styles.profileSlot} ref={profileSlotRef}>
               <button
+                ref={triggerRef}
                 type="button"
-                className={`${sharedStyles.iconButton} ${styles.profileButton} ${
-                  userMenuOpen ? `${sharedStyles.iconButtonActive} ${styles.profileButtonOpen}` : ''
+                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton} ${
+                  userMenuOpen ? sharedStyles.iconButtonActive : ''
                 }`}
                 aria-label={a11y.profileToggle}
                 aria-expanded={userMenuOpen}
                 aria-controls={accountPanelId}
-                onClick={() => setUserMenuOpen((prev) => !prev)}
+                onClick={() => togglePanel('account')}
               >
                 <CgProfile />
-                <span className={styles.srOnly}>{labels.profile}</span>
+                <span className={sharedStyles.srOnly}>{labels.profile}</span>
               </button>
-              {userMenuOpen && (
-                <div className={styles.desktopDropdown}>
-                  <nav
-                    id={accountPanelId}
-                    className={`glass-panel--base ${styles.accountNavigation}`}
-                    aria-labelledby={accountTitleId}
-                  >
-                    <div className={styles.accountHeader}>
+            </div>
+          </div>
+        </section>
+      </header>
+      {isMounted
+        ? (createPortal(
+            <div
+              className={`${styles.desktopDropdown} ${
+                userMenuOpen ? styles.desktopDropdownOpen : ''
+              }`}
+              style={{
+                top: `${dropdownPosition.top}px`,
+                right: `${dropdownPosition.right}px`,
+              }}
+            >
+              <nav
+                ref={accountPanelRef}
+                id={accountPanelId}
+                className={`card card--neutral ${styles.accountNavigation} ${
+                  userMenuOpen ? styles.accountNavigationOpen : ''
+                }`}
+                aria-labelledby={userMenuOpen ? accountTitleId : undefined}
+                aria-hidden={!userMenuOpen}
+              >
+                {visiblePanel === 'account' ? (
+                  <>
+                    <div className={sharedStyles.panelHeader}>
                       <h2 id={accountTitleId} className={styles.accountTitle}>
                         {session.accountMenuTitle}
                       </h2>
@@ -107,25 +161,23 @@ export function NavbarDesktopView({
                       userLinks={userLinks}
                       logoutLabel={session.logoutLabel}
                       onItemClick={(href) => {
-                        closeUserMenu();
+                        closePanel();
                         onNavigate(href);
                       }}
                       onLogoutClick={() => {
-                        closeUserMenu();
+                        closePanel();
                         void onLogout();
                       }}
-                      listClassName={styles.userList}
-                      itemClassName={styles.userItem}
-                      buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-                      iconClassName={styles.linkIcon}
+                      animated
+                      animationDirection="down"
                     />
-                  </nav>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      </header>
+                  </>
+                ) : null}
+              </nav>
+            </div>,
+            document.body
+          ) as unknown as JSX.Element)
+        : null}
     </div>
   );
 }

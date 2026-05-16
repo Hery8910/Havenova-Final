@@ -10,14 +10,13 @@
   left: 0;
   margin: 0 auto;
   z-index: 9;
-  color: var(--text-primary);
-  --navbar-hover-bg: rgba(7, 104, 201, 0.12);
-  --navbar-active-bg: rgba(7, 104, 201, 0.2);
-  --navbar-surface-bg: rgba(255, 255, 255, 0.2);
-  --navbar-surface-image:
-    linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.22)),
-    radial-gradient(circle, var(--nav), var(--nav-1));
-  --navbar-surface-border: var(--glass-border);
+  color: var(--color-page-heading);
+  --navbar-hover-bg: hsla(
+    var(--brand-primary-h) var(--brand-primary-s) var(--brand-primary-l) / 0.1
+  );
+  --navbar-active-bg: hsla(
+    var(--brand-primary-h) var(--brand-primary-s) var(--brand-primary-l) / 0.16
+  );
 }
 
 .navbarPlaceholder {
@@ -68,7 +67,6 @@
   position: relative;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
 }
 
 .navbarShellBrand::after,
@@ -79,8 +77,8 @@
   position: absolute;
   inset: 0;
   transform: translateX(-100%);
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-  animation: navbarSkeleton 1.4s ease-in-out infinite;
+
+  animation: navbarSkeletonShimmer 1.4s ease-in-out infinite;
 }
 
 .navbarShellBrand {
@@ -112,14 +110,6 @@
 .navbarShellAction {
   width: 44px;
   height: 44px;
-}
-
-:global([data-theme='dark']) .navbar {
-  --navbar-hover-bg: rgba(148, 163, 184, 0.16);
-  --navbar-active-bg: rgba(148, 163, 184, 0.22);
-  --navbar-surface-bg: var(--glass-bg);
-  --navbar-surface-image: radial-gradient(circle, var(--nav), var(--nav-1));
-  --navbar-surface-border: var(--glass-border);
 }
 
 @media (max-width: 1499px) {
@@ -182,11 +172,5 @@
     bottom: 0;
     padding-top: 0;
     padding-bottom: env(safe-area-inset-bottom);
-  }
-}
-
-@keyframes navbarSkeleton {
-  100% {
-    transform: translateX(100%);
   }
 }

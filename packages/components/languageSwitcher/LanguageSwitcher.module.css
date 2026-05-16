@@ -14,30 +14,38 @@
   margin: 0 auto;
   width: 100%;
   max-width: 150px;
-  display: inline-flex;
-  align-items: center;
   justify-content: space-around;
   border-radius: var(--radius-sm);
 }
 
 .triggerWithValue {
-  gap: 8px;
-  padding-inline: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  padding-left: 22px;
+  padding-right: 8px;
+  gap: 21px;
 }
 
 .triggerValue {
-  color: var(--text-muted);
+  color: var(--color-page-muted);
   font-size: 0.8rem;
   font-weight: 500;
   line-height: 1;
 }
 
 .dropdown {
-  position: absolute;
-  top: calc(100% + 24px);
-  right: 0;
+  position: fixed;
   z-index: 20;
   min-width: 280px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dropdownOpen {
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .modalRoot {
@@ -48,41 +56,57 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modalRootOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .modalBackdrop {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(10, 18, 28, 0.38);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  padding: 0;
+  margin: 0;
+  background: rgba(19, 31, 43, 0.24);
+  cursor: pointer;
 }
 
 .panel {
   position: relative;
   padding: 18px;
-  border-radius: var(--radius-md);
+}
+
+.panelOpen {
+  animation: navbarFadeInUpLarge 0.3s var(--ease-standard);
+}
+
+.dropdownOpen .panel {
+  animation: navbarFadeInDownLarge 0.3s var(--ease-standard);
 }
 
 .modalPanel {
   width: min(100%, 320px);
   max-height: min(70dvh, 420px);
   overflow-y: auto;
-  box-shadow: var(--shadow-lg, var(--shadow-md));
+}
+.triggerOpen {
+  box-shadow: var(--shadow-sm);
 }
 
 .header {
   margin-bottom: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--navbar-surface-border);
+  border-bottom: 1px solid var(--color-card-border);
 }
 
 .title {
-  color: var(--text-primary);
   font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.2;
 }
 
 .list {
@@ -99,30 +123,15 @@
 
 .optionButtonCurrent {
   background-color: var(--navbar-active-bg);
-  color: var(--text-primary);
+  color: var(--color-page-heading);
   box-shadow: var(--shadow-sm);
 }
 
 .optionBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   min-width: 36px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background-color: color-mix(in srgb, var(--brand-primary) 12%, transparent);
-  color: var(--text-primary);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  padding-inline: 8px;
 }
 
 .optionLabel {
   flex: 1 1 auto;
-}
-
-.currentTag {
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  font-weight: 600;
 }

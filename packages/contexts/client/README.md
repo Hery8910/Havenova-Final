@@ -16,7 +16,8 @@ Su objetivo actual es:
 
 - bootstrap público del tenant vía `GET /api/clients/tenant/:tenantKey`
 - estado global en memoria de `client` dentro de `ClientProvider`
-- fallback de error visual cuando no hay cliente cargado
+- integración del fallo de bootstrap con `AlertContext`
+- fallback visual temporal en desarrollo cuando no hay cliente cargado
 
 ### No incluye
 
@@ -82,7 +83,8 @@ Campos opcionales por compatibilidad:
 2. Layout llama `getClient(tenantKey)` en servidor para bootstrap público.
 3. Layout inyecta `initialClient` en `ClientProvider`.
 4. `ClientProvider` hidrata estado local y expone `client`.
-5. Si `client` es `null`, muestra popup según `code/status` del backend y no renderiza hijos.
+5. Si `client` es `null`, dispara `showError(...)` según `code/status` del backend y no renderiza hijos.
+6. En `development`, además puede renderizar `ClientBootstrapFallback` para permitir inspección visual sin backend desplegado.
 
 ## Dependencias directas
 
@@ -105,6 +107,7 @@ Campos opcionales por compatibilidad:
 - El dashboard todavía no consume `getClientDashboard(clientId)` como bootstrap específico de settings
 - El contexto ya clasifica errores de bootstrap por `code/status` y aplica CTA según recuperabilidad
 - Fallback i18n compartido ya resuelve EN/DE por `locale` mediante `getI18nFallbacks(language)`
+- `ClientBootstrapFallback` debe dejar de ser parte del flujo activo antes del despliegue productivo final; su uso actual queda limitado a desarrollo
 
 ## Checklist de cambios
 
@@ -173,6 +176,7 @@ NEXT_PUBLIC_TENANT_KEY_FALLBACK=tnk_havenova_backup
 - [x] Añadir tests de contrato para bootstrap: resolución de tenant, host allowlist, endpoints y manejo de error estructurado
 - [x] Añadir tests de mapeo de popups por código en EN/DE
 - [x] Corregir fallback i18n compartido para respetar `en` y `de` según idioma activo
+- [ ] eliminar o desactivar `ClientBootstrapFallback` para producción cuando el backend ya esté desplegado
 
 ## Legacy Soportado
 
@@ -185,10 +189,6 @@ Códigos legacy aún presentes en recursos i18n:
 - `CLIENT_CREATE_SUCCESS`
 - `CLIENT_FETCH_FAILED`
 - `CLIENT_UPDATE_SUCCESS`
-- `USER_EMAIL_ALREADY_REGISTERED`
-- `USER_FORGOT_PASSWORD_EMAIL_SENDED`
-- `USER_LOGIN_INVALID_CREDENTIALS`
-- `USER_VERIFY_EMAIL_RESENDED`
 
 Objetivo:
 
@@ -220,6 +220,12 @@ Matriz UX actual de bootstrap:
 - `CLIENT_NOT_FOUND` y `AUTH_FORBIDDEN`: navegación a inicio o cierre
 - `GLOBAL_INTERNAL_ERROR`, red o `5xx`: reintento o cierre
 - `VALIDATION_ERROR` y errores no recuperables: cierre simple
+
+Nota temporal de desarrollo:
+
+- mientras el backend no esté desplegado, se mantiene `ClientBootstrapFallback` como apoyo visual en `development`
+- en producción el canal esperado del bootstrap error es `AlertContext`
+- antes del despliegue final hay que eliminarlo o dejarlo explícitamente desactivado fuera de desarrollo
 
 ## Referencias
 

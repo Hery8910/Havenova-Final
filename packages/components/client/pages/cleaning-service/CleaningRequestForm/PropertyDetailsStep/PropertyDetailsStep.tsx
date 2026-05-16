@@ -2,6 +2,7 @@ import styles from './PropertyDetailsStep.module.css';
 import { PropertySizeRange } from '../../../../../../types/services';
 
 type Props = {
+  showTitle?: boolean;
   property: {
     title: string;
     sizeRangeLabel: string;
@@ -45,6 +46,7 @@ type Props = {
 };
 
 export default function PropertyDetailsStep({
+  showTitle = true,
   property,
   common,
   requiredText,
@@ -62,20 +64,21 @@ export default function PropertyDetailsStep({
 }: Props) {
   return (
     <section className={styles.container} aria-labelledby="cleaning-property-details-title">
-      <h3 id="cleaning-property-details-title" className={styles.propertyTitle}>
-        {property.title}
-      </h3>
+      {showTitle ? (
+        <h3 id="cleaning-property-details-title" className={styles.propertyTitle}>
+          {property.title}
+        </h3>
+      ) : null}
 
-      <label className={styles.field} htmlFor="cleaning-size-range">
+      <label className={` label ${styles.field} ${styles.column}`} htmlFor="cleaning-size-range">
         <span className={styles.label}>{property.sizeRangeLabel}</span>
         <select
           id="cleaning-size-range"
-          className={styles.input}
+          className={`input ${errors.sizeRange ? styles.fieldControlError : ''}`}
           value={values.sizeRange}
           onChange={(e) => onSizeRangeChange(e.target.value as PropertySizeRange | '')}
           onBlur={onSizeRangeBlur}
           aria-invalid={Boolean(errors.sizeRange)}
-          aria-describedby="cleaning-size-range-error"
           required
         >
           <option value="">{requiredText}</option>
@@ -85,20 +88,16 @@ export default function PropertyDetailsStep({
             </option>
           ))}
         </select>
-        <span id="cleaning-size-range-error" className={styles.error} aria-live="polite">
-          {errors.sizeRange || ''}
-        </span>
       </label>
 
-      <label className={styles.field} htmlFor="cleaning-rooms-count">
+      <label className={` label ${styles.field}`} htmlFor="cleaning-rooms-count">
         <span className={styles.label}>{property.roomsCountLabel}</span>
         <section
           id="cleaning-rooms-count"
-          className={styles.counter}
+          className={`${styles.counter} ${errors.roomsCount ? styles.fieldControlError : ''}`}
           role="group"
           aria-label={property.roomsCountLabel}
           aria-invalid={Boolean(errors.roomsCount)}
-          aria-describedby="cleaning-rooms-count-error"
         >
           <button
             type="button"
@@ -120,9 +119,6 @@ export default function PropertyDetailsStep({
             +
           </button>
         </section>
-        <span id="cleaning-rooms-count-error" className={styles.error} aria-live="polite">
-          {errors.roomsCount || ''}
-        </span>
       </label>
 
       <fieldset className={styles.flagsGroup}>
@@ -175,23 +171,22 @@ export default function PropertyDetailsStep({
         </button>
       </fieldset>
 
-      <label className={styles.field} htmlFor="cleaning-property-details">
+      <label
+        className={` label ${styles.field} ${styles.column}`}
+        htmlFor="cleaning-property-details"
+      >
         <span className={styles.label}>{property.detailsLabel}</span>
         <textarea
           id="cleaning-property-details"
-          className={styles.textarea}
+          className={`input ${errors.details ? styles.fieldControlError : ''}`}
           maxLength={1500}
           value={values.details}
           placeholder={property.detailsPlaceholder}
           onChange={(e) => onDetailsChange(e.target.value)}
           onBlur={onDetailsBlur}
           aria-invalid={Boolean(errors.details)}
-          aria-describedby="cleaning-property-details-error"
           rows={5}
         />
-        <span id="cleaning-property-details-error" className={styles.error} aria-live="polite">
-          {errors.details || ''}
-        </span>
       </label>
     </section>
   );

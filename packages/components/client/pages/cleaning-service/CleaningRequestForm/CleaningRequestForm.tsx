@@ -69,6 +69,10 @@ export interface CleaningRequestFormTexts {
         heading: string;
         ariaLabel?: string;
       };
+      review?: {
+        heading: string;
+        ariaLabel?: string;
+      };
     };
   };
   customerType: {
@@ -237,6 +241,19 @@ export default function CleaningRequestForm({
   });
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const processTexts = useMemo(
+    () => ({
+      ...texts.process,
+      steps: {
+        ...texts.process.steps,
+        review: texts.process.steps.review ?? {
+          heading: texts.review.title,
+          ariaLabel: texts.review.title,
+        },
+      },
+    }),
+    [texts.process, texts.review.title]
+  );
 
   const errors = useMemo<FieldErrors>(() => {
     const next: FieldErrors = {};
@@ -252,7 +269,7 @@ export default function CleaningRequestForm({
       next.roomsCount = texts.errors.required;
     } else if (!Number.isInteger(roomsNumber)) {
       next.roomsCount = texts.errors.invalid;
-    } else if (roomsNumber < 0 || roomsNumber > 50) {
+    } else if (roomsNumber < 1 || roomsNumber > 50) {
       next.roomsCount = texts.errors.roomsRange;
     }
 
@@ -279,6 +296,56 @@ export default function CleaningRequestForm({
   const hasErrors = Object.keys(errors).length > 0;
   const showError = (field: keyof FieldErrors) =>
     Boolean((submitted || touched[field]) && errors[field]);
+  const stepOneError = (() => {
+    if (showError('customerType') && errors.customerType) {
+      return `${texts.customerType.label}: ${errors.customerType}`;
+    }
+
+    if (showError('frequency') && errors.frequency) {
+      return `${texts.frequency.label}: ${errors.frequency}`;
+    }
+
+    return '';
+  })();
+  const stepTwoError = (() => {
+    if (showError('sizeRange') && errors.sizeRange) {
+      return `${texts.property.sizeRangeLabel}: ${errors.sizeRange}`;
+    }
+
+    if (showError('roomsCount') && errors.roomsCount) {
+      return `${texts.property.roomsCountLabel}: ${errors.roomsCount}`;
+    }
+
+    if (showError('details') && errors.details) {
+      return `${texts.property.detailsLabel}: ${errors.details}`;
+    }
+
+    return '';
+  })();
+  const stepThreeError =
+    showError('preferredVisitSlot') && errors.preferredVisitSlot
+      ? `${texts.scheduling?.title ?? texts.process.steps.scheduling.heading}: ${errors.preferredVisitSlot}`
+      : '';
+  const stepFourError =
+    showError('workAddress') && errors.workAddress
+      ? `${texts.serviceAddress?.title ?? texts.process.steps.serviceAddress.heading}: ${errors.workAddress}`
+      : '';
+  const footerValidationMessage =
+    (step === 1 && stepOneError) ||
+    (step === 2 && stepTwoError) ||
+    (step === 3 && stepThreeError) ||
+    (step === 4 && stepFourError) ||
+    '';
+  const currentStepHeading =
+    step === 1
+      ? processTexts.steps.customerFrequency.heading
+      : step === 2
+        ? processTexts.steps.propertyDetails.heading
+        : step === 3
+          ? processTexts.steps.scheduling.heading
+          : step === 4
+            ? processTexts.steps.serviceAddress.heading
+            : processTexts.steps.review?.heading ?? texts.review.title;
 
   const isStepOneValid = Boolean(
     values.customerType && values.frequency && !errors.customerType && !errors.frequency
@@ -391,190 +458,222 @@ export default function CleaningRequestForm({
 
   return (
     <section className={styles.section} aria-labelledby="cleaning-process-title">
-      <ProcessStepsHeader currentStep={step} texts={texts.process} />
+      <ProcessStepsHeader currentStep={step} texts={processTexts} />
 
-      <form className={styles.form} onSubmit={handleSubmit} noValidate>
-        {step === 1 ? (
-          <CustomerFrequencyStep
-            customerType={texts.customerType}
-            frequency={texts.frequency}
-            values={{ customerType: values.customerType, frequency: values.frequency }}
-            errors={{
-              customerType: showError('customerType') ? errors.customerType : '',
-              frequency: showError('frequency') ? errors.frequency : '',
-            }}
-            frequencyOrder={FREQUENCY_ORDER}
-            onCustomerTypeChange={(customerType) => {
-              setValues((prev) => ({ ...prev, customerType }));
-              setTouched((prev) => ({ ...prev, customerType: true }));
-            }}
-            onFrequencyChange={(frequency) => {
-              setValues((prev) => ({ ...prev, frequency }));
-              setTouched((prev) => ({ ...prev, frequency: true }));
-            }}
-          />
-        ) : step === 2 ? (
-          <PropertyDetailsStep
-            property={texts.property}
-            common={texts.common}
-            requiredText={texts.errors.required}
-            values={{
-              sizeRange: values.sizeRange,
-              roomsCount: values.roomsCount,
-              hasBalcony: values.hasBalcony,
-              hasIndoorStairs: values.hasIndoorStairs,
-              hasPets: values.hasPets,
-              details: values.details,
-            }}
-            errors={{
-              sizeRange: showError('sizeRange') ? errors.sizeRange : '',
-              roomsCount: showError('roomsCount') ? errors.roomsCount : '',
-              details: showError('details') ? errors.details : '',
-            }}
-            onSizeRangeChange={(sizeRange) => setValues((prev) => ({ ...prev, sizeRange }))}
-            onSizeRangeBlur={() => setTouched((prev) => ({ ...prev, sizeRange: true }))}
-            onRoomsDecrement={() => {
-              const current = Number(values.roomsCount || '0');
-              const next = Math.max(0, Math.min(50, Number.isNaN(current) ? 0 : current - 1));
-              setValues((prev) => ({ ...prev, roomsCount: String(next) }));
-              setTouched((prev) => ({ ...prev, roomsCount: true }));
-            }}
-            onRoomsIncrement={() => {
-              const current = Number(values.roomsCount || '0');
-              const next = Math.max(0, Math.min(50, Number.isNaN(current) ? 0 : current + 1));
-              setValues((prev) => ({ ...prev, roomsCount: String(next) }));
-              setTouched((prev) => ({ ...prev, roomsCount: true }));
-            }}
-            onBalconyToggle={() => setValues((prev) => ({ ...prev, hasBalcony: !prev.hasBalcony }))}
-            onIndoorStairsToggle={() =>
-              setValues((prev) => ({ ...prev, hasIndoorStairs: !prev.hasIndoorStairs }))
-            }
-            onPetsToggle={() => setValues((prev) => ({ ...prev, hasPets: !prev.hasPets }))}
-            onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
-            onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
-          />
-        ) : step === 3 && clientCalendarSettings ? (
-          <section
-            className={styles.schedulingStep}
-            aria-label={
-              texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
-            }
-          >
-            <AvailabilityCalendar
-              clientId={clientCalendarSettings.clientId}
-              schedule={clientCalendarSettings.schedule}
-              slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
-              value={values.preferredVisitSlot}
-              onChange={(preferredVisitSlot) => {
-                setValues((prev) => ({ ...prev, preferredVisitSlot }));
-                setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
-              }}
-              texts={{
-                title: texts.scheduling?.title,
-                description: texts.scheduling?.description,
-                slotsTitle: texts.scheduling?.slotsTitle,
-                noDateSelected: texts.scheduling?.noDateSelected,
-                noAvailability: texts.scheduling?.noAvailability,
-                blockedBadge: texts.scheduling?.blockedBadge,
-                selectedBadge: texts.scheduling?.selectedBadge,
-                availableBadge: texts.scheduling?.availableBadge,
-                closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
-                loading: texts.scheduling?.loading,
-                errorPrefix: texts.scheduling?.errorPrefix,
-                previousMonth: texts.scheduling?.previousMonth,
-                nextMonth: texts.scheduling?.nextMonth,
-                monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
-                weekdayLabels: texts.scheduling?.weekdayLabels,
-                nonWorkday: texts.scheduling?.nonWorkday,
-                blockedDay: texts.scheduling?.blockedDay,
-                availableDay: texts.scheduling?.availableDay,
-              }}
-            />
+      <form
+        className={`${styles.form} glass-panel--base glass-card--primary`}
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        <div className={styles.stepHeader}>
+          <h3 className={styles.stepTitle}>{currentStepHeading}</h3>
+        </div>
 
-            {showError('preferredVisitSlot') && (
-              <p className={styles.errorText}>{errors.preferredVisitSlot}</p>
+        <div className={styles.stepViewport}>
+          <div className={styles.stepContent}>
+            {step === 1 ? (
+              <CustomerFrequencyStep
+                customerType={texts.customerType}
+                frequency={texts.frequency}
+                values={{ customerType: values.customerType, frequency: values.frequency }}
+                errors={{
+                  customerType: showError('customerType') ? errors.customerType : '',
+                  frequency: showError('frequency') ? errors.frequency : '',
+                }}
+                frequencyOrder={FREQUENCY_ORDER}
+                onCustomerTypeChange={(customerType) => {
+                  setValues((prev) => ({ ...prev, customerType }));
+                  setTouched((prev) => ({ ...prev, customerType: true }));
+                }}
+                onFrequencyChange={(frequency) => {
+                  setValues((prev) => ({ ...prev, frequency }));
+                  setTouched((prev) => ({ ...prev, frequency: true }));
+                }}
+              />
+            ) : step === 2 ? (
+              <PropertyDetailsStep
+                showTitle={false}
+                property={texts.property}
+                common={texts.common}
+                requiredText={texts.errors.required}
+                values={{
+                  sizeRange: values.sizeRange,
+                  roomsCount: values.roomsCount,
+                  hasBalcony: values.hasBalcony,
+                  hasIndoorStairs: values.hasIndoorStairs,
+                  hasPets: values.hasPets,
+                  details: values.details,
+                }}
+                errors={{
+                  sizeRange: showError('sizeRange') ? errors.sizeRange : '',
+                  roomsCount: showError('roomsCount') ? errors.roomsCount : '',
+                  details: showError('details') ? errors.details : '',
+                }}
+                onSizeRangeChange={(sizeRange) => setValues((prev) => ({ ...prev, sizeRange }))}
+                onSizeRangeBlur={() => setTouched((prev) => ({ ...prev, sizeRange: true }))}
+                onRoomsDecrement={() => {
+                  const current = Number(values.roomsCount || '1');
+                  const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current - 1));
+                  setValues((prev) => ({ ...prev, roomsCount: String(next) }));
+                  setTouched((prev) => ({ ...prev, roomsCount: true }));
+                }}
+                onRoomsIncrement={() => {
+                  const current = Number(values.roomsCount || '1');
+                  const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current + 1));
+                  setValues((prev) => ({ ...prev, roomsCount: String(next) }));
+                  setTouched((prev) => ({ ...prev, roomsCount: true }));
+                }}
+                onBalconyToggle={() =>
+                  setValues((prev) => ({ ...prev, hasBalcony: !prev.hasBalcony }))
+                }
+                onIndoorStairsToggle={() =>
+                  setValues((prev) => ({ ...prev, hasIndoorStairs: !prev.hasIndoorStairs }))
+                }
+                onPetsToggle={() => setValues((prev) => ({ ...prev, hasPets: !prev.hasPets }))}
+                onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
+                onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
+              />
+            ) : step === 3 && clientCalendarSettings ? (
+              <section
+                className={styles.stepPane}
+                aria-label={
+                  texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
+                }
+              >
+                <AvailabilityCalendar
+                  showHeader={false}
+                  clientId={clientCalendarSettings.clientId}
+                  schedule={clientCalendarSettings.schedule}
+                  slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
+                  value={values.preferredVisitSlot}
+                  onChange={(preferredVisitSlot) => {
+                    setValues((prev) => ({ ...prev, preferredVisitSlot }));
+                    setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+                  }}
+                  texts={{
+                    title: texts.scheduling?.title,
+                    description: texts.scheduling?.description,
+                    slotsTitle: texts.scheduling?.slotsTitle,
+                    noDateSelected: texts.scheduling?.noDateSelected,
+                    noAvailability: texts.scheduling?.noAvailability,
+                    blockedBadge: texts.scheduling?.blockedBadge,
+                    selectedBadge: texts.scheduling?.selectedBadge,
+                    availableBadge: texts.scheduling?.availableBadge,
+                    closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
+                    loading: texts.scheduling?.loading,
+                    errorPrefix: texts.scheduling?.errorPrefix,
+                    previousMonth: texts.scheduling?.previousMonth,
+                    nextMonth: texts.scheduling?.nextMonth,
+                    monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
+                    weekdayLabels: texts.scheduling?.weekdayLabels,
+                    nonWorkday: texts.scheduling?.nonWorkday,
+                    blockedDay: texts.scheduling?.blockedDay,
+                    availableDay: texts.scheduling?.availableDay,
+                  }}
+                />
+              </section>
+            ) : step === 4 ? (
+              <section
+                className={styles.stepPane}
+                aria-label={
+                  texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
+                }
+              >
+                <WorkAddressSelector
+                  showHeader={false}
+                  texts={texts.serviceAddress}
+                  value={values.workAddress}
+                  onChange={(workAddress) => {
+                    setValues((prev) => ({ ...prev, workAddress }));
+                    setTouched((prev) => ({ ...prev, workAddress: true }));
+                  }}
+                />
+              </section>
+            ) : step === 5 &&
+              values.customerType &&
+              values.frequency &&
+              values.sizeRange &&
+              values.preferredVisitSlot &&
+              values.workAddress ? (
+              <ReviewStep
+                showHeader={false}
+                texts={texts.review}
+                customerType={{
+                  selected: values.customerType,
+                  options: texts.customerType.options,
+                }}
+                frequency={{
+                  selected: values.frequency,
+                  options: texts.frequency.options,
+                }}
+                property={{
+                  sizeRange: values.sizeRange,
+                  sizeRangeOptions: texts.property.sizeRangeOptions,
+                  roomsCount: Number(values.roomsCount),
+                  hasBalcony: values.hasBalcony,
+                  hasIndoorStairs: values.hasIndoorStairs,
+                  hasPets: values.hasPets,
+                  details: sanitizeText(values.details) || undefined,
+                }}
+                scheduling={values.preferredVisitSlot}
+                workAddress={values.workAddress}
+                common={texts.common}
+              />
+            ) : (
+              <section className={styles.missingConfig} aria-live="polite">
+                <p className={styles.errorText}>
+                  {texts.scheduling?.missingClientConfig ??
+                    'Client calendar configuration is unavailable right now.'}
+                </p>
+              </section>
             )}
-          </section>
-        ) : step === 4 ? (
-          <section
-            className={styles.schedulingStep}
-            aria-label={
-              texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
-            }
-          >
-            <WorkAddressSelector
-              texts={texts.serviceAddress}
-              value={values.workAddress}
-              onChange={(workAddress) => {
-                setValues((prev) => ({ ...prev, workAddress }));
-                setTouched((prev) => ({ ...prev, workAddress: true }));
-              }}
-            />
+          </div>
+        </div>
 
-            {showError('workAddress') && <p className={styles.errorText}>{errors.workAddress}</p>}
-          </section>
-        ) : step === 5 &&
-          values.customerType &&
-          values.frequency &&
-          values.sizeRange &&
-          values.preferredVisitSlot &&
-          values.workAddress ? (
-          <ReviewStep
-            texts={texts.review}
-            customerType={{
-              selected: values.customerType,
-              options: texts.customerType.options,
-            }}
-            frequency={{
-              selected: values.frequency,
-              options: texts.frequency.options,
-            }}
-            property={{
-              sizeRange: values.sizeRange,
-              sizeRangeOptions: texts.property.sizeRangeOptions,
-              roomsCount: Number(values.roomsCount),
-              hasBalcony: values.hasBalcony,
-              hasIndoorStairs: values.hasIndoorStairs,
-              hasPets: values.hasPets,
-              details: sanitizeText(values.details) || undefined,
-            }}
-            scheduling={values.preferredVisitSlot}
-            workAddress={values.workAddress}
-            common={texts.common}
-          />
-        ) : (
-          <section className={styles.missingConfig} aria-live="polite">
-            <p className={styles.errorText}>
-              {texts.scheduling?.missingClientConfig ??
-                'Client calendar configuration is unavailable right now.'}
-            </p>
-          </section>
-        )}
+        <div
+          className={styles.stepValidationSlot}
+          aria-live="polite"
+          role={footerValidationMessage ? 'alert' : undefined}
+        >
+          {footerValidationMessage ? (
+            <p className={styles.stepValidationMessage}>{footerValidationMessage}</p>
+          ) : null}
+        </div>
 
         <footer className={styles.actions}>
-          {step > 1 && (
-            <button
-              type="button"
-              className={`button button_ghost ${styles.backButton}`}
-              onClick={() =>
-                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
-              }
-            >
-              {texts.common.back}
-            </button>
-          )}
+          <div className={styles.actionsSide}>
+            {step > 1 ? (
+              <button
+                type="button"
+                className={`button_invert ${styles.backButton}`}
+                onClick={() =>
+                  setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
+                }
+              >
+                {texts.common.back}
+              </button>
+            ) : (
+              <span className={styles.actionsSpacer} aria-hidden="true" />
+            )}
+          </div>
 
-          <button
-            className={`button ${!canSubmit ? styles.submitDisabled : ''}`}
-            type={step === 5 && !canSubmit ? 'button' : 'submit'}
-            aria-disabled={step === 5 && !canSubmit}
-            disabled={loading}
-            onClick={() => {
-              if (step === 5 && !canSubmit) onRequireAuth?.();
-            }}
-          >
-            {step === 5 ? texts.common.submit : step === 4 ? texts.common.review : texts.common.next}
-          </button>
+          <div className={styles.actionsSide}>
+            <button
+              className={`button ${!canSubmit ? styles.submitDisabled : ''}`}
+              type={step === 5 && !canSubmit ? 'button' : 'submit'}
+              aria-disabled={step === 5 && !canSubmit}
+              disabled={loading}
+              onClick={() => {
+                if (step === 5 && !canSubmit) onRequireAuth?.();
+              }}
+            >
+              {step === 5
+                ? texts.common.submit
+                : step === 4
+                  ? texts.common.review
+                  : texts.common.next}
+            </button>
+          </div>
         </footer>
       </form>
     </section>

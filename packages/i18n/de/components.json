@@ -10,7 +10,6 @@
         "openButtonLabel": "Sprachauswahl öffnen",
         "closeButtonLabel": "Sprachauswahl schließen",
         "currentLanguageLabel": "Aktuelle Sprache",
-        "currentTag": "Aktiv",
         "options": {
           "de": {
             "label": "Deutsch",

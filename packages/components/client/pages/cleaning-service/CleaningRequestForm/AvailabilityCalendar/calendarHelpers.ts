@@ -211,7 +211,7 @@ export function generateCalendarDays(
   const firstDay = createUtcDate(year, month, 1);
   const firstWeekday = (firstDay.getUTCDay() + 6) % 7;
   const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
-  const totalCells = Math.ceil((firstWeekday + daysInMonth) / 7) * 7;
+  const totalCells = 42;
   const gridStart = createUtcDate(year, month, 1 - firstWeekday);
 
   return Array.from({ length: totalCells }, (_, index) => {

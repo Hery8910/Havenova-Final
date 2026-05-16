@@ -17,6 +17,7 @@ import { href } from '../../../../../../../packages/utils/navigation';
 import { useLang } from '../../../../../../../packages/hooks';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { PopupCode } from '@/packages/contexts/alert/alert.types';
 
 export interface ResetPasswordData {
   title: string;
@@ -52,6 +53,43 @@ const ResetPasswordContent = () => {
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
 
+  const getResetPasswordErrorStatus = (errorCode?: string, fallbackStatus = 500) => {
+    switch (errorCode) {
+      case 'USER_RESET_PASSWORD_INVALID_TOKEN':
+      case 'USER_RESET_PASSWORD_TOKEN_EXPIRED':
+      case 'VALIDATION_ERROR':
+        return 400;
+      case 'AUTH_BLOCKED':
+      case 'USER_CLIENT_BLOCKED':
+        return 403;
+      case 'AUTH_USER_NOT_FOUND':
+      case 'USER_CLIENT_NOT_FOUND':
+        return 404;
+      default:
+        return fallbackStatus;
+    }
+  };
+
+  const getResetPasswordPopupDefaultKey = (errorCode?: string): PopupCode => {
+    switch (errorCode) {
+      case 'USER_RESET_PASSWORD_INVALID_TOKEN':
+        return 'USER_RESET_PASSWORD_INVALID_TOKEN';
+      case 'USER_RESET_PASSWORD_TOKEN_EXPIRED':
+        return 'USER_RESET_PASSWORD_TOKEN_EXPIRED';
+      case 'AUTH_BLOCKED':
+        return 'AUTH_BLOCKED';
+      case 'USER_CLIENT_BLOCKED':
+        return 'USER_CLIENT_BLOCKED';
+      case 'AUTH_USER_NOT_FOUND':
+      case 'USER_CLIENT_NOT_FOUND':
+        return 'USER_RESET_PASSWORD_INVALID_TOKEN';
+      case 'VALIDATION_ERROR':
+        return 'VALIDATION_ERROR';
+      default:
+        return 'GLOBAL_INTERNAL_ERROR';
+    }
+  };
+
   useEffect(() => {
     if (!token) {
       const popupData = getPopup(
@@ -63,7 +101,7 @@ const ResetPasswordContent = () => {
 
       showError({
         response: {
-          status: 500,
+          status: 400,
           title: popupData.title,
           description: popupData.description,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
@@ -81,7 +119,7 @@ const ResetPasswordContent = () => {
       const popupData = getPopup(
         popups,
         code || undefined,
-        'USER_RESET_PASSWORD_INVALID_TOKEN',
+        getResetPasswordPopupDefaultKey(code || undefined),
         fallbackGlobalError
       );
 
@@ -91,7 +129,7 @@ const ResetPasswordContent = () => {
           title: popupData.title,
           description:
             popupData.description ||
-            texts.popups.GLOBAL_INTERNAL_ERROR.description ||
+            texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description ||
             'Invalid or expired link.',
           confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
           cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
@@ -116,7 +154,7 @@ const ResetPasswordContent = () => {
     showError,
     closeAlert,
     lang,
-    texts.popups.GLOBAL_INTERNAL_ERROR.description,
+    texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description,
   ]);
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
@@ -177,13 +215,13 @@ const ResetPasswordContent = () => {
         const popupData = getPopup(
           popups,
           response.code,
-          'GLOBAL_INTERNAL_ERROR',
+          getResetPasswordPopupDefaultKey(response.code),
           fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 400,
+            status: getResetPasswordErrorStatus(response.code, 400),
             title: popupData.title,
             description: popupData.description,
             confirmLabel:
@@ -233,7 +271,12 @@ const ResetPasswordContent = () => {
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
-      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const popupData = getPopup(
+        popups,
+        code,
+        getResetPasswordPopupDefaultKey(code),
+        fallbackGlobalError
+      );
       const canRequestNewLink =
         code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
         code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED';
@@ -241,7 +284,7 @@ const ResetPasswordContent = () => {
 
       showError({
         response: {
-          status: err.response?.status ?? 500,
+          status: getResetPasswordErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
           confirmLabel:
@@ -273,7 +316,7 @@ const ResetPasswordContent = () => {
 
   return (
     <section
-      className={styles.authSection}
+      className={`${styles.authSection} card card--primary`}
       aria-labelledby="reset-password-title"
       aria-describedby="reset-password-description"
     >

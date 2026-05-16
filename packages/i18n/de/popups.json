@@ -48,10 +48,6 @@
     "title": "Konto gesperrt",
     "description": "Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support."
   },
-  "AUTH_CLIENT_NOT_FOUND": {
-    "title": "Client nicht gefunden",
-    "description": "Ihr Konto konnte keinem Client zugeordnet werden."
-  },
   "AUTH_USER_NOT_FOUND": {
     "title": "Benutzer nicht gefunden",
     "description": "Es konnte kein passender Benutzer gefunden werden."
@@ -175,44 +171,11 @@
     "title": "Passwort erforderlich",
     "description": "Bitte geben Sie Ihr Passwort ein, um fortzufahren."
   },
-  "USER_LOGIN_INVALID_PASSWORD": {
-    "title": "Ungültige Anmeldedaten",
-    "description": "Das Passwort ist falsch. Versuchen Sie es erneut oder setzen Sie es zurück.",
-    "confirm": "Passwort zurücksetzen",
-    "close": "Erneut versuchen"
-  },
-  "USER_LOGIN_INVALID_CREDENTIALS": {
-    "title": "Ungültige Anmeldedaten",
-    "description": "E-Mail oder Passwort sind nicht korrekt. Prüfen Sie Ihre Eingaben und versuchen Sie es erneut.",
-    "close": "Erneut versuchen"
-  },
-  "USER_LOGIN_USER_NOT_FOUND": {
-    "title": "Benutzer nicht gefunden",
-    "description": "Für diese Zugangsdaten wurde kein Konto gefunden.",
-    "confirm": "Konto erstellen",
-    "close": "Schließen"
-  },
-  "USER_EMAIL_ALREADY_REGISTERED": {
-    "title": "E-Mail bereits registriert",
-    "description": "Diese E-Mail ist bereits registriert. Bitte melden Sie sich an, um fortzufahren."
-  },
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "E-Mail erfolgreich bestätigt",
     "description": "Ihre E-Mail wurde bestätigt. Sie können jetzt zum Login weitergehen.",
     "confirm": "Zum Login",
     "close": "Schließen"
-  },
-  "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
-    "title": "Reset-Link gesendet",
-    "description": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach."
-  },
-  "USER_VERIFY_EMAIL_RESENDED": {
-    "title": "Bestätigungs-E-Mail erneut gesendet",
-    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie erneut Ihren Posteingang."
-  },
-  "USER_VERIFY_MISSING_TOKEN": {
-    "title": "Ungültiger Bestätigungslink",
-    "description": "Der Verifizierungslink ist ungültig oder fehlt."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "E-Mail bereits bestätigt",
@@ -378,18 +341,6 @@
     "title": "Bestätigungs-E-Mail erneut gesendet",
     "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.",
     "confirm": "Weiter",
-    "close": "Schließen"
-  },
-  "USER_VERIFY_EXPIRED_TOKEN": {
-    "title": "Bestätigungslink abgelaufen",
-    "description": "Dieser Bestätigungslink ist abgelaufen. Fordern Sie eine neue Bestätigungs-E-Mail an.",
-    "confirm": "Weiter",
-    "close": "Schließen"
-  },
-  "USER_VERIFY_INVALID_TOKEN": {
-    "title": "Ungültiger Bestätigungslink",
-    "description": "Dieser Bestätigungslink ist ungültig oder beschädigt.",
-    "confirm": "Zur Startseite",
     "close": "Schließen"
   },
   "OBJECT_ADDRESS_EXISTS": {

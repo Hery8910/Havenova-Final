@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useProfile } from '../../../../../../../packages/contexts/profile/ProfileContext';
 import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
@@ -25,8 +25,10 @@ import { href } from '../../../../../../../packages/utils/navigation';
 import { useVerifyEmailActions } from '../../../../../../../packages/utils';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 
 const VerifyEmailPageContent = () => {
+  const AUTO_REDIRECT_MS = 4000;
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -53,6 +55,56 @@ const VerifyEmailPageContent = () => {
 
   // Evitar doble ejecución del efecto en modo dev / StrictMode
   const didRunRef = useRef(false);
+  const redirectTimeoutRef = useRef<number | null>(null);
+
+  const clearRedirectTimeout = useCallback(() => {
+    if (redirectTimeoutRef.current) {
+      window.clearTimeout(redirectTimeoutRef.current);
+      redirectTimeoutRef.current = null;
+    }
+  }, []);
+
+  const getAutoRedirectDescription = useCallback((baseDescription: string) => {
+    const redirectCopy =
+      lang === 'de'
+        ? 'Sie werden in wenigen Sekunden zur Startseite weitergeleitet.'
+        : lang === 'es'
+          ? 'Serás redirigido a la página de inicio en unos segundos.'
+          : 'You will be redirected to the homepage in a few seconds.';
+
+    return `${baseDescription} ${redirectCopy}`.trim();
+  }, [lang]);
+
+  const scheduleHomeRedirect = useCallback(() => {
+    clearRedirectTimeout();
+    redirectTimeoutRef.current = window.setTimeout(() => {
+      closeAlert();
+      router.push(href(lang, '/'));
+    }, AUTO_REDIRECT_MS);
+  }, [AUTO_REDIRECT_MS, clearRedirectTimeout, closeAlert, lang, router]);
+
+  useEffect(() => {
+    return () => {
+      clearRedirectTimeout();
+    };
+  }, [clearRedirectTimeout]);
+
+  const getVerifyFlowPopupDefaultKey = (code?: string, status?: number): PopupCode => {
+    switch (code) {
+      case 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED':
+        return 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED';
+      case 'AUTH_VERIFY_EMAIL_TOKEN_INVALID':
+      case 'AUTH_USER_NOT_FOUND':
+      case 'USER_CLIENT_NOT_FOUND':
+        return 'AUTH_VERIFY_EMAIL_TOKEN_INVALID';
+      case 'MAGIC_TOKEN_EXPIRED':
+        return 'MAGIC_TOKEN_EXPIRED';
+      case 'MAGIC_TOKEN_INVALID':
+        return 'MAGIC_TOKEN_INVALID';
+      default:
+        return (status ?? 500) < 500 ? 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' : 'GLOBAL_INTERNAL_ERROR';
+    }
+  };
 
   useEffect(() => {
     // Evita doble ejecución en Strict Mode
@@ -64,14 +116,14 @@ const VerifyEmailPageContent = () => {
       if (!token) {
         const popupData = getPopup(
           popups,
-          'GLOBAL_INTERNAL_ERROR',
-          'GLOBAL_INTERNAL_ERROR',
+          'AUTH_VERIFY_EMAIL_TOKEN_INVALID',
+          'AUTH_VERIFY_EMAIL_TOKEN_INVALID',
           fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 500,
+            status: 400,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
@@ -174,28 +226,31 @@ const VerifyEmailPageContent = () => {
           response: {
             status: 200,
             title: popupData.title,
-            description: popupData.description,
+            description: getAutoRedirectDescription(popupData.description),
             confirmLabel: popups.button?.continue ?? fallbackButtons.continue,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
           },
           onConfirm: () => {
-            router.push(href(lang, '/'));
-            closeAlert();
-          },
-          onCancel: () => {
+            clearRedirectTimeout();
             router.push(href(lang, '/'));
             closeAlert();
           },
         });
+        scheduleHomeRedirect();
       } catch (error) {
         const err = error as { response?: { data?: { code?: string }; status?: number } };
         const code = err.response?.data?.code;
+        const status = err.response?.status ?? 500;
 
-        const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        const popupData = getPopup(
+          popups,
+          code,
+          getVerifyFlowPopupDefaultKey(code, status),
+          fallbackGlobalError
+        );
 
         showError({
           response: {
-            status: err.response?.status ?? 500,
+            status,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload,
@@ -227,6 +282,9 @@ const VerifyEmailPageContent = () => {
     showLoading,
     showSuccess,
     token,
+    clearRedirectTimeout,
+    getAutoRedirectDescription,
+    scheduleHomeRedirect,
   ]);
 
   // ---------------------------
@@ -253,7 +311,7 @@ const VerifyEmailPageContent = () => {
   // ---------------------------
   return (
     <section
-      className={styles.authSection}
+      className={`${styles.authSection} card card--primary`}
       aria-labelledby="verify-title"
       aria-describedby="verify-desc"
     >
@@ -285,14 +343,14 @@ const VerifyEmailPageContent = () => {
           <Link className={styles.link} href={href(lang, '/user/register')}>
             {registerText.title}
           </Link>
-          <div className={`${styles.authFooterActions} ${styles.authFooterSecondary}`}>
-            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/login')}>
-              {formText.button.login}
-            </Link>
-            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
-              <IoMdArrowRoundBack /> {navText.homeLink}
-            </Link>
-          </div>
+        </div>
+        <div className={`${styles.authFooterActions} ${styles.authFooterSecondary}`}>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/login')}>
+            {formText.button.login}
+          </Link>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
+          </Link>
         </div>
       </footer>
     </section>

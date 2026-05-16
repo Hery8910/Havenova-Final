@@ -53,9 +53,7 @@ export default function CalendarDaySlots({
   if (slots.length === 0) {
     return (
       <aside
-        className={styles.panel}
-        role="dialog"
-        aria-modal="false"
+        className={`${styles.panel} glass-panel--base glass-card--primary`}
         aria-labelledby={headingId}
         aria-live="polite"
       >
@@ -66,7 +64,7 @@ export default function CalendarDaySlots({
               {formatLongDate(date)}
             </h3>
           </section>
-          <button type="button" className={styles.closeButton} onClick={onClose}>
+          <button type="button" className={`button_invert ${styles.closeButton}`} onClick={onClose}>
             {copy.closeLabel}
           </button>
         </header>
@@ -76,13 +74,7 @@ export default function CalendarDaySlots({
   }
 
   return (
-    <aside
-      className={styles.panel}
-      role="dialog"
-      aria-modal="false"
-      aria-labelledby={headingId}
-      aria-live="polite"
-    >
+    <aside className={styles.panel} aria-labelledby={headingId} aria-live="polite">
       <header className={styles.header}>
         <section className={styles.headerCopy}>
           <p className={styles.eyebrow}>{copy.title}</p>
@@ -90,19 +82,18 @@ export default function CalendarDaySlots({
             {formatLongDate(date)}
           </h3>
         </section>
-        <button type="button" className={styles.closeButton} onClick={onClose}>
+        <button type="button" className={`button_invert ${styles.closeButton}`} onClick={onClose}>
           {copy.closeLabel}
         </button>
       </header>
 
       <ul className={styles.slotList}>
         {slots.map((slot) => {
-          const isSelected =
-            Boolean(
-              value &&
-                createLocalDateTime(slot.date, slot.start)?.getTime() === value.start.getTime() &&
-                createLocalDateTime(slot.date, slot.end)?.getTime() === value.end.getTime()
-            );
+          const isSelected = Boolean(
+            value &&
+            createLocalDateTime(slot.date, slot.start)?.getTime() === value.start.getTime() &&
+            createLocalDateTime(slot.date, slot.end)?.getTime() === value.end.getTime()
+          );
 
           return (
             <li key={`${slot.date}-${slot.start}-${slot.end}`} className={styles.slotItem}>
@@ -130,7 +121,15 @@ export default function CalendarDaySlots({
                 <span className={styles.slotTime}>
                   {slot.start} - {slot.end}
                 </span>
-                <span className={styles.slotBadge}>
+                <span
+                  className={`badge ${
+                    slot.blocked
+                      ? 'badge--neutral'
+                      : isSelected
+                        ? 'badge--primary'
+                        : 'badge--accent'
+                  } ${styles.slotBadge}`}
+                >
                   {slot.blocked
                     ? copy.blockedBadge
                     : isSelected

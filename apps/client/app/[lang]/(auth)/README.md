@@ -1,15 +1,15 @@
-# Auditoria de la Ruta `(auth)` en `apps/client`
+# Auditoría de la Ruta `(auth)` en `apps/client`
 
-Este documento registra la revisión del estado actual de la ruta `apps/client/app/[lang]/(auth)` con foco en:
+Este documento resume el estado actual de `apps/client/app/[lang]/(auth)` con foco en:
 
-- semántica HTML
-- accesibilidad
-- metadata
-- manejo de códigos y errores
-- consistencia de i18n
-- acoplamiento entre UI, contexto y servicios
+- consistencia visual y responsive
+- semántica y accesibilidad
+- contratos funcionales de auth
+- errores, popups y estados de loading
+- i18n y metadata
+- riesgos para despliegue
 
-La revisión cubre:
+Archivos revisados:
 
 - [layout.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/layout.tsx)
 - [user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/login/page.tsx)
@@ -18,413 +18,455 @@ La revisión cubre:
 - [user/set-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/set-password/page.tsx)
 - [user/verify-email/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/verify-email/page.tsx)
 - [user/userAuth.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/userAuth.module.css)
-- [packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx)
-- [packages/components/client/user/auth/userForm/form/Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx)
-- [packages/utils/user/userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
-- [packages/services/auth/authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts)
-- [packages/utils/metadata/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/metadata/metadata.ts)
-- `packages/i18n/{de,en}/{pages,popups,loadings}.json`
+- [TESTING.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/TESTING.md)
+- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx)
+- [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx)
+- [Form.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.module.css)
+- [userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
+- [authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts)
+- [metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/metadata/metadata.ts)
+- [packages/i18n/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/i18n/metadata.ts)
+- [FRONTEND_INTEGRATION.md](/home/heriberto/Escritorio/Backend/havenova-backend/src/core/auth/FRONTEND_INTEGRATION.md)
+- `packages/i18n/{de,en,es}/{pages,popups,loadings}.json`
 
-## Resumen Ejecutivo
+## Estado General
 
-La ruta `(auth)` funciona, pero hoy mezcla tres problemas:
+La ruta `(auth)` ya no está en un estado inicial. Tiene un shell compartido, un patrón visual bastante consistente y formularios reutilizables que cubren los casos principales:
 
-1. La semántica y accesibilidad son inconsistentes entre páginas.
-2. El flujo de errores/success depende demasiado de popups genéricos y de helpers con contratos ambiguos.
-3. Hay deuda de i18n y de metadata: algunas claves parecen duplicadas o en desuso y parte del contenido de página no está conectado con los textos correctos.
+- `login`
+- `register`
+- `forgot-password`
+- `set-password`
+- `verify-email`
 
-El caso más delicado detectado en la revisión es `verify-email`: el backend puede devolver éxito en la verificación y aun así el frontend terminar mostrando un error inesperado si falla el paso siguiente de `magic login`, o si el helper considera inválido un éxito sin `magicToken`.
+Lo que falta ahora no es rehacer la ruta desde cero, sino cerrar deuda concreta en cuatro frentes:
 
-## Estado Actual vs Auditoria Anterior
+1. endurecer el contrato funcional de errores y transiciones
+2. alinear el frontend con el contrato real del backend auth
+3. limpiar deuda de accesibilidad y semántica del formulario compartido
+4. estabilizar el layout responsive y el consumo de i18n para despliegue
 
-Desde la auditoría inicial ya hubo avances reales en la ruta:
+## Flujos Esperados
 
-- `/(auth)/layout.tsx` ya no es pasivo y ahora aporta un shell visual compartido.
-- `login`, `register`, `forgot-password`, `set-password` y `verify-email` ya migraron parcialmente a una estructura más consistente con `section/header/footer`.
-- varios `aria-labelledby` rotos se corrigieron usando ids estáticos.
-- `verify-email/page.tsx` ya contempla el caso "verify success sin magicToken" y redirige a login manual.
+### Register
 
-Aun así, siguen abiertos estos problemas:
+1. El usuario completa email, password, language y TOS.
+2. El frontend envía `POST /api/auth/register`.
+3. Si responde `USER_REGISTER_SUCCESS`, no se crea sesión.
+4. El frontend guarda el email necesario para continuidad del flujo.
+5. Se muestra success y la continuación lleva a `/user/verify-email`.
 
-- el flujo `register -> verify-email -> magicLogin` no está estabilizado del todo
-- `useVerifyEmailActions()` sigue tratando éxitos y fallos con demasiada ambigüedad
-- los `loadings` y algunos popups usan fuentes distintas (`loadings.json` vs `popups.json`) sin un contrato claro
-- el README original quedó parcialmente desactualizado en los hallazgos de layout/semántica ya corregidos
+Notas:
+
+- no se debe asumir login automático
+- el objetivo del success es empujar al usuario al flujo de verificación
+
+### Login
+
+1. El usuario completa email y password.
+2. El frontend envía `POST /api/auth/login`.
+3. Si responde `USER_LOGIN_SUCCESS`, el backend crea cookies de sesión.
+4. El frontend persiste el estado derivado del payload `user`.
+5. Se muestra success con lectura corta y luego redirección automática a home.
+
+Caso especial:
+
+- si responde `USER_LOGIN_EMAIL_NOT_VERIFIED`, el frontend deriva a `/user/verify-email`
+
+### Verify Email
+
+1. La página recibe `token` desde la URL.
+2. El frontend envía `POST /api/auth/verify-email`.
+3. Si responde success con `magicToken`, continúa automáticamente con `POST /api/auth/magic-login`.
+4. Después refresca auth state.
+5. Muestra success final con timeout corto y redirección automática a home.
+
+Fallback defensivo actual:
+
+- si `verify-email` responde success sin `magicToken`, el frontend trata el caso como verify success y deriva a login manual
+- este fallback existe para robustez, pero no debe ser el camino normal del contrato
+
+### Forgot Password
+
+1. El usuario envía email, language y clientId.
+2. El frontend llama `POST /api/auth/forgot-password`.
+3. Si responde `USER_FORGOT_PASSWORD_EMAIL_SENT`, se muestra success.
+4. La continuación esperada lleva a `/user/login`.
+
+Nota:
+
+- la respuesta es ambigua por diseño y no debe exponer si el usuario existe o no
+
+### Set Password
+
+1. La página recibe `token` desde la URL.
+2. El usuario define nueva contraseña.
+3. El frontend envía `POST /api/auth/reset-password-confirm`.
+4. Si responde `USER_RESET_PASSWORD_SUCCESS`, se muestra success.
+5. La continuación esperada lleva a `/user/login`.
+
+Nota:
+
+- esta ruta pública usa `token`; `inviteToken` no aplica aquí
+
+### Resend Verification
+
+1. El usuario reenvía email, language y clientId desde `/user/verify-email`.
+2. El frontend llama `POST /api/auth/resend-verification`.
+3. Si responde `USER_VERIFY_EMAIL_RESENT`, se muestra success.
+
+Nota:
+
+- la respuesta es ambigua por diseño y no debe revelar estado interno del usuario
+
+## Qué Ya Está Mejor Que En La Auditoría Anterior
+
+- Existe un layout compartido en [`layout.tsx`](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/layout.tsx) con shell visual común.
+- Todas las páginas auth principales usan `section`, `header` y `footer`.
+- Los títulos visibles ya usan ids estáticos y evitamos depender del texto traducido como id.
+- `register` ya toma su loading desde `texts.loadings`.
+- el cliente HTTP ya envía `credentials: include`, `x-csrf-token` y `x-frontend-origin` para las rutas auth que lo requieren.
+- Cada subruta auth tiene `generateMetadata(...)` conectado con `getPageMetadata(...)`.
+- `register` ya continúa al flujo de verificación y dejó de cerrar en home como success genérico.
+- `login` y `magic-login` ya usan success con redirección automática a home tras un timeout corto.
+- `FormWrapper` ya no depende de `useAuth`, `useClient`, `useRouter` ni `useLang`.
+- `verify-email`, `forgot-password` y `set-password` ya distinguen mejor varios códigos canónicos del backend y usan estados HTTP más coherentes.
 
 Conclusión:
-- la prioridad ya no es "crear estructura auth desde cero"
-- la prioridad actual es "cerrar el contrato funcional y de mensajes del flujo auth"
 
-## Hallazgos
+- el `README` anterior seguía reportando como abiertos varios problemas que ya fueron corregidos
+- la deuda real actual es más específica y más cercana a producción
 
-### 1. Layout de `(auth)` ya mejoró, pero sigue siendo visual y no semántico
+## Problemas Detectados
 
-Archivo:
-- [layout.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/layout.tsx)
-
-Estado actual:
-- el layout ya define un shell compartido con fondo, centrado y panel visual
-- sigue siendo un layout visual, no un layout semántico completo de auth
-- el `<main>` vive en el layout, lo cual está bien
-- pero cada página sigue decidiendo por separado intro, landmarks secundarios y estructura interna
-
-Impacto:
-- se redujo la duplicación del shell general
-- la semántica fina sigue repartida entre páginas
-- la accesibilidad sigue dependiendo de convenciones no totalmente unificadas
-
-Sugerencia:
-- mantener el shell actual
-- extraer del layout o de un componente compartido auth:
-  - branding
-  - bloque introductorio opcional
-  - zona de formulario
-  - pie de CTA secundario
-
-### 2. Metadata configurada, pero el layout no aprovecha una estructura común
+### 1. El shell auth está unificado, pero la estructura visual sigue incompleta
 
 Archivos:
-- `user/*/layout.tsx`
-- [packages/utils/metadata/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/metadata/metadata.ts)
-- `packages/i18n/metadata.ts`
+
+- [layout.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/layout.tsx)
+- [userAuth.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/userAuth.module.css)
 
 Estado actual:
-- cada página auth genera metadata con `getPageMetadata(...)`
-- eso está bien y es consistente
-- pero la estructura visual no utiliza un layout común que refuerce el propósito de cada página
 
-Observaciones:
-- `forgotPassword`, `setPassword`, `login`, `register`, `verifyEmail` sí tienen metadata declarada
-- el helper `getPageMetadata` devuelve un fallback vacío si la key no existe; no hay validación
+- el layout sólo aporta `main` + wrapper visual
+- el contenido introductorio sigue definido página por página
+- existe `.logoImage` en CSS, pero ninguna página de la ruta la usa hoy
 
-Sugerencia:
-- mantener el esquema actual de metadata
-- añadir test o validación estática para asegurar que toda página auth tenga entrada en `pageMetadata`
-- alinear los títulos/intro visibles con la metadata correspondiente para evitar divergencias
+Riesgo:
 
-### 3. Semántica inconsistente entre páginas, aunque mejor que en la revisión anterior
+- el diseño parece consistente, pero la intención del layout todavía no está codificada como patrón reusable
+- es fácil que una página nueva rompa el sistema visual sin que el layout la contenga
 
-Ejemplos:
+### 2. Hay un problema responsive real en mobile pequeño
+
+Archivo:
+
+- [userAuth.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/userAuth.module.css)
+
+Hallazgo:
+
+- en `max-width: 425px`, `.authSection` pasa a `padding: 0` y `min-height: 100dvh`
+- el `header` mantiene `padding-top: 64px`
+- el wrapper externo también reduce padding
+
+Riesgo:
+
+- en pantallas chicas la card puede quedar demasiado pegada a bordes laterales e inferior
+- la jerarquía visual depende demasiado del `header` y no del contenedor principal
+- es un punto probable de regresión visual durante la refactorización de estilos
+
+### 3. `FormWrapper` mejoró, pero aún falta endurecer su contrato presentacional
+
+Archivo:
+
+- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx)
+
+Estado actual:
+
+- ya no consume contexto de auth/client/router
+- ya no resuelve navegación por sí mismo
+- ya no completa automáticamente `email`, `clientId` y `language`
+- recibe `initialValues` y callbacks desde cada página
+
+Deuda restante:
+
+- sigue mezclando manejo de estado, validación y render en una sola pieza
+- el reseteo basado en `initialValues` aún depende de comparación por serialización
+- todavía no existe una división clara entre `AuthFormView` y lógica de estado si quisiéramos testear granularmente
+
+Riesgo de despliegue:
+
+- bajo, pero sigue siendo una pieza central de formularios auth y conviene estabilizarla antes del testing manual final
+
+### 4. Hay detalles concretos de accesibilidad pendientes en el formulario
+
+Archivo:
+
+- [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx)
+
+Problemas detectados:
+
+- el toggle de contraseña ya declara `aria-controls` sobre `#password`
+- los mensajes inline usan `role="status"` incluso cuando son errores de validación; conviene revisar si un patrón con `aria-live` más específico sería más claro
+- el checkbox de TOS sólo enlaza `aria-describedby` al error y no tiene slot semántico para ayuda o contexto legal adicional
+- la UI del checkbox oculta el input real con `opacity: 0` y `pointer-events: none`; funciona, pero merece prueba manual de foco y navegación por teclado
+
+### 5. La ruta usa convenciones mezcladas para loadings y popups
+
+Archivos:
+
 - [user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/login/page.tsx)
 - [user/register/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/register/page.tsx)
 - [user/forgot-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/forgot-password/page.tsx)
 - [user/set-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/set-password/page.tsx)
 - [user/verify-email/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/verify-email/page.tsx)
-
-Problemas detectados:
-- `login`, `register`, `forgot-password`, `set-password` y `verify-email` ya usan mejor `section/header/footer`
-- `set-password` ya dejó de usar el texto traducido como id del `<h1>`
-- el problema principal ya no es ids rotos masivos, sino consistencia entre páginas
-- `verify-email` y `register` siguen teniendo una semántica más débil en el contenido visible, porque dependen demasiado del popup global y muy poco del contenido de página
-- la jerarquía visual es más consistente, pero aún no existe un patrón común explícito para todas las variantes auth
-
-Sugerencia:
-- normalizar todas las páginas auth a una estructura como:
-  - `<main>`
-  - `<section>` contenedora
-  - `<header>` con logo, `<h1>` y texto introductorio
-  - `<form>`
-  - `<footer>` o bloque secundario para CTA complementaria
-- eliminar `role="form"` de contenedores no necesarios
-- usar ids estáticos y predecibles, nunca derivados de texto i18n
-
-### 4. Accesibilidad del formulario mejorable
-
-Archivos:
-- [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx)
-- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx)
+- [userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
 
 Estado actual:
-- el formulario ya tiene buenas bases:
-  - `label` asociados
-  - `aria-invalid`
-  - `aria-describedby`
-  - focus en primer campo inválido
-  - `autocomplete` razonable para password
-- hay summary de errores y feedback inline
 
-Problemas detectados:
-- el contenedor del error summary usa `<div>`; un `<section>` o `<aside>` con `aria-labelledby` sería más claro
-- el botón de mostrar/ocultar contraseña no declara `aria-controls`
-- en el checkbox de TOS, `aria-describedby` depende sólo de error; si hubiera texto de ayuda, hoy no hay slot semántico claro
-- el formulario mezcla navegación (`forgotPassword`) y estado de auth/client dentro del wrapper, lo que lo vuelve menos presentacional
-
-Sugerencia:
-- mantener la base del componente, pero separar:
-  - UI/formulario presentacional
-  - hydration de valores iniciales
-  - navegación auxiliar
-- convertir `FormWrapper` en una pieza más delgada o partirlo en:
-  - `AuthFormView`
-  - `useAuthFormState`
-  - página contenedora
-
-### 5. Acoplamiento innecesario del `FormWrapper`
-
-Archivo:
-- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx)
-
-Problemas:
-- consume `useAuth()`, `useClient()`, `useRouter()`, `useLang()` e `useI18n()`
-- además hace navegación a forgot-password
-- completa automáticamente `clientId`, `language` y `email`
+- `register` usa `texts.loadings?.loading?.REGISTER_LOADING_SUBMIT`
+- `login` y `verify-email` usan `texts.loadings?.message`
+- `forgot-password`, `set-password` y partes de `userHandler.ts` siguen resolviendo `GLOBAL_LOADING` vía `popups`
 
 Impacto:
-- la pieza ya no es un wrapper de formulario, sino una mezcla de UI, defaults de negocio y navegación
-- complica pruebas unitarias
-- hace más difícil reutilizar o endurecer la semántica de cada pantalla
 
-Sugerencia:
-- mover la resolución de `email`, `clientId` y `language` a cada página
-- dejar `FormWrapper` como wrapper puramente de validación y render
-- o reemplazarlo por un componente de formulario auth explícito por caso de uso
+- no hay una convención única para estados intermedios
+- el mismo tipo de feedback visual se arma desde fuentes distintas
+- eso complica el pulido visual y la coherencia de copy
 
-### 6. Manejo de errores: sigue habiendo uso excesivo de `GLOBAL_INTERNAL_ERROR`
+### 6. El frontend está mucho más alineado con el contrato actual del backend, pero todavía no está completamente cerrado
 
-Páginas afectadas:
-- login
-- register
-- forgot-password
-- set-password
-- verify-email
+Referencia principal:
+
+- [FRONTEND_INTEGRATION.md](/home/heriberto/Escritorio/Backend/havenova-backend/src/core/auth/FRONTEND_INTEGRATION.md)
+
+Desajustes detectados:
+
+- `register` ya entra al flujo de verify-email, pero todavía convive con algunos fallbacks de error genéricos en respuestas no esperadas.
+- `login` ya usa los códigos canónicos del backend como camino principal.
+- `verify-email` ya distingue `AUTH_VERIFY_EMAIL_TOKEN_INVALID`, `AUTH_VERIFY_EMAIL_TOKEN_EXPIRED`, `MAGIC_TOKEN_INVALID` y `MAGIC_TOKEN_EXPIRED`, pero aún conserva compatibilidad defensiva con claves legacy de verify dentro del helper compartido.
+- `set-password` queda explícitamente limitado a `token` en esta ruta pública de usuario; `inviteToken` no aplica aquí.
+- `forgot-password` y `resend-verification` siguen siendo respuestas ambiguas por diseño y eso ya está más alineado con backend, pero debe comprobarse en testing con logs.
+
+Impacto:
+
+- el frontend puede dar una UX válida pero desalineada con el contrato oficial
+- varios fallos actuales parecen de UI, pero en realidad son deuda de integración
+- sin alinear códigos y paths de success, el testing manual produciría ruido innecesario
+
+### 7. Sigue habiendo algo de fallback a `GLOBAL_INTERNAL_ERROR`, pero ya está más acotado
+
+Archivos principales:
+
+- [user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/login/page.tsx)
+- [user/register/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/register/page.tsx)
+- [user/forgot-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/forgot-password/page.tsx)
+- [user/set-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/set-password/page.tsx)
+- [userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
 
 Problemas:
-- varios guard clauses locales muestran `GLOBAL_INTERNAL_ERROR` para errores que en realidad son de validación o precondición local
-- `register` ya propaga `err.response?.status`, pero sigue dependiendo de fallback genérico para varios casos de negocio
-- `register` todavía no trata explícitamente `USER_REGISTER_NEEDS_CORRECT_PASSWORD` como caso de UX diferenciado
-- en `login`, si faltan `email/password/clientId`, el popup es genérico aunque existen códigos específicos de validación
-- en `set-password`, la ruta de `status=error` usa fallback genérico incluso cuando el query param `code` apunta a un caso tipado
-- `verify-email` y `magic-login` todavía mezclan errores de contrato, errores de backend y fallos inesperados
 
-Sugerencia:
-- distinguir:
-  - validación local
-  - errores de backend esperados
-  - fallos internos inesperados
-- no mapear precondiciones locales a `GLOBAL_INTERNAL_ERROR`
-- propagar `status` y `code` reales del backend en todos los catches
+- ya se corrigieron varios casos locales y recuperables para usar `defaultKey` contextual
+- todavía quedan algunos `catch` y ramas realmente no esperadas que caen en `GLOBAL_INTERNAL_ERROR`
+- el criterio de cuándo reintentar, cuándo redirigir y cuándo cerrar ya es más coherente, pero aún no está completamente unificado entre páginas
 
-### 7. `verify-email` sigue siendo el flujo más frágil
+Impacto:
+
+- peor UX
+- menor capacidad de diagnóstico
+- más riesgo de enmascarar un problema real antes del despliegue
+
+### 8. `verify-email` sigue siendo el flujo más frágil
 
 Archivos:
+
 - [user/verify-email/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/verify-email/page.tsx)
-- [packages/utils/user/userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
-- [packages/types/auth/authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts)
-
-Hallazgo principal:
-- el backend ya confirmó `AUTH_VERIFY_EMAIL_SUCCEEDED`
-- `verify-email/page.tsx` ya contempla el caso sin `magicToken`
-- pero `handleVerifyEmail()` dentro de `useVerifyEmailActions()` todavía trata `success` sin `magicToken` como error interno antes de que la página pueda decidir otra cosa
-- hay una contradicción entre la página y el helper: la página quiere tolerar ese caso, el helper no
-
-Esto es importante:
-- esa decisión de frontend puede ser válida o inválida según el contrato real del backend
-- si el backend considera que verificar email con éxito no siempre requiere `magicToken`, el frontend está mal
-- si el backend garantiza que todo éxito trae `magicToken`, entonces el contrato está bien pero falta observabilidad para saber cuándo se rompe
-
-Problemas adicionales:
-- `catch` en `handleVerifyEmail` ignora `code` y `status` reales del backend
-- `catch` en `handleResendEmail` también cae siempre en genérico
-- `handleMagicLogin()` sólo devuelve `boolean`, lo que dificulta saber si falló por token inválido, expirado o ausencia de `user`
-- la página `verify-email` muestra tres loadings secuenciales y luego un success genérico; falta un contrato explícito de transiciones de estado
-- `didRunRef` evita doble ejecución en dev, pero también complica el razonamiento del flujo y tapa posibles efectos dependientes del token
-
-Sugerencia:
-- definir explícitamente el contrato de `VerifyEmailResponse`
-- decidir una sola semántica:
-  - `success` siempre trae `magicToken`
-  - o `success` puede no traerlo y el frontend debe tratarlo como verify-success sin auto-login
-- registrar en frontend el `code` real cuando falle verify/magic-login
-- cambiar `handleMagicLogin()` para que devuelva un resultado estructurado y no sólo `boolean`
-- separar visualmente:
-  - verificación automática del token
-  - auto-login mágico
-  - formulario para reenviar email
-
-### 7.1. Problema actual de mensajes y loading
+- [userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
 
 Estado actual:
-- `register` usa `REGISTER_LOADING_SUBMIT` desde `popups + fallback`, mientras que otros flujos toman textos desde `loadings.message`
-- `verify-email` encadena `verifyEmail`, `login` y `createUser` usando `loadings.message`
-- `forgot-password` usa `GLOBAL_LOADING` con fallback específico
 
-Problema:
-- no hay una única convención para textos de loading
-- el flujo visual depende de helpers distintos según la página
-- cuando algo falla en medio del loading, el usuario ve un popup genérico sin saber en qué paso ocurrió
+- mejoró respecto a la versión anterior
+- la contradicción principal entre página y helper ya fue corregida
 
-Sugerencia:
-- normalizar los loadings auth en una sola fuente
-- decidir si `loadings.json` o `popups.json` es el contrato oficial para estados intermedios
-- para `verify-email`, incluir mensajes de fallo diferenciados por etapa:
-  - verify step failed
-  - magic login failed
-  - resend failed
+Problemas que siguen:
 
-### 8. Inconsistencias de i18n y claves aparentemente en desuso
-
-Hallazgos en `popups.json`:
-- `USER_FORGOT_PASSWORD_EMAIL_SENDED` existe, pero la app usa `USER_FORGOT_PASSWORD_EMAIL_SENT`
-- `USER_VERIFY_EMAIL_RESENDED` existe, pero la app usa `USER_VERIFY_EMAIL_RESENT`
-- `USER_EMAIL_ALREADY_REGISTERED` existe, pero no aparece usado en la ruta auth
-- `USER_LOGIN_INVALID_CREDENTIALS` existe, pero el frontend no la referencia explícitamente en auth
-
-Esto sugiere:
-- hubo renombrados de códigos sin limpieza posterior
-- el i18n acumula claves legacy
-
-Hallazgos en `pages.json`:
-- existe `resetPasswordText`, pero `set-password/page.tsx` no la usa
-- `forgotPasswordText` y `verifyEmail` sí están siendo consumidos
-- `login` y `register` consumen sólo partes de sus textos; no todo el contenido declarado parece estar aprovechado
-
-Impacto:
-- aumenta la probabilidad de fallback equivocado
-- hace más difícil saber qué textos son de verdad parte del contrato vigente
-
-Sugerencia:
-- auditar y clasificar claves i18n en:
-  - activas
-  - legacy
-  - duplicadas
-- eliminar o migrar claves con naming inconsistente:
-  - `SENDED` -> `SENT`
-  - `RESENDED` -> `RESENT`
-- alinear nombres de códigos frontend/backend/i18n
-
-### 9. CTA y navegación secundaria podrían ser más semánticas
-
-Ejemplos:
-- `login` y `register` usan `<aside>` para una CTA textual
-- `forgot-password` y `set-password` no siguen el mismo patrón
-
-Sugerencia:
-- si la CTA es parte del flujo principal, usar `<footer>` dentro del card auth
-- reservar `<aside>` para contenido realmente complementario
-
-### 10. CSS compartido pero con semántica visual poco explícita
-
-Archivo:
-- [userAuth.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/userAuth.module.css)
-
-Observaciones:
-- la hoja sirve como estilo compartido, pero la nomenclatura (`section`, `article`, `aside`, `header_p`) depende mucho de cómo cada página la interprete
-- aparece `.wrapper` sólo en media query, pero no como bloque base consistente para todas las páginas
-
-Sugerencia:
-- renombrar estilos hacia intención de layout:
-  - `shell`
-  - `card`
-  - `intro`
-  - `actions`
-  - `supportingCta`
-- alinear CSS con una estructura semántica única para toda la ruta auth
-
-## Lectura del Incidente de Verificación
-
-Con los logs revisados:
-
-1. `AUTH_REGISTER_REJECTED` con `USER_REGISTER_NEEDS_CORRECT_PASSWORD`
-2. luego `AUTH_REGISTER_SUCCEEDED`
-3. luego `AUTH_VERIFY_EMAIL_SUCCEEDED`
+- el flujo sigue encadenando `verify -> magic login -> refresh auth -> success`
+- cada etapa usa popups y loadings propios
+- si falla `magicLogin`, el usuario no ve con claridad en qué paso se rompió el proceso
+- `didRunRef` evita dobles ejecuciones en dev, pero mantiene complejidad accidental en el efecto
+- el success final ya se automatizó mejor, pero el flujo sigue mezclando automatización, fallback defensivo y formulario de resend dentro de la misma página
+- según el contrato actual del backend, `success` debería incluir `magicToken`; el fallback sin token debe quedar como defensa excepcional, no como camino normal del flujo
 
 Conclusión:
-- backend registró éxito en la verificación de email
-- el error inesperado que viste no queda explicado por esos logs del backend
-- el candidato principal está en el frontend, concretamente en:
-  - `handleVerifyEmail`
-  - `handleMagicLogin`
-  - el fallback a `GLOBAL_INTERNAL_ERROR`
 
-## Prioridad de Cambios Sugeridos
+- ya no es un bug obvio de contrato como antes
+- sigue siendo el flujo con mayor densidad de estados y con más riesgo de regresión
+- además concentra el punto de mayor sensibilidad entre contrato backend, sesión y UX
 
-### Prioridad Alta
+### 9. Hay claves i18n duplicadas o legacy
 
-- Rediseñar el contrato de `verify-email` entre frontend y backend.
-- Corregir ids y relaciones `aria-*` rotas en `login`, `register` y `set-password`.
-- Crear un layout auth real y único.
-- Propagar `status` y `code` reales del backend en todos los catches.
-- Eliminar uso de `GLOBAL_INTERNAL_ERROR` para validaciones locales.
+Hallazgos:
 
-## Avances Implementados en Esta Iteracion
+- las claves legacy de auth ya fueron retiradas de la lógica activa y de `popups.json`
+- las claves canónicas de verify quedaron consolidadas en `AUTH_VERIFY_EMAIL_TOKEN_EXPIRED` y `AUTH_VERIFY_EMAIL_TOKEN_INVALID`
 
-- `register/page.tsx` ya no usa `getPopup('REGISTER_LOADING_SUBMIT')` para el loading.
-- `register/page.tsx` ahora toma el loading desde `texts.loadings.loading.REGISTER_LOADING_SUBMIT`.
-- `register/page.tsx` ahora respeta mejor códigos de negocio de backend y evita redirigir a home en errores recuperables como:
-  - `USER_REGISTER_NEEDS_CORRECT_PASSWORD`
-  - `USER_REGISTER_ALREADY_REGISTERED`
-  - `USER_EMAIL_ALREADY_REGISTERED`
-- `useVerifyEmailActions().handleVerifyEmail()` ya no fuerza error interno cuando el backend responde `success` sin `magicToken`.
-- `useVerifyEmailActions().handleMagicLogin()` ya no devuelve sólo `boolean`; ahora devuelve un resultado estructurado.
-- `verify-email/page.tsx` ya usa el popup de `USER_VERIFY_EMAIL_SUCCESS` cuando hay verify success sin auto-login.
+Impacto:
 
-Esto reduce la contradicción entre la página y el helper, pero no cierra todavía todo el flujo.
+- ruido en el contrato i18n
+- mayor probabilidad de fallback incorrecto
+- deuda innecesaria antes de despliegue
 
-Pendiente crítico:
-- revisar en runtime si el backend realmente devuelve `magicToken` en el caso esperado y qué `code/status` vuelve cuando `magicLogin` falla.
+### 10. Metadata está conectada, pero sin validación
 
-### Prioridad Media
+Archivos:
 
-- Desacoplar `FormWrapper` de `auth/client/router`.
-- Unificar estructura semántica de todas las páginas auth.
-- Revisar el uso correcto de `resetPasswordText`.
-- Normalizar CTA secundaria dentro de `<footer>` del card auth.
+- [packages/utils/metadata/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/metadata/metadata.ts)
+- [packages/i18n/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/i18n/metadata.ts)
+- `user/*/layout.tsx`
 
-### Prioridad Media/Baja
+Estado actual:
 
-- Limpiar claves legacy de i18n.
-- Añadir tests de contrato para metadata auth.
-- Añadir tests de accesibilidad por página.
+- todas las páginas auth revisadas tienen `generateMetadata(...)`
+- `getPageMetadata(...)` devuelve fallback al idioma o `{}` si no encuentra la key
 
-## Propuesta de Plan de Trabajo
+Riesgo:
 
-### Fase 1. Contrato y errores
+- si una key desaparece o se renombra, la página no falla
+- eso es cómodo en desarrollo, pero malo para detectar regresiones de SEO antes de producción
 
-- Documentar contrato de:
+## Errores y Riesgos Prioritarios
+
+Estos son los puntos que hoy sí deberían considerarse bloqueantes o casi bloqueantes para dejar la ruta lista para despliegue:
+
+1. `verify-email` sigue siendo el flujo con mayor densidad técnica y mayor riesgo de regresión.
+2. El sistema de errores todavía depende de `GLOBAL_INTERNAL_ERROR` en algunas ramas no esperadas.
+3. La estrategia de loadings sigue fragmentada entre `loadings.json` y `popups.json`.
+4. Aún queda limpieza de i18n/códigos legacy para cerrar la alineación total con backend.
+5. Hay deuda responsive real en mobile pequeño que todavía no está cerrada.
+
+## Estado de Preparación para Despliegue
+
+Situación actual:
+
+- la ruta está funcional
+- visualmente ya tiene una base más consistente
+- todavía no la consideraría cerrada para despliegue sin una pasada adicional de hardening
+
+Lo mínimo razonable antes de marcarla como lista:
+
+- cerrar la limpieza técnica residual de errores e i18n
+- documentar el flujo final esperado de cada pantalla auth y sus transiciones
+- cerrar el flujo `verify-email`
+- normalizar errores, códigos y loading states
+- hacer una validación manual visual en desktop y mobile
+- limpiar claves i18n legacy que afecten esta ruta
+
+## Plan de Trabajo Propuesto
+
+### Fase 1. Alineación de contrato con backend
+
+- [x] revisar `login`, `register`, `forgot-password`, `set-password` y `verify-email` contra [FRONTEND_INTEGRATION.md](/home/heriberto/Escritorio/Backend/havenova-backend/src/core/auth/FRONTEND_INTEGRATION.md)
+- [x] sustituir ramas legacy por los códigos canónicos del backend en la lógica activa de la ruta:
+  - `AUTH_INVALID_CREDENTIALS`
+  - `CLIENT_NOT_FOUND`
+  - `USER_CLIENT_NOT_FOUND`
+  - `USER_EMAIL_ALREADY_IN_USE`
+  - `AUTH_VERIFY_EMAIL_TOKEN_INVALID`
+  - `AUTH_VERIFY_EMAIL_TOKEN_EXPIRED`
+  - `MAGIC_TOKEN_INVALID`
+  - `MAGIC_TOKEN_EXPIRED`
+- [x] mantener `set-password` limitado a `token` en esta ruta pública de usuario; `inviteToken` no aplica aquí y debe resolverse en los flujos de workers/dashboard
+- [x] documentar por flujo:
+  - request esperado
+  - success code esperado
+  - error codes esperados
+  - comportamiento ambiguo permitido
+  - unexpected error path
+
+### Fase 1.1. Documentación operativa de la ruta
+
+- [x] documentar el flujo final esperado de cada pantalla auth dentro de este `README`:
+  - `register`
+  - `login`
+  - `verify-email`
+  - `forgot-password`
+  - `set-password`
+- [x] dejar explícitas las transiciones entre páginas:
+  - `register -> verify-email`
+  - `login(email not verified) -> verify-email`
+  - `verify-email(success) -> home`
+  - `forgot-password(success) -> login`
+  - `set-password(success) -> login`
+- [x] registrar qué partes del flujo son automáticas y cuáles requieren interacción del usuario
+- [x] alinear esa documentación con el comportamiento real de alerts, redirects y loadings antes de empezar los ajustes visuales
+
+### Fase 2. Corrección funcional de flujos auth
+
+- [x] rehacer el post-success de `register` para que cierre en estado "revisa tu email" y no como navegación genérica a home
+- [ ] simplificar `verify-email` para que trate `magicToken` como camino normal del success y deje el fallback sin token sólo como defensa excepcional
+- [ ] diferenciar visual y funcionalmente:
+  - verify success
+  - magic login success
+  - magic login failed
+  - resend verification success
+- [x] convertir el success final de `magic-login` en un cierre automático con timeout corto y redirección a home, evitando el patrón actual de dos CTAs
+- [~] eliminar fallback a `GLOBAL_INTERNAL_ERROR` en validaciones locales y casos recuperables:
+  - `login`, `register`, `forgot-password` y `set-password` ya usan más `defaultKey` contextuales
+  - `verify-email` y `resend-verification` ya acotaron mejor sus `catch`
+  - quedan sólo ramas realmente inesperadas y la futura limpieza de claves legacy en i18n
+- [~] asegurar que `forgot-password` y `resend-verification` mantengan UX deliberadamente ambigua
+
+### Fase 3. Refactor del formulario compartido
+
+- [x] mover `email`, `clientId` y `language` al contenedor de cada página
+- [x] sacar la navegación a `forgot-password` del wrapper o volverla completamente inyectable
+- [~] dejar `FormWrapper` limitado a:
+  - estado del formulario
+  - validación
+  - rendering
+
+### Fase 4. Refactor de estilos auth
+
+- ajustar spacing del shell para mobile pequeño
+- revisar padding vertical del `header`
+- convertir la nomenclatura CSS a intención de layout más explícita
+- validar el comportamiento visual de footer y CTAs secundarias
+
+### Fase 5. Accesibilidad
+
+- revisar foco y lectura del checkbox TOS con teclado
+- añadir `aria-controls` al toggle de contraseña
+- revisar patrón de anuncios inline para errores y hints
+- confirmar landmark y orden de lectura de todas las páginas auth
+
+### Fase 6. i18n y metadata
+
+- limpiar claves legacy duplicadas
+- retirar o migrar códigos desalineados con el backend actual
+- consolidar la fuente oficial de textos de loading auth
+- validar que cada página auth tenga metadata existente y completa
+
+### Fase 7. Verificación manual previa a despliegue
+
+- ejecutar la batería descrita en [TESTING.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/TESTING.md)
+- revisar logs del backend en paralelo a cada caso para confirmar que UI, redirecciones y códigos coinciden con el contrato real
+- registrar evidencia de:
+  - desktop
+  - mobile
+  - cold load
   - register
   - login
-  - verify-email
-  - magic-login
-  - resend-verification
-- Ajustar frontend para usar `code` y `status` reales.
+  - verify email
+  - forgot password
+  - reset password
 
-### Fase 1.1. Correcciones inmediatas del flujo auth
+## Orden Recomendado para la Próxima Iteración
 
-- [x] Reconciliar `verify-email/page.tsx` con `useVerifyEmailActions()`.
-- [x] Hacer que `handleVerifyEmail()` no fuerce error interno si la página quiere manejar `success` sin `magicToken`.
-- [x] Hacer que `handleMagicLogin()` devuelva resultado estructurado con `code/status`.
-- [x] Corregir `register/page.tsx` para mostrar el mensaje real de backend en códigos como `USER_REGISTER_NEEDS_CORRECT_PASSWORD`.
-- [x] Corregir el loading de `register`.
-- [ ] Revisar qué loading usa cada flujo y unificar la semántica visual del resto de páginas auth.
+1. Cerrar la limpieza técnica residual de `verify-email`, `resend-verification` e i18n legacy.
+2. Ajustar estilos del shell auth y responsive.
+3. Cerrar accesibilidad, metadata y detalles semánticos finales.
+4. Ejecutar validación manual completa con revisión de logs backend.
 
-### Fase 2. Layout y semántica
+## Decisión
 
-- Implementar `/(auth)/layout.tsx` con estructura compartida.
-- Homogeneizar `main/header/form/footer`.
-- Corregir ids, `aria-labelledby`, `aria-describedby`.
-
-### Fase 3. Formularios y accesibilidad
-
-- Separar `FormWrapper` en capa presentacional y capa de estado.
-- Revisar foco, summary de errores, mensajes de ayuda y checkbox legal.
-
-### Fase 4. i18n y metadata
-
-- Eliminar claves duplicadas/legacy.
-- Verificar que cada texto declarado tenga consumidor real o sea eliminado.
-- Validar metadata por página auth.
-
-## Cambios Concretos Recomendados en la Próxima Iteración
-
-- Rehacer `verify-email/page.tsx` para soportar explícitamente:
-  - verify success + magic login success
-  - verify success sin magic login
-  - token expirado
-  - token inválido
-  - reenvío de email
-- Corregir `login/page.tsx`, `register/page.tsx` y `set-password/page.tsx` para que sus ids ARIA existan realmente.
-- Hacer que `register/page.tsx` muestre el `code` real del backend, en particular `USER_REGISTER_NEEDS_CORRECT_PASSWORD`.
-- Incorporar `resetPasswordText` o eliminarlo del i18n si no se usará.
-- Limpiar claves legacy:
-  - `USER_FORGOT_PASSWORD_EMAIL_SENDED`
-  - `USER_VERIFY_EMAIL_RESENDED`
+La ruta `(auth)` ya está en una fase de consolidación, no de reconstrucción. Pero el siguiente paso ya no puede ser sólo visual: antes de entrar en tests manuales hay que cerrar la alineación con el contrato actual del backend, porque hoy los mayores riesgos de despliegue están en la frontera entre integración auth, UX de flujos públicos y manejo de errores.

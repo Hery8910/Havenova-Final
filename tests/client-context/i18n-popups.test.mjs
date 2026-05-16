@@ -39,10 +39,6 @@ test('legacy popup aliases retained for gradual migration still exist in both lo
     'CLIENT_CREATE_SUCCESS',
     'CLIENT_FETCH_FAILED',
     'CLIENT_UPDATE_SUCCESS',
-    'USER_EMAIL_ALREADY_REGISTERED',
-    'USER_FORGOT_PASSWORD_EMAIL_SENDED',
-    'USER_LOGIN_INVALID_CREDENTIALS',
-    'USER_VERIFY_EMAIL_RESENDED',
   ];
 
   for (const code of legacyCodes) {

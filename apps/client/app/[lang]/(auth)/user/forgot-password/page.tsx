@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { href } from '@/packages/utils/navigation';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { PopupCode } from '@/packages/contexts/alert/alert.types';
 
 export interface ForgotPasswordData {
   title: string;
@@ -47,6 +48,30 @@ const ForgotPassword = () => {
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
 
+  const getForgotPasswordErrorStatus = (code?: string, fallbackStatus = 500) => {
+    switch (code) {
+      case 'CLIENT_NOT_FOUND':
+        return 404;
+      case 'VALIDATION_ERROR':
+        return 400;
+      default:
+        return fallbackStatus;
+    }
+  };
+
+  const getForgotPasswordPopupDefaultKey = (code?: string): PopupCode => {
+    switch (code) {
+      case 'CLIENT_MISSING_CLIENT_ID':
+        return 'CLIENT_MISSING_CLIENT_ID';
+      case 'CLIENT_NOT_FOUND':
+        return 'CLIENT_NOT_FOUND';
+      case 'VALIDATION_ERROR':
+        return 'VALIDATION_ERROR';
+      default:
+        return 'GLOBAL_INTERNAL_ERROR';
+    }
+  };
+
   const handleForgotPassword = async (data: ForgotPasswordPayload) => {
     try {
       setLoading(true);
@@ -55,7 +80,7 @@ const ForgotPassword = () => {
         const popupData = getPopup(
           popups,
           'CLIENT_MISSING_CLIENT_ID',
-          'GLOBAL_INTERNAL_ERROR',
+          'CLIENT_MISSING_CLIENT_ID',
           fallbackGlobalError
         );
 
@@ -80,7 +105,7 @@ const ForgotPassword = () => {
         const popupData = getPopup(
           popups,
           'CLIENT_MISSING_CLIENT_ID',
-          'GLOBAL_INTERNAL_ERROR',
+          'CLIENT_MISSING_CLIENT_ID',
           fallbackGlobalError
         );
 
@@ -117,13 +142,13 @@ const ForgotPassword = () => {
         const popupData = getPopup(
           popups,
           response.code,
-          'GLOBAL_INTERNAL_ERROR',
+          getForgotPasswordPopupDefaultKey(response.code),
           fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 400,
+            status: getForgotPasswordErrorStatus(response.code, 400),
             title: popupData.title,
             description: popupData.description,
             cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
@@ -158,12 +183,17 @@ const ForgotPassword = () => {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
-      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const popupData = getPopup(
+        popups,
+        code,
+        getForgotPasswordPopupDefaultKey(code),
+        fallbackGlobalError
+      );
       const canRetry = !code || (err.response?.status ?? 500) >= 500;
 
       showError({
         response: {
-          status: err.response?.status ?? 500,
+          status: getForgotPasswordErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
           confirmLabel: canRetry
@@ -186,7 +216,7 @@ const ForgotPassword = () => {
 
   return (
     <section
-      className={styles.authSection}
+      className={`${styles.authSection} card card--primary`}
       aria-labelledby={headingId}
       aria-describedby={descriptionId}
     >

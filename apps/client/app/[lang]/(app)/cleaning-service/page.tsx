@@ -81,6 +81,10 @@ export interface CleaningServicePageTexts {
           heading: string;
           ariaLabel?: string;
         };
+        review?: {
+          heading: string;
+          ariaLabel?: string;
+        };
       };
     };
     customerType: {

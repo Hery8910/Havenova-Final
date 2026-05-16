@@ -10,7 +10,6 @@
         "openButtonLabel": "Abrir selector de idioma",
         "closeButtonLabel": "Cerrar selector de idioma",
         "currentLanguageLabel": "Idioma actual",
-        "currentTag": "Actual",
         "options": {
           "de": {
             "label": "Deutsch",

@@ -10,6 +10,7 @@ import {
   fallbackButtons,
   fallbackGlobalError,
   fallbackRegisterSuccess,
+  useAuth,
   useGlobalAlert,
   useProfile,
 } from '../../../../../../../packages/contexts';
@@ -24,6 +25,7 @@ import { useLang } from '../../../../../../../packages/hooks';
 import { useRouter } from 'next/navigation';
 import { href } from '../../../../../../../packages/utils/navigation';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 
 export interface RegisterData {
   title: string;
@@ -38,6 +40,7 @@ const Register = () => {
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
+  const { auth, setAuth } = useAuth();
   const { updateProfile } = useProfile();
 
   const { texts } = useI18n();
@@ -53,6 +56,76 @@ const Register = () => {
   };
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
+
+  const getRegisterErrorStatus = (code?: string, fallbackStatus = 500) => {
+    switch (code) {
+      case 'USER_REGISTER_NEEDS_CORRECT_PASSWORD':
+      case 'USER_REGISTER_ALREADY_REGISTERED':
+      case 'USER_EMAIL_ALREADY_IN_USE':
+        return 409;
+      case 'AUTH_BLOCKED':
+      case 'USER_CLIENT_BLOCKED':
+        return 403;
+      case 'CLIENT_NOT_FOUND':
+        return 404;
+      case 'VALIDATION_ERROR':
+        return 400;
+      default:
+        return fallbackStatus;
+    }
+  };
+
+  const getRegisterPopupDefaultKey = (code?: string): PopupCode => {
+    switch (code) {
+      case 'USER_REGISTER_NEEDS_CORRECT_PASSWORD':
+        return 'USER_REGISTER_NEEDS_CORRECT_PASSWORD';
+      case 'USER_REGISTER_ALREADY_REGISTERED':
+        return 'USER_REGISTER_ALREADY_REGISTERED';
+      case 'USER_EMAIL_ALREADY_IN_USE':
+        return 'USER_EMAIL_ALREADY_IN_USE';
+      case 'AUTH_BLOCKED':
+        return 'AUTH_BLOCKED';
+      case 'USER_CLIENT_BLOCKED':
+        return 'USER_CLIENT_BLOCKED';
+      case 'CLIENT_NOT_FOUND':
+        return 'CLIENT_NOT_FOUND';
+      case 'VALIDATION_ERROR':
+        return 'VALIDATION_ERROR';
+      default:
+        return 'GLOBAL_INTERNAL_ERROR';
+    }
+  };
+
+  const openRegisterSuccess = (email: string, clientId: string) => {
+    const popupData = getPopup(popups, 'USER_REGISTER_SUCCESS', 'USER_REGISTER_SUCCESS', fallbackRegisterSuccess);
+
+    setAuth({
+      ...(auth || {}),
+      email,
+      clientId,
+      isLogged: false,
+      isVerified: false,
+      role: auth?.role || 'guest',
+    });
+
+    showSuccess({
+      response: {
+        status: 200,
+        title: popupData.title,
+        description: popupData.description,
+        confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
+        cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+      },
+      onConfirm: () => {
+        router.push(href(lang, '/user/verify-email'));
+        closeAlert();
+      },
+      onCancel: () => {
+        router.push(href(lang, '/user/verify-email'));
+        closeAlert();
+      },
+    });
+  };
 
   const handleRegister = async (data: RegisterFormData) => {
     try {
@@ -86,13 +159,13 @@ const Register = () => {
         const popupData = getPopup(
           popups,
           response?.code,
-          'GLOBAL_INTERNAL_ERROR',
+          getRegisterPopupDefaultKey(response?.code),
           fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 400,
+            status: getRegisterErrorStatus(response?.code, 400),
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm,
@@ -122,43 +195,26 @@ const Register = () => {
         language: profileLanguage,
       });
 
-      // 4) success popup
-      const popupData = getPopup(
-        popups,
-        response.code,
-        'USER_REGISTER_SUCCESS',
-        fallbackRegisterSuccess
-      );
-
-      showSuccess({
-        response: {
-          status: 200,
-          title: popupData.title,
-          description: popupData.description,
-          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
-        },
-        onConfirm: () => {
-          router.push(href(lang, '/'));
-          closeAlert();
-        },
-        onCancel: () => {
-          router.push(href(lang, '/'));
-          closeAlert();
-        },
-      });
+      // 4) success popup -> continue into verify-email flow
+      openRegisterSuccess(payload.email, payload.clientId);
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
 
-      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const popupData = getPopup(
+        popups,
+        code,
+        getRegisterPopupDefaultKey(code),
+        fallbackGlobalError
+      );
       const shouldStayOnPage =
         code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD' ||
         code === 'USER_REGISTER_ALREADY_REGISTERED' ||
-        code === 'USER_EMAIL_ALREADY_REGISTERED' ||
+        code === 'USER_EMAIL_ALREADY_IN_USE' ||
         (err.response?.status ?? 500) < 500;
       const onConfirm =
-        code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_REGISTERED'
+        code === 'USER_REGISTER_ALREADY_REGISTERED' ||
+        code === 'USER_EMAIL_ALREADY_IN_USE'
           ? () => {
               router.push(href(lang, '/user/login'));
               closeAlert();
@@ -177,7 +233,7 @@ const Register = () => {
 
       showError({
         response: {
-          status: err.response?.status ?? 500,
+          status: getRegisterErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
           confirmLabel: onConfirm ? popupData.confirm : undefined,
@@ -198,7 +254,7 @@ const Register = () => {
 
   return (
     <section
-      className={styles.authSection}
+      className={`${styles.authSection} card card--primary`}
       aria-labelledby="register-title"
       aria-describedby="register-description"
     >

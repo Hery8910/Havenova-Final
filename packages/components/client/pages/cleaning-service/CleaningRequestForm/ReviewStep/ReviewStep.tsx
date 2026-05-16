@@ -46,6 +46,7 @@ type ReviewTexts = {
 };
 
 export default function ReviewStep({
+  showHeader = true,
   texts,
   customerType,
   frequency,
@@ -54,6 +55,7 @@ export default function ReviewStep({
   workAddress,
   common,
 }: {
+  showHeader?: boolean;
   texts: ReviewTexts;
   customerType: {
     selected: CleaningCustomerType;
@@ -92,12 +94,14 @@ export default function ReviewStep({
 
   return (
     <section className={styles.container} aria-labelledby="cleaning-review-title">
-      <header className={styles.header}>
-        <h3 id="cleaning-review-title" className={styles.title}>
-          {texts.title}
-        </h3>
-        <p className={styles.description}>{texts.description}</p>
-      </header>
+      {showHeader ? (
+        <header className={styles.header}>
+          <h3 id="cleaning-review-title" className={styles.title}>
+            {texts.title}
+          </h3>
+          <p className={styles.description}>{texts.description}</p>
+        </header>
+      ) : null}
 
       <section className={styles.grid}>
         <article className={styles.card}>

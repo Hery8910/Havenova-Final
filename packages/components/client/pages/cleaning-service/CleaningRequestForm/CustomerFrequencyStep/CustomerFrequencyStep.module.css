@@ -1,103 +1,163 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .group {
   border: none;
-  padding: 12px;
+  padding: 0;
+  margin: 0;
 }
 
 .legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  padding: 0 6px;
-}
-.frequencyButton {
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  min-height: 42px;
-  padding: 6px;
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease;
 }
 
-.frequencyButton:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-.frequencyGrid {
+.customerTypeList,
+.frequencyList {
   margin: 0;
   padding: 0;
   list-style: none;
-  width: 100%;
+}
+
+.customerTypeList {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.customerTypeList li {
+  flex: 1 1 180px;
+}
+
+.customerTypeButton,
+.frequencyButton {
+  width: 100%;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background: var(--surface-primary, #fff);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.customerTypeButton {
+  min-height: 52px;
+  padding: 12px 16px;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  text-align: center;
+}
+
+.customerTypeLabel {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.frequencyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .frequencyButton {
-  position: relative;
-  width: 270px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
+  text-align: left;
+}
+
+.frequencyContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
 .frequencyText {
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  text-align: left;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .frequencyDiscount {
-  width: 120px;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  text-align: center;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand-primary) 10%, white);
+  color: var(--brand-primary-dark, var(--brand-primary));
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--brand-primary-dark);
-  background-color: var(--card-primary-bg);
-}
-
-.recommended {
-  border-color: color-mix(in srgb, var(--brand-primary) 65%, var(--surface-border));
+  line-height: 1.2;
 }
 
 .badge {
-  position: absolute;
-  bottom: -8px;
-  left: 8px;
-  border-radius: 4px;
-  padding: 3px 8px;
-  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand-primary) 14%, white);
+  color: var(--brand-primary-dark, var(--brand-primary));
+  font-size: 0.72rem;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
   white-space: nowrap;
-  text-transform: capitalize;
+}
+
+.recommended {
+  border-color: color-mix(in srgb, var(--brand-primary) 38%, var(--surface-border));
+}
+
+.customerTypeButton:hover,
+.frequencyButton:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--brand-primary) 30%, var(--surface-border));
+  background: color-mix(in srgb, var(--brand-primary) 4%, white);
 }
 
 .active {
   border-color: var(--brand-primary);
-  background: var(--card-primary-bg);
+  background: color-mix(in srgb, var(--brand-primary) 10%, white);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent);
 }
 
+.customerTypeButton:focus-visible,
 .frequencyButton:focus-visible {
-  outline: 2px solid var(--brand-primary);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow:
+    0 0 0 1px var(--brand-primary),
+    0 0 0 4px color-mix(in srgb, var(--brand-primary) 16%, transparent);
+}
+
+.fieldControlError {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
+}
+
+@media (max-width: 640px) {
+  .customerTypeList {
+    flex-direction: column;
+  }
+
+  .frequencyButton {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .frequencyContent {
+    width: 100%;
+    justify-content: space-between;
+  }
 }

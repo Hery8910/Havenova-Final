@@ -404,6 +404,17 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         url: 'https://havenova.de/de/user/login',
       },
     },
+    es: {
+      title: 'Iniciar sesión | Havenova',
+      description:
+        'Accede a tu cuenta de Havenova para gestionar servicios y ajustes de perfil.',
+      openGraph: {
+        title: 'Iniciar sesión | Havenova',
+        description: 'Accede de forma segura a tu cuenta de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/user/login',
+      },
+    },
   },
   register: {
     en: {
@@ -425,6 +436,17 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         description: 'Erstellen Sie in wenigen Schritten ein Havenova-Konto.',
         type: 'website',
         url: 'https://havenova.de/de/user/register',
+      },
+    },
+    es: {
+      title: 'Crear cuenta | Havenova',
+      description:
+        'Crea tu cuenta de Havenova para reservar y gestionar servicios para el hogar en Berlín.',
+      openGraph: {
+        title: 'Crear cuenta | Havenova',
+        description: 'Crea una cuenta de Havenova en pocos pasos.',
+        type: 'website',
+        url: 'https://havenova.de/es/user/register',
       },
     },
   },
@@ -449,6 +471,16 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         url: 'https://havenova.de/de/user/forgot-password',
       },
     },
+    es: {
+      title: 'Olvidé mi contraseña | Havenova',
+      description: 'Solicita un enlace seguro para restablecer la contraseña de tu cuenta.',
+      openGraph: {
+        title: 'Olvidé mi contraseña | Havenova',
+        description: 'Restablece de forma segura la contraseña de tu cuenta de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/user/forgot-password',
+      },
+    },
   },
   setPassword: {
     en: {
@@ -469,6 +501,16 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         description: 'Erstellen Sie ein neues Passwort für Ihr Havenova-Konto.',
         type: 'website',
         url: 'https://havenova.de/de/user/set-password',
+      },
+    },
+    es: {
+      title: 'Definir nueva contraseña | Havenova',
+      description: 'Define una nueva contraseña y recupera el acceso a tu cuenta de Havenova.',
+      openGraph: {
+        title: 'Definir nueva contraseña | Havenova',
+        description: 'Crea una nueva contraseña para tu cuenta de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/user/set-password',
       },
     },
   },
@@ -492,6 +534,17 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         description: 'Schließen Sie die E-Mail-Verifizierung für Ihr Havenova-Konto ab.',
         type: 'website',
         url: 'https://havenova.de/de/user/verify-email',
+      },
+    },
+    es: {
+      title: 'Verificar correo | Havenova',
+      description:
+        'Verifica tu dirección de correo para activar tu cuenta de Havenova de forma segura.',
+      openGraph: {
+        title: 'Verificar correo | Havenova',
+        description: 'Completa la verificación de correo de tu cuenta de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/user/verify-email',
       },
     },
   },

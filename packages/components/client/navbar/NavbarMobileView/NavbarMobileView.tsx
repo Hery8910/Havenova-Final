@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useId, useRef, useState } from 'react';
+import { useCallback, useId, useRef } from 'react';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import styles from './NavbarMobileView.module.css';
@@ -10,11 +10,11 @@ import { CgProfile } from 'react-icons/cg';
 import { IoIosSettings } from 'react-icons/io';
 import { FiTool } from 'react-icons/fi';
 import { NavbarAccountContent } from '../components/NavbarAccountContent';
-import { HiMiniLanguage } from 'react-icons/hi2';
 import Image from 'next/image';
 import { NavbarLinkList } from '../components/NavbarLinkList';
 import { NavbarPanelSection } from '../components/NavbarPanelSection';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
+import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 
 type NavSection = 'menu' | 'auth' | 'services' | 'preferences' | null;
 
@@ -33,7 +33,6 @@ export function NavbarMobileView({
   onLogout,
   bellSlot,
 }: NavbarMobileViewProps) {
-  const [activeSection, setActiveSection] = useState<NavSection>(null);
   const panelRef = useRef<HTMLElement>(null);
   const bottomBarRef = useRef<HTMLElement>(null);
   const panelId = useId();
@@ -45,17 +44,20 @@ export function NavbarMobileView({
     content;
   const BellSlot = bellSlot;
   const profileButtonLabel = auth.isLogged ? labels.profile : labels.account;
-  const closeActiveSection = useCallback(() => {
-    setActiveSection(null);
-  }, []);
+  const {
+    activePanel: activeSection,
+    visiblePanel: visibleSection,
+    isAnyPanelOpen: isPanelOpen,
+    closePanel: closeActiveSection,
+    togglePanel: toggleSection,
+    handlePanelTransitionEnd,
+  } = useNavbarPanelState<Exclude<NavSection, null>>({
+    persistOnClose: true,
+  });
 
   const handleNavClick = (href: string) => {
     onNavigate(href);
     closeActiveSection();
-  };
-
-  const toggleSection = (section: NavSection) => {
-    setActiveSection(activeSection === section ? null : section);
   };
 
   useDismissibleLayer({
@@ -63,25 +65,24 @@ export function NavbarMobileView({
     refs: [panelRef, bottomBarRef],
     onDismiss: closeActiveSection,
   });
-
   const activePanelLabel =
-    activeSection === 'menu'
+    visibleSection === 'menu'
       ? a11y.menuPanel
-      : activeSection === 'auth'
+      : visibleSection === 'auth'
         ? a11y.accountPanel
-        : activeSection === 'services'
+        : visibleSection === 'services'
           ? a11y.servicesPanel
-          : activeSection === 'preferences'
+          : visibleSection === 'preferences'
             ? a11y.preferencesPanel
             : a11y.mobileNavigation;
   const activePanelTitleId =
-    activeSection === 'menu'
+    visibleSection === 'menu'
       ? menuTitleId
-      : activeSection === 'auth'
+      : visibleSection === 'auth'
         ? accountTitleId
-        : activeSection === 'services'
+        : visibleSection === 'services'
           ? servicesTitleId
-          : activeSection === 'preferences'
+          : visibleSection === 'preferences'
             ? preferencesTitleId
             : undefined;
 
@@ -90,18 +91,20 @@ export function NavbarMobileView({
       <aside
         id={panelId}
         ref={panelRef}
-        className={`${styles.mobilePanel} glass-panel--base ${
-          activeSection ? styles.mobilePanelOpen : ''
+        className={`${styles.mobilePanel} card card--neutral ${
+          isPanelOpen ? styles.mobilePanelOpen : ''
         }`}
         aria-label={activePanelTitleId ? undefined : activePanelLabel}
         aria-labelledby={activePanelTitleId}
+        aria-hidden={!visibleSection}
+        onTransitionEnd={handlePanelTransitionEnd}
       >
-        {activeSection === 'auth' && (
+        {visibleSection === 'auth' && (
           <NavbarPanelSection
             className={styles.mobilePanelContent}
             title={profileButtonLabel}
             titleId={accountTitleId}
-            headerClassName={styles.mobilePanelHeader}
+            headerClassName={sharedStyles.panelHeader}
             titleClassName={styles.mobilePanelTitle}
             showHandle
             handleClassName={styles.panelHandle}
@@ -116,21 +119,17 @@ export function NavbarMobileView({
                 void onLogout();
               }}
               bellSlot={BellSlot}
-              listClassName={`${sharedStyles.panelList} ${styles.mobilePanelList}`}
-              buttonClassName={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink} ${styles.mobilePanelLinkWithIcon}`}
-              iconClassName={styles.mobilePanelIcon}
-              featureListClassName={`${sharedStyles.panelList} ${styles.mobilePanelList}`}
-              featureItemClassName={styles.mobilePanelFeature}
+              animated
             />
           </NavbarPanelSection>
         )}
 
-        {activeSection === 'menu' && (
+        {visibleSection === 'menu' && (
           <NavbarPanelSection
             className={styles.mobilePanelContent}
             title={labels.menu}
             titleId={menuTitleId}
-            headerClassName={styles.mobilePanelHeader}
+            headerClassName={sharedStyles.panelHeader}
             titleClassName={styles.mobilePanelTitle}
             showHandle
             handleClassName={styles.panelHandle}
@@ -138,18 +137,16 @@ export function NavbarMobileView({
             <NavbarLinkList
               items={menuLinks}
               onItemClick={handleNavClick}
-              listClassName={`${sharedStyles.panelList} ${styles.mobilePanelList}`}
-              buttonClassName={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink} ${styles.mobilePanelLinkWithIcon}`}
-              iconClassName={styles.mobilePanelIcon}
+              animated
             />
           </NavbarPanelSection>
         )}
-        {activeSection === 'services' && (
+        {visibleSection === 'services' && (
           <NavbarPanelSection
             className={styles.mobilePanelContent}
             title={labels.services}
             titleId={servicesTitleId}
-            headerClassName={styles.mobilePanelHeader}
+            headerClassName={sharedStyles.panelHeader}
             titleClassName={styles.mobilePanelTitle}
             showHandle
             handleClassName={styles.panelHandle}
@@ -157,24 +154,22 @@ export function NavbarMobileView({
             <NavbarLinkList
               items={serviceLinks}
               onItemClick={handleNavClick}
-              listClassName={`${sharedStyles.panelList} ${styles.mobilePanelList}`}
-              buttonClassName={`${sharedStyles.navLinkButton} ${styles.mobilePanelLink} ${styles.mobilePanelLinkWithIcon}`}
-              imageClassName={styles.mobilePanelImage}
+              animated
             />
           </NavbarPanelSection>
         )}
 
-        {activeSection === 'preferences' && (
+        {visibleSection === 'preferences' && (
           <NavbarPanelSection
             className={styles.mobilePanelContent}
             title={labels.preferences}
             titleId={preferencesTitleId}
-            headerClassName={styles.mobilePanelHeader}
+            headerClassName={sharedStyles.panelHeader}
             titleClassName={styles.mobilePanelTitle}
             showHandle
             handleClassName={styles.panelHandle}
           >
-            <ul className={`${sharedStyles.panelList} ${styles.mobilePanelList}`}>
+            <ul className={`${sharedStyles.panelList} ${styles.mobilePreferencesList}`}>
               <li className={styles.preferencesItem}>
                 <span className={styles.preferencesLabel}>
                   <span>{preferences.theme}</span>
@@ -198,17 +193,15 @@ export function NavbarMobileView({
 
       <nav
         ref={bottomBarRef}
-        className={` glass-panel--base ${styles.mobileBottomBar}`}
+        className={`card card--neutral ${styles.mobileBottomBar}`}
         aria-label={a11y.mobileNavigationSections}
       >
         <ul className={styles.mobileBottomList}>
           <li className={styles.mobileBottomItem}>
             <button
               type="button"
-              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
-                activeSection === 'menu'
-                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
-                  : ''
+              className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'menu' ? sharedStyles.iconButtonActive : ''
               }`}
               aria-label={a11y.menuToggle}
               aria-expanded={activeSection === 'menu'}
@@ -223,17 +216,15 @@ export function NavbarMobileView({
                 height={branding.mobileLogoHeight}
                 priority
               />
-              <span className={styles.srOnly}>{labels.menu}</span>
+              <span className={sharedStyles.srOnly}>{labels.menu}</span>
             </button>
           </li>
 
           <li className={styles.mobileBottomItem}>
             <button
               type="button"
-              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
-                activeSection === 'services'
-                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
-                  : ''
+              className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'services' ? sharedStyles.iconButtonActive : ''
               }`}
               aria-label={a11y.servicesToggle}
               aria-expanded={activeSection === 'services'}
@@ -241,17 +232,15 @@ export function NavbarMobileView({
               onClick={() => toggleSection('services')}
             >
               <FiTool />
-              <span className={styles.srOnly}>{labels.services}</span>
+              <span className={sharedStyles.srOnly}>{labels.services}</span>
             </button>
           </li>
 
           <li className={styles.mobileBottomItem}>
             <button
               type="button"
-              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
-                activeSection === 'auth'
-                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
-                  : ''
+              className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'auth' ? sharedStyles.iconButtonActive : ''
               }`}
               aria-label={a11y.profileToggle}
               aria-expanded={activeSection === 'auth'}
@@ -259,17 +248,15 @@ export function NavbarMobileView({
               onClick={() => toggleSection('auth')}
             >
               <CgProfile />
-              <span className={styles.srOnly}>{profileButtonLabel}</span>
+              <span className={sharedStyles.srOnly}>{profileButtonLabel}</span>
             </button>
           </li>
 
           <li className={styles.mobileBottomItem}>
             <button
               type="button"
-              className={`${sharedStyles.iconButton} ${styles.mobileNavButton} ${
-                activeSection === 'preferences'
-                  ? `${sharedStyles.iconButtonActive} ${styles.mobileNavButtonActive}`
-                  : ''
+              className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton} ${
+                activeSection === 'preferences' ? sharedStyles.iconButtonActive : ''
               }`}
               aria-label={a11y.preferencesToggle}
               aria-expanded={activeSection === 'preferences'}
@@ -277,7 +264,7 @@ export function NavbarMobileView({
               onClick={() => toggleSection('preferences')}
             >
               <IoIosSettings />
-              <span className={styles.srOnly}>{labels.preferences}</span>
+              <span className={sharedStyles.srOnly}>{labels.preferences}</span>
             </button>
           </li>
         </ul>

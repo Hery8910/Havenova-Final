@@ -191,7 +191,7 @@ export type ServiceRequestItem =
 // --------------------------------------
 
 export type CleaningServiceType = 'cleaning';
-export type CleaningCustomerType = 'private' | 'business' | 'property_management';
+export type CleaningCustomerType = 'private' | 'business';
 export type CleaningRequestStatus =
   | 'submitted'
   | 'date_confirmed'

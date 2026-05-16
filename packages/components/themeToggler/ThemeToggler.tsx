@@ -74,7 +74,7 @@ const ThemeToggler = ({
   return (
     <button
       type="button"
-      className={`${sharedStyles.iconButton} ${styles.toggleButton} ${
+      className={`button button--ghost ${sharedStyles.iconButton} ${styles.toggleButton} ${
         shouldShowCurrentValue ? styles.toggleButtonWithValue : ''
       } ${
         theme === 'dark' ? `${sharedStyles.iconButtonActive} ${styles.isDark}` : styles.isLight

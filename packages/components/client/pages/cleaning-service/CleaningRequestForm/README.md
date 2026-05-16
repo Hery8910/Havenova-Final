@@ -43,7 +43,7 @@ Collected fields:
 
 ```ts
 {
-  customerType: 'private' | 'business' | 'property_management';
+  customerType: 'private' | 'business';
 }
 ```
 
@@ -143,7 +143,7 @@ The form currently emits this object to the parent page:
 
 ```ts
 interface CleaningRequestFormSubmission {
-  customerType: 'private' | 'business' | 'property_management';
+  customerType: 'private' | 'business';
   details: {
     frequency: 'once' | 'two_per_month' | 'three_per_month' | 'weekly';
     property: {

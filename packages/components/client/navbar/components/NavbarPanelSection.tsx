@@ -31,7 +31,10 @@ export function NavbarPanelSection({
         />
       ) : null}
       <div className={headerClassName}>
-        <h2 id={titleId} className={`${sharedStyles.panelTitle} ${titleClassName ?? ''}`.trim()}>
+        <h2
+          id={titleId}
+          className={`type-title-sm ${sharedStyles.panelTitle} ${titleClassName ?? ''}`.trim()}
+        >
           {title}
         </h2>
       </div>

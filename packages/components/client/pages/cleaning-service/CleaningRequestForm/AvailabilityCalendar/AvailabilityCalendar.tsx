@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useMonthlyAvailability } from '../../../../../../hooks';
 import type {
   CalendarDay,
@@ -20,6 +21,7 @@ import {
 import styles from './AvailabilityCalendar.module.css';
 
 export interface AvailabilityCalendarProps {
+  showHeader?: boolean;
   clientId: string;
   schedule: WeeklySchedule;
   slotDurationMinutes: number;
@@ -87,6 +89,7 @@ function getInitialMonthState(value: SelectedCalendarSlot | null) {
 }
 
 export default function AvailabilityCalendar({
+  showHeader = true,
   clientId,
   schedule,
   slotDurationMinutes,
@@ -101,7 +104,7 @@ export default function AvailabilityCalendar({
   const [visibleMonth, setVisibleMonth] = useState(initialState.month);
   const [selectedDate, setSelectedDate] = useState<string | null>(initialState.selectedDate);
   const [isSlotsOpen, setIsSlotsOpen] = useState(Boolean(initialState.selectedDate));
-  const { availability, loading, error } = useMonthlyAvailability(clientId, visibleYear, visibleMonth);
+  const { availability, loading } = useMonthlyAvailability(clientId, visibleYear, visibleMonth);
 
   useEffect(() => {
     if (!value?.start) {
@@ -180,110 +183,121 @@ export default function AvailabilityCalendar({
 
   return (
     <section className={styles.wrapper}>
-      <header className={styles.header}>
-        <section className={styles.copy}>
-          <h3 className={styles.title}>{copy.title}</h3>
-          <p className={styles.description}>{copy.description}</p>
-        </section>
-      </header>
+      {showHeader ? (
+        <header className={styles.header}>
+          <section className={styles.copy}>
+            <h3 className={styles.title}>{copy.title}</h3>
+            <p className={styles.description}>{copy.description}</p>
+          </section>
+        </header>
+      ) : null}
 
       <section className={styles.calendarShell}>
-        <section className={styles.calendarPanel} aria-label={copy.title}>
-          <nav className={styles.calendarToolbar} aria-label={copy.monthNavigationAriaLabel}>
-            <button type="button" className={styles.navButton} onClick={() => changeVisibleMonth(-1)}>
-              {copy.previousMonth}
-            </button>
-            <h4 className={styles.monthHeading}>{formatMonthLabel(visibleYear, visibleMonth)}</h4>
-            <button type="button" className={styles.navButton} onClick={() => changeVisibleMonth(1)}>
-              {copy.nextMonth}
-            </button>
-          </nav>
+        <div className={styles.stage}>
+          {isSlotsOpen && selectedDay ? (
+            <CalendarDaySlots
+              date={selectedDay.date}
+              slots={selectedDay.slots}
+              value={value}
+              onSelect={onChange}
+              onClose={closeSlotsPanel}
+              texts={{
+                title: copy.slotsTitle,
+                empty: copy.empty,
+                noDateSelected: copy.noDateSelected,
+                noAvailability: copy.noAvailability,
+                closeLabel: copy.closeSlotsLabel,
+                blockedBadge: copy.blockedBadge,
+                selectedBadge: copy.selectedBadge,
+                availableBadge: copy.availableBadge,
+              }}
+            />
+          ) : (
+            <section className={styles.calendarPanel} aria-label={copy.title}>
+              <nav className={styles.calendarToolbar} aria-label={copy.monthNavigationAriaLabel}>
+                <button
+                  type="button"
+                  className={`button_invert ${styles.navButton}`}
+                  onClick={() => changeVisibleMonth(-1)}
+                  aria-label={copy.previousMonth}
+                >
+                  <IoIosArrowBack aria-hidden="true" />
+                </button>
+                <h4 className={styles.monthHeading}>{formatMonthLabel(visibleYear, visibleMonth)}</h4>
+                <button
+                  type="button"
+                  className={`button_invert ${styles.navButton}`}
+                  onClick={() => changeVisibleMonth(1)}
+                  aria-label={copy.nextMonth}
+                >
+                  <IoIosArrowForward aria-hidden="true" />
+                </button>
+              </nav>
 
-          {loading && <p className={styles.notice}>{copy.loading}</p>}
-          {error && (
-            <p className={`${styles.notice} ${styles.error}`}>
-              {copy.errorPrefix} {error}
-            </p>
+              <div className={styles.noticeSlot} aria-live="polite">
+                {loading ? <p className={styles.notice}>{copy.loading}</p> : null}
+              </div>
+
+              <ol className={styles.weekdayRow} aria-hidden="true">
+                {copy.weekdayLabels.map((label) => (
+                  <li key={label} className={styles.weekdayLabel}>
+                    {label}
+                  </li>
+                ))}
+              </ol>
+
+              <ol className={styles.grid} aria-label={formatMonthLabel(visibleYear, visibleMonth)}>
+                {calendarDays.map((day) => {
+                  const availableSlots = day.slots.filter((slot) => !slot.blocked).length;
+                  const isSelectedDay = day.date === selectedDate;
+                  const isPastOrToday = day.date < minSelectableDate;
+                  const isDisabled = !day.isCurrentMonth || isPastOrToday;
+                  const isAvailable =
+                    day.isCurrentMonth && !isPastOrToday && !day.blocked && availableSlots > 0;
+                  const statusLabel = isPastOrToday
+                    ? copy.nonWorkday
+                    : !day.isWorkday
+                      ? copy.nonWorkday
+                      : day.blocked
+                        ? copy.blockedDay
+                        : `${availableSlots} ${copy.availableDay}`;
+
+                  return (
+                    <li key={day.date} className={styles.dayItem}>
+                      <button
+                        type="button"
+                        className={`${styles.dayCell} ${!day.isCurrentMonth ? styles.outsideMonth : ''} ${
+                          isSelectedDay ? styles.daySelected : ''
+                        } ${day.blocked ? styles.dayBlocked : ''} ${
+                          isAvailable ? styles.dayAvailable : ''
+                        } ${isPastOrToday ? styles.dayUnavailable : ''}`}
+                        onClick={() => handleDaySelect(day)}
+                        disabled={isDisabled}
+                        aria-pressed={isSelectedDay}
+                        aria-label={`${formatLongDate(day.date)}. ${statusLabel}.`}
+                      >
+                        <time className={styles.dayNumber} dateTime={day.date}>
+                          {day.date.slice(-2)}
+                        </time>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+
+              {selectedDay && (
+                <p className={styles.selectedDaySummary}>
+                  {formatLongDate(selectedDay.date)}
+                  {!selectedDay.isWorkday
+                    ? ` • ${copy.nonWorkday}`
+                    : selectedDay.blocked
+                      ? ` • ${copy.blockedDay}`
+                      : ''}
+                </p>
+              )}
+            </section>
           )}
-
-          <ol className={styles.weekdayRow} aria-hidden="true">
-            {copy.weekdayLabels.map((label) => (
-              <li key={label} className={styles.weekdayLabel}>
-                {label}
-              </li>
-            ))}
-          </ol>
-
-          <ol className={styles.grid} aria-label={formatMonthLabel(visibleYear, visibleMonth)}>
-            {calendarDays.map((day) => {
-              const availableSlots = day.slots.filter((slot) => !slot.blocked).length;
-              const isSelectedDay = day.date === selectedDate;
-              const isPastOrToday = day.date < minSelectableDate;
-              const isDisabled = !day.isCurrentMonth || isPastOrToday;
-              const isAvailable = day.isCurrentMonth && !isPastOrToday && !day.blocked && availableSlots > 0;
-              const statusLabel = isPastOrToday
-                ? copy.nonWorkday
-                : !day.isWorkday
-                  ? copy.nonWorkday
-                  : day.blocked
-                    ? copy.blockedDay
-                    : `${availableSlots} ${copy.availableDay}`;
-
-              return (
-                <li key={day.date} className={styles.dayItem}>
-                  <button
-                    type="button"
-                    className={`${styles.dayCell} ${!day.isCurrentMonth ? styles.outsideMonth : ''} ${
-                      isSelectedDay ? styles.daySelected : ''
-                    } ${day.blocked ? styles.dayBlocked : ''} ${
-                      isAvailable ? styles.dayAvailable : ''
-                    } ${isPastOrToday ? styles.dayUnavailable : ''}`}
-                    onClick={() => handleDaySelect(day)}
-                    disabled={isDisabled}
-                    aria-pressed={isSelectedDay}
-                    aria-label={`${formatLongDate(day.date)}. ${statusLabel}.`}
-                  >
-                    <time className={styles.dayNumber} dateTime={day.date}>
-                      {day.date.slice(-2)}
-                    </time>
-                    <span className={styles.dayMeta}>{statusLabel}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-
-          {selectedDay && (
-            <p className={styles.selectedDaySummary}>
-              {formatLongDate(selectedDay.date)}
-              {!selectedDay.isWorkday
-                ? ` • ${copy.nonWorkday}`
-                : selectedDay.blocked
-                  ? ` • ${copy.blockedDay}`
-                  : ''}
-            </p>
-          )}
-        </section>
-
-        {isSlotsOpen && selectedDay && (
-          <CalendarDaySlots
-            date={selectedDay.date}
-            slots={selectedDay.slots}
-            value={value}
-            onSelect={onChange}
-            onClose={closeSlotsPanel}
-            texts={{
-              title: copy.slotsTitle,
-              empty: copy.empty,
-              noDateSelected: copy.noDateSelected,
-              noAvailability: copy.noAvailability,
-              closeLabel: copy.closeSlotsLabel,
-              blockedBadge: copy.blockedBadge,
-              selectedBadge: copy.selectedBadge,
-              availableBadge: copy.availableBadge,
-            }}
-          />
-        )}
+        </div>
       </section>
     </section>
   );

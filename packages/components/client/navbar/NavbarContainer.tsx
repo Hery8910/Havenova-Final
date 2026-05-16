@@ -34,9 +34,9 @@ export function NavbarContainer() {
   };
 
   if (!deviceSize) {
-    return (
+      return (
       <nav className={styles.navbarPlaceholder} aria-hidden="true">
-        <div className={`${styles.navbarShell} glass-panel--base`}>
+        <div className={`${styles.navbarShell} card card--neutral`}>
           <div className={styles.navbarShellBrand} />
           <div className={styles.navbarShellLinks}>
             <span className={styles.navbarShellItem} />
@@ -48,7 +48,7 @@ export function NavbarContainer() {
             <span className={styles.navbarShellAction} />
           </div>
         </div>
-        <div className={`${styles.navbarShellMobile} glass-panel--base`}>
+        <div className={`${styles.navbarShellMobile} card card--neutral`}>
           <span className={styles.navbarShellMobileItem} />
           <span className={styles.navbarShellMobileItem} />
           <span className={styles.navbarShellMobileItem} />

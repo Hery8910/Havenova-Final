@@ -48,10 +48,6 @@
     "title": "Account blocked",
     "description": "Your access is blocked. Please contact support."
   },
-  "AUTH_CLIENT_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "We couldn't match your account to this client."
-  },
   "AUTH_USER_NOT_FOUND": {
     "title": "User not found",
     "description": "We couldn't find a matching user for this request."
@@ -175,44 +171,11 @@
     "title": "Password required",
     "description": "Please provide your password to continue."
   },
-  "USER_LOGIN_INVALID_PASSWORD": {
-    "title": "Invalid credentials",
-    "description": "The password is incorrect. Try again or reset it.",
-    "confirm": "Reset password",
-    "close": "Try again"
-  },
-  "USER_LOGIN_INVALID_CREDENTIALS": {
-    "title": "Invalid credentials",
-    "description": "Email or password is incorrect. Check your details and try again.",
-    "close": "Try again"
-  },
-  "USER_LOGIN_USER_NOT_FOUND": {
-    "title": "User not found",
-    "description": "We could not find an account for these credentials.",
-    "confirm": "Create account",
-    "close": "Close"
-  },
-  "USER_EMAIL_ALREADY_REGISTERED": {
-    "title": "Email already registered",
-    "description": "This email is already registered. Please log in to continue."
-  },
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "Email verified successfully",
     "description": "Your email has been verified. You can continue to login now.",
     "confirm": "Go to login",
     "close": "Close"
-  },
-  "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
-    "title": "Reset link sent",
-    "description": "We have emailed you a link to reset your password. Please check your inbox."
-  },
-  "USER_VERIFY_EMAIL_RESENDED": {
-    "title": "Verification email resend",
-    "description": "We have sent you a new verification email."
-  },
-  "USER_VERIFY_MISSING_TOKEN": {
-    "title": "Invalid verification link",
-    "description": "The verification token is missing or invalid."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "Email already verified",
@@ -378,18 +341,6 @@
     "title": "Verification email resent",
     "description": "We sent you a new verification email. Check your inbox to continue.",
     "confirm": "Continue",
-    "close": "Close"
-  },
-  "USER_VERIFY_EXPIRED_TOKEN": {
-    "title": "Verification link expired",
-    "description": "This verification link has expired. Request a new verification email.",
-    "confirm": "Continue",
-    "close": "Close"
-  },
-  "USER_VERIFY_INVALID_TOKEN": {
-    "title": "Invalid verification link",
-    "description": "This verification link is invalid or corrupted.",
-    "confirm": "Go to home",
     "close": "Close"
   },
   "OBJECT_ADDRESS_EXISTS": {

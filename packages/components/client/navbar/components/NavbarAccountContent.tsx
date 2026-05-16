@@ -1,6 +1,8 @@
 import { LuLogOut } from 'react-icons/lu';
 import type { NavLinkItem } from '../navbar.types';
+import sharedStyles from '../NavbarShared.module.css';
 import { NavbarLinkList } from './NavbarLinkList';
+import styles from './NavbarLinkList.module.css';
 
 export interface NavbarAccountContentProps {
   authIsLogged: boolean;
@@ -9,12 +11,8 @@ export interface NavbarAccountContentProps {
   onItemClick: (href: string) => void;
   onLogoutClick: () => void;
   bellSlot?: (() => JSX.Element) | null;
-  listClassName: string;
-  buttonClassName: string;
-  itemClassName?: string;
-  iconClassName?: string;
-  featureListClassName?: string;
-  featureItemClassName?: string;
+  animated?: boolean;
+  animationDirection?: 'up' | 'down';
 }
 
 export function NavbarAccountContent({
@@ -24,20 +22,20 @@ export function NavbarAccountContent({
   onItemClick,
   onLogoutClick,
   bellSlot,
-  listClassName,
-  buttonClassName,
-  itemClassName,
-  iconClassName,
-  featureListClassName,
-  featureItemClassName,
+  animated = false,
+  animationDirection = 'up',
 }: NavbarAccountContentProps) {
   const BellSlot = bellSlot;
+  const animatedClassName =
+    animationDirection === 'down' ? sharedStyles.panelListAnimatedDown : sharedStyles.panelListAnimated;
+  const panelListClassName = `${sharedStyles.panelList} ${animated ? animatedClassName : ''} ${styles.panelList}`.trim();
+  const panelButtonClassName = `button button--ghost ${styles.panelButton}`;
 
   return (
     <>
       {BellSlot ? (
-        <ul className={featureListClassName ?? listClassName}>
-          <li className={featureItemClassName ?? itemClassName}>
+        <ul className={panelListClassName}>
+          <li className={styles.panelItem}>
             <BellSlot />
           </li>
         </ul>
@@ -45,21 +43,19 @@ export function NavbarAccountContent({
       <NavbarLinkList
         items={userLinks}
         onItemClick={onItemClick}
-        listClassName={listClassName}
-        itemClassName={itemClassName}
-        buttonClassName={buttonClassName}
-        iconClassName={iconClassName}
+        animated={animated}
+        animationDirection={animationDirection}
       />
       {authIsLogged ? (
-        <ul className={listClassName}>
-          <li className={itemClassName}>
+        <ul className={panelListClassName}>
+          <li className={styles.panelItem}>
             <button
               type="button"
-              className={buttonClassName}
+              className={panelButtonClassName}
               onClick={onLogoutClick}
               aria-label={logoutLabel}
             >
-              <span className={iconClassName}>
+              <span className={styles.panelIcon}>
                 <LuLogOut aria-hidden />
               </span>
               <span>{logoutLabel}</span>

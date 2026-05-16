@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useId, useRef, useState } from 'react';
+import { useId, useRef } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
@@ -12,6 +12,7 @@ import { NavbarBrand } from '../components/NavbarBrand';
 import { NavbarLinkList } from '../components/NavbarLinkList';
 import { NavbarPanelSection } from '../components/NavbarPanelSection';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
+import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 
 type TabletPanel = 'menu' | 'account' | null;
 
@@ -30,8 +31,6 @@ export function NavbarTabletView({
   onLogout,
   bellSlot,
 }: NavbarTabletViewProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [accountOpen, setAccountOpen] = useState(false);
   const tabletNavRef = useRef<HTMLElement>(null);
   const accountPanelId = useId();
   const menuPanelId = useId();
@@ -41,43 +40,30 @@ export function NavbarTabletView({
   const BellSlot = bellSlot;
   const menuPanelTitle = labels.menu;
   const profileButtonLabel = auth.isLogged ? labels.profile : labels.account;
-  const activePanel: TabletPanel = menuOpen ? 'menu' : accountOpen ? 'account' : null;
-  const dismissPanels = useCallback(() => {
-    setAccountOpen(false);
-    setMenuOpen(false);
-  }, []);
+  const {
+    activePanel,
+    closePanel,
+    togglePanel,
+    isPanelOpen,
+  } = useNavbarPanelState<Exclude<TabletPanel, null>>();
+  const accountOpen = isPanelOpen('account');
+  const menuOpen = isPanelOpen('menu');
 
   useDismissibleLayer({
     enabled: Boolean(activePanel),
     refs: [tabletNavRef],
-    onDismiss: dismissPanels,
+    onDismiss: closePanel,
   });
-
-  const handleAccountToggle = () => {
-    if (menuOpen) {
-      setMenuOpen(false);
-    }
-
-    setAccountOpen((prev) => !prev);
-  };
-
-  const handleMenuToggle = () => {
-    if (accountOpen) {
-      setAccountOpen(false);
-    }
-
-    setMenuOpen((prev) => !prev);
-  };
 
   const handlePanelNavigation = (href: string) => {
     onNavigate(href);
-    dismissPanels();
+    closePanel();
   };
 
   const closeActivePanel = () => {
     if (!activePanel) return;
 
-    dismissPanels();
+    closePanel();
   };
 
   return (
@@ -85,8 +71,8 @@ export function NavbarTabletView({
       <section className={styles.tabletLayout}>
         <header className={styles.tabletHeader}>
           <NavbarBrand
-            linkClassName={styles.logoLink}
-            imageClassName={styles.logoImage}
+            linkClassName={sharedStyles.logoLink}
+            imageClassName={sharedStyles.logoImage}
             ariaLabel={a11y.homeLink}
             logoAlt={a11y.logoAlt}
             href={branding.homeHref}
@@ -115,62 +101,64 @@ export function NavbarTabletView({
             </div>
             <div className={styles.accountActionsGroup}>
               {BellSlot ? (
-                <div className={styles.notificationSlot}>
+                <div className={sharedStyles.notificationSlot}>
                   <BellSlot />
                 </div>
               ) : null}
               <button
                 type="button"
-                className={`${sharedStyles.iconButton} ${styles.profileButton} ${
-                  accountOpen ? `${sharedStyles.iconButtonActive} ${styles.profileButtonOpen}` : ''
+                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton} ${
+                  accountOpen ? sharedStyles.iconButtonActive : ''
                 }`}
                 aria-label={a11y.profileToggle}
                 aria-expanded={accountOpen}
                 aria-controls={accountPanelId}
-                onClick={handleAccountToggle}
+                onClick={() => togglePanel('account')}
               >
                 <CgProfile />
-                <span className={styles.srOnly}>{profileButtonLabel}</span>
+                <span className={sharedStyles.srOnly}>{profileButtonLabel}</span>
               </button>
             </div>
             <button
               type="button"
-              className={`${sharedStyles.menuButton} ${styles.menuButton} ${
+              className={`button button--ghost ${sharedStyles.menuButton} ${styles.menuButton} ${
                 menuOpen ? styles.menuButtonOpen : ''
               }`}
               aria-label={menuOpen ? a11y.closeMenu : a11y.openMenu}
               aria-expanded={menuOpen}
               aria-controls={menuPanelId}
-              onClick={handleMenuToggle}
+              onClick={() => togglePanel('menu')}
             >
               <span className={styles.menuLine} aria-hidden="true" />
               <span className={styles.menuLine} aria-hidden="true" />
             </button>
           </section>
         </header>
-        {activePanel && (
-          <div className={styles.panelWrapper}>
-            <div className={styles.tabletSection}>
-              <nav
-                className={`${styles.tabletPanel} glass-panel--base`}
-                id={activePanel === 'menu' ? menuPanelId : accountPanelId}
-                aria-labelledby={activePanel === 'menu' ? menuTitleId : accountTitleId}
-              >
+        <div className={styles.panelWrapper}>
+          <div className={styles.tabletSection}>
+            <nav
+              className={`${styles.tabletPanel} card card--neutral ${
+                activePanel ? styles.tabletPanelOpen : ''
+              }`}
+              id={activePanel ? (activePanel === 'menu' ? menuPanelId : accountPanelId) : undefined}
+              aria-labelledby={
+                activePanel ? (activePanel === 'menu' ? menuTitleId : accountTitleId) : undefined
+              }
+              aria-hidden={!activePanel}
+            >
+              {activePanel ? (
                 <NavbarPanelSection
                   title={activePanel === 'menu' ? menuPanelTitle : session.accountMenuTitle}
                   titleId={activePanel === 'menu' ? menuTitleId : accountTitleId}
-                  headerClassName={styles.panelHeader}
+                  headerClassName={sharedStyles.panelHeader}
                   titleClassName={styles.panelTitle}
                 >
                   {activePanel === 'menu' ? (
                     <NavbarLinkList
                       items={primaryLinks}
                       onItemClick={handlePanelNavigation}
-                      listClassName={styles.tabletList}
-                      itemClassName={styles.tabletItem}
-                      buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-                      iconClassName={styles.linkIcon}
-                      imageClassName={styles.linkImage}
+                      animated
+                      animationDirection="down"
                     />
                   ) : (
                     <NavbarAccountContent
@@ -179,20 +167,18 @@ export function NavbarTabletView({
                       logoutLabel={session.logoutLabel}
                       onItemClick={handlePanelNavigation}
                       onLogoutClick={() => {
-                        dismissPanels();
+                        closePanel();
                         void onLogout();
                       }}
-                      listClassName={styles.tabletList}
-                      itemClassName={styles.tabletItem}
-                      buttonClassName={`${sharedStyles.navLinkButton} ${styles.navLink}`}
-                      iconClassName={styles.linkIcon}
+                      animated
+                      animationDirection="down"
                     />
                   )}
                 </NavbarPanelSection>
-              </nav>
-            </div>
+              ) : null}
+            </nav>
           </div>
-        )}
+        </div>
       </section>
     </section>
   );

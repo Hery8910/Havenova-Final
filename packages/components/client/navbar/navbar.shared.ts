@@ -89,7 +89,6 @@ export interface ResolvedNavbarLanguageSwitcher {
   openButtonLabel: string;
   closeButtonLabel: string;
   currentLanguageLabel: string;
-  currentTag: string;
   options: Record<AppLanguage, ResolvedNavbarLanguageOption>;
 }
 
@@ -287,7 +286,6 @@ export function getNavbarContent({
           navbarTexts?.languageSwitcher?.closeButtonLabel ?? 'Close language selector',
         currentLanguageLabel:
           navbarTexts?.languageSwitcher?.currentLanguageLabel ?? 'Current language',
-        currentTag: navbarTexts?.languageSwitcher?.currentTag ?? 'Current',
         options: {
           de: {
             label: navbarTexts?.languageSwitcher?.options?.de?.label ?? 'Deutsch',

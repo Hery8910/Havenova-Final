@@ -207,7 +207,7 @@
       },
       "form": {
         "process": {
-          "title": "Schließen Sie Ihre Reinigungsanfrage in 4 Schritten ab",
+          "title": "Schließen Sie Ihre Reinigungsanfrage in 5 Schritten ab",
           "description": "Folgen Sie den Schritten, damit wir alle Daten für die Erstbesichtigung und Einsatzplanung erhalten.",
           "stepLabel": "Schritt",
           "steps": {
@@ -229,8 +229,7 @@
           "label": "Kundentyp",
           "options": {
             "private": "Privat",
-            "business": "Gewerblich",
-            "property_management": "Hausverwaltung"
+            "business": "Gewerblich"
           }
         },
         "frequency": {
@@ -440,8 +439,7 @@
           "helper": "Wählen Sie die passende Kundengruppe für diesen Hausservice-Einsatz.",
           "options": {
             "private": "Privat",
-            "business": "Gewerblich",
-            "property_management": "Hausverwaltung"
+            "business": "Gewerblich"
           }
         },
         "serviceType": {

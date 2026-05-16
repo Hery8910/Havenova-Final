@@ -17,6 +17,7 @@ import {
 import styles from './WorkAddressSelector.module.css';
 
 export interface WorkAddressSelectorProps {
+  showHeader?: boolean;
   value: WorkAddressSelection | null;
   onChange: (value: WorkAddressSelection | null) => void;
   texts?: {
@@ -44,7 +45,12 @@ export interface WorkAddressSelectorProps {
 
 type SelectionMode = 'primary' | 'saved' | 'new';
 
-export default function WorkAddressSelector({ value, onChange, texts }: WorkAddressSelectorProps) {
+export default function WorkAddressSelector({
+  showHeader = true,
+  value,
+  onChange,
+  texts,
+}: WorkAddressSelectorProps) {
   const { profile, loading } = useProfile();
   const isInternalSyncRef = useRef(false);
   const addressOptions = useMemo(
@@ -151,15 +157,17 @@ export default function WorkAddressSelector({ value, onChange, texts }: WorkAddr
 
   return (
     <section className={styles.section} aria-labelledby="work-address-selector-title">
-      <header className={styles.header}>
-        <h3 id="work-address-selector-title" className={styles.title}>
-          {texts?.title ?? 'Service address'}
-        </h3>
-        <p className={styles.description}>
-          {texts?.description ??
-            'Choose your main address, a saved one, or enter a different location for this request.'}
-        </p>
-      </header>
+      {showHeader ? (
+        <header className={styles.header}>
+          <h3 id="work-address-selector-title" className={styles.title}>
+            {texts?.title ?? 'Service address'}
+          </h3>
+          <p className={styles.description}>
+            {texts?.description ??
+              'Choose your main address, a saved one, or enter a different location for this request.'}
+          </p>
+        </header>
+      ) : null}
 
       {loading ? (
         <p className={styles.helper}>{texts?.loading ?? 'Loading your saved addresses...'}</p>

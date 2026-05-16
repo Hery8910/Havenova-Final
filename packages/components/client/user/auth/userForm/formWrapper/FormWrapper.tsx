@@ -8,11 +8,6 @@ import {
   validateTosAccepted,
 } from '../../../../../../utils/validators/authFormValidator';
 import { useI18n } from '../../../../../../contexts/i18n';
-import { useRouter } from 'next/navigation';
-import { useLang } from '../../../../../../hooks/useLang';
-import { href } from '../../../../../../utils/navigation';
-import { useClient } from '../../../../../../contexts/client/ClientContext';
-import { useAuth } from '../../../../../../contexts/auth/authContext';
 
 interface WrapperProps<T extends Record<string, any>> {
   fields: (FormField & keyof T)[];
@@ -22,6 +17,7 @@ interface WrapperProps<T extends Record<string, any>> {
   showHintPassword?: boolean;
   initialValues: T;
   loading: boolean;
+  onForgotPassword?: () => void;
 }
 type ValidateField = 'email' | 'password' | 'tosAccepted';
 
@@ -53,12 +49,9 @@ export default function FormWrapper<T extends Record<string, any>>({
   showHintPassword,
   initialValues,
   loading,
+  onForgotPassword,
 }: WrapperProps<T>) {
   const { texts } = useI18n();
-  const { auth } = useAuth();
-  const { client } = useClient();
-  const router = useRouter();
-  const lang = useLang();
 
   const formError = texts.components.client.form.error as Partial<
     Record<FormField, Record<string, string>>
@@ -66,6 +59,7 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   const placeholderText = texts.components.client.form.placeholders;
   const labelText = texts.components.client.form.labels;
+  const initialValuesKey = JSON.stringify(initialValues);
 
   const [formData, setFormData] = useState<T>(initialValues);
 
@@ -74,20 +68,8 @@ export default function FormWrapper<T extends Record<string, any>>({
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      ...initialValues,
-      clientId: client?._id || initialValues.clientId || '',
-      language: initialValues.language || 'de',
-      email: auth?.email || initialValues.email || prev.email,
-    }));
-  }, [
-    auth?.email,
-    client?._id,
-    initialValues.clientId,
-    initialValues.email,
-    initialValues.language,
-  ]);
+    setFormData(initialValues);
+  }, [initialValues, initialValuesKey]);
 
   const passwordValidator = (value: string): string[] => {
     if (showHintPassword) {
@@ -145,10 +127,6 @@ export default function FormWrapper<T extends Record<string, any>>({
     }
   };
 
-  const handleForgotPassword = () => {
-    router.push(href(lang, '/user/forgot-password'));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElement = e.currentTarget;
@@ -189,12 +167,7 @@ export default function FormWrapper<T extends Record<string, any>>({
 
     if (submitResult === false) return;
 
-    setFormData({
-      ...initialValues,
-      email: auth?.email || initialValues.email || '',
-      clientId: client?._id || '',
-      language: initialValues.language || 'de',
-    } as T);
+    setFormData(initialValues);
     setErrors({});
     setTouched({});
   };
@@ -209,7 +182,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       onChange={handleChange}
       onBlur={handleBlur}
       onTogglePassword={() => setShowPassword((prev) => !prev)}
-      forgotPassword={handleForgotPassword}
+      forgotPassword={onForgotPassword}
       onSubmit={handleSubmit}
       button={button}
       showForgotPassword={showForgotPassword}

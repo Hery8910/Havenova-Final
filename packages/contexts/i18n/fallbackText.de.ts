@@ -67,10 +67,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Konto gesperrt',
     'Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support.'
   ),
-  AUTH_CLIENT_NOT_FOUND: withClose(
-    'Client nicht gefunden',
-    'Ihr Konto konnte keinem Client zugeordnet werden.'
-  ),
   AUTH_USER_NOT_FOUND: withClose(
     'Benutzer nicht gefunden',
     'Es konnte kein passender Benutzer gefunden werden.'
@@ -155,14 +151,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
     'Passwort erforderlich',
     'Bitte geben Sie Ihr Passwort ein, um fortzufahren.'
   ),
-  USER_LOGIN_INVALID_PASSWORD: withClose(
-    'Ungültige Anmeldedaten',
-    'Das Passwort ist falsch. Bitte versuchen Sie es erneut.'
-  ),
-  USER_LOGIN_USER_NOT_FOUND: withClose(
-    'Benutzer nicht gefunden',
-    'Es wurde kein Konto mit diesen Zugangsdaten gefunden.'
-  ),
   USER_VERIFY_EMAIL_SUCCESS: withClose(
     'E-Mail erfolgreich bestätigt',
     'Ihre E-Mail-Adresse wurde erfolgreich verifiziert.'
@@ -170,10 +158,6 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   USER_VERIFY_EMAIL_RESENT: withClose(
     'Bestätigungs-E-Mail erneut gesendet',
     'Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet.'
-  ),
-  USER_VERIFY_MISSING_TOKEN: withClose(
-    'Ungültiger Bestätigungslink',
-    'Der Verifizierungslink ist ungültig oder fehlt.'
   ),
   USER_VERIFY_EMAIL_VERIFIED: withClose(
     'E-Mail bereits bestätigt',
@@ -323,11 +307,11 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   ),
   MAGIC_LOGIN_SUCCESS: withClose('Login erfolgreich', 'Sie wurden erfolgreich eingeloggt.'),
 
-  USER_VERIFY_EXPIRED_TOKEN: withClose(
+  AUTH_VERIFY_EMAIL_TOKEN_EXPIRED: withClose(
     'Bestätigungslink abgelaufen',
     'Ihr Bestätigungslink ist abgelaufen. Bitte fordern Sie einen neuen an.'
   ),
-  USER_VERIFY_INVALID_TOKEN: withClose(
+  AUTH_VERIFY_EMAIL_TOKEN_INVALID: withClose(
     'Ungültiger Bestätigungslink',
     'Der Bestätigungslink ist ungültig oder beschädigt.'
   ),
@@ -444,8 +428,8 @@ export const fallbackEmailEmpty = fallbackPopups.USER_LOGIN_MISSING_EMAIL;
 export const fallbackPasswordEmpty = fallbackPopups.USER_LOGIN_MISSING_PASSWORD;
 export const fallbackVerifyEmailSuccess = fallbackPopups.USER_VERIFY_EMAIL_SUCCESS;
 export const fallbackVerifyEmailResent = fallbackPopups.USER_VERIFY_EMAIL_RESENT;
-export const fallbackExpiredToken = fallbackPopups.USER_VERIFY_EXPIRED_TOKEN;
-export const fallbackInvalidToken = fallbackPopups.USER_VERIFY_INVALID_TOKEN;
+export const fallbackExpiredToken = fallbackPopups.AUTH_VERIFY_EMAIL_TOKEN_EXPIRED;
+export const fallbackInvalidToken = fallbackPopups.AUTH_VERIFY_EMAIL_TOKEN_INVALID;
 export const fallbackLoginSuccess = fallbackPopups.USER_LOGIN_SUCCESS;
 export const fallbackLogoutSuccess = fallbackPopups.LOGOUT_SUCCESS;
 export const fallbackLogoutConfirm = fallbackPopups.LOGOUT_CONFIRM;

@@ -21,7 +21,7 @@ interface GenericFormProps<T extends Record<string, any>> {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onTogglePassword: () => void;
-  forgotPassword: () => void;
+  forgotPassword?: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   button: string;
   showForgotPassword?: boolean;
@@ -57,6 +57,10 @@ export default function Form<T extends Record<string, any>>({
     return undefined;
   }, [errors.password, showHintPassword, touched.password]);
 
+  const tosDescriptionId = useMemo(() => {
+    return errors.tosAccepted ? 'tos-error tos-help' : 'tos-help';
+  }, [errors.tosAccepted]);
+
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       {fields.includes('email') && (
@@ -77,6 +81,7 @@ export default function Form<T extends Record<string, any>>({
             required
             aria-invalid={Boolean(touched.email && errors.email)}
             aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+            aria-errormessage={touched.email && errors.email ? 'email-error' : undefined}
           />
           <p
             className={
@@ -85,18 +90,17 @@ export default function Form<T extends Record<string, any>>({
                 : `${styles.feedback} ${styles.hidden}`
             }
             id="email-error"
-            role="status"
-            aria-live="polite"
+            role={touched.email && errors.email ? 'alert' : undefined}
+            aria-live={touched.email && errors.email ? 'assertive' : undefined}
           >
             {touched.email && errors.email ? errors.email : '\u00A0'}
           </p>
         </div>
       )}
 
-      {/* PASSWORD */}
       {fields.includes('password') && (
         <div className={styles.wrapper}>
-          <article className={styles.article}>
+          <div className={styles.article}>
             <label className={styles.label} htmlFor="password">
               {labels.password}
             </label>
@@ -106,11 +110,12 @@ export default function Form<T extends Record<string, any>>({
                 type="button"
                 onClick={forgotPassword}
                 aria-label={labels.forgotPassword}
+                disabled={!forgotPassword}
               >
                 {labels.forgotPassword}
               </button>
             )}
-          </article>
+          </div>
 
           <div className={styles.div}>
             <input
@@ -126,6 +131,7 @@ export default function Form<T extends Record<string, any>>({
               required
               aria-invalid={Boolean(touched.password && errors.password)}
               aria-describedby={passwordDescriptionId}
+              aria-errormessage={touched.password && errors.password ? 'password-error' : undefined}
             />
             <button
               className={styles.show}
@@ -133,6 +139,7 @@ export default function Form<T extends Record<string, any>>({
               onClick={onTogglePassword}
               aria-pressed={showPassword}
               aria-label={showPassword ? labels.hidePassword : labels.showPassword}
+              aria-controls="password"
             >
               {showPassword ? <ImEye /> : <ImEyeBlocked />}
             </button>
@@ -142,8 +149,8 @@ export default function Form<T extends Record<string, any>>({
             <p
               className={`${styles.feedback} ${styles.error}`}
               id="password-error"
-              role="status"
-              aria-live="polite"
+              role="alert"
+              aria-live="assertive"
             >
               {errors.password}
             </p>
@@ -151,7 +158,6 @@ export default function Form<T extends Record<string, any>>({
             <p
               className={`${styles.feedback} ${styles.hint}`}
               id="password-hint"
-              role="status"
               aria-live="polite"
             >
               {labels.passwordHint}
@@ -174,7 +180,8 @@ export default function Form<T extends Record<string, any>>({
               onChange={onChange}
               className={styles.checkboxInput}
               aria-invalid={Boolean(touched.tosAccepted && errors.tosAccepted)}
-              aria-describedby={errors.tosAccepted ? 'tos-error' : undefined}
+              aria-describedby={tosDescriptionId}
+              aria-errormessage={errors.tosAccepted ? 'tos-error' : undefined}
             />
             <span className={styles.customCheckbox}></span>
             <span className={styles.checkboxText}>
@@ -186,9 +193,12 @@ export default function Form<T extends Record<string, any>>({
               <Link className={styles.policyLink} href={href(lang, '/legal/privacy-policy')}>
                 {labels.tosPrivacy}
               </Link>
-              
             </span>
           </label>
+
+          <p id="tos-help" className={styles.assistiveText}>
+            {labels.tosPrefix} {labels.tosTerms} {labels.tosConnector} {labels.tosPrivacy}
+          </p>
 
           <p
             className={
@@ -197,8 +207,8 @@ export default function Form<T extends Record<string, any>>({
                 : `${styles.feedback} ${styles.hidden}`
             }
             id="tos-error"
-            role="status"
-            aria-live="polite"
+            role={errors.tosAccepted ? 'alert' : undefined}
+            aria-live={errors.tosAccepted ? 'assertive' : undefined}
           >
             {errors.tosAccepted ? errors.tosAccepted : '\u00A0'}
           </p>
@@ -206,7 +216,7 @@ export default function Form<T extends Record<string, any>>({
       )}
 
       <button
-        className={`${styles.button} button`}
+        className={`${styles.button} button button--primary`}
         type="submit"
         disabled={loading}
         aria-disabled={loading}

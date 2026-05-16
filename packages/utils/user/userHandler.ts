@@ -6,7 +6,7 @@ import {
   useGlobalAlert,
   useAuth,
 } from '../../contexts';
-import { PopupsTexts } from '../../contexts/alert/alert.types';
+import { PopupCode, PopupsTexts } from '../../contexts/alert/alert.types';
 import { magicLoginRequest, resendVerificationEmail, verifyEmailRequest } from '../../services';
 import { MagicLoginResult, ResendVerificationEmailPayload, VerifyEmailResult } from '../../types';
 import { getPopup } from '../alertType';
@@ -26,6 +26,69 @@ export function useVerifyEmailActions() {
     fallbackVerifyEmailResent,
     fallbackGlobalLoading,
   } = getI18nFallbacks(lang);
+
+  const getVerifyEmailErrorConfig = (code?: string) => {
+    if (code === 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED') {
+      return {
+        kind: 'expired' as const,
+        status: 400,
+        popupKey: 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED' as PopupCode,
+        fallback: fallbackExpiredToken,
+      };
+    }
+
+    if (
+      code === 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' ||
+      code === 'AUTH_USER_NOT_FOUND' ||
+      code === 'USER_CLIENT_NOT_FOUND'
+    ) {
+      return {
+        kind: 'invalid' as const,
+        status: 400,
+        popupKey: 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' as PopupCode,
+        fallback: fallbackInvalidToken,
+      };
+    }
+
+    if (code === 'AUTH_BLOCKED' || code === 'USER_CLIENT_BLOCKED') {
+      return {
+        kind: 'blocked' as const,
+        status: 403,
+        popupKey: (code === 'AUTH_BLOCKED' ? 'AUTH_BLOCKED' : 'USER_CLIENT_BLOCKED') as PopupCode,
+        fallback: fallbackGlobalError,
+      };
+    }
+
+    return null;
+  };
+
+  const getResendVerificationErrorConfig = (code?: string, fallbackStatus = 500) => {
+    switch (code) {
+      case 'CLIENT_NOT_FOUND':
+        return { status: 404, popupKey: 'CLIENT_NOT_FOUND' as PopupCode };
+      case 'VALIDATION_ERROR':
+        return { status: 400, popupKey: 'VALIDATION_ERROR' as PopupCode };
+      case 'AUTH_BLOCKED':
+        return { status: 403, popupKey: 'AUTH_BLOCKED' as PopupCode };
+      case 'USER_CLIENT_BLOCKED':
+        return { status: 403, popupKey: 'USER_CLIENT_BLOCKED' as PopupCode };
+      default:
+        return { status: fallbackStatus, popupKey: 'GLOBAL_INTERNAL_ERROR' as PopupCode };
+    }
+  };
+
+  const getMagicLoginPopupDefaultKey = (code?: string): PopupCode => {
+    switch (code) {
+      case 'MAGIC_TOKEN_EXPIRED':
+        return 'MAGIC_TOKEN_EXPIRED';
+      case 'MAGIC_TOKEN_INVALID':
+      case 'AUTH_USER_NOT_FOUND':
+      case 'USER_CLIENT_NOT_FOUND':
+        return 'MAGIC_TOKEN_INVALID';
+      default:
+        return 'GLOBAL_INTERNAL_ERROR';
+    }
+  };
 
   // -----------------------
   //  handleVerifyEmail
@@ -47,17 +110,14 @@ export function useVerifyEmailActions() {
         };
       }
 
-      if (code === 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED' || code === 'USER_VERIFY_EXPIRED_TOKEN') {
-        const popupData = getPopup(
-          popups,
-          code,
-          'USER_VERIFY_EXPIRED_TOKEN',
-          fallbackExpiredToken
-        );
+      const errorConfig = getVerifyEmailErrorConfig(code);
+
+      if (errorConfig?.kind === 'expired') {
+        const popupData = getPopup(popups, code, errorConfig.popupKey, errorConfig.fallback);
 
         showError({
           response: {
-            status: 401,
+            status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
@@ -69,26 +129,15 @@ export function useVerifyEmailActions() {
           },
         });
 
-        return { ok: false, code, status: 401, isExpired: true };
+        return { ok: false, code, status: errorConfig.status, isExpired: true };
       }
 
-      if (
-        code === 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' ||
-        code === 'USER_VERIFY_INVALID_TOKEN' ||
-        code === 'USER_VERIFY_MISSING_TOKEN' ||
-        code === 'AUTH_USER_NOT_FOUND' ||
-        code === 'USER_CLIENT_NOT_FOUND'
-      ) {
-        const popupData = getPopup(
-          popups,
-          code || 'USER_VERIFY_INVALID_TOKEN',
-          'USER_VERIFY_INVALID_TOKEN',
-          fallbackInvalidToken
-        );
+      if (errorConfig?.kind === 'invalid' || errorConfig?.kind === 'blocked') {
+        const popupData = getPopup(popups, code, errorConfig.popupKey, errorConfig.fallback);
 
         showError({
           response: {
-            status: 400,
+            status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
@@ -104,7 +153,7 @@ export function useVerifyEmailActions() {
           },
         });
 
-        return { ok: false, code, status: 400 };
+        return { ok: false, code, status: errorConfig.status };
       }
 
       const popupData = getPopup(
@@ -137,17 +186,14 @@ export function useVerifyEmailActions() {
       const code = error?.response?.data?.code;
       const status = error?.response?.status ?? 500;
 
-      if (code === 'AUTH_VERIFY_EMAIL_TOKEN_EXPIRED' || code === 'USER_VERIFY_EXPIRED_TOKEN') {
-        const popupData = getPopup(
-          popups,
-          code,
-          'USER_VERIFY_EXPIRED_TOKEN',
-          fallbackExpiredToken
-        );
+      const errorConfig = getVerifyEmailErrorConfig(code);
+
+      if (errorConfig?.kind === 'expired') {
+        const popupData = getPopup(popups, code, errorConfig.popupKey, errorConfig.fallback);
 
         showError({
           response: {
-            status,
+            status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
@@ -157,26 +203,15 @@ export function useVerifyEmailActions() {
           onCancel: closeAlert,
         });
 
-        return { ok: false, code, status, isExpired: true };
+        return { ok: false, code, status: errorConfig.status, isExpired: true };
       }
 
-      if (
-        code === 'AUTH_VERIFY_EMAIL_TOKEN_INVALID' ||
-        code === 'USER_VERIFY_INVALID_TOKEN' ||
-        code === 'USER_VERIFY_MISSING_TOKEN' ||
-        code === 'AUTH_USER_NOT_FOUND' ||
-        code === 'USER_CLIENT_NOT_FOUND'
-      ) {
-        const popupData = getPopup(
-          popups,
-          code,
-          'USER_VERIFY_INVALID_TOKEN',
-          fallbackInvalidToken
-        );
+      if (errorConfig?.kind === 'invalid' || errorConfig?.kind === 'blocked') {
+        const popupData = getPopup(popups, code, errorConfig.popupKey, errorConfig.fallback);
 
         showError({
           response: {
-            status,
+            status: errorConfig.status,
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
@@ -192,7 +227,7 @@ export function useVerifyEmailActions() {
           },
         });
 
-        return { ok: false, code, status };
+        return { ok: false, code, status: errorConfig.status };
       }
 
       const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
@@ -230,32 +265,46 @@ export function useVerifyEmailActions() {
       const res = await magicLoginRequest({ token: magicToken });
 
       if (!res?.success || !res?.user) {
+        const isExpired = res?.code === 'MAGIC_TOKEN_EXPIRED';
+        const isInvalid =
+          res?.code === 'MAGIC_TOKEN_INVALID' ||
+          res?.code === 'AUTH_USER_NOT_FOUND' ||
+          res?.code === 'USER_CLIENT_NOT_FOUND';
         const popupData = getPopup(
           popups,
           res?.code,
-          'GLOBAL_INTERNAL_ERROR',
-          fallbackGlobalError
+          getMagicLoginPopupDefaultKey(res?.code),
+          isExpired || isInvalid ? fallbackInvalidToken : fallbackGlobalError
         );
 
         showError({
           response: {
-            status: 401,
+            status: isExpired ? 401 : isInvalid ? 400 : 401,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm ?? fallbackButtons.reload,
+            confirmLabel:
+              isExpired || isInvalid
+                ? popupData.confirm ?? fallbackButtons.continue
+                : popupData.confirm ?? fallbackButtons.reload,
             cancelLabel: popupData.close,
           },
-          onConfirm: () => {
-            closeAlert();
-            router.refresh();
-          },
+          onConfirm:
+            isExpired || isInvalid
+              ? () => {
+                  closeAlert();
+                  router.push(href(lang, '/user/login'));
+                }
+              : () => {
+                  closeAlert();
+                  router.refresh();
+                },
           onCancel: () => {
             closeAlert();
             router.push(href(lang, '/'));
           },
         });
 
-        return { ok: false, code: res?.code, status: 401 };
+        return { ok: false, code: res?.code, status: isExpired ? 401 : isInvalid ? 400 : 401 };
       }
 
       const { user } = res;
@@ -281,21 +330,40 @@ export function useVerifyEmailActions() {
     } catch (err: any) {
       const code = err?.response?.data?.code;
       const status = err?.response?.status ?? 401;
+      const isExpired = code === 'MAGIC_TOKEN_EXPIRED';
+      const isInvalid =
+        code === 'MAGIC_TOKEN_INVALID' ||
+        code === 'AUTH_USER_NOT_FOUND' ||
+        code === 'USER_CLIENT_NOT_FOUND';
 
-      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const popupData = getPopup(
+        popups,
+        code,
+        getMagicLoginPopupDefaultKey(code),
+        isExpired || isInvalid ? fallbackInvalidToken : fallbackGlobalError
+      );
 
       showError({
         response: {
           status,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
+          confirmLabel:
+            isExpired || isInvalid
+              ? popupData.confirm ?? fallbackButtons.continue
+              : popupData.confirm ?? fallbackButtons.reload,
           cancelLabel: popupData.close,
         },
-        onConfirm: () => {
-          closeAlert();
-          router.refresh();
-        },
+        onConfirm:
+          isExpired || isInvalid
+            ? () => {
+                closeAlert();
+                router.push(href(lang, '/user/login'));
+              }
+            : () => {
+                closeAlert();
+                router.refresh();
+              },
         onCancel: () => {
           closeAlert();
           router.push(href(lang, '/'));
@@ -350,20 +418,24 @@ export function useVerifyEmailActions() {
     } catch (e: any) {
       const code = e?.response?.data?.code;
       const status = e?.response?.status ?? 500;
-      const popupData = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+      const errorConfig = getResendVerificationErrorConfig(code, status);
+      const popupData = getPopup(popups, code, errorConfig.popupKey, fallbackGlobalError);
+      const canRetry = !code || status >= 500;
 
       showError({
         response: {
-          status,
+          status: errorConfig.status,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm ?? fallbackButtons.reload,
+          confirmLabel: canRetry ? popupData.confirm ?? fallbackButtons.reload : undefined,
           cancelLabel: popupData.close,
         },
-        onConfirm: () => {
-          closeAlert();
-          void handleResendEmail(popups, data);
-        },
+        onConfirm: canRetry
+          ? () => {
+              closeAlert();
+              void handleResendEmail(popups, data);
+            }
+          : undefined,
         onCancel: () => {
           closeAlert();
         },
