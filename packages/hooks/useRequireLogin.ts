@@ -24,6 +24,7 @@ export const useRequireLogin = () => {
   const lang = useLang();
   const { fallbackButtons, fallbackPopups } = getI18nFallbacks(lang);
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
 
   useEffect(() => {
     if (authLoading) return;
@@ -41,9 +42,8 @@ export const useRequireLogin = () => {
         status: 401,
         title: popupData.title,
         description: popupData.description,
-        confirmLabel:
-          popupData.confirm ?? texts.popups?.button?.continue ?? fallbackButtons.continue,
-        cancelLabel: popupData.close ?? texts.popups?.button?.close ?? fallbackButtons.close,
+        confirmLabel: alertButtons.goToLogin,
+        cancelLabel: alertButtons.continueBrowsing,
       },
       onConfirm: () => {
         closeAlert();
@@ -63,6 +63,5 @@ export const useRequireLogin = () => {
     popups,
     router,
     showConfirm,
-    texts.popups,
   ]);
 };

@@ -82,15 +82,29 @@
         "items": [
           {
             "title": "Reinigung",
-            "description": "Zuverlässige Reinigung für Wohnungen, Treppenhäuser und Gemeinschaftsflächen – passend zu deinem Bedarf.",
-            "ctaLabel": "Jetzt bestellen",
+            "description": "Professionelle Reinigung für Wohnungen, Gemeinschaftsflächen und wiederkehrende Einsätze, mit klarer Abstimmung und einem Ablauf, der sich am Zustand und Bedarf jedes Objekts orientiert.",
+            "highlights": [
+              "Fensterreinigung",
+              "Grundreinigung",
+              "Reinigung nach Reparaturen",
+              "Treppenhausreinigung",
+              "Einzugs- und Auszugsreinigung"
+            ],
+            "ctaLabel": "Mehr entdecken",
             "href": "/cleaning-service",
             "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Hausservice",
-            "description": "Kleine Reparaturen, Instandhaltung und praktische Hilfe zu Hause – schnell organisiert und klar abgestimmt.",
-            "ctaLabel": "Jetzt bestellen",
+            "description": "Flexibler Hausservice für praktische Aufgaben, kleine Reparaturen und laufende Unterstützung im Alltag, mit einer einfachen Anfrage und besserer Vorbereitung vor jedem Einsatz.",
+            "highlights": [
+              "Möbelmontage",
+              "Küchenmontage",
+              "Kleine Reparaturen",
+              "Austausch von Armaturen",
+              "Allgemeine Hilfe im Haushalt"
+            ],
+            "ctaLabel": "Mehr entdecken",
             "href": "/home-service",
             "icon": "/svg/service.svg"
           }

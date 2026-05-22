@@ -3,132 +3,204 @@
 
   /* ==========================================
      1. PAGE TEXT COLORS
-     Text outside cards and interactive surfaces.
      ========================================== */
   --page-text-primary: #16212d;
   --page-text-secondary: #5a6878;
   --page-text-muted: #7a8898;
-  --page-text-inverse-primary: #f8fbff;
-  --page-text-inverse-secondary: #d8e0e8;
 
   /* ==========================================
-     2. PAGE SURFACES AND BORDERS
-     Base layout colors outside cards.
+     2. PAGE BACKGROUNDS
      ========================================== */
   --page-bg: #f8fafc;
   --page-bg-image:
     radial-gradient(circle at top left, rgba(10, 132, 255, 0.08), transparent 30%),
     radial-gradient(circle at bottom right, rgba(111, 66, 193, 0.06), transparent 24%);
-  --page-surface: #ffffff;
-  --page-surface-subtle: #f3f6f8;
-  --page-surface-muted: #e9eef2;
-  --page-border: rgba(77, 99, 120, 0.14);
-  --page-border-strong: rgba(77, 99, 120, 0.26);
-  --page-border-focus: rgba(10, 132, 255, 0.42);
 
   /* ==========================================
      3. FEEDBACK COLORS
-     Shared semantic feedback states.
      ========================================== */
-  --feedback-success-bg: rgba(10, 132, 255, 0.12);
-  --feedback-success-bg-strong: rgba(10, 132, 255, 0.18);
-  --feedback-success-border: rgba(10, 132, 255, 0.24);
-  --feedback-success-text: #0d4f93;
+  --feedback-info-bg: rgba(10, 132, 255, 0.12);
+  --feedback-info-bg-image: rgba(10, 132, 255, 0.18);
 
-  --feedback-error-bg: rgba(111, 66, 193, 0.12);
-  --feedback-error-bg-strong: rgba(111, 66, 193, 0.18);
-  --feedback-error-border: rgba(111, 66, 193, 0.24);
-  --feedback-error-text: #5a3295;
+  --feedback-success-bg: rgba(21, 128, 61, 0.12);
+  --feedback-success-bg-image: rgba(21, 128, 61, 0.18);
 
-  --feedback-warning-bg: rgba(236, 171, 20, 0.14);
-  --feedback-warning-bg-strong: rgba(236, 171, 20, 0.22);
-  --feedback-warning-border: rgba(236, 171, 20, 0.28);
-  --feedback-warning-text: #8a5b00;
+  --feedback-error-bg: rgba(220, 38, 38, 0.12);
+  --feedback-error-bg-image: rgba(220, 38, 38, 0.18);
+
+  --feedback-warning-bg: #fc872183;
+  --feedback-warning-bg-image: rgba(236, 171, 20, 0.22);
 
   /* ==========================================
      4. CARD VARIANTS
      Every card variant defines its own background,
      border, primary text and secondary text.
      ========================================== */
-  --card-blur: 24px;
-  --card-shadow: 0 18px 48px rgba(19, 31, 43, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.12);
 
-  --card-neutral-bg: rgba(255, 255, 255, 0.56);
-  --card-neutral-bg-image: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.52),
-    rgba(255, 255, 255, 0.12)
-  );
-  --card-neutral-border: rgba(255, 255, 255, 0.5);
-  --card-neutral-text-primary: #16212d;
-  --card-neutral-text-secondary: #5a6878;
+  --card-neutral-bg1: hsla(210, 14%, 95%, 0.4);
+  --card-neutral-bg2: hsla(210, 14%, 85%, 0.25);
+  --card-neutral-bg3: hsla(210, 14%, 95%, 0.3);
+  --card-neutral-border: rgba(255, 255, 255, 0.3);
+  --card-text-primary: #595959;
+  --card-text-secondary: #666666;
 
-  --card-primary-bg: rgba(255, 255, 255, 0.56);
-  --card-primary-bg-image: linear-gradient(
-    135deg,
-    rgba(10, 132, 255, 0.24),
-    rgba(10, 132, 255, 0.05)
-  );
-  --card-primary-border: rgba(10, 132, 255, 0.24);
-  --card-primary-text-primary: #16212d;
-  --card-primary-text-secondary: #38566f;
+  --card-primary-bg1: hsla(210, 93%, 76%, 0.5);
+  --card-primary-bg2: hsla(210, 93%, 86%, 0.35);
+  --card-primary-bg3: hsla(210, 93%, 86%, 0.4);
+  --card-primary-border: hsla(210, 93%, 66%, 0.5);
 
-  --card-secondary-bg: rgba(255, 255, 255, 0.56);
-  --card-secondary-bg-image: linear-gradient(
-    135deg,
-    rgba(111, 66, 193, 0.22),
-    rgba(111, 66, 193, 0.05)
-  );
-  --card-secondary-border: rgba(111, 66, 193, 0.24);
-  --card-secondary-text-primary: #16212d;
-  --card-secondary-text-secondary: #58466f;
+  --card-secondary-bg1: hsl(262, 85%, 82%, 0.5);
+  --card-secondary-bg2: hsla(262, 85%, 92%, 0.35);
+  --card-secondary-bg3: hsla(262, 85%, 92%, 0.4);
+  --card-secondary-border: hsla(262, 85%, 82%, 0.5);
 
-  --card-accent-bg: rgba(255, 255, 255, 0.56);
-  --card-accent-bg-image: linear-gradient(
-    135deg,
-    rgba(236, 171, 20, 0.24),
-    rgba(236, 171, 20, 0.06)
-  );
+  --card-accent-bg: #fc872183;
+  --card-accent-bg-image: rgba(236, 171, 20, 0.22);
   --card-accent-border: rgba(236, 171, 20, 0.28);
-  --card-accent-text-primary: #16212d;
-  --card-accent-text-secondary: #6d5a28;
 
   /* ==========================================
      5. BUTTON VARIANTS
      Button colors grouped by variant and state.
      ========================================== */
   --button-text-disabled: rgba(22, 33, 45, 0.48);
-  --button-shadow: 0 1px 2px rgba(19, 31, 43, 0.08);
+  --button-border-disabled: rgba(77, 99, 120, 0.14);
+  --button-bg-disabled: rgba(248, 250, 252, 0.72);
+  --button-shadow-rest: 0 1px 2px rgba(19, 31, 43, 0.08);
+  --button-shadow-hover: 0 8px 18px rgba(19, 31, 43, 0.12);
+  --button-shadow-active: 0 2px 6px rgba(19, 31, 43, 0.1);
+  --button-shadow-focus: 0 0 0 3px rgba(10, 132, 255, 0.18);
+  --button-focus-border: rgba(10, 132, 255, 0.42);
+
+  --button-active-bg: rgba(10, 132, 255, 0.14);
+  --button-active-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(10, 132, 255, 0.04)
+  );
+  --button-active-border: rgba(10, 132, 255, 0.2);
+  --button-active-text: #16212d;
+  --button-active-shadow: 0 6px 14px rgba(10, 132, 255, 0.12);
 
   --button-primary-bg: #0a84ff;
+  --button-primary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0)
+  );
   --button-primary-bg-hover: #0975e1;
+  --button-primary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-primary-bg-active: #0764c1;
+  --button-primary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.04)
+  );
   --button-primary-border: #0a84ff;
   --button-primary-text: #f8fbff;
 
   --button-secondary-bg: #6f42c1;
+  --button-secondary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
   --button-secondary-bg-hover: #6035ad;
+  --button-secondary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-secondary-bg-active: #512b92;
+  --button-secondary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.05)
+  );
   --button-secondary-border: #6f42c1;
   --button-secondary-text: #f8fbff;
 
   --button-accent-bg: #ecab14;
+  --button-accent-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
   --button-accent-bg-hover: #d79b11;
+  --button-accent-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-accent-bg-active: #bb870d;
+  --button-accent-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
   --button-accent-border: #ecab14;
   --button-accent-text: #1d2128;
 
-  --button-outline-bg: transparent;
+  --button-outline-bg: rgba(255, 255, 255, 0.38);
+  --button-outline-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0)
+  );
   --button-outline-bg-hover: #f3f6f8;
+  --button-outline-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.06)
+  );
   --button-outline-bg-active: #e9eef2;
+  --button-outline-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-outline-border: rgba(77, 99, 120, 0.26);
   --button-outline-text: #233241;
 
   --button-ghost-bg: transparent;
+  --button-ghost-bg-image: none;
   --button-ghost-bg-hover: rgba(77, 99, 120, 0.08);
+  --button-ghost-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
   --button-ghost-bg-active: rgba(77, 99, 120, 0.14);
+  --button-ghost-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
   --button-ghost-border: transparent;
   --button-ghost-text: #233241;
+
+  --button-close-bg: transparent;
+  --button-close-bg-image: none;
+  --button-close-bg-hover: rgba(220, 38, 38, 0.08);
+  --button-close-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
+  --button-close-bg-active: rgba(220, 38, 38, 0.18);
+  --button-close-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.03)
+  );
+  --button-close-border: transparent;
+  --button-close-text: var(--color-page-body);
+  --button-close-text-hover: #a62b2b;
+  --button-close-focus-border: rgba(220, 38, 38, 0.36);
+  --button-close-shadow: none;
 
   /* ==========================================
      6. INPUT VARIANTS
@@ -152,9 +224,9 @@
   --badge-neutral-border: rgba(77, 99, 120, 0.14);
   --badge-neutral-text: #233241;
 
-  --badge-primary-bg: var(--feedback-success-bg);
-  --badge-primary-border: var(--feedback-success-border);
-  --badge-primary-text: var(--feedback-success-text);
+  --badge-primary-bg: var(--feedback-info-bg);
+  --badge-primary-border: var(--feedback-info-border);
+  --badge-primary-text: var(--feedback-info-text);
 
   --badge-secondary-bg: var(--feedback-error-bg);
   --badge-secondary-border: var(--feedback-error-border);
@@ -189,7 +261,7 @@
   --type-display-md-size: clamp(2.125rem, 4.8vw, 3.75rem);
   --type-title-xl-size: clamp(1.875rem, 3.6vw, 3rem);
   --type-title-lg-size: clamp(1.5rem, 2.8vw, 2.25rem);
-  --type-title-md-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  --type-title-md-size: clamp(1.7rem, 2.2vw, 1.9rem);
   --type-title-sm-size: clamp(1.0625rem, 1.7vw, 1.25rem);
   --type-body-lg-size: clamp(1.0625rem, 1.7vw, 1.1875rem);
   --type-body-md-size: clamp(1rem, 1.35vw, 1.0625rem);
@@ -217,13 +289,6 @@
   --space-8: 48px;
   --space-10: 64px;
   --space-section: 88px;
-
-  --container-max: 1200px;
-  --content-max: 72rem;
-  --navbar-height-desktop: 55px;
-  --navbar-height-tablet: 55px;
-  --hero-height-desktop: 700px;
-  --hero-height-tablet: 620px;
 
   /* ==========================================
      10. SHADOWS AND MOTION
@@ -258,6 +323,10 @@
   --color-page-soft: var(--page-text-muted);
   --color-page-inverse: var(--page-text-inverse-primary);
 
+  --color-feedback-info-surface: var(--feedback-info-bg);
+  --color-feedback-info-surface-strong: var(--feedback-info-bg-strong);
+  --color-feedback-info-border: var(--feedback-info-border);
+  --color-feedback-info-text: var(--feedback-info-text);
   --color-feedback-success-surface: var(--feedback-success-bg);
   --color-feedback-success-surface-strong: var(--feedback-success-bg-strong);
   --color-feedback-success-border: var(--feedback-success-border);
@@ -280,6 +349,82 @@
   --gradient-card-primary: var(--card-primary-bg-image);
   --gradient-card-secondary: var(--card-secondary-bg-image);
   --gradient-card-accent: var(--card-accent-bg-image);
+
+  /* ==========================================
+     12. ALERT CARD TOKENS
+     loading / confirm / info reuse the primary card.
+     ========================================== */
+  --card-alert-loading-bg: var(--card-primary-bg);
+  --card-alert-loading-bg-image: var(--card-primary-bg-image);
+  --card-alert-loading-border: var(--card-primary-border);
+  --card-alert-loading-text-primary: var(--card-primary-text-primary);
+  --card-alert-loading-text-secondary: var(--card-primary-text-secondary);
+  --card-alert-loading-accent-bg: var(--color-feedback-info-surface-strong);
+  --card-alert-loading-accent-border: var(--color-feedback-info-border);
+  --card-alert-loading-accent-text: var(--color-feedback-info-text);
+  --card-alert-loading-image-glow: rgba(10, 132, 255, 0.28);
+
+  --card-alert-info-bg: var(--card-primary-bg);
+  --card-alert-info-bg-image: var(--card-primary-bg-image);
+  --card-alert-info-border: var(--card-primary-border);
+  --card-alert-info-text-primary: var(--card-primary-text-primary);
+  --card-alert-info-text-secondary: var(--card-primary-text-secondary);
+  --card-alert-info-accent-bg: var(--color-feedback-info-surface-strong);
+  --card-alert-info-accent-border: var(--color-feedback-info-border);
+  --card-alert-info-accent-text: var(--color-feedback-info-text);
+  --card-alert-info-image-glow: rgba(10, 132, 255, 0.3);
+
+  --card-alert-confirm-bg: var(--card-primary-bg);
+  --card-alert-confirm-bg-image: var(--card-primary-bg-image);
+  --card-alert-confirm-border: var(--card-primary-border);
+  --card-alert-confirm-text-primary: var(--card-primary-text-primary);
+  --card-alert-confirm-text-secondary: var(--card-primary-text-secondary);
+  --card-alert-confirm-accent-bg: var(--color-feedback-info-surface-strong);
+  --card-alert-confirm-accent-border: var(--color-feedback-info-border);
+  --card-alert-confirm-accent-text: var(--color-feedback-info-text);
+  --card-alert-confirm-image-glow: rgba(10, 132, 255, 0.28);
+
+  --card-alert-success-bg: rgba(255, 255, 255, 0.58);
+  --card-alert-success-bg-image: linear-gradient(
+    135deg,
+    rgba(21, 128, 61, 0.4),
+    rgba(34, 197, 94, 0.2)
+  );
+  --card-alert-success-border: rgba(21, 128, 61, 0.24);
+  --card-alert-success-text-primary: #163221;
+  --card-alert-success-text-secondary: #3f6b53;
+  --card-alert-success-accent-bg: var(--color-feedback-success-surface-strong);
+  --card-alert-success-accent-border: var(--color-feedback-success-border);
+  --card-alert-success-accent-text: var(--color-feedback-success-text);
+  --card-alert-success-image-glow: rgba(21, 128, 61, 0.28);
+
+  --card-alert-error-bg: rgba(255, 255, 255, 0.58);
+  --card-alert-error-bg-image: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.22),
+    rgba(248, 113, 113, 0.06)
+  );
+  --card-alert-error-border: rgba(220, 38, 38, 0.24);
+  --card-alert-error-text-primary: #3b1414;
+  --card-alert-error-text-secondary: #7a4545;
+  --card-alert-error-accent-bg: var(--color-feedback-error-surface-strong);
+  --card-alert-error-accent-border: var(--color-feedback-error-border);
+  --card-alert-error-accent-text: var(--color-feedback-error-text);
+  --card-alert-error-image-glow: rgba(220, 38, 38, 0.3);
+
+  --card-alert-warning-bg: rgba(255, 255, 255, 0.58);
+  --card-alert-warning-bg-image: linear-gradient(
+    135deg,
+    rgba(236, 171, 20, 0.26),
+    rgba(251, 191, 36, 0.08)
+  );
+  --card-alert-warning-border: rgba(236, 171, 20, 0.3);
+  --card-alert-warning-text-primary: #3c2d0e;
+  --card-alert-warning-text-secondary: #755c24;
+  --card-alert-warning-accent-bg: var(--color-feedback-warning-surface-strong);
+  --card-alert-warning-accent-border: var(--color-feedback-warning-border);
+  --card-alert-warning-accent-text: var(--color-feedback-warning-text);
+  --card-alert-warning-image-glow: rgba(236, 171, 20, 0.32);
 }
 
 [data-theme='dark'] {
@@ -302,15 +447,17 @@
   --page-border-strong: rgba(148, 163, 184, 0.32);
   --page-border-focus: rgba(96, 165, 250, 0.5);
 
-  --feedback-success-text: #7ec2ff;
-  --feedback-error-text: #c6a0ff;
+  --feedback-info-text: #7ec2ff;
+  --feedback-success-text: #7ee2a8;
+  --feedback-error-text: #ffb4b4;
   --feedback-warning-text: #ffd978;
 
   --card-shadow: 0 18px 48px rgba(2, 8, 23, 0.34), 0 0 0 1px rgba(148, 163, 184, 0.08);
 
-  --card-neutral-bg: rgba(30, 41, 59, 0.42);
-  --card-neutral-bg-image: linear-gradient(135deg, rgba(71, 85, 105, 0.3), rgba(15, 23, 42, 0.18));
-  --card-neutral-border: rgba(148, 163, 184, 0.18);
+  --card-neutral-bg: rgba(30, 41, 59, 0.4);
+  --card-neutral-bg-2: rgba(30, 41, 59, 0.3);
+  --card-neutral-bg-3: rgba(30, 41, 59, 0.2);
+  --card-neutral-border: rgba(148, 163, 184, 0.452);
   --card-neutral-text-primary: #f8fafc;
   --card-neutral-text-secondary: #b6c2d1;
 
@@ -345,31 +492,143 @@
   --card-accent-text-secondary: #f6e5ad;
 
   --button-primary-bg: #2190ff;
+  --button-primary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
   --button-primary-bg-hover: #3b9cff;
+  --button-primary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-primary-bg-active: #1176de;
+  --button-primary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
   --button-primary-border: #2190ff;
   --button-primary-text: #f8fbff;
 
   --button-secondary-bg: #8b5cf6;
+  --button-secondary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
   --button-secondary-bg-hover: #9b74ff;
+  --button-secondary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-secondary-bg-active: #7c45ef;
+  --button-secondary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.05)
+  );
   --button-secondary-border: #8b5cf6;
   --button-secondary-text: #f8fbff;
 
   --button-accent-bg: #f4b51c;
+  --button-accent-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
   --button-accent-bg-hover: #ffbf2e;
+  --button-accent-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-accent-bg-active: #d79b11;
+  --button-accent-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
   --button-accent-border: #f4b51c;
   --button-accent-text: #1d2128;
 
+  --button-outline-bg: rgba(30, 41, 59, 0.44);
+  --button-outline-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
   --button-outline-bg-hover: rgba(148, 163, 184, 0.12);
+  --button-outline-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02)
+  );
   --button-outline-bg-active: rgba(148, 163, 184, 0.2);
+  --button-outline-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0)
+  );
   --button-outline-border: rgba(148, 163, 184, 0.32);
   --button-outline-text: #e2e8f0;
 
+  --button-ghost-bg: transparent;
+  --button-ghost-bg-image: none;
   --button-ghost-bg-hover: rgba(148, 163, 184, 0.12);
+  --button-ghost-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0)
+  );
   --button-ghost-bg-active: rgba(148, 163, 184, 0.2);
+  --button-ghost-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0)
+  );
+  --button-ghost-border: transparent;
   --button-ghost-text: #e2e8f0;
+
+  --button-close-bg: transparent;
+  --button-close-bg-image: none;
+  --button-close-bg-hover: rgba(248, 113, 113, 0.18);
+  --button-close-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0)
+  );
+  --button-close-bg-active: rgba(248, 113, 113, 0.24);
+  --button-close-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
+  --button-close-border: transparent;
+  --button-close-text: var(--color-page-body);
+  --button-close-text-hover: #fecaca;
+  --button-close-focus-border: rgba(248, 113, 113, 0.44);
+  --button-close-shadow: none;
+
+  --button-border-disabled: rgba(148, 163, 184, 0.14);
+  --button-bg-disabled: rgba(30, 41, 59, 0.44);
+  --button-shadow-rest: 0 1px 2px rgba(2, 8, 23, 0.18);
+  --button-shadow-hover: 0 10px 22px rgba(2, 8, 23, 0.22);
+  --button-shadow-active: 0 3px 8px rgba(2, 8, 23, 0.2);
+  --button-shadow-focus: 0 0 0 3px rgba(96, 165, 250, 0.22);
+  --button-focus-border: rgba(96, 165, 250, 0.5);
+
+  --button-active-bg: rgba(96, 165, 250, 0.16);
+  --button-active-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0)
+  );
+  --button-active-border: rgba(96, 165, 250, 0.24);
+  --button-active-text: #f8fafc;
+  --button-active-shadow: 0 8px 20px rgba(10, 132, 255, 0.16);
 
   --input-bg: #243447;
   --input-bg-focus: #1e293b;
@@ -558,6 +817,7 @@ p {
   font-size: var(--type-label-size);
   line-height: 1.2;
   letter-spacing: var(--tracking-label);
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -614,6 +874,23 @@ p {
    17. BUTTONS
    ========================================== */
 .button {
+  --button-text: var(--button-ghost-text);
+  --button-bg: var(--button-ghost-bg);
+  --button-bg-image: var(--button-ghost-bg-image);
+  --button-border: var(--button-ghost-border);
+  --button-shadow: none;
+  --button-text-hover: var(--button-text);
+  --button-bg-hover: var(--button-bg);
+  --button-bg-image-hover: var(--button-bg-image);
+  --button-border-hover: var(--button-border);
+  --button-shadow-hover-current: var(--button-shadow);
+  --button-text-active: var(--button-text-hover);
+  --button-bg-active: var(--button-bg-hover);
+  --button-bg-image-active: var(--button-bg-image-hover);
+  --button-border-active: var(--button-border-hover);
+  --button-shadow-active-current: var(--button-shadow-hover-current);
+  --button-focus-border-current: var(--button-focus-border);
+  --button-focus-shadow-current: var(--button-shadow-focus);
   width: fit-content;
   display: inline-flex;
   align-items: center;
@@ -623,109 +900,251 @@ p {
   padding: 8px 20px;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  background-image: var(--button-bg-image);
+  border-color: var(--button-border);
+  box-shadow: var(--button-shadow);
   font-size: var(--type-body-sm-size);
   font-weight: 700;
   line-height: 1.1;
   cursor: pointer;
+  appearance: none;
   transition:
     transform var(--motion-base) var(--ease-standard),
     box-shadow var(--motion-base) var(--ease-standard),
     background-color var(--motion-base) var(--ease-standard),
+    background-image var(--motion-base) var(--ease-standard),
     color var(--motion-base) var(--ease-standard),
     border-color var(--motion-base) var(--ease-standard);
 }
 
 .button:hover {
+  color: var(--button-text-hover);
+  background-color: var(--button-bg-hover);
+  background-image: var(--button-bg-image-hover);
+  border-color: var(--button-border-hover);
+  box-shadow: var(--button-shadow-hover-current);
   transform: translateY(-1px);
 }
 
 .button:active {
+  color: var(--button-text-active);
+  background-color: var(--button-bg-active);
+  background-image: var(--button-bg-image-active);
+  border-color: var(--button-border-active);
+  box-shadow: var(--button-shadow-active-current);
   transform: translateY(0);
+}
+
+.button:focus-visible {
+  outline: none;
+  border-color: var(--button-focus-border-current);
+  box-shadow: var(--button-shadow), var(--button-focus-shadow-current);
 }
 
 .button:disabled,
 .button[aria-disabled='true'] {
   opacity: 0.6;
   color: var(--button-text-disabled);
+  background: var(--button-bg-disabled);
+  border-color: var(--button-border-disabled);
   pointer-events: none;
   box-shadow: none;
 }
 
 .button--primary {
-  color: var(--button-primary-text);
-  background: var(--button-primary-bg);
-  border-color: var(--button-primary-border);
-  box-shadow: var(--button-shadow);
-}
-
-.button--primary:hover {
-  background: var(--button-primary-bg-hover);
-}
-
-.button--primary:active {
-  background: var(--button-primary-bg-active);
+  --button-text: var(--button-primary-text);
+  --button-bg: var(--button-primary-bg);
+  --button-bg-image: var(--button-primary-bg-image);
+  --button-border: var(--button-primary-border);
+  --button-shadow: var(--button-shadow-rest);
+  --button-text-hover: var(--button-primary-text);
+  --button-bg-hover: var(--button-primary-bg-hover);
+  --button-bg-image-hover: var(--button-primary-bg-image-hover);
+  --button-border-hover: var(--button-primary-border);
+  --button-shadow-hover-current: var(--button-shadow-hover);
+  --button-text-active: var(--button-primary-text);
+  --button-bg-active: var(--button-primary-bg-active);
+  --button-bg-image-active: var(--button-primary-bg-image-active);
+  --button-border-active: var(--button-primary-border);
+  --button-shadow-active-current: var(--button-shadow-active);
 }
 
 .button--secondary {
-  color: var(--button-secondary-text);
-  background: var(--button-secondary-bg);
-  border-color: var(--button-secondary-border);
-  box-shadow: var(--button-shadow);
-}
-
-.button--secondary:hover {
-  background: var(--button-secondary-bg-hover);
-}
-
-.button--secondary:active {
-  background: var(--button-secondary-bg-active);
+  --button-text: var(--button-secondary-text);
+  --button-bg: var(--button-secondary-bg);
+  --button-bg-image: var(--button-secondary-bg-image);
+  --button-border: var(--button-secondary-border);
+  --button-shadow: var(--button-shadow-rest);
+  --button-text-hover: var(--button-secondary-text);
+  --button-bg-hover: var(--button-secondary-bg-hover);
+  --button-bg-image-hover: var(--button-secondary-bg-image-hover);
+  --button-border-hover: var(--button-secondary-border);
+  --button-shadow-hover-current: var(--button-shadow-hover);
+  --button-text-active: var(--button-secondary-text);
+  --button-bg-active: var(--button-secondary-bg-active);
+  --button-bg-image-active: var(--button-secondary-bg-image-active);
+  --button-border-active: var(--button-secondary-border);
+  --button-shadow-active-current: var(--button-shadow-active);
 }
 
 .button--accent {
-  color: var(--button-accent-text);
-  background: var(--button-accent-bg);
-  border-color: var(--button-accent-border);
-  box-shadow: var(--button-shadow);
-}
-
-.button--accent:hover {
-  background: var(--button-accent-bg-hover);
-}
-
-.button--accent:active {
-  background: var(--button-accent-bg-active);
+  --button-text: var(--button-accent-text);
+  --button-bg: var(--button-accent-bg);
+  --button-bg-image: var(--button-accent-bg-image);
+  --button-border: var(--button-accent-border);
+  --button-shadow: var(--button-shadow-rest);
+  --button-text-hover: var(--button-accent-text);
+  --button-bg-hover: var(--button-accent-bg-hover);
+  --button-bg-image-hover: var(--button-accent-bg-image-hover);
+  --button-border-hover: var(--button-accent-border);
+  --button-shadow-hover-current: var(--button-shadow-hover);
+  --button-text-active: var(--button-accent-text);
+  --button-bg-active: var(--button-accent-bg-active);
+  --button-bg-image-active: var(--button-accent-bg-image-active);
+  --button-border-active: var(--button-accent-border);
+  --button-shadow-active-current: var(--button-shadow-active);
 }
 
 .button--outline {
-  color: var(--button-outline-text);
-  background: var(--button-outline-bg);
-  border-color: var(--button-outline-border);
-}
-
-.button--outline:hover {
-  background: var(--button-outline-bg-hover);
-}
-
-.button--outline:active {
-  background: var(--button-outline-bg-active);
+  --button-text: var(--button-outline-text);
+  --button-bg: var(--button-outline-bg);
+  --button-bg-image: var(--button-outline-bg-image);
+  --button-border: var(--button-outline-border);
+  --button-shadow: none;
+  --button-text-hover: var(--button-outline-text);
+  --button-bg-hover: var(--button-outline-bg-hover);
+  --button-bg-image-hover: var(--button-outline-bg-image-hover);
+  --button-border-hover: var(--button-outline-border);
+  --button-shadow-hover-current: var(--button-shadow-rest);
+  --button-text-active: var(--button-outline-text);
+  --button-bg-active: var(--button-outline-bg-active);
+  --button-bg-image-active: var(--button-outline-bg-image-active);
+  --button-border-active: var(--button-outline-border);
+  --button-shadow-active-current: var(--button-shadow-rest);
 }
 
 .button--ghost {
-  color: var(--button-ghost-text);
-  background: var(--button-ghost-bg);
-  border-color: var(--button-ghost-border);
+  --button-text: var(--button-ghost-text);
+  --button-bg: var(--button-ghost-bg);
+  --button-bg-image: var(--button-ghost-bg-image);
+  --button-border: var(--button-ghost-border);
+  --button-shadow: none;
+  --button-text-hover: var(--button-ghost-text);
+  --button-bg-hover: var(--button-ghost-bg-hover);
+  --button-bg-image-hover: var(--button-ghost-bg-image-hover);
+  --button-border-hover: var(--button-ghost-border);
+  --button-shadow-hover-current: none;
+  --button-text-active: var(--button-ghost-text);
+  --button-bg-active: var(--button-ghost-bg-active);
+  --button-bg-image-active: var(--button-ghost-bg-image-active);
+  --button-border-active: var(--button-ghost-border);
+  --button-shadow-active-current: none;
 }
 
-.button--ghost:hover {
-  background: var(--button-ghost-bg-hover);
+.button--close {
+  --button-text: var(--button-close-text);
+  --button-bg: var(--button-close-bg);
+  --button-bg-image: var(--button-close-bg-image);
+  --button-border: var(--button-close-border);
+  --button-shadow: var(--button-close-shadow);
+  --button-text-hover: var(--button-close-text-hover);
+  --button-bg-hover: var(--button-close-bg-hover);
+  --button-bg-image-hover: var(--button-close-bg-image-hover);
+  --button-border-hover: var(--button-close-border);
+  --button-shadow-hover-current: none;
+  --button-text-active: var(--button-close-text-hover);
+  --button-bg-active: var(--button-close-bg-active);
+  --button-bg-image-active: var(--button-close-bg-image-active);
+  --button-border-active: var(--button-close-focus-border);
+  --button-shadow-active-current: var(--button-shadow-active);
+  --button-focus-border-current: var(--button-close-focus-border);
 }
 
-.button--ghost:active {
-  background: var(--button-ghost-bg-active);
+.button--active,
+.button[aria-pressed='true'],
+.button[aria-expanded='true'] {
+  color: var(--button-active-text);
+  background-color: var(--button-active-bg);
+  background-image: var(--button-active-bg-image);
+  border-color: var(--button-active-border);
+  box-shadow: var(--button-active-shadow);
 }
 
 /* ==========================================
-   18. FORM PRIMITIVES
+   18. ALERT BUTTONS
+   Semantic button styles used by alert variants.
+   loading / confirm / info reuse the primary blue.
+   ========================================== */
+.button--alert-loading,
+.button--alert-confirm,
+.button--alert-info {
+  color: var(--button-primary-text);
+  background: var(--button-primary-bg);
+  border-color: var(--button-primary-border);
+  box-shadow: var(--button-shadow-rest);
+}
+
+.button--alert-loading:hover,
+.button--alert-confirm:hover,
+.button--alert-info:hover {
+  background: var(--button-primary-bg-hover);
+}
+
+.button--alert-loading:active,
+.button--alert-confirm:active,
+.button--alert-info:active {
+  background: var(--button-primary-bg-active);
+}
+
+.button--alert-success {
+  color: #f8fbff;
+  background: #15803d;
+  border-color: #15803d;
+  box-shadow: var(--button-shadow-rest);
+}
+
+.button--alert-success:hover {
+  background: #166534;
+}
+
+.button--alert-success:active {
+  background: #14532d;
+}
+
+.button--alert-error {
+  color: #fff5f5;
+  background: #dc2626;
+  border-color: #dc2626;
+  box-shadow: var(--button-shadow-rest);
+}
+
+.button--alert-error:hover {
+  background: #b91c1c;
+}
+
+.button--alert-error:active {
+  background: #991b1b;
+}
+
+.button--alert-warning {
+  color: #2b2110;
+  background: #ecab14;
+  border-color: #ecab14;
+  box-shadow: var(--button-shadow-rest);
+}
+
+.button--alert-warning:hover {
+  background: #d79b11;
+}
+
+.button--alert-warning:active {
+  background: #bb870d;
+}
+
+/* ==========================================
+   19. FORM PRIMITIVES
    ========================================== */
 .label {
   color: var(--input-label);
@@ -776,43 +1195,216 @@ p {
 .card {
   border-radius: var(--radius-card);
   border: 1px solid transparent;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 .card--neutral {
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
-  color: var(--card-neutral-text-primary);
-  background: var(--card-neutral-bg);
-  background-image: var(--card-neutral-bg-image);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-neutral-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-neutral-bg1) 0%,
+    var(--card-neutral-bg2) 50%,
+    var(--card-neutral-bg3) 100%
+  );
   border-color: var(--card-neutral-border);
 }
 
 .card--primary {
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
-  color: var(--card-primary-text-primary);
-  background: var(--card-primary-bg);
-  background-image: var(--card-primary-bg-image);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-primary-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-primary-bg1) 0%,
+    var(--card-primary-bg2) 50%,
+    var(--card-primary-bg3) 100%
+  );
   border-color: var(--card-primary-border);
 }
 
 .card--secondary {
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
-  color: var(--card-secondary-text-primary);
-  background: var(--card-secondary-bg);
-  background-image: var(--card-secondary-bg-image);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-secondary-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-secondary-bg1) 0%,
+    var(--card-secondary-bg2) 50%,
+    var(--card-secondary-bg3) 100%
+  );
   border-color: var(--card-secondary-border);
 }
 
 .card--accent {
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   color: var(--card-accent-text-primary);
   background: var(--card-accent-bg);
   background-image: var(--card-accent-bg-image);
   border-color: var(--card-accent-border);
+}
+
+/* ==========================================
+   20. ALERT CARD CLASSES
+   Global semantic surfaces for alert variants.
+   ========================================== */
+.bg--alert-loading,
+.bg--alert-info,
+.bg--alert-confirm,
+.bg--alert-success,
+.bg--alert-error,
+.bg--alert-warning {
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+}
+.bg--alert-loading,
+.bg--alert-info {
+  background: var(--card-alert-info-bg);
+  background-image: var(--card-alert-info-bg-image);
+  border-color: var(--card-alert-info-border);
+}
+
+.bg--alert-confirm {
+  color: var(--card-alert-confirm-text-primary);
+  background: var(--card-alert-confirm-bg);
+  background-image: var(--card-alert-confirm-bg-image);
+  border-color: var(--card-alert-confirm-border);
+  --alert-card-text-primary: var(--card-alert-confirm-text-primary);
+  --alert-card-text-secondary: var(--card-alert-confirm-text-secondary);
+  --alert-accent-bg: var(--card-alert-confirm-accent-bg);
+  --alert-accent-border: var(--card-alert-confirm-accent-border);
+  --alert-accent-text: var(--card-alert-confirm-accent-text);
+  --alert-image-glow: var(--card-alert-confirm-image-glow);
+}
+
+.bg--alert-success {
+  color: var(--card-alert-success-text-primary);
+  background: var(--card-alert-success-bg);
+  background-image: var(--card-alert-success-bg-image);
+  border-color: var(--card-alert-success-border);
+  --alert-card-text-primary: var(--card-alert-success-text-primary);
+  --alert-card-text-secondary: var(--card-alert-success-text-secondary);
+  --alert-accent-bg: var(--card-alert-success-accent-bg);
+  --alert-accent-border: var(--card-alert-success-accent-border);
+  --alert-accent-text: var(--card-alert-success-accent-text);
+  --alert-image-glow: var(--card-alert-success-image-glow);
+}
+
+.bg--alert-error {
+  color: var(--card-alert-error-text-primary);
+  background: var(--card-alert-error-bg);
+  background-image: var(--card-alert-error-bg-image);
+  border-color: var(--card-alert-error-border);
+  --alert-card-text-primary: var(--card-alert-error-text-primary);
+  --alert-card-text-secondary: var(--card-alert-error-text-secondary);
+  --alert-accent-bg: var(--card-alert-error-accent-bg);
+  --alert-accent-border: var(--card-alert-error-accent-border);
+  --alert-accent-text: var(--card-alert-error-accent-text);
+  --alert-image-glow: var(--card-alert-error-image-glow);
+}
+
+.bg--alert-warning {
+  background: var(--card-alert-warning-bg);
+  background-image: var(--card-alert-warning-bg-image);
+}
+.bg--alert-warning::before {
+  content: '';
+  position: absolute;
+  background-image:
+    radial-gradient(circle at top left, var(--feedback-warning-bg), transparent 30%),
+    radial-gradient(circle at bottom right, var(--feedback-warning-bg), transparent 24%);
+  inset: 0;
+  z-index: 10;
+}
+
+/* ==========================================
+   21. APP MOTION UTILITIES
+   ========================================== */
+@keyframes app-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes app-overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes app-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes app-modal-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes app-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-anim-overlay-enter {
+  animation: app-overlay-fade-in 0.24s ease-out forwards;
+}
+
+.app-anim-overlay-exit {
+  animation: app-overlay-fade-out 0.18s ease-in forwards;
+}
+
+.app-anim-modal-enter {
+  animation: app-modal-enter 0.32s var(--ease-emphasized) forwards;
+}
+
+.app-anim-modal-exit {
+  animation: app-modal-exit 0.18s ease-in forwards;
+}
+
+.app-anim-spin {
+  animation: app-spin 0.85s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-anim-overlay-enter,
+  .app-anim-overlay-exit,
+  .app-anim-modal-enter,
+  .app-anim-modal-exit,
+  .app-anim-spin {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 @keyframes navbarFadeInUp {

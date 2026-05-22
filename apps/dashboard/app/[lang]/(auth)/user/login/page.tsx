@@ -70,6 +70,7 @@ const Login = () => {
   }, [worker?.language, lang, language, router, setLanguage, isLoggedIn]);
 
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.client.user.login;
@@ -111,7 +112,7 @@ const Login = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -132,7 +133,7 @@ const Login = () => {
             status: 500,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: () => {
             closeAlert();
@@ -160,7 +161,7 @@ const Login = () => {
             status: 200,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -206,7 +207,7 @@ const Login = () => {
           status: status ?? 500,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: popupData.close,
+          cancelLabel: alertButtons.close,
         },
         onCancel: () => {
           closeAlert();

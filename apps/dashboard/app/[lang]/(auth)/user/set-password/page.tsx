@@ -39,6 +39,7 @@ const ResetPassword = () => {
   const { texts } = useI18n();
   const formText = texts.components.client.form;
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   // const accessDenied: accessDeniedText = texts.message.accessDenied;
   const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
   const resetButton = formText.button.resetPassword;
@@ -64,7 +65,7 @@ const ResetPassword = () => {
           status: 500,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.goToHome,
         },
         onCancel: () => {
           closeAlert();
@@ -91,7 +92,7 @@ const ResetPassword = () => {
             popupData.description ||
             texts.popups.GLOBAL_INTERNAL_ERROR.description ||
             'Invalid or expired link.',
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.goToHome,
         },
         onCancel: () => {
           closeAlert();
@@ -129,7 +130,7 @@ const ResetPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description || 'Missing token or invalid link.',
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.goToLogin,
           },
           onCancel: () => {
             closeAlert();
@@ -152,7 +153,7 @@ const ResetPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -194,7 +195,7 @@ const ResetPassword = () => {
             status: 200,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.goToLogin,
           },
           onCancel: () => {
             closeAlert();
@@ -212,7 +213,7 @@ const ResetPassword = () => {
           status: err.response?.status ?? 500,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.close,
         },
         onCancel: closeAlert,
       });

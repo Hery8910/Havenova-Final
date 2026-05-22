@@ -46,6 +46,7 @@ const Login = () => {
   const redirectTimeoutRef = useRef<number | null>(null);
 
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
@@ -90,10 +91,14 @@ const Login = () => {
         return 'CLIENT_MISSING_CLIENT_ID';
       case 'AUTH_INVALID_CREDENTIALS':
         return 'AUTH_INVALID_CREDENTIALS';
-      case 'USER_LOGIN_EMAIL_NOT_VERIFIED':
-        return 'USER_LOGIN_EMAIL_NOT_VERIFIED';
       case 'USER_CLIENT_NOT_FOUND':
         return 'USER_CLIENT_NOT_FOUND';
+      case 'AUTH_BLOCKED':
+        return 'AUTH_BLOCKED';
+      case 'USER_LOGIN_EMAIL_NOT_VERIFIED':
+        return 'USER_LOGIN_EMAIL_NOT_VERIFIED';
+      case 'USER_CLIENT_BLOCKED':
+        return 'USER_CLIENT_BLOCKED';
       case 'CLIENT_NOT_FOUND':
         return 'CLIENT_NOT_FOUND';
       default:
@@ -103,14 +108,6 @@ const Login = () => {
 
   const getLoginFailureAction = (code?: string) => {
     switch (code) {
-      case 'AUTH_INVALID_CREDENTIALS':
-        return {
-          status: 401,
-          onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/user/forgot-password'));
-          },
-        };
       case 'USER_CLIENT_NOT_FOUND':
         return {
           status: 404,
@@ -169,7 +166,7 @@ const Login = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -199,8 +196,8 @@ const Login = () => {
             status: 403,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            confirmLabel: alertButtons.openVerification,
+            cancelLabel: alertButtons.close,
           },
           onConfirm: () => {
             router.push(href(lang, '/user/verify-email'));
@@ -235,12 +232,15 @@ const Login = () => {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: onConfirm
-              ? (popupData.confirm ??
-                (canRetry
-                  ? (popups.button?.reload ?? fallbackButtons.reload)
-                  : (popups.button?.continue ?? fallbackButtons.continue)))
+              ? response?.code === 'USER_CLIENT_NOT_FOUND'
+                ? alertButtons.goToRegister
+                : response?.code === 'CLIENT_NOT_FOUND'
+                    ? alertButtons.goToHome
+                    : canRetry
+                      ? alertButtons.reload
+                      : alertButtons.continue
               : undefined,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onConfirm,
           onCancel: closeAlert,
@@ -266,12 +266,7 @@ const Login = () => {
           status: 200,
           title: popupData.title,
           description: getAutoRedirectDescription(popupData.description),
-          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-        },
-        onConfirm: () => {
-          clearRedirectTimeout();
-          router.push(href(lang, '/'));
-          closeAlert();
+          cancelLabel: '',
         },
       });
       scheduleHomeRedirect();
@@ -297,12 +292,15 @@ const Login = () => {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: onConfirm
-            ? (popupData.confirm ??
-              (canRetry
-                ? (popups.button?.reload ?? fallbackButtons.reload)
-                : (popups.button?.continue ?? fallbackButtons.continue)))
+            ? code === 'USER_CLIENT_NOT_FOUND'
+              ? alertButtons.goToRegister
+              : code === 'CLIENT_NOT_FOUND'
+                  ? alertButtons.goToHome
+                  : canRetry
+                    ? alertButtons.reload
+                    : alertButtons.continue
             : undefined,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.close,
         },
         onConfirm,
         onCancel: closeAlert,
@@ -321,10 +319,10 @@ const Login = () => {
       <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
         <Image
           className={styles.authBrandImage}
-          src="/logos/logo-horizontal.png"
+          src="/logos/logo-small-dark.webp"
           alt={navText.logoAlt}
-          width={800}
-          height={200}
+          width={80}
+          height={80}
           priority
         />
       </Link>

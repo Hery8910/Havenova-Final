@@ -120,7 +120,6 @@ export function useAlertBase(): AlertHookReturn {
           onConfirm,
           fallbackStatus: 200,
           fallbackVariant: 'success',
-          fallbackCancelLabel: 'Close',
         })
       );
     },

@@ -13,7 +13,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left;
-  opacity: 0.7;
+  opacity: 0.6;
   z-index: 0;
 }
 
@@ -56,45 +56,40 @@
 }
 
 .card {
-  padding: 16px 24px;
+  padding: 24px 24px 32px;
   width: 100%;
   max-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: var(--space-4);
   transition: all 0.2s ease-in-out;
   position: relative;
-}
-.card:hover {
-  cursor: pointer;
-  transform: translateY(-2px);
-  border-color: rgba(7, 104, 201, 0.4);
-  box-shadow: 0 20px 40px rgba(7, 22, 36, 0.12);
+  box-shadow: var(--shadow-md);
 }
 .cardIcon {
   width: 100%;
-  padding: 8px 0 8px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: baseline;
   gap: 16px;
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  border-color: transparent;
+  padding: var(--space-2);
   object-fit: contain;
 }
 .cardAside {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-start;
-  gap: 6px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
 }
 .cardTitle {
-  max-width: 250px;
   margin: 0;
   color: var(--text-primary);
 }
@@ -102,24 +97,38 @@
   margin: 0;
   color: var(--text-secondary);
 }
+.serviceList {
+  width: 100%;
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+.serviceListItem::marker {
+  color: var(--accent-primary);
+}
+.serviceListItem {
+  line-height: 1.45;
+}
 .cardLink {
+  padding: 8px 32px;
   text-decoration: none;
   display: inline-flex;
-  gap: 8px;
-  align-items: center;
   transition: color 0.3s ease-in-out;
-  color: var(--text-primary);
-}
-.cardLink:focus-visible {
-  outline: 2px solid var(--brand-primary-5);
-  outline-offset: 2px;
+  margin-top: var(--space-4);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .services {
     height: max-content;
   }
   .cardGrid {
     grid-template-columns: 1fr;
+  }
+  .icon {
+    width: 60px;
+    height: 60px;
   }
 }

@@ -107,9 +107,7 @@ export function NavbarTabletView({
               ) : null}
               <button
                 type="button"
-                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton} ${
-                  accountOpen ? sharedStyles.iconButtonActive : ''
-                }`}
+                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton}`}
                 aria-label={a11y.profileToggle}
                 aria-expanded={accountOpen}
                 aria-controls={accountPanelId}

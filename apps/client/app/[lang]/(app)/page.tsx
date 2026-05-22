@@ -22,6 +22,7 @@ export interface HomePageTexts {
     items: {
       title: string;
       description: string;
+      highlights: string[];
       ctaLabel: string;
       href: string;
       icon: string;

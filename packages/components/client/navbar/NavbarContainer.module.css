@@ -1,4 +1,5 @@
 .navbar {
+  --navbar-height: 55px;
   width: 100%;
   max-width: 100dvw;
   overflow: visible;
@@ -24,7 +25,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  min-height: calc(var(--navbar-height-desktop) + env(safe-area-inset-top));
+  min-height: calc(var(--navbar-height) + env(safe-area-inset-top));
   pointer-events: none;
   z-index: 9;
   display: flex;
@@ -35,7 +36,7 @@
 
 .navbarShell {
   width: 100%;
-  min-height: var(--navbar-height-desktop);
+  min-height: var(--navbar-height);
   padding: 0 5dvw;
   display: flex;
   align-items: center;
@@ -114,11 +115,11 @@
 
 @media (max-width: 1499px) {
   .navbarPlaceholder {
-    min-height: calc(var(--navbar-height-tablet) + env(safe-area-inset-top));
+    min-height: calc(var(--navbar-height) + env(safe-area-inset-top));
   }
 
   .navbarShell {
-    min-height: var(--navbar-height-tablet);
+    min-height: var(--navbar-height);
     padding: 0 5dvw;
   }
 

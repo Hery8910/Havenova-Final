@@ -28,11 +28,13 @@
 
 .panelButton {
   width: 100%;
-  min-height: 52px;
-  padding: 0 14px;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 8px;
   text-align: left;
+  color: var(--card-text-secondary);
 }
 
 .panelIcon {
@@ -42,7 +44,7 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  color: var(--color-page-muted);
+  color: var(--card-text-secondary);
 }
 
 .panelImage {

@@ -3,7 +3,16 @@
     "accept": "Akzeptieren",
     "continue": "Weiter",
     "close": "Schließen",
-    "reload": "Neu laden"
+    "reload": "Neu laden",
+    "goToHome": "Zur Startseite",
+    "goToLogin": "Zum Login",
+    "goToRegister": "Zur Registrierung",
+    "openVerification": "Verifizierung öffnen",
+    "resetPassword": "Passwort zurücksetzen",
+    "requestNewLink": "Neuen Link anfordern",
+    "tryAgain": "Erneut versuchen",
+    "continueBrowsing": "Weiter stöbern",
+    "logOut": "Abmelden"
   },
   "a11y": {
     "close": "Popup schließen",
@@ -28,21 +37,15 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Zugriff verboten",
-    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
-    "confirm": "Zur Startseite",
-    "close": "Schließen"
+    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen."
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
-    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
-    "confirm": "Zum Login",
-    "close": "Weiter stöbern"
+    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen."
   },
   "USER_SESSION_EXPIRED": {
     "title": "Sitzung abgelaufen",
-    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden.",
-    "confirm": "Zum Login",
-    "close": "Weiter stöbern"
+    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden."
   },
   "AUTH_BLOCKED": {
     "title": "Konto gesperrt",
@@ -132,27 +135,19 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client nicht gefunden",
-    "description": "Der angegebene Client existiert nicht.",
-    "confirm": "Zur Startseite",
-    "close": "Schließen"
+    "description": "Der angegebene Client existiert nicht."
   },
   "USER_REGISTER_SUCCESS": {
     "title": "Registrierung erfolgreich",
-    "description": "Ihr Konto wurde erstellt. Bitte prüfen Sie Ihren Posteingang und bestätigen Sie Ihre E-Mail.",
-    "confirm": "Weiter",
-    "close": "Schließen"
+    "description": "Ihr Konto wurde erstellt. Bitte prüfen Sie Ihren Posteingang und bestätigen Sie Ihre E-Mail."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
     "title": "Account bereits aktiv",
-    "description": "Für diese E-Mail existiert bereits ein aktiver Account.",
-    "confirm": "Zum Login",
-    "close": "Schließen"
+    "description": "Sie haben bereits Zugriff auf diesen Mandanten. Fahren Sie mit dem Login fort."
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
     "title": "Passwort erforderlich",
-    "description": "Dieses Konto existiert bereits. Geben Sie das richtige Passwort ein oder setzen Sie es zurück.",
-    "confirm": "Passwort zurücksetzen",
-    "close": "Erneut versuchen"
+    "description": "Die Registrierung konnte mit den angegebenen Daten nicht abgeschlossen werden. Verwenden Sie das richtige Passwort oder setzen Sie es zurück, um fortzufahren."
   },
   "USER_BLOCKED": {
     "title": "Zugriff verweigert",
@@ -160,8 +155,7 @@
   },
   "USER_TOS_NOT_ACCEPTED": {
     "title": "AGB nicht akzeptiert",
-    "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um die Registrierung fortzusetzen.",
-    "close": "Schließen"
+    "description": "Bitte akzeptieren Sie die AGB und die Datenschutzerklärung, um die Registrierung fortzusetzen."
   },
   "USER_LOGIN_MISSING_EMAIL": {
     "title": "E-Mail erforderlich",
@@ -173,9 +167,7 @@
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "E-Mail erfolgreich bestätigt",
-    "description": "Ihre E-Mail wurde bestätigt. Sie können jetzt zum Login weitergehen.",
-    "confirm": "Zum Login",
-    "close": "Schließen"
+    "description": "Ihre E-Mail wurde bestätigt. Sie können jetzt zum Login weitergehen."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "E-Mail bereits bestätigt",
@@ -183,15 +175,11 @@
   },
   "USER_RESET_PASSWORD_INVALID_TOKEN": {
     "title": "Ungültiger Reset-Link",
-    "description": "Dieser Reset-Link ist ungültig. Fordern Sie einen neuen an, um fortzufahren.",
-    "confirm": "Neuen Link anfordern",
-    "close": "Schließen"
+    "description": "Dieser Reset-Link ist ungültig. Fordern Sie einen neuen an, um fortzufahren."
   },
   "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
     "title": "Reset-Link abgelaufen",
-    "description": "Dieser Reset-Link ist abgelaufen. Fordern Sie einen neuen an, um fortzufahren.",
-    "confirm": "Neuen Link anfordern",
-    "close": "Schließen"
+    "description": "Dieser Reset-Link ist abgelaufen. Fordern Sie einen neuen an, um fortzufahren."
   },
   "VALIDATION_ERROR": {
     "title": "Validierungsfehler",
@@ -234,8 +222,8 @@
     "close": "Abbrechen"
   },
   "USER_CLIENT_NOT_FOUND": {
-    "title": "Zugehörigkeit nicht gefunden",
-    "description": "Der Benutzer ist diesem Client nicht zugeordnet."
+    "title": "Zugang noch nicht verfügbar",
+    "description": "Dieses Konto kann noch nicht auf diesen Mandanten zugreifen. Fahren Sie mit der Registrierung fort, um den Zugang zu vervollständigen."
   },
   "USER_CLIENT_BLOCKED": {
     "title": "Zugriff blockiert",
@@ -279,27 +267,19 @@
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
     "title": "Reset-Link gesendet",
-    "description": "Wir haben Ihnen einen Reset-Link per E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.",
-    "confirm": "Zum Login",
-    "close": "Schließen"
+    "description": "Wir haben Ihnen einen Reset-Link per E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang."
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
     "title": "E-Mail nicht bestätigt",
-    "description": "Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Bei Bedarf können Sie die Verifizierungsseite öffnen.",
-    "confirm": "Zur Verifizierung",
-    "close": "Schließen"
+    "description": "Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Bei Bedarf können Sie die Verifizierungsseite öffnen."
   },
   "USER_LOGIN_SUCCESS": {
     "title": "Login erfolgreich",
-    "description": "Sie wurden erfolgreich angemeldet.",
-    "confirm": "Weiter",
-    "close": "Schließen"
+    "description": "Sie wurden erfolgreich angemeldet."
   },
   "USER_RESET_PASSWORD_SUCCESS": {
     "title": "Passwort zurückgesetzt",
-    "description": "Ihr Passwort wurde aktualisiert. Gehen Sie jetzt zum Login.",
-    "confirm": "Zum Login",
-    "close": "Schließen"
+    "description": "Ihr Passwort wurde aktualisiert. Gehen Sie jetzt zum Login."
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Passwort aktualisiert",

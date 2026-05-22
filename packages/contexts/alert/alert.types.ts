@@ -12,6 +12,15 @@ export interface PopupsTexts {
     continue: string;
     close: string;
     reload?: string;
+    goToHome?: string;
+    goToLogin?: string;
+    goToRegister?: string;
+    openVerification?: string;
+    resetPassword?: string;
+    requestNewLink?: string;
+    tryAgain?: string;
+    continueBrowsing?: string;
+    logOut?: string;
   };
 
   a11y?: {

@@ -82,15 +82,29 @@
         "items": [
           {
             "title": "Cleaning",
-            "description": "Reliable cleaning for apartments, stairwells, and shared areas — adapted to your needs.",
-            "ctaLabel": "Order now",
+            "description": "Professional cleaning support for homes, shared buildings, and recurring maintenance needs, with clear coordination and service adapted to the condition and rhythm of each space.",
+            "highlights": [
+              "Window cleaning",
+              "Deep cleaning",
+              "Post-repair cleaning",
+              "Stairwell cleaning",
+              "Move-in and move-out cleaning"
+            ],
+            "ctaLabel": "Discover more",
             "href": "/cleaning-service",
             "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Home service",
-            "description": "Small repairs, upkeep, and practical help at home — quickly arranged and clearly coordinated.",
-            "ctaLabel": "Order now",
+            "description": "Flexible home support for practical tasks, minor fixes, and everyday upkeep, organized through a simple request flow so each visit is planned with the right context from the start.",
+            "highlights": [
+              "Furniture assembly",
+              "Kitchen assembly",
+              "Small repairs",
+              "Fixture replacement",
+              "General home assistance"
+            ],
+            "ctaLabel": "Discover more",
             "href": "/home-service",
             "icon": "/svg/service.svg"
           }

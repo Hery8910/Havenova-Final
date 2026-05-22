@@ -115,6 +115,7 @@
 
 .checkboxWrapper {
   width: 100%;
+  padding-top: var(--space-4);
 }
 
 .checkboxLabel {

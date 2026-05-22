@@ -1,5 +1,6 @@
 .desktopShell {
-  min-height: var(--navbar-height-desktop);
+  --navbar-height: 55px;
+  min-height: var(--navbar-height);
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -9,7 +10,7 @@
   box-sizing: border-box;
   position: relative;
   isolation: isolate;
-  height: var(--navbar-height-desktop);
+  height: var(--navbar-height);
   padding: 0 5dvw;
   width: 100dvw;
   margin: 0 auto;

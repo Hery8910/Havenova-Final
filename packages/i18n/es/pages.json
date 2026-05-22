@@ -82,15 +82,29 @@
         "items": [
           {
             "title": "Servicio de limpieza",
-            "description": "Limpieza fiable para pisos, escaleras y zonas comunes — adaptada a lo que necesitas.",
-            "ctaLabel": "Pedir ahora",
+            "description": "Apoyo profesional de limpieza para viviendas, edificios y necesidades recurrentes, con una coordinación clara y un servicio adaptado al estado y al ritmo de cada espacio.",
+            "highlights": [
+              "Limpieza de ventanas",
+              "Limpieza profunda",
+              "Limpieza después de reparaciones",
+              "Limpieza de escaleras",
+              "Limpieza de entrada y salida"
+            ],
+            "ctaLabel": "Descubre más",
             "href": "/cleaning-service",
             "icon": "/svg/cleaning.svg"
           },
           {
             "title": "Servicio al hogar",
-            "description": "Pequeñas reparaciones, mantenimiento y ayuda práctica en casa — organizados con rapidez y claridad.",
-            "ctaLabel": "Pedir ahora",
+            "description": "Apoyo flexible para tareas prácticas, pequeños arreglos y mantenimiento cotidiano del hogar, organizado mediante una solicitud sencilla para preparar cada visita con el contexto adecuado.",
+            "highlights": [
+              "Montaje de muebles",
+              "Montaje de cocina",
+              "Pequeñas reparaciones",
+              "Cambio de accesorios",
+              "Ayuda general en el hogar"
+            ],
+            "ctaLabel": "Descubre más",
             "href": "/home-service",
             "icon": "/svg/service.svg"
           }

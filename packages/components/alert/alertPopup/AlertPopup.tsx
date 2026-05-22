@@ -3,6 +3,7 @@
 import { useId } from 'react';
 import styles from './AlertPopup.module.css';
 import type { AlertVisualState } from '../../../contexts/alert/useAlert';
+import Image from 'next/image';
 
 export type AlertMedia =
   | {
@@ -36,10 +37,22 @@ export interface AlertPopupProps {
   dialogRef?: (node: HTMLElement | null) => void;
 }
 
-const toneClassMap: Record<AlertActionTone, string> = {
-  primary: 'button--primary',
-  secondary: 'button--outline',
-  danger: 'button--secondary',
+const alertCardClassMap: Record<AlertVisualState, string> = {
+  loading: 'bg--alert-loading',
+  success: 'bg--alert-success',
+  error: 'bg--alert-error',
+  confirm: 'bg--alert-confirm',
+  warning: 'bg--alert-warning',
+  info: 'bg--alert-info',
+};
+
+const alertPrimaryButtonClassMap: Record<AlertVisualState, string> = {
+  loading: 'button--alert-loading',
+  success: 'button--alert-success',
+  error: 'button--alert-error',
+  confirm: 'button--alert-confirm',
+  warning: 'button--alert-warning',
+  info: 'button--alert-info',
 };
 
 export default function AlertPopup({
@@ -75,19 +88,34 @@ export default function AlertPopup({
       );
     }
 
-    return <img className={styles.image} src={media.src} alt={media.alt} />;
+    return (
+      <Image
+        className={`${styles.image} ${styles[`image--${variant}`] ?? ''}`}
+        src={media.src}
+        alt={media.alt}
+        width={80}
+        height={80}
+        priority
+      />
+    );
   };
 
   const renderAction = (action: AlertAction | undefined, fallbackTone: AlertActionTone) => {
     if (!action) return null;
 
     const tone = action.tone ?? fallbackTone;
+    const toneClass =
+      tone === 'secondary'
+        ? 'button--outline'
+        : tone === 'danger'
+          ? 'button--alert-error'
+          : alertPrimaryButtonClassMap[variant];
 
     return (
       <button
         type="button"
         onClick={action.onAction}
-        className={`${styles.actionButton} button ${toneClassMap[tone]}`}
+        className={`${styles.actionButton} button ${toneClass}`}
       >
         {action.label}
       </button>
@@ -96,7 +124,7 @@ export default function AlertPopup({
 
   return (
     <div
-      className={`${styles.overlay} ${isOpen ? 'app-anim-overlay-enter' : 'app-anim-overlay-exit'}`}
+      className={`${styles.overlay} ${alertCardClassMap[variant]} ${isOpen ? 'app-anim-overlay-enter' : 'app-anim-overlay-exit'}`}
       onClick={onBackdropClick}
     >
       <section
@@ -108,7 +136,7 @@ export default function AlertPopup({
         aria-label={dialogLabel}
         aria-busy={media.kind === 'spinner'}
         tabIndex={-1}
-        className={`${styles.card} card card--primary ${styles[`card--${variant}`] ?? ''} ${layoutClass} ${isOpen ? 'app-anim-modal-enter' : 'app-anim-modal-exit'}`}
+        className={`${styles.card} card card--neutral ${layoutClass} ${isOpen ? 'app-anim-modal-enter' : 'app-anim-modal-exit'}`}
         onClick={(event) => event.stopPropagation()}
       >
         <div className={styles.media}>{renderMedia()}</div>
@@ -125,7 +153,7 @@ export default function AlertPopup({
         {actionsCount > 0 ? (
           <div className={styles.actions}>
             {renderAction(secondaryAction, 'secondary')}
-            {renderAction(primaryAction, variant === 'confirm' ? 'danger' : 'primary')}
+            {renderAction(primaryAction, 'primary')}
           </div>
         ) : null}
       </section>

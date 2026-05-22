@@ -28,6 +28,15 @@ import Link from 'next/link';
 import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
+const ALERT_DEBUG = true;
+const ALERT_DEBUG_STATE = 'warning' as
+  | 'loading'
+  | 'success'
+  | 'error'
+  | 'confirm'
+  | 'warning'
+  | 'info';
+
 const VerifyEmailPageContent = () => {
   const AUTO_REDIRECT_MS = 4000;
   const router = useRouter();
@@ -37,6 +46,7 @@ const VerifyEmailPageContent = () => {
 
   const { texts } = useI18n();
   const { popups } = texts;
+  const alertButtons = popups.button ?? fallbackButtons;
 
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
@@ -51,7 +61,7 @@ const VerifyEmailPageContent = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
+  const { showError, showSuccess, showConfirm, showLoading, closeAlert } = useGlobalAlert();
   const { handleVerifyEmail, handleMagicLogin, handleResendEmail } = useVerifyEmailActions();
 
   // Evitar doble ejecución del efecto en modo dev / StrictMode
@@ -115,34 +125,85 @@ const VerifyEmailPageContent = () => {
     if (didRunRef.current) return;
     didRunRef.current = true;
 
+    if (ALERT_DEBUG) {
+      const previewBase = {
+        title: `Alert preview: ${ALERT_DEBUG_STATE}`,
+        description: 'Temporary alert preview block for visual QA. Remove after testing.',
+      };
+
+      switch (ALERT_DEBUG_STATE) {
+        case 'loading':
+          showLoading({
+            response: previewBase,
+          });
+          return;
+        case 'success':
+          showSuccess({
+            response: {
+              ...previewBase,
+              variant: 'success',
+              confirmLabel: alertButtons.continue,
+              cancelLabel: alertButtons.close,
+            },
+            onConfirm: closeAlert,
+            onCancel: closeAlert,
+          });
+          return;
+        case 'confirm':
+          showConfirm({
+            response: {
+              ...previewBase,
+              confirmLabel: alertButtons.continue,
+              cancelLabel: alertButtons.close,
+            },
+            onConfirm: closeAlert,
+            onCancel: closeAlert,
+          });
+          return;
+        case 'warning':
+          showError({
+            response: {
+              ...previewBase,
+              variant: 'warning',
+              confirmLabel: alertButtons.continue,
+              cancelLabel: alertButtons.close,
+            },
+            onConfirm: closeAlert,
+            onCancel: closeAlert,
+          });
+          return;
+        case 'info':
+          showError({
+            response: {
+              ...previewBase,
+              variant: 'info',
+              cancelLabel: alertButtons.close,
+            },
+            onCancel: closeAlert,
+          });
+          return;
+        case 'error':
+        default:
+          showError({
+            response: {
+              ...previewBase,
+              variant: 'error',
+              confirmLabel: alertButtons.reload,
+              cancelLabel: alertButtons.close,
+            },
+            onConfirm: closeAlert,
+            onCancel: closeAlert,
+          });
+      }
+      return;
+    }
+
     // Envuelve en microtarea para asegurar que React estabilizó el árbol antes de correr
     Promise.resolve().then(async () => {
       if (!token) {
-        const popupData = getPopup(
-          popups,
-          'AUTH_VERIFY_EMAIL_TOKEN_INVALID',
-          'AUTH_VERIFY_EMAIL_TOKEN_INVALID',
-          fallbackGlobalError
-        );
-
-        showError({
-          response: {
-            status: 400,
-            title: popupData.title,
-            description: popupData.description,
-            confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-            cancelLabel: popupData.close,
-          },
-          onConfirm: () => {
-            router.push(href(lang, '/user/login'));
-            closeAlert();
-          },
-          onCancel: () => {
-            router.push(href(lang, '/'));
-            closeAlert();
-          },
-        });
-
+        // Sin token, esta ruta actua como pantalla segura para reenviar el email.
+        // El flujo de verificacion automatica solo debe correr cuando el usuario llega
+        // desde el enlace del correo.
         return;
       }
 
@@ -181,8 +242,8 @@ const VerifyEmailPageContent = () => {
               status: 200,
               title: popupData.title,
               description: popupData.description,
-              confirmLabel: popups.button?.continue ?? fallbackButtons.continue,
-              cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+              confirmLabel: alertButtons.goToLogin,
+              cancelLabel: alertButtons.close,
             },
             onConfirm: () => {
               router.push(href(lang, '/user/login'));
@@ -231,12 +292,7 @@ const VerifyEmailPageContent = () => {
             status: 200,
             title: popupData.title,
             description: getAutoRedirectDescription(popupData.description),
-            confirmLabel: popups.button?.continue ?? fallbackButtons.continue,
-          },
-          onConfirm: () => {
-            clearRedirectTimeout();
-            router.push(href(lang, '/'));
-            closeAlert();
+            cancelLabel: '',
           },
         });
         scheduleHomeRedirect();
@@ -257,8 +313,8 @@ const VerifyEmailPageContent = () => {
             status,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload,
-            cancelLabel: popupData.close ?? fallbackButtons.close,
+            confirmLabel: alertButtons.reload,
+            cancelLabel: alertButtons.goToHome,
           },
           onConfirm: () => {
             closeAlert();
@@ -283,6 +339,7 @@ const VerifyEmailPageContent = () => {
     refreshAuth,
     router,
     showError,
+    showConfirm,
     showLoading,
     showSuccess,
     token,
@@ -322,10 +379,10 @@ const VerifyEmailPageContent = () => {
       <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
         <Image
           className={styles.authBrandImage}
-          src="/logos/logo-horizontal.png"
+          src="/logos/logo-small-dark.webp"
           alt={navText.logoAlt}
-          width={800}
-          height={200}
+          width={80}
+          height={80}
           priority
         />
       </Link>

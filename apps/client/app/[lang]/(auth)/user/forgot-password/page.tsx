@@ -44,6 +44,7 @@ const ForgotPassword = () => {
   const lang = useLang();
 
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
@@ -90,7 +91,7 @@ const ForgotPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -115,7 +116,7 @@ const ForgotPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -152,7 +153,7 @@ const ForgotPassword = () => {
             status: getForgotPasswordErrorStatus(response.code, 400),
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            cancelLabel: alertButtons.close,
           },
           onCancel: closeAlert,
         });
@@ -171,8 +172,8 @@ const ForgotPassword = () => {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          confirmLabel: alertButtons.goToLogin,
+          cancelLabel: alertButtons.close,
         },
         onConfirm: () => {
           closeAlert();
@@ -197,10 +198,8 @@ const ForgotPassword = () => {
           status: getForgotPasswordErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: canRetry
-            ? (popupData.confirm ?? popups.button?.reload ?? fallbackButtons.reload)
-            : undefined,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          confirmLabel: canRetry ? alertButtons.reload : undefined,
+          cancelLabel: alertButtons.close,
         },
         onConfirm: canRetry
           ? () => {
@@ -224,10 +223,10 @@ const ForgotPassword = () => {
       <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
         <Image
           className={styles.authBrandImage}
-          src="/logos/logo-horizontal.png"
+          src="/logos/logo-small-dark.webp"
           alt={navText.logoAlt}
-          width={800}
-          height={200}
+          width={80}
+          height={80}
           priority
         />
       </Link>

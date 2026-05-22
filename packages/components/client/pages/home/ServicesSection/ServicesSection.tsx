@@ -2,7 +2,6 @@ import Link from 'next/link';
 import styles from './ServicesSection.module.css';
 import { href } from '../../../../../utils/navigation';
 import Image from 'next/image';
-import { IoIosArrowForward } from 'react-icons/io';
 
 export default function ServicesSection({
   texts,
@@ -14,6 +13,7 @@ export default function ServicesSection({
     items: {
       title: string;
       description: string;
+      highlights: string[];
       ctaLabel: string;
       href: string;
       icon: string;
@@ -32,23 +32,34 @@ export default function ServicesSection({
         </header>
         <div className={styles.cardGrid}>
           {texts.items.map((item) => {
-            const serviceCardClass = item.href.includes('cleaning')
-              ? 'glass-panel--service-primary'
-              : 'glass-panel--service-secondary';
+            const serviceCardClass = item.href.includes('cleaning') ? 'primary' : 'secondary';
 
             return (
-              <article className={`${styles.card} ${serviceCardClass}`} key={item.title}>
+              <article className={`${styles.card} card card--${serviceCardClass}`} key={item.title}>
                 <div className={styles.cardIcon} aria-hidden="true">
                   <h3 className={`${styles.cardTitle} type-title-md`}>{item.title}</h3>
-                  <Image className={styles.icon} src={item.icon} alt="" width={40} height={40} />
+                  <Image
+                    className={` card card--neutral ${styles.icon}`}
+                    src={item.icon}
+                    alt=""
+                    width={80}
+                    height={80}
+                  />
                 </div>
                 <aside className={styles.cardAside}>
                   <p className={`${styles.cardText} type-body-sm`}>{item.description}</p>
-                  <Link className={`${styles.cardLink} type-body-sm`} href={href(lang, item.href)}>
-                    {item.ctaLabel}{' '}
-                    <span aria-hidden="true">
-                      <IoIosArrowForward />
-                    </span>
+                  <ul className={styles.serviceList}>
+                    {item.highlights.map((highlight) => (
+                      <li className={`${styles.serviceListItem} type-body-sm`} key={highlight}>
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    className={`${styles.cardLink} button button--${serviceCardClass}`}
+                    href={href(lang, item.href)}
+                  >
+                    {item.ctaLabel}
                   </Link>
                 </aside>
               </article>

@@ -15,6 +15,15 @@ type I18nFallbackBundle = {
     continue: string;
     close: string;
     reload: string;
+    goToHome: string;
+    goToLogin: string;
+    goToRegister: string;
+    openVerification: string;
+    resetPassword: string;
+    requestNewLink: string;
+    tryAgain: string;
+    continueBrowsing: string;
+    logOut: string;
   };
   fallbackPopups: PopupFallbackMap;
   fallbackLoadingMessages: LoadingMessagesFallback;
@@ -44,6 +53,15 @@ const localeDefaults = {
       continue: 'Weiter',
       close: 'Schließen',
       reload: 'Neu laden',
+      goToHome: 'Zur Startseite',
+      goToLogin: 'Zum Login',
+      goToRegister: 'Zur Registrierung',
+      openVerification: 'Verifizierung öffnen',
+      resetPassword: 'Passwort zurücksetzen',
+      requestNewLink: 'Neuen Link anfordern',
+      tryAgain: 'Erneut versuchen',
+      continueBrowsing: 'Weiter stöbern',
+      logOut: 'Abmelden',
     },
     forgotPasswordLoading: {
       title: 'Passwort-Reset wird vorbereitet…',
@@ -57,6 +75,15 @@ const localeDefaults = {
       continue: 'Continue',
       close: 'Close',
       reload: 'Reload',
+      goToHome: 'Go to home',
+      goToLogin: 'Go to login',
+      goToRegister: 'Go to register',
+      openVerification: 'Open verification',
+      resetPassword: 'Reset password',
+      requestNewLink: 'Request new link',
+      tryAgain: 'Try again',
+      continueBrowsing: 'Continue browsing',
+      logOut: 'Log out',
     },
     forgotPasswordLoading: {
       title: 'Preparing password reset…',
@@ -70,6 +97,15 @@ const localeDefaults = {
       continue: 'Continuar',
       close: 'Cerrar',
       reload: 'Recargar',
+      goToHome: 'Ir al inicio',
+      goToLogin: 'Ir al acceso',
+      goToRegister: 'Ir al registro',
+      openVerification: 'Abrir verificación',
+      resetPassword: 'Restablecer contraseña',
+      requestNewLink: 'Solicitar enlace nuevo',
+      tryAgain: 'Intentar de nuevo',
+      continueBrowsing: 'Seguir navegando',
+      logOut: 'Cerrar sesión',
     },
     forgotPasswordLoading: {
       title: 'Preparando el restablecimiento de la contrasena…',
@@ -110,6 +146,15 @@ const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
     continue: popups.button?.continue ?? defaultButtons.continue,
     close: popups.button?.close ?? defaultButtons.close,
     reload: popups.button?.reload ?? defaultButtons.reload,
+    goToHome: popups.button?.goToHome ?? defaultButtons.goToHome,
+    goToLogin: popups.button?.goToLogin ?? defaultButtons.goToLogin,
+    goToRegister: popups.button?.goToRegister ?? defaultButtons.goToRegister,
+    openVerification: popups.button?.openVerification ?? defaultButtons.openVerification,
+    resetPassword: popups.button?.resetPassword ?? defaultButtons.resetPassword,
+    requestNewLink: popups.button?.requestNewLink ?? defaultButtons.requestNewLink,
+    tryAgain: popups.button?.tryAgain ?? defaultButtons.tryAgain,
+    continueBrowsing: popups.button?.continueBrowsing ?? defaultButtons.continueBrowsing,
+    logOut: popups.button?.logOut ?? defaultButtons.logOut,
   };
 
   const fallbackGlobalError = popupByCode(popups, 'GLOBAL_INTERNAL_ERROR', {

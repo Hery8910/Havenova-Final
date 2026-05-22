@@ -219,7 +219,7 @@ export default function LanguageSwitcher({
         aria-modal={isModalPresentation ? 'true' : undefined}
       >
         <div className={styles.header}>
-          <h2 id={titleId} className={`${sharedStyles.panelTitle} ${styles.title}`}>
+          <h2 id={titleId} className={`type-label ${styles.title}`}>
             {labels?.title ?? 'Language'}
           </h2>
         </div>
@@ -266,7 +266,7 @@ export default function LanguageSwitcher({
         type="button"
         className={`button button--ghost ${sharedStyles.iconButton} ${styles.trigger} ${
           shouldShowCurrentValue ? styles.triggerWithValue : ''
-        } ${isOpen ? `${sharedStyles.iconButtonActive} ${styles.triggerOpen}` : ''}`}
+        }`}
         aria-label={triggerLabel}
         aria-expanded={isOpen}
         aria-controls={menuId}

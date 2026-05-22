@@ -114,9 +114,7 @@ export function NavbarDesktopView({
               <button
                 ref={triggerRef}
                 type="button"
-                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton} ${
-                  userMenuOpen ? sharedStyles.iconButtonActive : ''
-                }`}
+                className={`button button--ghost ${sharedStyles.iconButton}`}
                 aria-label={a11y.profileToggle}
                 aria-expanded={userMenuOpen}
                 aria-controls={accountPanelId}

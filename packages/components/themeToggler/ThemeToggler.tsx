@@ -76,9 +76,7 @@ const ThemeToggler = ({
       type="button"
       className={`button button--ghost ${sharedStyles.iconButton} ${styles.toggleButton} ${
         shouldShowCurrentValue ? styles.toggleButtonWithValue : ''
-      } ${
-        theme === 'dark' ? `${sharedStyles.iconButtonActive} ${styles.isDark}` : styles.isLight
-      }`}
+      } ${theme === 'dark' ? styles.isDark : styles.isLight}`}
       onClick={toggleTheme}
       aria-label={resolvedAriaLabel}
       title={resolvedAriaLabel}

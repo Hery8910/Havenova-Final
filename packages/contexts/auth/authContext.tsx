@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { fallbackButtons, fallbackLogoutError, fallbackLogoutSuccess, fallbackPopups } =
     getI18nFallbacks(language);
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
 
   const [auth, setAuthState] = useState<AuthUser | null>(null);
@@ -254,9 +255,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                   status: status || 401,
                   title: popup.title,
                   description: popup.description,
-                  confirmLabel:
-                    popup.confirm ?? texts.popups?.button?.continue ?? fallbackButtons.continue,
-                  cancelLabel: popup.close ?? fallbackButtons.close,
+                  confirmLabel: alertButtons.goToLogin,
+                  cancelLabel: alertButtons.continueBrowsing,
                 },
                 onConfirm: () => {
                   closeAlert();
@@ -270,7 +270,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                   status: status || 401,
                   title: popup.title,
                   description: popup.description,
-                  cancelLabel: popup.close ?? fallbackButtons.close,
+                  cancelLabel: alertButtons.goToLogin,
                 },
                 onCancel: () => {
                   closeAlert();
@@ -340,7 +340,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           status: 200,
           title: popup.title,
           description: popup.description,
-          cancelLabel: popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.goToLogin,
         },
         onCancel: () => {
           closeAlert();
@@ -355,7 +355,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           status: 400,
           title: popup.title,
           description: popup.description,
-          cancelLabel: popups.button?.close ?? fallbackButtons.close,
+          cancelLabel: alertButtons.close,
         },
         onCancel: closeAlert,
       });
@@ -376,8 +376,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         status: 200,
         title: popup.title,
         description: popup.description,
-        confirmLabel: popup.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-        cancelLabel: popup.close ?? popups.button?.close ?? fallbackButtons.close,
+        confirmLabel: alertButtons.logOut,
+        cancelLabel: alertButtons.close,
       },
       onConfirm: async () => {
         closeAlert();
@@ -429,7 +429,7 @@ export const useRequireRole = (expectedRole: AuthRole) => {
   const { auth, loading } = useAuth();
   const { showError, closeAlert } = useGlobalAlert();
   const { texts, language } = useI18n();
-  const { fallbackPopups } = getI18nFallbacks(language);
+  const { fallbackButtons, fallbackPopups } = getI18nFallbacks(language);
   const router = useRouter();
   const didNotifyRef = useRef(false);
 
@@ -452,7 +452,7 @@ export const useRequireRole = (expectedRole: AuthRole) => {
         status: 403,
         title: popup.title,
         description: popup.description,
-        cancelLabel: popup.close ?? fallbackPopups.PERMISSION_DENIED.close,
+        cancelLabel: (texts?.popups?.button ?? fallbackButtons).goToLogin,
       },
       onCancel: () => {
         closeAlert();

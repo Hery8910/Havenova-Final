@@ -52,16 +52,35 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 16px;
+  gap: 8px;
+}
+
+.mobilePanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .mobilePanelTitle {
   margin: 0;
   text-align: left;
-  color: var(--color-page-heading);
+  color: var(--card-text-secondary);
   font-size: inherit;
-  font-weight: inherit;
   line-height: inherit;
+}
+
+.mobilePanelCloseButton {
+  flex: 0 0 auto;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  line-height: 1;
+}
+
+.mobilePanelCloseButton svg {
+  width: var(--type-title-lg-size);
+  height: auto;
 }
 
 .mobilePreferencesList {
@@ -84,7 +103,7 @@
   align-items: center;
   gap: 12px;
   font-weight: 600;
-  color: var(--color-page-body);
+  color: var(--card-text-secondary);
   padding-left: 16px;
 }
 

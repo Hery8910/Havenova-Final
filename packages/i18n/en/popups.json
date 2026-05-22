@@ -3,7 +3,16 @@
     "accept": "Accept",
     "continue": "Continue",
     "close": "Close",
-    "reload": "Reload"
+    "reload": "Reload",
+    "goToHome": "Go to home",
+    "goToLogin": "Go to login",
+    "goToRegister": "Go to register",
+    "openVerification": "Open verification",
+    "resetPassword": "Reset password",
+    "requestNewLink": "Request new link",
+    "tryAgain": "Try again",
+    "continueBrowsing": "Continue browsing",
+    "logOut": "Log out"
   },
   "a11y": {
     "close": "Close popup",
@@ -28,21 +37,15 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Access forbidden",
-    "description": "You do not have permission to perform this action.",
-    "confirm": "Go to home",
-    "close": "Close"
+    "description": "You do not have permission to perform this action."
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Login required to continue",
-    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
-    "confirm": "Go to login",
-    "close": "Continue browsing"
+    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now."
   },
   "USER_SESSION_EXPIRED": {
     "title": "Session expired",
-    "description": "Your session has expired. You can keep browsing or go to login.",
-    "confirm": "Go to login",
-    "close": "Continue browsing"
+    "description": "Your session has expired. You can keep browsing or go to login."
   },
   "AUTH_BLOCKED": {
     "title": "Account blocked",
@@ -132,27 +135,19 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client not found",
-    "description": "The specified client does not exist.",
-    "confirm": "Go to home",
-    "close": "Close"
+    "description": "The specified client does not exist."
   },
   "USER_REGISTER_SUCCESS": {
     "title": "Registration successful",
-    "description": "Your account was created. Check your inbox and verify your email before signing in.",
-    "confirm": "Continue",
-    "close": "Close"
+    "description": "Your account was created. Check your inbox and verify your email before signing in."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
     "title": "Account already active",
-    "description": "This email already has an active account. Go to login or close this message.",
-    "confirm": "Go to login",
-    "close": "Close"
+    "description": "You already have access to this workspace. Continue to login."
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
     "title": "Password required",
-    "description": "This account already exists. Enter the correct password or reset it.",
-    "confirm": "Reset password",
-    "close": "Try again"
+    "description": "We couldn't complete registration with the provided details. Use the correct password or reset it to continue."
   },
   "USER_BLOCKED": {
     "title": "Access denied",
@@ -160,8 +155,7 @@
   },
   "USER_TOS_NOT_ACCEPTED": {
     "title": "Terms not accepted",
-    "description": "Accept the terms and privacy policy to continue with registration.",
-    "close": "Close"
+    "description": "Accept the terms and privacy policy to continue with registration."
   },
   "USER_LOGIN_MISSING_EMAIL": {
     "title": "Email required",
@@ -173,9 +167,7 @@
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
     "title": "Email verified successfully",
-    "description": "Your email has been verified. You can continue to login now.",
-    "confirm": "Go to login",
-    "close": "Close"
+    "description": "Your email has been verified. You can continue to login now."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "Email already verified",
@@ -183,15 +175,11 @@
   },
   "USER_RESET_PASSWORD_INVALID_TOKEN": {
     "title": "Invalid reset link",
-    "description": "This reset link is invalid. Request a new one to continue.",
-    "confirm": "Request new link",
-    "close": "Close"
+    "description": "This reset link is invalid. Request a new one to continue."
   },
   "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
     "title": "Reset link expired",
-    "description": "This reset link has expired. Request a new one to continue.",
-    "confirm": "Request new link",
-    "close": "Close"
+    "description": "This reset link has expired. Request a new one to continue."
   },
   "VALIDATION_ERROR": {
     "title": "Validation error",
@@ -234,8 +222,8 @@
     "close": "Cancel"
   },
   "USER_CLIENT_NOT_FOUND": {
-    "title": "Client association not found",
-    "description": "The user is not associated with this client."
+    "title": "Access not available yet",
+    "description": "This account cannot access this workspace yet. Continue to registration to complete access."
   },
   "USER_CLIENT_BLOCKED": {
     "title": "Access blocked",
@@ -279,27 +267,19 @@
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
     "title": "Reset link sent",
-    "description": "We emailed you a reset link. Check your inbox to continue.",
-    "confirm": "Back to login",
-    "close": "Close"
+    "description": "We emailed you a reset link. Check your inbox to continue."
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
     "title": "Email not verified",
-    "description": "Verify your email before signing in. You can open the verification page if needed.",
-    "confirm": "Open verification",
-    "close": "Close"
+    "description": "Verify your email before signing in. You can open the verification page if needed."
   },
   "USER_LOGIN_SUCCESS": {
     "title": "Login successful",
-    "description": "You have been logged in successfully.",
-    "confirm": "Continue",
-    "close": "Close"
+    "description": "You have been logged in successfully."
   },
   "USER_RESET_PASSWORD_SUCCESS": {
     "title": "Password reset successful",
-    "description": "Your password has been updated. Go to login with your new password.",
-    "confirm": "Go to login",
-    "close": "Close"
+    "description": "Your password has been updated. Go to login with your new password."
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Password updated",

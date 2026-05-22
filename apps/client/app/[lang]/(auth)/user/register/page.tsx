@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -38,6 +38,7 @@ export interface RegisterData {
 }
 
 const Register = () => {
+  const AUTO_REDIRECT_MS = 4000;
   const router = useRouter();
   const lang = useLang();
   const { client } = useClient();
@@ -48,6 +49,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const popups = texts.popups;
+  const alertButtons = popups.button ?? fallbackButtons;
   const register: RegisterData = texts?.pages?.client.user.register;
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
@@ -57,6 +59,39 @@ const Register = () => {
   };
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
+  const redirectTimeoutRef = useRef<number | null>(null);
+
+  const clearRedirectTimeout = () => {
+    if (redirectTimeoutRef.current) {
+      window.clearTimeout(redirectTimeoutRef.current);
+      redirectTimeoutRef.current = null;
+    }
+  };
+
+  const getAutoRedirectDescription = (baseDescription: string) => {
+    const redirectCopy =
+      lang === 'de'
+        ? 'Sie werden in wenigen Sekunden zur Verifizierungsseite weitergeleitet.'
+        : lang === 'es'
+          ? 'Serás redirigido a la página de verificación en unos segundos.'
+          : 'You will be redirected to the verification page in a few seconds.';
+
+    return `${baseDescription} ${redirectCopy}`.trim();
+  };
+
+  const scheduleVerifyRedirect = () => {
+    clearRedirectTimeout();
+    redirectTimeoutRef.current = window.setTimeout(() => {
+      closeAlert();
+      router.push(href(lang, '/user/verify-email'));
+    }, AUTO_REDIRECT_MS);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearRedirectTimeout();
+    };
+  }, []);
 
   const getRegisterErrorStatus = (code?: string, fallbackStatus = 500) => {
     switch (code) {
@@ -118,14 +153,11 @@ const Register = () => {
       response: {
         status: 200,
         title: popupData.title,
-        description: popupData.description,
-        confirmLabel: popupData.confirm ?? popups.button?.continue ?? fallbackButtons.continue,
-      },
-      onConfirm: () => {
-        router.push(href(lang, '/user/verify-email'));
-        closeAlert();
+        description: getAutoRedirectDescription(popupData.description),
+        cancelLabel: '',
       },
     });
+    scheduleVerifyRedirect();
   };
 
   const handleRegister = async (data: RegisterFormData) => {
@@ -147,8 +179,8 @@ const Register = () => {
       const payload: RegisterPayload = {
         email: data.email,
         password: data.password,
-        language: data.language,
-        clientId: client._id,
+        language: data.language || lang || 'de',
+        clientId: data.clientId || client._id,
         tosAccepted: true,
         cookiePrefs: storedPrefs,
       };
@@ -169,8 +201,13 @@ const Register = () => {
             status: getRegisterErrorStatus(response?.code, 400),
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: popupData.confirm,
-            cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+            confirmLabel:
+              response?.code === 'USER_REGISTER_ALREADY_REGISTERED'
+                ? alertButtons.goToLogin
+                : response?.code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
+                  ? alertButtons.resetPassword
+                  : undefined,
+            cancelLabel: alertButtons.close,
           },
           onConfirm:
             response?.code === 'USER_REGISTER_ALREADY_REGISTERED'
@@ -190,7 +227,7 @@ const Register = () => {
       }
 
       // 3.1) Persist local profile data so it survives the verify-email flow
-      const profileLanguage = data.language === 'en' ? 'en' : 'de';
+      const profileLanguage = payload.language === 'en' || payload.language === 'es' ? payload.language : 'de';
 
       await updateProfile({
         language: profileLanguage,
@@ -236,8 +273,15 @@ const Register = () => {
           status: getRegisterErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: onConfirm ? popupData.confirm : undefined,
-          cancelLabel: popupData.close ?? popups.button?.close ?? fallbackButtons.close,
+          confirmLabel:
+            code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_IN_USE'
+              ? alertButtons.goToLogin
+              : code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
+                ? alertButtons.resetPassword
+                : onConfirm
+                  ? alertButtons.reload
+                  : undefined,
+          cancelLabel: alertButtons.close,
         },
         onConfirm,
         onCancel: shouldStayOnPage
@@ -261,10 +305,10 @@ const Register = () => {
       <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
         <Image
           className={styles.authBrandImage}
-          src="/logos/logo-horizontal.png"
+          src="/logos/logo-small-dark.webp"
           alt={navText.logoAlt}
-          width={800}
-          height={200}
+          width={80}
+          height={80}
           priority
         />
       </Link>
@@ -287,8 +331,8 @@ const Register = () => {
             email: '',
             password: '',
             tosAccepted: false,
-            language: '',
-            clientId: '',
+            language: lang || 'de',
+            clientId: client._id || '',
           }}
           loading={loading}
         />

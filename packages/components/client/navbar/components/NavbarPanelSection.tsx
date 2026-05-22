@@ -7,6 +7,7 @@ export interface NavbarPanelSectionProps {
   className?: string;
   headerClassName?: string;
   titleClassName?: string;
+  headerAction?: React.ReactNode;
   showHandle?: boolean;
   handleClassName?: string;
   children: React.ReactNode;
@@ -18,6 +19,7 @@ export function NavbarPanelSection({
   className,
   headerClassName,
   titleClassName,
+  headerAction,
   showHandle = false,
   handleClassName,
   children,
@@ -33,10 +35,11 @@ export function NavbarPanelSection({
       <div className={headerClassName}>
         <h2
           id={titleId}
-          className={`type-title-sm ${sharedStyles.panelTitle} ${titleClassName ?? ''}`.trim()}
+          className={`type-label ${sharedStyles.panelTitle} ${titleClassName ?? ''}`.trim()}
         >
           {title}
         </h2>
+        {headerAction}
       </div>
       {children}
     </section>
