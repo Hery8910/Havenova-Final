@@ -2,7 +2,6 @@
   "client": {
     "home": {
       "hero": {
-        "badge": "Digitale Service-Plattform",
         "title": "Finden Sie schnell die richtige Hilfe",
         "descriptions": [
           "Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein passendes Angebot. Klar, zuverlässig und einfach ab dem ersten Schritt."
@@ -136,7 +135,6 @@
     },
     "about": {
       "hero": {
-        "badge": "Vertrauen durch Klarheit und Sorgfalt",
         "title": "Warum Hausservice einfacher wirken kann",
         "descriptions": [
           "Erfahren Sie, wie Havenova persönlichen Service, klare Kommunikation und kontinuierliche digitale Verbesserung verbindet, um Kund:innen in ganz Berlin ein transparenteres Erlebnis zu bieten."
@@ -157,29 +155,34 @@
       },
       "clients": {
         "title": "Für wen wir arbeiten",
+        "description": "Wir unterstützen unterschiedliche Haushalte und Unternehmen, die verlässliche Reinigungs- oder Hausservices brauchen, mit einem Prozess, der auf Klarheit, Kommunikation und langfristigem Vertrauen basiert.",
+        "a11y": {
+          "sectionLabel": "Kunden und Bereiche, mit denen Havenova arbeitet",
+          "listLabel": "Kundenkategorien"
+        },
         "items": [
           {
             "title": "Privathaushalte",
             "description": "Wir arbeiten mit Mieter:innen und Eigentümer:innen, die eine verlässliche Lösung für Reinigung oder Hausservice suchen, jeden Auftrag nachverfolgen und alles sauber dokumentieren möchten.",
-            "image": "/images/private-properties.webp",
+            "image": "/images/private-properties.png",
             "imageAlt": "Wohngebäude im privaten Umfeld"
           },
           {
             "title": "Hausverwaltung",
             "description": "Wir unterstützen Hausverwaltungen mit strukturierten Serviceanfragen, klarer Kommunikation und einem transparenten Überblick über Hausservice und Reinigung in mehreren Objekten.",
-            "image": "/images/property-management.webp",
+            "image": "/images/property-management.png",
             "imageAlt": "Mehrparteienhaus mit gepflegter Fassade"
           },
           {
             "title": "Büros und Praxen",
             "description": "Wir helfen Büros und Praxen, wiederkehrende Reinigungs- und Hausservices mit klaren Abläufen, dokumentierten Leistungen und minimalem Aufwand zu organisieren.",
-            "image": "/images/practices.webp",
+            "image": "/images/practices.png",
             "imageAlt": "Modernes Büro mit Besprechungsbereich"
           },
           {
             "title": "Kleine Unternehmen",
             "description": "Wir begleiten kleine Unternehmen, die zuverlässige Reinigungs- oder Hausservices brauchen, mit einem einfachen Prozess für Anfrage, Fortschritt und Übersicht.",
-            "image": "/images/businesses.webp",
+            "image": "/images/businesses.png",
             "imageAlt": "Ladengeschäft mit Kundenbereich"
           }
         ],
@@ -188,7 +191,6 @@
     },
     "cleaning": {
       "hero": {
-        "badge": "Eine transparente Darstellung des Reinigungserlebnisses",
         "title": "Sauberere Räume, weniger Alltagsstress",
         "descriptions": [
           "Entdecken Sie einen Reinigungsservice, der auf Zuverlässigkeit, klare Kommunikation und einen reibungslosen Ablauf von der ersten Anfrage bis zum Endergebnis setzt."
@@ -322,9 +324,14 @@
           "description": "Wählen Sie Ihre Hauptadresse, eine gespeicherte Adresse oder geben Sie für diese Anfrage einen anderen Ort an.",
           "loading": "Ihre gespeicherten Adressen werden geladen...",
           "optionsLegend": "Verfügbare Adressoptionen",
+          "sourceLabels": {
+            "primary": "Hauptadresse",
+            "saved": "Gespeicherte Adresse"
+          },
           "useDifferentAddressLabel": "Andere Adresse verwenden",
           "useDifferentAddressHint": "Geben Sie für diese Anfrage einen neuen Einsatzort ein.",
           "emptyState": "Es wurden noch keine gespeicherten Adressen gefunden. Geben Sie unten die Einsatzadresse ein und speichern Sie sie bei Bedarf.",
+          "manualSectionTitle": "Neue Einsatzadresse",
           "manualHint": "Geben Sie die Adresse ein, an der der Besuch oder die Besichtigung stattfinden soll.",
           "saveToProfileLabel": "Diese Adresse in meinem Profil speichern",
           "savedAddressLabel": "Bezeichnung",
@@ -342,7 +349,7 @@
         },
         "review": {
           "title": "Letzter Check vor dem Absenden",
-          "description": "Sie haben die 4 Schritte abgeschlossen. Kontrollieren Sie jetzt alle Angaben und senden Sie die Reinigungsanfrage ab, wenn alles korrekt ist.",
+          "description": "Sie haben die 5 Schritte abgeschlossen. Kontrollieren Sie jetzt alle Angaben und senden Sie die Reinigungsanfrage ab, wenn alles korrekt ist.",
           "sections": {
             "customer": "Kunde und Häufigkeit",
             "property": "Objektdetails",
@@ -397,7 +404,6 @@
     },
     "home-service": {
       "hero": {
-        "badge": "Praktische Hilfe zuhause",
         "title": "Reparaturen, Montage und Alltagsaufgaben",
         "descriptions": [
           "Für Malerarbeiten, Reparaturen und Installationen, Möbel- und Küchenmontage sowie Umzugshilfe in Berlin. Havenova strukturiert Ihre Anfrage, damit wir Umfang, Zugangssituation und die nächsten Schritte schnell einordnen können."
@@ -601,7 +607,6 @@
     },
     "contact": {
       "hero": {
-        "badge": "Wir sind für dich da",
         "title": "Fragen, Ideen, Lassen Sie uns wissen",
         "descriptions": [
           "Diese Seite dient der Beantwortung allgemeiner Fragen, Anfragen bezüglich unseres Unternehmens und dem allgemeinen Austausch. Wenn Sie eine Dienstleistung anfordern möchten, helfen Ihnen unsere speziellen Formulare für Reinigungs- und Haushaltsdienstleistungen weiter."
@@ -629,7 +634,6 @@
     },
     "howItWorks": {
       "hero": {
-        "badge": "Über Havenova",
         "title": "Hausservices, vereinfacht für Kund:innen",
         "descriptions": [
           "Havenova ist das Unternehmen hinter dieser Plattform für Reinigung und Hausservice. Wir haben einen klaren Ablauf mitentwickelt, damit Kund:innen in Minuten anfragen und Serviceunternehmen Anfragen, Termine und Updates effizient verwalten können."

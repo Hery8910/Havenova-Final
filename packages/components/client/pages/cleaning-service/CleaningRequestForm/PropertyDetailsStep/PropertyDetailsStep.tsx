@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import styles from './PropertyDetailsStep.module.css';
 import { PropertySizeRange } from '../../../../../../types/services';
 
@@ -62,15 +63,21 @@ export default function PropertyDetailsStep({
   onDetailsChange,
   onDetailsBlur,
 }: Props) {
+  const titleId = useId();
+  const sizeRangeErrorId = useId();
+  const roomsErrorId = useId();
+  const detailsErrorId = useId();
+  const roomsGroupLabelId = useId();
+
   return (
-    <section className={styles.container} aria-labelledby="cleaning-property-details-title">
+    <section className={styles.container} aria-labelledby={titleId}>
       {showTitle ? (
-        <h3 id="cleaning-property-details-title" className={styles.propertyTitle}>
+        <h3 id={titleId} className={`${styles.propertyTitle} type-title-sm`}>
           {property.title}
         </h3>
       ) : null}
 
-      <label className={` label ${styles.field} ${styles.column}`} htmlFor="cleaning-size-range">
+      <label className={`label ${styles.field} ${styles.column}`} htmlFor="cleaning-size-range">
         <span className={styles.label}>{property.sizeRangeLabel}</span>
         <select
           id="cleaning-size-range"
@@ -79,6 +86,7 @@ export default function PropertyDetailsStep({
           onChange={(e) => onSizeRangeChange(e.target.value as PropertySizeRange | '')}
           onBlur={onSizeRangeBlur}
           aria-invalid={Boolean(errors.sizeRange)}
+          aria-describedby={errors.sizeRange ? sizeRangeErrorId : undefined}
           required
         >
           <option value="">{requiredText}</option>
@@ -88,20 +96,26 @@ export default function PropertyDetailsStep({
             </option>
           ))}
         </select>
+        {errors.sizeRange ? (
+          <span className={styles.errorText} id={sizeRangeErrorId}>
+            {errors.sizeRange}
+          </span>
+        ) : null}
       </label>
 
-      <label className={` label ${styles.field}`} htmlFor="cleaning-rooms-count">
-        <span className={styles.label}>{property.roomsCountLabel}</span>
-        <section
-          id="cleaning-rooms-count"
+      <div className={`label ${styles.field}`}>
+        <span className={styles.label} id={roomsGroupLabelId}>
+          {property.roomsCountLabel}
+        </span>
+        <div
           className={`${styles.counter} ${errors.roomsCount ? styles.fieldControlError : ''}`}
           role="group"
-          aria-label={property.roomsCountLabel}
-          aria-invalid={Boolean(errors.roomsCount)}
+          aria-labelledby={roomsGroupLabelId}
+          aria-describedby={errors.roomsCount ? roomsErrorId : undefined}
         >
           <button
             type="button"
-            className={styles.counterButton}
+            className={`button button--outline ${styles.counterButton}`}
             onClick={onRoomsDecrement}
             aria-label={property.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
           >
@@ -112,14 +126,19 @@ export default function PropertyDetailsStep({
           </output>
           <button
             type="button"
-            className={styles.counterButton}
+            className={`button button--outline ${styles.counterButton}`}
             onClick={onRoomsIncrement}
             aria-label={property.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
           >
             +
           </button>
-        </section>
-      </label>
+        </div>
+        {errors.roomsCount ? (
+          <span className={styles.errorText} id={roomsErrorId}>
+            {errors.roomsCount}
+          </span>
+        ) : null}
+      </div>
 
       <fieldset className={styles.flagsGroup}>
         <legend className={styles.legend}>{property.hasBalconyLabel}</legend>
@@ -127,7 +146,7 @@ export default function PropertyDetailsStep({
           type="button"
           role="switch"
           aria-checked={values.hasBalcony}
-          className={`${styles.switch} ${values.hasBalcony ? styles.switchActive : ''}`}
+          className={`button button--outline ${styles.switch} ${values.hasBalcony ? styles.switchActive : ''}`}
           onClick={onBalconyToggle}
         >
           <span className={styles.switchTrack}>
@@ -143,7 +162,7 @@ export default function PropertyDetailsStep({
           type="button"
           role="switch"
           aria-checked={values.hasIndoorStairs}
-          className={`${styles.switch} ${values.hasIndoorStairs ? styles.switchActive : ''}`}
+          className={`button button--outline ${styles.switch} ${values.hasIndoorStairs ? styles.switchActive : ''}`}
           onClick={onIndoorStairsToggle}
         >
           <span className={styles.switchTrack}>
@@ -161,7 +180,7 @@ export default function PropertyDetailsStep({
           type="button"
           role="switch"
           aria-checked={values.hasPets}
-          className={`${styles.switch} ${values.hasPets ? styles.switchActive : ''}`}
+          className={`button button--outline ${styles.switch} ${values.hasPets ? styles.switchActive : ''}`}
           onClick={onPetsToggle}
         >
           <span className={styles.switchTrack}>
@@ -185,8 +204,14 @@ export default function PropertyDetailsStep({
           onChange={(e) => onDetailsChange(e.target.value)}
           onBlur={onDetailsBlur}
           aria-invalid={Boolean(errors.details)}
+          aria-describedby={errors.details ? detailsErrorId : undefined}
           rows={5}
         />
+        {errors.details ? (
+          <span className={styles.errorText} id={detailsErrorId}>
+            {errors.details}
+          </span>
+        ) : null}
       </label>
     </section>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import styles from './CleaningRequestForm.module.css';
 import CustomerFrequencyStep from './CustomerFrequencyStep/CustomerFrequencyStep';
 import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
@@ -132,7 +132,12 @@ export interface CleaningRequestFormTexts {
     saveToProfileLabel?: string;
     savedAddressLabel?: string;
     savedAddressPlaceholder?: string;
+    manualSectionTitle?: string;
     addressDetailsAriaLabel?: string;
+    sourceLabels?: {
+      primary?: string;
+      saved?: string;
+    };
     fields?: {
       street?: string;
       streetNumber?: string;
@@ -214,6 +219,9 @@ export default function CleaningRequestForm({
   onRequireAuth?: () => void;
   onSubmit: (data: CleaningRequestFormSubmission) => Promise<void> | void;
 }) {
+  const sectionTitleId = useId();
+  const stepTitleId = useId();
+  const validationMessageId = useId();
   const clientCalendarSettings = useClientCalendarSettings();
   const [values, setValues] = useState<FormState>({
     customerType: 'private',
@@ -345,7 +353,7 @@ export default function CleaningRequestForm({
           ? processTexts.steps.scheduling.heading
           : step === 4
             ? processTexts.steps.serviceAddress.heading
-            : processTexts.steps.review?.heading ?? texts.review.title;
+            : (processTexts.steps.review?.heading ?? texts.review.title);
 
   const isStepOneValid = Boolean(
     values.customerType && values.frequency && !errors.customerType && !errors.frequency
@@ -457,20 +465,26 @@ export default function CleaningRequestForm({
   };
 
   return (
-    <section className={styles.section} aria-labelledby="cleaning-process-title">
-      <ProcessStepsHeader currentStep={step} texts={processTexts} />
+    <section className={styles.section} aria-labelledby={sectionTitleId}>
+      <ProcessStepsHeader currentStep={step} texts={processTexts} titleId={sectionTitleId} />
 
       <form
-        className={`${styles.form} glass-panel--base glass-card--primary`}
+        className={`${styles.form} card card--primary`}
         onSubmit={handleSubmit}
         noValidate
+        aria-labelledby={stepTitleId}
+        aria-describedby={footerValidationMessage ? validationMessageId : undefined}
       >
-        <div className={styles.stepHeader}>
-          <h3 className={styles.stepTitle}>{currentStepHeading}</h3>
-        </div>
-
-        <div className={styles.stepViewport}>
-          <div className={styles.stepContent}>
+        <header className={styles.stepHeader}>
+          <h3 className={`${styles.stepTitle} type-title-sm`} id={stepTitleId}>
+            {currentStepHeading}
+          </h3>
+          <span
+            className={`${styles.stepNumber} card card--neutral type-body-sm`}
+          >{`${step}/5`}</span>
+        </header>
+        <div className={styles.wrapper}>
+          <article className={styles.stepContent}>
             {step === 1 ? (
               <CustomerFrequencyStep
                 customerType={texts.customerType}
@@ -627,53 +641,50 @@ export default function CleaningRequestForm({
                 </p>
               </section>
             )}
-          </div>
-        </div>
+          </article>
 
-        <div
-          className={styles.stepValidationSlot}
-          aria-live="polite"
-          role={footerValidationMessage ? 'alert' : undefined}
-        >
-          {footerValidationMessage ? (
-            <p className={styles.stepValidationMessage}>{footerValidationMessage}</p>
-          ) : null}
+          <aside
+            className={styles.stepValidationSlot}
+            aria-live="polite"
+            role={footerValidationMessage ? 'alert' : undefined}
+          >
+            {footerValidationMessage ? (
+              <p className={styles.stepValidationMessage} id={validationMessageId}>
+                {footerValidationMessage}
+              </p>
+            ) : null}
+          </aside>
         </div>
-
         <footer className={styles.actions}>
-          <div className={styles.actionsSide}>
-            {step > 1 ? (
-              <button
-                type="button"
-                className={`button_invert ${styles.backButton}`}
-                onClick={() =>
-                  setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
-                }
-              >
-                {texts.common.back}
-              </button>
-            ) : (
-              <span className={styles.actionsSpacer} aria-hidden="true" />
-            )}
-          </div>
-
-          <div className={styles.actionsSide}>
+          {step > 1 ? (
             <button
-              className={`button ${!canSubmit ? styles.submitDisabled : ''}`}
-              type={step === 5 && !canSubmit ? 'button' : 'submit'}
-              aria-disabled={step === 5 && !canSubmit}
-              disabled={loading}
-              onClick={() => {
-                if (step === 5 && !canSubmit) onRequireAuth?.();
-              }}
+              type="button"
+              className={`button button--outline ${styles.backButton}`}
+              onClick={() =>
+                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
+              }
             >
-              {step === 5
-                ? texts.common.submit
-                : step === 4
-                  ? texts.common.review
-                  : texts.common.next}
+              {texts.common.back}
             </button>
-          </div>
+          ) : (
+            <span className={styles.actionsSpacer} aria-hidden="true" />
+          )}
+
+          <button
+            className={`button button--primary ${!canSubmit ? styles.submitDisabled : ''}`}
+            type={step === 5 && !canSubmit ? 'button' : 'submit'}
+            aria-disabled={step === 5 && !canSubmit}
+            disabled={loading}
+            onClick={() => {
+              if (step === 5 && !canSubmit) onRequireAuth?.();
+            }}
+          >
+            {step === 5
+              ? texts.common.submit
+              : step === 4
+                ? texts.common.review
+                : texts.common.next}
+          </button>
         </footer>
       </form>
     </section>

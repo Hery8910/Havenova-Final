@@ -1,6 +1,7 @@
 .appInstall {
   display: flex;
   justify-content: center;
+  align-items: center;
   background: transparent;
   padding: 128px 5dvw 200px;
 }
@@ -32,14 +33,14 @@
   max-width: 350px;
   order: 2;
   gap: 16px;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
 }
 
 .titleBlock :global(.type-title-xl) {
   margin: 0;
   max-width: 10ch;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
   line-height: 1;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -48,14 +49,14 @@
 .titleBlock :global(.type-display-md) {
   margin: 0;
   max-width: 9ch;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
   line-height: 0.96;
   letter-spacing: -0.05em;
   text-wrap: balance;
 }
 
 .sectionSubtitle {
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   margin: 0;
   max-width: 44ch;
   line-height: 1.45;
@@ -71,9 +72,7 @@
 }
 
 .actionButton {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
+  padding: 8px 24px;
 }
 
 .appInstalledCard,
@@ -223,7 +222,7 @@
 
 .supportInfo {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   width: 100%;
   max-width: 420px;
 }

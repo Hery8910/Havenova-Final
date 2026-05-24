@@ -1,4 +1,6 @@
 .container {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1200px;
   padding: clamp(56px, 8vw, 96px) 5dvw;
@@ -19,11 +21,33 @@
 }
 
 .benefits {
-  padding: clamp(56px, 8vw, 96px) 0;
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(56px, 8vw, 96px) 0;
+}
+
+.benefits::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: clamp(-9rem, -10vw, -4rem);
+  width: min(78rem, 92vw);
+  height: clamp(14rem, 28vw, 22rem);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 100%, var(--card-primary-bg1) 0%, transparent 58%),
+    radial-gradient(circle at 30% 100%, var(--card-secondary-bg2) 0%, transparent 52%),
+    radial-gradient(circle at 70% 100%, var(--feedback-info-bg-image) 0%, transparent 46%);
+  opacity: 0.7;
+  filter: blur(36px);
+  pointer-events: none;
+  z-index: 0;
 }
 .benefitsCards,
 .benefitsGrid {
+  list-style: none;
   display: flex;
   justify-content: space-between;
   align-items: center;

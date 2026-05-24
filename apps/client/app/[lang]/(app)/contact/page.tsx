@@ -2,6 +2,7 @@
 import { FAQSection } from '../../../../../../packages/components';
 import { ContactFormSection } from '../../../../../../packages/components/client/pages/contact';
 import { InfoSection } from '../../../../../../packages/components/client/pages/contact/InfoSection';
+import type { FooterHoursStatusCopy } from '../../../../../../packages/components/client/footer/BusinessHoursStatus';
 import {
   PageHero,
   type PageHeroContent,
@@ -10,10 +11,6 @@ import { useI18n } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
 
-interface WeekItem {
-  label?: string;
-  data: string;
-}
 export interface ContactPageTexts {
   hero: PageHeroContent;
 }
@@ -24,7 +21,7 @@ export interface ContactInfoTexts {
     phone: string;
     address: string;
   };
-  hour: { week: WeekItem; weekend: WeekItem };
+  hoursStatus?: FooterHoursStatusCopy;
 }
 
 export default function Contact() {

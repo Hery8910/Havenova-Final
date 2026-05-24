@@ -30,11 +30,16 @@
   color: var(--text-secondary);
 }
 .heroCtas {
+  width: 100%;
+  max-width: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
-
+.ctaPrimary,
+.ctaSecondary {
+  width: 100%;
+}
 .imageWrapper {
   position: relative;
   overflow: visible;

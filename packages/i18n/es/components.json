@@ -96,89 +96,89 @@
     },
     "avatar": {
       "profile": {
-        "label": "Profile",
-        "ariaLabel": "Go to profile page"
+        "label": "Perfil",
+        "ariaLabel": "Ir a la página de perfil"
       },
       "register": {
-        "label": "Register",
-        "ariaLabel": "Go to register page"
+        "label": "Registrarse",
+        "ariaLabel": "Ir a la página de registro"
       },
       "login": {
-        "label": "Log in",
-        "ariaLabel": "Go to login page"
+        "label": "Iniciar sesión",
+        "ariaLabel": "Ir a la página de inicio de sesión"
       }
     },
     "form": {
       "error": {
         "name": {
-          "required": "Name is required.",
-          "invalid": "Name must start with a capital letter."
+          "required": "El nombre es obligatorio.",
+          "invalid": "El nombre debe comenzar con mayúscula."
         },
         "email": {
-          "required": "Email is required.",
-          "invalid": "Invalid email format."
+          "required": "El correo electrónico es obligatorio.",
+          "invalid": "Formato de correo electrónico no válido."
         },
         "phone": {
-          "required": "Phone number is required.",
-          "invalid": "Invalid phone number."
+          "required": "El número de teléfono es obligatorio.",
+          "invalid": "Número de teléfono no válido."
         },
         "password": {
-          "required": "Password is required.",
-          "tooShort": "Password must be at least 8 characters.",
-          "missingUppercase": "Password needs an uppercase letter.",
-          "missingNumber": "Password needs a number.",
-          "missingSymbol": "Password needs a special character."
+          "required": "La contraseña es obligatoria.",
+          "tooShort": "La contraseña debe tener al menos 8 caracteres.",
+          "missingUppercase": "La contraseña debe incluir una letra mayúscula.",
+          "missingNumber": "La contraseña debe incluir un número.",
+          "missingSymbol": "La contraseña debe incluir un carácter especial."
         },
         "address": {
-          "required": "Address is required.",
-          "invalid": "Invalid address format."
+          "required": "La dirección es obligatoria.",
+          "invalid": "Formato de dirección no válido."
         },
         "serviceAddress": {
-          "required": "Service address is required.",
-          "invalid": "Invalid service address format."
+          "required": "La dirección del servicio es obligatoria.",
+          "invalid": "Formato de dirección del servicio no válido."
         },
         "message": {
-          "required": "Message is required",
-          "tooShort": "Message must be at least 10 characters",
-          "tooLong": "Message must not exceed 1000 characters"
+          "required": "El mensaje es obligatorio",
+          "tooShort": "El mensaje debe tener al menos 10 caracteres",
+          "tooLong": "El mensaje no debe superar los 1000 caracteres"
         },
         "subject": {
-          "required": "Subject is required."
+          "required": "El asunto es obligatorio."
         },
         "tosAccepted": {
-          "required": "You must accept the terms and conditions"
+          "required": "Debes aceptar los términos y condiciones"
         }
       },
       "button": {
-        "register": "Register",
-        "login": "Log in",
-        "edit": "Save Changes",
-        "changePassword": "Save password",
-        "forgotPassword": "Reset",
-        "resetPassword": "Save password",
-        "contact": "Send message",
-        "support": "Create ticket",
-        "resendEmail": "Resend email"
+        "register": "Registrarse",
+        "login": "Iniciar sesión",
+        "edit": "Guardar cambios",
+        "changePassword": "Guardar contraseña",
+        "forgotPassword": "Restablecer",
+        "resetPassword": "Guardar contraseña",
+        "contact": "Enviar mensaje",
+        "support": "Crear ticket",
+        "resendEmail": "Reenviar correo"
       },
       "labels": {
-        "name": "Name",
-        "email": "Email",
-        "password": "Password",
-        "errorSummary": "Please review the highlighted fields.",
-        "forgotPassword": "Forgot Password?",
-        "resetPassword": "Reset Password",
-        "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
-        "showPassword": "Show password",
-        "hidePassword": "Hide password",
-        "tosPrefix": "I agree to the ",
-        "tosTerms": "Terms of Service",
-        "tosConnector": " and the ",
-        "tosPrivacy": "Privacy Policy",
-        "address": "Address",
-        "phone": "Phone number",
-        "profileImage": "Change profile image",
-        "subject": "Subject",
-        "message": "Message"
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "errorSummary": "Revisa los campos resaltados.",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "resetPassword": "Restablecer contraseña",
+        "passwordHint": "Mín. 8 caracteres con mayúscula, número y símbolo.",
+        "showPassword": "Mostrar contraseña",
+        "hidePassword": "Ocultar contraseña",
+        "tosPrefix": "Acepto los ",
+        "tosTerms": "Términos del servicio",
+        "tosConnector": " y la ",
+        "tosPrivacy": "Política de privacidad",
+        "address": "Dirección",
+        "phone": "Número de teléfono",
+        "profileImage": "Cambiar imagen de perfil",
+        "subject": "Asunto",
+        "message": "Mensaje"
       },
       "placeholders": {
         "name": "John Doe",
@@ -186,44 +186,49 @@
         "password": "Min. 8 characters",
         "address": "Main Street 12, 12345 London",
         "phone": "+49 7911 123456",
-        "subject": "Select a subject",
-        "message": "Your question or message..."
+        "subject": "Selecciona un asunto",
+        "message": "Tu pregunta o mensaje..."
       },
       "subjects": {
         "contact": [
-          "Pricing question",
-          "Service request",
-          "Availability and schedules",
-          "Changes or cancellations",
-          "Other"
+          "Consulta sobre precios",
+          "Solicitud de servicio",
+          "Disponibilidad y horarios",
+          "Cambios o cancelaciones",
+          "Otro"
         ],
         "support": [
-          "Login issue",
-          "Platform error",
-          "Service-related issue",
-          "Billing and payments",
-          "Other"
+          "Problema de inicio de sesión",
+          "Error de plataforma",
+          "Incidencia relacionada con el servicio",
+          "Facturación y pagos",
+          "Otro"
         ]
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "Preguntas frecuentes",
+      "a11y": {
+        "sectionLabel": "Preguntas frecuentes",
+        "openItem": "Expandir respuesta",
+        "closeItem": "Contraer respuesta"
+      },
       "items": [
         {
-          "question": "What services does Havenova offer?",
-          "answer": "Havenova offers a wide range of home and property services in Berlin, including professional cleaning, small repairs, regular maintenance, and assistance with moving or furniture assembly. Our goal is to provide reliable and flexible support for both private households and businesses, so you can focus on what matters most while we take care of the rest."
+          "question": "¿Qué servicios ofrece Havenova?",
+          "answer": "Havenova ofrece una amplia gama de servicios para el hogar y propiedades en Berlín, incluyendo limpieza profesional, pequeñas reparaciones, mantenimiento regular y ayuda con mudanzas o montaje de muebles. Nuestro objetivo es ofrecer apoyo fiable y flexible tanto a hogares particulares como a empresas, para que puedas centrarte en lo importante mientras nosotros nos encargamos del resto."
         },
         {
-          "question": "How quickly can I book a service?",
-          "answer": "Most services can be scheduled within 24–48 hours after we receive your request. Once you submit your details through our platform, our team reviews them and confirms an appointment that works best for you. For urgent cases, we always try to find the fastest possible solution."
+          "question": "¿Con qué rapidez puedo reservar un servicio?",
+          "answer": "La mayoría de los servicios pueden programarse en un plazo de 24 a 48 horas después de recibir tu solicitud. Una vez que envíes tus datos a través de nuestra plataforma, nuestro equipo los revisará y confirmará la cita que mejor se adapte a ti. Para casos urgentes, siempre intentamos encontrar la solución más rápida posible."
         },
         {
-          "question": "Are your employees qualified and insured?",
-          "answer": "Yes, all our team members and partner contractors are carefully selected, trained, and fully insured. This ensures that the work is carried out safely and professionally. We also work with trusted specialists for tasks such as electrical or painting work, so you always get the right expertise."
+          "question": "¿Sus empleados están cualificados y asegurados?",
+          "answer": "Sí, todos nuestros miembros del equipo y colaboradores son seleccionados cuidadosamente, reciben formación y están plenamente asegurados. Esto garantiza que el trabajo se realice de forma segura y profesional. También trabajamos con especialistas de confianza para tareas como electricidad o pintura, para que siempre recibas la experiencia adecuada."
         },
         {
-          "question": "What is the typical booking process?",
-          "answer": "You choose the service you need on our website, provide the details, and submit your request. Our team reviews the information and confirms the appointment or prepares a custom offer for you."
+          "question": "¿Cómo es el proceso habitual de reserva?",
+          "answer": "Eliges el servicio que necesitas en nuestra web, indicas los detalles y envías tu solicitud. Nuestro equipo revisa la información y confirma la cita o prepara una oferta personalizada para ti."
         }
       ]
     },
@@ -241,7 +246,7 @@
         "legal": "Legal"
       },
       "contact": {
-        "title": "Contact uns",
+        "title": "Contacto",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"
@@ -259,25 +264,25 @@
       "links": [
         { "label": "Servicio de limpieza", "href": "/cleaning-service" },
         { "label": "Servicio al hogar", "href": "/home-service" },
-        { "label": "How it works", "href": "/how-it-work" },
-        { "label": "Contact", "href": "/contact" },
-        { "label": "About", "href": "/about" }
+        { "label": "Cómo funciona", "href": "/how-it-work" },
+        { "label": "Contacto", "href": "/contact" },
+        { "label": "Sobre nosotros", "href": "/about" }
       ],
       "legal": [
         {
-          "label": "Privacy Policy",
+          "label": "Política de privacidad",
           "href": "/legal/privacy-policy"
         },
         {
-          "label": "Cookie Policy",
+          "label": "Política de cookies",
           "href": "/legal/cookie-policy"
         },
         {
-          "label": "Terms of Service",
+          "label": "Términos del servicio",
           "href": "/legal/terms-of-service"
         },
         {
-          "label": "Imprint",
+          "label": "Aviso legal",
           "href": "/legal/imprint"
         }
       ],
@@ -296,22 +301,50 @@
         }
       ],
       "cta": {
-        "cookies": "Cookie Preference",
+        "cookies": "Preferencias de cookies",
         "title": "Maped Solutions",
-        "description": "This platform was developed by Maped Solutions, with a clear focus on making everyday work easier for service-based businesses."
+        "description": "Esta plataforma fue desarrollada por Maped Solutions, con un enfoque claro en facilitar el trabajo diario de las empresas de servicios."
+      },
+      "hoursStatus": {
+        "heading": "Horario",
+        "open": "Abierto",
+        "closed": "Cerrado",
+        "opensAt": "Abre a las {time}",
+        "closesAt": "Cierra a las {time}",
+        "opensTomorrowAt": "Abre mañana a las {time}",
+        "opensOn": "Abre {day} a las {time}",
+        "closedToday": "Cerrado por hoy",
+        "unavailable": "Horario no disponible",
+        "dayClosed": "Cerrado",
+        "ariaCurrentStatus": "Estado actual del horario",
+        "ariaWeeklyHours": "Horario semanal",
+        "expandHours": "Mostrar horario semanal",
+        "collapseHours": "Ocultar horario semanal"
+      },
+      "a11y": {
+        "landmark": "Pie del sitio web",
+        "home": "Ir a la página de inicio",
+        "contact": "Información de contacto",
+        "navigation": "Enlaces del pie de página",
+        "hours": "Horario comercial",
+        "cookies": "Abrir preferencias de cookies",
+        "email": "Enviar un correo a Havenova",
+        "phone": "Llamar a Havenova",
+        "address": "Dirección de Havenova",
+        "developer": "Ir al sitio de Maped Solutions"
       }
     },
     "contact": {
       "aria": {
-        "info": "Contact information",
-        "quickActions": "Quick contact actions",
-        "call": "Call phone number",
-        "email": "Send email",
-        "whatsapp": "Open WhatsApp chat"
+        "info": "Información de contacto",
+        "quickActions": "Acciones rápidas de contacto",
+        "call": "Llamar al número de teléfono",
+        "email": "Enviar correo electrónico",
+        "whatsapp": "Abrir chat de WhatsApp"
       },
       "quickActions": {
-        "call": "Call",
-        "email": "Email",
+        "call": "Llamar",
+        "email": "Correo",
         "whatsapp": "WhatsApp"
       }
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useProfile } from '../../../../../../contexts';
 import type { UserAddress } from '../../../../../../types/profile';
 import type { WorkAddressSelection } from '../../../../../../types/services';
@@ -8,6 +8,7 @@ import AddressFormFields from './AddressFormFields';
 import {
   buildAddressOptions,
   createEmptyUserAddress,
+  formatAddressLabel,
   isAddressComplete,
   isSameAddress,
   isSameWorkAddressSelection,
@@ -32,7 +33,12 @@ export interface WorkAddressSelectorProps {
     saveToProfileLabel?: string;
     savedAddressLabel?: string;
     savedAddressPlaceholder?: string;
+    manualSectionTitle?: string;
     addressDetailsAriaLabel?: string;
+    sourceLabels?: {
+      primary?: string;
+      saved?: string;
+    };
     fields?: {
       street?: string;
       streetNumber?: string;
@@ -51,6 +57,8 @@ export default function WorkAddressSelector({
   onChange,
   texts,
 }: WorkAddressSelectorProps) {
+  const titleId = useId();
+  const manualSectionTitleId = useId();
   const { profile, loading } = useProfile();
   const isInternalSyncRef = useRef(false);
   const addressOptions = useMemo(
@@ -156,13 +164,13 @@ export default function WorkAddressSelector({
   ]);
 
   return (
-    <section className={styles.section} aria-labelledby="work-address-selector-title">
+    <section className={styles.section} aria-labelledby={titleId}>
       {showHeader ? (
         <header className={styles.header}>
-          <h3 id="work-address-selector-title" className={styles.title}>
+          <h3 id={titleId} className={`${styles.title} type-title-sm`}>
             {texts?.title ?? 'Service address'}
           </h3>
-          <p className={styles.description}>
+          <p className={`${styles.description} type-body-md`}>
             {texts?.description ??
               'Choose your main address, a saved one, or enter a different location for this request.'}
           </p>
@@ -182,6 +190,11 @@ export default function WorkAddressSelector({
                   (option.source === 'saved' &&
                     selectionMode === 'saved' &&
                     selectedOptionId === option.id);
+                const optionLabel =
+                  option.source === 'primary'
+                    ? texts?.sourceLabels?.primary ?? 'Primary address'
+                    : option.savedLabel || texts?.sourceLabels?.saved || 'Saved address';
+                const optionHint = formatAddressLabel(option.address);
 
                 return (
                   <label key={option.id} className={`${styles.optionCard} ${isChecked ? styles.optionSelected : ''}`}>
@@ -195,8 +208,8 @@ export default function WorkAddressSelector({
                         setSelectedOptionId(option.id);
                       }}
                     />
-                    <span className={styles.optionLabel}>{option.label}</span>
-                    <span className={styles.optionHint}>{option.hint}</span>
+                    <span className={styles.optionLabel}>{optionLabel}</span>
+                    <span className={styles.optionHint}>{optionHint}</span>
                   </label>
                 );
               })}
@@ -230,7 +243,10 @@ export default function WorkAddressSelector({
           )}
 
           {(selectionMode === 'new' || !hasProfileAddresses) && (
-            <section className={styles.manualSection}>
+            <section className={styles.manualSection} aria-labelledby={manualSectionTitleId}>
+              <h4 id={manualSectionTitleId} className={styles.manualTitle}>
+                {texts?.manualSectionTitle ?? texts?.useDifferentAddressLabel ?? 'Use a different address'}
+              </h4>
               <p className={styles.manualHint}>
                 {texts?.manualHint ?? 'Enter the address where the visit or inspection should take place.'}
               </p>

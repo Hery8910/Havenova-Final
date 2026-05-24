@@ -56,11 +56,9 @@
 
 .counterButton {
   width: 36px;
+  min-width: 36px;
   height: 36px;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
+  padding: 0;
   line-height: 1;
   transition:
     transform 0.2s ease,
@@ -94,12 +92,8 @@
 
 .switch {
   width: 100%;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-sm);
   min-height: 48px;
   padding: 8px 10px;
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -155,6 +149,11 @@
 .fieldControlError {
   border-color: var(--color-error) !important;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
+}
+
+.errorText {
+  color: var(--color-error);
+  font-size: var(--type-body-sm-size);
 }
 
 .counterButton:focus-visible,

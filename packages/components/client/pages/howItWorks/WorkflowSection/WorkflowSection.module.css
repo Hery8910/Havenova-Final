@@ -66,8 +66,6 @@
   width: 34px;
   height: 34px;
   border-radius: var(--radius-sm);
-  background: var(--brand-accent-5);
-  color: var(--text-inverse);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -89,10 +87,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: radial-gradient(circle at 70% 110%, var(--bg-warning), var(--card-accent-bg));
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-warning);
 }
 .noteTitle {
   color: var(--color-warning);

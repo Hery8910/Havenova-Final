@@ -1,75 +1,102 @@
 .section {
-  margin: 100px auto;
-  max-width: 1000px;
+  margin: var(--space-10) auto;
+  max-width: var(--container-max);
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: var(--space-8);
   padding: 0 5dvw;
   text-align: center;
 }
-.aside {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 16px;
+
+.title {
+  margin: 0;
+  color: var(--color-page-heading);
 }
 
 .ul {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
+  gap: var(--space-4);
   margin: 0;
+  padding: 0;
   list-style: none;
 }
+
 .li {
   width: 100%;
-  height: auto;
-  border: 1px solid var(--text-primary);
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
+  border: 1px solid var(--color-page-border);
+  border-radius: var(--radius-md);
+  text-align: left;
 }
-.h4 {
+
+.heading {
+  margin: 0;
+}
+
+.trigger {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
   text-align: left;
+  color: var(--color-page-heading);
 }
+.trigger,
+.trigger[aria-pressed='true'],
+.trigger[aria-expanded='true'] {
+  box-shadow: none;
+  background-image: none;
+  border-color: transparent;
+}
+.question {
+  flex: 1;
+  margin: 0;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+}
+
 .icon {
   font-size: clamp(22px, 3.5vw, 26px);
-  transition: all 0.3s ease-in-out;
+  transition:
+    transform var(--motion-base) var(--ease-standard),
+    color var(--motion-base) var(--ease-standard);
 }
+
 .icon.open {
   color: var(--brand-primary);
   transform: rotate(-45deg);
 }
-.description {
-  margin-bottom: 32px;
-}
-.p {
-  text-align: left;
+
+.answerWrap {
+  padding: 0 var(--space-5) var(--space-5);
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -400% 0;
+.answer {
+  margin: 0;
+  color: var(--color-page-body);
+}
+
+@media (max-width: 720px) {
+  .section {
+    gap: var(--space-6);
   }
-  100% {
-    background-position: 400% 0;
+
+  .trigger {
+    padding: var(--space-4);
+  }
+
+  .answerWrap {
+    padding: 0 var(--space-4) var(--space-4);
   }
 }

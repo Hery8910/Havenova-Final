@@ -1,5 +1,6 @@
 'use client';
 
+import { useId } from 'react';
 import { useLang } from '../../../../../../hooks';
 import { formatUserAddress } from '../../../../../../types';
 import type {
@@ -81,6 +82,7 @@ export default function ReviewStep({
     no: string;
   };
 }) {
+  const titleId = useId();
   const lang = useLang();
   const dateFormatter = new Intl.DateTimeFormat(lang, {
     day: '2-digit',
@@ -93,10 +95,10 @@ export default function ReviewStep({
   });
 
   return (
-    <section className={styles.container} aria-labelledby="cleaning-review-title">
+    <section className={styles.container} aria-labelledby={titleId}>
       {showHeader ? (
         <header className={styles.header}>
-          <h3 id="cleaning-review-title" className={styles.title}>
+          <h3 id={titleId} className={styles.title}>
             {texts.title}
           </h3>
           <p className={styles.description}>{texts.description}</p>

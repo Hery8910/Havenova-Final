@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useMonthlyAvailability } from '../../../../../../hooks';
 import type {
@@ -97,6 +97,7 @@ export default function AvailabilityCalendar({
   onChange,
   texts,
 }: AvailabilityCalendarProps) {
+  const titleId = useId();
   const copy = { ...DEFAULT_TEXTS, ...texts };
   const minSelectableDate = useMemo(() => getTomorrowDateString(), []);
   const initialState = useMemo(() => getInitialMonthState(value), [value]);
@@ -213,11 +214,14 @@ export default function AvailabilityCalendar({
               }}
             />
           ) : (
-            <section className={styles.calendarPanel} aria-label={copy.title}>
+            <section className={styles.calendarPanel} aria-labelledby={titleId}>
+              <h3 className={styles.srOnly} id={titleId}>
+                {copy.title}
+              </h3>
               <nav className={styles.calendarToolbar} aria-label={copy.monthNavigationAriaLabel}>
                 <button
                   type="button"
-                  className={`button_invert ${styles.navButton}`}
+                  className={`button button--outline ${styles.navButton}`}
                   onClick={() => changeVisibleMonth(-1)}
                   aria-label={copy.previousMonth}
                 >
@@ -226,7 +230,7 @@ export default function AvailabilityCalendar({
                 <h4 className={styles.monthHeading}>{formatMonthLabel(visibleYear, visibleMonth)}</h4>
                 <button
                   type="button"
-                  className={`button_invert ${styles.navButton}`}
+                  className={`button button--outline ${styles.navButton}`}
                   onClick={() => changeVisibleMonth(1)}
                   aria-label={copy.nextMonth}
                 >
@@ -246,7 +250,11 @@ export default function AvailabilityCalendar({
                 ))}
               </ol>
 
-              <ol className={styles.grid} aria-label={formatMonthLabel(visibleYear, visibleMonth)}>
+              <ol
+                className={styles.grid}
+                aria-label={formatMonthLabel(visibleYear, visibleMonth)}
+                aria-busy={loading}
+              >
                 {calendarDays.map((day) => {
                   const availableSlots = day.slots.filter((slot) => !slot.blocked).length;
                   const isSelectedDay = day.date === selectedDate;

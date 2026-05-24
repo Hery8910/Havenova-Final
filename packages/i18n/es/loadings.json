@@ -1,34 +1,34 @@
 {
   "loading": {
     "REGISTER_LOADING_SUBMIT": {
-      "title": "Processing your registration…",
-      "description": "Please wait a moment."
+      "title": "Procesando tu registro…",
+      "description": "Espera un momento."
     }
   },
   "message": {
     "verifyEmail": {
-      "title": "Verifying your email…",
-      "description": "Please wait while we confirm your verification link."
+      "title": "Verificando tu correo electrónico…",
+      "description": "Espera mientras confirmamos tu enlace de verificación."
     },
     "login": {
-      "title": "Logging you in…",
-      "description": "We are preparing your session. This may take a moment."
+      "title": "Iniciando tu sesión…",
+      "description": "Estamos preparando tu sesión. Esto puede tardar un momento."
     },
     "createUser": {
-      "title": "Loading your account…",
-      "description": "We are setting up your profile and preferences."
+      "title": "Cargando tu cuenta…",
+      "description": "Estamos configurando tu perfil y tus preferencias."
     },
     "accessDenied": {
-      "title": "Oops, something is missing!",
-      "description": "Access to this page is restricted.You do not have the required permissions."
+      "title": "Falta algo",
+      "description": "El acceso a esta página está restringido. No tienes los permisos necesarios."
     },
     "logout": {
-      "title": "Successfully logged out",
-      "description": "You have been logged out of your account.",
-      "close": "Close",
+      "title": "Sesión cerrada correctamente",
+      "description": "Has cerrado sesión en tu cuenta.",
+      "close": "Cerrar",
       "errorTexts": {
-        "title": "Logout failed",
-        "description": "An error occurred while logging out. Please try again."
+        "title": "No se pudo cerrar la sesión",
+        "description": "Se produjo un error al cerrar la sesión. Inténtalo de nuevo."
       }
     }
   }

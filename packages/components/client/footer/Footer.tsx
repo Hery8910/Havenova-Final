@@ -1,9 +1,15 @@
 'use client';
+import { useId } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
-import { useCookies, useI18n } from '../../../contexts';
-import { LuMail, LuMapPin, LuPhone } from 'react-icons/lu';
+import { useClient, useCookies, useI18n } from '../../../contexts';
+import { useAuth } from '../../../contexts/auth/authContext';
+import { href } from '../../../utils';
+import type { FooterHoursStatusCopy } from './BusinessHoursStatus';
+import { getNavbarContent } from '../navbar/navbar.shared';
+import type { NavbarConfig } from '../navbar/navbar.types';
+import { CompanyContact } from '../companyContact';
 
 interface HeadersItem {
   services?: string;
@@ -35,9 +41,23 @@ interface CtaItem {
   cookies: string;
 }
 
+interface FooterA11y {
+  landmark?: string;
+  home?: string;
+  contact?: string;
+  navigation?: string;
+  hours?: string;
+  cookies?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  developer?: string;
+}
+
 export interface FooterProps {
   headers: HeadersItem;
   contact: {
+    title?: string;
     email: string;
     phone: string;
     address: string;
@@ -47,6 +67,8 @@ export interface FooterProps {
   legal: LegalItem[];
   social: SocialItem[];
   cta: CtaItem;
+  a11y?: FooterA11y;
+  hoursStatus?: FooterHoursStatusCopy;
 }
 
 export interface FooterViewProps {
@@ -55,65 +77,66 @@ export interface FooterViewProps {
 }
 
 export function Footer() {
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
+  const { client } = useClient();
+  const { auth } = useAuth();
   const { openManager } = useCookies();
+  const aboutHeadingId = useId();
+  const legalHeadingId = useId();
+  const userHeadingId = useId();
 
   const footer = texts?.components?.client?.footer as FooterProps | undefined;
+  const navbarConfig: NavbarConfig | undefined = texts?.components?.client?.navbar;
 
   if (!footer) return null;
 
+  const a11y = footer.a11y ?? {};
+  const navbarContent = getNavbarContent({
+    texts,
+    navbarConfig,
+    auth,
+  });
+  const userSectionTitle = auth.isLogged
+    ? navbarContent.labels.profile
+    : navbarContent.labels.account;
+
   return (
-    <footer className={styles.footer} aria-label="Website footer">
-      <Link className={styles.logoLink} href="/" aria-label="Go to homepage">
-        <Image
-          className={styles.logoImage}
-          src="/logos/logo-dark.webp"
-          alt="Havenova Logo"
-          width={200}
-          height={50}
-          priority
-        />
-      </Link>
+    <footer className={styles.footer} aria-label={a11y.landmark}>
       <div className={`${styles.content} container`}>
-        <address className={styles.contact} aria-label="Contact information">
-          <ul className={styles.contactList}>
-            <li className={styles.contactItem} key={'1'}>
-              <span className={styles.contactIcon}>
-                <LuMail />
-              </span>
-              <p className={styles.contactLabel}>{footer?.contact?.email}</p>
-            </li>
-            <li className={styles.contactItem} key={'2'}>
-              <span className={styles.contactIcon}>
-                <LuPhone />
-              </span>
-              <p className={styles.contactLabel}>{footer?.contact?.phone}</p>
-            </li>
-            <li className={styles.contactItem} key={'3'}>
-              <span className={styles.contactIcon}>
-                <LuMapPin />
-              </span>
-              <p className={styles.contactLabel}>{footer?.contact?.address}</p>
-            </li>
-            <li className={styles.contactItem} key={'4'}>
-              <p className={styles.contactLabel}>{footer?.hour?.week.label}</p>
-              <p className={styles.contactLabel}>{footer?.hour?.week.data}</p>
-            </li>
-            <li className={styles.contactItem} key={'5'}>
-              <p className={styles.contactLabel}>{footer?.hour?.weekend.label}</p>
-              <p className={styles.contactLabel}>{footer?.hour?.weekend.data}</p>
-            </li>
-          </ul>
-        </address>
-        <nav className={styles.links} aria-label="Footer links">
+        <header className={styles.header} aria-label={a11y.contact}>
+          <Link className={styles.logoLink} href={href(language, '/')} aria-label={a11y.home}>
+            <Image
+              className={styles.logoImage}
+              src="/logos/logo-dark.webp"
+              alt=""
+              width={200}
+              height={50}
+              priority
+            />
+          </Link>
+          <CompanyContact
+            contact={footer.contact}
+            schedule={client.operations.schedule}
+            hoursStatus={footer.hoursStatus}
+            ariaLabel={a11y.contact}
+            emailAriaLabel={a11y.email}
+            phoneAriaLabel={a11y.phone}
+            className={styles.contact}
+            headingClassName={`${styles.sectionHeading} type-title-md`}
+          />
+        </header>
+        <nav className={styles.links} aria-label={a11y.navigation}>
           <section className={styles.linkGroup}>
-            <h4 className={styles.linkHeading} id="footer-about">
-              {footer?.headers?.about}
-            </h4>
-            <ul className={styles.linkList} aria-labelledby="footer-about">
-              {footer.links.map((elem, index) => (
-                <li key={index} className={styles.linkItem}>
-                  <Link className={styles.footerLink} href={elem.href}>
+            <h2 className={`${styles.linkHeading} type-title-md`} id={aboutHeadingId}>
+              {footer.headers.about}
+            </h2>
+            <ul className={styles.linkList} aria-labelledby={aboutHeadingId}>
+              {footer.links.map((elem) => (
+                <li key={elem.href} className={styles.linkItem}>
+                  <Link
+                    className={`button button--ghost ${styles.footerButton}`}
+                    href={href(language, elem.href)}
+                  >
                     {elem.label}
                   </Link>
                 </li>
@@ -121,37 +144,61 @@ export function Footer() {
             </ul>
           </section>
           <section className={styles.linkGroup}>
-            <h4 className={styles.linkHeading} id="footer-legal">
-              {footer?.headers?.legal}
-            </h4>
-            <ul className={styles.linkList} aria-labelledby="footer-legal">
-              {footer.legal.map((elem, index) => (
-                <li key={index} className={styles.linkItem}>
-                  <Link className={styles.footerLink} href={elem.href}>
+            <h2 className={`${styles.linkHeading} type-title-md`} id={legalHeadingId}>
+              {footer.headers.legal}
+            </h2>
+            <ul className={styles.linkList} aria-labelledby={legalHeadingId}>
+              {footer.legal.map((elem) => (
+                <li key={elem.href} className={styles.linkItem}>
+                  <Link
+                    className={`button button--ghost ${styles.footerButton}`}
+                    href={href(language, elem.href)}
+                  >
                     {elem.label}
                   </Link>
                 </li>
               ))}
               <li className={styles.linkItem}>
                 <button
-                  className={styles.footerLink}
+                  className={`button button--ghost ${styles.footerButton}`}
                   type="button"
                   onClick={openManager}
-                  aria-label="Open cookie preferences"
+                  aria-label={a11y.cookies}
                 >
                   {footer.cta.cookies}
                 </button>
               </li>
             </ul>
           </section>
+          <section className={styles.linkGroup}>
+            <h2 className={`${styles.linkHeading} type-title-md`} id={userHeadingId}>
+              {userSectionTitle}
+            </h2>
+            <ul className={styles.linkList} aria-labelledby={userHeadingId}>
+              {navbarContent.userLinks.map((item) => (
+                <li key={item.href} className={styles.linkItem}>
+                  <Link
+                    className={`button button--ghost ${styles.footerButton}`}
+                    href={href(language, item.href)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </nav>
       </div>
       <aside className={styles.support}>
-        <Link href="/#" className={styles.supportLink}>
+        <Link
+          href="/#"
+          className={`button button--ghost ${styles.supportLink}`}
+          aria-label={a11y.developer}
+        >
           <Image
             className={styles.supportLogo}
             src="/svg/maped.svg"
-            alt="Maped Solutions Logo"
+            alt=""
             width={50}
             height={25}
             priority

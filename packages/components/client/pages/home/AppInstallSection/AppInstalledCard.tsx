@@ -23,7 +23,7 @@ export function AppInstalledCard({ content }: AppInstalledCardProps) {
           {content.ctas.map((cta, index) => (
             <Link
               key={`${cta.href}-${index}`}
-              className={`${styles.actionButton} button_invert button`}
+              className={`${styles.actionButton}  button button--accent`}
               href={cta.href}
             >
               {cta.label}

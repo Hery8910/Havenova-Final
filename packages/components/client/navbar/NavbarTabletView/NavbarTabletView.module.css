@@ -1,6 +1,5 @@
 .tabletShell {
   --tablet-dropdown-offset: 24px;
-  --navbar-height: 55px;
   min-height: var(--navbar-height);
   width: 100%;
   position: relative;
@@ -11,7 +10,7 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  min-height: var(--navbar-height-tablet);
+  min-height: var(--navbar-height);
   padding: 0 5dvw;
   display: flex;
   flex-direction: column;

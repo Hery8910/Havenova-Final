@@ -2,7 +2,6 @@
   "client": {
     "home": {
       "hero": {
-        "badge": "Plataforma digital de servicios",
         "title": "Encuentra la ayuda adecuada rápido",
         "descriptions": [
           "Elige tu servicio, envía tu solicitud en pocos minutos y recibe una propuesta a medida. Claro, fiable y fácil desde el primer paso."
@@ -136,7 +135,6 @@
     },
     "about": {
       "hero": {
-        "badge": "Confianza construida con claridad y cuidado",
         "title": "Por qué el servicio del hogar puede sentirse más fácil",
         "descriptions": [
           "Descubre cómo Havenova combina un servicio cercano, una comunicación clara y una mejora digital continua para crear una experiencia más transparente para sus clientes en todo Berlín."
@@ -157,29 +155,34 @@
       },
       "clients": {
         "title": "Con quién trabajamos",
+        "description": "Apoyamos a distintos tipos de hogares y negocios que necesitan servicio de limpieza o servicio al hogar fiable, con un proceso basado en la claridad, la comunicación y la confianza a largo plazo.",
+        "a11y": {
+          "sectionLabel": "Clientes y sectores con los que trabaja Havenova",
+          "listLabel": "Categorías de clientes"
+        },
         "items": [
           {
             "title": "Viviendas particulares",
             "description": "Trabajamos con inquilinos y propietarios que buscan una forma fiable de solicitar servicio de limpieza o servicio al hogar, seguir cada trabajo y mantener un registro claro de todo lo realizado.",
-            "image": "/images/private-properties.webp",
+            "image": "/images/private-properties.png",
             "imageAlt": "Edificio residencial en una zona privada"
           },
           {
             "title": "Administración de fincas",
             "description": "Apoyamos a las empresas de administración de fincas estructurando las solicitudes, mejorando la comunicación y manteniendo una visión transparente del servicio al hogar y del servicio de limpieza en varios inmuebles.",
-            "image": "/images/property-management.webp",
+            "image": "/images/property-management.png",
             "imageAlt": "Fachada de un edificio residencial de varias viviendas"
           },
           {
             "title": "Oficinas y consultas",
             "description": "Ayudamos a oficinas y consultas profesionales a gestionar servicios recurrentes de limpieza y servicio al hogar con horarios claros, trabajos documentados y el mínimo esfuerzo administrativo.",
-            "image": "/images/practices.webp",
+            "image": "/images/practices.png",
             "imageAlt": "Zona de reuniones en una oficina moderna"
           },
           {
             "title": "Pequeñas empresas",
             "description": "Trabajamos con pequeñas empresas que necesitan servicio de limpieza o servicio al hogar de forma fiable, con un proceso sencillo para pedir ayuda, seguir el progreso y mantener todo organizado.",
-            "image": "/images/businesses.webp",
+            "image": "/images/businesses.png",
             "imageAlt": "Interior de un pequeño local comercial"
           }
         ],
@@ -188,7 +191,6 @@
     },
     "cleaning": {
       "hero": {
-        "badge": "Una presentación clara de la experiencia de limpieza",
         "title": "Espacios limpios, sin complicaciones diarias",
         "descriptions": [
           "Descubre un servicio de limpieza basado en la fiabilidad, la comunicación clara y una experiencia más fluida desde la primera solicitud hasta el resultado final."
@@ -221,157 +223,162 @@
       },
       "form": {
         "process": {
-          "title": "Complete your cleaning request in 5 steps",
-          "description": "Follow each step to provide the data we need for your first visit planning and service setup.",
-          "stepLabel": "Step",
+          "title": "Completa tu solicitud de limpieza en 5 pasos",
+          "description": "Sigue cada paso para facilitarnos los datos necesarios para planificar tu primera visita y configurar el servicio.",
+          "stepLabel": "Paso",
           "steps": {
             "customerFrequency": {
-              "heading": "Customer and recurrence"
+              "heading": "Cliente y recurrencia"
             },
             "propertyDetails": {
-              "heading": "Property details"
+              "heading": "Detalles de la propiedad"
             },
             "scheduling": {
-              "heading": "First visit date and hour"
+              "heading": "Fecha y hora de la primera visita"
             },
             "serviceAddress": {
-              "heading": "Service address"
+              "heading": "Dirección del servicio"
             }
           }
         },
         "customerType": {
-          "label": "Customer type",
+          "label": "Tipo de cliente",
           "options": {
-            "private": "Private",
-            "business": "Business"
+            "private": "Particular",
+            "business": "Empresa"
           }
         },
         "frequency": {
-          "label": "Preferred frequency",
-          "recommendedLabel": "Most requested",
+          "label": "Frecuencia preferida",
+          "recommendedLabel": "Más solicitada",
           "options": {
-            "once": "One-time",
-            "two_per_month": "2 times per month",
-            "weekly": "Weekly",
-            "three_per_month": "3 times per month"
+            "once": "Una vez",
+            "two_per_month": "2 veces al mes",
+            "weekly": "Semanal",
+            "three_per_month": "3 veces al mes"
           },
           "discounts": {
-            "once": "0% discount",
-            "two_per_month": "5% discount",
-            "three_per_month": "10% discount",
-            "weekly": "15% discount"
+            "once": "0% de descuento",
+            "two_per_month": "5% de descuento",
+            "three_per_month": "10% de descuento",
+            "weekly": "15% de descuento"
           }
         },
         "property": {
-          "title": "Property details",
-          "sizeRangeLabel": "Property size range",
+          "title": "Detalles de la propiedad",
+          "sizeRangeLabel": "Rango de tamaño de la propiedad",
           "sizeRangeOptions": {
-            "under_50": "Under 50 m2",
-            "50_80": "50 to 80 m2",
-            "80_120": "80 to 120 m2",
-            "over_120": "Over 120 m2"
+            "under_50": "Menos de 50 m2",
+            "50_80": "De 50 a 80 m2",
+            "80_120": "De 80 a 120 m2",
+            "over_120": "Más de 120 m2"
           },
-          "roomsCountLabel": "Number of rooms",
-          "roomsCountDecrementAriaLabel": "Decrease rooms count",
-          "roomsCountIncrementAriaLabel": "Increase rooms count",
-          "hasBalconyLabel": "Balcony",
-          "hasIndoorStairsLabel": "Indoor stairs",
-          "hasPetsLabel": "Pets in property",
-          "detailsLabel": "Additional details (optional)",
-          "detailsPlaceholder": "Tell us about special cleaning needs, access notes, or preferences."
+          "roomsCountLabel": "Cantidad de habitaciones",
+          "roomsCountDecrementAriaLabel": "Reducir cantidad de habitaciones",
+          "roomsCountIncrementAriaLabel": "Aumentar cantidad de habitaciones",
+          "hasBalconyLabel": "Balcón",
+          "hasIndoorStairsLabel": "Escaleras interiores",
+          "hasPetsLabel": "Mascotas en la propiedad",
+          "detailsLabel": "Detalles adicionales (opcional)",
+          "detailsPlaceholder": "Cuéntanos necesidades especiales de limpieza, notas de acceso o preferencias."
         },
         "common": {
-          "yes": "Yes",
+          "yes": "Sí",
           "no": "No",
-          "next": "Continue",
-          "review": "Review request",
-          "back": "Back",
-          "submit": "Submit request"
+          "next": "Continuar",
+          "review": "Revisar solicitud",
+          "back": "Volver",
+          "submit": "Enviar solicitud"
         },
         "errors": {
-          "required": "This field is required.",
-          "invalid": "Please enter a valid value.",
-          "roomsRange": "Rooms count must be between 0 and 50.",
-          "detailsTooLong": "Additional details must be 1500 characters or fewer.",
-          "unsafeInput": "Please remove unsupported characters or scripts from this field."
+          "required": "Este campo es obligatorio.",
+          "invalid": "Introduce un valor válido.",
+          "roomsRange": "La cantidad de habitaciones debe estar entre 0 y 50.",
+          "detailsTooLong": "Los detalles adicionales deben tener 1500 caracteres o menos.",
+          "unsafeInput": "Elimina caracteres o scripts no compatibles de este campo."
         },
         "scheduling": {
-          "title": "Choose your preferred visit",
-          "description": "Select a date and then choose one available time slot.",
-          "slotsTitle": "Available times",
-          "noDateSelected": "Select a date to continue.",
-          "noAvailability": "There are no available times for this day.",
-          "blockedBadge": "Blocked",
-          "selectedBadge": "Selected",
-          "availableBadge": "Available",
-          "closeSlotsLabel": "Choose another day",
-          "loading": "Loading availability...",
-          "errorPrefix": "Availability error:",
-          "previousMonth": "Previous month",
-          "nextMonth": "Next month",
-          "monthNavigationAriaLabel": "Calendar month navigation",
-          "weekdayLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          "nonWorkday": "Unavailable",
-          "blockedDay": "Blocked",
-          "availableDay": "Open",
-          "required": "Please select a preferred date and time.",
-          "missingClientConfig": "Client calendar configuration is unavailable right now."
+          "title": "Elige tu visita preferida",
+          "description": "Selecciona una fecha y luego elige una franja horaria disponible.",
+          "slotsTitle": "Horarios disponibles",
+          "noDateSelected": "Selecciona una fecha para continuar.",
+          "noAvailability": "No hay horarios disponibles para este día.",
+          "blockedBadge": "Bloqueado",
+          "selectedBadge": "Seleccionado",
+          "availableBadge": "Disponible",
+          "closeSlotsLabel": "Elegir otro día",
+          "loading": "Cargando disponibilidad...",
+          "errorPrefix": "Error de disponibilidad:",
+          "previousMonth": "Mes anterior",
+          "nextMonth": "Mes siguiente",
+          "monthNavigationAriaLabel": "Navegación del calendario por mes",
+          "weekdayLabels": ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+          "nonWorkday": "No disponible",
+          "blockedDay": "Bloqueado",
+          "availableDay": "Abierto",
+          "required": "Selecciona una fecha y hora preferidas.",
+          "missingClientConfig": "La configuración del calendario del cliente no está disponible en este momento."
         },
         "serviceAddress": {
-          "title": "Service address",
-          "description": "Choose your main address, a saved one, or enter a different location for this request.",
-          "loading": "Loading your saved addresses...",
-          "optionsLegend": "Available address options",
-          "useDifferentAddressLabel": "Use a different address",
-          "useDifferentAddressHint": "Enter a new work location for this request.",
-          "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
-          "manualHint": "Enter the address where the visit or inspection should take place.",
-          "saveToProfileLabel": "Save this address to my profile",
-          "savedAddressLabel": "Label",
-          "savedAddressPlaceholder": "Home office, Building A, Parents...",
-          "addressDetailsAriaLabel": "Address details",
-          "fields": {
-            "street": "Street",
-            "streetNumber": "Number",
-            "postalCode": "Postal code",
-            "district": "District",
-            "floor": "Floor"
+          "title": "Dirección del servicio",
+          "description": "Elige tu dirección principal, una guardada o introduce una ubicación diferente para esta solicitud.",
+          "loading": "Cargando tus direcciones guardadas...",
+          "optionsLegend": "Opciones de dirección disponibles",
+          "sourceLabels": {
+            "primary": "Dirección principal",
+            "saved": "Dirección guardada"
           },
-          "stepAriaLabel": "Service address selection",
-          "required": "Please select or enter a work address."
+          "useDifferentAddressLabel": "Usar una dirección diferente",
+          "useDifferentAddressHint": "Introduce una nueva ubicación de trabajo para esta solicitud.",
+          "emptyState": "Todavía no hay direcciones guardadas. Introduce la dirección del servicio a continuación y guárdala si quieres.",
+          "manualSectionTitle": "Nueva dirección del servicio",
+          "manualHint": "Introduce la dirección donde debe realizarse la visita o inspección.",
+          "saveToProfileLabel": "Guardar esta dirección en mi perfil",
+          "savedAddressLabel": "Etiqueta",
+          "savedAddressPlaceholder": "Oficina en casa, Edificio A, Padres...",
+          "addressDetailsAriaLabel": "Detalles de la dirección",
+          "fields": {
+            "street": "Calle",
+            "streetNumber": "Número",
+            "postalCode": "Código postal",
+            "district": "Distrito",
+            "floor": "Piso"
+          },
+          "stepAriaLabel": "Selección de dirección del servicio",
+          "required": "Selecciona o introduce una dirección de trabajo."
         },
         "review": {
-          "title": "Final check before sending",
-          "description": "You have completed the 5 steps. Review the details below and submit the cleaning request if everything is correct.",
+          "title": "Revisión final antes de enviar",
+          "description": "Has completado los 5 pasos. Revisa los detalles a continuación y envía la solicitud de limpieza si todo es correcto.",
           "sections": {
-            "customer": "Customer and frequency",
-            "property": "Property details",
-            "scheduling": "Preferred visit",
-            "address": "Service address"
+            "customer": "Cliente y frecuencia",
+            "property": "Detalles de la propiedad",
+            "scheduling": "Visita preferida",
+            "address": "Dirección del servicio"
           },
           "labels": {
-            "customerType": "Customer type",
-            "frequency": "Frequency",
-            "sizeRange": "Property size range",
-            "roomsCount": "Rooms count",
-            "hasBalcony": "Balcony",
-            "hasIndoorStairs": "Indoor stairs",
-            "hasPets": "Pets",
-            "details": "Additional details",
-            "visitDate": "Date",
-            "visitTime": "Time slot",
-            "addressSource": "Address source",
-            "addressLabel": "Label",
-            "address": "Address",
-            "saveToProfile": "Save to profile"
+            "customerType": "Tipo de cliente",
+            "frequency": "Frecuencia",
+            "sizeRange": "Rango de tamaño de la propiedad",
+            "roomsCount": "Cantidad de habitaciones",
+            "hasBalcony": "Balcón",
+            "hasIndoorStairs": "Escaleras interiores",
+            "hasPets": "Mascotas",
+            "details": "Detalles adicionales",
+            "visitDate": "Fecha",
+            "visitTime": "Franja horaria",
+            "addressSource": "Origen de la dirección",
+            "addressLabel": "Etiqueta",
+            "address": "Dirección",
+            "saveToProfile": "Guardar en el perfil"
           },
           "sourceOptions": {
-            "primary": "Primary address",
-            "saved": "Saved address",
-            "new": "New address"
+            "primary": "Dirección principal",
+            "saved": "Dirección guardada",
+            "new": "Dirección nueva"
           },
-          "emptyDetails": "No additional details provided.",
-          "finalNote": "This is the final check before sending. If everything looks correct, you can submit the request now."
+          "emptyDetails": "No se proporcionaron detalles adicionales.",
+          "finalNote": "Esta es la revisión final antes del envío. Si todo se ve correcto, ya puedes enviar la solicitud."
         }
       },
       "submission": {
@@ -397,7 +404,6 @@
     },
     "home-service": {
       "hero": {
-        "badge": "Ayuda práctica en casa",
         "title": "Reparaciones, montajes y tareas diarias",
         "descriptions": [
           "Para pintura, reparaciones e instalaciones, montaje de muebles y cocinas, y ayuda en mudanzas en Berlín. Havenova estructura tu solicitud para entender rápido el alcance, el acceso y los siguientes pasos."
@@ -544,64 +550,63 @@
           }
         },
         "common": {
-          "next": "Continue",
-          "back": "Back",
-          "submit": "Continue request"
+          "next": "Continuar",
+          "back": "Volver",
+          "submit": "Continuar solicitud"
         },
         "errors": {
-          "required": "This field is required.",
-          "detailsTooLong": "Service details must be 1500 characters or fewer."
+          "required": "Este campo es obligatorio.",
+          "detailsTooLong": "Los detalles del servicio deben tener 1500 caracteres o menos."
         },
         "scheduling": {
-          "title": "Choose your preferred date",
-          "description": "Select a date and then choose one available time slot for the requested service.",
-          "slotsTitle": "Available times",
-          "noDateSelected": "Select a date to continue.",
-          "noAvailability": "There are no available times for this day.",
-          "blockedBadge": "Blocked",
-          "selectedBadge": "Selected",
-          "availableBadge": "Available",
-          "closeSlotsLabel": "Choose another day",
-          "loading": "Loading availability...",
-          "errorPrefix": "Availability error:",
-          "previousMonth": "Previous month",
-          "nextMonth": "Next month",
-          "monthNavigationAriaLabel": "Calendar month navigation",
-          "weekdayLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          "nonWorkday": "Unavailable",
-          "blockedDay": "Blocked",
-          "availableDay": "Open",
-          "required": "Please select a preferred date and time.",
-          "missingClientConfig": "Client calendar configuration is unavailable right now."
+          "title": "Elige tu fecha preferida",
+          "description": "Selecciona una fecha y luego una franja horaria disponible para el servicio solicitado.",
+          "slotsTitle": "Horarios disponibles",
+          "noDateSelected": "Selecciona una fecha para continuar.",
+          "noAvailability": "No hay horarios disponibles para este día.",
+          "blockedBadge": "Bloqueado",
+          "selectedBadge": "Seleccionado",
+          "availableBadge": "Disponible",
+          "closeSlotsLabel": "Elegir otro día",
+          "loading": "Cargando disponibilidad...",
+          "errorPrefix": "Error de disponibilidad:",
+          "previousMonth": "Mes anterior",
+          "nextMonth": "Mes siguiente",
+          "monthNavigationAriaLabel": "Navegación del calendario por mes",
+          "weekdayLabels": ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+          "nonWorkday": "No disponible",
+          "blockedDay": "Bloqueado",
+          "availableDay": "Abierto",
+          "required": "Selecciona una fecha y hora preferidas.",
+          "missingClientConfig": "La configuración del calendario del cliente no está disponible en este momento."
         },
         "serviceAddress": {
-          "title": "Service address",
-          "description": "Choose your main address, a saved one, or enter a different location for this request.",
-          "loading": "Loading your saved addresses...",
-          "optionsLegend": "Available address options",
-          "useDifferentAddressLabel": "Use a different address",
-          "useDifferentAddressHint": "Enter a new work location for this request.",
-          "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
-          "manualHint": "Enter the address where the requested service should take place.",
-          "saveToProfileLabel": "Save this address to my profile",
-          "savedAddressLabel": "Label",
-          "savedAddressPlaceholder": "Property A, Rear building, Practice...",
-          "addressDetailsAriaLabel": "Address details",
+          "title": "Dirección del servicio",
+          "description": "Elige tu dirección principal, una guardada o introduce una ubicación diferente para esta solicitud.",
+          "loading": "Cargando tus direcciones guardadas...",
+          "optionsLegend": "Opciones de dirección disponibles",
+          "useDifferentAddressLabel": "Usar una dirección diferente",
+          "useDifferentAddressHint": "Introduce una nueva ubicación de trabajo para esta solicitud.",
+          "emptyState": "Todavía no hay direcciones guardadas. Introduce la dirección del servicio a continuación y guárdala si quieres.",
+          "manualHint": "Introduce la dirección donde debe realizarse el servicio solicitado.",
+          "saveToProfileLabel": "Guardar esta dirección en mi perfil",
+          "savedAddressLabel": "Etiqueta",
+          "savedAddressPlaceholder": "Propiedad A, edificio trasero, consulta...",
+          "addressDetailsAriaLabel": "Detalles de la dirección",
           "fields": {
-            "street": "Street",
-            "streetNumber": "Number",
-            "postalCode": "Postal code",
-            "district": "District",
-            "floor": "Floor"
+            "street": "Calle",
+            "streetNumber": "Número",
+            "postalCode": "Código postal",
+            "district": "Distrito",
+            "floor": "Piso"
           },
-          "stepAriaLabel": "Service address selection",
-          "required": "Please select or enter a work address."
+          "stepAriaLabel": "Selección de dirección del servicio",
+          "required": "Selecciona o introduce una dirección de trabajo."
         }
       }
     },
     "contact": {
       "hero": {
-        "badge": "Estamos aquí para ayudarte",
         "title": "Preguntas, ideas, déjanos saber",
         "descriptions": [
           "Esta página es para preguntas generales, consultas relacionadas con la empresa y conversaciones más amplias. Si desea solicitar un servicio, nuestros formularios específicos de Servicio de limpieza y Servicio al hogar le guiarán con mayor precisión."
@@ -629,7 +634,6 @@
     },
     "howItWorks": {
       "hero": {
-        "badge": "Sobre Havenova",
         "title": "Simplificamos el servicio para nuestros clientes",
         "descriptions": [
           "Havenova es la empresa detrás de esta plataforma de servicio de limpieza y servicio al hogar. Ayudamos a crear un flujo claro para que los clientes pidan ayuda en minutos y las empresas gestionen solicitudes, citas y actualizaciones con eficiencia."
@@ -678,166 +682,166 @@
     "reviews": {},
     "user": {
       "register": {
-        "title": "Create account",
-        "description": "Create your account to request and manage services.",
+        "title": "Crear cuenta",
+        "description": "Crea tu cuenta para solicitar y gestionar servicios.",
         "cta": {
-          "title": "Already have an account?",
-          "label": "Log in now",
+          "title": "¿Ya tienes una cuenta?",
+          "label": "Inicia sesión ahora",
           "url": "/user/login"
         }
       },
       "login": {
-        "title": "Welcome Back",
-        "description": "Access your account and manage your requests.",
+        "title": "Bienvenido de nuevo",
+        "description": "Accede a tu cuenta y gestiona tus solicitudes.",
         "cta": {
-          "title": "Don't have an account yet?",
-          "label": "Sign Up",
+          "title": "¿Todavía no tienes una cuenta?",
+          "label": "Regístrate",
           "url": "/user/register"
         }
       },
       "edit": {
-        "title": "Edit",
-        "description": "Keep your details up to date to ensure a seamless service experience.",
-        "theme": { "title": "Appearance", "theme": "Theme", "lang": "Language" },
-        "personalInfo": "Personal information",
-        "password": "Password"
+        "title": "Editar",
+        "description": "Mantén tus datos actualizados para asegurar una experiencia de servicio fluida.",
+        "theme": { "title": "Apariencia", "theme": "Tema", "lang": "Idioma" },
+        "personalInfo": "Información personal",
+        "password": "Contraseña"
       },
       "forgotPasswordText": {
-        "title": "Reset your password",
-        "info": "Enter your email and we will send you a reset link.",
-        "button": "Send reset link"
+        "title": "Restablece tu contraseña",
+        "info": "Introduce tu correo electrónico y te enviaremos un enlace de restablecimiento.",
+        "button": "Enviar enlace de restablecimiento"
       },
       "resetPasswordText": {
-        "title": "Set a new password",
-        "info": "Choose a new password for your account.",
-        "button": "Save password"
+        "title": "Establece una nueva contraseña",
+        "info": "Elige una nueva contraseña para tu cuenta.",
+        "button": "Guardar contraseña"
       },
       "profileHeader": {
-        "ariaLabel": "User area",
-        "verified": "Verified",
-        "verifiedAria": "Account verified",
-        "missingName": "Missing name",
-        "greeting": "Welcome back 👋",
+        "ariaLabel": "Área de usuario",
+        "verified": "Verificado",
+        "verifiedAria": "Cuenta verificada",
+        "missingName": "Falta el nombre",
+        "greeting": "Bienvenido de nuevo",
         "completion": {
-          "title": "Profile progress",
-          "info": "Complete the missing details to improve your booking and communication flow.",
-          "progressAriaLabel": "Profile completion progress",
-          "percentageAriaLabel": "Profile completion percentage"
+          "title": "Progreso del perfil",
+          "info": "Completa los datos que faltan para mejorar tu flujo de reservas y comunicación.",
+          "progressAriaLabel": "Progreso de completado del perfil",
+          "percentageAriaLabel": "Porcentaje de completado del perfil"
         }
       },
       "profileNav": {
-        "profile": "Profile",
-        "requests": "Work requests",
-        "notifications": "Notifications",
-        "settings": "Settings"
+        "profile": "Perfil",
+        "requests": "Solicitudes de trabajo",
+        "notifications": "Notificaciones",
+        "settings": "Configuración"
       },
       "verifyEmail": {
-        "title": "Verify your email",
-        "info": "Check your inbox or request a new verification email.",
+        "title": "Verifica tu correo electrónico",
+        "info": "Revisa tu bandeja de entrada o solicita un nuevo correo de verificación.",
         "input": {
-          "placeholder": "Email address",
-          "button": "Resend verification email.",
-          "info": "Please use the same email address you used to create your profile."
+          "placeholder": "Dirección de correo electrónico",
+          "button": "Reenviar correo de verificación.",
+          "info": "Utiliza la misma dirección de correo con la que creaste tu perfil."
         }
       },
       "profile": {
-        "title": "Account settings",
-        "manageAccount": "Manage your account settings, and view your profile information.",
-        "memberSince": "Member since:",
-        "verified": "Verified",
-        "name": "Name:",
-        "nameEmpty": "Missing name",
-        "address": "Address:",
-        "phone": "Phone:",
-        "email": "Email:",
+        "title": "Configuración de la cuenta",
+        "manageAccount": "Gestiona la configuración de tu cuenta y consulta la información de tu perfil.",
+        "memberSince": "Miembro desde:",
+        "verified": "Verificado",
+        "name": "Nombre:",
+        "nameEmpty": "Falta el nombre",
+        "address": "Dirección:",
+        "phone": "Teléfono:",
+        "email": "Correo electrónico:",
         "theme": {
-          "title": "Theme:",
-          "light": "Light",
-          "dark": "Dark"
+          "title": "Tema:",
+          "light": "Claro",
+          "dark": "Oscuro"
         },
         "language": {
-          "title": "Language:",
-          "lang": "English"
+          "title": "Idioma:",
+          "lang": "Español"
         },
-        "notLoggedInTitle": "You are not logged in",
-        "notLoggedInText": "To access and manage your profile, please log in to your Havenova account. This way, you can view your personal information, track your service requests, and update your preferences.",
-        "loginButton": "Log in to your account",
+        "notLoggedInTitle": "No has iniciado sesión",
+        "notLoggedInText": "Para acceder y gestionar tu perfil, inicia sesión en tu cuenta de Havenova. Así podrás ver tu información personal, seguir tus solicitudes de servicio y actualizar tus preferencias.",
+        "loginButton": "Iniciar sesión en tu cuenta",
         "details": {
-          "eyebrow": "Profile details",
-          "title": "Your information",
-          "description": "Review your current data and update your contact and address details when needed.",
-          "editButton": "Edit",
-          "cancelButton": "Cancel",
-          "saveButton": "Save changes",
-          "tableAriaLabel": "User profile details",
-          "formAriaLabel": "Edit user profile details",
-          "emptyValue": "Not provided",
+          "eyebrow": "Detalles del perfil",
+          "title": "Tu información",
+          "description": "Revisa tus datos actuales y actualiza tu información de contacto y dirección cuando sea necesario.",
+          "editButton": "Editar",
+          "cancelButton": "Cancelar",
+          "saveButton": "Guardar cambios",
+          "tableAriaLabel": "Detalles del perfil del usuario",
+          "formAriaLabel": "Editar detalles del perfil del usuario",
+          "emptyValue": "No proporcionado",
           "labels": {
-            "name": "Name",
-            "email": "Email",
-            "phone": "Phone",
-            "primaryAddress": "Primary address",
-            "additionalAddress": "Address"
+            "name": "Nombre",
+            "email": "Correo electrónico",
+            "phone": "Teléfono",
+            "primaryAddress": "Dirección principal",
+            "additionalAddress": "Dirección"
           },
           "form": {
-            "primaryAddressTitle": "Primary address",
-            "primaryAddressAriaLabel": "Main profile address details",
-            "secondaryAddressAriaLabel": "Secondary address details",
-            "secondaryAddressTitle": "Address",
-            "addSecondaryAddressQuestion": "Do you want to add another address?",
-            "addSecondaryAddressButton": "Add address",
-            "removeSecondaryAddressButton": "Remove",
-            "addressDetailsAriaLabel": "Address details",
-            "saving": "Saving...",
+            "primaryAddressTitle": "Dirección principal",
+            "primaryAddressAriaLabel": "Detalles de la dirección principal del perfil",
+            "secondaryAddressAriaLabel": "Detalles de la dirección secundaria",
+            "secondaryAddressTitle": "Dirección",
+            "addSecondaryAddressQuestion": "¿Quieres añadir otra dirección?",
+            "addSecondaryAddressButton": "Añadir dirección",
+            "removeSecondaryAddressButton": "Eliminar",
+            "addressDetailsAriaLabel": "Detalles de la dirección",
+            "saving": "Guardando...",
             "fields": {
-              "street": "Street",
-              "streetNumber": "Number",
-              "postalCode": "Postal code",
-              "district": "District",
-              "floor": "Floor"
+              "street": "Calle",
+              "streetNumber": "Número",
+              "postalCode": "Código postal",
+              "district": "Distrito",
+              "floor": "Piso"
             },
             "errors": {
-              "required": "This field is required."
+              "required": "Este campo es obligatorio."
             }
           }
         },
         "preferences": {
-          "eyebrow": "Preferences",
+          "eyebrow": "Preferencias",
           "sections": {
             "language": {
-              "title": "Language:",
-              "subtitle": "Switch language",
-              "lang": "English",
-              "switchToEnglish": "Switch language to English",
-              "switchToGerman": "Switch language to German",
+              "title": "Idioma:",
+              "subtitle": "Cambiar idioma",
+              "lang": "Español",
+              "switchToEnglish": "Cambiar idioma a inglés",
+              "switchToGerman": "Cambiar idioma a alemán",
               "englishVisible": "EN",
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Theme:",
-              "buttonLabel": "Toggle color theme",
-              "lightMode": "Light mode",
-              "darkMode": "Dark mode",
-              "light": "Light mode",
-              "dark": "Dark mode"
+              "title": "Tema:",
+              "buttonLabel": "Alternar tema de color",
+              "lightMode": "Modo claro",
+              "darkMode": "Modo oscuro",
+              "light": "Modo claro",
+              "dark": "Modo oscuro"
             },
             "notifications": {
-              "title": "Notifications",
+              "title": "Notificaciones",
               "inApp": {
-                "title": "In-app notifications",
-                "description": "These notifications are always enabled inside the app.",
-                "ariaLabel": "In-app notifications enabled and required"
+                "title": "Notificaciones dentro de la app",
+                "description": "Estas notificaciones siempre están activadas dentro de la aplicación.",
+                "ariaLabel": "Notificaciones dentro de la app activadas y obligatorias"
               },
               "important": {
-                "title": "Important email notifications",
-                "description": "Important account emails stay enabled for security and service updates.",
-                "ariaLabel": "Important email notifications enabled and required"
+                "title": "Notificaciones importantes por correo",
+                "description": "Los correos importantes de la cuenta permanecen activados por seguridad y actualizaciones del servicio.",
+                "ariaLabel": "Notificaciones importantes por correo activadas y obligatorias"
               },
               "reminders": {
-                "title": "Reminder emails",
-                "description": "Turn reminder emails on if you want to receive reminders for your bookings.",
-                "ariaLabel": "Toggle reminder email notifications",
-                "error": "We could not update your reminder notifications."
+                "title": "Correos de recordatorio",
+                "description": "Activa los correos de recordatorio si quieres recibir avisos sobre tus reservas.",
+                "ariaLabel": "Alternar notificaciones de recordatorio por correo",
+                "error": "No pudimos actualizar tus notificaciones de recordatorio."
               }
             }
           }

@@ -4,8 +4,6 @@ import type { WorkAddressSelection, WorkAddressSource } from '../../../../../../
 export interface NormalizedAddressOption {
   id: string;
   source: Exclude<WorkAddressSource, 'new'>;
-  label: string;
-  hint: string;
   address: UserAddress;
   savedLabel?: string;
 }
@@ -83,8 +81,6 @@ export const buildAddressOptions = (
     options.push({
       id: 'primary',
       source: 'primary',
-      label: formatAddressLabel(primaryAddress),
-      hint: 'Main profile address',
       address: primaryAddress,
     });
   }
@@ -93,8 +89,6 @@ export const buildAddressOptions = (
     options.push({
       id: `saved-${index}`,
       source: 'saved',
-      label: savedAddress.label?.trim() || formatAddressLabel(savedAddress.address),
-      hint: savedAddress.label?.trim() ? formatAddressLabel(savedAddress.address) : 'Saved address',
       address: savedAddress.address,
       savedLabel: savedAddress.label?.trim() || undefined,
     });

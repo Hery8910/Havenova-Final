@@ -1,3 +1,5 @@
+import { useId } from 'react';
+import Image from 'next/image';
 import styles from './ClientsSection.module.css';
 
 export default function ClientsSection({
@@ -5,6 +7,11 @@ export default function ClientsSection({
 }: {
   texts: {
     title: string;
+    description: string;
+    a11y?: {
+      sectionLabel?: string;
+      listLabel?: string;
+    };
     items: {
       title: string;
       description: string;
@@ -14,13 +21,25 @@ export default function ClientsSection({
     closing: string;
   };
 }) {
+  const titleId = useId();
+  const descriptionId = useId();
+  const closingId = useId();
+
   return (
-    <section className={styles.section} aria-labelledby="about-clients-title">
+    <section
+      className={styles.section}
+      aria-labelledby={titleId}
+      aria-describedby={`${descriptionId} ${closingId}`}
+      aria-label={texts.a11y?.sectionLabel}
+    >
       <div className={styles.container}>
-        <h2 id="about-clients-title" className={`${styles.title} type-title-lg`}>
+        <h2 id={titleId} className={`${styles.title} type-title-lg`}>
           {texts.title}
         </h2>
-        <ul className={styles.list}>
+        <p id={descriptionId} className={`${styles.description} type-body-md`}>
+          {texts.description}
+        </p>
+        <ul className={styles.list} aria-label={texts.a11y?.listLabel}>
           {texts.items.map((item, index) => (
             <li className={styles.item} key={`${item.title}-${index}`}>
               <article
@@ -28,11 +47,12 @@ export default function ClientsSection({
                 aria-labelledby={`about-client-title-${index}`}
                 aria-describedby={`about-client-description-${index}`}
               >
-                <div
+                <Image
                   className={styles.media}
-                  role="img"
-                  aria-label={item.imageAlt}
-                  style={{ backgroundImage: `url(${item.image})` }}
+                  src={item.image}
+                  alt={item.imageAlt}
+                  fill
+                  sizes="(max-width: 440px) 300px, (max-width: 900px) 350px, 350px"
                 />
                 <div className={styles.content}>
                   <h3 id={`about-client-title-${index}`} className={`${styles.cardTitle} type-title-sm`}>
@@ -50,7 +70,7 @@ export default function ClientsSection({
           ))}
         </ul>
       </div>
-      <p id="about-clients-close-description" className={`${styles.closing} type-body-md`}>
+      <p id={closingId} className={`${styles.closing} type-body-md`}>
         {texts.closing}
       </p>
     </section>

@@ -208,6 +208,11 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
+      "a11y": {
+        "sectionLabel": "Frequently asked questions",
+        "openItem": "Expand answer",
+        "closeItem": "Collapse answer"
+      },
       "items": [
         {
           "question": "What services does Havenova offer?",
@@ -241,7 +246,7 @@
         "legal": "Legal"
       },
       "contact": {
-        "title": "Contact uns",
+        "title": "Contact us",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"
@@ -299,6 +304,34 @@
         "cookies": "Cookie Preference",
         "title": "Maped Solutions",
         "description": "This platform was developed by Maped Solutions, with a clear focus on making everyday work easier for service-based businesses."
+      },
+      "hoursStatus": {
+        "heading": "Business hours",
+        "open": "Open",
+        "closed": "Closed",
+        "opensAt": "Opens at {time}",
+        "closesAt": "Closes at {time}",
+        "opensTomorrowAt": "Opens tomorrow at {time}",
+        "opensOn": "Opens {day} at {time}",
+        "closedToday": "Closed for today",
+        "unavailable": "Hours unavailable",
+        "dayClosed": "Closed",
+        "ariaCurrentStatus": "Current business status",
+        "ariaWeeklyHours": "Weekly business hours",
+        "expandHours": "Show weekly business hours",
+        "collapseHours": "Hide weekly business hours"
+      },
+      "a11y": {
+        "landmark": "Website footer",
+        "home": "Go to homepage",
+        "contact": "Contact information",
+        "navigation": "Footer links",
+        "hours": "Business hours",
+        "cookies": "Open cookie preferences",
+        "email": "Send an email to Havenova",
+        "phone": "Call Havenova",
+        "address": "Havenova address",
+        "developer": "Visit Maped Solutions website"
       }
     },
     "contact": {

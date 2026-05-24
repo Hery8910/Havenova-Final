@@ -26,13 +26,13 @@ export default function BenefitsSplitSection({
           <p className={`${styles.subtitle} type-body-lg`}>{texts.description}</p>
           <nav className={styles.heroCtas} aria-label={texts.ctaAriaLabel}>
             <Link
-              className={`${styles.ctaPrimary} btn--primary button`}
+              className={`${styles.ctaPrimary} button button--primary`}
               href={href(lang, texts.ctaCleaning.href)}
             >
               {texts.ctaCleaning.label}
             </Link>
             <Link
-              className={`${styles.ctaSecondary} btn--secondary button`}
+              className={`${styles.ctaSecondary} button button--secondary`}
               href={href(lang, texts.ctaHomeServices.href)}
             >
               {texts.ctaHomeServices.label}

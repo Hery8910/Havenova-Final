@@ -64,7 +64,11 @@ export default function CalendarDaySlots({
               {formatLongDate(date)}
             </h3>
           </section>
-          <button type="button" className={`button_invert ${styles.closeButton}`} onClick={onClose}>
+          <button
+            type="button"
+            className={`button button--outline ${styles.closeButton}`}
+            onClick={onClose}
+          >
             {copy.closeLabel}
           </button>
         </header>
@@ -82,7 +86,11 @@ export default function CalendarDaySlots({
             {formatLongDate(date)}
           </h3>
         </section>
-        <button type="button" className={`button_invert ${styles.closeButton}`} onClick={onClose}>
+        <button
+          type="button"
+          className={`button button--outline ${styles.closeButton}`}
+          onClick={onClose}
+        >
           {copy.closeLabel}
         </button>
       </header>

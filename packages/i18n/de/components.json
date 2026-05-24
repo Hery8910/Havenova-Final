@@ -208,6 +208,11 @@
     },
     "faq": {
       "title": "Häufig gestellte Fragen",
+      "a11y": {
+        "sectionLabel": "Häufig gestellte Fragen",
+        "openItem": "Antwort öffnen",
+        "closeItem": "Antwort schließen"
+      },
       "items": [
         {
           "question": "Welche Dienstleistungen bietet Havenova an?",
@@ -241,7 +246,7 @@
         "legal": "Legal"
       },
       "contact": {
-        "title": "Contact us",
+        "title": "Kontakt",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"
@@ -299,6 +304,34 @@
         "cookies": "Cookie-Einstellungen",
         "title": "Maped Solutions",
         "description": "Diese Plattform wurde von Maped Solutions konzipiert und entwickelt – mit dem Ziel, Dienstleistungsunternehmen den Arbeitsalltag zu erleichtern."
+      },
+      "hoursStatus": {
+        "heading": "Geschäftszeiten",
+        "open": "Geöffnet",
+        "closed": "Geschlossen",
+        "opensAt": "Öffnet um {time}",
+        "closesAt": "Schließt um {time}",
+        "opensTomorrowAt": "Öffnet morgen um {time}",
+        "opensOn": "Öffnet {day} um {time}",
+        "closedToday": "Heute geschlossen",
+        "unavailable": "Keine Zeiten verfügbar",
+        "dayClosed": "Geschlossen",
+        "ariaCurrentStatus": "Aktueller Geschäftsstatus",
+        "ariaWeeklyHours": "Wochenplan",
+        "expandHours": "Wöchentliche Zeiten anzeigen",
+        "collapseHours": "Wöchentliche Zeiten ausblenden"
+      },
+      "a11y": {
+        "landmark": "Fußbereich der Website",
+        "home": "Zur Startseite",
+        "contact": "Kontaktinformationen",
+        "navigation": "Footer-Links",
+        "hours": "Geschäftszeiten",
+        "cookies": "Cookie-Einstellungen öffnen",
+        "email": "E-Mail an Havenova senden",
+        "phone": "Havenova anrufen",
+        "address": "Adresse von Havenova",
+        "developer": "Website von Maped Solutions öffnen"
       }
     },
     "contact": {

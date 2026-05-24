@@ -17,6 +17,11 @@ export interface AboutPageTexts {
   };
   clients: {
     title: string;
+    description: string;
+    a11y?: {
+      sectionLabel?: string;
+      listLabel?: string;
+    };
     items: {
       title: string;
       description: string;

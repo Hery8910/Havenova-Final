@@ -2,7 +2,6 @@
   "client": {
     "home": {
       "hero": {
-        "badge": "Digital service platform",
         "title": "Find The Right Help Fast",
         "descriptions": [
           "Choose your service, send your request in minutes, and receive a tailored offer. Clear, reliable, and easy from the first step."
@@ -136,7 +135,6 @@
     },
     "about": {
       "hero": {
-        "badge": "Trust built through clarity and care",
         "title": "Why Home Service Feels Easier",
         "descriptions": [
           "Learn how Havenova combines personal service, clear communication, and ongoing digital improvement to create a more transparent experience for clients across Berlin."
@@ -157,29 +155,34 @@
       },
       "clients": {
         "title": "Who we work with",
+        "description": "We support different kinds of homes and businesses that need reliable cleaning or home service, with a process built around clarity, communication, and long-term trust.",
+        "a11y": {
+          "sectionLabel": "Clients and sectors Havenova works with",
+          "listLabel": "Client categories"
+        },
         "items": [
           {
             "title": "Private properties",
             "description": "We work with tenants and homeowners who want a reliable way to request cleaning or home service, track each job, and keep a clear record of everything that has been done.",
-            "image": "/images/private-properties.webp",
+            "image": "/images/private-properties.png",
             "imageAlt": "Residential building in a private neighborhood"
           },
           {
             "title": "Property management",
             "description": "We support property management companies by structuring service requests, improving communication, and keeping a transparent overview of home service and cleaning across multiple properties.",
-            "image": "/images/property-management.webp",
+            "image": "/images/property-management.png",
             "imageAlt": "Multi-unit residential building facade"
           },
           {
             "title": "Offices and practices",
             "description": "We help offices and professional practices manage recurring cleaning and home service with clear schedules, documented work, and minimal administrative effort.",
-            "image": "/images/practices.webp",
+            "image": "/images/practices.png",
             "imageAlt": "Modern office meeting area"
           },
           {
             "title": "Small businesses",
             "description": "We work with small businesses that need dependable cleaning or home service, offering a simple process to request help, follow progress, and keep everything organized.",
-            "image": "/images/businesses.webp",
+            "image": "/images/businesses.png",
             "imageAlt": "Small retail storefront interior"
           }
         ],
@@ -188,7 +191,6 @@
     },
     "cleaning": {
       "hero": {
-        "badge": "A clear presentation of the cleaning experience",
         "title": "Cleaner Spaces, Less Daily Friction",
         "descriptions": [
           "Explore a cleaning service built around reliability, clear communication, and a smoother experience from the first request to the final result."
@@ -322,9 +324,14 @@
           "description": "Choose your main address, a saved one, or enter a different location for this request.",
           "loading": "Loading your saved addresses...",
           "optionsLegend": "Available address options",
+          "sourceLabels": {
+            "primary": "Primary address",
+            "saved": "Saved address"
+          },
           "useDifferentAddressLabel": "Use a different address",
           "useDifferentAddressHint": "Enter a new work location for this request.",
           "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
+          "manualSectionTitle": "New service address",
           "manualHint": "Enter the address where the visit or inspection should take place.",
           "saveToProfileLabel": "Save this address to my profile",
           "savedAddressLabel": "Label",
@@ -397,7 +404,6 @@
     },
     "home-service": {
       "hero": {
-        "badge": "Practical help at home",
         "title": "Repairs, Assembly, and Everyday Tasks",
         "descriptions": [
           "For painting, repairs and installations, furniture and kitchen assembly, and moving help in Berlin. Havenova structures your request so we can quickly understand the scope, access situation, and next steps."
@@ -601,7 +607,6 @@
     },
     "contact": {
       "hero": {
-        "badge": "We’re here to help",
         "title": "Questions, Ideas, Let Us Know",
         "descriptions": [
           "This page is for general questions, company-related inquiries, and broader conversations. If you want to request a service, our dedicated Cleaning and Home Service forms will guide you more accurately."
@@ -629,7 +634,6 @@
     },
     "howItWorks": {
       "hero": {
-        "badge": "About Havenova",
         "title": "Home Services, Simplified for Customers",
         "descriptions": [
           "Havenova is the company behind this platform for cleaning and home service. We helped build a streamlined workflow so customers can request help in minutes and service companies can manage requests, scheduling, and updates efficiently."

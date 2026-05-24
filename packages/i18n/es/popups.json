@@ -1,9 +1,9 @@
 {
   "button": {
-    "accept": "Accept",
-    "continue": "Continue",
-    "close": "Close",
-    "reload": "Reload",
+    "accept": "Aceptar",
+    "continue": "Continuar",
+    "close": "Cerrar",
+    "reload": "Recargar",
     "goToHome": "Ir al inicio",
     "goToLogin": "Ir al acceso",
     "goToRegister": "Ir al registro",
@@ -15,67 +15,67 @@
     "logOut": "Cerrar sesión"
   },
   "a11y": {
-    "close": "Close popup",
-    "dialog": "Alert dialog",
-    "loading": "Loading message"
+    "close": "Cerrar ventana emergente",
+    "dialog": "Diálogo de alerta",
+    "loading": "Cargando mensaje"
   },
   "ACCESS_TOKEN_EXPIRED": {
-    "title": "Session expired",
-    "description": "Your access token has expired. Please log in again."
+    "title": "Sesión expirada",
+    "description": "Tu token de acceso ha expirado. Inicia sesión de nuevo."
   },
   "NO_ACCESS_TOKEN": {
-    "title": "Missing access token",
-    "description": "We could not find a valid access token. Please log in again."
+    "title": "Falta el token de acceso",
+    "description": "No pudimos encontrar un token de acceso válido. Inicia sesión de nuevo."
   },
   "AUTH_NOT_LOGGED_IN": {
-    "title": "Login required",
-    "description": "You need to be logged in to perform this action."
+    "title": "Inicio de sesión obligatorio",
+    "description": "Debes iniciar sesión para realizar esta acción."
   },
   "AUTH_REQUIRED": {
-    "title": "Login required",
-    "description": "You must be logged in to perform this action."
+    "title": "Inicio de sesión obligatorio",
+    "description": "Debes iniciar sesión para realizar esta acción."
   },
   "AUTH_FORBIDDEN": {
-    "title": "Access forbidden",
-    "description": "You do not have permission to perform this action."
+    "title": "Acceso prohibido",
+    "description": "No tienes permiso para realizar esta acción."
   },
   "USER_NEED_TO_LOGIN": {
-    "title": "Login required to continue",
-    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now."
+    "title": "Debes iniciar sesión para continuar",
+    "description": "Debes iniciar sesión para acceder a esta página o enviar una solicitud. Puedes seguir navegando o ir ahora al inicio de sesión."
   },
   "USER_SESSION_EXPIRED": {
-    "title": "Session expired",
-    "description": "Your session has expired. You can keep browsing or go to login."
+    "title": "Sesión expirada",
+    "description": "Tu sesión ha expirado. Puedes seguir navegando o ir al inicio de sesión."
   },
   "AUTH_BLOCKED": {
-    "title": "Account blocked",
-    "description": "Your access is blocked. Please contact support."
+    "title": "Cuenta bloqueada",
+    "description": "Tu acceso está bloqueado. Ponte en contacto con soporte."
   },
   "AUTH_USER_NOT_FOUND": {
-    "title": "User not found",
-    "description": "We couldn't find a matching user for this request."
+    "title": "Usuario no encontrado",
+    "description": "No pudimos encontrar un usuario que coincida con esta solicitud."
   },
   "GLOBAL_INTERNAL_ERROR": {
-    "title": "Unexpected error",
-    "description": "Something went wrong. Please try again or contact support.",
-    "confirm": "Retry",
-    "close": "Close"
+    "title": "Error inesperado",
+    "description": "Algo salió mal. Inténtalo de nuevo o contacta con soporte.",
+    "confirm": "Reintentar",
+    "close": "Cerrar"
   },
   "CLEANING_REQUEST_LOADING": {
     "title": "Sending request",
     "description": "Your cleaning request is being processed securely."
   },
   "CLEANING_REQUEST_SUBMITTED": {
-    "title": "Request sent",
-    "description": "Your cleaning request was submitted successfully. We will contact you with the next step."
+    "title": "Solicitud enviada",
+    "description": "Tu solicitud de limpieza se envió correctamente. Nos pondremos en contacto contigo con el siguiente paso."
   },
   "CLEANING_REQUEST_MISSING_SESSION": {
-    "title": "Login required",
-    "description": "Your session is missing required data. Please log in again and try once more."
+    "title": "Inicio de sesión obligatorio",
+    "description": "A tu sesión le faltan datos obligatorios. Inicia sesión de nuevo y vuelve a intentarlo."
   },
   "CATALOG_FOUND": {
-    "title": "Catalog loaded",
-    "description": "The global task catalog was loaded successfully."
+    "title": "Catálogo cargado",
+    "description": "El catálogo global de tareas se cargó correctamente."
   },
   "CLIENT_CREATE_SUCCESS": {
     "title": "Client created successfully",
@@ -138,8 +138,8 @@
     "description": "The specified client does not exist."
   },
   "USER_REGISTER_SUCCESS": {
-    "title": "Registration successful",
-    "description": "Your account was created. Check your inbox and verify your email before signing in."
+    "title": "Registro completado",
+    "description": "Tu cuenta fue creada. Revisa tu bandeja de entrada y verifica tu correo antes de iniciar sesión."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
     "title": "Account already active",
@@ -150,76 +150,76 @@
     "description": "No pudimos completar el registro con los datos proporcionados. Usa la contraseña correcta o restablécela para continuar."
   },
   "USER_BLOCKED": {
-    "title": "Access denied",
-    "description": "This account is blocked and cannot be used."
+    "title": "Acceso denegado",
+    "description": "Esta cuenta está bloqueada y no se puede utilizar."
   },
   "USER_TOS_NOT_ACCEPTED": {
-    "title": "Terms not accepted",
-    "description": "Accept the terms and privacy policy to continue with registration."
+    "title": "Términos no aceptados",
+    "description": "Acepta los términos y la política de privacidad para continuar con el registro."
   },
   "USER_LOGIN_MISSING_EMAIL": {
-    "title": "Email required",
-    "description": "Please provide your email to continue."
+    "title": "Correo electrónico obligatorio",
+    "description": "Introduce tu correo electrónico para continuar."
   },
   "USER_LOGIN_MISSING_PASSWORD": {
-    "title": "Password required",
-    "description": "Please provide your password to continue."
+    "title": "Contraseña obligatoria",
+    "description": "Introduce tu contraseña para continuar."
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
-    "title": "Email verified successfully",
-    "description": "Your email has been verified. You can continue to login now."
+    "title": "Correo verificado correctamente",
+    "description": "Tu correo electrónico ha sido verificado. Ya puedes continuar al inicio de sesión."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
-    "title": "Email already verified",
-    "description": "Your email was already verified. You can continue."
+    "title": "Correo ya verificado",
+    "description": "Tu correo electrónico ya estaba verificado. Puedes continuar."
   },
   "USER_RESET_PASSWORD_INVALID_TOKEN": {
-    "title": "Invalid reset link",
-    "description": "This reset link is invalid. Request a new one to continue."
+    "title": "Enlace de restablecimiento no válido",
+    "description": "Este enlace de restablecimiento no es válido. Solicita uno nuevo para continuar."
   },
   "USER_RESET_PASSWORD_TOKEN_EXPIRED": {
-    "title": "Reset link expired",
-    "description": "This reset link has expired. Request a new one to continue."
+    "title": "Enlace de restablecimiento expirado",
+    "description": "Este enlace de restablecimiento ha expirado. Solicita uno nuevo para continuar."
   },
   "VALIDATION_ERROR": {
-    "title": "Validation error",
-    "description": "Please review the entered data and try again."
+    "title": "Error de validación",
+    "description": "Revisa los datos introducidos e inténtalo de nuevo."
   },
   "USER_NOT_FOUND": {
-    "title": "User not found",
-    "description": "The user associated with this token could not be found."
+    "title": "Usuario no encontrado",
+    "description": "No se pudo encontrar el usuario asociado a este token."
   },
   "LOGOUT_SUCCESS": {
-    "title": "Logged out successfully",
-    "description": "You have been logged out successfully."
+    "title": "Sesión cerrada correctamente",
+    "description": "Has cerrado sesión correctamente."
   },
   "LOGOUT_FAILED": {
-    "title": "Logout failed",
-    "description": "We were unable to log you out. Please try again."
+    "title": "No se pudo cerrar la sesión",
+    "description": "No pudimos cerrar tu sesión. Inténtalo de nuevo."
   },
   "LOGOUT_CONFIRM": {
-    "title": "Log out?",
-    "description": "Are you sure you want to log out?",
-    "confirm": "Log out",
-    "close": "Cancel"
+    "title": "¿Cerrar sesión?",
+    "description": "¿Seguro que quieres cerrar sesión?",
+    "confirm": "Cerrar sesión",
+    "close": "Cancelar"
   },
   "USER_LOGOUT_SUCCESS": {
-    "title": "Logged out successfully",
-    "description": "You have been logged out successfully."
+    "title": "Sesión cerrada correctamente",
+    "description": "Has cerrado sesión correctamente."
   },
   "USER_LOGOUT_ALL_SUCCESS": {
-    "title": "Logged out of all sessions",
-    "description": "You have been logged out from all devices."
+    "title": "Sesión cerrada en todas las sesiones",
+    "description": "Has cerrado sesión en todos los dispositivos."
   },
   "AUTH_GET_SUCCESS": {
-    "title": "Session loaded",
-    "description": "Your session information has been loaded."
+    "title": "Sesión cargada",
+    "description": "La información de tu sesión se ha cargado."
   },
   "PROFILE_ADDRESS_DELETE_CONFIRM": {
-    "title": "Delete address?",
-    "description": "This action is permanent. You will not be able to recover this address after deleting it.",
-    "confirm": "Delete address",
-    "close": "Cancel"
+    "title": "¿Eliminar dirección?",
+    "description": "Esta acción es permanente. No podrás recuperar esta dirección después de eliminarla.",
+    "confirm": "Eliminar dirección",
+    "close": "Cancelar"
   },
   "USER_CLIENT_NOT_FOUND": {
     "title": "Acceso aún no disponible",

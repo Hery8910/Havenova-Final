@@ -1,29 +1,29 @@
 {
   "contactInfo": {
-    "title": "Contact",
+    "title": "Contacto",
     "mapSection": {
-      "title": "Our Adress",
-      "subtitle": "Visit us at our office or use the map to locate us precisely",
+      "title": "Nuestra dirección",
+      "subtitle": "Visítanos en nuestra oficina o usa el mapa para ubicarnos con precisión",
       "address": "Stollberger Str.43, 12627 Berlin"
     },
     "havenova": {
-      "label": "Controller",
+      "label": "Responsable",
       "name": {
-        "label": "Name",
+        "label": "Nombre",
         "value": "Havenova",
-        "description": "Your dream home begins with us"
+        "description": "Tu hogar ideal comienza con nosotros"
       },
       "phone": {
-        "label": "Phone",
+        "label": "Teléfono",
         "value": "+49 176 7091 7803"
       },
       "address": {
-        "label": "Address",
+        "label": "Dirección",
         "value": "Stollberger Str.43, 12627 Berlin",
         "mapUrl": "https://maps.google.com/?q=Stollberger+Strasse+43,+12627+Berlin"
       },
       "email": {
-        "label": "Email",
+        "label": "Correo electrónico",
         "value": "contact@havenova.de"
       },
       "weekHours": {
@@ -36,32 +36,32 @@
       }
     },
     "maped": {
-      "label": "Technical support",
+      "label": "Soporte técnico",
       "name": {
-        "label": "Name",
+        "label": "Nombre",
         "value": "Maped Solutions"
       },
       "phone": {
-        "label": "Phone",
+        "label": "Teléfono",
         "value": "+49 177 7312 606"
       },
-      "address": { "label": "Address", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
+      "address": { "label": "Dirección", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
       "email": {
-        "label": "Email",
+        "label": "Correo electrónico",
         "value": "contact@mapedsolutions.de"
       }
     },
     "cta": {
-      "label": "Go to Contact",
+      "label": "Ir a contacto",
       "href": "/contact"
     }
   },
   "date": {
     "relative": {
-      "hour": { "one": "{count} hr ago", "other": "{count} hrs ago" },
-      "day": { "one": "{count} day ago", "other": "{count} days ago" },
-      "week": { "one": "{count} week ago", "other": "{count} weeks ago" },
-      "month": { "one": "{count} month ago", "other": "{count} months ago" }
+      "hour": { "one": "hace {count} h", "other": "hace {count} h" },
+      "day": { "one": "hace {count} día", "other": "hace {count} días" },
+      "week": { "one": "hace {count} semana", "other": "hace {count} semanas" },
+      "month": { "one": "hace {count} mes", "other": "hace {count} meses" }
     }
   }
 }

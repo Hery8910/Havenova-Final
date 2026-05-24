@@ -12,14 +12,14 @@
 
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
 }
 
 .description,
 .helper,
 .manualHint {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
 }
 
 .optionsGroup {
@@ -32,15 +32,15 @@
 
 .legend {
   margin-bottom: 4px;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.94rem;
 }
 
 .optionCard {
   padding: 14px 16px;
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--card-neutral-border);
   border-radius: 14px;
-  background: white;
+  background: color-mix(in srgb, white 82%, var(--card-neutral-bg));
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -59,17 +59,17 @@
 
 .optionLabel {
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
 }
 
 .optionHint {
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.9rem;
 }
 
 .manualSection {
   padding: 18px;
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--card-neutral-border);
   border-radius: var(--radius-md);
   background: color-mix(in srgb, var(--brand-primary) 5%, white);
   display: flex;
@@ -77,11 +77,17 @@
   gap: 14px;
 }
 
+.manualTitle {
+  margin: 0;
+  color: var(--page-text-primary);
+  font-size: 1rem;
+}
+
 .checkboxRow {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
 }
 
 .labelField {
@@ -91,15 +97,15 @@
 }
 
 .label {
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.92rem;
 }
 
 .textInput {
   min-height: 46px;
   padding: 10px 12px;
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--card-neutral-border);
   border-radius: 12px;
-  background: white;
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--page-text-primary);
 }

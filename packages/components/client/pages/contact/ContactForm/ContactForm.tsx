@@ -223,7 +223,10 @@ export function ContactFormSection() {
     (touched[field] || submitted) && errors[field];
 
   return (
-    <section className={`${styles.section} glass-panel--base`} aria-labelledby="contact-form-title">
+    <section
+      className={`${styles.section} card card--secondary`}
+      aria-labelledby="contact-form-title"
+    >
       <article className={styles.card}>
         <h3 id="contact-form-title" className="type-title-md">
           {submitLabel}
@@ -235,7 +238,7 @@ export function ContactFormSection() {
               <span className={`${styles.label} type-body-md`}>{labels?.name ?? 'Name'}</span>
               <input
                 id="contact-name"
-                className={styles.input}
+                className="input"
                 type="text"
                 name="name"
                 autoComplete="name"
@@ -260,7 +263,7 @@ export function ContactFormSection() {
               <span className={`${styles.label} type-body-md`}>{labels?.email ?? 'Email'}</span>
               <input
                 id="contact-email"
-                className={styles.input}
+                className="input"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -287,7 +290,7 @@ export function ContactFormSection() {
             <span className={`${styles.label} type-body-md`}>{labels?.subject ?? 'Subject'}</span>
             <select
               id="contact-subject"
-              className={styles.input}
+              className="input"
               name="subject"
               value={values.subject}
               onChange={(e) => handleChange('subject', e.target.value)}
@@ -318,7 +321,7 @@ export function ContactFormSection() {
             <span className={`${styles.label} type-body-md`}>{labels?.message ?? 'Message'}</span>
             <textarea
               id="contact-message"
-              className={styles.textarea}
+              className="input"
               name="message"
               rows={6}
               placeholder={placeholders?.message ?? 'Your question or message...'}
@@ -339,7 +342,11 @@ export function ContactFormSection() {
           </label>
 
           <div className={styles.actions}>
-            <button className={`button ${styles.submit}`} type="submit" disabled={submitting}>
+            <button
+              className={` button button--primary ${styles.submit}`}
+              type="submit"
+              disabled={submitting}
+            >
               {submitting ? sendingLabel : submitLabel}
             </button>
           </div>

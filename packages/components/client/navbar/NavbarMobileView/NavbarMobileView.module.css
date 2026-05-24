@@ -16,7 +16,7 @@
   width: 100%;
   max-width: 90dvw;
   margin: 0 auto;
-  padding: 0 16px 16px;
+  padding: 8px;
   position: fixed;
   bottom: calc(var(--mobile-bottom-bar-height) + var(--mobile-nav-gap-bottom) + 12px);
   left: 0;
@@ -113,7 +113,8 @@
   left: 0;
   right: 0;
   min-height: var(--mobile-bottom-bar-height);
-  margin: 0 5dvw;
+  margin: 0 auto;
+  max-width: 90dvw;
   padding: 0;
   display: flex;
   justify-content: space-around;

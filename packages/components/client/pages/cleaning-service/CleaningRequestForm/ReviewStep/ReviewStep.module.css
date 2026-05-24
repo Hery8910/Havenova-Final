@@ -12,12 +12,12 @@
 
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
 }
 
 .description {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   line-height: 1.6;
 }
 
@@ -29,7 +29,7 @@
 
 .card {
   padding: 16px;
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--card-neutral-border);
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.06);
   display: flex;
@@ -43,7 +43,7 @@
 
 .cardTitle {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
   font-size: 1rem;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .label {
-  color: var(--text-tertiary);
+  color: color-mix(in srgb, var(--page-text-secondary) 78%, white);
   font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -71,7 +71,7 @@
 }
 
 .value {
-  color: var(--text-primary);
+  color: var(--page-text-primary);
   line-height: 1.5;
   word-break: break-word;
 }
@@ -80,9 +80,9 @@
   margin: 0;
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  border: 1px solid color-mix(in srgb, var(--brand-primary) 24%, var(--surface-border));
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 24%, var(--card-neutral-border));
   background: color-mix(in srgb, var(--brand-primary) 10%, transparent);
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   line-height: 1.6;
 }
 

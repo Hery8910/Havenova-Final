@@ -4,26 +4,11 @@ import Link from 'next/link';
 import styles from './PageHero.module.css';
 import { href } from '../../../../utils';
 
-type HeroClassNameSlot =
-  | 'root'
-  | 'container'
-  | 'media'
-  | 'mediaFrame'
-  | 'content'
-  | 'copy'
-  | 'badge'
-  | 'title'
-  | 'descriptions'
-  | 'description'
-  | 'ctas'
-  | 'image';
-
 export interface PageHeroAction {
   label: string;
   href: string;
   ariaLabel?: string;
   variant?: 'primary' | 'secondary';
-  className?: string;
 }
 
 export interface PageHeroImage {
@@ -33,7 +18,6 @@ export interface PageHeroImage {
 }
 
 export interface PageHeroContent {
-  badge?: string;
   title: string;
   descriptions: string[];
   ctas?: {
@@ -43,20 +27,15 @@ export interface PageHeroContent {
   image: PageHeroImage;
   a11y?: {
     actionsLabel?: string;
-    imageCardLabel?: string;
   };
 }
 
 export interface PageHeroProps {
   texts: PageHeroContent;
   lang: 'de' | 'en' | 'es';
-  classNames?: Partial<Record<HeroClassNameSlot, string>>;
 }
 
-const joinClasses = (...classNames: Array<string | undefined | false>) =>
-  classNames.filter(Boolean).join(' ');
-
-export function PageHero({ texts, lang, classNames }: PageHeroProps) {
+export function PageHero({ texts, lang }: PageHeroProps) {
   const titleId = useId();
   const descriptionId = useId();
   const ctas = [texts.ctas?.primary, texts.ctas?.secondary].filter(Boolean) as PageHeroAction[];
@@ -65,15 +44,15 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
 
   return (
     <section
-      className={joinClasses(styles.hero, classNames?.root)}
+      className={styles.hero}
       aria-labelledby={titleId}
       aria-describedby={hasDescriptions ? descriptionId : undefined}
     >
-      <div className={joinClasses(styles.container, classNames?.container)}>
-        <div className={joinClasses(styles.heroMedia, classNames?.media)}>
-          <div className={joinClasses(styles.heroMediaFrame, classNames?.mediaFrame)}>
+      <div className={styles.container}>
+        <div className={styles.heroMedia}>
+          <div className={styles.heroMediaFrame}>
             <Image
-              className={joinClasses(styles.heroImage, classNames?.image)}
+              className={styles.heroImage}
               src={texts.image.src}
               alt={texts.image.alt}
               fill
@@ -83,62 +62,32 @@ export function PageHero({ texts, lang, classNames }: PageHeroProps) {
           </div>
         </div>
 
-        <div className={joinClasses(styles.heroContent, classNames?.content)}>
-          <header className={joinClasses(styles.heroCopy, classNames?.copy)}>
-            {texts.badge && (
-              <span
-                className={joinClasses(
-                  styles.heroBadge,
-                  'badge',
-                  'badge--primary',
-                  classNames?.badge
-                )}
-              >
-                {texts.badge}
-              </span>
-            )}
-
-            <h1
-              id={titleId}
-              className={joinClasses(styles.heroTitle, 'type-display-md', classNames?.title)}
-            >
+        <div className={styles.heroContent}>
+          <header className={styles.heroCopy}>
+            <h1 id={titleId} className={`${styles.heroTitle} type-display-lg`}>
               {texts.title}
             </h1>
 
             <div
               id={hasDescriptions ? descriptionId : undefined}
-              className={joinClasses(styles.heroDescriptions, classNames?.descriptions)}
+              className={styles.heroDescriptions}
             >
               {texts.descriptions.map((description) => (
-                <p
-                  key={description}
-                  className={joinClasses(
-                    styles.heroDescription,
-                    'type-body-lg',
-                    classNames?.description
-                  )}
-                >
+                <p key={description} className={`${styles.heroDescription} type-body-lg`}>
                   {description}
                 </p>
               ))}
             </div>
 
             {ctas.length > 0 && (
-              <nav
-                className={joinClasses(styles.heroCtas, classNames?.ctas)}
-                aria-label={actionsLabel}
-              >
+              <nav className={styles.heroCtas} aria-label={actionsLabel}>
                 {ctas.map((cta, index) => {
                   const isPrimary = cta.variant ? cta.variant === 'primary' : index === 0;
 
                   return (
                     <Link
                       key={`${cta.href}-${cta.label}`}
-                      className={joinClasses(
-                        isPrimary ? 'btn--primary' : 'btn--secondary',
-                        'button',
-                        `${styles.cta}`
-                      )}
+                      className={`button ${isPrimary ? 'button--primary' : 'button--secondary'} ${styles.cta}`}
                       href={href(lang, cta.href)}
                       aria-label={cta.ariaLabel}
                     >
