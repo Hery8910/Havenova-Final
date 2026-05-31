@@ -8,8 +8,10 @@
     "react": ">=18.2.0"
   },
   "dependencies": {
+    "@havenova/components": "workspace:*",
+    "@havenova/i18n": "workspace:*",
+    "@havenova/services": "workspace:*",
     "@havenova/types": "workspace:*",
-    "@havenova/utils": "workspace:*",
-    "@havenova/services": "workspace:*"
+    "@havenova/utils": "workspace:*"
   }
 }

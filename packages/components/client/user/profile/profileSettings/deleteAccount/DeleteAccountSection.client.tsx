@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { deleteUserClientProfile } from '@havenova/services';
+import { deleteUserClientProfile } from '@havenova/services/profile';
 import { useAuth, useGlobalAlert, useI18n } from '../../../../../../contexts';
 import styles from './DeleteAccountSection.module.css';
 

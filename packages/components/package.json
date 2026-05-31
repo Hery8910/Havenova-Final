@@ -12,6 +12,11 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
+    "@havenova/contexts": "workspace:*",
+    "@havenova/hooks": "workspace:*",
+    "@havenova/i18n": "workspace:*",
+    "@havenova/services": "workspace:*",
+    "@havenova/utils": "workspace:*",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
