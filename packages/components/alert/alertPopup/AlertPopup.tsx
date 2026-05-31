@@ -28,7 +28,7 @@ export interface AlertPopupProps {
   variant: AlertVisualState;
   isOpen?: boolean;
   title: string;
-  description: string;
+  description?: string;
   media: AlertMedia;
   primaryAction?: AlertAction;
   secondaryAction?: AlertAction;
@@ -69,6 +69,7 @@ export default function AlertPopup({
 }: AlertPopupProps) {
   const titleId = useId();
   const descriptionId = useId();
+  const hasDescription = Boolean(description);
   const actionsCount = Number(Boolean(primaryAction)) + Number(Boolean(secondaryAction));
   const dialogRole = media.kind === 'spinner' ? 'dialog' : 'alertdialog';
   const layoutClass =
@@ -132,7 +133,7 @@ export default function AlertPopup({
         role={dialogRole}
         aria-modal="true"
         aria-labelledby={titleId}
-        aria-describedby={descriptionId}
+        aria-describedby={hasDescription ? descriptionId : undefined}
         aria-label={dialogLabel}
         aria-busy={media.kind === 'spinner'}
         tabIndex={-1}
@@ -145,9 +146,11 @@ export default function AlertPopup({
           <h4 id={titleId} className={styles.title}>
             {title}
           </h4>
-          <p id={descriptionId} className={styles.description}>
-            {description}
-          </p>
+          {hasDescription ? (
+            <p id={descriptionId} className={styles.description}>
+              {description}
+            </p>
+          ) : null}
         </div>
 
         {actionsCount > 0 ? (

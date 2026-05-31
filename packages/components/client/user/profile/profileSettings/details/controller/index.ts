@@ -1,0 +1,1 @@
+export { useUserProfileDetailsController } from './useUserProfileDetailsController';

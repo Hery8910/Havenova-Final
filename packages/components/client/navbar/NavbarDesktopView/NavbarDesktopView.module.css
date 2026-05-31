@@ -73,4 +73,6 @@
 
 .accountTitle {
   font-size: inherit;
+  flex: 1 1 auto;
+  min-width: 0;
 }

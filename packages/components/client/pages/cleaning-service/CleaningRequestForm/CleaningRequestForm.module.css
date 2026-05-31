@@ -99,13 +99,9 @@
   overflow: hidden;
 }
 
-.stepContent,
-.stepPane {
-  height: 100%;
-}
-
 .stepContent {
-  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 .stepValidationSlot {
@@ -115,14 +111,12 @@
 }
 
 .stepValidationMessage {
+  padding: 16px 0;
   margin: 0;
   width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--color-error) 10%, white);
-  color: var(--error-700, #9f2d2d);
+  color: #9f2d2d;
   font-size: 0.92rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .submitDisabled {

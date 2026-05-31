@@ -1,28 +1,97 @@
-.layout {
+.page {
   margin: 0 auto;
-  padding: 100px 5dvw;
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 250px auto;
-  min-height: 100dvh;
   width: 100%;
   max-width: 1200px;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 88px 5dvw 28px;
 }
-.header {
-  grid-column: 1 / -1;
-  grid-row: 1 / 2;
-  margin: 0 auto;
+
+.workspace {
   width: 100%;
-  padding: 16px 32px;
+  min-height: min(82dvh, 860px);
+  height: min(82dvh, 860px);
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
 }
-.nav {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 250px;
+
+.navColumn {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+  padding: 12px;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: 0;
 }
+
 .section {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+@media (max-width: 1024px) {
+  .page {
+    padding: 84px 24px 20px;
+  }
+
+  .workspace {
+    min-height: min(74dvh, 760px);
+    height: min(74dvh, 760px);
+    padding: 16px;
+  }
+
+  .navColumn {
+    padding: 8px;
+  }
+
+  .navPanel {
+    padding: 12px;
+  }
+
+  .section {
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 0;
+    display: block;
+  }
+
+  .workspace {
+    min-height: auto;
+    height: auto;
+    display: block;
+    border: none;
+    border-radius: 0;
+    padding: 12px 0;
+  }
+
+  .navColumn {
+    display: none;
+  }
+
+  .section {
+    height: auto;
+    min-height: 0;
+    padding-left: 0;
+    overflow: visible;
+  }
 }

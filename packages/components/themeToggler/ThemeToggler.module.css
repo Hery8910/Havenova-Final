@@ -2,16 +2,32 @@
   width: fit-content;
   position: relative;
   min-width: 44px;
-  max-width: 150px;
+  max-width: 250px;
   width: 100%;
   border-radius: var(--radius-sm);
   padding: 0;
 }
 
+.toggleButton[aria-pressed='true'] {
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  background-image: var(--button-bg-image);
+  border-color: var(--button-border);
+  box-shadow: var(--button-shadow);
+}
+
+.toggleButton[aria-pressed='true']:hover {
+  color: var(--button-text-hover);
+  background-color: var(--button-bg-hover);
+  background-image: var(--button-bg-image-hover);
+  border-color: var(--button-border-hover);
+  box-shadow: var(--button-shadow-hover-current);
+}
+
 .toggleButtonWithValue {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0 8px;
   gap: 8px;
 }
@@ -42,8 +58,7 @@
 
 .currentValue {
   color: var(--color-page-muted);
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1;
 }
 

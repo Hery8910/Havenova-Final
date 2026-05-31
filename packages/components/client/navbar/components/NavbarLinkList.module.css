@@ -14,6 +14,13 @@
 
 .inlineButton {
   width: auto;
+  color: var(--page-text-secondary);
+  transition: color var(--motion-base) var(--ease-standard);
+}
+
+.inlineButton:hover,
+.inlineButton:focus-visible {
+  color: var(--page-text-primary);
 }
 
 .panelList {
@@ -34,7 +41,15 @@
   justify-content: flex-start;
   gap: 8px;
   text-align: left;
-  color: var(--card-text-secondary);
+  color: var(--page-text-secondary);
+  transition:
+    color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard);
+}
+
+.panelButton:hover,
+.panelButton:focus-visible {
+  color: var(--page-text-primary);
 }
 
 .panelIcon {
@@ -44,7 +59,7 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  color: var(--card-text-secondary);
+  color: currentColor;
 }
 
 .panelImage {

@@ -1,0 +1,121 @@
+/* ==========================================
+   20. CARD CLASSES
+   ========================================== */
+.card {
+  border-radius: var(--radius-card);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.card--neutral {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-neutral-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-neutral-bg1) 0%,
+    var(--card-neutral-bg2) 50%,
+    var(--card-neutral-bg3) 100%
+  );
+  border-color: var(--card-neutral-border);
+}
+
+.card--primary {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-primary-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-primary-bg1) 0%,
+    var(--card-primary-bg2) 50%,
+    var(--card-primary-bg3) 100%
+  );
+  border-color: var(--card-primary-border);
+}
+
+.card--secondary {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--card-secondary-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-secondary-bg1) 0%,
+    var(--card-secondary-bg2) 50%,
+    var(--card-secondary-bg3) 100%
+  );
+  border-color: var(--card-secondary-border);
+}
+
+.card--accent {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--card-accent-text-primary);
+  background: var(--card-accent-bg);
+  background-image: var(--card-accent-bg-image);
+  border-color: var(--card-accent-border);
+}
+
+.card--alert-error {
+  background: var(--color-feedback-error-surface);
+  background-image: var(--alert-icon-error-image);
+  border-color: var(--color-feedback-error-border);
+}
+
+.card--alert-warning {
+  background: var(--color-feedback-warning-surface);
+  background-image: var(--alert-icon-warning-image);
+  border-color: var(--color-feedback-warning-border);
+}
+
+.card--alert-success {
+  background: var(--color-feedback-success-surface);
+  background-image: var(--alert-icon-success-image);
+  border-color: var(--color-feedback-success-border);
+}
+
+/* ==========================================
+   21. ALERT CARD CLASSES
+   State mapping for full-screen alert overlays.
+   ========================================== */
+
+.bg--alert-loading {
+  --alert-overlay-image: var(--alert-overlay-info-image);
+  --alert-icon-image: var(--alert-icon-info-image);
+  --alert-media-border: var(--feedback-info-border);
+  --alert-spinner-color: var(--feedback-info-text);
+}
+
+.bg--alert-info {
+  --alert-overlay-image: var(--alert-overlay-info-image);
+  --alert-icon-image: var(--alert-icon-info-image);
+  --alert-media-border: var(--feedback-info-border);
+  --alert-spinner-color: var(--feedback-info-text);
+}
+
+.bg--alert-confirm {
+  --alert-overlay-image: var(--alert-overlay-info-image);
+  --alert-icon-image: var(--alert-icon-info-image);
+  --alert-media-border: var(--feedback-info-border);
+  --alert-spinner-color: var(--feedback-info-text);
+}
+
+.bg--alert-success {
+  --alert-overlay-image: var(--alert-overlay-success-image);
+  --alert-icon-image: var(--alert-icon-success-image);
+  --alert-media-border: var(--feedback-success-border);
+  --alert-spinner-color: var(--feedback-success-text);
+}
+
+.bg--alert-error {
+  --alert-overlay-image: var(--alert-overlay-error-image);
+  --alert-icon-image: var(--alert-icon-error-image);
+  --alert-media-border: var(--feedback-error-border);
+  --alert-spinner-color: var(--feedback-error-text);
+}
+
+.bg--alert-warning {
+  --alert-overlay-image: var(--alert-overlay-warning-image);
+  --alert-icon-image: var(--alert-icon-warning-image);
+  --alert-media-border: var(--feedback-warning-border);
+  --alert-spinner-color: var(--feedback-warning-text);
+}

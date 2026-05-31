@@ -227,7 +227,9 @@ export default function AvailabilityCalendar({
                 >
                   <IoIosArrowBack aria-hidden="true" />
                 </button>
-                <h4 className={styles.monthHeading}>{formatMonthLabel(visibleYear, visibleMonth)}</h4>
+                <h4 className={styles.monthHeading}>
+                  {formatMonthLabel(visibleYear, visibleMonth)}
+                </h4>
                 <button
                   type="button"
                   className={`button button--outline ${styles.navButton}`}
@@ -271,7 +273,7 @@ export default function AvailabilityCalendar({
                         : `${availableSlots} ${copy.availableDay}`;
 
                   return (
-                    <li key={day.date} className={styles.dayItem}>
+                    <li key={day.date} className={`${styles.dayItem}`}>
                       <button
                         type="button"
                         className={`${styles.dayCell} ${!day.isCurrentMonth ? styles.outsideMonth : ''} ${

@@ -1,13 +1,6 @@
 import React from 'react';
-import { Footer } from '@/packages/components/client/footer';
-import { NavbarContainer } from '@/packages/components/client/navbar';
+import { AppLayoutShell } from './AppLayoutShell';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <NavbarContainer />
-      {children}
-      <Footer />
-    </>
-  );
+  return <AppLayoutShell>{children}</AppLayoutShell>;
 }

@@ -45,6 +45,12 @@ El navbar quedó separado en una capa de orquestación y tres vistas responsivas
 - `ThemeToggler` y `LanguageSwitcher` siguen el mismo contrato de props entre vistas.
 - `mobile` muestra preferencias con `icon-with-value`; `desktop` y `tablet` usan solo icono.
 - `LanguageSwitcher` ya no depende de estilos del navbar eliminados.
+- En rutas `profile`, `desktop` y `tablet` mantienen la navegación principal general del sitio en el topbar.
+- En rutas `profile`, `desktop` y `tablet` dejan de renderizar por completo los controles de cuenta del topbar.
+- En rutas `profile`, `desktop` y `tablet` el topbar muestra solo utilidades globales, concretamente tema e idioma.
+- En rutas `profile`, la identidad del usuario, logout y navegación interna viven en el sidebar.
+- `mobile` mantiene la navegación dentro del navbar porque ahí no existe sidebar persistente.
+- El trigger de cuenta ya usa avatar real y nombre del usuario cuando están disponibles.
 
 ## Estado de tests
 
@@ -87,5 +93,6 @@ Razón:
 - `mobile` ya mantiene consistencia entre apertura y cierre
 - `LanguageSwitcher` quedó alineado con el mismo patrón de overlay estable
 - el estado interactivo del navbar ya no está disperso por variante; quedó centralizado en un hook compartido
+- la duplicación de controles de cuenta en la zona `profile` quedó eliminada en `desktop/tablet`
 - hay cobertura automatizada del container, las tres vistas y el selector de idioma
 - `npm run check:types` pasa

@@ -5,6 +5,10 @@ import { AuthRequiredAlert } from '../../../../../../packages/components/client/
 import { HomeServiceRequestForm } from '../../../../../../packages/components/client/pages/home-service';
 import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
 import {
+  ServiceCrossCtaSection,
+  type ServiceCrossCtaSectionTexts,
+} from '../../../../../../packages/components/client/pages/shared';
+import {
   useAuth,
   useI18n,
 } from '../../../../../../packages/contexts';
@@ -13,6 +17,7 @@ import styles from './page.module.css';
 
 interface HomeServicePageTexts {
   hero: PageHeroContent;
+  relatedServiceCta: ServiceCrossCtaSectionTexts;
   authAlert: {
     title: string;
     description: string;
@@ -65,6 +70,7 @@ export default function HomeService() {
           />
         </article>
       </section>
+      <ServiceCrossCtaSection texts={homeService.relatedServiceCta} lang={lang} />
     </main>
   );
 }

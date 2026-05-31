@@ -1,11 +1,12 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useI18n } from '@havenova/contexts/i18n';
 import { href } from '@havenova/utils/navigation';
 import { useLang } from '@havenova/hooks/useLang';
 import type { NavbarConfig } from './navbar.types';
 import { useAuth } from '../../../contexts/auth/authContext';
+import { useProfile } from '../../../contexts/profile/ProfileContext';
 import { getNavbarContent } from './navbar.shared';
 import { useDeviceSize } from './hooks/useDeviceSize';
 import { NavbarDesktopView } from './NavbarDesktopView/NavbarDesktopView';
@@ -15,10 +16,14 @@ import styles from './NavbarContainer.module.css';
 
 export function NavbarContainer() {
   const { auth, logout } = useAuth();
+  const { profile } = useProfile();
   const { texts } = useI18n();
   const router = useRouter();
+  const pathname = usePathname();
   const lang = useLang();
   const deviceSize = useDeviceSize();
+  const routeWithoutLang = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
+  const hideProfileAccountControls = routeWithoutLang.startsWith('/profile');
 
   const navbarConfig: NavbarConfig | undefined = texts?.components?.client?.navbar;
   const mainNavigationLabel =
@@ -27,6 +32,7 @@ export function NavbarContainer() {
     texts,
     navbarConfig,
     auth,
+    profile,
   });
 
   const handleNavigate = (path: string) => {
@@ -61,7 +67,12 @@ export function NavbarContainer() {
   return (
     <nav className={styles.navbar} aria-label={mainNavigationLabel}>
       {deviceSize === 'desktop' && (
-        <NavbarDesktopView content={navbarContent} onNavigate={handleNavigate} onLogout={logout} />
+        <NavbarDesktopView
+          content={navbarContent}
+          onNavigate={handleNavigate}
+          onLogout={logout}
+          hideAccountControls={hideProfileAccountControls}
+        />
       )}
 
       {deviceSize === 'tablet' && (
@@ -70,6 +81,7 @@ export function NavbarContainer() {
           content={navbarContent}
           onNavigate={handleNavigate}
           onLogout={logout}
+          hideAccountControls={hideProfileAccountControls}
         />
       )}
 

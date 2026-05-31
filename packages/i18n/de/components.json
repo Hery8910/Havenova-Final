@@ -34,8 +34,8 @@
         "language": "Sprache",
         "themeToggle": {
           "buttonLabel": "Design",
-          "darkMode": "Dunkler Modus",
-          "lightMode": "Heller Modus"
+          "darkMode": "Dunkler",
+          "lightMode": "Heller"
         }
       },
       "accountLinks": {
@@ -757,6 +757,38 @@
       "support": {
         "heading": "Support",
         "description": "Beschreiben Sie Ihr Anliegen, wir melden uns schnellstmöglich."
+      }
+    },
+    "sideNav": {
+      "common": {
+        "navigationLabel": "Bereichsnavigation",
+        "mainListLabel": "Hauptseiten",
+        "footerListLabel": "Kontoaktionen",
+        "settings": "Einstellungen",
+        "logout": "Abmelden",
+        "collapse": "Navigation einklappen",
+        "expand": "Navigation ausklappen"
+      },
+      "user": {
+        "pages": {
+          "overview": "Überblick",
+          "workOrders": "Arbeitsaufträge",
+          "workRequests": "Arbeitsanfragen",
+          "notifications": "Benachrichtigungen"
+        }
+      },
+      "dashboard": {
+        "pages": {
+          "dashboard": "Dashboard",
+          "requests": "Anfragen",
+          "clients": "Kunden",
+          "propertyManager": "Immobilienverwalter",
+          "objects": "Objekte",
+          "taskCatalog": "Aufgabenkatalog",
+          "employees": "Mitarbeiter",
+          "messages": "Nachrichten",
+          "notifications": "Benachrichtigungen"
+        }
       }
     },
     "sidebar": {

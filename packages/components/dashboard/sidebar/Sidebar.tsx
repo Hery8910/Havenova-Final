@@ -1,173 +1,110 @@
 'use client';
-import styles from './Sidebar.module.css';
-import Link from 'next/link';
 
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import {
-  LuBell,
-  LuBookOpen,
-  LuLayoutPanelTop,
-  LuSettings,
-  LuListChecks,
-  LuLogOut,
-  LuMessagesSquare,
-  LuUser,
-  LuUsers,
-} from 'react-icons/lu';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/image';
+import { LuBell, LuBookOpen, LuLayoutPanelTop, LuListChecks, LuMessagesSquare, LuSettings, LuUsers } from 'react-icons/lu';
 import { PiBuildings } from 'react-icons/pi';
-import { useAuth, useI18n, useWorker } from '../../../contexts';
-import { useLang } from '../../../hooks';
 import { GrUserManager, GrUserWorker } from 'react-icons/gr';
 
-export interface NavItem {
-  label: string;
-  href: string;
-}
+import { useAuth, useI18n } from '../../../contexts';
+import { useLang } from '../../../hooks';
+import { href } from '../../../utils/navigation/navigation';
+import { SideNav, type SideNavItem } from '../../sideNav';
 
 export default function Sidebar() {
   const { logout } = useAuth();
-  const { worker } = useWorker();
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const lang = useLang();
   const { texts } = useI18n();
-  const sidebarTexts = texts.components.dashboard.sidebar || {};
-  const pagesText = (sidebarTexts.pages || []) as NavItem[];
-  const settingsText = (sidebarTexts.settings || []) as NavItem[];
-  const logoutText = sidebarTexts.logout || 'Logout';
-  const closeMenuText = sidebarTexts.closeMenu || 'Close menu';
-  const openMenuText = sidebarTexts.openMenu || 'Open menu';
+  const lang = useLang();
+  const sideNavTexts = texts.components?.dashboard?.sideNav;
+  const commonTexts = sideNavTexts?.common;
+  const dashboardTexts = sideNavTexts?.dashboard?.pages;
 
-  const iconMap: Record<string, JSX.Element> = {
-    '/': <LuLayoutPanelTop />,
-    '/requests': <LuListChecks />,
-    '/clients': <LuUsers />,
-    '/employees': <GrUserWorker />,
-    '/messages': <LuMessagesSquare />,
-    '/notifications': <LuBell />,
-    '/support': <LuSettings />,
-    '/profile': <LuUser />,
-    '/property-manager': <GrUserManager />,
-    '/objects': <PiBuildings />,
-    '/global-task-catalog': <LuBookOpen />,
-  };
+  const mainItems: SideNavItem[] = [
+    {
+      key: 'dashboard',
+      label: dashboardTexts?.dashboard ?? 'Dashboard',
+      href: href(lang, '/'),
+      icon: <LuLayoutPanelTop />,
+      match: 'exact',
+    },
+    {
+      key: 'requests',
+      label: dashboardTexts?.requests ?? 'Requests',
+      href: href(lang, '/requests'),
+      icon: <LuListChecks />,
+      match: 'prefix',
+    },
+    {
+      key: 'clients',
+      label: dashboardTexts?.clients ?? 'Clients',
+      href: href(lang, '/clients'),
+      icon: <LuUsers />,
+      match: 'prefix',
+    },
+    {
+      key: 'property-manager',
+      label: dashboardTexts?.propertyManager ?? 'Property Manager',
+      href: href(lang, '/property-manager'),
+      icon: <GrUserManager />,
+      match: 'prefix',
+    },
+    {
+      key: 'objects',
+      label: dashboardTexts?.objects ?? 'Objects',
+      href: href(lang, '/objects'),
+      icon: <PiBuildings />,
+      match: 'prefix',
+    },
+    {
+      key: 'global-task-catalog',
+      label: dashboardTexts?.taskCatalog ?? 'Task catalog',
+      href: href(lang, '/global-task-catalog'),
+      icon: <LuBookOpen />,
+      match: 'prefix',
+    },
+    {
+      key: 'employees',
+      label: dashboardTexts?.employees ?? 'Employees',
+      href: href(lang, '/employees'),
+      icon: <GrUserWorker />,
+      match: 'prefix',
+    },
+    {
+      key: 'messages',
+      label: dashboardTexts?.messages ?? 'Messages',
+      href: href(lang, '/messages'),
+      icon: <LuMessagesSquare />,
+      match: 'prefix',
+    },
+    {
+      key: 'notifications',
+      label: dashboardTexts?.notifications ?? 'Notifications',
+      href: href(lang, '/notifications'),
+      icon: <LuBell />,
+      match: 'prefix',
+    },
+  ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsCollapsed(window.innerWidth <= 1024);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  const getLogoSrc = () => {
-    if (worker.theme === 'dark') {
-      return isCollapsed ? '/favicon-light.svg' : '/logos/nav-logo-dark.webp';
-    } else {
-      return isCollapsed ? '/favicon-dark.svg' : '/logos/nav-logo-light.webp';
-    }
-  };
+  const footerItems: SideNavItem[] = [
+    {
+      key: 'settings',
+      label: commonTexts?.settings ?? 'Settings',
+      href: href(lang, '/profile/edit'),
+      icon: <LuSettings />,
+      match: 'prefix',
+    },
+  ];
 
   return (
-    <nav
-      className={`${styles.sidebar} glass-panel--base`}
-      aria-label="Sidebar navigation"
-      id="dashboard-sidebar"
-    >
-      <header className={styles.sidebarHeader}>
-        <div className={styles.logoWrapper}>
-          <Image
-            className={styles.logo}
-            src={getLogoSrc()}
-            alt="Havenova Logo"
-            width={isCollapsed ? 40 : 160}
-            height={isCollapsed ? 40 : 40}
-            priority
-          />
-        </div>
-        <ul className={styles.navList}>
-          {pagesText.map(({ label, href }) => {
-            const fullHref = `/${lang}${href}`;
-            return (
-              <li key={label} className={styles.navItem}>
-                <Link
-                  key={href}
-                  href={fullHref}
-                  className={`${styles.navLink} ${
-                    isCollapsed ? styles.navLinkCompact : styles.navLinkFull
-                  } ${pathname === fullHref ? styles.active : ''}`}
-                  aria-current={pathname === fullHref ? 'page' : undefined}
-                  aria-label={label}
-                  title={isCollapsed ? label : undefined}
-                >
-                  {iconMap[href] || null}
-                  {!isCollapsed && <p>{label}</p>}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </header>
-      <div className={styles.sidebarFooter}>
-        <ul className={styles.footerList}>
-          {settingsText.map(({ label, href }) => {
-            const fullHref = `/${lang}${href}`;
-            return (
-              <li key={label} className={styles.navItem}>
-                <Link
-                  key={href}
-                  href={fullHref}
-                  className={`${styles.navLink} ${
-                    isCollapsed ? styles.navLinkCompact : styles.navLinkFull
-                  } ${pathname === fullHref ? styles.active : ''}`}
-                  aria-current={pathname === fullHref ? 'page' : undefined}
-                  aria-label={label}
-                  title={isCollapsed ? label : undefined}
-                >
-                  {iconMap[href] || null}
-                  {!isCollapsed && <p>{label}</p>}
-                </Link>
-              </li>
-            );
-          })}
-          <li className={styles.navItem}>
-            <button
-              type="button"
-              onClick={logout}
-              className={`${styles.logoutButton} ${
-                isCollapsed ? styles.navLinkCompact : styles.navLinkFull
-              }`}
-              aria-label={logoutText}
-              title={isCollapsed ? logoutText : undefined}
-            >
-              <LuLogOut /> {!isCollapsed && <p>{logoutText}</p>}
-            </button>
-          </li>
-        </ul>
-        <button
-          type="button"
-          className={styles.toggleButton}
-          aria-controls="dashboard-sidebar"
-          aria-expanded={!isCollapsed}
-          aria-label={isCollapsed ? openMenuText : closeMenuText}
-          onClick={() => {
-            setIsCollapsed(!isCollapsed);
-          }}
-        >
-          {isCollapsed ? (
-            <IoIosArrowForward />
-          ) : (
-            <>
-              <IoIosArrowBack />
-              <span className={styles.toggleLabel}>{closeMenuText}</span>
-            </>
-          )}
-        </button>
-      </div>
-    </nav>
+    <SideNav
+      className="glass-panel--base"
+      mainItems={mainItems}
+      footerItems={footerItems}
+      onLogout={logout}
+      logoutLabel={commonTexts?.logout ?? 'Logout'}
+      navigationLabel={commonTexts?.navigationLabel ?? 'Section navigation'}
+      mainListLabel={commonTexts?.mainListLabel ?? 'Main pages'}
+      footerListLabel={commonTexts?.footerListLabel ?? 'Account actions'}
+      collapseLabel={commonTexts?.collapse ?? 'Collapse navigation'}
+      expandLabel={commonTexts?.expand ?? 'Expand navigation'}
+    />
   );
 }

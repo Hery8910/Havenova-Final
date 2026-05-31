@@ -1,4 +1,4 @@
 export { default as WorkAddressSelector } from './WorkAddressSelector';
-export { default as AddressFormFields } from './AddressFormFields';
+export { AddressFormFields } from '../../../../shared/addressFormFields';
 export type { WorkAddressSelectorProps } from './WorkAddressSelector';
-export type { AddressFormFieldsProps } from './AddressFormFields';
+export type { AddressFormFieldsProps } from '../../../../shared/addressFormFields';

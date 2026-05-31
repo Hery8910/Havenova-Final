@@ -2,7 +2,11 @@
 
 import { useId } from 'react';
 import styles from './ProfileCompletionBadge.module.css';
-import type { UserAddress, UserClientProfile } from '../../../../../types';
+import type { UserClientProfile } from '../../../../../types';
+import {
+  getProfileCompletionPercentage,
+  getProfileCompletionState,
+} from './profileCompletion.helpers';
 
 interface ProfileCompletionBadgeTexts {
   title?: string;
@@ -14,51 +18,35 @@ interface ProfileCompletionBadgeTexts {
 interface ProfileCompletionBadgeProps {
   profile: UserClientProfile;
   texts?: ProfileCompletionBadgeTexts;
+  emphasis?: 'default' | 'subtle-when-complete';
 }
 
-const isNonEmpty = (value?: string) => Boolean(value?.trim());
-
-const isCompleteAddress = (address?: UserAddress) =>
-  Boolean(
-    address?.street?.trim() &&
-    address?.streetNumber?.trim() &&
-    address?.postalCode?.trim() &&
-    address?.district?.trim()
-  );
-
-const PROFILE_COMPLETION_CHECKS = [
-  (profile: UserClientProfile) => isNonEmpty(profile.name),
-  (profile: UserClientProfile) => isNonEmpty(profile.phone),
-  (profile: UserClientProfile) => isCompleteAddress(profile.primaryAddress),
-];
-
-const getCompletionPercentage = (profile: UserClientProfile) => {
-  const completedFields = PROFILE_COMPLETION_CHECKS.reduce(
-    (total, check) => total + Number(check(profile)),
-    0
-  );
-
-  return Math.round((completedFields / PROFILE_COMPLETION_CHECKS.length) * 100);
-};
-
-const getCompletionState = (percentage: number) => {
-  if (percentage >= 67) return 'high';
-  if (percentage >= 34) return 'medium';
-  return 'low';
-};
-
-export function ProfileCompletionBadge({ profile, texts }: ProfileCompletionBadgeProps) {
+export function ProfileCompletionBadge({
+  profile,
+  texts,
+  emphasis = 'default',
+}: ProfileCompletionBadgeProps) {
   const titleId = useId();
-  const percentage = getCompletionPercentage(profile);
-  const state = getCompletionState(percentage);
+  const percentage = getProfileCompletionPercentage(profile);
+  const state = getProfileCompletionState(percentage);
+  const stateCardClassName =
+    state === 'low'
+      ? 'card--alert-error'
+      : state === 'medium'
+        ? 'card--alert-warning'
+        : 'card--alert-success';
   const title = texts?.title ?? 'Profile completion';
-  const info =
-    texts?.info ?? 'Complete the missing details to improve your booking and communication flow.';
   const progressAriaLabel = texts?.progressAriaLabel ?? 'Profile completion progress';
   const percentageAriaLabel = texts?.percentageAriaLabel ?? 'Profile completion percentage';
+  const isSubtleComplete = emphasis === 'subtle-when-complete' && state === 'high';
 
   return (
-    <section className={`${styles.badge} glass-panel--service-primary`} aria-labelledby={titleId}>
+    <section
+      className={`${styles.badge} card ${stateCardClassName} ${
+        isSubtleComplete ? styles.badgeSubtleComplete : ''
+      }`}
+      aria-labelledby={titleId}
+    >
       <p id={titleId} className={styles.title}>
         {title}
       </p>
@@ -80,7 +68,10 @@ export function ProfileCompletionBadge({ profile, texts }: ProfileCompletionBadg
           aria-valuenow={percentage}
           aria-valuetext={`${percentage}%`}
         >
-          <span className={styles.progressFill} style={{ width: `${percentage}%` }} />
+          <span
+            className={`${styles.progressFill} ${styles[`progressFill${state.charAt(0).toUpperCase()}${state.slice(1)}`]}`}
+            style={{ width: `${percentage}%` }}
+          />
         </div>
       </div>
     </section>

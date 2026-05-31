@@ -8,7 +8,7 @@ type AlertActionableState = Exclude<AlertVisualState, 'loading'>;
 interface AlertPayloadBase {
   status?: number;
   title: string;
-  description: string;
+  description?: string;
 }
 
 export interface LoadingAlertPayload extends AlertPayloadBase {

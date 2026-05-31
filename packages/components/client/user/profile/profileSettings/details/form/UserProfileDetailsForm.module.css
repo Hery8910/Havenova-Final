@@ -1,0 +1,146 @@
+.card {
+  padding: 24px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  border: 1px solid var(--card-neutral-border);
+  border-radius: var(--radius-md);
+}
+.title {
+  margin: 0;
+  color: var(--page-text-secondary);
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.form {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.addressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.addressTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.addressHint {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.addressCard {
+  padding-top: 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.addressCardHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.secondaryAddressList {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.secondaryAddressTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.secondaryPrompt {
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.secondaryPromptText {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.secondaryPromptBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.submitButton {
+  flex-grow: 1;
+}
+
+.ghostButton {
+  min-width: 150px;
+}
+
+@media (max-width: 767px) {
+  .card {
+    padding: 20px;
+  }
+
+  .addressHeader,
+  .addressCardHeader,
+  .secondaryPrompt {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

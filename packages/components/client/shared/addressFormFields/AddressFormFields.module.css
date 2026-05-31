@@ -1,0 +1,37 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.streetField {
+  grid-column: span 2;
+}
+
+.streetNumberField {
+  grid-column: span 1;
+}
+
+.postalCodeField {
+  grid-column: span 1;
+}
+
+.districtField {
+  grid-column: span 1;
+}
+
+.floorField {
+  grid-column: span 1;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

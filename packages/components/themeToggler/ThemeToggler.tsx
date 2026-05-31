@@ -12,26 +12,16 @@ import type { ThemeMode } from '../../types';
 
 interface ThemeTogglerProps {
   display?: 'icon' | 'icon-with-value';
+  variant?: 'ghost' | 'surface';
   labels?: ResolvedNavbarThemeToggle;
   ariaLabel?: string;
   darkLabel?: string;
   lightLabel?: string;
 }
 
-const getStoredTheme = (): ThemeMode | null => {
-  if (typeof window === 'undefined') return null;
-  const stored = localStorage.getItem('theme');
-  return stored === 'dark' || stored === 'light' ? stored : null;
-};
-
-const getDocumentTheme = (): ThemeMode | null => {
-  if (typeof document === 'undefined') return null;
-  const theme = document.documentElement.getAttribute('data-theme');
-  return theme === 'dark' || theme === 'light' ? theme : null;
-};
-
 const ThemeToggler = ({
   display = 'icon',
+  variant = 'ghost',
   labels,
   ariaLabel,
   darkLabel,
@@ -41,12 +31,7 @@ const ThemeToggler = ({
   const workerContext = useOptionalWorkerContext();
 
   const setTheme = profileContext?.setTheme ?? workerContext?.setTheme;
-  const theme =
-    profileContext?.profile?.theme ??
-    workerContext?.worker?.theme ??
-    getStoredTheme() ??
-    getDocumentTheme() ??
-    'light';
+  const theme = profileContext?.profile?.theme ?? workerContext?.worker?.theme ?? 'light';
   const nextTheme = theme === 'dark' ? 'light' : 'dark';
   const currentThemeLabel =
     theme === 'dark'
@@ -74,9 +59,17 @@ const ThemeToggler = ({
   return (
     <button
       type="button"
-      className={`button button--ghost ${sharedStyles.iconButton} ${styles.toggleButton} ${
-        shouldShowCurrentValue ? styles.toggleButtonWithValue : ''
-      } ${theme === 'dark' ? styles.isDark : styles.isLight}`}
+      className={[
+        'button',
+        variant === 'ghost' ? 'button--ghost' : '',
+        sharedStyles.iconButton,
+        styles.toggleButton,
+        shouldShowCurrentValue ? styles.toggleButtonWithValue : '',
+        variant === 'surface' ? styles.toggleButtonSurface : '',
+        theme === 'dark' ? styles.isDark : styles.isLight,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       onClick={toggleTheme}
       aria-label={resolvedAriaLabel}
       title={resolvedAriaLabel}
@@ -90,7 +83,9 @@ const ThemeToggler = ({
           <IoMoonOutline className={styles.icon} />
         </span>
       </span>
-      {shouldShowCurrentValue ? <span className={styles.currentValue}>{currentThemeLabel}</span> : null}
+      {shouldShowCurrentValue ? (
+        <span className={` ${styles.currentValue} type-body-md`}>{currentThemeLabel}</span>
+      ) : null}
     </button>
   );
 };

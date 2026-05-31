@@ -1,0 +1,32 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  padding: 24px min(5dvw, 36px) 32px;
+}
+
+.article {
+  max-width: 980px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 20px;
+  padding-bottom: 24px;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .article {
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+}

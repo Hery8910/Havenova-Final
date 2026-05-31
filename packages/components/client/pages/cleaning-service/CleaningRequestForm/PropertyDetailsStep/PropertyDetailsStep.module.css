@@ -55,11 +55,7 @@
 }
 
 .counterButton {
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
-  padding: 0;
-  line-height: 1;
+  padding: 0 12px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -72,8 +68,7 @@
 }
 
 .counterValue {
-  height: 36px;
-  width: 36px;
+  padding: 6px 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -86,69 +81,90 @@
 }
 
 .flagsGroup {
+  padding: 0;
+  width: 100%;
   border: none;
-  padding: 12px;
+  position: relative;
+}
+.legend {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-weight: 600;
+}
+.checkboxLabel {
+  position: absolute;
+  top: -24px;
+  right: 12px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.switch {
-  width: 100%;
-  min-height: 48px;
-  padding: 8px 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.checkboxInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.customCheckbox {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  border: 2px solid var(--input-border-hover, var(--surface-border));
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  position: relative;
+  background: color-mix(in srgb, var(--input-bg, #ffffff) 84%, transparent);
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.switch:hover {
-  box-shadow: var(--shadow-sm);
+.customCheckbox::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 12px;
+  top: 2px;
+  left: 6px;
+  border-right: 2px solid var(--button-primary-bg, var(--brand-primary));
+  border-bottom: 2px solid var(--button-primary-bg, var(--brand-primary));
+  transform: rotate(45deg) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.switchTrack {
-  width: 46px;
-  height: 26px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-border) 70%, #000);
-  display: inline-flex;
-  align-items: center;
-  padding: 2px;
-  transition: background-color 0.2s ease;
+.checkboxInput:checked + .customCheckbox {
+  background-color: transparent;
+  border-color: var(--button-primary-bg, var(--brand-primary));
 }
 
-.switchThumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
-  transition: transform 0.2s ease;
+.checkboxInput:checked + .customCheckbox::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
 }
 
-.switchActive {
-  border-color: var(--brand-primary);
-  background: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+.checkboxInput:focus-visible + .customCheckbox {
+  border-color: var(--input-border-focus, var(--brand-primary));
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--button-primary-bg, var(--brand-primary)) 12%, transparent);
 }
 
-.switchActive .switchTrack {
-  background: var(--brand-primary);
-}
-
-.switchActive .switchThumb {
-  transform: translateX(20px);
-}
-
-.switchLabel {
+.checkboxText {
   color: var(--text-secondary);
-  font-weight: 600;
 }
 
 .fieldControlError {
-  border-color: var(--color-error) !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
+  border-color: var(--color-error);
 }
 
 .errorText {
@@ -157,7 +173,6 @@
 }
 
 .counterButton:focus-visible,
-.switch:focus-visible,
 .input:focus-visible,
 .textarea:focus-visible {
   outline: 2px solid var(--brand-primary);

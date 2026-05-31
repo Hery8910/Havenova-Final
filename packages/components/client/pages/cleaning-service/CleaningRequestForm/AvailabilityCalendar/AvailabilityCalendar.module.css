@@ -91,8 +91,8 @@
   margin: 0;
   padding: 8px 10px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--brand-primary) 7%, white);
-  color: var(--page-text-secondary);
+  background: var(--feedback-info-bg);
+  color: var(--card-primary-text-primary);
   font-size: 0.82rem;
 }
 
@@ -132,7 +132,8 @@
   aspect-ratio: 1 / 1;
   min-height: 0;
   padding: 8px;
-  border: none;
+  border: 1px solid var(--card-neutral-border);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +146,8 @@
 
 .dayCell:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--brand-primary) 42%, var(--card-neutral-border));
+  border-color: color-mix(in srgb, var(--brand-primary) 32%, var(--card-neutral-border));
+  background: color-mix(in srgb, white 76%, var(--feedback-info-bg));
   box-shadow: var(--shadow-sm);
 }
 
@@ -159,29 +161,46 @@
 
 .daySelected {
   border-color: var(--brand-primary);
-  background: color-mix(in srgb, var(--brand-primary) 12%, white);
+  background: color-mix(in srgb, var(--feedback-info-bg-image) 72%, white);
   box-shadow: 0 10px 26px color-mix(in srgb, var(--brand-primary) 10%, transparent);
 }
 
 .dayBlocked {
-  background: color-mix(in srgb, #d9e0e8 58%, white);
-  border-color: color-mix(in srgb, #95a4b6 55%, var(--card-neutral-border));
+  background: color-mix(in srgb, var(--feedback-error-bg) 78%, white);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 65%, var(--card-neutral-border));
+}
+
+.dayBlocked .dayNumber {
+  color: #8f2d2d;
 }
 
 .dayAvailable {
-  background: color-mix(in srgb, #dff2e6 56%, white);
-  border-color: color-mix(in srgb, #6daa7d 52%, var(--card-neutral-border));
+  background: color-mix(in srgb, var(--feedback-success-bg) 82%, white);
+  border-color: color-mix(
+    in srgb,
+    var(--feedback-success-bg-image) 72%,
+    var(--card-neutral-border)
+  );
+}
+
+.dayAvailable .dayNumber {
+  color: #92c4a8;
 }
 
 .dayUnavailable {
-  opacity: 0.55;
+  opacity: 0.78;
   cursor: not-allowed;
-  background: color-mix(in srgb, #eef2f6 62%, white);
+  background: var(--feedback-error-bg);
+  background-image: var(--feedback-error-bg-image);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 45%, var(--card-neutral-border));
 }
 
 .outsideMonth {
-  opacity: 0.34;
+  opacity: 0.42;
   cursor: default;
+  background: var(--feedback-error-bg);
+  background-image: var(--feedback-error-bg-image);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 45%, var(--card-neutral-border));
 }
 
 .dayNumber {
@@ -237,6 +256,6 @@
 
   .dayCell {
     padding: 6px;
-    border-radius: 12px;
+    border-radius: 6px;
   }
 }

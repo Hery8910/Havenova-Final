@@ -40,12 +40,14 @@ export function NavbarAccountContent({
           </li>
         </ul>
       ) : null}
-      <NavbarLinkList
-        items={userLinks}
-        onItemClick={onItemClick}
-        animated={animated}
-        animationDirection={animationDirection}
-      />
+      {userLinks.length ? (
+        <NavbarLinkList
+          items={userLinks}
+          onItemClick={onItemClick}
+          animated={animated}
+          animationDirection={animationDirection}
+        />
+      ) : null}
       {authIsLogged ? (
         <ul className={panelListClassName}>
           <li className={styles.panelItem}>

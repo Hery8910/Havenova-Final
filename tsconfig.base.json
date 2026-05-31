@@ -30,6 +30,7 @@
       "@havenova/components/*": ["./packages/components/*"],
       "@havenova/contexts/*": ["./packages/contexts/*"],
       "@havenova/hooks/*": ["./packages/hooks/*"],
+      "@havenova/services": ["./packages/services/index.ts"],
       "@havenova/services/*": ["./packages/services/*"],
       "@havenova/types/*": ["./packages/types/*"],
       "@havenova/utils/*": ["./packages/utils/*"],

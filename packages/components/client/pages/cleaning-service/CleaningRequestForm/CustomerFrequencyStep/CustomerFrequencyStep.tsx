@@ -85,10 +85,14 @@ export default function CustomerFrequencyStep({
                 <span className={styles.frequencyContent}>
                   <span className={styles.frequencyText}>{frequency.options[freq]}</span>
                   {freq === 'three_per_month' && (
-                    <span className={styles.badge}>{frequency.recommendedLabel}</span>
+                    <span className={`${styles.badge} card card--accent`}>
+                      {frequency.recommendedLabel}
+                    </span>
                   )}
                 </span>
-                <span className={styles.frequencyDiscount}>{frequency.discounts[freq]}</span>
+                <span className={`${styles.frequencyDiscount} card card--neutral`}>
+                  {frequency.discounts[freq]}
+                </span>
               </button>
             </li>
           ))}

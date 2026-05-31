@@ -3,7 +3,6 @@ export { default as CleaningRequestForm } from './CleaningRequestForm/CleaningRe
 export { default as AvailabilityCalendar } from './CleaningRequestForm/AvailabilityCalendar/AvailabilityCalendar';
 export { default as CalendarDaySlots } from './CleaningRequestForm/AvailabilityCalendar/CalendarDaySlots';
 export { default as WorkAddressSelector } from './CleaningRequestForm/WorkAddressSelector/WorkAddressSelector';
-export { default as AddressFormFields } from './CleaningRequestForm/WorkAddressSelector/AddressFormFields';
 export type {
   CleaningRequestFormSubmission,
   CleaningRequestFormTexts,

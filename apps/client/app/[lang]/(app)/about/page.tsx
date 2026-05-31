@@ -5,6 +5,10 @@ import {
   AboutStorySection,
 } from '../../../../../../packages/components/client/pages/about';
 import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
+import {
+  ServiceCrossCtaSection,
+  type ServiceCrossCtaSectionTexts,
+} from '../../../../../../packages/components/client/pages/shared';
 import { useI18n } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import styles from './page.module.css';
@@ -30,6 +34,7 @@ export interface AboutPageTexts {
     }[];
     closing: string;
   };
+  servicesCta: ServiceCrossCtaSectionTexts;
 }
 
 export default function About() {
@@ -44,6 +49,7 @@ export default function About() {
       <PageHero texts={about.hero} lang={lang} />
       <AboutStorySection texts={about.story} />
       <AboutClientsSection texts={about.clients} />
+      <ServiceCrossCtaSection texts={about.servicesCta} lang={lang} />
     </main>
   );
 }

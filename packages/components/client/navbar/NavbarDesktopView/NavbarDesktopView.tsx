@@ -1,7 +1,6 @@
 'use client';
 import { createPortal } from 'react-dom';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { CgProfile } from 'react-icons/cg';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import styles from './NavbarDesktopView.module.css';
@@ -10,6 +9,7 @@ import type { ResolvedNavbarContent } from '../navbar.shared';
 import { NavbarBrand } from '../components/NavbarBrand';
 import { NavbarAccountContent } from '../components/NavbarAccountContent';
 import { NavbarLinkList } from '../components/NavbarLinkList';
+import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 
@@ -17,6 +17,7 @@ export interface NavbarDesktopViewProps {
   content: ResolvedNavbarContent;
   onNavigate: (href: string) => void;
   onLogout: () => Promise<void>;
+  hideAccountControls?: boolean;
   bellSlot?: (() => JSX.Element) | null;
 }
 
@@ -29,6 +30,7 @@ export function NavbarDesktopView({
   content,
   onNavigate,
   onLogout,
+  hideAccountControls = false,
   bellSlot,
 }: NavbarDesktopViewProps) {
   const [isMounted, setIsMounted] = useState(false);
@@ -101,33 +103,40 @@ export function NavbarDesktopView({
             <LanguageSwitcher
               presentation="dropdown"
               triggerDisplay="icon"
+              panelVariant="navbar"
               labels={preferences.languageSwitcher}
             />
           </div>
-          <div className={styles.accountActions}>
-            {BellSlot ? (
-              <div className={sharedStyles.notificationSlot}>
-                <BellSlot />
+          {!hideAccountControls ? (
+            <div className={styles.accountActions}>
+              {BellSlot ? (
+                <div className={sharedStyles.notificationSlot}>
+                  <BellSlot />
+                </div>
+              ) : null}
+              <div className={styles.profileSlot} ref={profileSlotRef}>
+                <button
+                  ref={triggerRef}
+                  type="button"
+                  className={`button button--ghost ${sharedStyles.iconButton}`}
+                  aria-label={a11y.profileToggle}
+                  aria-expanded={userMenuOpen}
+                  aria-controls={accountPanelId}
+                  onClick={() => togglePanel('account')}
+                >
+                  <NavbarProfileTrigger
+                    avatarSrc={session.avatarSrc}
+                    alt={session.avatarAlt}
+                    fallbackLabel={labels.profile}
+                  />
+                  <span className={sharedStyles.srOnly}>{labels.profile}</span>
+                </button>
               </div>
-            ) : null}
-            <div className={styles.profileSlot} ref={profileSlotRef}>
-              <button
-                ref={triggerRef}
-                type="button"
-                className={`button button--ghost ${sharedStyles.iconButton}`}
-                aria-label={a11y.profileToggle}
-                aria-expanded={userMenuOpen}
-                aria-controls={accountPanelId}
-                onClick={() => togglePanel('account')}
-              >
-                <CgProfile />
-                <span className={sharedStyles.srOnly}>{labels.profile}</span>
-              </button>
             </div>
-          </div>
+          ) : null}
         </section>
       </header>
-      {isMounted
+      {!hideAccountControls && isMounted
         ? (createPortal(
             <div
               className={`${styles.desktopDropdown} ${
@@ -150,8 +159,12 @@ export function NavbarDesktopView({
                 {visiblePanel === 'account' ? (
                   <>
                     <div className={sharedStyles.panelHeader}>
-                      <h2 id={accountTitleId} className={styles.accountTitle}>
-                        {session.accountMenuTitle}
+                      <h2
+                        id={accountTitleId}
+                        className={`${styles.accountTitle} ${sharedStyles.panelIdentityTitle}`}
+                        title={session.displayName ?? session.accountMenuTitle}
+                      >
+                        {session.displayName ?? session.accountMenuTitle}
                       </h2>
                     </div>
                     <NavbarAccountContent

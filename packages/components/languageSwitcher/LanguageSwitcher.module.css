@@ -3,17 +3,16 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: space-around;
-  min-width: 44px;
-  max-width: 150px;
+  justify-content: space-between;
   width: 100%;
+  min-width: 44px;
+  max-width: 250px;
   border-radius: var(--radius-sm);
 }
 
 .trigger {
   margin: 0 auto;
   width: 100%;
-  max-width: 150px;
   justify-content: space-around;
   border-radius: var(--radius-sm);
 }
@@ -21,7 +20,7 @@
 .triggerWithValue {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0;
   padding-left: 22px;
   padding-right: 8px;
@@ -29,9 +28,8 @@
 }
 
 .triggerValue {
-  color: var(--color-page-muted);
-  font-size: 0.8rem;
-  font-weight: 500;
+  color: var(--page-text-secondary);
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -48,6 +46,14 @@
   pointer-events: auto;
 }
 
+.dropdownBottom .panelOpen {
+  animation: navbarFadeInDownLarge 0.3s var(--ease-standard);
+}
+
+.dropdownTop .panelOpen {
+  animation: navbarFadeInUpLarge 0.3s var(--ease-standard);
+}
+
 .modalRoot {
   position: fixed;
   inset: 0;
@@ -55,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -86,10 +92,6 @@
   animation: navbarFadeInUpLarge 0.3s var(--ease-standard);
 }
 
-.dropdownOpen .panel {
-  animation: navbarFadeInDownLarge 0.3s var(--ease-standard);
-}
-
 .modalPanel {
   width: min(100%, 320px);
   max-height: min(70dvh, 420px);
@@ -97,37 +99,88 @@
 }
 .header {
   margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--color-card-border);
+}
+
+.headerNavbar {
+  margin-bottom: 10px;
+  padding-bottom: 14px;
 }
 
 .title {
   font-size: 0.95rem;
+  padding-left: 0;
+}
+
+.titleNavbar {
+  padding-left: 0;
+  color: var(--page-text-secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
-.optionButton {
-  gap: 10px;
+.optionButton,
+.optionButtonNavbar {
   width: 100%;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
   justify-content: flex-start;
+  gap: 16px;
+  text-align: left;
 }
 
 .optionButtonCurrent {
-  background-color: var(--navbar-active-bg);
-  color: var(--color-page-heading);
-  box-shadow: var(--shadow-sm);
+  background-color: color-mix(in srgb, var(--navbar-active-bg) 88%, transparent);
+  color: var(--page-text-primary);
+  border-color: color-mix(in srgb, var(--brand-primary) 28%, var(--color-card-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--brand-primary) 16%, transparent),
+    var(--shadow-sm);
 }
 
-.optionBadge {
-  min-width: 36px;
-  padding-inline: 8px;
+.optionButtonNavbar:hover {
+  color: var(--page-text-primary);
+}
+
+.optionButtonNavbar {
+  gap: 16px;
 }
 
 .optionLabel {
   flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.optionMetaShell {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionMeta {
+  min-width: 36px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--card-neutral-border) 88%, transparent);
+  color: var(--page-text-secondary);
+  background: color-mix(in srgb, var(--navbar-active-bg) 52%, transparent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.optionButtonCurrent .optionMeta {
+  color: inherit;
+  border-color: color-mix(in srgb, var(--brand-primary) 36%, currentColor 16%);
 }

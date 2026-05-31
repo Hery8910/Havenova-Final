@@ -187,6 +187,29 @@
           }
         ],
         "closing": "Our focus is on clarity, organization, and long-term reliability."
+      },
+      "servicesCta": {
+        "eyebrow": "Request a service",
+        "title": "Choose the service that fits what you need today",
+        "description": "If you already know what kind of help you need, go straight to the right form and send your request with the right context from the first step.",
+        "a11y": {
+          "sectionLabel": "Direct links to Havenova service request forms",
+          "actionsLabel": "Service request options"
+        },
+        "actions": [
+          {
+            "label": "Go to cleaning service",
+            "href": "/cleaning-service",
+            "ariaLabel": "Open the cleaning service request page",
+            "variant": "primary"
+          },
+          {
+            "label": "Go to home service",
+            "href": "/home-service",
+            "ariaLabel": "Open the home service request page",
+            "variant": "secondary"
+          }
+        ]
       }
     },
     "cleaning": {
@@ -221,6 +244,23 @@
           }
         }
       },
+      "relatedServiceCta": {
+        "eyebrow": "Need something else?",
+        "title": "You can also request help for repairs and practical home tasks",
+        "description": "If you also need assembly, small repairs, or hands-on help at home, use the home service form to send that kind of request.",
+        "a11y": {
+          "sectionLabel": "Related home service section",
+          "actionsLabel": "Actions to continue with another service"
+        },
+        "actions": [
+          {
+            "label": "Request home service",
+            "href": "/home-service",
+            "ariaLabel": "Go to the home service request page",
+            "variant": "secondary"
+          }
+        ]
+      },
       "form": {
         "process": {
           "title": "Complete your cleaning request in 5 steps",
@@ -253,9 +293,9 @@
           "recommendedLabel": "Most requested",
           "options": {
             "once": "One-time",
-            "two_per_month": "2 times per month",
+            "two_per_month": "2x per month",
             "weekly": "Weekly",
-            "three_per_month": "3 times per month"
+            "three_per_month": "3x per month"
           },
           "discounts": {
             "once": "0% discount",
@@ -433,6 +473,23 @@
             "href": "/user/register"
           }
         }
+      },
+      "relatedServiceCta": {
+        "eyebrow": "Need a different kind of help?",
+        "title": "For cleaning needs, use the dedicated cleaning request form",
+        "description": "If you are looking for recurring cleaning, deep cleaning, or move-in and move-out support, the cleaning flow is the right place to share those details.",
+        "a11y": {
+          "sectionLabel": "Related cleaning service section",
+          "actionsLabel": "Actions to switch to the cleaning form"
+        },
+        "actions": [
+          {
+            "label": "Request cleaning service",
+            "href": "/cleaning-service",
+            "ariaLabel": "Go to the cleaning service request page",
+            "variant": "secondary"
+          }
+        ]
       },
       "form": {
         "process": {
@@ -716,19 +773,6 @@
         "info": "Choose a new password for your account.",
         "button": "Save password"
       },
-      "profileHeader": {
-        "ariaLabel": "User area",
-        "verified": "Verified",
-        "verifiedAria": "Account verified",
-        "missingName": "Missing name",
-        "greeting": "Welcome back 👋",
-        "completion": {
-          "title": "Profile progress",
-          "info": "Complete the missing details to improve your booking and communication flow.",
-          "progressAriaLabel": "Profile completion progress",
-          "percentageAriaLabel": "Profile completion percentage"
-        }
-      },
       "profileNav": {
         "profile": "Profile",
         "requests": "Work requests",
@@ -776,6 +820,18 @@
           "tableAriaLabel": "User profile details",
           "formAriaLabel": "Edit user profile details",
           "emptyValue": "Not provided",
+          "avatarSelector": {
+            "openButton": "Change profile image",
+            "closeButton": "Close avatar selector",
+            "title": "Choose a profile avatar",
+            "description": "Select one of the available images for your profile.",
+            "optionsLabel": "Avatar options",
+            "listAriaLabel": "Avatar list",
+            "chooseAvatarAriaLabel": "Choose avatar",
+            "selectedAvatarAriaLabel": "Selected avatar",
+            "submitButton": "Choose selected",
+            "saving": "Saving..."
+          },
           "labels": {
             "name": "Name",
             "email": "Email",
@@ -825,23 +881,33 @@
               "light": "Light mode",
               "dark": "Dark mode"
             },
+            "cookies": {
+              "title": "Cookies",
+              "buttonLabel": "Open cookie notice"
+            },
             "notifications": {
               "title": "Notifications",
+              "description": "Review which notifications are required and choose whether you want reminder emails.",
               "inApp": {
                 "title": "In-app notifications",
                 "description": "These notifications are always enabled inside the app.",
-                "ariaLabel": "In-app notifications enabled and required"
+                "ariaLabel": "In-app notifications enabled and required",
+                "status": "Required"
               },
               "important": {
                 "title": "Important email notifications",
                 "description": "Important account emails stay enabled for security and service updates.",
-                "ariaLabel": "Important email notifications enabled and required"
+                "ariaLabel": "Important email notifications enabled and required",
+                "status": "Required"
               },
               "reminders": {
                 "title": "Reminder emails",
                 "description": "Turn reminder emails on if you want to receive reminders for your bookings.",
                 "ariaLabel": "Toggle reminder email notifications",
-                "error": "We could not update your reminder notifications."
+                "error": "We could not update your reminder notifications.",
+                "enabled": "Reminder emails enabled.",
+                "disabled": "Reminder emails disabled.",
+                "saving": "Saving changes..."
               }
             }
           }

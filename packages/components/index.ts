@@ -4,6 +4,7 @@ export * from './client/footer';
 export * from './alert';
 export * from './loading';
 export * from './languageSwitcher';
+export * from './sideNav';
 export * from './themeToggler';
 export * from './dashboard';
 export * from './client';

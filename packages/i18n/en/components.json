@@ -34,8 +34,8 @@
         "language": "Language",
         "themeToggle": {
           "buttonLabel": "Theme",
-          "darkMode": "Dark mode",
-          "lightMode": "Light mode"
+          "darkMode": "Dark",
+          "lightMode": "Light"
         }
       },
       "accountLinks": {
@@ -757,6 +757,38 @@
       "support": {
         "heading": "Support",
         "description": "Tell us about your issue and we will get back to you."
+      }
+    },
+    "sideNav": {
+      "common": {
+        "navigationLabel": "Section navigation",
+        "mainListLabel": "Main pages",
+        "footerListLabel": "Account actions",
+        "settings": "Settings",
+        "logout": "Logout",
+        "collapse": "Collapse navigation",
+        "expand": "Expand navigation"
+      },
+      "user": {
+        "pages": {
+          "overview": "Overview",
+          "workOrders": "Work orders",
+          "workRequests": "Work requests",
+          "notifications": "Notifications"
+        }
+      },
+      "dashboard": {
+        "pages": {
+          "dashboard": "Dashboard",
+          "requests": "Requests",
+          "clients": "Clients",
+          "propertyManager": "Property Manager",
+          "objects": "Objects",
+          "taskCatalog": "Task catalog",
+          "employees": "Employees",
+          "messages": "Messages",
+          "notifications": "Notifications"
+        }
       }
     },
     "sidebar": {

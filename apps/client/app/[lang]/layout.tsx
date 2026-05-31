@@ -66,42 +66,42 @@ export default async function LangLayout({
   }
 
   return (
-    <html lang={params.lang} data-theme="light" suppressHydrationWarning>
-      <body>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                try {
-                  var storedTheme = localStorage.getItem('theme');
-                  var theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
-                  document.documentElement.setAttribute('data-theme', theme);
-                } catch (error) {
-                  document.documentElement.setAttribute('data-theme', 'light');
-                }
-              })();
-            `,
-          }}
-        />
-        <I18nProvider initialLanguage={params.lang}>
-          <AlertProvider>
-            <ClientProvider
-              initialClient={initialClient}
-              initialError={clientError}
-              tenantKey={tenantKey}
-            >
-              <AuthProvider>
-                <ProfileProvider>
-                  <CookiesProvider>
-                    {children}
-                    <CookieBannerContainer />
-                  </CookiesProvider>
-                </ProfileProvider>
-              </AuthProvider>
-            </ClientProvider>
-          </AlertProvider>
-        </I18nProvider>
-      </body>
-    </html>
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function () {
+              try {
+                var storedTheme = localStorage.getItem('theme');
+                var theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
+                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
+                document.documentElement.setAttribute('data-theme', theme);
+              } catch (error) {
+                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
+                document.documentElement.setAttribute('data-theme', 'light');
+              }
+            })();
+          `,
+        }}
+      />
+      <I18nProvider initialLanguage={params.lang}>
+        <AlertProvider>
+          <ClientProvider
+            initialClient={initialClient}
+            initialError={clientError}
+            tenantKey={tenantKey}
+          >
+            <AuthProvider>
+              <ProfileProvider>
+                <CookiesProvider>
+                  {children}
+                  <CookieBannerContainer />
+                </CookiesProvider>
+              </ProfileProvider>
+            </AuthProvider>
+          </ClientProvider>
+        </AlertProvider>
+      </I18nProvider>
+    </>
   );
 }

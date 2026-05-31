@@ -66,9 +66,9 @@ export default async function LangLayout({
               <AuthProvider>
                 <WorkerProvider>
                   <div className={styles.layout}>
-                    <nav className={styles.nav}>
+                    <aside className={styles.nav}>
                       <Sidebar />
-                    </nav>
+                    </aside>
                     <header className={styles.header}>
                       <DashboardHeader />
                     </header>

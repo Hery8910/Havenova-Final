@@ -187,6 +187,29 @@
           }
         ],
         "closing": "Unser Fokus liegt auf Klarheit, Organisation und langfristiger Verlässlichkeit."
+      },
+      "servicesCta": {
+        "eyebrow": "Service anfragen",
+        "title": "Wählen Sie den Service, der heute zu Ihrem Bedarf passt",
+        "description": "Wenn Sie bereits wissen, welche Art von Unterstützung Sie brauchen, können Sie direkt das passende Formular öffnen und Ihre Anfrage von Anfang an mit dem richtigen Kontext senden.",
+        "a11y": {
+          "sectionLabel": "Direkte Zugänge zu den Serviceformularen von Havenova",
+          "actionsLabel": "Optionen für eine Serviceanfrage"
+        },
+        "actions": [
+          {
+            "label": "Zum Reinigungsservice",
+            "href": "/cleaning-service",
+            "ariaLabel": "Die Seite für Reinigungsanfragen öffnen",
+            "variant": "primary"
+          },
+          {
+            "label": "Zum Hausservice",
+            "href": "/home-service",
+            "ariaLabel": "Die Seite für Hausservice-Anfragen öffnen",
+            "variant": "secondary"
+          }
+        ]
       }
     },
     "cleaning": {
@@ -220,6 +243,23 @@
             "href": "/user/register"
           }
         }
+      },
+      "relatedServiceCta": {
+        "eyebrow": "Brauchen Sie noch etwas anderes?",
+        "title": "Sie können auch Hilfe für Reparaturen und praktische Aufgaben im Haushalt anfragen",
+        "description": "Wenn Sie zusätzlich Montage, kleinere Reparaturen oder praktische Unterstützung im Alltag brauchen, nutzen Sie dafür das Hausservice-Formular.",
+        "a11y": {
+          "sectionLabel": "Zugehöriger Bereich zum Hausservice",
+          "actionsLabel": "Aktionen für einen weiteren Service"
+        },
+        "actions": [
+          {
+            "label": "Hausservice anfragen",
+            "href": "/home-service",
+            "ariaLabel": "Zur Seite für Hausservice-Anfragen gehen",
+            "variant": "secondary"
+          }
+        ]
       },
       "form": {
         "process": {
@@ -433,6 +473,23 @@
             "href": "/user/register"
           }
         }
+      },
+      "relatedServiceCta": {
+        "eyebrow": "Brauchen Sie eine andere Art von Hilfe?",
+        "title": "Für Reinigungsbedarf nutzen Sie bitte das passende Reinigungsformular",
+        "description": "Wenn Sie wiederkehrende Reinigung, Grundreinigung oder Unterstützung beim Ein- oder Auszug suchen, ist das Reinigungsformular der richtige Weg für diese Angaben.",
+        "a11y": {
+          "sectionLabel": "Zugehöriger Bereich zum Reinigungsservice",
+          "actionsLabel": "Aktionen zum Wechsel in das Reinigungsformular"
+        },
+        "actions": [
+          {
+            "label": "Reinigungsservice anfragen",
+            "href": "/cleaning-service",
+            "ariaLabel": "Zur Seite für Reinigungsanfragen gehen",
+            "variant": "secondary"
+          }
+        ]
       },
       "form": {
         "process": {
@@ -716,19 +773,6 @@
         "info": "Wähle ein neues Passwort für dein Konto.",
         "button": "Passwort speichern"
       },
-      "profileHeader": {
-        "ariaLabel": "Benutzerbereich",
-        "verified": "Verifiziert",
-        "verifiedAria": "Konto verifiziert",
-        "missingName": "Fehlender Name",
-        "greeting": "Willkommen zurück 👋",
-        "completion": {
-          "title": "Profilfortschritt",
-          "info": "Ergänzen Sie die fehlenden Angaben, um Ihren Buchungs- und Kommunikationsablauf zu verbessern.",
-          "progressAriaLabel": "Fortschritt der Profilvervollständigung",
-          "percentageAriaLabel": "Prozentsatz der Profilvervollständigung"
-        }
-      },
       "profileNav": {
         "profile": "Profil",
         "requests": "Anfragen",
@@ -776,6 +820,18 @@
           "tableAriaLabel": "Benutzerprofildetails",
           "formAriaLabel": "Benutzerprofildetails bearbeiten",
           "emptyValue": "Nicht angegeben",
+          "avatarSelector": {
+            "openButton": "Profilbild ändern",
+            "closeButton": "Avatar-Auswahl schließen",
+            "title": "Profil-Avatar auswählen",
+            "description": "Wählen Sie eines der verfügbaren Bilder für Ihr Profil aus.",
+            "optionsLabel": "Avatar-Optionen",
+            "listAriaLabel": "Avatar-Liste",
+            "chooseAvatarAriaLabel": "Avatar auswählen",
+            "selectedAvatarAriaLabel": "Ausgewählter Avatar",
+            "submitButton": "Auswahl übernehmen",
+            "saving": "Wird gespeichert..."
+          },
           "labels": {
             "name": "Name",
             "email": "E-Mail",
@@ -825,23 +881,33 @@
               "light": "Heller Modus",
               "dark": "Dunkler Modus"
             },
+            "cookies": {
+              "title": "Cookies",
+              "buttonLabel": "Cookie-Hinweis öffnen"
+            },
             "notifications": {
               "title": "Benachrichtigungen",
+              "description": "Prüfen Sie, welche Benachrichtigungen verpflichtend sind, und wählen Sie, ob Sie Erinnerungs-E-Mails erhalten möchten.",
               "inApp": {
                 "title": "Benachrichtigungen in der App",
                 "description": "Diese Benachrichtigungen sind in der App immer aktiviert.",
-                "ariaLabel": "Benachrichtigungen in der App sind aktiviert und erforderlich"
+                "ariaLabel": "Benachrichtigungen in der App sind aktiviert und erforderlich",
+                "status": "Verpflichtend"
               },
               "important": {
                 "title": "Wichtige E-Mail-Benachrichtigungen",
                 "description": "Wichtige Konto-E-Mails bleiben aus Sicherheits- und Servicegründen aktiviert.",
-                "ariaLabel": "Wichtige E-Mail-Benachrichtigungen sind aktiviert und erforderlich"
+                "ariaLabel": "Wichtige E-Mail-Benachrichtigungen sind aktiviert und erforderlich",
+                "status": "Verpflichtend"
               },
               "reminders": {
                 "title": "Erinnerungs-E-Mails",
                 "description": "Aktivieren Sie Erinnerungs-E-Mails, wenn Sie Erinnerungen zu Ihren Buchungen erhalten möchten.",
                 "ariaLabel": "Erinnerungs-E-Mail-Benachrichtigungen umschalten",
-                "error": "Die Erinnerungs-Benachrichtigungen konnten nicht aktualisiert werden."
+                "error": "Die Erinnerungs-Benachrichtigungen konnten nicht aktualisiert werden.",
+                "enabled": "Erinnerungs-E-Mails aktiviert.",
+                "disabled": "Erinnerungs-E-Mails deaktiviert.",
+                "saving": "Änderungen werden gespeichert..."
               }
             }
           }

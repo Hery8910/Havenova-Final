@@ -19,6 +19,8 @@ import type {
 } from './navbar.types';
 import { FaCog } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
+import type { UserClientProfile } from '../../../types';
+import { normalizeNavbarAvatar } from './navbar.helpers';
 
 const DEFAULT_MENU_LINKS: NavLinkItem[] = [
   { label: 'Home', href: '/', icon: HiHome },
@@ -76,6 +78,9 @@ export interface ResolvedNavbarSession {
   isLoggedIn: boolean;
   accountMenuTitle: string;
   logoutLabel: string;
+  displayName?: string;
+  avatarSrc?: string;
+  avatarAlt: string;
 }
 
 export interface ResolvedNavbarLanguageOption {
@@ -203,10 +208,12 @@ export function getNavbarContent({
   texts,
   navbarConfig,
   auth,
+  profile,
 }: {
   texts: Messages;
   navbarConfig?: NavbarConfig;
   auth: AuthUser;
+  profile?: UserClientProfile | null;
 }): ResolvedNavbarContent {
   const navbarTexts = texts?.components?.client?.navbar;
   const navbarAccountLinkTexts = navbarTexts?.accountLinks;
@@ -313,8 +320,14 @@ export function getNavbarContent({
     },
     session: {
       isLoggedIn: auth.isLogged,
-      accountMenuTitle: texts?.components?.client?.navbar?.accountMenuTitle ?? a11y.accountLabel,
+      accountMenuTitle:
+        profile?.name?.trim() ||
+        texts?.components?.client?.navbar?.accountMenuTitle ||
+        a11y.accountLabel,
       logoutLabel: navbarTexts?.session?.logoutLabel ?? 'Logout',
+      displayName: profile?.name?.trim() || undefined,
+      avatarSrc: auth.isLogged ? normalizeNavbarAvatar(profile?.profileImage) || undefined : undefined,
+      avatarAlt: profile?.name?.trim() ? `${profile.name} avatar` : a11y.accountLabel,
     },
     a11y,
   };

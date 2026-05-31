@@ -6,13 +6,13 @@ import styles from './NavbarMobileView.module.css';
 import sharedStyles from '../NavbarShared.module.css';
 import { AuthUser } from '../../../../types';
 import type { ResolvedNavbarContent } from '../navbar.shared';
-import { CgProfile } from 'react-icons/cg';
 import { IoIosSettings } from 'react-icons/io';
 import { FiTool } from 'react-icons/fi';
 import { NavbarAccountContent } from '../components/NavbarAccountContent';
 import Image from 'next/image';
 import { NavbarLinkList } from '../components/NavbarLinkList';
 import { NavbarPanelSection } from '../components/NavbarPanelSection';
+import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 import { IoClose } from 'react-icons/io5';
@@ -113,10 +113,10 @@ export function NavbarMobileView({
         {visibleSection === 'auth' && (
           <NavbarPanelSection
             className={styles.mobilePanelContent}
-            title={profileButtonLabel}
+            title={session.displayName ?? profileButtonLabel}
             titleId={accountTitleId}
             headerClassName={`${sharedStyles.panelHeader} ${styles.mobilePanelHeader}`}
-            titleClassName={styles.mobilePanelTitle}
+            titleClassName={`${styles.mobilePanelTitle} ${sharedStyles.panelIdentityTitle}`}
             headerAction={mobilePanelCloseButton}
             showHandle
             handleClassName={styles.panelHandle}
@@ -190,6 +190,7 @@ export function NavbarMobileView({
                 <LanguageSwitcher
                   presentation="modal"
                   triggerDisplay="icon-with-value"
+                  panelVariant="navbar"
                   labels={preferences.languageSwitcher}
                 />
               </li>
@@ -248,7 +249,11 @@ export function NavbarMobileView({
               aria-controls={panelId}
               onClick={() => toggleSection('auth')}
             >
-              <CgProfile />
+              <NavbarProfileTrigger
+                avatarSrc={session.avatarSrc}
+                alt={session.avatarAlt}
+                fallbackLabel={profileButtonLabel}
+              />
               <span className={sharedStyles.srOnly}>{profileButtonLabel}</span>
             </button>
           </li>

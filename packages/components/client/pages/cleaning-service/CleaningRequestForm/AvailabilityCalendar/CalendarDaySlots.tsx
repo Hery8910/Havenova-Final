@@ -52,11 +52,7 @@ export default function CalendarDaySlots({
 
   if (slots.length === 0) {
     return (
-      <aside
-        className={`${styles.panel} glass-panel--base glass-card--primary`}
-        aria-labelledby={headingId}
-        aria-live="polite"
-      >
+      <aside className={`${styles.panel} `} aria-labelledby={headingId} aria-live="polite">
         <header className={styles.header}>
           <section className={styles.headerCopy}>
             <p className={styles.eyebrow}>{copy.title}</p>
@@ -81,7 +77,6 @@ export default function CalendarDaySlots({
     <aside className={styles.panel} aria-labelledby={headingId} aria-live="polite">
       <header className={styles.header}>
         <section className={styles.headerCopy}>
-          <p className={styles.eyebrow}>{copy.title}</p>
           <h3 id={headingId} className={styles.title}>
             {formatLongDate(date)}
           </h3>
@@ -107,7 +102,7 @@ export default function CalendarDaySlots({
             <li key={`${slot.date}-${slot.start}-${slot.end}`} className={styles.slotItem}>
               <button
                 type="button"
-                className={`${styles.slotButton} ${slot.blocked ? styles.blocked : styles.available} ${
+                className={`button button--outline ${styles.slotButton} ${slot.blocked ? styles.blocked : styles.available} ${
                   isSelected ? styles.selected : ''
                 }`}
                 onClick={() =>
@@ -135,7 +130,7 @@ export default function CalendarDaySlots({
                       ? 'badge--neutral'
                       : isSelected
                         ? 'badge--primary'
-                        : 'badge--accent'
+                        : 'badge--secondary'
                   } ${styles.slotBadge}`}
                 >
                   {slot.blocked

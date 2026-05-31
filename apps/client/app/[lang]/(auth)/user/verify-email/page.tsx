@@ -28,15 +28,6 @@ import Link from 'next/link';
 import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
-const ALERT_DEBUG = true;
-const ALERT_DEBUG_STATE = 'warning' as
-  | 'loading'
-  | 'success'
-  | 'error'
-  | 'confirm'
-  | 'warning'
-  | 'info';
-
 const VerifyEmailPageContent = () => {
   const AUTO_REDIRECT_MS = 4000;
   const router = useRouter();
@@ -61,7 +52,7 @@ const VerifyEmailPageContent = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { showError, showSuccess, showConfirm, showLoading, closeAlert } = useGlobalAlert();
+  const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const { handleVerifyEmail, handleMagicLogin, handleResendEmail } = useVerifyEmailActions();
 
   // Evitar doble ejecución del efecto en modo dev / StrictMode
@@ -124,79 +115,6 @@ const VerifyEmailPageContent = () => {
     // Evita doble ejecución en Strict Mode
     if (didRunRef.current) return;
     didRunRef.current = true;
-
-    if (ALERT_DEBUG) {
-      const previewBase = {
-        title: `Alert preview: ${ALERT_DEBUG_STATE}`,
-        description: 'Temporary alert preview block for visual QA. Remove after testing.',
-      };
-
-      switch (ALERT_DEBUG_STATE) {
-        case 'loading':
-          showLoading({
-            response: previewBase,
-          });
-          return;
-        case 'success':
-          showSuccess({
-            response: {
-              ...previewBase,
-              variant: 'success',
-              confirmLabel: alertButtons.continue,
-              cancelLabel: alertButtons.close,
-            },
-            onConfirm: closeAlert,
-            onCancel: closeAlert,
-          });
-          return;
-        case 'confirm':
-          showConfirm({
-            response: {
-              ...previewBase,
-              confirmLabel: alertButtons.continue,
-              cancelLabel: alertButtons.close,
-            },
-            onConfirm: closeAlert,
-            onCancel: closeAlert,
-          });
-          return;
-        case 'warning':
-          showError({
-            response: {
-              ...previewBase,
-              variant: 'warning',
-              confirmLabel: alertButtons.continue,
-              cancelLabel: alertButtons.close,
-            },
-            onConfirm: closeAlert,
-            onCancel: closeAlert,
-          });
-          return;
-        case 'info':
-          showError({
-            response: {
-              ...previewBase,
-              variant: 'info',
-              cancelLabel: alertButtons.close,
-            },
-            onCancel: closeAlert,
-          });
-          return;
-        case 'error':
-        default:
-          showError({
-            response: {
-              ...previewBase,
-              variant: 'error',
-              confirmLabel: alertButtons.reload,
-              cancelLabel: alertButtons.close,
-            },
-            onConfirm: closeAlert,
-            onCancel: closeAlert,
-          });
-      }
-      return;
-    }
 
     // Envuelve en microtarea para asegurar que React estabilizó el árbol antes de correr
     Promise.resolve().then(async () => {
@@ -339,7 +257,6 @@ const VerifyEmailPageContent = () => {
     refreshAuth,
     router,
     showError,
-    showConfirm,
     showLoading,
     showSuccess,
     token,

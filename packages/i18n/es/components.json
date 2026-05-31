@@ -34,8 +34,8 @@
         "language": "Idioma",
         "themeToggle": {
           "buttonLabel": "Tema",
-          "darkMode": "Modo oscuro",
-          "lightMode": "Modo claro"
+          "darkMode": "Oscuro",
+          "lightMode": "Claro"
         }
       },
       "accountLinks": {
@@ -757,6 +757,38 @@
       "support": {
         "heading": "Support",
         "description": "Tell us about your issue and we will get back to you."
+      }
+    },
+    "sideNav": {
+      "common": {
+        "navigationLabel": "Navegación de sección",
+        "mainListLabel": "Páginas principales",
+        "footerListLabel": "Acciones de la cuenta",
+        "settings": "Configuración",
+        "logout": "Cerrar sesión",
+        "collapse": "Contraer navegación",
+        "expand": "Expandir navegación"
+      },
+      "user": {
+        "pages": {
+          "overview": "Resumen",
+          "workOrders": "Órdenes de trabajo",
+          "workRequests": "Solicitudes de trabajo",
+          "notifications": "Notificaciones"
+        }
+      },
+      "dashboard": {
+        "pages": {
+          "dashboard": "Dashboard",
+          "requests": "Solicitudes",
+          "clients": "Clientes",
+          "propertyManager": "Administrador de inmuebles",
+          "objects": "Objetos",
+          "taskCatalog": "Catálogo de tareas",
+          "employees": "Empleados",
+          "messages": "Mensajes",
+          "notifications": "Notificaciones"
+        }
       }
     },
     "sidebar": {

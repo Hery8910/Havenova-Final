@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import styles from './PropertyDetailsStep.module.css';
 import { PropertySizeRange } from '../../../../../../types/services';
+import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
 
 type Props = {
   showTitle?: boolean;
@@ -68,6 +69,9 @@ export default function PropertyDetailsStep({
   const roomsErrorId = useId();
   const detailsErrorId = useId();
   const roomsGroupLabelId = useId();
+  const balconyCheckboxId = useId();
+  const indoorStairsCheckboxId = useId();
+  const petsCheckboxId = useId();
 
   return (
     <section className={styles.container} aria-labelledby={titleId}>
@@ -96,11 +100,6 @@ export default function PropertyDetailsStep({
             </option>
           ))}
         </select>
-        {errors.sizeRange ? (
-          <span className={styles.errorText} id={sizeRangeErrorId}>
-            {errors.sizeRange}
-          </span>
-        ) : null}
       </label>
 
       <div className={`label ${styles.field}`}>
@@ -119,7 +118,7 @@ export default function PropertyDetailsStep({
             onClick={onRoomsDecrement}
             aria-label={property.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
           >
-            -
+            <CgMathMinus />
           </button>
           <output className={styles.counterValue} aria-live="polite">
             {values.roomsCount || '1'}
@@ -130,64 +129,51 @@ export default function PropertyDetailsStep({
             onClick={onRoomsIncrement}
             aria-label={property.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
           >
-            +
+            <CgMathPlus />
           </button>
         </div>
-        {errors.roomsCount ? (
-          <span className={styles.errorText} id={roomsErrorId}>
-            {errors.roomsCount}
-          </span>
-        ) : null}
       </div>
 
       <fieldset className={styles.flagsGroup}>
         <legend className={styles.legend}>{property.hasBalconyLabel}</legend>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={values.hasBalcony}
-          className={`button button--outline ${styles.switch} ${values.hasBalcony ? styles.switchActive : ''}`}
-          onClick={onBalconyToggle}
-        >
-          <span className={styles.switchTrack}>
-            <span className={styles.switchThumb} />
-          </span>
-          <span className={styles.switchLabel}>{values.hasBalcony ? common.yes : common.no}</span>
-        </button>
+        <label className={styles.checkboxLabel} htmlFor={balconyCheckboxId}>
+          <input
+            id={balconyCheckboxId}
+            type="checkbox"
+            checked={values.hasBalcony}
+            onChange={onBalconyToggle}
+            className={styles.checkboxInput}
+          />
+          <span className={styles.customCheckbox} aria-hidden="true" />
+        </label>
       </fieldset>
 
       <fieldset className={styles.flagsGroup}>
         <legend className={styles.legend}>{property.hasIndoorStairsLabel}</legend>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={values.hasIndoorStairs}
-          className={`button button--outline ${styles.switch} ${values.hasIndoorStairs ? styles.switchActive : ''}`}
-          onClick={onIndoorStairsToggle}
-        >
-          <span className={styles.switchTrack}>
-            <span className={styles.switchThumb} />
-          </span>
-          <span className={styles.switchLabel}>
-            {values.hasIndoorStairs ? common.yes : common.no}
-          </span>
-        </button>
+        <label className={styles.checkboxLabel} htmlFor={indoorStairsCheckboxId}>
+          <input
+            id={indoorStairsCheckboxId}
+            type="checkbox"
+            checked={values.hasIndoorStairs}
+            onChange={onIndoorStairsToggle}
+            className={styles.checkboxInput}
+          />
+          <span className={styles.customCheckbox} aria-hidden="true" />
+        </label>
       </fieldset>
 
       <fieldset className={styles.flagsGroup}>
         <legend className={styles.legend}>{property.hasPetsLabel}</legend>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={values.hasPets}
-          className={`button button--outline ${styles.switch} ${values.hasPets ? styles.switchActive : ''}`}
-          onClick={onPetsToggle}
-        >
-          <span className={styles.switchTrack}>
-            <span className={styles.switchThumb} />
-          </span>
-          <span className={styles.switchLabel}>{values.hasPets ? common.yes : common.no}</span>
-        </button>
+        <label className={styles.checkboxLabel} htmlFor={petsCheckboxId}>
+          <input
+            id={petsCheckboxId}
+            type="checkbox"
+            checked={values.hasPets}
+            onChange={onPetsToggle}
+            className={styles.checkboxInput}
+          />
+          <span className={styles.customCheckbox} aria-hidden="true" />
+        </label>
       </fieldset>
 
       <label
@@ -207,11 +193,6 @@ export default function PropertyDetailsStep({
           aria-describedby={errors.details ? detailsErrorId : undefined}
           rows={5}
         />
-        {errors.details ? (
-          <span className={styles.errorText} id={detailsErrorId}>
-            {errors.details}
-          </span>
-        ) : null}
       </label>
     </section>
   );

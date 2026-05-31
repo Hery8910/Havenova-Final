@@ -18,6 +18,7 @@
 /.next/
 /out/
 /**/.next/              # <-- Ignora .next en subcarpetas
+/**/.next*/
 
 # production
 /build

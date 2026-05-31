@@ -4,7 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useProfile } from '../../../../../../contexts';
 import type { UserAddress } from '../../../../../../types/profile';
 import type { WorkAddressSelection } from '../../../../../../types/services';
-import AddressFormFields from './AddressFormFields';
+import AddressFormFields from '../../../../shared/addressFormFields/AddressFormFields';
 import {
   buildAddressOptions,
   createEmptyUserAddress,

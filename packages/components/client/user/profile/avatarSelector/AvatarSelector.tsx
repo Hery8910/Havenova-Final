@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useId, useRef, useState } from 'react';
+import type { JSX } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { IoClose } from 'react-icons/io5';
@@ -7,10 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import styles from './AvatarSelector.module.css';
 
-import {
-  getI18nFallbacks,
-  useI18n,
-} from '../../../../../contexts/i18n';
+import { getI18nFallbacks, useI18n } from '../../../../../contexts/i18n';
 import { getPopup } from '@havenova/utils/alertType';
 import { useLang } from '../../../../../hooks';
 import { href } from '@havenova/utils/navigation';
@@ -32,6 +30,7 @@ export default function AvatarSelector() {
 
   const popups = texts.popups;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
+  const avatarSelectorTexts = texts?.pages?.client?.user?.profile?.details?.avatarSelector;
 
   const { profile, setProfileImage, reloadProfile } = useProfile();
   const { auth } = useAuth();
@@ -83,6 +82,21 @@ export default function AvatarSelector() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [open, saving]);
+
+  const openButtonLabel =
+    avatarSelectorTexts?.openButton ??
+    texts?.components?.client?.form?.labels?.profileImage ??
+    'Change profile image';
+  const closeButtonLabel = avatarSelectorTexts?.closeButton ?? 'Close avatar selector';
+  const dialogTitle = avatarSelectorTexts?.title ?? 'Choose a profile avatar';
+  const dialogDescription =
+    avatarSelectorTexts?.description ?? 'Select one of the available images for your profile.';
+  const avatarOptionsLabel = avatarSelectorTexts?.optionsLabel ?? 'Avatar options';
+  const avatarListLabel = avatarSelectorTexts?.listAriaLabel ?? 'Avatar list';
+  const chooseAvatarLabel = avatarSelectorTexts?.chooseAvatarAriaLabel ?? 'Choose avatar';
+  const selectedAvatarLabel = avatarSelectorTexts?.selectedAvatarAriaLabel ?? 'Selected avatar';
+  const submitLabel = avatarSelectorTexts?.submitButton ?? 'Choose selected';
+  const savingLabel = avatarSelectorTexts?.saving ?? 'Saving...';
 
   const handleSubmit = async () => {
     try {
@@ -180,31 +194,18 @@ export default function AvatarSelector() {
     }
   };
 
-  return (
-    <section className={styles.main}>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={styles.button}
-        aria-label={
-          texts?.components?.client?.form?.labels?.profileImage || 'Change profile image'
-        }
-        title={texts?.components?.client?.form?.labels?.profileImage || 'Change profile image'}
-      >
-        <MdOutlinePhotoCamera aria-hidden="true" />
-      </button>
-      {mounted &&
-        open &&
-        createPortal(
+  const dialogPortal: JSX.Element | null =
+    mounted && open
+      ? (createPortal(
           <div
-            className={styles.overlay}
+            className={`${styles.overlay} card card--neutral`}
             onClick={() => {
               if (!saving) setOpen(false);
             }}
           >
             <article
               ref={dialogRef}
-              className={`${styles.article} glass-panel--base`}
+              className={`${styles.article} card card--secondary`}
               role="dialog"
               aria-modal="true"
               aria-labelledby={dialogTitleId}
@@ -216,7 +217,7 @@ export default function AvatarSelector() {
                 type="button"
                 onClick={() => setOpen(false)}
                 className={styles.closeButton}
-                aria-label="Close avatar selector"
+                aria-label={closeButtonLabel}
                 disabled={saving}
               >
                 <IoClose aria-hidden="true" />
@@ -225,58 +226,78 @@ export default function AvatarSelector() {
               <div className={styles.modalContent}>
                 <header className={styles.header}>
                   <h3 id={dialogTitleId} className={styles.title}>
-                    Choose a profile avatar
+                    {dialogTitle}
                   </h3>
                   <p id={dialogDescriptionId} className={styles.description}>
-                    Select one of the available images for your profile.
+                    {dialogDescription}
                   </p>
                 </header>
 
-                <aside className={styles.aside} aria-label="Avatar options">
-                  <ul className={styles.ul} role="listbox" aria-label="Avatar list">
-                    {avatarList.map((src) => (
-                      <li
-                        className={styles.li}
-                        key={src}
-                        role="option"
-                        aria-selected={selectedAvatar === src}
-                        tabIndex={0}
-                        onClick={() => setSelectedAvatar(src)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            setSelectedAvatar(src);
-                          }
-                        }}
-                        aria-label={`Choose avatar ${src.split('/').pop()}`}
-                      >
-                        <Image
-                          className={`${styles.image} ${selectedAvatar === src ? styles.selected : ''}`}
-                          src={src}
-                          alt=""
-                          width={60}
-                          height={60}
-                          aria-hidden="true"
-                        />
-                      </li>
-                    ))}
+                <section className={styles.aside} aria-label={avatarOptionsLabel}>
+                  <ul className={styles.ul} role="radiogroup" aria-label={avatarListLabel}>
+                    {avatarList.map((src, index) => {
+                      const isSelected = selectedAvatar === src;
+                      const optionName = `${chooseAvatarLabel} ${index + 1}`;
+
+                      return (
+                        <li className={styles.li} key={src}>
+                          <button
+                            type="button"
+                            role="radio"
+                            className={styles.optionButton}
+                            onClick={() => setSelectedAvatar(src)}
+                            aria-label={optionName}
+                            aria-checked={isSelected}
+                            aria-describedby={isSelected ? dialogDescriptionId : undefined}
+                          >
+                            <Image
+                              className={`${styles.image} ${isSelected ? styles.selected : ''}`}
+                              src={src}
+                              alt=""
+                              width={60}
+                              height={60}
+                              aria-hidden="true"
+                            />
+                            {isSelected ? (
+                              <span className={styles.srOnly}>
+                                {selectedAvatarLabel} {index + 1}
+                              </span>
+                            ) : null}
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
-                </aside>
+                </section>
               </div>
 
               <button
                 type="button"
                 onClick={handleSubmit}
-                className={styles.submitButton}
+                className="button button--secondary"
                 disabled={saving}
                 aria-busy={saving}
               >
-                {saving ? 'Saving...' : 'Choose Selected'}
+                {saving ? savingLabel : submitLabel}
               </button>
             </article>
           </div>,
           document.body
-        )}
+        ) as unknown as JSX.Element)
+      : null;
+
+  return (
+    <section className={styles.main}>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={`${styles.button} card card--neutral`}
+        aria-label={openButtonLabel}
+        title={openButtonLabel}
+      >
+        <MdOutlinePhotoCamera aria-hidden="true" />
+      </button>
+      {dialogPortal}
     </section>
   );
 }

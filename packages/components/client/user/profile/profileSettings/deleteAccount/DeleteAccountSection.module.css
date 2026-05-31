@@ -1,0 +1,64 @@
+.card {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 18px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--feedback-error-border);
+}
+
+.copy {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: var(--type-label-size);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--feedback-error-text);
+}
+
+.title {
+  margin: 0;
+  color: var(--card-neutral-text-primary);
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+}
+
+.description {
+  margin: 0;
+  color: var(--card-neutral-text-secondary);
+}
+
+.warning {
+  margin: 0;
+  color: var(--card-neutral-text-primary);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .card {
+    padding: 16px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions :global(.button) {
+    width: 100%;
+    justify-content: center;
+  }
+}

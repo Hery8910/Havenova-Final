@@ -168,8 +168,8 @@
             "imageAlt": "Edificio residencial en una zona privada"
           },
           {
-            "title": "Administración de fincas",
-            "description": "Apoyamos a las empresas de administración de fincas estructurando las solicitudes, mejorando la comunicación y manteniendo una visión transparente del servicio al hogar y del servicio de limpieza en varios inmuebles.",
+            "title": "Administración de inmuebles",
+            "description": "Apoyamos a las empresas de administración de inmuebles, estructurando las solicitudes, mejorando la comunicación y manteniendo una visión transparente del servicio al hogar y del servicio de limpieza en varios inmuebles.",
             "image": "/images/property-management.png",
             "imageAlt": "Fachada de un edificio residencial de varias viviendas"
           },
@@ -187,6 +187,29 @@
           }
         ],
         "closing": "Nuestro enfoque está en la claridad, la organización y la fiabilidad a largo plazo."
+      },
+      "servicesCta": {
+        "eyebrow": "Solicitar un servicio",
+        "title": "Elige el servicio que mejor encaje con lo que necesitas hoy",
+        "description": "Si ya sabes qué tipo de ayuda necesitas, puedes ir directamente al formulario adecuado y enviarnos tu solicitud con el contexto correcto desde el primer paso.",
+        "a11y": {
+          "sectionLabel": "Accesos directos a los formularios de servicios de Havenova",
+          "actionsLabel": "Opciones para solicitar un servicio"
+        },
+        "actions": [
+          {
+            "label": "Ir a servicio de limpieza",
+            "href": "/cleaning-service",
+            "ariaLabel": "Abrir la página de solicitud de servicio de limpieza",
+            "variant": "primary"
+          },
+          {
+            "label": "Ir a servicio al hogar",
+            "href": "/home-service",
+            "ariaLabel": "Abrir la página de solicitud de servicio al hogar",
+            "variant": "secondary"
+          }
+        ]
       }
     },
     "cleaning": {
@@ -221,6 +244,23 @@
           }
         }
       },
+      "relatedServiceCta": {
+        "eyebrow": "¿Necesitas otra ayuda?",
+        "title": "También puedes solicitar apoyo para tareas y reparaciones del hogar",
+        "description": "Si además de limpieza necesitas montaje, pequeñas reparaciones o ayuda práctica en casa, usa el formulario de servicio al hogar para enviarnos ese tipo de solicitud.",
+        "a11y": {
+          "sectionLabel": "Sección relacionada con el servicio al hogar",
+          "actionsLabel": "Acciones para continuar con otro servicio"
+        },
+        "actions": [
+          {
+            "label": "Solicitar servicio al hogar",
+            "href": "/home-service",
+            "ariaLabel": "Ir a la página de solicitud de servicio al hogar",
+            "variant": "secondary"
+          }
+        ]
+      },
       "form": {
         "process": {
           "title": "Completa tu solicitud de limpieza en 5 pasos",
@@ -253,9 +293,9 @@
           "recommendedLabel": "Más solicitada",
           "options": {
             "once": "Una vez",
-            "two_per_month": "2 veces al mes",
+            "two_per_month": "2x por mes",
             "weekly": "Semanal",
-            "three_per_month": "3 veces al mes"
+            "three_per_month": "3x por mes"
           },
           "discounts": {
             "once": "0% de descuento",
@@ -433,6 +473,23 @@
             "href": "/user/register"
           }
         }
+      },
+      "relatedServiceCta": {
+        "eyebrow": "¿Necesitas algo distinto?",
+        "title": "Para necesidades de limpieza, usa el formulario específico de ese servicio",
+        "description": "Si lo que buscas es limpieza periódica, profunda o de entrada y salida, te conviene enviar la solicitud desde el flujo de limpieza para compartir los detalles adecuados.",
+        "a11y": {
+          "sectionLabel": "Sección relacionada con el servicio de limpieza",
+          "actionsLabel": "Acciones para cambiar al formulario de limpieza"
+        },
+        "actions": [
+          {
+            "label": "Solicitar servicio de limpieza",
+            "href": "/cleaning-service",
+            "ariaLabel": "Ir a la página de solicitud de servicio de limpieza",
+            "variant": "secondary"
+          }
+        ]
       },
       "form": {
         "process": {
@@ -716,19 +773,6 @@
         "info": "Elige una nueva contraseña para tu cuenta.",
         "button": "Guardar contraseña"
       },
-      "profileHeader": {
-        "ariaLabel": "Área de usuario",
-        "verified": "Verificado",
-        "verifiedAria": "Cuenta verificada",
-        "missingName": "Falta el nombre",
-        "greeting": "Bienvenido de nuevo",
-        "completion": {
-          "title": "Progreso del perfil",
-          "info": "Completa los datos que faltan para mejorar tu flujo de reservas y comunicación.",
-          "progressAriaLabel": "Progreso de completado del perfil",
-          "percentageAriaLabel": "Porcentaje de completado del perfil"
-        }
-      },
       "profileNav": {
         "profile": "Perfil",
         "requests": "Solicitudes de trabajo",
@@ -776,6 +820,18 @@
           "tableAriaLabel": "Detalles del perfil del usuario",
           "formAriaLabel": "Editar detalles del perfil del usuario",
           "emptyValue": "No proporcionado",
+          "avatarSelector": {
+            "openButton": "Cambiar imagen de perfil",
+            "closeButton": "Cerrar selector de avatar",
+            "title": "Elegir un avatar de perfil",
+            "description": "Selecciona una de las imágenes disponibles para tu perfil.",
+            "optionsLabel": "Opciones de avatar",
+            "listAriaLabel": "Lista de avatares",
+            "chooseAvatarAriaLabel": "Elegir avatar",
+            "selectedAvatarAriaLabel": "Avatar seleccionado",
+            "submitButton": "Elegir seleccionado",
+            "saving": "Guardando..."
+          },
           "labels": {
             "name": "Nombre",
             "email": "Correo electrónico",
@@ -825,23 +881,33 @@
               "light": "Modo claro",
               "dark": "Modo oscuro"
             },
+            "cookies": {
+              "title": "Cookies",
+              "buttonLabel": "Abrir aviso de cookies"
+            },
             "notifications": {
               "title": "Notificaciones",
+              "description": "Revisa qué notificaciones son obligatorias y elige si quieres recibir correos de recordatorio.",
               "inApp": {
                 "title": "Notificaciones dentro de la app",
                 "description": "Estas notificaciones siempre están activadas dentro de la aplicación.",
-                "ariaLabel": "Notificaciones dentro de la app activadas y obligatorias"
+                "ariaLabel": "Notificaciones dentro de la app activadas y obligatorias",
+                "status": "Obligatorias"
               },
               "important": {
                 "title": "Notificaciones importantes por correo",
                 "description": "Los correos importantes de la cuenta permanecen activados por seguridad y actualizaciones del servicio.",
-                "ariaLabel": "Notificaciones importantes por correo activadas y obligatorias"
+                "ariaLabel": "Notificaciones importantes por correo activadas y obligatorias",
+                "status": "Obligatorias"
               },
               "reminders": {
                 "title": "Correos de recordatorio",
                 "description": "Activa los correos de recordatorio si quieres recibir avisos sobre tus reservas.",
                 "ariaLabel": "Alternar notificaciones de recordatorio por correo",
-                "error": "No pudimos actualizar tus notificaciones de recordatorio."
+                "error": "No pudimos actualizar tus notificaciones de recordatorio.",
+                "enabled": "Correos de recordatorio activados.",
+                "disabled": "Correos de recordatorio desactivados.",
+                "saving": "Guardando cambios..."
               }
             }
           }

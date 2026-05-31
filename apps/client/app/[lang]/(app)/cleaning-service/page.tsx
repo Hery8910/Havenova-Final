@@ -7,6 +7,10 @@ import {
   type CleaningRequestFormSubmission,
 } from '../../../../../../packages/components/client/pages/cleaning-service';
 import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
+import {
+  ServiceCrossCtaSection,
+  type ServiceCrossCtaSectionTexts,
+} from '../../../../../../packages/components/client/pages/shared';
 import { useLang } from '../../../../../../packages/hooks';
 import {
   useAuth,
@@ -44,6 +48,7 @@ interface RequestError {
 
 export interface CleaningServicePageTexts {
   hero: PageHeroContent;
+  relatedServiceCta: ServiceCrossCtaSectionTexts;
   authAlert: {
     title: string;
     description: string;
@@ -394,6 +399,7 @@ export default function CleaningService() {
         onRequireAuth={() => setIsAlertClosed(false)}
         onSubmit={handleMainFormSubmit}
       />
+      <ServiceCrossCtaSection texts={cleaning.relatedServiceCta} lang={lang} />
     </main>
   );
 }

@@ -1,6 +1,5 @@
 'use client';
 import { useId, useRef } from 'react';
-import { CgProfile } from 'react-icons/cg';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import styles from './NavbarTabletView.module.css';
@@ -11,6 +10,7 @@ import { NavbarAccountContent } from '../components/NavbarAccountContent';
 import { NavbarBrand } from '../components/NavbarBrand';
 import { NavbarLinkList } from '../components/NavbarLinkList';
 import { NavbarPanelSection } from '../components/NavbarPanelSection';
+import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 
@@ -21,6 +21,7 @@ export interface NavbarTabletViewProps {
   content: ResolvedNavbarContent;
   onNavigate: (href: string) => void;
   onLogout: () => Promise<void>;
+  hideAccountControls?: boolean;
   bellSlot?: (() => JSX.Element) | null;
 }
 
@@ -29,6 +30,7 @@ export function NavbarTabletView({
   content,
   onNavigate,
   onLogout,
+  hideAccountControls = false,
   bellSlot,
 }: NavbarTabletViewProps) {
   const tabletNavRef = useRef<HTMLElement>(null);
@@ -95,28 +97,35 @@ export function NavbarTabletView({
                 <LanguageSwitcher
                   presentation="dropdown"
                   triggerDisplay="icon"
+                  panelVariant="navbar"
                   labels={preferences.languageSwitcher}
                 />
               </div>
             </div>
-            <div className={styles.accountActionsGroup}>
-              {BellSlot ? (
-                <div className={sharedStyles.notificationSlot}>
-                  <BellSlot />
-                </div>
-              ) : null}
-              <button
-                type="button"
-                className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton}`}
-                aria-label={a11y.profileToggle}
-                aria-expanded={accountOpen}
-                aria-controls={accountPanelId}
-                onClick={() => togglePanel('account')}
-              >
-                <CgProfile />
-                <span className={sharedStyles.srOnly}>{profileButtonLabel}</span>
-              </button>
-            </div>
+            {!hideAccountControls ? (
+              <div className={styles.accountActionsGroup}>
+                {BellSlot ? (
+                  <div className={sharedStyles.notificationSlot}>
+                    <BellSlot />
+                  </div>
+                ) : null}
+                <button
+                  type="button"
+                  className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton}`}
+                  aria-label={a11y.profileToggle}
+                  aria-expanded={accountOpen}
+                  aria-controls={accountPanelId}
+                  onClick={() => togglePanel('account')}
+                >
+                  <NavbarProfileTrigger
+                    avatarSrc={session.avatarSrc}
+                    alt={session.avatarAlt}
+                    fallbackLabel={profileButtonLabel}
+                  />
+                  <span className={sharedStyles.srOnly}>{profileButtonLabel}</span>
+                </button>
+              </div>
+            ) : null}
             <button
               type="button"
               className={`button button--ghost ${sharedStyles.menuButton} ${styles.menuButton} ${
@@ -136,7 +145,9 @@ export function NavbarTabletView({
           <div className={styles.tabletSection}>
             <nav
               className={`${styles.tabletPanel} card card--neutral ${
-                activePanel ? styles.tabletPanelOpen : ''
+                activePanel && (!hideAccountControls || activePanel === 'menu')
+                  ? styles.tabletPanelOpen
+                  : ''
               }`}
               id={activePanel ? (activePanel === 'menu' ? menuPanelId : accountPanelId) : undefined}
               aria-labelledby={
@@ -146,10 +157,16 @@ export function NavbarTabletView({
             >
               {activePanel ? (
                 <NavbarPanelSection
-                  title={activePanel === 'menu' ? menuPanelTitle : session.accountMenuTitle}
+                  title={
+                    activePanel === 'menu'
+                      ? menuPanelTitle
+                      : (session.displayName ?? session.accountMenuTitle)
+                  }
                   titleId={activePanel === 'menu' ? menuTitleId : accountTitleId}
                   headerClassName={sharedStyles.panelHeader}
-                  titleClassName={styles.panelTitle}
+                  titleClassName={`${styles.panelTitle} ${
+                    activePanel === 'account' ? sharedStyles.panelIdentityTitle : ''
+                  }`}
                 >
                   {activePanel === 'menu' ? (
                     <NavbarLinkList
@@ -158,7 +175,7 @@ export function NavbarTabletView({
                       animated
                       animationDirection="down"
                     />
-                  ) : (
+                  ) : !hideAccountControls ? (
                     <NavbarAccountContent
                       authIsLogged={session.isLoggedIn}
                       userLinks={userLinks}
@@ -171,7 +188,7 @@ export function NavbarTabletView({
                       animated
                       animationDirection="down"
                     />
-                  )}
+                  ) : null}
                 </NavbarPanelSection>
               ) : null}
             </nav>

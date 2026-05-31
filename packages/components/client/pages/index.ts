@@ -4,3 +4,4 @@ export * from './about';
 export * from './cleaning-service';
 export * from './home-service';
 export * from './hero';
+export * from './shared';

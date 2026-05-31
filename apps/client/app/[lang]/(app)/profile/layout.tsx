@@ -1,7 +1,6 @@
 // app/profile/layout.tsx
 import React from 'react';
 import { Metadata } from 'next';
-import { ProfileHeader } from '@/packages/components/client/user/profile/profileHeader/ProfileHeader';
 import { ProfileNav } from '@/packages/components/client/user/profile/profileNav/ProfileNav';
 import { getPageMetadata } from '@/packages/utils/metadata';
 import styles from './layout.module.css';
@@ -16,14 +15,14 @@ export async function generateMetadata({
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className={styles.layout}>
-      <header className={`${styles.header} glass-panel--base`}>
-        <ProfileHeader />
-      </header>
-      <nav className={styles.nav} aria-label="Profile navigation">
-        <ProfileNav />
-      </nav>
-      <section className={styles.section}>{children}</section>
+    <main className={styles.page}>
+      <section className={`${styles.workspace} card card--primary`} aria-label="Profile workspace">
+        <aside className={styles.navColumn} aria-label="Profile navigation">
+          <ProfileNav />
+        </aside>
+
+        <section className={styles.section}>{children}</section>
+      </section>
     </main>
   );
 }

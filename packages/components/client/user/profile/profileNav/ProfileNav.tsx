@@ -1,82 +1,74 @@
 'use client';
 
-import Link from 'next/link';
-import { FaUser, FaBell, FaListUl, FaCog } from 'react-icons/fa';
+import { FaBell, FaCog, FaListUl, FaUser } from 'react-icons/fa';
 import { FaBriefcase } from 'react-icons/fa6';
-import { usePathname } from 'next/navigation';
-import { LuLogOut } from 'react-icons/lu';
+
 import { useAuth } from '../../../../../contexts/auth/authContext';
 import { useI18n } from '../../../../../contexts/i18n/I18nContext';
 import { useLang } from '../../../../../hooks/useLang';
 import { href } from '../../../../../utils/navigation';
-import styles from './ProfileNav.module.css';
-
-const routes = [
-  { key: 'overview', path: '/profile', icon: <FaUser aria-hidden /> },
-  { key: 'orders', path: '/profile/orders', icon: <FaBriefcase aria-hidden /> },
-  { key: 'requests', path: '/profile/requests', icon: <FaListUl aria-hidden /> },
-  { key: 'notifications', path: '/profile/notifications', icon: <FaBell aria-hidden /> },
-];
-const settings = { key: 'settings', path: '/profile/settings', icon: <FaCog aria-hidden /> };
-const logoutButton = { key: 'logout', path: '', icon: <LuLogOut aria-hidden /> };
+import { SideNav, type SideNavItem } from '../../../../sideNav';
 
 export function ProfileNav() {
   const { logout } = useAuth();
   const { texts } = useI18n();
-  const logoutText = texts.components.dashboard.sidebar.logout || 'Logout';
   const lang = useLang();
-  const pathname = usePathname();
-  const labels = texts.pages.client.user.profileNav;
-  const isCollapsed = false;
-  const active = pathname?.startsWith(href(lang, settings.path));
+  const sideNavTexts = texts.components?.dashboard?.sideNav;
+  const commonTexts = sideNavTexts?.common;
+  const userTexts = sideNavTexts?.user?.pages;
+
+  const mainItems: SideNavItem[] = [
+    {
+      key: 'overview',
+      label: userTexts?.overview ?? 'Overview',
+      href: href(lang, '/profile'),
+      icon: <FaUser aria-hidden />,
+      match: 'exact',
+    },
+    {
+      key: 'work-orders',
+      label: userTexts?.workOrders ?? 'Work orders',
+      href: href(lang, '/profile/orders'),
+      icon: <FaBriefcase aria-hidden />,
+      match: 'prefix',
+    },
+    {
+      key: 'work-requests',
+      label: userTexts?.workRequests ?? 'Work requests',
+      href: href(lang, '/profile/requests'),
+      icon: <FaListUl aria-hidden />,
+      match: 'prefix',
+    },
+    {
+      key: 'notifications',
+      label: userTexts?.notifications ?? 'Notifications',
+      href: href(lang, '/profile/notifications'),
+      icon: <FaBell aria-hidden />,
+      match: 'prefix',
+    },
+  ];
+
+  const footerItems: SideNavItem[] = [
+    {
+      key: 'settings',
+      label: commonTexts?.settings ?? 'Settings',
+      href: href(lang, '/profile/settings'),
+      icon: <FaCog aria-hidden />,
+      match: 'prefix',
+    },
+  ];
 
   return (
-    <div className={`${styles.wrapper} glass-panel--base`} role="navigation">
-      <ul className={styles.list}>
-        {routes.map((item) => {
-          const active =
-            pathname?.localeCompare(href(lang, item.path), undefined, { sensitivity: 'base' }) ===
-            0;
-          return (
-            <li key={item.key} className={styles.listItem}>
-              <Link
-                href={href(lang, item.path)}
-                className={`${styles.link} ${active ? styles.active : ''}`.trim()}
-              >
-                <span className={styles.icon}>{item.icon}</span>
-                <span className={styles.label}>
-                  {labels?.[item.key as keyof typeof labels] ?? item.key}
-                </span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <ul className={styles.list}>
-        <li key={settings.key} className={styles.listItem}>
-          <Link
-            href={href(lang, settings.path)}
-            className={`${styles.link} ${active ? styles.active : ''}`.trim()}
-          >
-            <span className={styles.icon}>{settings.icon}</span>
-            <span className={styles.label}>
-              {labels?.[settings.key as keyof typeof labels] ?? settings.key}
-            </span>
-          </Link>
-        </li>
-        <li key="logout" className={styles.listItem}>
-          <button
-            type="button"
-            onClick={logout}
-            className={`${styles.link} ${isCollapsed ? styles.navLinkCompact : styles.navLinkFull}${active ? styles.active : ''}`.trim()}
-            aria-label={logoutText}
-            title={isCollapsed ? logoutButton.key : undefined}
-          >
-            <span className={styles.icon}>{logoutButton.icon}</span>
-            <span className={styles.label}>{logoutText}</span>
-          </button>
-        </li>
-      </ul>
-    </div>
+    <SideNav
+      mainItems={mainItems}
+      footerItems={footerItems}
+      onLogout={logout}
+      logoutLabel={commonTexts?.logout ?? 'Logout'}
+      navigationLabel={commonTexts?.navigationLabel ?? 'Section navigation'}
+      mainListLabel={commonTexts?.mainListLabel ?? 'Main pages'}
+      footerListLabel={commonTexts?.footerListLabel ?? 'Account actions'}
+      collapseLabel={commonTexts?.collapse ?? 'Collapse navigation'}
+      expandLabel={commonTexts?.expand ?? 'Expand navigation'}
+    />
   );
 }

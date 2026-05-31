@@ -9,6 +9,7 @@ import type { AppLanguage } from '../../types';
 import { useOptionalProfileContext } from '../../contexts/profile/ProfileContext';
 import { useOptionalWorkerContext } from '../../contexts/worker/WorkerContext';
 import sharedStyles from '../client/navbar/NavbarShared.module.css';
+import linkListStyles from '../client/navbar/components/NavbarLinkList.module.css';
 import styles from './LanguageSwitcher.module.css';
 import type { ResolvedNavbarLanguageSwitcher } from '../client/navbar/navbar.shared';
 
@@ -24,6 +25,8 @@ type LanguageOption = {
 interface LanguageSwitcherProps {
   presentation?: 'dropdown' | 'modal';
   triggerDisplay?: 'icon' | 'icon-with-value';
+  dropdownPlacement?: 'top' | 'bottom';
+  panelVariant?: 'default' | 'navbar';
   labels?: ResolvedNavbarLanguageSwitcher;
 }
 
@@ -35,6 +38,8 @@ type DropdownPosition = {
 export default function LanguageSwitcher({
   presentation = 'dropdown',
   triggerDisplay = 'icon',
+  dropdownPlacement = 'bottom',
+  panelVariant = 'default',
   labels,
 }: LanguageSwitcherProps) {
   const router = useRouter();
@@ -133,11 +138,15 @@ export default function LanguageSwitcher({
 
     const updateDropdownPosition = () => {
       const triggerRect = triggerRef.current?.getBoundingClientRect();
+      const panelHeight = panelRef.current?.offsetHeight ?? 0;
 
       if (!triggerRect) return;
 
       setDropdownPosition({
-        top: triggerRect.bottom + 24,
+        top:
+          dropdownPlacement === 'top'
+            ? Math.max(16, triggerRect.top - panelHeight - 24)
+            : triggerRect.bottom + 24,
         right: window.innerWidth - triggerRect.right,
       });
     };
@@ -150,7 +159,7 @@ export default function LanguageSwitcher({
       window.removeEventListener('resize', updateDropdownPosition);
       window.removeEventListener('scroll', updateDropdownPosition, true);
     };
-  }, [isModalPresentation, isOpen]);
+  }, [dropdownPlacement, isModalPresentation, isOpen]);
 
   const switchLanguage = async (nextLanguage: AppLanguage) => {
     if (nextLanguage === currentLang) {
@@ -186,7 +195,9 @@ export default function LanguageSwitcher({
       className={
         isModalPresentation
           ? `${styles.modalRoot} ${isOpen ? styles.modalRootOpen : ''} card--neutral`
-          : `${styles.dropdown} ${isOpen ? styles.dropdownOpen : ''}`
+          : `${styles.dropdown} ${
+              dropdownPlacement === 'top' ? styles.dropdownTop : styles.dropdownBottom
+            } ${isOpen ? styles.dropdownOpen : ''}`
       }
       style={
         isModalPresentation
@@ -218,8 +229,17 @@ export default function LanguageSwitcher({
         role={isModalPresentation ? 'dialog' : undefined}
         aria-modal={isModalPresentation ? 'true' : undefined}
       >
-        <div className={styles.header}>
-          <h2 id={titleId} className={`type-label ${styles.title}`}>
+        <div
+          className={`${styles.header} ${sharedStyles.panelHeader} ${
+            panelVariant === 'navbar' ? styles.headerNavbar : ''
+          }`}
+        >
+          <h2
+            id={titleId}
+            className={`type-label ${sharedStyles.panelTitle} ${styles.title} ${
+              panelVariant === 'navbar' ? styles.titleNavbar : ''
+            }`}
+          >
             {labels?.title ?? 'Language'}
           </h2>
         </div>
@@ -229,25 +249,34 @@ export default function LanguageSwitcher({
             isModalPresentation
               ? sharedStyles.panelListAnimated
               : sharedStyles.panelListAnimatedDown
-          } ${styles.list}`}
+          } ${panelVariant === 'navbar' ? linkListStyles.panelList : ''} ${styles.list}`}
         >
           {languageOptions.map((option) => {
             const isCurrent = option.code === currentLang;
 
             return (
-              <li key={option.code}>
+              <li
+                key={option.code}
+                className={panelVariant === 'navbar' ? linkListStyles.panelItem : ''}
+              >
                 <button
                   ref={option.code === currentLang ? firstOptionRef : undefined}
                   type="button"
-                  className={`button button--ghost ${styles.optionButton} ${
-                    isCurrent ? styles.optionButtonCurrent : ''
-                  }`}
+                  className={[
+                    'button',
+                    'button--ghost',
+                    panelVariant === 'navbar' ? linkListStyles.panelButton : styles.optionButton,
+                    panelVariant === 'navbar' ? styles.optionButtonNavbar : '',
+                    isCurrent ? styles.optionButtonCurrent : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
                   onClick={() => void switchLanguage(option.code)}
                   aria-current={isCurrent ? 'true' : undefined}
                   aria-label={isCurrent ? option.label : option.switchLabel}
                 >
-                  <span className={`badge badge--primary ${styles.optionBadge}`} aria-hidden>
-                    {option.shortLabel}
+                  <span className={styles.optionMetaShell} aria-hidden>
+                    <span className={styles.optionMeta}>{option.shortLabel}</span>
                   </span>
                   <span className={styles.optionLabel}>{option.label}</span>
                 </button>
@@ -275,7 +304,7 @@ export default function LanguageSwitcher({
       >
         <HiMiniLanguage aria-hidden />
         {shouldShowCurrentValue ? (
-          <span className={styles.triggerValue}>{currentLanguage.label}</span>
+          <span className={` ${styles.triggerValue} type-body-md`}>{currentLanguage.label}</span>
         ) : null}
       </button>
 
