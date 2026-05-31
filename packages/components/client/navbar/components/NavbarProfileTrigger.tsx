@@ -26,7 +26,7 @@ export function NavbarProfileTrigger({
   return (
     <>
       <CgProfile aria-hidden />
-      <span className="sr-only">{fallbackLabel}</span>
+      <span className={styles.srOnly}>{fallbackLabel}</span>
     </>
   );
 }
