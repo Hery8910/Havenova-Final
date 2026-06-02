@@ -1,15 +1,10 @@
 .card {
-  padding: 28px;
-  margin: 0 auto;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
-  gap: 20px;
-  border: 1px solid var(--card-neutral-border);
-  border-radius: var(--radius-md);
+  gap: 24px;
 }
-
 .srOnly {
   position: absolute;
   width: 1px;
@@ -23,25 +18,28 @@
 }
 .title {
   margin: 0;
-  font-weight: 700;
-  font-size: var(--type-title-sm-size);
+  align-self: flex-start;
+  color: var(--page-text-secondary);
 }
 .wrapper {
+  border: 1px solid var(--card-neutral-border);
+  border-radius: var(--radius-md);
   width: 100%;
+  max-width: max-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  gap: 18px;
-  margin-bottom: 20px;
+  align-items: stretch;
+  gap: 14px;
+  padding: 28px;
 }
 .aside {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(180px, 220px) minmax(220px, 320px);
   align-items: center;
   gap: 24px;
-  padding: 12px 0;
+  padding: 0;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
 }
@@ -74,36 +72,52 @@
   color: var(--text-secondary);
 }
 .switchWrapper {
-  width: fit-content;
-  min-width: 172px;
+  width: 100%;
+  max-width: 200px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  padding: 0 4px;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  justify-self: end;
+}
+.cookieButton {
   border-radius: var(--radius-sm);
-  border: 1px solid var(--glassBlack-border);
-  background-color: var(--glassBlack-bg);
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 18px;
+  font-size: clamp(18px, 3vw, 22px);
+}
+.switchWrapper > :global(*) {
+  width: 100%;
+}
+
+.switchWrapper :global(.button svg) {
+  flex: 0 0 auto;
 }
 
 .notificationRow {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
   align-items: flex-start;
-  gap: 24px;
-  padding-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--card-neutral-bg3) 92%, transparent);
 }
 
 .notificationCopy {
   width: 100%;
-  max-width: 560px;
+  display: flex;
+  min-width: 0;
+}
+.notificationArticle {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  gap: 4px;
 }
-
 .notificationTitle {
   margin: 0;
   color: var(--text-primary);
@@ -111,15 +125,8 @@
   line-height: 1.4;
 }
 
-.notificationDescription {
-  margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
 .notificationsSection {
   border-top: 1px solid var(--glass-border);
-  padding-top: 24px;
 }
 
 .notificationsFieldset {
@@ -127,6 +134,20 @@
   padding: 0;
   border: 0;
   min-width: 0;
+}
+
+.notificationsIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 92%, transparent);
+}
+
+.notificationRows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .notificationsLegend {
@@ -138,18 +159,20 @@
 }
 
 .notificationsDescription {
-  margin: 0 0 24px;
+  margin: 0;
   color: var(--text-secondary);
   line-height: 1.5;
+  max-width: 62ch;
 }
 
 .checkboxLabel {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3, 12px);
+  justify-content: flex-start;
   cursor: pointer;
   user-select: none;
   flex-shrink: 0;
+  width: 40px;
 }
 
 .checkboxLabelDisabled {
@@ -244,20 +267,27 @@
   color: var(--color-error, #9f2d2d);
 }
 
+@media (max-width: 1300px) {
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .wrapper {
+    min-width: 100%;
+  }
+}
+
 @media (max-width: 767px) {
   .card {
-    padding: 20px;
+    flex-direction: column;
+    align-items: stretch;
   }
-
   .wrapper {
-    gap: 14px;
-    margin-bottom: 16px;
+    min-width: 100%;
   }
-
   .aside {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 16px;
-    padding: 14px 12px;
   }
 
   .labelWrapper {
@@ -271,10 +301,10 @@
   }
 
   .notificationRow {
-    flex-direction: row;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: flex-start;
-    justify-content: space-between;
     gap: 12px;
+    padding: 12px;
   }
 
   .checkboxLabel {

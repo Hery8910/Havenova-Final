@@ -19,8 +19,8 @@ export function ProfileNav() {
 
   const mainItems: SideNavItem[] = [
     {
-      key: 'overview',
-      label: userTexts?.overview ?? 'Overview',
+      key: 'profile',
+      label: userTexts?.overview ?? 'Profile',
       href: href(lang, '/profile'),
       icon: <FaUser aria-hidden />,
       match: 'exact',

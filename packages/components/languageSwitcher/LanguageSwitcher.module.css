@@ -3,28 +3,26 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   min-width: 44px;
-  max-width: 250px;
+  max-width: 200px;
   border-radius: var(--radius-sm);
 }
 
 .trigger {
   margin: 0 auto;
   width: 100%;
-  justify-content: space-around;
   border-radius: var(--radius-sm);
 }
 
 .triggerWithValue {
-  display: inline-flex;
+  border: 1px solid var(--button-outline-border);
+  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  padding-left: 22px;
-  padding-right: 8px;
-  gap: 21px;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 8px 24px;
 }
 
 .triggerValue {
@@ -168,7 +166,7 @@
 
 .optionMeta {
   min-width: 36px;
-  padding: 4px 8px;
+  padding: 4px 24px;
   border-radius: var(--radius-sm);
   border: 1px solid color-mix(in srgb, var(--card-neutral-border) 88%, transparent);
   color: var(--page-text-secondary);

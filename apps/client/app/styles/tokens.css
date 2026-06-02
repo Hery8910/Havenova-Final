@@ -102,6 +102,16 @@
   --card-secondary-text-primary: #443361;
   --card-secondary-text-secondary: #66547f;
 
+  --card-accent-bg1: hsl(42, 86%, 50%, 0.5);
+  --card-accent-bg2: hsla(42, 86%, 50%, 0.35);
+  --card-accent-bg3: hsla(42, 86%, 50%, 0.4);
+  --card-accent-bg: var(--card-accent-bg2);
+  --card-accent-bg-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-accent-bg1) 0%,
+    var(--card-accent-bg2) 50%,
+    var(--card-accent-bg3) 100%
+  );
   --card-accent-bg: #fc872183;
   --card-accent-bg-image: rgba(236, 171, 20, 0.22);
   --card-accent-border: rgba(236, 171, 20, 0.28);
@@ -310,8 +320,8 @@
   --type-display-lg-size: clamp(4rem, 6vw, 6.75rem);
   --type-display-md-size: clamp(2.125rem, 4.8vw, 3.75rem);
   --type-title-xl-size: clamp(1.875rem, 3.6vw, 3rem);
-  --type-title-lg-size: clamp(1.5rem, 2.8vw, 2.25rem);
-  --type-title-md-size: clamp(1.7rem, 2.2vw, 1.9rem);
+  --type-title-lg-size: clamp(1.5rem, 2.8vw, 2rem);
+  --type-title-md-size: clamp(1.25rem, 2.2vw, 1.5rem);
   --type-title-sm-size: clamp(1.0625rem, 1.7vw, 1.25rem);
   --type-body-lg-size: clamp(1.0625rem, 1.7vw, 1.1875rem);
   --type-body-md-size: clamp(1rem, 1.35vw, 1.0625rem);
@@ -509,7 +519,7 @@
   --card-primary-text-primary: #f8fafc;
   --card-primary-text-secondary: #c8def4;
 
-  --card-secondary-bg1: rgba(84, 56, 151, 0.32);
+  --card-secondary-bg1: hsla(258, 46%, 41%, 0.32);
   --card-secondary-bg2: rgba(30, 41, 59, 0.46);
   --card-secondary-bg3: rgba(37, 32, 70, 0.62);
   --card-secondary-bg: var(--card-secondary-bg2);
@@ -523,11 +533,15 @@
   --card-secondary-text-primary: #f8fafc;
   --card-secondary-text-secondary: #ddd1f4;
 
-  --card-accent-bg: hsla(42, 91%, 53%, 0.6);
-  --card-accent-bg-image: linear-gradient(
-    135deg,
-    rgba(236, 171, 20, 0.32),
-    rgba(236, 171, 20, 0.08)
+  --card-accent-bg1: hsl(42, 86%, 18%, 0.5);
+  --card-accent-bg2: hsla(42, 86%, 18%, 0.35);
+  --card-accent-bg3: hsla(42, 86%, 18%, 0.4);
+  --card-accent-bg: hsla(42, 91%, 20%, 0.6);
+  --card-accent-bg-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--card-accent-bg1) 0%,
+    var(--card-accent-bg2) 50%,
+    var(--card-accent-bg3) 100%
   );
   --card-accent-border: rgba(250, 204, 21, 0.3);
   --card-accent-text-primary: #f8fafc;

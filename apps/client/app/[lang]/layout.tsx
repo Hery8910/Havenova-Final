@@ -37,7 +37,9 @@ export default async function LangLayout({
   let initialClient: ClientPublicConfig | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
   let tenantKey: string | null = null;
-  const allowVisualFallback = process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true';
+  const allowVisualFallback =
+    process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true' ||
+    process.env.NODE_ENV !== 'production';
   const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
 
   try {

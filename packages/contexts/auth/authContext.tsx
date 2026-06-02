@@ -29,6 +29,8 @@ type PartialAuthUser = Partial<AuthUser> & {
   userId?: string;
 };
 
+const isDevFallbackAuth = (value?: PartialAuthUser | null) => value?.authId === 'dev-auth';
+
 const isSameAuthState = (left: AuthUser | null, right: AuthUser) => {
   if (!left) return false;
 
@@ -68,6 +70,9 @@ const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, message: 
 interface AuthContextProps {
   auth: AuthUser;
   loading: boolean;
+  source: 'server' | 'storage' | 'default' | 'dev-fallback';
+  isOffline: boolean;
+  lastSyncAt: string | null;
   setAuth: (u: AuthUser) => void;
   refreshAuth: (onSessionExpired?: () => void) => Promise<void>;
   logout: () => Promise<void>;
@@ -75,6 +80,36 @@ interface AuthContextProps {
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+
+const isOfflineAuthError = (error: unknown): boolean => {
+  const err = error as {
+    code?: string;
+    message?: string;
+    response?: { status?: number };
+  };
+  const status = err?.response?.status;
+  const message = err?.message?.toLowerCase() ?? '';
+
+  if (status === 0 || status === 502 || status === 503 || status === 504) {
+    return true;
+  }
+
+  if (typeof status === 'number' && status >= 500) {
+    return true;
+  }
+
+  if (!status) {
+    return (
+      err?.code === 'ECONNABORTED' ||
+      message.includes('timeout') ||
+      message.includes('network') ||
+      message.includes('fetch') ||
+      message.includes('failed')
+    );
+  }
+
+  return false;
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { client } = useClient();
@@ -87,10 +122,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const popups = texts.popups;
   const alertButtons = popups.button ?? fallbackButtons;
   const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
+  const isDevAuthFallbackEnabled = process.env.NODE_ENV !== 'production';
 
   const [auth, setAuthState] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [isClientReady, setIsClientReady] = useState(false);
+  const [source, setSource] = useState<'server' | 'storage' | 'default' | 'dev-fallback'>(
+    'default'
+  );
+  const [isOffline, setIsOffline] = useState(false);
+  const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
 
   const sessionCallbackRef = useRef<(() => void) | null>(null);
   const isRefreshingRef = useRef(false);
@@ -167,6 +208,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [clientId, normalizeAuthState]);
 
+  const createDevFallback = useCallback((): AuthUser => {
+    const stored = loadFromStorage();
+    return normalizeAuthState(stored, {
+      authId: stored?.authId || 'dev-auth',
+      userClientId: stored?.userClientId || stored?.userId || 'dev-user',
+      userId: stored?.userId || stored?.userClientId || 'dev-user',
+      clientId: stored?.clientId || clientId,
+      email: stored?.email || 'dev.user@havenova.local',
+      role: stored?.role === 'guest' ? 'user' : stored?.role || 'user',
+      status: stored?.status || 'active',
+      isVerified: stored?.isVerified ?? true,
+      isLogged: true,
+      isNewUser: stored?.isNewUser ?? false,
+    });
+  }, [clientId, normalizeAuthState]);
+
   // -------------------
   // Init hydration guard
   // -------------------
@@ -201,12 +258,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
         setAuthState(finalAuth);
         saveToStorage(finalAuth);
+        setSource('server');
+        setIsOffline(false);
+        setLastSyncAt(new Date().toISOString());
       };
 
-      const setGuest = () => {
+      const setGuest = (offline = false) => {
         const guest = createGuest();
         setAuthState(guest);
         saveToStorage(guest);
+        setSource('default');
+        setIsOffline(offline);
+        setLastSyncAt(null);
+      };
+
+      const setFromStorage = (cachedAuth: AuthUser, offline = false) => {
+        setAuthState(normalizeAuthState(cachedAuth));
+        const useDevFallback = isDevFallbackAuth(cachedAuth);
+        setSource(useDevFallback ? 'dev-fallback' : 'storage');
+        setIsOffline(useDevFallback || offline);
+        setLastSyncAt(null);
+      };
+
+      const setDevFallback = () => {
+        const devAuth = createDevFallback();
+        setAuthState(devAuth);
+        saveToStorage(devAuth);
+        setSource('dev-fallback');
+        setIsOffline(true);
+        setLastSyncAt(null);
       };
 
       try {
@@ -234,7 +314,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             );
             setFromBackend(backendAuth);
             return;
-          } catch {
+          } catch (refreshError) {
+            if (isOfflineAuthError(refreshError)) {
+              if (stored) {
+                setFromStorage(stored, true);
+                return;
+              }
+              if (isDevAuthFallbackEnabled) {
+                setDevFallback();
+                return;
+              }
+              setGuest(true);
+              return;
+            }
+
             clearUserStorage();
             setGuest();
             const role = stored?.role;
@@ -285,15 +378,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         // Other errors
         if (stored) {
-          setAuthState(normalizeAuthState(stored));
+          setFromStorage(stored, isOfflineAuthError(err));
           return;
         }
-        setGuest();
+        if (isOfflineAuthError(err) && isDevAuthFallbackEnabled) {
+          setDevFallback();
+          return;
+        }
+        setGuest(isOfflineAuthError(err));
       } finally {
         isRefreshingRef.current = false;
       }
     },
-    [clientId, createGuest, closeAlert, language, popups, router, showConfirm, showError, texts]
+    [
+      clientId,
+      createDevFallback,
+      createGuest,
+      closeAlert,
+      isDevAuthFallbackEnabled,
+      language,
+      popups,
+      router,
+      showConfirm,
+      showError,
+      texts,
+    ]
   );
 
   // -------------------
@@ -310,6 +419,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthState((current) =>
         isSameAuthState(current, normalizedStored) ? current : normalizedStored
       );
+      setSource(isDevFallbackAuth(normalizedStored) ? 'dev-fallback' : 'storage');
+      setIsOffline(isDevFallbackAuth(normalizedStored));
+      setLastSyncAt(null);
       if (normalizedStored.role !== 'guest') {
         void refreshAuth().finally(() => {
           setLoading(false);
@@ -317,13 +429,88 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
     } else {
-      const guest = createGuest();
-      setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
-      saveToStorage(guest);
+      let cancelled = false;
+
+      const bootstrapWithoutStoredSession = async () => {
+        if (!clientId) {
+          const guest = createGuest();
+          setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
+          saveToStorage(guest);
+          setSource('default');
+          setIsOffline(false);
+          setLastSyncAt(null);
+          setLoading(false);
+          return;
+        }
+
+        try {
+          const backendAuth = await withTimeout(
+            getAuthUser(),
+            AUTH_REQUEST_TIMEOUT_MS,
+            'Auth bootstrap timed out.'
+          );
+
+          if (cancelled) return;
+
+          const normalized = normalizeAuthState(backendAuth, {
+            isLogged: true,
+            isNewUser: backendAuth.isNewUser ?? false,
+          });
+          setAuthState(normalized);
+          saveToStorage(normalized);
+          setSource('server');
+          setIsOffline(false);
+          setLastSyncAt(new Date().toISOString());
+        } catch (err) {
+          if (cancelled) return;
+
+          const status = (err as { response?: { status?: number } })?.response?.status;
+
+          if (status === 401 || status === 403) {
+            const guest = createGuest();
+            setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
+            saveToStorage(guest);
+            setSource('default');
+            setIsOffline(false);
+            setLastSyncAt(null);
+          } else if (isOfflineAuthError(err) && isDevAuthFallbackEnabled) {
+            const devAuth = createDevFallback();
+            setAuthState(devAuth);
+            saveToStorage(devAuth);
+            setSource('dev-fallback');
+            setIsOffline(true);
+            setLastSyncAt(null);
+          } else {
+            const guest = createGuest();
+            setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
+            saveToStorage(guest);
+            setSource('default');
+            setIsOffline(isOfflineAuthError(err));
+            setLastSyncAt(null);
+          }
+        } finally {
+          if (!cancelled) {
+            setLoading(false);
+          }
+        }
+      };
+
+      void bootstrapWithoutStoredSession();
+      return () => {
+        cancelled = true;
+      };
     }
 
     setLoading(false);
-  }, [isClientReady, createGuest, refreshAuth]);
+  }, [
+    clientId,
+    createDevFallback,
+    createGuest,
+    isClientReady,
+    isDevAuthFallbackEnabled,
+    normalizeAuthState,
+    refreshAuth,
+  ]);
 
   // -------------------
   // Logout
@@ -365,6 +552,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const guest = createGuest();
       setAuthState(guest);
       saveToStorage(guest);
+      setSource('default');
+      setIsOffline(false);
+      setLastSyncAt(null);
     }
   }, [createGuest, showError, showSuccess, closeAlert, popups]);
 
@@ -395,6 +585,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const normalized = normalizeAuthState(u);
     setAuthState(normalized);
     saveToStorage(normalized);
+    setSource('storage');
+    setIsOffline(false);
   }, [normalizeAuthState]);
 
   const registerSessionCallback = useCallback((cb: () => void) => {
@@ -408,6 +600,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         auth: authValue,
         loading,
+        source,
+        isOffline,
+        lastSyncAt,
         setAuth,
         refreshAuth,
         logout,

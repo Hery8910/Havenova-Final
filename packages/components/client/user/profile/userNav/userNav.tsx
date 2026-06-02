@@ -29,7 +29,7 @@ export function UserNav({ isMobile }: UserNavProps) {
   const registerAria = avatarTexts?.register?.ariaLabel ?? registerLabel;
   const loginLabel = avatarTexts?.login?.label ?? navbarTexts?.register?.[1]?.label ?? 'Login';
   const loginAria = avatarTexts?.login?.ariaLabel ?? loginLabel;
-  const detailsLabel = profileNavTexts?.profile ?? 'Details';
+  const detailsLabel = profileNavTexts?.profile ?? 'Profile';
   const requestsLabel = profileNavTexts?.requests ?? 'Requests';
   const notificationsLabel = profileNavTexts?.notifications ?? 'Notifications';
   const settingsLabel = profileNavTexts?.settings ?? 'Settings';

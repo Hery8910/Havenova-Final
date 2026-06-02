@@ -799,12 +799,12 @@
         "phone": "Telefon:",
         "email": "E-Mail:",
         "theme": {
-          "title": "Design:",
+          "title": "Design",
           "light": "Hell",
           "dark": "Dunkel"
         },
         "language": {
-          "title": "Sprache:",
+          "title": "Sprache",
           "lang": "Deutsch"
         },
         "notLoggedInTitle": "Sie sind nicht eingeloggt",
@@ -865,7 +865,7 @@
           "eyebrow": "Präferenzen",
           "sections": {
             "language": {
-              "title": "Sprache:",
+              "title": "Sprache",
               "subtitle": "Sprache umstellen",
               "lang": "Deutsch",
               "switchToEnglish": "Sprache auf Englisch umstellen",
@@ -874,7 +874,7 @@
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Design:",
+              "title": "Design",
               "buttonLabel": "Farbschema umschalten",
               "lightMode": "Heller Modus",
               "darkMode": "Dunkler Modus",

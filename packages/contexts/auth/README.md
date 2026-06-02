@@ -42,6 +42,28 @@ Conclusión:
 - `AuthProvider` ya concentra sesión, refresh y logout
 - `auth` se persiste localmente en `hv-auth`
 - el contexto depende de `client._id` para operar por tenant
+- el contexto ya expone metadatos de origen de sesión para distinguir `server`, `storage`, `default` y `dev-fallback`
+
+### Fallback temporal de desarrollo
+
+Comportamiento activo en esta fase:
+
+- si `GET /api/auth/me` o el ciclo `refreshToken() -> getAuthUser()` falla por timeout, red o `5xx`, `AuthContext` conserva la sesión local en vez de degradarla automáticamente a `guest`
+- si no existe cache previa y el backend no está accesible en `development`, el contexto puede crear una sesión local `dev-fallback`
+- el contexto expone:
+  - `source`
+  - `isOffline`
+  - `lastSyncAt`
+
+Objetivo de este fallback:
+
+- permitir seguir usando navbar, guards blandos y flujo de perfil durante desarrollo sin backend levantado
+- distinguir caída temporal del backend de expiración real de sesión
+
+Restricción importante:
+
+- este comportamiento es temporal y solo existe para desarrollo local
+- antes del despliegue final debe revertirse o quedar desactivado fuera de desarrollo
 
 ### Inconsistencias detectadas
 
@@ -114,6 +136,7 @@ Esto permite:
   - rol
   - verificación
   - flags de sesión (`isLogged`, `isNewUser`)
+- [x] exponer metadatos de origen/offline para distinguir bootstrap desde backend, storage local y fallback dev
 - [ ] dejar de tratar `auth.email` como fuente de perfil en componentes de UI
 
 ### Fase 4. Consumidores
@@ -219,6 +242,12 @@ Cambios previstos:
 Resultado esperado:
 
 - `auth` conserva sesión, refresh y permisos, pero deja de actuar como base de perfil
+
+Estado temporal adicional en desarrollo:
+
+- `auth` tolera caída de backend usando la última sesión persistida
+- cuando no existe sesión persistida, puede crear una sesión local de desarrollo para no bloquear el resto del árbol
+- esto no debe considerarse comportamiento final de producción
 
 ### Paso 4. Inventario de consumidores de `auth`
 

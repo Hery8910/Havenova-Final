@@ -83,7 +83,12 @@ export function SideNav({
   }, [collapseBreakpoint]);
 
   const rootClassName = [styles.root, className].filter(Boolean).join(' ');
-  const actionClassName = [styles.action, isCollapsed ? styles.actionCollapsed : '', 'button', 'button--ghost']
+  const actionClassName = [
+    styles.action,
+    isCollapsed ? styles.actionCollapsed : '',
+    'button',
+    'button--ghost',
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -101,7 +106,9 @@ export function SideNav({
               <li key={item.key} className={styles.item}>
                 <Link
                   href={item.href}
-                  className={[actionClassName, active ? 'button--active' : ''].filter(Boolean).join(' ')}
+                  className={[active ? 'button--active' : '', actionClassName]
+                    .filter(Boolean)
+                    .join(' ')}
                   aria-current={active ? 'page' : undefined}
                   aria-label={item.label}
                   title={isCollapsed ? item.label : undefined}
@@ -129,7 +136,9 @@ export function SideNav({
               <li key={item.key} className={styles.item}>
                 <Link
                   href={item.href}
-                  className={[actionClassName, active ? 'button--active' : ''].filter(Boolean).join(' ')}
+                  className={[actionClassName, active ? 'button--active' : '']
+                    .filter(Boolean)
+                    .join(' ')}
                   aria-current={active ? 'page' : undefined}
                   aria-label={item.label}
                   title={isCollapsed ? item.label : undefined}

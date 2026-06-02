@@ -4,18 +4,6 @@
   justify-content: center;
 }
 
-.wrapper::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url('/svg/user-background.svg');
-  background-position: center;
-  background-size: contain;
-  background-repeat: repeat;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.6;
-}
 .section {
   width: 100%;
   max-width: 1000px;

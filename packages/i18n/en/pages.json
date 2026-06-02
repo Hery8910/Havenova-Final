@@ -799,12 +799,12 @@
         "phone": "Phone:",
         "email": "Email:",
         "theme": {
-          "title": "Theme:",
+          "title": "Theme",
           "light": "Light",
           "dark": "Dark"
         },
         "language": {
-          "title": "Language:",
+          "title": "Language",
           "lang": "English"
         },
         "notLoggedInTitle": "You are not logged in",
@@ -814,7 +814,7 @@
           "eyebrow": "Profile details",
           "title": "Your information",
           "description": "Review your current data and update your contact and address details when needed.",
-          "editButton": "Edit",
+          "editButton": "Edit profile",
           "cancelButton": "Cancel",
           "saveButton": "Save changes",
           "tableAriaLabel": "User profile details",
@@ -865,7 +865,7 @@
           "eyebrow": "Preferences",
           "sections": {
             "language": {
-              "title": "Language:",
+              "title": "Language",
               "subtitle": "Switch language",
               "lang": "English",
               "switchToEnglish": "Switch language to English",
@@ -874,7 +874,7 @@
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Theme:",
+              "title": "Theme",
               "buttonLabel": "Toggle color theme",
               "lightMode": "Light mode",
               "darkMode": "Dark mode",
@@ -883,7 +883,7 @@
             },
             "cookies": {
               "title": "Cookies",
-              "buttonLabel": "Open cookie notice"
+              "buttonLabel": "Cookie notice"
             },
             "notifications": {
               "title": "Notifications",

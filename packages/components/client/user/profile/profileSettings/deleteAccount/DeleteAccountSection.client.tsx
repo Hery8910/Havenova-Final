@@ -91,29 +91,22 @@ export function DeleteAccountSectionClient() {
   };
 
   return (
-    <section
-      className={`${styles.card} card bg--alert-error`}
-      aria-labelledby="delete-account-title"
-    >
+    <section className={styles.card} aria-labelledby="delete-account-title">
       <div className={styles.copy}>
         <p className={styles.eyebrow}>Danger zone</p>
         <h3 id="delete-account-title" className={styles.title}>
           {title}
         </h3>
         <p className={styles.description}>{description}</p>
-        <p className={styles.warning}>{warning}</p>
       </div>
-
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className="button button--outline-danger"
-          onClick={handleDelete}
-          aria-label={confirmLabel}
-        >
-          {confirmLabel}
-        </button>
-      </div>
+      <button
+        type="button"
+        className="button button--outline-danger"
+        onClick={handleDelete}
+        aria-label={confirmLabel}
+      >
+        {confirmLabel}
+      </button>
     </section>
   );
 }

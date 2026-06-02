@@ -84,7 +84,7 @@ const ThemeToggler = ({
         </span>
       </span>
       {shouldShowCurrentValue ? (
-        <span className={` ${styles.currentValue} type-body-md`}>{currentThemeLabel}</span>
+        <span className={` ${styles.currentValue} type-body-sm`}>{currentThemeLabel}</span>
       ) : null}
     </button>
   );

@@ -799,12 +799,12 @@
         "phone": "Teléfono:",
         "email": "Correo electrónico:",
         "theme": {
-          "title": "Tema:",
+          "title": "Tema",
           "light": "Claro",
           "dark": "Oscuro"
         },
         "language": {
-          "title": "Idioma:",
+          "title": "Idioma",
           "lang": "Español"
         },
         "notLoggedInTitle": "No has iniciado sesión",
@@ -865,7 +865,7 @@
           "eyebrow": "Preferencias",
           "sections": {
             "language": {
-              "title": "Idioma:",
+              "title": "Idioma",
               "subtitle": "Cambiar idioma",
               "lang": "Español",
               "switchToEnglish": "Cambiar idioma a inglés",
@@ -874,7 +874,7 @@
               "germanVisible": "DE"
             },
             "theme": {
-              "title": "Tema:",
+              "title": "Tema",
               "buttonLabel": "Alternar tema de color",
               "lightMode": "Modo claro",
               "darkMode": "Modo oscuro",

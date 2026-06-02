@@ -16,13 +16,14 @@ export function ProfileSettingsClient() {
 
   return (
     <section className={styles.section} aria-label="Profile settings">
-      <article className={styles.article}>
+      <div className={styles.wrapper}>
         {identityProps ? <UserProfileIdentityCard {...identityProps} /> : null}
         {showSummary ? <UserProfileDetailsSummary {...summaryProps} /> : null}
         {showFullForm ? <UserProfileDetailsForm {...formProps} /> : null}
-        <UserPreferencesCard />
-        <DeleteAccountSectionClient />
-      </article>
+      </div>
+      <UserPreferencesCard />
+
+      <DeleteAccountSectionClient />
     </section>
   );
 }

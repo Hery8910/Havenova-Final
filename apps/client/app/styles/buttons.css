@@ -135,9 +135,7 @@
 }
 
 .button--outline {
-  --button-text: var(--button-outline-text);
-  --button-bg: var(--button-outline-bg);
-  --button-bg-image: var(--button-outline-bg-image);
+  --button-text: var(--page-text-secondary);
   --button-border: var(--button-outline-border);
   --button-shadow: none;
   --button-text-hover: var(--button-outline-text);
@@ -187,6 +185,15 @@
   --button-border-active: var(--feedback-error-border);
   --button-shadow-active-current: none;
   --button-focus-border-current: var(--feedback-error-border);
+}
+.button--outline-small,
+.button--outline-danger-small {
+  padding: 8px 16px;
+  font-size: var(--type-label-size);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  font-weight: 700;
+  display: inline-flex;
 }
 
 .button--close {

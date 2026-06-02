@@ -2,31 +2,27 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-  height: 100%;
-  padding: 24px min(5dvw, 36px) 32px;
+  align-items: flex-start;
+  gap: 28px;
+  height: max-content;
+  padding: 32px clamp(24px, 3.4dvw, 44px) 40px;
 }
-
-.article {
-  max-width: 980px;
+.wrapper {
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
-  align-items: stretch;
-  gap: 20px;
-  padding-bottom: 24px;
+  align-items: flex-start;
+  gap: 24px;
 }
-
+@media (max-width: 1300px) {
+  .wrapper {
+    align-items: center;
+    flex-direction: column;
+  }
+}
 @media (max-width: 767px) {
   .section {
     padding: 16px;
     gap: 16px;
-  }
-
-  .article {
-    gap: 16px;
-    padding-bottom: 16px;
   }
 }

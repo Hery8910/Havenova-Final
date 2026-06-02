@@ -81,10 +81,30 @@ Campos opcionales por compatibilidad:
 1. Layout (`apps/client` y `apps/dashboard`) resuelve `tenantKey` con helper compartido:
    `resolveTenantKey()`.
 2. Layout llama `getClient(tenantKey)` en servidor para bootstrap público.
-3. Layout inyecta `initialClient` en `ClientProvider`.
-4. `ClientProvider` hidrata estado local y expone `client`.
-5. Si `client` es `null`, dispara `showError(...)` según `code/status` del backend y no renderiza hijos.
-6. En `development`, además puede renderizar `ClientBootstrapFallback` para permitir inspección visual sin backend desplegado.
+3. Si el bootstrap falla y la app está en `development`, el layout puede inyectar un cliente visual local con `createVisualFallbackClient(tenantKey)`.
+4. Layout inyecta `initialClient` en `ClientProvider`.
+5. `ClientProvider` hidrata estado local y expone `client`.
+6. Si `client` es `null`, dispara `showError(...)` según `code/status` del backend y no renderiza hijos.
+7. En `development`, además puede renderizar `ClientBootstrapFallback` para permitir inspección visual sin backend desplegado.
+
+## Fallback temporal de desarrollo
+
+Comportamiento activo en esta fase:
+
+- `apps/client` y `apps/dashboard` crean un cliente visual local si falla `getClient(tenantKey)` y la app no está en producción
+- esto evita bloquear el árbol antes de montar `AuthProvider`, `ProfileProvider` y `WorkerProvider`
+- el fallback visual usa `createVisualFallbackClient(...)`
+- `ClientProvider` sigue conservando su fallback visual interno (`ClientBootstrapFallback`) como red de seguridad adicional para desarrollo
+
+Objetivo de este fallback:
+
+- poder trabajar frontend y backend por separado durante desarrollo
+- evitar que la caída del bootstrap público del tenant deje la app inutilizable
+
+Restricción importante:
+
+- este comportamiento no forma parte del diseño objetivo de producción
+- antes del despliegue final debe revertirse o quedar explícitamente desactivado fuera de desarrollo
 
 ## Dependencias directas
 
@@ -108,6 +128,7 @@ Campos opcionales por compatibilidad:
 - El contexto ya clasifica errores de bootstrap por `code/status` y aplica CTA según recuperabilidad
 - Fallback i18n compartido ya resuelve EN/DE por `locale` mediante `getI18nFallbacks(language)`
 - `ClientBootstrapFallback` debe dejar de ser parte del flujo activo antes del despliegue productivo final; su uso actual queda limitado a desarrollo
+- el uso automático de `createVisualFallbackClient(...)` en layouts también es temporal y solo existe para desarrollo local
 
 ## Checklist de cambios
 
@@ -177,6 +198,7 @@ NEXT_PUBLIC_TENANT_KEY_FALLBACK=tnk_havenova_backup
 - [x] Añadir tests de mapeo de popups por código en EN/DE
 - [x] Corregir fallback i18n compartido para respetar `en` y `de` según idioma activo
 - [ ] eliminar o desactivar `ClientBootstrapFallback` para producción cuando el backend ya esté desplegado
+- [ ] revertir o desactivar el uso automático de `createVisualFallbackClient(...)` en layouts antes del despliegue final
 
 ## Legacy Soportado
 
@@ -224,6 +246,7 @@ Matriz UX actual de bootstrap:
 Nota temporal de desarrollo:
 
 - mientras el backend no esté desplegado, se mantiene `ClientBootstrapFallback` como apoyo visual en `development`
+- además, los layouts `client` y `dashboard` pueden inyectar un cliente visual local si falla la primera llamada de tenant
 - en producción el canal esperado del bootstrap error es `AlertContext`
 - antes del despliegue final hay que eliminarlo o dejarlo explícitamente desactivado fuera de desarrollo
 

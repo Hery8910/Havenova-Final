@@ -304,7 +304,7 @@ export default function LanguageSwitcher({
       >
         <HiMiniLanguage aria-hidden />
         {shouldShowCurrentValue ? (
-          <span className={` ${styles.triggerValue} type-body-md`}>{currentLanguage.label}</span>
+          <span className={` ${styles.triggerValue} type-body-sm`}>{currentLanguage.label}</span>
         ) : null}
       </button>
 

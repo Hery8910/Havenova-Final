@@ -2,6 +2,7 @@ import AddressFormFields from '../../../../../shared/addressFormFields/AddressFo
 import type { UserAddress } from '../../../../../../../types';
 import type { AddressErrors, ProfileDetailsTexts, ProfileFormState } from '../types';
 import styles from './UserProfileDetailsForm.module.css';
+import { MdDeleteOutline } from 'react-icons/md';
 
 export interface UserProfileDetailsFormProps {
   mode: 'full' | 'secondary-only';
@@ -66,7 +67,7 @@ export function UserProfileDetailsForm({
 
   return (
     <section className={styles.card} aria-labelledby="profile-details-form-title">
-      <h3 id="profile-details-form-title" className={`${styles.title} type-title-sm`}>
+      <h3 id="profile-details-form-title" className={`type-title-sm ${styles.title}`}>
         {'Edit profile details'}
       </h3>
       <form
@@ -123,7 +124,10 @@ export function UserProfileDetailsForm({
             >
               <div className={styles.addressCard}>
                 <div className={styles.addressCardHeader}>
-                  <h4 className={styles.secondaryAddressTitle}>
+                  <h4
+                    id="profile-primary-address-title"
+                    className={`type-title-sm ${styles.addressTitle}`}
+                  >
                     {texts?.labels?.primaryAddress ?? 'Primary address'}
                   </h4>
                   {onAddressClick && isAddressComplete(formState.primaryAddress) && (
@@ -162,7 +166,7 @@ export function UserProfileDetailsForm({
                 {formState.savedAddresses.map((address, index) => (
                   <div key={`saved-address-${index}`} className={styles.addressCard}>
                     <div className={styles.addressCardHeader}>
-                      <h4 className={styles.secondaryAddressTitle}>
+                      <h4 className={`type-title-sm ${styles.addressTitle}`}>
                         {address.label.trim() ||
                           `${texts?.form?.secondaryAddressTitle ?? 'Address'} ${index + 1}`}
                       </h4>
@@ -179,10 +183,11 @@ export function UserProfileDetailsForm({
                         )}
                         <button
                           type="button"
-                          className="button button--outline"
+                          className="button button--outline-danger button--outline-danger-small"
                           onClick={() => onRemoveSecondaryAddress(index)}
                           aria-label={`${texts?.form?.removeSecondaryAddressButton ?? 'Remove additional address'} ${index + 1}`}
                         >
+                          <MdDeleteOutline />
                           {texts?.form?.removeSecondaryAddressButton ?? 'Remove'}
                         </button>
                       </div>
@@ -242,7 +247,10 @@ export function UserProfileDetailsForm({
         {showSecondaryPrompt && (
           <div className={`${styles.secondaryPrompt} card card--primary`}>
             <div className={styles.secondaryPromptBody}>
-              <h3 id="profile-secondary-addresses-title" className={styles.addressTitle}>
+              <h3
+                id="profile-secondary-addresses-title"
+                className={`type-title-sm ${styles.addressTitle}`}
+              >
                 {texts?.form?.secondaryAddressesTitle ?? 'Secondary addresses'}
               </h3>
               <p className={styles.secondaryPromptText}>

@@ -1,13 +1,13 @@
 .page {
   margin: 0 auto;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   min-height: 100dvh;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 88px 5dvw 28px;
+  padding: 88px clamp(20px, 4.5dvw, 44px) 28px;
 }
 
 .workspace {
@@ -30,7 +30,7 @@
   min-height: 0;
   position: relative;
   z-index: 1;
-  padding: 12px;
+  padding: 6px;
   background: transparent;
   background-image: none;
   box-shadow: none;
@@ -41,7 +41,7 @@
   min-width: 0;
   min-height: 0;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   scrollbar-width: none;
 }
 

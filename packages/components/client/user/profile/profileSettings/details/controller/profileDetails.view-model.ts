@@ -64,7 +64,6 @@ export function buildProfileDetailsViewModel({
           showCompletionInfo: !profileCompleted,
           completionInfo:
             'Complete the missing details to improve your booking and communication flow.',
-          completionTexts: undefined,
         }
       : null,
   };

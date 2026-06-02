@@ -40,6 +40,29 @@ Conclusión:
   - `getUserClientProfile`
   - `updateUserClientProfile`
 - ya existe estrategia de bootstrap automático para `isNewUser`
+- el contexto ya expone metadatos de origen de perfil para distinguir `server`, `storage`, `default` y `dev-fallback`
+
+### Fallback temporal de desarrollo
+
+Comportamiento activo en esta fase:
+
+- el perfil sigue funcionando con persistencia local aunque el backend falle por timeout, red o `5xx`
+- el storage local ahora se separa por `clientId + userClientId` para no mezclar perfiles distintos dentro del mismo tenant
+- si existe auth utilizable pero no existe perfil cacheado y el backend no está accesible en `development`, el contexto puede crear un perfil local `dev-fallback`
+- el contexto expone:
+  - `source`
+  - `isOffline`
+  - `lastSyncAt`
+
+Objetivo de este fallback:
+
+- poder editar y leer datos de perfil durante desarrollo con el backend apagado
+- evitar que el perfil dependa de que la primera lectura remota funcione
+
+Restricción importante:
+
+- este comportamiento es temporal y solo existe para desarrollo local
+- antes del despliegue final debe revertirse o quedar desactivado fuera de desarrollo
 
 ### Inconsistencias detectadas
 
@@ -110,6 +133,8 @@ Los componentes pueden mostrarlo como “email” en UI, pero el modelo debería
 - [x] incluir `contactEmail` en `createEmptyProfile()`
 - [x] incluir `contactEmail` en `normalizeProfile()`
 - [x] preservar `contactEmail` en `applyProfile()`
+- [x] separar el storage local por identidad de usuario dentro del tenant
+- [x] exponer metadatos de origen/offline para distinguir backend, storage y fallback dev
 - [ ] asegurar que el perfil guest/local no invente un email si no existe sesión
 
 ### Fase 4. Consumidores
@@ -183,3 +208,8 @@ Pendiente principal a partir de ahora:
 1. migrar consumidores secundarios de UI desde `auth.email` a `profile.contactEmail`
 2. revisar identidad de perfil (`userId`/`userClientId`) con la nueva decisión de dominio
 3. decidir el contrato final de delete/responses del perfil
+
+Pendiente adicional antes de despliegue:
+
+1. revertir o desactivar el `dev-fallback` del perfil
+2. revisar si `source/isOffline/lastSyncAt` deben mantenerse como API pública del contexto o volver a estado interno

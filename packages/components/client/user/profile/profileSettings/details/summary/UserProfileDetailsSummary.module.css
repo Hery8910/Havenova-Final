@@ -1,32 +1,36 @@
 .card {
   padding: 28px;
-  margin: 0 auto;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
   border: 1px solid var(--card-neutral-border);
   border-radius: var(--radius-md);
+  margin: 0;
 }
-
-.header {
+.wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+}
+.article {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
+  padding-top: 4px;
 }
-
 .title {
   margin: 0;
-  font-weight: 700;
-  font-size: var(--type-title-md-size);
+  color: var(--page-text-secondary);
   line-height: 1.2;
 }
 
 .table {
   width: 100%;
+  margin: 0;
   border-collapse: collapse;
 }
 
@@ -36,12 +40,13 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 4px;
-  padding: 10px 14px;
+  gap: 8px;
+  padding: 6px 16px;
   border-radius: var(--radius-sm);
+  background-color: var(--card-neutral-bg3);
 }
 
-.tableRowEven {
+.tableRow:nth-child(even) {
   background-color: color-mix(in srgb, var(--glassBlack-bg) 72%, transparent);
 }
 
@@ -52,13 +57,14 @@
 }
 
 .tableHeader {
-  width: 38%;
+  flex: 0 0 180px;
   color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
 .tableCell {
+  flex: 1 1 300px;
   color: var(--text-secondary);
   word-break: break-word;
   line-height: 1.5;
@@ -69,26 +75,9 @@
   color: var(--color-error);
 }
 
-@media (max-width: 767px) {
-  .card {
-    padding: 20px;
-  }
-
-  .header {
-    flex-wrap: wrap;
-  }
-
-  .tableHeader,
-  .tableCell {
-    display: block;
-    width: 100%;
-  }
-
-  .tableHeader {
-    margin-bottom: 2px;
-  }
-
-  .tableRow {
-    padding: 10px 12px;
-  }
+.editButton {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

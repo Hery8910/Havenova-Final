@@ -30,6 +30,9 @@ import {
 interface ProfileContextProps {
   profile: UserClientProfile;
   loading: boolean;
+  source: 'server' | 'storage' | 'default' | 'dev-fallback';
+  isOffline: boolean;
+  lastSyncAt: string | null;
   reloadProfile: () => Promise<void>;
   updateProfile: (patch: UpdateUserClientProfileInput) => Promise<void>;
   setLanguage: (lang: AppLanguage) => Promise<void>;
@@ -159,7 +162,43 @@ const normalizeProfile = (
     notificationPreferences: normalizeNotificationPreferences(profile?.notificationPreferences),
   });
 
-const getProfileStorageKey = (clientId?: string | null) => `hv-profile:${clientId || 'guest'}`;
+const getProfileStorageKey = (
+  clientId?: string | null,
+  userClientId?: string | null,
+  userId?: string | null
+) => `hv-profile:${clientId || 'guest'}:${userClientId || userId || 'guest'}`;
+
+const isOfflineProfileError = (error: unknown): boolean => {
+  const err = error as {
+    code?: string;
+    message?: string;
+    response?: { status?: number };
+  };
+  const status = err?.response?.status;
+  const message = err?.message?.toLowerCase() ?? '';
+
+  if (status === 0 || status === 502 || status === 503 || status === 504) {
+    return true;
+  }
+
+  if (typeof status === 'number' && status >= 500) {
+    return true;
+  }
+
+  if (!status) {
+    return (
+      err?.code === 'ECONNABORTED' ||
+      message.includes('timeout') ||
+      message.includes('network') ||
+      message.includes('fetch') ||
+      message.includes('failed')
+    );
+  }
+
+  return false;
+};
+
+const isDevFallbackProfile = (value?: Partial<UserClientProfile> | null) => value?._id === 'dev-profile';
 
 export const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
 
@@ -169,12 +208,20 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { auth, loading: authLoading, setAuth } = useAuth();
   const creatingProfileRef = useRef(false);
   const authRef = useRef(auth);
-  const lastStorageKeyRef = useRef<string | null>(null);
+  const isDevProfileFallbackEnabled = process.env.NODE_ENV !== 'production';
 
-  const storageKey = useMemo(() => getProfileStorageKey(auth.clientId), [auth.clientId]);
+  const storageKey = useMemo(
+    () => getProfileStorageKey(auth.clientId, auth.userClientId, auth.userId),
+    [auth.clientId, auth.userClientId, auth.userId]
+  );
   const [profile, setProfile] = useState<UserClientProfile>(createEmptyProfile());
   const [loading, setLoading] = useState(true);
   const [isClientReady, setIsClientReady] = useState(false);
+  const [source, setSource] = useState<'server' | 'storage' | 'default' | 'dev-fallback'>(
+    'default'
+  );
+  const [isOffline, setIsOffline] = useState(false);
+  const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
   const profileRef = useRef(profile);
 
   useEffect(() => {
@@ -223,10 +270,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!isClientReady) return;
 
-    if (lastStorageKeyRef.current && lastStorageKeyRef.current !== storageKey) {
-      localStorage.removeItem(lastStorageKeyRef.current);
-    }
-
     const storedProfile = loadFromStorage();
     const nextProfile =
       storedProfile ??
@@ -238,7 +281,8 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
     setProfile(nextProfile);
     saveToStorage(nextProfile);
-    lastStorageKeyRef.current = storageKey;
+    setSource(storedProfile ? (isDevFallbackProfile(storedProfile) ? 'dev-fallback' : 'storage') : 'default');
+    setIsOffline(Boolean(storedProfile && isDevFallbackProfile(storedProfile)));
     setLoading(false);
   }, [isClientReady, loadFromStorage, saveToStorage, storageKey]);
 
@@ -256,7 +300,14 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   }, [isClientReady, profile?.theme]);
 
   const applyProfile = useCallback(
-    (nextProfile: Partial<UserClientProfile> | null | undefined) => {
+    (
+      nextProfile: Partial<UserClientProfile> | null | undefined,
+      options?: {
+        source?: 'server' | 'storage' | 'default' | 'dev-fallback';
+        isOffline?: boolean;
+        syncedAt?: string | null;
+      }
+    ) => {
       const normalized = normalizeProfile(nextProfile, {
         userClientId: authRef.current.userClientId,
         userId: authRef.current.userId,
@@ -264,6 +315,19 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       });
       setProfile(normalized);
       saveToStorage(normalized);
+      if (options?.source) {
+        setSource(options.source);
+      } else if (isDevFallbackProfile(normalized)) {
+        setSource('dev-fallback');
+      }
+      if (typeof options?.isOffline === 'boolean') {
+        setIsOffline(options.isOffline);
+      } else if (isDevFallbackProfile(normalized)) {
+        setIsOffline(true);
+      }
+      if (options?.syncedAt !== undefined) {
+        setLastSyncAt(options.syncedAt);
+      }
       return normalized;
     },
     [saveToStorage]
@@ -303,6 +367,27 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [setAuth]);
 
+  const createDevProfileFallback = useCallback((): UserClientProfile => {
+    const currentProfile = profileRef.current;
+    return normalizeProfile(
+      {
+        ...currentProfile,
+        _id: currentProfile?._id || 'dev-profile',
+        contactEmail: currentProfile?.contactEmail || authRef.current.email || 'dev.user@havenova.local',
+        name: currentProfile?.name || 'Development User',
+        phone: currentProfile?.phone || '',
+        profileImage: currentProfile?.profileImage || DEFAULT_AVATAR,
+        language: currentProfile?.language ?? getStoredLanguage() ?? 'de',
+        theme: currentProfile?.theme ?? getStoredTheme() ?? 'light',
+      },
+      {
+        userClientId: authRef.current.userClientId,
+        userId: authRef.current.userId,
+        clientId: authRef.current.clientId,
+      }
+    );
+  }, []);
+
   const ensureBackendProfile = useCallback(async () => {
     const currentProfile = profileRef.current;
     const initialProfile: CreateUserClientProfileInput = {
@@ -323,7 +408,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const created = await createUserClientProfile(initialProfile);
-    applyProfile(created.profile);
+    applyProfile(created.profile, {
+      source: 'server',
+      isOffline: false,
+      syncedAt: new Date().toISOString(),
+    });
     clearIsNewUserFlag();
   }, [applyProfile, clearIsNewUserFlag]);
 
@@ -345,13 +434,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const backendProfile = await getUserClientProfile();
-      applyProfile(backendProfile);
+      applyProfile(backendProfile, {
+        source: 'server',
+        isOffline: false,
+        syncedAt: new Date().toISOString(),
+      });
       clearIsNewUserFlag();
     } catch (error) {
       const err = error as { response?: { status?: number; data?: { code?: string } } };
       const status = err.response?.status;
       const code = err.response?.data?.code;
-      const currentAuth = authRef.current;
 
       if (
         (status === 404 || code === 'USER_CLIENT_PROFILE_NOT_FOUND') &&
@@ -373,10 +465,35 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         try {
           await refreshToken();
           const backendProfile = await getUserClientProfile();
-          applyProfile(backendProfile);
+          applyProfile(backendProfile, {
+            source: 'server',
+            isOffline: false,
+            syncedAt: new Date().toISOString(),
+          });
           clearIsNewUserFlag();
-        } catch {
+        } catch (refreshError) {
+          if (isOfflineProfileError(refreshError)) {
+            if (isDevProfileFallbackEnabled && !profileRef.current.contactEmail) {
+              applyProfile(createDevProfileFallback(), {
+                source: 'dev-fallback',
+                isOffline: true,
+              });
+            } else {
+              setSource('storage');
+              setIsOffline(true);
+            }
+          }
           return;
+        }
+      } else if (isOfflineProfileError(error)) {
+        if (isDevProfileFallbackEnabled && !profileRef.current.contactEmail) {
+          applyProfile(createDevProfileFallback(), {
+            source: 'dev-fallback',
+            isOffline: true,
+          });
+        } else {
+          setSource('storage');
+          setIsOffline(true);
         }
       }
     }
@@ -385,8 +502,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     auth.isLogged,
     auth.role,
     clearIsNewUserFlag,
+    createDevProfileFallback,
     ensureBackendProfile,
     handleProfileBootstrapError,
+    isDevProfileFallbackEnabled,
   ]);
 
   useEffect(() => {
@@ -411,7 +530,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           userId: auth.userId,
           clientId: auth.clientId,
         }
-      )
+      ),
+      {
+        source: 'default',
+        isOffline: false,
+      }
     );
   }, [
     applyProfile,
@@ -446,13 +569,19 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         }
       );
 
-      applyProfile(updatedLocal);
+      applyProfile(updatedLocal, {
+        source: 'storage',
+      });
 
       if (!auth.isLogged || auth.role === 'guest') return;
 
       try {
         const response = await updateUserClientProfile(patch);
-        applyProfile(response.profile);
+        applyProfile(response.profile, {
+          source: 'server',
+          isOffline: false,
+          syncedAt: new Date().toISOString(),
+        });
       } catch (error) {
         const err = error as { response?: { status?: number } };
 
@@ -474,7 +603,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
               },
               extra: updatedLocal.extra,
             });
-            applyProfile(created.profile);
+            applyProfile(created.profile, {
+              source: 'server',
+              isOffline: false,
+              syncedAt: new Date().toISOString(),
+            });
             clearIsNewUserFlag();
           } catch (createError) {
             handleProfileBootstrapError(createError);
@@ -486,9 +619,34 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           try {
             await refreshToken();
             const response = await updateUserClientProfile(patch);
-            applyProfile(response.profile);
-          } catch {
+            applyProfile(response.profile, {
+              source: 'server',
+              isOffline: false,
+              syncedAt: new Date().toISOString(),
+            });
+          } catch (refreshError) {
+            if (isOfflineProfileError(refreshError)) {
+              if (isDevProfileFallbackEnabled && !profileRef.current.contactEmail) {
+                applyProfile(createDevProfileFallback(), {
+                  source: 'dev-fallback',
+                  isOffline: true,
+                });
+              } else {
+                setSource('storage');
+                setIsOffline(true);
+              }
+            }
             return;
+          }
+        } else if (isOfflineProfileError(error)) {
+          if (isDevProfileFallbackEnabled && !profileRef.current.contactEmail) {
+            applyProfile(createDevProfileFallback(), {
+              source: 'dev-fallback',
+              isOffline: true,
+            });
+          } else {
+            setSource('storage');
+            setIsOffline(true);
           }
         }
       }
@@ -501,7 +659,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       auth.userClientId,
       auth.userId,
       clearIsNewUserFlag,
+      createDevProfileFallback,
       handleProfileBootstrapError,
+      isDevProfileFallbackEnabled,
       profile,
     ]
   );
@@ -521,6 +681,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       value={{
         profile,
         loading,
+        source,
+        isOffline,
+        lastSyncAt,
         reloadProfile,
         updateProfile,
         setLanguage,

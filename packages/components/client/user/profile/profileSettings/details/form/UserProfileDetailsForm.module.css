@@ -1,5 +1,5 @@
 .card {
-  padding: 24px;
+  padding: 28px;
   margin: 0 auto;
   width: 100%;
   display: flex;
@@ -10,15 +10,13 @@
   border-radius: var(--radius-md);
 }
 .title {
+  width: fit-content;
   margin: 0;
   color: var(--page-text-secondary);
-  font-weight: 700;
-  margin-bottom: 24px;
 }
 .form {
   width: 100%;
   margin: 0 auto;
-  max-width: 450px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -46,14 +44,17 @@
 
 .addressTitle {
   margin: 0;
-  color: var(--text-primary);
-  font-size: 1rem;
-  font-weight: 700;
+  color: var(--page-text-secondary);
+}
+
+.primaryAddressTitle {
+  margin: 0;
+  color: var(--page-text-primary);
 }
 
 .addressHint {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.95rem;
 }
 
@@ -63,7 +64,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 8px;
 }
 
@@ -84,9 +85,7 @@
 
 .secondaryAddressTitle {
   margin: 0;
-  color: var(--text-primary);
-  font-size: 0.98rem;
-  font-weight: 700;
+  color: var(--page-text-secondary);
 }
 
 .cardActions {
@@ -96,7 +95,7 @@
 }
 
 .secondaryPrompt {
-  padding: 8px;
+  padding: 8px 24px;
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
@@ -140,7 +139,6 @@
   .addressHeader,
   .addressCardHeader,
   .secondaryPrompt {
-    flex-direction: column;
     align-items: stretch;
   }
 }
