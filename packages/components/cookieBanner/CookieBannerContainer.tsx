@@ -16,7 +16,7 @@ export function CookieBannerContainer() {
   const cookieTexts = texts?.components?.client.cookieBanner;
 
   const handleAcknowledge = useCallback(() => {
-    saveSelection({ statistics: false });
+    saveSelection({});
   }, [saveSelection]);
 
   useEffect(() => {

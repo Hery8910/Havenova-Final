@@ -137,11 +137,12 @@ export function useVerifyEmailActions() {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
+            cancelLabel: popupData.close,
           },
           onConfirm: () => {
             closeAlert();
-            router.push(href(lang, '/'));
           },
+          onCancel: closeAlert,
         });
 
         return { ok: false, code, status: errorConfig.status };
@@ -160,7 +161,7 @@ export function useVerifyEmailActions() {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: popupData.confirm ?? fallbackButtons.reload,
-          cancelLabel: popupData.close,
+          cancelLabel: popups.button?.goToHome ?? fallbackButtons.goToHome,
         },
         onConfirm: () => {
           closeAlert();
@@ -204,11 +205,12 @@ export function useVerifyEmailActions() {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: popupData.confirm ?? fallbackButtons.continue,
+            cancelLabel: popupData.close,
           },
           onConfirm: () => {
             closeAlert();
-            router.push(href(lang, '/'));
           },
+          onCancel: closeAlert,
         });
 
         return { ok: false, code, status: errorConfig.status };
@@ -222,7 +224,7 @@ export function useVerifyEmailActions() {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: popupData.confirm ?? fallbackButtons.reload,
-          cancelLabel: popupData.close,
+          cancelLabel: popups.button?.goToHome ?? fallbackButtons.goToHome,
         },
         onConfirm: () => {
           closeAlert();
@@ -270,7 +272,7 @@ export function useVerifyEmailActions() {
               isExpired || isInvalid
                 ? popupData.confirm ?? fallbackButtons.continue
                 : popupData.confirm ?? fallbackButtons.reload,
-            cancelLabel: popupData.close,
+            cancelLabel: popups.button?.goToHome ?? fallbackButtons.goToHome,
           },
           onConfirm:
             isExpired || isInvalid
@@ -294,22 +296,12 @@ export function useVerifyEmailActions() {
       const { user } = res;
 
       setAuth({
-        authId: user.authId,
-        userClientId: user.userClientId,
-        userId: user.userId,
-        clientId: user.clientId,
-        email: user.email,
-        role: user.role,
-        status: user.status,
-        isVerified: user.isVerified,
-        isLogged: true,
+        ...user,
         isNewUser: true,
-        tosAccepted: auth?.tosAccepted,
-        cookiePrefs: auth?.cookiePrefs,
       });
 
       // El success de login no lo mostramos aquí, lo dejas a la página verify-email
-      // para mantener el patrón que ya tienes: 3 loadings + popup final.
+      // para mantener el patrón actual: un loading compuesto y un único success final.
       return { ok: true, code: res.code };
     } catch (err: any) {
       const code = err?.response?.data?.code;
@@ -336,7 +328,7 @@ export function useVerifyEmailActions() {
             isExpired || isInvalid
               ? popupData.confirm ?? fallbackButtons.continue
               : popupData.confirm ?? fallbackButtons.reload,
-          cancelLabel: popupData.close,
+          cancelLabel: popups.button?.goToHome ?? fallbackButtons.goToHome,
         },
         onConfirm:
           isExpired || isInvalid

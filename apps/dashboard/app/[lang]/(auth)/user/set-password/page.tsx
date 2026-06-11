@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { useI18n } from '@/packages/contexts';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -13,7 +13,7 @@ import { FormWrapper } from '@/packages/components/client/user/auth';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
 import styles from './page.module.css';
-import { href } from '../../../../../../../packages/utils/navigation';
+import { href } from '../../../../../../../packages/utils';
 import { useLang } from '../../../../../../../packages/hooks';
 
 export interface ResetPasswordData {

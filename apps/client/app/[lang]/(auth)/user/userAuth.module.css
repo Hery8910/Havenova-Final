@@ -2,17 +2,20 @@
   width: 100%;
   position: relative;
   min-height: 100dvh;
-  height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--space-2) var(--space-4);
+  padding: max(var(--space-3), env(safe-area-inset-top, 0px))
+    max(var(--space-4), env(safe-area-inset-right, 0px))
+    max(var(--space-3), env(safe-area-inset-bottom, 0px))
+    max(var(--space-4), env(safe-area-inset-left, 0px));
 }
 
 .authCardWrapper {
   width: 100%;
-  max-width: 28rem;
+  max-width: 30rem;
   max-height: 100%;
   padding: 0;
   margin: 0 auto;
@@ -34,6 +37,12 @@
   display: flex;
   justify-content: center;
   text-decoration: none;
+}
+
+.authBrand:focus-visible {
+  outline: 2px solid var(--input-border-focus);
+  outline-offset: 6px;
+  border-radius: var(--radius-lg);
 }
 
 .authBrandImage {
@@ -220,22 +229,20 @@
 
 @media (max-width: 400px) {
   .authMainLayout {
-    padding: 0;
+    padding: max(var(--space-2), env(safe-area-inset-top, 0px)) var(--space-2)
+      max(var(--space-2), env(safe-area-inset-bottom, 0px));
   }
 
   .authCardWrapper {
-    height: 100dvh;
+    min-height: calc(100dvh - (var(--space-2) * 2));
+    height: auto;
   }
 
   .authSection {
-    min-height: 100dvh;
-    padding: calc(var(--space-5) + env(safe-area-inset-top, 0px)) var(--space-4)
-      calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    min-height: calc(100dvh - (var(--space-2) * 2));
+    gap: var(--space-6);
+    padding: calc(var(--space-4) + env(safe-area-inset-top, 0px)) var(--space-3)
+      calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
   }
 }
 

@@ -12,33 +12,34 @@
 
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
+  font-size: var(--type-title-sm-size);
+  line-height: var(--leading-heading);
 }
 
 .description {
   margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: var(--page-text-secondary);
+  line-height: 1.55;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .label {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: var(--page-text-secondary);
 }
 
 .input,
 .textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  color: var(--page-text-primary);
   background: rgba(255, 255, 255, 0.08);
   font: inherit;
 }
@@ -54,21 +55,19 @@
 }
 
 .counter {
-  display: grid;
-  grid-template-columns: 44px minmax(64px, auto) 44px;
-  gap: 8px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-sm);
+  padding: 6px;
 }
 
 .counterButton {
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 22px;
-  line-height: 1;
+  width: auto;
+  height: auto;
+  padding: 10px 10px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -81,21 +80,22 @@
 }
 
 .counterValue {
-  min-height: 44px;
+  min-width: 72px;
+  padding: 6px 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  color: var(--page-text-primary);
   background: rgba(255, 255, 255, 0.08);
   font-weight: 700;
-  font-size: var(--font-size-300);
+  font-size: var(--type-body-md-size);
 }
 
 .hint,
 .photosDescription {
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -107,19 +107,19 @@
   padding: 16px;
   border: 1px dashed color-mix(in srgb, var(--surface-border) 85%, #fff);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--card-primary-bg) 36%, transparent);
 }
 
 .photosTitle {
   margin: 0 0 6px;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
   font-size: 1rem;
 }
 
 .error {
   min-height: 20px;
   color: var(--color-error);
-  font-size: var(--font-size-100);
+  font-size: var(--type-body-sm-size);
 }
 
 .counterButton:focus-visible,

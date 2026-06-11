@@ -75,8 +75,10 @@
         }
       ],
       "accessibility": {
+        "skipToContent": "Skip to main content",
         "mainNavigation": "Main navigation",
         "homeLink": "Go to homepage",
+        "authFooter": "Authentication page actions",
         "logoAlt": "Havenova logo",
         "accountLabel": "Account",
         "mobileNavigation": "Mobile navigation",
@@ -154,17 +156,18 @@
         "login": "Log in",
         "edit": "Save Changes",
         "changePassword": "Save password",
-        "forgotPassword": "Reset",
-        "resetPassword": "Save password",
+        "forgotPassword": "Send reset link",
+        "resetPassword": "Set new password",
         "contact": "Send message",
         "support": "Create ticket",
-        "resendEmail": "Resend email"
+        "resendEmail": "Resend verification email"
       },
       "labels": {
         "name": "Name",
         "email": "Email",
         "password": "Password",
-        "errorSummary": "Please review the highlighted fields.",
+        "invalidData": "Please review this field.",
+        "errorSummary": "Please review the highlighted fields before continuing.",
         "forgotPassword": "Forgot Password?",
         "resetPassword": "Reset Password",
         "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
@@ -181,11 +184,11 @@
         "message": "Message"
       },
       "placeholders": {
-        "name": "John Doe",
+        "name": "Jane Doe",
         "email": "john.doe@example.com",
         "password": "Min. 8 characters",
-        "address": "Main Street 12, 12345 London",
-        "phone": "+49 7911 123456",
+        "address": "221B Baker Street, London NW1",
+        "phone": "+44 20 7946 0958",
         "subject": "Select a subject",
         "message": "Your question or message..."
       },

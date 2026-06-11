@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 
 import styles from './page.module.css';
 import { getPopup } from '../../../../../../packages/utils/alertType';
-import AvatarSelector from '../../../../../../packages/components/client/user/profile/avatarSelector/AvatarSelector';
 import { UpdateUserClientProfileInput, formatUserAddress } from '../../../../../../packages/types';
 import {
   fallbackButtons,
@@ -20,7 +19,7 @@ import {
 import { useLang } from '../../../../../../packages/hooks';
 import { useRequireLogin } from '../../../../../../packages/hooks/useRequireLogin';
 import { href } from '../../../../../../packages/utils';
-import { FormWrapper } from '../../../../../../packages/components/client/user/profile';
+import { AvatarSelector, FormWrapper } from '../../../../../../packages/components/client/user/profile';
 
 type ProfileFormData = Pick<
   UpdateUserClientProfileInput,

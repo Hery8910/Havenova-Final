@@ -26,7 +26,7 @@ export default function ProcessStepsHeader({
   const visualCurrentStep = currentStep > totalSteps ? null : currentStep;
 
   return (
-    <header className={styles.header} aria-labelledby={titleId}>
+    <section className={styles.header} aria-labelledby={titleId}>
       <div className={styles.intro}>
         <p className={`${styles.meta} type-body-sm`}>
           {texts.stepLabel} {Math.min(currentStep, totalSteps)}/{totalSteps}
@@ -59,6 +59,6 @@ export default function ProcessStepsHeader({
           );
         })}
       </ol>
-    </header>
+    </section>
   );
 }

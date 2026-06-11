@@ -1,25 +1,23 @@
 import api from '../api/api';
-import type { ApiResponse } from '@/packages/types/api';
-import type { CleaningRequestSubmission } from '@/packages/types/services/servicesTypes';
+import type { ApiResponse } from '@/packages/types';
+import type {
+  CleaningServiceRequest,
+  CreateServiceRequestInput,
+} from '@/packages/types';
 
-export interface CleaningRequestCreatePayload extends CleaningRequestSubmission {
-  clientId: string;
-  userId?: string;
-}
+export type CleaningRequestCreatePayload = CreateServiceRequestInput<'cleaning'>;
 
 export interface CleaningRequestCreateResponse {
   success: boolean;
   code: string;
   message?: string;
-  data: {
-    id?: string;
-  };
+  data: CleaningServiceRequest | null;
 }
 
 export const createCleaningRequest = async (
   payload: CleaningRequestCreatePayload
 ): Promise<CleaningRequestCreateResponse> => {
-  const { data } = await api.post<ApiResponse<{ id?: string }>>(
+  const { data } = await api.post<ApiResponse<CleaningServiceRequest>>(
     '/api/home-services/service-request',
     payload,
     {
@@ -31,8 +29,6 @@ export const createCleaningRequest = async (
     success: data.success,
     code: data.code,
     message: data.message,
-    data: {
-      id: data.data?.id,
-    },
+    data: data.data ?? null,
   };
 };

@@ -6,7 +6,7 @@ import { MdDeleteForever } from 'react-icons/md';
 import styles from './page.module.css';
 import { ContactMessage } from '../../../../../../packages/types';
 import { formatMessageAge } from '../../../../../../packages/utils';
-import { ContactMessageResponder } from '../../../../../../packages/components/dashboard/contactMessages/ContactMessageResponder';
+import { ContactMessageResponder } from '../../../../../../packages/components/dashboard';
 import { useI18n } from '../../../../../../packages/contexts';
 
 interface ContactMessagesListTexts {
@@ -44,7 +44,7 @@ interface ContactMessagesListProps {
     payload: {
       text: string;
       respondedAt?: string;
-      respondedBy?: string;
+      respondedByUserClientId?: string;
       respondedByName?: string;
       respondedByProfileImage?: string;
     }
@@ -92,21 +92,26 @@ export default function ContactMessagesList({
             const isAnswered = msg.status === 'answered';
             const isResponseOpen = activeResponseId === msg._id;
             const isResponderOpen = activeMessageId === msg._id;
+            const senderName = msg.sender.name;
+            const senderEmail = msg.sender.email;
+            const senderAvatar = msg.sender.profileImage || '/avatars/avatar-1.svg';
+            const subject = msg.content.subject;
+            const body = msg.content.body;
 
             return (
               <li key={msg._id} className={styles.item}>
                 <Image
                   className={styles.image}
-                  src={msg.profileImage || '/avatars/avatar-1.svg'}
-                  alt={`${msg.name} avatar`}
+                  src={senderAvatar}
+                  alt={`${senderName} avatar`}
                   width={40}
                   height={40}
                 />
                 <div className={styles.wrapper}>
                   <header className={styles.itemsHeader}>
                     <article className={styles.article}>
-                      <p className={styles.name}>{msg.name}</p>
-                      <p className={styles.email}>{msg.email}</p>
+                      <p className={styles.name}>{senderName}</p>
+                      <p className={styles.email}>{senderEmail}</p>
                     </article>
                     <aside className={styles.aside}>
                       <button
@@ -134,8 +139,8 @@ export default function ContactMessagesList({
                   </header>
                   <section className={styles.msgSection}>
                     <article className={styles.msgArticle}>
-                      {msg.subject && <p className={styles.subject}>{msg.subject}</p>}
-                      <p className={styles.message}>{msg.message}</p>
+                      {subject && <p className={styles.subject}>{subject}</p>}
+                      <p className={styles.message}>{body}</p>
                     </article>
                     <button
                       className={isAnswered ? styles.showBtn : styles.responseBtn}

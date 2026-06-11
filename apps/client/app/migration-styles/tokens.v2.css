@@ -1,0 +1,351 @@
+:root {
+  /*
+   * Owned v2 tokens for migrated pages.
+   * Tokens are grouped by visual responsibility so consumers can reference
+   * the intended design role directly without alias chains.
+   */
+
+  /* Page */
+  --v2-page-bg: #f8fafc;
+  --v2-page-bg-image:
+    radial-gradient(circle at top left, rgba(10, 132, 255, 0.14), transparent 32%),
+    radial-gradient(circle at 85% 18%, rgba(111, 66, 193, 0.1), transparent 28%),
+    linear-gradient(180deg, #f8fafc 0%, #eef5ff 52%, #fdf8ff 100%);
+  --v2-page-text-primary: #4a4a4a;
+  --v2-page-text-secondary: #585858;
+
+  /* Layout */
+  --v2-navbar-height: 55px;
+  --v2-page-max-width: 1400px;
+  --v2-content-max-width: 1200px;
+  --v2-page-inline-padding: 5dvw;
+  --v2-section-space-y: clamp(56px, 8vw, 96px);
+  --v2-hero-mobile-min-block-offset: 88px;
+  --v2-space-8: 48px;
+  --v2-space-10: 64px;
+
+  /* Radius */
+  --v2-radius-sm: 6px;
+  --v2-radius-md: 8px;
+  --v2-radius-lg: 16px;
+
+  /* Motion */
+  --v2-motion-base: 220ms;
+  --v2-ease-standard: ease;
+  --v2-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Buttons */
+  --v2-button-padding-y: 8px;
+  --v2-button-padding-x: 24px;
+  --v2-button-gap: var(--space-2);
+  --v2-button-font-size: var(--type-body-sm-size);
+  --v2-button-font-weight: 700;
+  --v2-button-line-height: 1.1;
+  --v2-button-text-disabled: rgba(22, 33, 45, 0.48);
+  --v2-button-border-disabled: rgba(77, 99, 120, 0.14);
+  --v2-button-bg-disabled: rgba(248, 250, 252, 0.72);
+  --v2-button-shadow-rest: 0 1px 2px rgba(19, 31, 43, 0.08);
+  --v2-button-shadow-hover: 0 8px 18px rgba(19, 31, 43, 0.12);
+  --v2-button-shadow-active: 0 2px 6px rgba(19, 31, 43, 0.1);
+  --v2-button-shadow-focus: 0 0 0 3px rgba(10, 132, 255, 0.18);
+  --v2-button-focus-border: rgba(10, 132, 255, 0.42);
+
+  --v2-button-primary-text: #f8fbff;
+  --v2-button-primary-bg: #0a84ff;
+  --v2-button-primary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-primary-bg-hover: #0975e1;
+  --v2-button-primary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-primary-bg-active: #0764c1;
+  --v2-button-primary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.04)
+  );
+  --v2-button-primary-border: #0a84ff;
+
+  --v2-button-secondary-text: #f8fbff;
+  --v2-button-secondary-bg: #6f42c1;
+  --v2-button-secondary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-secondary-bg-hover: #6035ad;
+  --v2-button-secondary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-secondary-bg-active: #512b92;
+  --v2-button-secondary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.05)
+  );
+  --v2-button-secondary-border: #6f42c1;
+
+  --v2-button-accent-text: #1d2128;
+  --v2-button-accent-bg: #ecab14;
+  --v2-button-accent-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-accent-bg-hover: #d79b11;
+  --v2-button-accent-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-accent-bg-active: #bb870d;
+  --v2-button-accent-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
+  --v2-button-accent-border: #ecab14;
+
+  --v2-button-outline-text: var(--v2-page-text-secondary);
+  --v2-button-outline-bg: rgba(255, 255, 255, 0.38);
+  --v2-button-outline-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-outline-bg-hover: #f3f6f8;
+  --v2-button-outline-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.06)
+  );
+  --v2-button-outline-bg-active: #e9eef2;
+  --v2-button-outline-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-outline-border: rgba(77, 99, 120, 0.26);
+
+  /* Cards */
+  --v2-card-blur: 14px;
+  --v2-card-shadow: 0 1px 2px rgba(19, 31, 43, 0.08);
+  --v2-list-marker-accent: #0a84ff;
+  --v2-service-icon-surface-size: clamp(72px, 10vw, 92px);
+  --v2-service-icon-size: clamp(48px, 6vw, 64px);
+  --v2-benefit-icon-size: clamp(1.75rem, 4vw, 2.5rem);
+
+  --v2-card-neutral-bg1: hsla(210, 14%, 95%, 0.4);
+  --v2-card-neutral-bg2: hsla(210, 14%, 85%, 0.25);
+  --v2-card-neutral-bg3: hsla(210, 14%, 95%, 0.3);
+  --v2-card-neutral-border: rgba(255, 255, 255, 0.3);
+
+  --v2-card-primary-bg1: hsla(210, 93%, 76%, 0.5);
+  --v2-card-primary-bg2: hsla(210, 93%, 86%, 0.35);
+  --v2-card-primary-bg3: hsla(210, 93%, 86%, 0.4);
+  --v2-card-primary-border: hsla(210, 93%, 66%, 0.5);
+
+  --v2-card-secondary-bg1: hsla(262, 85%, 82%, 0.5);
+  --v2-card-secondary-bg2: hsla(262, 85%, 92%, 0.35);
+  --v2-card-secondary-bg3: hsla(262, 85%, 92%, 0.4);
+  --v2-card-secondary-border: hsla(262, 85%, 82%, 0.5);
+
+  --v2-card-accent-bg: #fc872183;
+  --v2-card-accent-bg-image: rgba(236, 171, 20, 0.22);
+  --v2-card-accent-border: rgba(236, 171, 20, 0.28);
+
+  /* Feedback / alert surfaces */
+  --v2-feedback-success-surface: rgba(21, 128, 61, 0.12);
+  --v2-feedback-success-border: rgba(21, 128, 61, 0.28);
+  --v2-feedback-warning-surface: #fc872183;
+  --v2-feedback-warning-border: rgba(236, 171, 20, 0.32);
+  --v2-feedback-error-surface: rgba(220, 38, 38, 0.12);
+  --v2-feedback-error-border: rgba(220, 38, 38, 0.28);
+
+  /* Feedback / decoration */
+  --v2-feedback-info-bg-image: rgba(10, 132, 255, 0.18);
+  --v2-alert-icon-success-image: linear-gradient(
+    145deg,
+    rgba(21, 128, 61, 0.34) 0%,
+    rgba(34, 197, 94, 0.18) 52%,
+    rgba(21, 128, 61, 0.34) 100%
+  );
+  --v2-alert-icon-error-image: linear-gradient(
+    145deg,
+    rgba(220, 38, 38, 0.3) 0%,
+    rgba(248, 113, 113, 0.18) 52%,
+    rgba(220, 38, 38, 0.3) 100%
+  );
+  --v2-alert-icon-warning-image: linear-gradient(
+    145deg,
+    rgba(236, 171, 20, 0.36) 0%,
+    rgba(251, 191, 36, 0.18) 52%,
+    rgba(236, 171, 20, 0.36) 100%
+  );
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --v2-page-bg: #0f172a;
+  --v2-page-bg-image:
+    radial-gradient(circle at top left, rgba(87, 134, 180, 0.2), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(82, 61, 122, 0.2), transparent 30%),
+    linear-gradient(180deg, #0f172a 0%, #111c32 54%, #18152d 100%);
+  --v2-page-text-primary: #f8fafc;
+  --v2-page-text-secondary: #b8b8b8;
+  --v2-list-marker-accent: #60a5fa;
+
+  --v2-button-text-disabled: rgba(148, 163, 184, 0.56);
+  --v2-button-border-disabled: rgba(148, 163, 184, 0.14);
+  --v2-button-bg-disabled: rgba(30, 41, 59, 0.44);
+  --v2-button-shadow-rest: 0 1px 2px rgba(2, 8, 23, 0.18);
+  --v2-button-shadow-hover: 0 10px 22px rgba(2, 8, 23, 0.22);
+  --v2-button-shadow-active: 0 3px 8px rgba(2, 8, 23, 0.2);
+  --v2-button-shadow-focus: 0 0 0 3px rgba(96, 165, 250, 0.22);
+  --v2-button-focus-border: rgba(96, 165, 250, 0.5);
+
+  --v2-button-primary-text: #f8fbff;
+  --v2-button-primary-bg: #2190ff;
+  --v2-button-primary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-primary-bg-hover: #3b9cff;
+  --v2-button-primary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-primary-bg-active: #1176de;
+  --v2-button-primary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
+  --v2-button-primary-border: #2190ff;
+
+  --v2-button-secondary-text: #f8fbff;
+  --v2-button-secondary-bg: #8b5cf6;
+  --v2-button-secondary-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-secondary-bg-hover: #9b74ff;
+  --v2-button-secondary-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-secondary-bg-active: #7c45ef;
+  --v2-button-secondary-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.05)
+  );
+  --v2-button-secondary-border: #8b5cf6;
+
+  --v2-button-accent-text: #1d2128;
+  --v2-button-accent-bg: #f4b51c;
+  --v2-button-accent-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-accent-bg-hover: #ffbf2e;
+  --v2-button-accent-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-accent-bg-active: #d79b11;
+  --v2-button-accent-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.06)
+  );
+  --v2-button-accent-border: #f4b51c;
+
+  --v2-button-outline-text: #e2e8f0;
+  --v2-button-outline-bg: rgba(30, 41, 59, 0.44);
+  --v2-button-outline-bg-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-outline-bg-hover: rgba(148, 163, 184, 0.12);
+  --v2-button-outline-bg-image-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02)
+  );
+  --v2-button-outline-bg-active: rgba(148, 163, 184, 0.2);
+  --v2-button-outline-bg-image-active: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0)
+  );
+  --v2-button-outline-border: rgba(148, 163, 184, 0.32);
+
+  --v2-card-shadow: 0 18px 48px rgba(2, 8, 23, 0.34), 0 0 0 1px rgba(148, 163, 184, 0.08);
+
+  --v2-card-neutral-bg1: rgba(49, 58, 71, 0.2);
+  --v2-card-neutral-bg2: rgba(30, 41, 59, 0.45);
+  --v2-card-neutral-bg3: rgba(15, 23, 42, 0.45);
+  --v2-card-neutral-border: rgba(148, 163, 184, 0.3);
+
+  --v2-card-primary-bg1: rgba(43, 96, 182, 0.34);
+  --v2-card-primary-bg2: rgba(20, 41, 75, 0.34);
+  --v2-card-primary-bg3: rgba(28, 43, 80, 0.6);
+  --v2-card-primary-border: rgba(96, 165, 250, 0.28);
+
+  --v2-card-secondary-bg1: hsla(258, 46%, 41%, 0.32);
+  --v2-card-secondary-bg2: rgba(30, 41, 59, 0.46);
+  --v2-card-secondary-bg3: rgba(37, 32, 70, 0.62);
+  --v2-card-secondary-border: rgba(167, 139, 250, 0.3);
+
+  --v2-card-accent-bg: hsla(42, 91%, 20%, 0.6);
+  --v2-card-accent-bg-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    hsla(42, 86%, 18%, 0.5) 0%,
+    hsla(42, 86%, 18%, 0.35) 50%,
+    hsla(42, 86%, 18%, 0.4) 100%
+  );
+  --v2-card-accent-border: rgba(250, 204, 21, 0.3);
+
+  --v2-feedback-success-surface: rgba(21, 128, 61, 0.12);
+  --v2-feedback-success-border: rgba(126, 226, 168, 0.3);
+  --v2-feedback-warning-surface: #fc872183;
+  --v2-feedback-warning-border: rgba(255, 217, 120, 0.32);
+  --v2-feedback-error-surface: rgba(220, 38, 38, 0.12);
+  --v2-feedback-error-border: rgba(255, 180, 180, 0.3);
+
+  --v2-feedback-info-bg-image: rgba(10, 132, 255, 0.18);
+  --v2-alert-icon-success-image: linear-gradient(
+    145deg,
+    rgba(21, 128, 61, 0.34) 0%,
+    rgba(34, 197, 94, 0.18) 52%,
+    rgba(21, 128, 61, 0.34) 100%
+  );
+  --v2-alert-icon-error-image: linear-gradient(
+    145deg,
+    rgba(220, 38, 38, 0.3) 0%,
+    rgba(248, 113, 113, 0.18) 52%,
+    rgba(220, 38, 38, 0.3) 100%
+  );
+  --v2-alert-icon-warning-image: linear-gradient(
+    145deg,
+    rgba(236, 171, 20, 0.36) 0%,
+    rgba(251, 191, 36, 0.18) 52%,
+    rgba(236, 171, 20, 0.36) 100%
+  );
+}

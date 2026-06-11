@@ -12,6 +12,7 @@ import { NavbarLinkList } from '../components/NavbarLinkList';
 import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
+import { useFocusTrap } from '../../../../utils/accessibility/useFocusTrap';
 
 export interface NavbarDesktopViewProps {
   content: ResolvedNavbarContent;
@@ -57,6 +58,13 @@ export function NavbarDesktopView({
     enabled: userMenuOpen,
     refs: [profileSlotRef, accountPanelRef],
     onDismiss: closePanel,
+  });
+
+  useFocusTrap({
+    enabled: userMenuOpen,
+    containerRef: accountPanelRef,
+    returnFocusRef: triggerRef,
+    onEscape: closePanel,
   });
 
   useLayoutEffect(() => {
@@ -153,6 +161,7 @@ export function NavbarDesktopView({
                 className={`card card--neutral ${styles.accountNavigation} ${
                   userMenuOpen ? styles.accountNavigationOpen : ''
                 }`}
+                tabIndex={-1}
                 aria-labelledby={userMenuOpen ? accountTitleId : undefined}
                 aria-hidden={!userMenuOpen}
               >

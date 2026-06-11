@@ -2,21 +2,21 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1200px;
-  padding: clamp(56px, 8vw, 96px) 5dvw;
+  max-width: var(--v2-content-max-width);
+  padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 64px;
+  gap: clamp(32px, 6vw, 64px);
 }
 .sectionTitle {
-  color: var(--text-primary);
+  color: var(--v2-page-text-primary);
   margin: 0;
 }
 .sectionSubtitle {
-  color: var(--text-secondary);
+  color: var(--v2-page-text-secondary);
   margin: 0;
 }
 
@@ -24,7 +24,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: clamp(56px, 8vw, 96px) 0;
+  padding: 0;
 }
 
 .benefits::after {
@@ -37,9 +37,9 @@
   transform: translateX(-50%);
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 100%, var(--card-primary-bg1) 0%, transparent 58%),
-    radial-gradient(circle at 30% 100%, var(--card-secondary-bg2) 0%, transparent 52%),
-    radial-gradient(circle at 70% 100%, var(--feedback-info-bg-image) 0%, transparent 46%);
+    radial-gradient(circle at 50% 100%, var(--v2-card-primary-bg1) 0%, transparent 58%),
+    radial-gradient(circle at 30% 100%, var(--v2-card-secondary-bg2) 0%, transparent 52%),
+    radial-gradient(circle at 70% 100%, var(--v2-feedback-info-bg-image) 0%, transparent 46%);
   opacity: 0.7;
   filter: blur(36px);
   pointer-events: none;
@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   padding: var(--space-4) 0;
-  gap: 24px;
+  gap: clamp(16px, 3vw, 24px);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -87,14 +87,41 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-primary);
+  color: var(--v2-page-text-primary);
+  font-size: var(--v2-benefit-icon-size);
+  flex: 0 0 auto;
 }
 
 .benefitTitle {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--v2-page-text-primary);
 }
 .benefitText {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--v2-page-text-secondary);
+}
+
+@media (max-width: 767px) {
+  .container {
+    gap: clamp(28px, 8vw, 40px);
+  }
+
+  .benefitsCopy,
+  .benefitsCards {
+    max-width: 100%;
+  }
+
+  .benefitCard {
+    align-items: flex-start;
+  }
+
+  .benefitIcon {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefitCard {
+    transition: none;
+  }
 }

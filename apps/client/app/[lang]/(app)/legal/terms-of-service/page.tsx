@@ -2,6 +2,7 @@
 
 import { useClient, useI18n } from '../../../../../../../packages/contexts';
 import styles from './page.module.css';
+import type { ClientLegalNamedParty } from '../../../../../../../packages/types';
 export interface TermsOfServicePageTexts {
   hero: {
     headline1: string;
@@ -17,6 +18,26 @@ export interface TermsOfServicePageTexts {
   definitions: {
     title: string;
     items: { term: string; definition: string }[];
+  };
+  parties: {
+    title: string;
+    intro: string;
+    serviceProvider: {
+      title: string;
+      description: string;
+    };
+    technicalOperator: {
+      title: string;
+      description: string;
+    };
+    fields: {
+      businessName: string;
+      legalName: string;
+      representedBy: string;
+      address: string;
+      email: string;
+      phone: string;
+    };
   };
   serviceDescription: {
     title: string;
@@ -67,36 +88,91 @@ export interface TermsOfServicePageTexts {
   };
 }
 
-export interface ContactTexts {
-  title: string;
-  items: {
-    label: string;
-    name: { label: string; value: string };
-    phone: { label: string; value: string };
-    address: { label: string; value: string };
-    email: { label: string; value: string };
-  }[];
-  cta: { label: string; href: string };
+type PartyItem = {
+  label: string;
+  value: string;
+  isAddress?: boolean;
+  isEmail?: boolean;
+};
+
+function buildPartyItems(
+  party: ClientLegalNamedParty | undefined,
+  fields: TermsOfServicePageTexts['parties']['fields']
+): PartyItem[] {
+  if (!party) return [];
+
+  return [
+    {
+      label: fields.businessName,
+      value: party.businessName ?? '',
+    },
+    {
+      label: fields.legalName,
+      value: party.legalName ?? '',
+    },
+    {
+      label: fields.representedBy,
+      value: party.representedBy ?? '',
+    },
+    {
+      label: fields.address,
+      value: party.contact?.address ?? '',
+      isAddress: true,
+    },
+    {
+      label: fields.email,
+      value: party.contact?.email ?? '',
+      isEmail: true,
+    },
+    {
+      label: fields.phone,
+      value: party.contact?.phone ?? '',
+    },
+  ].filter((item) => Boolean(item.value));
 }
 
 export default function TermsOfServicePage() {
   const { client } = useClient();
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
   const terms: TermsOfServicePageTexts = texts?.pages?.client?.legal?.terms;
 
   if (!client || !terms) return null;
 
   const legalUpdates = client.legal?.updates;
 
+  const serviceProvider = client.legal?.serviceProvider ?? {
+    businessName: client.identity.displayName ?? client.identity.companyName,
+    legalName: client.identity.legalName,
+    contact: {
+      address: client.identity.address,
+      email: client.identity.contactEmail,
+      phone: client.identity.phone,
+    },
+  };
+
+  const technicalOperator = client.legal?.technicalOperator ?? {
+    businessName: 'Maped Solutions',
+    legalName: 'Heriberto Santana',
+    representedBy: 'Heriberto Santana',
+    contact: {
+      address: 'Sarah-Kirsch-Str. 5, 12629 Berlin',
+      email: 'contact@mapedsolutions.com',
+      phone: '+49 177 7312 606',
+    },
+  };
+
+  const serviceProviderItems = buildPartyItems(serviceProvider, terms.parties.fields);
+  const technicalOperatorItems = buildPartyItems(technicalOperator, terms.parties.fields);
+
   function formatDate(dateString: string): string {
     if (!dateString) return '';
     const date = new Date(dateString);
     if (Number.isNaN(date.getTime())) return '';
-    return new Intl.DateTimeFormat('de-DE').format(date);
+    return new Intl.DateTimeFormat(language).format(date);
   }
 
   return (
-    <main className={styles.main}>
+    <main id="app-main-content" tabIndex={-1} className={styles.main}>
       {/* Hero */}
       <section className={styles.section}>
         <h1>{terms.hero.headline1}</h1>
@@ -125,6 +201,53 @@ export default function TermsOfServicePage() {
             <div className={styles.definition_item} key={item.term}>
               <dt className={styles.definition_term}>{item.term}</dt>
               <dd className={styles.definition_desc}>{item.definition}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{terms.parties.title}</h3>
+        <p>{terms.parties.intro}</p>
+
+        <h4 className={styles.h4}>{terms.parties.serviceProvider.title}</h4>
+        <p>{terms.parties.serviceProvider.description}</p>
+        <dl className={styles.definition_list}>
+          {serviceProviderItems.map((item) => (
+            <div className={styles.definition_item} key={item.label}>
+              <dt className={styles.definition_term}>{item.label}</dt>
+              <dd className={styles.definition_desc}>
+                {item.isEmail ? (
+                  <a className={styles.link} href={`mailto:${item.value}`}>
+                    {item.value}
+                  </a>
+                ) : item.isAddress ? (
+                  <address className={styles.address}>{item.value}</address>
+                ) : (
+                  item.value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <h4 className={styles.h4}>{terms.parties.technicalOperator.title}</h4>
+        <p>{terms.parties.technicalOperator.description}</p>
+        <dl className={styles.definition_list}>
+          {technicalOperatorItems.map((item) => (
+            <div className={styles.definition_item} key={item.label}>
+              <dt className={styles.definition_term}>{item.label}</dt>
+              <dd className={styles.definition_desc}>
+                {item.isEmail ? (
+                  <a className={styles.link} href={`mailto:${item.value}`}>
+                    {item.value}
+                  </a>
+                ) : item.isAddress ? (
+                  <address className={styles.address}>{item.value}</address>
+                ) : (
+                  item.value
+                )}
+              </dd>
             </div>
           ))}
         </dl>

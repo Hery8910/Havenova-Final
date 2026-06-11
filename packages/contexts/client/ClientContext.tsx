@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import { ClientPublicConfig, ClientContextProps } from '../../types/client/clientTypes';
-import Loading from '@havenova/components/loading/Loading';
 import { useI18n } from '../i18n';
 import { getPopup } from '@havenova/utils';
 import { getI18nFallbacks } from '../i18n';
@@ -10,7 +9,8 @@ import { useRouter } from 'next/navigation';
 import { getClient } from '../../services/client/clientServices';
 import { useGlobalAlert } from '../alert';
 import { PopupCode } from '../alert/alert.types';
-import { ClientBootstrapFallback } from './ClientBootstrapFallback';
+
+const CLIENT_BOOTSTRAP_RETRY_LIMIT = 3;
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -27,12 +27,49 @@ type ClientBootstrapAlertKind =
   | 'invalid_request'
   | 'dismiss_only';
 
-type ClientBootstrapFallbackState = {
+type ClientBootstrapFailure = {
   status: number;
   code: string;
   message?: string;
   alertKind: ClientBootstrapAlertKind;
 };
+
+function getBootstrapRetryStorageKey(tenantKey?: string | null) {
+  return `hv-client-bootstrap-retries:${tenantKey ?? 'unknown'}`;
+}
+
+function readBootstrapRetryCount(tenantKey?: string | null): number {
+  if (typeof window === 'undefined') return 0;
+
+  const raw = window.sessionStorage.getItem(getBootstrapRetryStorageKey(tenantKey));
+  const count = Number(raw);
+
+  return Number.isFinite(count) && count > 0 ? count : 0;
+}
+
+function writeBootstrapRetryCount(tenantKey: string | null | undefined, count: number) {
+  if (typeof window === 'undefined') return;
+  window.sessionStorage.setItem(getBootstrapRetryStorageKey(tenantKey), String(count));
+}
+
+function clearBootstrapRetryCount(tenantKey?: string | null) {
+  if (typeof window === 'undefined') return;
+  window.sessionStorage.removeItem(getBootstrapRetryStorageKey(tenantKey));
+}
+
+function getRetryBlockedDescription(
+  language: string,
+  baseDescription?: string
+): string {
+  const suffix =
+    language === 'de'
+      ? 'Zu viele Versuche erkannt. Bitte versuchen Sie es später erneut.'
+      : language === 'es'
+        ? 'Se detectaron demasiados intentos. Inténtalo de nuevo más tarde.'
+        : 'Too many attempts were detected. Please try again later.';
+
+  return [baseDescription, suffix].filter(Boolean).join(' ');
+}
 
 function resolveBootstrapCode(error?: ClientBootstrapError | null): string {
   const status = error?.status ?? 500;
@@ -94,29 +131,16 @@ export function ClientProvider({
   initialClient,
   initialError,
   tenantKey,
+  loadingFallback = null,
 }: {
   children: ReactNode;
   initialClient: ClientPublicConfig | null;
   initialError?: ClientBootstrapError | null;
   tenantKey?: string | null;
+  loadingFallback?: ReactNode;
 }) {
-  const isDevBootstrapFallbackEnabled = process.env.NODE_ENV !== 'production';
   const [client, setClient] = useState<ClientPublicConfig | null>(initialClient);
   const [loading, setLoading] = useState(!initialClient && !initialError);
-  const [devBootstrapFallback, setDevBootstrapFallback] =
-    useState<ClientBootstrapFallbackState | null>(() => {
-      if (!isDevBootstrapFallbackEnabled || !initialError) {
-        return null;
-      }
-
-      const code = resolveBootstrapCode(initialError);
-      return {
-        status: initialError.status ?? 500,
-        code,
-        message: initialError.message,
-        alertKind: classifyBootstrapError(initialError.status ?? 500, code),
-      };
-    });
   const { texts, language } = useI18n();
   const { fallbackButtons, fallbackGlobalError } = getI18nFallbacks(language);
   const router = useRouter();
@@ -124,11 +148,12 @@ export function ClientProvider({
   const popups = texts?.popups ?? {};
   const presentedBootstrapAlertRef = useRef<string | null>(null);
 
-  const presentBootstrapAlert = (
-    failure: Pick<ClientBootstrapFallbackState, 'status' | 'code' | 'message' | 'alertKind'>
-  ) => {
+  const presentBootstrapAlert = (failure: ClientBootstrapFailure) => {
     const popupDefaultKey = getBootstrapPopupDefaultKey(failure.code);
     const popup = getPopup(popups, failure.code, popupDefaultKey, fallbackGlobalError);
+    const retryCount = readBootstrapRetryCount(tenantKey);
+    const retryBlocked =
+      failure.alertKind === 'retryable' && retryCount >= CLIENT_BOOTSTRAP_RETRY_LIMIT;
 
     const goHome = () => {
       closeAlert();
@@ -137,8 +162,21 @@ export function ClientProvider({
 
     const reloadPage = () => {
       closeAlert();
+      writeBootstrapRetryCount(tenantKey, retryCount + 1);
       window.location.reload();
     };
+
+    if (retryBlocked) {
+      showError({
+        response: {
+          status: failure.status,
+          title: popup.title,
+          description: getRetryBlockedDescription(language, popup.description),
+          cancelLabel: '',
+        },
+      });
+      return;
+    }
 
     if (failure.alertKind === 'retryable') {
       showError({
@@ -147,9 +185,20 @@ export function ClientProvider({
           title: popup.title,
           description: popup.description,
           confirmLabel: popup.confirm ?? popups?.button?.reload ?? fallbackButtons.reload,
-          cancelLabel: popups?.button?.continue ?? fallbackButtons.continue,
         },
         onConfirm: reloadPage,
+      });
+      return;
+    }
+
+    if (failure.alertKind === 'not_found' || failure.alertKind === 'forbidden') {
+      showError({
+        response: {
+          status: failure.status,
+          title: popup.title,
+          description: popup.description,
+          cancelLabel: popups?.button?.goToHome ?? fallbackButtons.goToHome,
+        },
         onCancel: goHome,
       });
       return;
@@ -160,13 +209,11 @@ export function ClientProvider({
         status: failure.status,
         title: popup.title,
         description: popup.description,
-        confirmLabel: popup.confirm ?? popups?.button?.continue ?? fallbackButtons.continue,
         cancelLabel:
           failure.alertKind === 'dismiss_only'
             ? popups?.button?.close ?? fallbackButtons.close
             : popups?.button?.continue ?? fallbackButtons.continue,
       },
-      onConfirm: goHome,
       onCancel: goHome,
     });
   };
@@ -175,21 +222,10 @@ export function ClientProvider({
     setClient(initialClient);
     presentedBootstrapAlertRef.current = null;
 
-    if (isDevBootstrapFallbackEnabled) {
-      if (initialError) {
-        const code = resolveBootstrapCode(initialError);
-        setDevBootstrapFallback({
-          status: initialError.status ?? 500,
-          code,
-          message: initialError.message,
-          alertKind: classifyBootstrapError(initialError.status ?? 500, code),
-        });
-      } else {
-        setDevBootstrapFallback(null);
-      }
-    }
-
     if (initialClient || initialError) {
+      if (initialClient) {
+        clearBootstrapRetryCount(tenantKey);
+      }
       setLoading(false);
       return;
     }
@@ -201,7 +237,7 @@ export function ClientProvider({
         const resolvedClient = await getClient(tenantKey ?? undefined);
         if (!cancelled) {
           setClient(resolvedClient);
-          setDevBootstrapFallback(null);
+          clearBootstrapRetryCount(tenantKey);
         }
       } catch (error: any) {
         if (!cancelled) {
@@ -217,10 +253,6 @@ export function ClientProvider({
             message: error?.response?.data?.message ?? error?.message,
             alertKind: classifyBootstrapError(status, code),
           };
-
-          if (isDevBootstrapFallbackEnabled) {
-            setDevBootstrapFallback(failure);
-          }
 
           const alertSignature = `${tenantKey ?? 'no-tenant'}:${status}:${code}:${failure.message ?? ''}`;
           if (presentedBootstrapAlertRef.current !== alertSignature) {
@@ -240,7 +272,7 @@ export function ClientProvider({
     return () => {
       cancelled = true;
     };
-  }, [initialClient, initialError, isDevBootstrapFallbackEnabled, tenantKey]);
+  }, [initialClient, initialError, tenantKey]);
 
   useEffect(() => {
     if (loading || client || !initialError) {
@@ -272,45 +304,11 @@ export function ClientProvider({
   ]);
 
   if (loading) {
-    return <Loading theme={'light'} />;
+    return <>{loadingFallback}</>;
   }
 
   if (!client) {
-    if (!isDevBootstrapFallbackEnabled) {
-      return null;
-    }
-
-    if (!devBootstrapFallback) {
-      return null;
-    }
-
-    const popupDefaultKey = getBootstrapPopupDefaultKey(devBootstrapFallback.code);
-    const popup = getPopup(popups, devBootstrapFallback.code, popupDefaultKey, fallbackGlobalError);
-    const meta = [devBootstrapFallback.code, devBootstrapFallback.message].filter(Boolean).join(' · ');
-
-    if (devBootstrapFallback.alertKind === 'retryable') {
-      return (
-        <ClientBootstrapFallback
-          title={popup.title}
-          description={popup.description}
-          primaryLabel={popup.confirm ?? popups?.button?.reload ?? fallbackButtons.reload}
-          onPrimary={() => window.location.reload()}
-          secondaryLabel={popups?.button?.continue ?? fallbackButtons.continue}
-          onSecondary={() => router.push(`/${language}`)}
-          meta={meta}
-        />
-      );
-    }
-
-    return (
-      <ClientBootstrapFallback
-        title={popup.title}
-        description={popup.description}
-        primaryLabel={popup.confirm ?? popups?.button?.continue ?? fallbackButtons.continue}
-        onPrimary={() => router.push(`/${language}`)}
-        meta={meta}
-      />
-    );
+    return null;
   }
 
   return (

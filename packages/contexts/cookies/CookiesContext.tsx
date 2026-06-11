@@ -4,7 +4,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { CookiePrefs, COOKIE_POLICY_VERSION } from '../../types/cookies/cookiesTypes';
 import {
-  cleanupAnalyticsCookies,
   defaultPrefs,
   getPrefsFromLocalStorage,
   loadCookiePrefs,
@@ -18,12 +17,10 @@ type CookiesContextValue = {
   prefs: CookiePrefs;
   /** Mostrar banner */
   showBanner: boolean;
-  /** Aceptar todo (necesarias + estadísticas) */
+  /** Estado de carga inicial */
   loading: boolean;
   acceptAll: () => void;
-  /** Rechazar todo excepto necesarias */
   rejectAll: () => void;
-  /** Guardar selección granular (ahora solo statistics) */
   saveSelection: (next: Partial<CookiePrefs['consent']>) => void;
   /** Reabrir el gestor (p. ej. desde el footer) */
   openManager: () => void;
@@ -68,11 +65,10 @@ export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children })
     const next: CookiePrefs = {
       v: COOKIE_POLICY_VERSION,
       ts: new Date().toISOString(),
-      consent: { necessary: true, statistics: true },
+      consent: { necessary: true },
     };
     persist(next);
     setShowBanner(false);
-    // Notifica a quien escuche (p. ej., componente que carga GA)
     document.dispatchEvent(new CustomEvent('cookies:consent-changed', { detail: next }));
   }, [persist]);
 
@@ -80,39 +76,22 @@ export const CookiesProvider: React.FC<React.PropsWithChildren> = ({ children })
     const next: CookiePrefs = {
       v: COOKIE_POLICY_VERSION,
       ts: new Date().toISOString(),
-      consent: { necessary: true, statistics: false },
+      consent: { necessary: true },
     };
     persist(next);
     setShowBanner(false);
-
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('consent', 'update', { analytics_storage: 'denied' });
-    }
-
-    cleanupAnalyticsCookies();
-
     document.dispatchEvent(new CustomEvent('cookies:consent-changed', { detail: next }));
   }, [persist]);
 
   const saveSelection = useCallback(
-    (nextConsent: Partial<CookiePrefs['consent']>) => {
+    (_nextConsent: Partial<CookiePrefs['consent']>) => {
       const next: CookiePrefs = {
         v: COOKIE_POLICY_VERSION,
         ts: new Date().toISOString(),
-        consent: {
-          necessary: true,
-          statistics: !!nextConsent.statistics,
-        },
+        consent: { necessary: true },
       };
       persist(next);
       setShowBanner(false);
-
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('consent', 'update', { analytics_storage: 'denied' });
-      }
-
-      cleanupAnalyticsCookies();
-
       document.dispatchEvent(new CustomEvent('cookies:consent-changed', { detail: next }));
     },
     [persist]

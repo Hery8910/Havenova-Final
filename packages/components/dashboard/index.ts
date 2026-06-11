@@ -1,6 +1,7 @@
 export * from './dashboardHeader';
 export * from './filters';
 export * from './pagination';
+export * from './pages';
 export * from './propertyManagers';
 export * from './objects';
 export * from './sidebar';
@@ -8,3 +9,4 @@ export * from './statusBadge';
 export * from './recurrenceBadge';
 export * from './areaBadge';
 export * from './workers';
+export * from './contactMessages';

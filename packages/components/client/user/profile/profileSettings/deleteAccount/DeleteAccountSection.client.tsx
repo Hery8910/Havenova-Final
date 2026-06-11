@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { deleteUserClientProfile } from '@havenova/services/profile';
 import { useAuth, useGlobalAlert, useI18n } from '../../../../../../contexts';
+import { createLoggedOutAuthSeed } from '../../../../../../utils';
 import styles from './DeleteAccountSection.module.css';
 
 export function DeleteAccountSectionClient() {
@@ -49,18 +50,11 @@ export function DeleteAccountSectionClient() {
 
           await deleteUserClientProfile();
 
-          setAuth({
-            authId: '',
-            userClientId: '',
-            userId: '',
-            clientId: auth.clientId,
-            email: '',
-            role: 'guest',
-            status: 'active',
-            isVerified: false,
-            isLogged: false,
-            isNewUser: false,
-          });
+          setAuth(
+            createLoggedOutAuthSeed({
+              clientId: auth.clientId,
+            })
+          );
 
           showSuccess({
             response: {

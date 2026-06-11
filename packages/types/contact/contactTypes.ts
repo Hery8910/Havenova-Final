@@ -1,15 +1,17 @@
 import { ApiResponse } from '../api';
 
 export type ContactMessageStatus = 'pending' | 'answered';
+export type ContactMessageLanguage = 'de' | 'en' | 'es';
+export type ContactMessageSourceChannel = 'public_form';
 
 export interface ContactMessageCreatePayload {
   clientId: string;
   name: string;
   email: string;
-  message: string;
   subject: string;
+  message: string;
   profileImage?: string;
-  userId?: string;
+  language?: ContactMessageLanguage;
 }
 
 export interface ContactMessageCreateResult {
@@ -18,25 +20,46 @@ export interface ContactMessageCreateResult {
 
 export type ContactMessageCreateResponse = ApiResponse<ContactMessageCreateResult>;
 
+export interface ContactMessageSource {
+  channel: ContactMessageSourceChannel;
+  userClientId?: string | null;
+}
+
+export interface ContactMessageSender {
+  name: string;
+  email: string;
+  profileImage?: string;
+}
+
+export interface ContactMessageContent {
+  subject: string;
+  body: string;
+}
+
 export interface ContactMessageResponseData {
   text: string;
-  respondedBy?: string;
+  respondedByUserClientId?: string | null;
   respondedByName?: string;
   respondedByProfileImage?: string;
   respondedAt?: string;
 }
 
+export interface ContactMessageConfigurationSnapshot {
+  serviceConfigKey: string;
+  serviceConfigVersion: number;
+  intakeVersion: number;
+}
+
 export interface ContactMessage {
   _id: string;
   clientId: string;
-  userId?: string;
-  name: string;
-  email: string;
-  message: string;
-  subject?: string;
-  profileImage?: string;
+  source: ContactMessageSource;
+  sender: ContactMessageSender;
+  content: ContactMessageContent;
   response?: ContactMessageResponseData;
+  configurationSnapshot?: ContactMessageConfigurationSnapshot;
   status: ContactMessageStatus;
+  anonymizedAt?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -51,21 +74,29 @@ export interface ContactMessagesQuery {
   limit?: number;
 }
 
+export interface ContactMessagesPagination {
+  page: number;
+  limit: number;
+}
+
+export interface ContactMessagesTotals {
+  total: number;
+  pending: number;
+  answered: number;
+}
+
+export interface ContactMessagesListMeta {
+  count: number;
+  pagination: ContactMessagesPagination;
+  totals: ContactMessagesTotals;
+}
+
 export interface ContactMessagesListResponse {
   success: boolean;
   code?: string;
   message?: string;
-  count: number;
-  messages: ContactMessage[];
-  pagination: {
-    page: number;
-    limit: number;
-  };
-  totals?: {
-    total: number;
-    pending: number;
-    answered: number;
-  };
+  data: ContactMessage[];
+  meta: ContactMessagesListMeta;
 }
 
 export interface ContactMessageRespondPayload {
@@ -76,6 +107,7 @@ export interface ContactMessageRespondResponse {
   success: boolean;
   code: string;
   message?: string;
+  data?: ContactMessage;
 }
 
 export interface ContactMessageDeleteResponse {
@@ -84,13 +116,8 @@ export interface ContactMessageDeleteResponse {
   message?: string;
 }
 
-export interface ContactMessageFormData extends Record<string, any> {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  clientId: string;
-  userId: string;
-  profileImage?: string;
-  language?: string;
+export interface ContactMessageBulkDeleteResult {
+  deletedCount: number;
 }
+
+export type ContactMessageBulkDeleteResponse = ApiResponse<ContactMessageBulkDeleteResult>;

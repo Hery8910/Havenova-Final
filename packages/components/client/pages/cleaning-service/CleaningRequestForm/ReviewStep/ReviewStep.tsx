@@ -4,12 +4,14 @@ import { useId } from 'react';
 import { useLang } from '../../../../../../hooks';
 import { formatUserAddress } from '../../../../../../types';
 import type {
-  CleaningCustomerType,
   CleaningFrequency,
   PropertySizeRange,
-  WorkAddressSelection,
 } from '../../../../../../types/services';
 import type { SelectedCalendarSlot } from '../../../../../../types/calendar';
+import type {
+  CleaningRequestCustomerType,
+  CleaningWorkAddressSelection,
+} from '../cleaningRequest.types';
 import styles from './ReviewStep.module.css';
 
 type ReviewTexts = {
@@ -59,8 +61,8 @@ export default function ReviewStep({
   showHeader?: boolean;
   texts: ReviewTexts;
   customerType: {
-    selected: CleaningCustomerType;
-    options: Record<CleaningCustomerType, string>;
+    selected: CleaningRequestCustomerType;
+    options: Record<CleaningRequestCustomerType, string>;
   };
   frequency: {
     selected: CleaningFrequency;
@@ -76,7 +78,7 @@ export default function ReviewStep({
     details?: string;
   };
   scheduling: SelectedCalendarSlot;
-  workAddress: WorkAddressSelection;
+  workAddress: CleaningWorkAddressSelection;
   common: {
     yes: string;
     no: string;
@@ -106,29 +108,26 @@ export default function ReviewStep({
       ) : null}
 
       <section className={styles.grid}>
+        <h4 className={`${styles.cardTitle} type-body-lg`}>
+          <span className={styles.title}>{texts.sections.customer}</span>
+          <span className={styles.titleLine}>{''}</span>
+        </h4>
         <article className={styles.card}>
-          <h4 className={styles.cardTitle}>{texts.sections.customer}</h4>
           <ul className={styles.list}>
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.customerType}</span>
+            <li key={texts.labels.customerType} className={styles.item}>
+              <span className={styles.label}>{texts.labels.customerType}:</span>
               <span className={styles.value}>{customerType.options[customerType.selected]}</span>
             </li>
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.frequency}</span>
+            <li key={texts.labels.frequency} className={styles.item}>
+              <span className={styles.label}>{texts.labels.frequency}:</span>
               <span className={styles.value}>{frequency.options[frequency.selected]}</span>
             </li>
-          </ul>
-        </article>
-
-        <article className={styles.card}>
-          <h4 className={styles.cardTitle}>{texts.sections.scheduling}</h4>
-          <ul className={styles.list}>
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.visitDate}</span>
+            <li key={texts.labels.visitDate} className={styles.item}>
+              <span className={styles.label}>{texts.labels.visitDate}:</span>
               <span className={styles.value}>{dateFormatter.format(scheduling.start)}</span>
             </li>
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.visitTime}</span>
+            <li key={texts.labels.visitTime} className={styles.item}>
+              <span className={styles.label}>{texts.labels.visitTime}:</span>
               <span className={styles.value}>
                 {timeFormatter.format(scheduling.start)} - {timeFormatter.format(scheduling.end)}
               </span>
@@ -137,31 +136,34 @@ export default function ReviewStep({
         </article>
 
         <article className={styles.card}>
-          <h4 className={styles.cardTitle}>{texts.sections.property}</h4>
+          <h4 className={`${styles.cardTitle} type-body-lg`}>
+            <span className={styles.title}>{texts.sections.property}</span>
+            <span className={styles.titleLine}>{''}</span>
+          </h4>
           <ul className={styles.list}>
-            <li className={styles.item}>
+            <li key={texts.labels.sizeRange} className={styles.item}>
               <span className={styles.label}>{texts.labels.sizeRange}</span>
               <span className={styles.value}>{property.sizeRangeOptions[property.sizeRange]}</span>
             </li>
-            <li className={styles.item}>
+            <li key={texts.labels.roomsCount} className={styles.item}>
               <span className={styles.label}>{texts.labels.roomsCount}</span>
               <span className={styles.value}>{property.roomsCount}</span>
             </li>
-            <li className={styles.item}>
+            <li key={texts.labels.hasBalcony} className={styles.item}>
               <span className={styles.label}>{texts.labels.hasBalcony}</span>
               <span className={styles.value}>{property.hasBalcony ? common.yes : common.no}</span>
             </li>
-            <li className={styles.item}>
+            <li key={texts.labels.hasIndoorStairs} className={styles.item}>
               <span className={styles.label}>{texts.labels.hasIndoorStairs}</span>
               <span className={styles.value}>
                 {property.hasIndoorStairs ? common.yes : common.no}
               </span>
             </li>
-            <li className={styles.item}>
+            <li key={texts.labels.hasPets} className={styles.item}>
               <span className={styles.label}>{texts.labels.hasPets}</span>
               <span className={styles.value}>{property.hasPets ? common.yes : common.no}</span>
             </li>
-            <li className={styles.item}>
+            <li key={texts.labels.details} className={styles.itemDetails}>
               <span className={styles.label}>{texts.labels.details}</span>
               <span className={styles.value}>{property.details || texts.emptyDetails}</span>
             </li>
@@ -169,35 +171,25 @@ export default function ReviewStep({
         </article>
 
         <article className={`${styles.card} ${styles.cardFull}`}>
-          <h4 className={styles.cardTitle}>{texts.sections.address}</h4>
-          <ul className={styles.list}>
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.addressSource}</span>
-              <span className={styles.value}>{texts.sourceOptions[workAddress.source]}</span>
-            </li>
-            {workAddress.label ? (
-              <li className={styles.item}>
-                <span className={styles.label}>{texts.labels.addressLabel}</span>
-                <span className={styles.value}>{workAddress.label}</span>
-              </li>
+          <h4 className={`${styles.cardTitle} type-body-lg`}>
+            <span className={styles.title}>{texts.sections.address}</span>
+            <span className={styles.titleLine}>{''}</span>
+          </h4>
+          <p key={texts.labels.address} className={styles.adress}>
+            {workAddress.source === 'primary' ? (
+              <span className={styles.label}>{texts.sourceOptions.primary}</span>
             ) : null}
-            <li className={styles.item}>
-              <span className={styles.label}>{texts.labels.address}</span>
-              <span className={styles.value}>{formatUserAddress(workAddress.address)}</span>
-            </li>
-            {workAddress.source === 'new' ? (
-              <li className={styles.item}>
-                <span className={styles.label}>{texts.labels.saveToProfile}</span>
-                <span className={styles.value}>
-                  {workAddress.saveToProfile ? common.yes : common.no}
-                </span>
-              </li>
+            {workAddress.source === 'saved' && workAddress.label ? (
+              <span className={styles.label}>{workAddress.label}</span>
             ) : null}
-          </ul>
+            {workAddress.source === 'new' && workAddress.label ? (
+              <span className={styles.label}>{workAddress.label}</span>
+            ) : null}
+
+            <span className={styles.value}>{formatUserAddress(workAddress.address)}</span>
+          </p>
         </article>
       </section>
-
-      <p className={styles.note}>{texts.finalNote}</p>
     </section>
   );
 }

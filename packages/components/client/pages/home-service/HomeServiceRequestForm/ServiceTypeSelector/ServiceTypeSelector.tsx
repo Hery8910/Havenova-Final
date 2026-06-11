@@ -1,11 +1,11 @@
 import type { HomeServiceKind } from '../homeServiceTypes';
+import { useId } from 'react';
 import styles from './ServiceTypeSelector.module.css';
 
 type Props = {
   texts: {
     label: string;
-    helper: string;
-    options: Record<HomeServiceKind, { title: string; description: string }>;
+    options: Record<HomeServiceKind, { title: string }>;
   };
   value: HomeServiceKind | '';
   error?: string;
@@ -20,26 +20,30 @@ export default function ServiceTypeSelector({
   serviceTypeOrder,
   onChange,
 }: Props) {
+  const errorId = useId();
+
   return (
     <fieldset className={styles.group}>
       <legend className={styles.legend}>{texts.label}</legend>
-      <p className={styles.helper}>{texts.helper}</p>
       <ul className={styles.serviceGrid}>
         {serviceTypeOrder.map((type) => (
-          <li key={type}>
+          <li key={type} className={styles.serviceItem}>
             <button
               type="button"
-              className={`${styles.serviceButton} ${value === type ? styles.active : ''}`}
+              className={`button button--outline ${styles.serviceButton} ${value === type ? styles.active : ''} ${
+                error ? styles.fieldControlError : ''
+              }`}
               aria-pressed={value === type}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? errorId : undefined}
               onClick={() => onChange(type)}
             >
               <span className={styles.serviceTitle}>{texts.options[type].title}</span>
-              <span className={styles.serviceDescription}>{texts.options[type].description}</span>
             </button>
           </li>
         ))}
       </ul>
-      <span className={styles.error} aria-live="polite">
+      <span className={styles.error} id={error ? errorId : undefined} aria-live="polite">
         {error || ''}
       </span>
     </fieldset>

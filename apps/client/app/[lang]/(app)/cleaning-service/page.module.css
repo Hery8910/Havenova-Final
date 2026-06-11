@@ -1,4 +1,89 @@
 .main {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: clamp(var(--space-6), 5vw, calc(var(--space-section) * 0.75));
+  padding-bottom: clamp(var(--space-8), 6vw, calc(var(--space-section) * 0.85));
+  overflow: clip;
+}
+
+.heroSection,
+.formSection,
+.relatedSection {
+  position: relative;
+  z-index: 1;
+}
+
+.heroSection {
+  isolation: isolate;
+}
+
+.formSection {
+  margin-top: clamp(-7rem, -9vw, -3rem);
+}
+
+.formSectionInner,
+.relatedSectionInner {
+  width: min(100%, var(--container-max));
+  margin: 0 auto;
+}
+
+.formSectionInner {
+  padding-inline: clamp(var(--space-4), 3vw, var(--space-6));
+}
+
+.formSurface {
+  position: relative;
+  padding: clamp(var(--space-4), 2.4vw, calc(var(--space-6) - var(--space-1)));
+  border: 1px solid color-mix(in srgb, var(--color-card-border) 68%, transparent);
+  border-radius: clamp(var(--radius-card), 3vw, calc(var(--radius-card) + var(--space-3)));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-page-bg) 24%, transparent),
+      color-mix(in srgb, var(--color-page-bg) 8%, transparent)
+    ),
+    var(--gradient-card-neutral);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.relatedSection {
+  padding-inline: clamp(var(--space-4), 3vw, var(--space-6));
+}
+
+.relatedSectionInner {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1023px) {
+  .formSection {
+    margin-top: clamp(-3rem, -4vw, -1.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .main {
+    gap: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .formSection {
+    margin-top: 0;
+  }
+
+  .formSectionInner,
+  .relatedSection {
+    padding-inline: var(--space-2);
+  }
+
+  .formSurface {
+    padding: 6px;
+    border-radius: calc(var(--radius-card) - 2px);
+    box-shadow: var(--shadow-lg);
+  }
 }

@@ -154,7 +154,10 @@ La página puede cerrarse aceptando esta deuda residual:
 
 - `useUserProfileDetailsController` sigue siendo el orquestador principal de details, aunque ya no mezcla todas las capas;
 - `LanguageSwitcher` y `ThemeToggler` todavía soportan variantes visuales, pero ya no se siguió empujando esa complejidad dentro de `settings`;
-- la página puede beneficiarse de una iteración final de polish visual, pero no necesita más refactor estructural para salir de estado “en progreso”.
+- la página puede beneficiarse de una iteración final de polish visual, pero no necesita más refactor estructural para salir de estado “en progreso”;
+- falta una sección dedicada para cambio de correo;
+- falta una sección dedicada para cambio de password;
+- falta cobertura de tests específica para la migración ya aplicada de `details` y direcciones.
 
 ## Criterio de cierre
 
@@ -169,6 +172,21 @@ La feature puede considerarse técnicamente cerrada si se mantiene este estado:
 ## Recomendación final
 
 No abrir más refactor técnico sobre `settings` salvo que cambie el alcance de la feature. La siguiente iteración, si se decide hacerla, debería ser exclusivamente de UX/UI y responsive fino.
+
+Actualización de alcance:
+
+- esta recomendación queda superada por la nueva migración de perfil compartido entre `settings` y páginas de servicio;
+- `settings` volverá a recibir trabajo estructural en la gestión de direcciones y en la extracción de piezas reutilizables.
+
+## Tareas pendientes de alcance
+
+Estas tareas ya están aceptadas como parte de la siguiente fase de evolución de `settings`:
+
+- crear una sección dedicada para cambio de correo
+- crear una sección dedicada para cambio de password
+- añadir tests unitarios para helpers, validación y estado del formulario de perfil
+- añadir tests de integración para la UX de selección/edición de direcciones ya implementada
+- añadir tests de accesibilidad para las superficies de details y gestión de direcciones
 
 ## Observaciones abiertas
 

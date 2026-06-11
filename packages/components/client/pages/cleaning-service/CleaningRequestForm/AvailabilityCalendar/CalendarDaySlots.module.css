@@ -3,13 +3,15 @@
   min-height: 344px;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 24px;
-  padding: 16px;
 }
 
 .header {
+  width: 100%;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
@@ -35,9 +37,6 @@
 }
 
 .closeButton {
-  min-height: 34px;
-  padding-inline: 12px;
-  font-size: 0.78rem;
   white-space: nowrap;
 }
 
@@ -46,27 +45,25 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .slotItem {
   min-width: 0;
   width: 100%;
-  padding: 0 16px;
 }
 
 .slotButton {
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 8px 8px 8px 12px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  gap: 12px;
   text-align: left;
   transition:
     border-color 0.18s ease,
@@ -109,10 +106,8 @@
   font-size: 0.9rem;
 }
 
-.slotBadge {
-  min-height: 24px;
-  padding: 4px 8px;
-  font-size: 0.62rem;
+.checkIcon {
+  color: var(--feedback-success-text);
 }
 
 @media (max-width: 768px) {

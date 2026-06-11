@@ -28,6 +28,20 @@ Antes de un despliegue, esta batería debe permitir responder con evidencia a es
 - la primera conexión y el bootstrap del cliente no rompen la experiencia
 - el frontend, la red y el backend cuentan la misma historia
 
+## Baseline actual del feature
+
+Antes de abrir una nueva ronda de pruebas manuales, tomar como estado base:
+
+- el shell visual de auth ya está consolidado en una pieza shared
+- el patrón `success + autoRedirect + cleanup` ya está centralizado
+- las acciones principales de alerts auth (`reload`, `goToHome`, `goToLogin`, `goToRegister`, `openVerification`, `resetPassword`, `requestNewLink`) ya salen de una utilidad shared
+- los mapeos de `code -> popup/status` siguen locales por flujo de forma intencional para conservar legibilidad
+
+Implicación para testing:
+
+- si aparece una inconsistencia de CTA o navegación entre páginas, primero verificar si nace en el flujo local o en la capa shared
+- si aparece una inconsistencia de `popupKey` o `status`, revisar primero la página específica porque esa lógica aún no está centralizada
+
 ## Alcance
 
 Este manual se divide en dos suites principales:
@@ -57,6 +71,10 @@ No cubre todavía:
 - revisión de cabeceras HTTP a nivel de hardening completo
 - pruebas de carga
 - automatización visual completa
+
+Tampoco cubre todavía:
+
+- una suite automatizada de regresión específica para las utilidades shared de auth
 
 ## Principios de ejecución
 

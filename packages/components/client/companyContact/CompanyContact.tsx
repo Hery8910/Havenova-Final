@@ -16,6 +16,7 @@ export interface CompanyContactDetails {
 export interface CompanyContactProps {
   contact: CompanyContactDetails;
   schedule: WeeklySchedule;
+  locale: string;
   hoursStatus?: FooterHoursStatusCopy;
   ariaLabel?: string;
   emailAriaLabel?: string;
@@ -32,6 +33,7 @@ function cx(...classNames: Array<string | undefined>) {
 export function CompanyContact({
   contact,
   schedule,
+  locale,
   hoursStatus,
   ariaLabel,
   emailAriaLabel,
@@ -82,7 +84,7 @@ export function CompanyContact({
           </li>
         </ul>
       </address>
-      <BusinessHoursStatus schedule={schedule} copy={hoursStatus} />
+      <BusinessHoursStatus schedule={schedule} copy={hoursStatus} locale={locale} />
     </section>
   );
 }

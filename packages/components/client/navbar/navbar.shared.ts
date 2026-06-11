@@ -45,6 +45,7 @@ const DEFAULT_SERVICE_LINKS: NavLinkItem[] = [
 ];
 
 export interface ResolvedNavbarAccessibility {
+  skipToContent: string;
   mainNavigation: string;
   homeLink: string;
   logoAlt: string;
@@ -171,6 +172,7 @@ function resolveAccessibility(
   accessibility: NavbarAccessibilityConfig | undefined
 ): ResolvedNavbarAccessibility {
   return {
+    skipToContent: accessibility?.skipToContent ?? 'Skip to main content',
     mainNavigation: accessibility?.mainNavigation ?? 'Main navigation',
     homeLink: accessibility?.homeLink ?? 'Go to homepage',
     logoAlt: accessibility?.logoAlt ?? 'Havenova logo',

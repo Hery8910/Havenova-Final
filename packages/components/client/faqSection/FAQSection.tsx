@@ -1,7 +1,6 @@
 'use client';
 import { useId, useState } from 'react';
 import styles from './FAQSection.module.css';
-import { useI18n } from '../../../contexts';
 import { LuPlus } from 'react-icons/lu';
 
 export interface FAQItems {
@@ -19,17 +18,43 @@ export interface FAQSectionTexts {
   };
 }
 
-export default function FAQSection() {
-  const { texts } = useI18n();
-  const faq: FAQSectionTexts = texts?.components?.client?.faq;
+const FAQ_ITEMS_FALLBACK: FAQItems[] = [
+  {
+    question: 'Welche Dienstleistungen bietet Havenova an?',
+    answer:
+      'Havenova bietet Unterstuetzung fuer Reinigung und Hausservice, damit Anfragen klar strukturiert und passend bearbeitet werden koennen.',
+  },
+  {
+    question: 'Wie laeuft eine Anfrage ab?',
+    answer:
+      'Sie senden Ihre Anfrage mit den wichtigsten Angaben. Danach prueft unser Team den Bedarf und meldet sich mit den naechsten Schritten.',
+  },
+];
+
+interface FAQSectionProps {
+  texts: FAQSectionTexts;
+}
+
+function resolveFaqTexts(texts: FAQSectionTexts | undefined): FAQSectionTexts {
+  return {
+    title: texts?.title ?? 'Haeufig gestellte Fragen',
+    items: texts?.items?.length ? texts.items : FAQ_ITEMS_FALLBACK,
+    a11y: {
+      sectionLabel: texts?.a11y?.sectionLabel ?? 'Haeufig gestellte Fragen',
+      openItem: texts?.a11y?.openItem ?? 'Antwort oeffnen',
+      closeItem: texts?.a11y?.closeItem ?? 'Antwort schliessen',
+    },
+  };
+}
+
+export default function FAQSection({ texts: providedTexts }: FAQSectionProps) {
+  const faq = resolveFaqTexts(providedTexts);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const sectionTitleId = useId();
 
   const handleToggle = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
-
-  if (!faq) return null;
 
   return (
     <section

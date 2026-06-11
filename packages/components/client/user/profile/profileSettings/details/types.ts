@@ -35,6 +35,12 @@ export interface ProfileDetailsTexts {
     removeSecondaryAddressButton?: string;
     secondaryAddressTitle?: string;
     secondaryAddressLabelField?: string;
+    secondaryAddressListHint?: string;
+    secondaryAddressListAriaLabel?: string;
+    selectedSecondaryAddressTitle?: string;
+    selectedSecondaryAddressAriaLabel?: string;
+    editSecondaryAddressButton?: string;
+    editSecondaryAddressAriaLabel?: string;
     addressDetailsAriaLabel?: string;
     saving?: string;
     fields?: {

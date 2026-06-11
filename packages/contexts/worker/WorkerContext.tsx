@@ -15,13 +15,13 @@ import { useGlobalAlert } from '../alert';
 import { useI18n, getI18nFallbacks } from '../i18n';
 import { useAuth } from '../auth/authContext';
 import { getWorkerProfile, refreshToken, updateWorkerProfile } from '@havenova/services';
-import { getPopup } from '@havenova/utils';
+import { getPopup, resolvePreferredContactEmail } from '@havenova/utils';
 import {
   UpdateWorkerProfilePayload,
   WorkerLanguage,
   WorkerRecord,
-} from '@/packages/types/worker/workerTypes';
-import { ThemeMode } from '@/packages/types/profile/profileTypes';
+  ThemeMode,
+} from '@/packages/types';
 
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
 
@@ -79,9 +79,9 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
 
   const createLocalDefault = useCallback(
     (previous?: WorkerRecord | null): WorkerRecord => ({
-      userId: previous?.userId ?? '',
+      userClientId: previous?.userClientId ?? auth.userClientId ?? '',
       clientId: previous?.clientId ?? clientId ?? '',
-      email: previous?.email ?? auth.email ?? '',
+      email: resolvePreferredContactEmail(previous?.email, auth.email),
       name: previous?.name ?? '',
       phone: previous?.phone,
       address: previous?.address,
@@ -92,7 +92,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
       createdAt: previous?.createdAt,
       updatedAt: previous?.updatedAt,
     }),
-    [auth.email, clientId]
+    [auth.email, auth.userClientId, clientId]
   );
 
   const getStoredTheme = (): ThemeMode | null => {
@@ -223,7 +223,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     const lastWorker = worker ?? loadFromStorage();
     const local = {
       ...createLocalDefault(null),
-      userId: '',
+      userClientId: '',
       email: '',
       name: '',
       phone: '',

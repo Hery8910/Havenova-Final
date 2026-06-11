@@ -16,6 +16,7 @@ import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
 import { IoClose } from 'react-icons/io5';
+import { useFocusTrap } from '../../../../utils/accessibility/useFocusTrap';
 
 type NavSection = 'menu' | 'auth' | 'services' | 'preferences' | null;
 
@@ -36,6 +37,10 @@ export function NavbarMobileView({
 }: NavbarMobileViewProps) {
   const panelRef = useRef<HTMLElement>(null);
   const bottomBarRef = useRef<HTMLElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const servicesTriggerRef = useRef<HTMLButtonElement>(null);
+  const authTriggerRef = useRef<HTMLButtonElement>(null);
+  const preferencesTriggerRef = useRef<HTMLButtonElement>(null);
   const panelId = useId();
   const accountTitleId = useId();
   const menuTitleId = useId();
@@ -65,6 +70,20 @@ export function NavbarMobileView({
     enabled: Boolean(activeSection),
     refs: [panelRef, bottomBarRef],
     onDismiss: closeActiveSection,
+  });
+
+  useFocusTrap({
+    enabled: Boolean(activeSection),
+    containerRef: panelRef,
+    returnFocusRef:
+      activeSection === 'menu'
+        ? menuTriggerRef
+        : activeSection === 'services'
+          ? servicesTriggerRef
+          : activeSection === 'auth'
+            ? authTriggerRef
+            : preferencesTriggerRef,
+    onEscape: closeActiveSection,
   });
   const activePanelLabel =
     visibleSection === 'menu'
@@ -105,6 +124,7 @@ export function NavbarMobileView({
         className={`${styles.mobilePanel} card card--neutral ${
           isPanelOpen ? styles.mobilePanelOpen : ''
         }`}
+        tabIndex={-1}
         aria-label={activePanelTitleId ? undefined : activePanelLabel}
         aria-labelledby={activePanelTitleId}
         aria-hidden={!visibleSection}
@@ -207,6 +227,7 @@ export function NavbarMobileView({
         <ul className={styles.mobileBottomList}>
           <li className={styles.mobileBottomItem}>
             <button
+              ref={menuTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
               aria-label={a11y.menuToggle}
@@ -228,6 +249,7 @@ export function NavbarMobileView({
 
           <li className={styles.mobileBottomItem}>
             <button
+              ref={servicesTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
               aria-label={a11y.servicesToggle}
@@ -242,6 +264,7 @@ export function NavbarMobileView({
 
           <li className={styles.mobileBottomItem}>
             <button
+              ref={authTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
               aria-label={a11y.profileToggle}
@@ -260,6 +283,7 @@ export function NavbarMobileView({
 
           <li className={styles.mobileBottomItem}>
             <button
+              ref={preferencesTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
               aria-label={a11y.preferencesToggle}

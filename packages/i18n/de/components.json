@@ -75,8 +75,10 @@
         }
       ],
       "accessibility": {
+        "skipToContent": "Zum Hauptinhalt springen",
         "mainNavigation": "Hauptnavigation",
         "homeLink": "Zur Startseite",
+        "authFooter": "Aktionen der Authentifizierungsseite",
         "logoAlt": "Havenova Logo",
         "accountLabel": "Konto",
         "mobileNavigation": "Mobile Navigation",
@@ -151,20 +153,21 @@
       },
       "button": {
         "register": "Registrieren",
-        "login": "Einloggen",
+        "login": "Anmelden",
         "edit": "Änderungen speichern",
         "changePassword": "Passwort speichern",
-        "forgotPassword": "Zurücksetzen",
-        "resetPassword": "Passwort speichern",
+        "forgotPassword": "Link zum Zurücksetzen senden",
+        "resetPassword": "Neues Passwort speichern",
         "contact": "Nachricht senden",
         "support": "Ticket erstellen",
-        "resendEmail": "E-Mail erneut senden"
+        "resendEmail": "Bestätigungs-E-Mail erneut senden"
       },
       "labels": {
         "name": "Name",
         "email": "E-Mail",
         "password": "Passwort",
-        "errorSummary": "Bitte prüfen Sie die markierten Felder.",
+        "invalidData": "Bitte prüfen Sie dieses Feld.",
+        "errorSummary": "Bitte prüfen Sie die markierten Felder, bevor Sie fortfahren.",
         "forgotPassword": "Passwort vergessen?",
         "resetPassword": "Passwort zurücksetzen",
         "passwordHint": "Mind. 8 Zeichen mit Großbuchstaben, Zahl und Sonderzeichen.",

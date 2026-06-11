@@ -8,6 +8,7 @@ export type PaintingPaintScope =
   | 'entire_apartment';
 
 type Props = {
+  showHeader?: boolean;
   texts: {
     title: string;
     description: string;
@@ -47,6 +48,7 @@ type Props = {
 };
 
 export default function PaintingDetailsStep({
+  showHeader = true,
   texts,
   requiredText,
   values,
@@ -62,12 +64,14 @@ export default function PaintingDetailsStep({
 }: Props) {
   return (
     <section className={styles.container} aria-labelledby="home-service-painting-details-title">
-      <header className={styles.header}>
-        <h3 id="home-service-painting-details-title" className={styles.title}>
-          {texts.title}
-        </h3>
-        <p className={styles.description}>{texts.description}</p>
-      </header>
+      {showHeader ? (
+        <header className={styles.header}>
+          <h3 id="home-service-painting-details-title" className={styles.title}>
+            {texts.title}
+          </h3>
+          <p className={styles.description}>{texts.description}</p>
+        </header>
+      ) : null}
 
       <label className={styles.field} htmlFor="painting-scope">
         <span className={styles.label}>{texts.paintScopeLabel}</span>

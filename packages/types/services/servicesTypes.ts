@@ -1,206 +1,48 @@
-// service.ts
 import type { UserAddress } from '../profile';
 
 // --------------------------------------
-// Tipos generales
+// Shared service-request primitives
 // --------------------------------------
-export type ServiceStatus = 'submitted' | 'accepted' | 'in progress' | 'completed' | 'cancelled';
 
 export type ServiceType =
+  | 'cleaning'
   | 'painting'
-  | 'repairs-installations'
-  | 'kitchen-cleaning'
-  | 'kitchen-assembly'
-  | 'house-cleaning'
-  | 'furniture-assembly'
-  | 'window-cleaning'
-  | 'moving-help';
+  | 'repairs_installations'
+  | 'furniture_assembly'
+  | 'kitchen_assembly'
+  | 'moving_help';
 
-// --------------------------------------
-// Base para todos los detalles de servicio
-// --------------------------------------
-export interface BaseServiceDetails {
-  title: string;
-  icon: string;
-  notes?: string;
-  images?: string[];
-}
+export type CustomerType = 'private' | 'business';
 
-// --------------------------------------
-// Estructura de solicitud general
-// --------------------------------------
-export interface ServiceRequest {
-  id: string;
-  userId: string;
-  createdAt: string;
-  serviceAddress: string;
-  preferredDate: string;
-  preferredTime: string;
-  status: ServiceStatus;
-  totalPrice: number;
-  totalEstimatedDuration: number;
-  services: ServiceRequestItem[];
-}
-
-// --------------------------------------
-// Definición de cada tipo de servicio
-// --------------------------------------
-export interface FurnitureAssemblyDetails {
-  title: string;
-  icon: string;
-  notes?: string;
-  type: string;
-  location: string;
-  quantity: number;
-  position: 'floor' | 'wall';
-  width?: string;
-  height?: string;
-  depth?: string;
-  doors?: number;
-  drawers?: number;
-}
-
-export interface FurnitureAssemblyRequest {
-  id: string;
-  serviceType: 'furniture-assembly';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: FurnitureAssemblyDetails;
-}
-
-export interface KitchenAssemblyRequest {
-  id: string;
-  serviceType: 'kitchen-assembly';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    length: number;
-    lowerCabinets: number;
-    upperCabinets: number;
-    layout: string;
-    appliances: string[];
-    island?: string;
-    islandCabinet?: number;
-    islandLength?: string;
-    islandWidth?: string;
-    disassemblyNeed?: string;
-    provider?: string;
-  };
-}
-
-export interface KitchenCleaningRequest {
-  id: string;
-  serviceType: 'kitchen-cleaning';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    appliances: string[];
-    size: number;
-  };
-}
-
-export interface HouseCleaningRequest {
-  serviceType: 'house-cleaning';
-  icon: string;
-  details: BaseServiceDetails & {
-    surface: number;
-    livingRoom: number;
-    bedRooms: number;
-    badRooms: number;
-    balcon?: number;
-    kitchen: string;
-    stairs?: string;
-  };
-}
-
-export interface WindowCleaningRequest {
-  id: string;
-  serviceType: 'window-cleaning';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    windows: number;
-    doors: number;
-    access: string;
-  };
-}
-
-export interface PaintingRequest {
-  id: string;
-  serviceType: 'painting';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    area: string;
-    surfaces: string[];
-    colorPreferences?: string;
-    removeOldPaint?: string;
-  };
-}
-
-export interface RepairsInstallationsRequest {
-  id: string;
-  serviceType: 'repairs-installations';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    category: string;
-    quantity?: number;
-    materialsProvided?: string;
-    accessNotes?: string;
-  };
-}
-
-export interface MovingHelpRequest {
-  id: string;
-  serviceType: 'moving-help';
-  price: number;
-  estimatedDuration: number;
-  icon: string;
-  details: BaseServiceDetails & {
-    area: string;
-    length: string;
-    rooms: number;
-    floorType?: string;
-    heavyItems?: string[];
-    helpersNeeded?: number;
-  };
-}
-
-// --------------------------------------
-// Unión de todos los servicios
-// --------------------------------------
-export type ServiceRequestItem =
-  | FurnitureAssemblyRequest
-  | KitchenAssemblyRequest
-  | KitchenCleaningRequest
-  | HouseCleaningRequest
-  | WindowCleaningRequest
-  | PaintingRequest
-  | RepairsInstallationsRequest
-  | MovingHelpRequest;
-
-// --------------------------------------
-// Cleaning request domain (new backend)
-// --------------------------------------
-
-export type CleaningServiceType = 'cleaning';
-export type CleaningCustomerType = 'private' | 'business';
-export type CleaningRequestStatus =
+export type ServiceRequestStatus =
   | 'submitted'
-  | 'date_confirmed'
-  | 'alternative_date_proposed'
+  | 'under_review'
+  | 'visit_scheduled'
   | 'visit_completed'
-  | 'task_created'
+  | 'converted_to_work_order'
   | 'cancelled';
+
+export type WorkAddressSource = 'primary' | 'saved' | 'new';
 export type CleaningFrequency = 'once' | 'two_per_month' | 'three_per_month' | 'weekly';
 export type PropertySizeRange = 'under_50' | '50_80' | '80_120' | 'over_120';
+export type PaintingPaintScope = 'single_room' | 'multiple_rooms' | 'full_property';
+export type FurnitureAssemblyMountingType = 'floor' | 'wall';
+
+export interface ServiceAddress extends UserAddress {}
+
+export interface PreferredVisitSlot {
+  start: string;
+  end: string;
+}
+
+export interface WorkAddress {
+  address: ServiceAddress;
+  source?: WorkAddressSource;
+}
+
+// --------------------------------------
+// Service-specific details
+// --------------------------------------
 
 export interface CleaningPropertyDetails {
   sizeRange: PropertySizeRange;
@@ -211,26 +53,138 @@ export interface CleaningPropertyDetails {
   details?: string;
 }
 
-export interface CleaningRequestDetailsInput {
+export interface CleaningRequestDetails {
   frequency: CleaningFrequency;
   property: CleaningPropertyDetails;
 }
 
-export type WorkAddressSource = 'primary' | 'saved' | 'new';
-
-export interface WorkAddressSelection {
-  address: UserAddress;
-  source: WorkAddressSource;
-  saveToProfile?: boolean;
-  label?: string;
+export interface PaintingRequestDetails {
+  paintScope: PaintingPaintScope;
+  roomsCount?: number;
+  sizeRange?: PropertySizeRange;
+  description: string;
 }
 
-export interface CleaningRequestSubmission {
-  customerType: CleaningCustomerType;
-  details: CleaningRequestDetailsInput;
-  preferredVisitSlot: {
-    start: Date;
-    end: Date;
-  };
-  workAddress: WorkAddressSelection;
+export interface RepairsInstallationsRequestDetails {
+  category?: string;
+  description: string;
+  quantity?: number;
+  materialsProvided?: boolean;
+  accessNotes?: string;
 }
+
+export interface FurnitureAssemblyRequestDetails {
+  itemType?: string;
+  quantity?: number;
+  mountingType?: FurnitureAssemblyMountingType;
+  width?: string;
+  height?: string;
+  depth?: string;
+  doors?: number;
+  drawers?: number;
+  description: string;
+}
+
+export interface KitchenAssemblyRequestDetails {
+  layout?: string;
+  length?: number;
+  lowerCabinets?: number;
+  upperCabinets?: number;
+  appliances?: string[];
+  island?: boolean;
+  islandCabinetCount?: number;
+  islandLength?: string;
+  islandWidth?: string;
+  disassemblyRequired?: boolean;
+  provider?: string;
+  description: string;
+}
+
+export interface MovingHelpRequestDetails {
+  area?: string;
+  length?: string;
+  rooms?: number;
+  floorType?: string;
+  heavyItems?: string[];
+  helpersNeeded?: number;
+  description: string;
+}
+
+export interface ServiceRequestDetailsMap {
+  cleaning: CleaningRequestDetails;
+  painting: PaintingRequestDetails;
+  repairs_installations: RepairsInstallationsRequestDetails;
+  furniture_assembly: FurnitureAssemblyRequestDetails;
+  kitchen_assembly: KitchenAssemblyRequestDetails;
+  moving_help: MovingHelpRequestDetails;
+}
+
+export type ServiceRequestDetails<TServiceType extends ServiceType = ServiceType> =
+  ServiceRequestDetailsMap[TServiceType];
+
+// --------------------------------------
+// Canonical service-request contracts
+// --------------------------------------
+
+export interface ServiceRequestBase<
+  TServiceType extends ServiceType = ServiceType,
+  TDetails extends ServiceRequestDetails = ServiceRequestDetails<TServiceType>,
+> {
+  id: string;
+  clientId: string;
+  userClientId: string;
+  serviceType: TServiceType;
+  customerType: CustomerType;
+  status: ServiceRequestStatus;
+  preferredVisitSlot: PreferredVisitSlot;
+  workAddress: WorkAddress;
+  details: TDetails;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ServiceRequest<TServiceType extends ServiceType = ServiceType> = ServiceRequestBase<
+  TServiceType,
+  ServiceRequestDetails<TServiceType>
+>;
+
+export interface CreateServiceRequestInput<
+  TServiceType extends ServiceType = ServiceType,
+  TDetails extends ServiceRequestDetails = ServiceRequestDetails<TServiceType>,
+> {
+  serviceType: TServiceType;
+  customerType: CustomerType;
+  preferredVisitSlot: PreferredVisitSlot;
+  workAddress: WorkAddress;
+  details: TDetails;
+}
+
+export interface UpdateServiceRequestStatusInput {
+  status: ServiceRequestStatus;
+}
+
+export interface ListServiceRequestsQuery {
+  page?: number;
+  limit?: number;
+  status?: ServiceRequestStatus;
+  serviceType?: ServiceType;
+  customerType?: CustomerType;
+  search?: string;
+}
+
+export interface ServiceRequestListMeta {
+  total: number;
+  page: number;
+  limit: number;
+}
+
+// --------------------------------------
+// Named request specializations
+// --------------------------------------
+
+export type CleaningServiceRequest = ServiceRequest<'cleaning'>;
+export type PaintingServiceRequest = ServiceRequest<'painting'>;
+export type RepairsInstallationsServiceRequest = ServiceRequest<'repairs_installations'>;
+export type FurnitureAssemblyServiceRequest = ServiceRequest<'furniture_assembly'>;
+export type KitchenAssemblyServiceRequest = ServiceRequest<'kitchen_assembly'>;
+export type MovingHelpServiceRequest = ServiceRequest<'moving_help'>;

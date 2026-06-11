@@ -1,15 +1,15 @@
 .workflow {
-  padding: 0 5dvw;
+  padding: 0 var(--v2-page-inline-padding);
   position: relative;
 }
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--v2-content-max-width);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: clamp(24px, 4vw, 32px);
 }
 .header {
   display: flex;
@@ -21,11 +21,11 @@
 }
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--v2-page-text-primary);
 }
 .subtitle {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--v2-page-text-secondary);
 }
 .stepsGrid {
   list-style: none;
@@ -44,17 +44,17 @@
   width: 100%;
   max-width: 350px;
   height: 100%;
-  padding: 22px;
+  padding: clamp(20px, 3vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 12px;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--v2-motion-base) var(--v2-ease-standard),
+    box-shadow var(--v2-motion-base) var(--v2-ease-standard);
 }
 .stepCard:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 28px rgba(19, 31, 43, 0.12);
 }
 .stepAside {
   display: flex;
@@ -65,40 +65,55 @@
 .badge {
   width: 34px;
   height: 34px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--v2-radius-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: var(--type-body-md-size);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
+  flex: 0 0 auto;
 }
 .stepTitle {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--v2-page-text-primary);
 }
 .stepDescription {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--v2-page-text-secondary);
 }
 .note {
   width: 100%;
   max-width: 720px;
-  padding: 22px;
+  padding: clamp(20px, 3vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 .noteTitle {
-  color: var(--color-warning);
+  color: var(--v2-page-text-primary);
   margin: 0;
 }
 .noteDescription {
-  color: var(--text-primary);
+  color: var(--v2-page-text-secondary);
   margin: 0;
 }
 
 @media (max-width: 760px) {
   .stepsGrid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .stepCard {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepCard {
+    transition: none;
+  }
+
+  .stepCard:hover {
+    transform: none;
   }
 }

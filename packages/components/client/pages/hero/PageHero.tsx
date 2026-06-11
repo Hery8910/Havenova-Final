@@ -40,10 +40,10 @@ export function PageHero({ texts, lang }: PageHeroProps) {
   const descriptionId = useId();
   const ctas = [texts.ctas?.primary, texts.ctas?.secondary].filter(Boolean) as PageHeroAction[];
   const hasDescriptions = texts.descriptions.length > 0;
-  const actionsLabel = texts.a11y?.actionsLabel;
+  const actionsLabel = texts.a11y?.actionsLabel ?? 'Aktionen im Startseiten-Hero';
 
   return (
-    <section
+    <header
       className={styles.hero}
       aria-labelledby={titleId}
       aria-describedby={hasDescriptions ? descriptionId : undefined}
@@ -63,8 +63,8 @@ export function PageHero({ texts, lang }: PageHeroProps) {
         </div>
 
         <div className={styles.heroContent}>
-          <header className={styles.heroCopy}>
-            <h1 id={titleId} className={`${styles.heroTitle} type-display-lg`}>
+          <div className={styles.heroCopy}>
+            <h1 id={titleId} className={`${styles.heroTitle} type-display-lg v2-page-heading`}>
               {texts.title}
             </h1>
 
@@ -73,7 +73,7 @@ export function PageHero({ texts, lang }: PageHeroProps) {
               className={styles.heroDescriptions}
             >
               {texts.descriptions.map((description) => (
-                <p key={description} className={`${styles.heroDescription} type-body-lg`}>
+                <p key={description} className={`${styles.heroDescription} type-body-lg v2-page-copy`}>
                   {description}
                 </p>
               ))}
@@ -87,7 +87,7 @@ export function PageHero({ texts, lang }: PageHeroProps) {
                   return (
                     <Link
                       key={`${cta.href}-${cta.label}`}
-                      className={`button ${isPrimary ? 'button--primary' : 'button--secondary'} ${styles.cta}`}
+                      className={`v2-button ${isPrimary ? 'v2-button--primary' : 'v2-button--secondary'} ${styles.cta}`}
                       href={href(lang, cta.href)}
                       aria-label={cta.ariaLabel}
                     >
@@ -97,9 +97,9 @@ export function PageHero({ texts, lang }: PageHeroProps) {
                 })}
               </nav>
             )}
-          </header>
+          </div>
         </div>
       </div>
-    </section>
+    </header>
   );
 }

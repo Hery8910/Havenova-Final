@@ -1,0 +1,21 @@
+/*
+ * Home page migration helpers.
+ * This file is transitional and should only contain rules justified by the Home audit.
+ *
+ * Current decision:
+ * - Home now consumes v2 tokens and base/motion primitives at route level.
+ * - Typography and page-surface adoption start here before card migration.
+ * - Card semantics remain owned by the current global layer for now.
+ */
+
+.v2-home-page {
+  color: var(--v2-page-text-secondary);
+}
+
+.v2-home-page :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--v2-page-text-primary);
+}
+
+.v2-home-page :where(p) {
+  color: var(--v2-page-text-secondary);
+}

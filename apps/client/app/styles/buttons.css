@@ -65,7 +65,8 @@
 }
 
 .button:focus-visible {
-  outline: none;
+  outline: 2px solid var(--button-focus-border-current);
+  outline-offset: 3px;
   border-color: var(--button-focus-border-current);
   box-shadow: var(--button-shadow), var(--button-focus-shadow-current);
 }
@@ -256,6 +257,17 @@
   background: #15803d;
   border-color: #15803d;
   box-shadow: var(--button-shadow-rest);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none !important;
+  }
+
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
 }
 
 .button--alert-success:hover {

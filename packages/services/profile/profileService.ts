@@ -1,5 +1,5 @@
 import api from '../api/api';
-import type { ApiResponse } from '@/packages/types/api';
+import type { ApiResponse } from '@/packages/types';
 import type {
   CreateUserClientProfileInput,
   DeleteUserClientProfileResponse,
@@ -7,7 +7,7 @@ import type {
   UpdateUserClientProfileInput,
   UserClientProfile,
   UserClientProfileMutationResponse,
-} from '@/packages/types/profile/profileTypes';
+} from '@/packages/types';
 
 const USER_CLIENT_PROFILE_PATH = '/api/home-services/profile';
 
@@ -197,7 +197,7 @@ export const createUserClientProfile = async (
 };
 
 export const deleteUserClientProfile = async (): Promise<DeleteUserClientProfileResponse> => {
-  const { data } = await api.delete<ApiResponse<{ userId: string; clientId: string }>>(
+  const { data } = await api.delete<ApiResponse<{ userClientId: string; clientId: string }>>(
     USER_CLIENT_PROFILE_PATH,
     {
       withCredentials: true,

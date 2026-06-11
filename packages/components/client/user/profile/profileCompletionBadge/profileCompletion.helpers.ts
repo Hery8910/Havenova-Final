@@ -1,24 +1,30 @@
-import type { UserAddress, UserClientProfile } from '../../../../../types';
+import type {
+  SelectableProfileAddressOption,
+  UserClientProfile,
+} from '../../../../../types';
+import {
+  getSelectableProfileAddresses as buildSelectableProfileAddresses,
+  isCompleteAddress as isAddressComplete,
+} from '../../../../../types';
+
+export type RequiredProfileField = 'name' | 'phone' | 'primaryAddress';
 
 const isNonEmpty = (value?: string) => Boolean(value?.trim());
 
-export const isCompleteAddress = (address?: UserAddress) =>
-  Boolean(
-    address?.street?.trim() &&
-      address?.streetNumber?.trim() &&
-      address?.postalCode?.trim() &&
-      address?.district?.trim()
-  );
+export const isCompleteAddress = isAddressComplete;
 
-const PROFILE_COMPLETION_CHECKS = [
-  (profile: UserClientProfile) => isNonEmpty(profile.name),
-  (profile: UserClientProfile) => isNonEmpty(profile.phone),
-  (profile: UserClientProfile) => isCompleteAddress(profile.primaryAddress),
+const PROFILE_COMPLETION_CHECKS: Array<{
+  field: RequiredProfileField;
+  check: (profile: UserClientProfile) => boolean;
+}> = [
+  { field: 'name', check: (profile) => isNonEmpty(profile.name) },
+  { field: 'phone', check: (profile) => isNonEmpty(profile.phone) },
+  { field: 'primaryAddress', check: (profile) => isCompleteAddress(profile.primaryAddress) },
 ];
 
 export const getProfileCompletionPercentage = (profile: UserClientProfile) => {
   const completedFields = PROFILE_COMPLETION_CHECKS.reduce(
-    (total, check) => total + Number(check(profile)),
+    (total, entry) => total + Number(entry.check(profile)),
     0
   );
 
@@ -31,5 +37,25 @@ export const getProfileCompletionState = (percentage: number) => {
   return 'low';
 };
 
+export const getMissingProfileFields = (
+  profile?: UserClientProfile | null
+): RequiredProfileField[] => {
+  if (!profile) {
+    return PROFILE_COMPLETION_CHECKS.map((entry) => entry.field);
+  }
+
+  return PROFILE_COMPLETION_CHECKS.filter((entry) => !entry.check(profile)).map(
+    (entry) => entry.field
+  );
+};
+
+export const hasPrimaryAddress = (profile?: UserClientProfile | null) =>
+  isCompleteAddress(profile?.primaryAddress);
+
+export const getSelectableProfileAddresses = (
+  profile?: UserClientProfile | null
+): SelectableProfileAddressOption[] =>
+  buildSelectableProfileAddresses(profile?.primaryAddress, profile?.savedAddresses ?? []);
+
 export const isProfileComplete = (profile?: UserClientProfile | null) =>
-  Boolean(profile && getProfileCompletionPercentage(profile) === 100);
+  getMissingProfileFields(profile).length === 0;

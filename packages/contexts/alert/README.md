@@ -18,6 +18,27 @@ Hoy actúa como un modal global de feedback y confirmación. El objetivo funcion
 
 Este README documenta el contrato actual del contexto y deja una base para revisar después los flujos de autenticación con el mismo criterio.
 
+## Restricción importante para flujos compuestos
+
+El sistema actual solo soporta una alerta global activa.
+
+Por tanto:
+
+- no conviene modelar flujos compuestos como una cadena de alertas autónomas por request
+- si varias llamadas exitosas forman parte de un mismo flujo de usuario, no deben ir alternando `loading`, `success`, `loading`, `success`
+
+Regla operativa recomendada:
+
+- mantener una sola alerta `loading` mientras el flujo compuesto siga en progreso
+- mostrar `error` solo cuando falle un paso que rompa el flujo
+- mostrar `success` solo cuando el flujo completo haya terminado
+
+Caso de referencia:
+
+- `verify-email -> magic-login -> refreshAuth`
+
+Si cada request muestra su propia alerta, el popup salta de estado varias veces en segundos y el flujo se percibe inestable aunque técnicamente sea exitoso.
+
 ## Arquitectura actual
 
 Archivos principales:

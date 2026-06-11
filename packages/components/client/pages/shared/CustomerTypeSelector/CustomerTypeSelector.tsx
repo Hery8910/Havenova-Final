@@ -1,34 +1,32 @@
-import { CleaningCustomerType } from '../../../../../types/services';
+import type { CustomerType } from '../../../../../types/services';
 import styles from './CustomerTypeSelector.module.css';
+import { useId } from 'react';
 
 type Props = {
   label: string;
-  helper?: string;
-  options: Record<CleaningCustomerType, string>;
-  value: CleaningCustomerType | '';
+  options: Record<CustomerType, string>;
+  value: CustomerType | '';
   error?: string;
-  onChange: (value: CleaningCustomerType) => void;
+  onChange: (value: CustomerType) => void;
 };
 
-export default function CustomerTypeSelector({
-  label,
-  helper,
-  options,
-  value,
-  error,
-  onChange,
-}: Props) {
+export default function CustomerTypeSelector({ label, options, value, error, onChange }: Props) {
+  const errorId = useId();
+
   return (
     <fieldset className={styles.group}>
       <legend className={styles.legend}>{label}</legend>
-      {helper ? <p className={styles.helper}>{helper}</p> : null}
       <ul className={styles.toggleGrid}>
-        {(Object.keys(options) as CleaningCustomerType[]).map((type) => (
+        {(Object.keys(options) as CustomerType[]).map((type) => (
           <li key={type}>
             <button
               type="button"
-              className={`${styles.choiceButton} ${value === type ? styles.active : ''}`}
+              className={` button button--outline ${styles.choiceButton} ${value === type ? styles.active : ''} ${
+                error ? styles.fieldControlError : ''
+              }`}
               aria-pressed={value === type}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? errorId : undefined}
               onClick={() => onChange(type)}
             >
               {options[type]}
@@ -36,7 +34,7 @@ export default function CustomerTypeSelector({
           </li>
         ))}
       </ul>
-      <span className={styles.error} aria-live="polite">
+      <span className={styles.error} id={error ? errorId : undefined} aria-live="polite">
         {error || ''}
       </span>
     </fieldset>

@@ -1,7 +1,7 @@
 // app/profile/layout.tsx
 import React from 'react';
 import { Metadata } from 'next';
-import { ProfileNav } from '@/packages/components/client/user/profile/profileNav/ProfileNav';
+import { ProfileNav } from '@/packages/components/client/user/profile';
 import { getPageMetadata } from '@/packages/utils/metadata';
 import styles from './layout.module.css';
 

@@ -13,6 +13,7 @@ type PaintingDetails = {
 };
 
 type Props = {
+  showHeader?: boolean;
   serviceType: HomeServiceKind;
   texts: {
     title: string;
@@ -58,6 +59,7 @@ type Props = {
 };
 
 export default function ServiceDetailsRouter({
+  showHeader = true,
   serviceType,
   texts,
   requiredText,
@@ -77,6 +79,7 @@ export default function ServiceDetailsRouter({
   if (serviceType === 'painting') {
     return (
       <PaintingDetailsStep
+        showHeader={showHeader}
         texts={texts.painting}
         requiredText={requiredText}
         values={paintingDetails}
@@ -99,6 +102,7 @@ export default function ServiceDetailsRouter({
 
   return (
     <ServiceDetailsStep
+      showHeader={showHeader}
       texts={texts}
       selectedServiceType={serviceType}
       details={serviceDetails}

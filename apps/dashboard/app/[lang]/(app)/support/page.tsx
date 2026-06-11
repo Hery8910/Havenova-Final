@@ -2,24 +2,33 @@
 
 import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
 import styles from './page.module.css';
-import { ContactMessageCreatePayload, ContactMessageFormData } from '../../../../../../packages/types';
-import { useClient } from '../../../../../../packages/contexts/client/ClientContext';
+import { ContactMessageCreatePayload, ContactMessageLanguage } from '../../../../../../packages/types';
 import {
   fallbackGlobalError,
   fallbackGlobalLoading,
   useAuth,
+  useClient,
   useGlobalAlert,
   useI18n,
   useRequireRole,
 } from '../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../packages/utils/alertType';
-import { sendContactMessage } from '../../../../../../packages/services/contact';
+import { createContactMessage } from '../../../../../../packages/services/contact';
+
+type SupportContactFormState = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  clientId: string;
+  language?: ContactMessageLanguage;
+};
 
 const SupportPage = () => {
   const isAllowed = useRequireRole('admin');
   const { client } = useClient();
   const { auth } = useAuth();
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
   const supportTexts = texts.components?.dashboard?.pages?.support;
   const formText = texts.components?.client?.form;
   const supportSubjects = texts.components?.client?.form?.subjects?.support ?? [];
@@ -27,28 +36,28 @@ const SupportPage = () => {
   const { showLoading, showError, showSuccess, closeAlert } = useGlobalAlert();
 
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<ContactMessageFormData>({
+  const [formData, setFormData] = useState<SupportContactFormState>({
     name: '',
     email: '',
     subject: '',
     message: '',
     clientId: '',
-    userId: '',
+    language,
   });
 
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
       clientId: client?._id || prev.clientId,
-      userId: auth?.userId || prev.userId,
       name: prev.name || auth?.email || '',
       email: prev.email || auth?.email || '',
+      language: prev.language || language,
     }));
-  }, [auth?.email, auth?.userId, client?._id]);
+  }, [auth?.email, client?._id, language]);
 
   if (!isAllowed) return null;
 
-  const handleSubmit = async (data: ContactMessageFormData) => {
+  const handleSubmit = async (data: SupportContactFormState) => {
     setLoading(true);
     try {
       const loadingPopup = getPopup(
@@ -85,15 +94,15 @@ const SupportPage = () => {
       }
 
       const payload: ContactMessageCreatePayload = {
-        userId: auth?.userId || '',
         name: data.name || auth?.email || '',
         email: data.email || auth?.email || '',
         message: data.message || '',
         subject: data.subject || '',
         clientId: client._id,
+        language: data.language || language,
       };
 
-      const response = await sendContactMessage(payload);
+      const response = await createContactMessage(payload);
       closeAlert();
 
       const popupData = (popups as any)?.[response.code] ||

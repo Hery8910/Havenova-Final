@@ -8,6 +8,7 @@ import { useAuth, useI18n, useProfile } from '../../../../../contexts';
 import { useLang, useRequireLogin } from '../../../../../hooks';
 import type { UserClientProfile } from '../../../../../types';
 import { href } from '../../../../../utils/navigation';
+import { resolvePreferredContactEmail } from '../../../../../utils';
 import {
   getProfileCompletionPercentage,
   getProfileCompletionState,
@@ -80,7 +81,7 @@ const buildIdentityProps = (
   auth: { isVerified?: boolean; email?: string | null }
 ) => ({
   profile,
-  name: profile.name?.trim() || auth.email?.trim() || 'Profile user',
+  name: profile.name?.trim() || resolvePreferredContactEmail(profile.contactEmail, auth.email) || 'Profile user',
   avatarAlt: profile.name?.trim() ? `${profile.name} avatar` : 'Profile avatar',
   isVerified: Boolean(auth.isVerified),
   verifiedLabel: 'Verified',

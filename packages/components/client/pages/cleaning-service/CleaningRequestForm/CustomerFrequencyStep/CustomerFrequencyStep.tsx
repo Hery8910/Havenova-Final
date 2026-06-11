@@ -1,11 +1,13 @@
 import { useId } from 'react';
 import styles from './CustomerFrequencyStep.module.css';
-import { CleaningCustomerType, CleaningFrequency } from '../../../../../../types/services';
+import { CleaningFrequency } from '../../../../../../types/services';
+import CustomerTypeSelector from '../../../shared/CustomerTypeSelector/CustomerTypeSelector';
+import type { CleaningRequestCustomerType } from '../cleaningRequest.types';
 
 type Props = {
   customerType: {
     label: string;
-    options: Record<CleaningCustomerType, string>;
+    options: Record<CleaningRequestCustomerType, string>;
   };
   frequency: {
     label: string;
@@ -14,7 +16,7 @@ type Props = {
     recommendedLabel: string;
   };
   values: {
-    customerType: CleaningCustomerType | '';
+    customerType: CleaningRequestCustomerType | '';
     frequency: CleaningFrequency | '';
   };
   errors: {
@@ -22,7 +24,7 @@ type Props = {
     frequency?: string;
   };
   frequencyOrder: CleaningFrequency[];
-  onCustomerTypeChange: (value: CleaningCustomerType) => void;
+  onCustomerTypeChange: (value: CleaningRequestCustomerType) => void;
   onFrequencyChange: (value: CleaningFrequency) => void;
 };
 
@@ -36,7 +38,6 @@ export default function CustomerFrequencyStep({
   onFrequencyChange,
 }: Props) {
   const sectionLabelId = useId();
-  const customerErrorId = useId();
   const frequencyErrorId = useId();
 
   return (
@@ -44,30 +45,13 @@ export default function CustomerFrequencyStep({
       <h3 className={styles.srOnly} id={sectionLabelId}>
         {`${customerType.label}. ${frequency.label}`}
       </h3>
-      <fieldset className={styles.group}>
-        <legend className={`${styles.legend} type-body-md`}>{customerType.label}</legend>
-        <ul className={styles.customerTypeList}>
-          {(Object.keys(customerType.options) as CleaningCustomerType[]).map((type) => (
-            <li key={type}>
-              <button
-                type="button"
-                className={`${styles.customerTypeButton} ${values.customerType === type ? styles.active : ''} ${errors.customerType ? styles.fieldControlError : ''} button button--outline `}
-                aria-pressed={values.customerType === type}
-                aria-invalid={Boolean(errors.customerType)}
-                aria-describedby={errors.customerType ? customerErrorId : undefined}
-                onClick={() => onCustomerTypeChange(type)}
-              >
-                <span className={styles.customerTypeLabel}>{customerType.options[type]}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-        {errors.customerType ? (
-          <p className={styles.errorText} id={customerErrorId}>
-            {errors.customerType}
-          </p>
-        ) : null}
-      </fieldset>
+      <CustomerTypeSelector
+        label={customerType.label}
+        options={customerType.options}
+        value={values.customerType}
+        error={errors.customerType}
+        onChange={onCustomerTypeChange}
+      />
 
       <fieldset className={styles.group}>
         <legend className={`${styles.legend} type-body-md`}>{frequency.label}</legend>

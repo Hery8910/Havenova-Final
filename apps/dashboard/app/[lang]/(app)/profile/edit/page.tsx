@@ -2,14 +2,12 @@
 
 import { useState } from 'react';
 import styles from './page.module.css';
-import { useProfile } from '@/packages/contexts/profile/ProfileContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { useI18n, useProfile, type AlertVisualState } from '@/packages/contexts';
 import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
 import { FormWrapper } from '@/packages/components/client/user/profile';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
 import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
 import { formatUserAddress } from '@/packages/types';
-import type { AlertVisualState } from '@/packages/contexts/alert/useAlert';
 
 export interface ThemeData {
   title: string;

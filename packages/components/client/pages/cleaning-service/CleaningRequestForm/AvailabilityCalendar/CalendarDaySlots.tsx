@@ -3,6 +3,8 @@
 import type { CalendarSlot, SelectedCalendarSlot } from '../../../../../../types/calendar';
 import { createLocalDateTime, formatLongDate } from './calendarHelpers';
 import styles from './CalendarDaySlots.module.css';
+import { MdBlock } from 'react-icons/md';
+import { FaRegCheckCircle } from 'react-icons/fa';
 
 export interface CalendarDaySlotsTexts {
   title: string;
@@ -60,15 +62,15 @@ export default function CalendarDaySlots({
               {formatLongDate(date)}
             </h3>
           </section>
-          <button
-            type="button"
-            className={`button button--outline ${styles.closeButton}`}
-            onClick={onClose}
-          >
-            {copy.closeLabel}
-          </button>
         </header>
-        <p className={styles.empty}>{copy.noAvailability}</p>
+        <p className={styles.empty}>{copy.noAvailability}</p>{' '}
+        <button
+          type="button"
+          className={`button button--outline ${styles.closeButton}`}
+          onClick={onClose}
+        >
+          {copy.closeLabel}
+        </button>
       </aside>
     );
   }
@@ -81,13 +83,6 @@ export default function CalendarDaySlots({
             {formatLongDate(date)}
           </h3>
         </section>
-        <button
-          type="button"
-          className={`button button--outline ${styles.closeButton}`}
-          onClick={onClose}
-        >
-          {copy.closeLabel}
-        </button>
       </header>
 
       <ul className={styles.slotList}>
@@ -124,26 +119,31 @@ export default function CalendarDaySlots({
                 <span className={styles.slotTime}>
                   {slot.start} - {slot.end}
                 </span>
-                <span
-                  className={`badge ${
-                    slot.blocked
-                      ? 'badge--neutral'
-                      : isSelected
-                        ? 'badge--primary'
-                        : 'badge--secondary'
-                  } ${styles.slotBadge}`}
-                >
-                  {slot.blocked
-                    ? copy.blockedBadge
-                    : isSelected
-                      ? copy.selectedBadge
-                      : copy.availableBadge}
-                </span>
+                {slot.blocked ? (
+                  copy.blockedBadge
+                ) : isSelected ? (
+                  <span
+                    className={styles.checkIcon}
+                    aria-hidden="true"
+                    aria-label={copy.selectedBadge}
+                  >
+                    {slot.blocked ? copy.blockedBadge : isSelected ? <FaRegCheckCircle /> : ''}
+                  </span>
+                ) : (
+                  ''
+                )}
               </button>
             </li>
           );
         })}
       </ul>
+      <button
+        type="button"
+        className={`button button--outline button--outline-small ${styles.closeButton}`}
+        onClick={onClose}
+      >
+        {copy.closeLabel}
+      </button>
     </aside>
   );
 }

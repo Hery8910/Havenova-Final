@@ -8,6 +8,23 @@ Este documento resume el estado actual de `apps/client/app/[lang]/(auth)` con fo
 - errores, popups y estados de loading
 - i18n y metadata
 - riesgos para despliegue
+- estabilidad visual de flujos compuestos
+- capacidad de reutilización del dominio auth en futuros proyectos
+
+## Requisito de plataforma
+
+La ruta `(auth)` no debe consolidarse como una implementación irrepetible de esta app.
+
+Debe servir como referencia de los flujos públicos de un dominio `auth` reusable para futuros proyectos multi-client.
+
+Eso obliga a documentar por flujo:
+
+- comportamiento esperado
+- mensajes
+- errores
+- transiciones visuales permitidas
+- pasos intermedios invisibles para el usuario
+- side effects de sesión y navegación
 
 Archivos revisados:
 
@@ -48,6 +65,26 @@ Lo que falta ahora no es rehacer la ruta desde cero, sino cerrar deuda concreta 
 
 ## Flujos Esperados
 
+## Regla general de estados visuales
+
+En esta ruta no basta con documentar llamadas HTTP.
+
+Cada flujo debe distinguir:
+
+- pasos técnicos internos
+- estado visible del usuario
+
+Regla cerrada:
+
+- si un flujo compuesto encadena varias llamadas y todas van bien, el usuario debe ver un único `loading` continuo hasta el último paso exitoso
+- no se deben mostrar `success` intermedios
+- el `success` final solo aparece cuando el flujo completo terminó
+- un `error` sí puede interrumpir el loading en el punto donde falla el flujo
+
+Esto es especialmente obligatorio en:
+
+- `verify-email -> magic-login -> refreshAuth`
+
 ### Register
 
 1. El usuario completa email, password, language y TOS.
@@ -60,6 +97,7 @@ Notas:
 
 - no se debe asumir login automático
 - el objetivo del success es empujar al usuario al flujo de verificación
+- el flujo es simple, por lo que puede mostrar `loading -> success final`
 
 ### Login
 
@@ -73,18 +111,42 @@ Caso especial:
 
 - si responde `USER_LOGIN_EMAIL_NOT_VERIFIED`, el frontend deriva a `/user/verify-email`
 
+Estado visual esperado:
+
+- `loading` mientras se resuelve login
+- `success` final solo si la sesión quedó establecida
+- `error/warning` si el email no está verificado o si falla la autenticación
+
 ### Verify Email
 
 1. La página recibe `token` desde la URL.
 2. El frontend envía `POST /api/auth/verify-email`.
 3. Si responde success con `magicToken`, continúa automáticamente con `POST /api/auth/magic-login`.
-4. Después refresca auth state.
-5. Muestra success final con timeout corto y redirección automática a home.
+4. Si `magic-login` responde `user`, el frontend hace un `setAuth({...user, isNewUser: true})` transitorio.
+5. Después ejecuta `refreshAuth()` para confirmar la sesión real desde servidor.
+6. Muestra success final con timeout corto y redirección automática a home.
 
 Fallback defensivo actual:
 
 - si `verify-email` responde success sin `magicToken`, el frontend trata el caso como verify success y deriva a login manual
 - este fallback existe para robustez, pero no debe ser el camino normal del contrato
+
+Estado visual esperado:
+
+- un único `loading` visible desde el inicio del verify hasta que termina `refreshAuth`
+- sin `success` intermedio después de `verify-email`
+- sin volver a abrir otro `loading` después de un pseudo-success intermedio
+- un único `success` final cuando toda la secuencia terminó bien
+
+Estado actual del fix:
+
+- el flujo ya se trata como una operación compuesta única
+- la página mantiene un solo `loading` visible mientras encadena:
+  - verificación
+  - magic-login
+  - sincronización de auth
+- los errores de `verify-email` o `magic-login` cortan el flujo en el punto correcto
+- el `success` definitivo sólo se muestra cuando la sesión quedó confirmada o, en fallback, cuando se deriva explícitamente a login manual
 
 ### Forgot Password
 
@@ -96,6 +158,7 @@ Fallback defensivo actual:
 Nota:
 
 - la respuesta es ambigua por diseño y no debe exponer si el usuario existe o no
+- el flujo es simple y puede cerrarse con `loading -> success final`
 
 ### Set Password
 
@@ -108,6 +171,7 @@ Nota:
 Nota:
 
 - esta ruta pública usa `token`; `inviteToken` no aplica aquí
+- el flujo es simple y puede cerrarse con `loading -> success final`
 
 ### Resend Verification
 
@@ -118,6 +182,7 @@ Nota:
 Nota:
 
 - la respuesta es ambigua por diseño y no debe revelar estado interno del usuario
+- el flujo es simple y puede cerrarse con `loading -> success final`
 
 ## Qué Ya Está Mejor Que En La Auditoría Anterior
 
@@ -233,8 +298,31 @@ Impacto:
 - no hay una convención única para estados intermedios
 - el mismo tipo de feedback visual se arma desde fuentes distintas
 - eso complica el pulido visual y la coherencia de copy
+- también dificulta extraer un patrón reusable para otros proyectos
 
-### 6. El frontend está mucho más alineado con el contrato actual del backend, pero todavía no está completamente cerrado
+### 6. `verify-email` sigue siendo el flujo visualmente más frágil
+
+Archivos:
+
+- [user/verify-email/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/verify-email/page.tsx)
+- [userHandler.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/utils/user/userHandler.ts)
+
+Hallazgo:
+
+- el flujo técnico es correcto a grandes rasgos
+- el problema actual no es tanto de integración HTTP sino de orquestación visual
+- los múltiples `showLoading()` y `showSuccess()` sobre un sistema de alerta única producen sustituciones inmediatas de popup
+
+Riesgo:
+
+- el usuario percibe inestabilidad
+- el flujo queda difícil de reutilizar en otro proyecto porque la UX depende de timings concretos
+
+Decisión:
+
+- antes del cierre de la ruta `(auth)`, este flujo debe quedar modelado como una secuencia visible única
+
+### 7. El frontend está mucho más alineado con el contrato actual del backend, pero todavía no está completamente cerrado
 
 Referencia principal:
 
@@ -254,7 +342,7 @@ Impacto:
 - varios fallos actuales parecen de UI, pero en realidad son deuda de integración
 - sin alinear códigos y paths de success, el testing manual produciría ruido innecesario
 
-### 7. Sigue habiendo algo de fallback a `GLOBAL_INTERNAL_ERROR`, pero ya está más acotado
+### 8. Sigue habiendo algo de fallback a `GLOBAL_INTERNAL_ERROR`, pero ya está más acotado
 
 Archivos principales:
 

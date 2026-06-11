@@ -2,6 +2,7 @@ import styles from './ServiceDetailsStep.module.css';
 import type { HomeServiceKind } from '../homeServiceTypes';
 
 type Props = {
+  showHeader?: boolean;
   texts: {
     title: string;
     description: string;
@@ -19,6 +20,7 @@ type Props = {
 };
 
 export default function ServiceDetailsStep({
+  showHeader = true,
   texts,
   selectedServiceType,
   details,
@@ -30,12 +32,14 @@ export default function ServiceDetailsStep({
 
   return (
     <section className={styles.container} aria-labelledby="home-service-details-title">
-      <header className={styles.header}>
-        <h3 id="home-service-details-title" className={styles.title}>
-          {texts.title}
-        </h3>
-        <p className={styles.description}>{texts.description}</p>
-      </header>
+      {showHeader ? (
+        <header className={styles.header}>
+          <h3 id="home-service-details-title" className={styles.title}>
+            {texts.title}
+          </h3>
+          <p className={styles.description}>{texts.description}</p>
+        </header>
+      ) : null}
 
       <article className={styles.serviceCard}>
         <span className={styles.hint}>{texts.selectedServiceLabel}</span>

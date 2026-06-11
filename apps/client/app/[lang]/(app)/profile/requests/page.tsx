@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import styles from './page.module.css';
-// import RequestTable from '../../../../../../packages/components/user/requestTable/RequestTable';
 
 // 👉 Ejemplo de órdenes (mock)
 // const mockOrders: ServiceOrder[] = [

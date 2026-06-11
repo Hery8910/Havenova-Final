@@ -1,36 +1,36 @@
 .header {
   width: 100%;
-  max-width: 280px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-4);
 }
 
 .intro {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .meta {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: var(--type-label-size);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--text-tertiary);
+  color: var(--page-text-secondary);
 }
 
 .title {
   margin: 0;
-  color: var(--text-primary);
-  font-size: clamp(1.55rem, 2vw, 2rem);
+  color: var(--page-text-primary);
 }
 
 .description {
   margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.55;
+  color: var(--page-text-secondary);
+  line-height: var(--leading-body);
+  max-width: 62ch;
 }
 
 .timeline {
@@ -39,27 +39,26 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.timelineItem {
-  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--space-4);
 }
 
 .card {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  color: var(--text-tertiary);
+  color: var(--card-neutral-text-secondary);
   transition: color 0.2s ease;
 }
 
 .index {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
   border-radius: 999px;
-  background: var(--surface-border);
+  background: color-mix(in srgb, var(--card-neutral-text-secondary) 30%, transparent);
   transition:
     background-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -68,13 +67,14 @@
 
 .stepHeading {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: var(--type-body-md-size);
   font-weight: 500;
   color: inherit;
+  line-height: var(--leading-heading);
 }
 
 .active {
-  color: var(--text-primary);
+  color: var(--card-primary-text-primary);
 }
 
 .active .stepHeading {
@@ -87,7 +87,7 @@
 }
 
 .completed {
-  color: var(--text-secondary);
+  color: var(--card-neutral-text-primary);
 }
 
 .completed .index {
@@ -95,19 +95,8 @@
   opacity: 0.55;
 }
 
-@media (max-width: 900px) {
-  .header {
-    max-width: none;
-    gap: 16px;
-  }
+@media (min-width: 768px) {
+}
 
-  .timeline {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px 18px;
-  }
-
-  .timelineItem {
-    width: auto;
-  }
+@media (min-width: 1024px) {
 }

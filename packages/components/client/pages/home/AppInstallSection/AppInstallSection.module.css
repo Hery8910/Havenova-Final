@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   background: transparent;
-  padding: 128px 5dvw 200px;
+  padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
 }
 
 .appCard {
   width: 100%;
-  max-width: fit-content;
+  max-width: var(--v2-content-max-width);
   display: grid;
   gap: 24px;
   align-items: center;
@@ -40,7 +40,7 @@
 .titleBlock :global(.type-title-xl) {
   margin: 0;
   max-width: 10ch;
-  color: var(--page-text-primary);
+  color: var(--v2-page-text-primary);
   line-height: 1;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -49,14 +49,14 @@
 .titleBlock :global(.type-display-md) {
   margin: 0;
   max-width: 9ch;
-  color: var(--page-text-primary);
+  color: var(--v2-page-text-primary);
   line-height: 0.96;
   letter-spacing: -0.05em;
   text-wrap: balance;
 }
 
 .sectionSubtitle {
-  color: var(--page-text-secondary);
+  color: var(--v2-page-text-secondary);
   margin: 0;
   max-width: 44ch;
   line-height: 1.45;
@@ -126,7 +126,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 12px 12px 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--v2-radius-md);
 }
 
 .skeletonTitle,
@@ -201,11 +201,15 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 12px 12px 20px;
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%),
-    var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-card-neutral-bg2);
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    var(--v2-card-neutral-bg1) 0%,
+    var(--v2-card-neutral-bg2) 50%,
+    var(--v2-card-neutral-bg3) 100%
+  );
+  border: 1px solid var(--v2-card-neutral-border);
 }
 
 .skeletonSupportText {
@@ -222,21 +226,9 @@
 
 .supportInfo {
   margin: 0;
-  color: var(--page-text-secondary);
+  color: var(--v2-page-text-secondary);
   width: 100%;
   max-width: 420px;
-}
-
-.actionButton:hover,
-.ctaGhost:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-.actionButton:focus-visible,
-.ctaGhost:focus-visible {
-  outline: 2px solid var(--brand-primary-5);
-  outline-offset: 2px;
 }
 
 @media (min-width: 768px) {
@@ -249,7 +241,7 @@
 @media (max-width: 767px) {
   .appCard {
     grid-template-columns: 1fr;
-    max-width: 720px;
+    max-width: 100%;
     gap: 18px;
   }
 
@@ -326,6 +318,24 @@
 
 @media (min-width: 1280px) {
   .appInstall {
-    padding: 200px 10dvw;
+    padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonTitle::after,
+  .skeletonTitleShort::after,
+  .skeletonLine::after,
+  .skeletonLineShort::after,
+  .skeletonButton::after,
+  .skeletonButtonAlt::after,
+  .skeletonSupportText::after,
+  .skeletonSupportButton::after {
+    animation: none !important;
+    transform: none;
+  }
+
+  .actionButton:hover {
+    transform: none;
   }
 }

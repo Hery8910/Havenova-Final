@@ -12,11 +12,11 @@ import {
   useRequireRole,
 } from '../../../../../../packages/contexts';
 import {
+  type GlobalTaskCatalogBundleFiltersValue,
   GlobalTaskCatalogBundleList,
   GlobalTaskCatalogDetails,
   GlobalTaskCatalogTotals,
-} from '../../../../../../packages/components/dashboard/pages';
-import type { GlobalTaskCatalogBundleFiltersValue } from '../../../../../../packages/components/dashboard/pages/globalTaskCatalog/bundleFilters';
+} from '../../../../../../packages/components/dashboard';
 import type {
   CatalogBundleDetail,
   CatalogBundleSummary,

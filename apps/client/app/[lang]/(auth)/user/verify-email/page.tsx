@@ -2,19 +2,19 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 
-import { useProfile } from '../../../../../../../packages/contexts/profile/ProfileContext';
-import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
-import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
 import {
+  PopupCode,
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoginSuccess,
   fallbackLoadingMessages,
   fallbackVerifyEmailSuccess,
   useAuth,
+  useClient,
   useGlobalAlert,
+  useI18n,
+  useProfile,
 } from '../../../../../../../packages/contexts';
 import { useLang } from '../../../../../../../packages/hooks';
 
@@ -22,18 +22,20 @@ import { FormWrapper } from '../../../../../../../packages/components/client/use
 import styles from '../userAuth.module.css';
 import { ResendVerificationEmailPayload } from '../../../../../../../packages/types';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
-import { href } from '../../../../../../../packages/utils/navigation';
+import { href } from '../../../../../../../packages/utils';
 import { useVerifyEmailActions } from '../../../../../../../packages/utils';
 import Link from 'next/link';
-import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { AuthPageShell } from '../AuthPageShell';
+import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
+import { useAuthAlertActions } from '../useAuthAlertActions';
 
 const VerifyEmailPageContent = () => {
-  const AUTO_REDIRECT_MS = 4000;
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const lang = useLang();
+  const homeHref = href(lang, '/');
 
   const { texts } = useI18n();
   const { popups } = texts;
@@ -43,6 +45,7 @@ const VerifyEmailPageContent = () => {
   const navText = texts.components.client.navbar.accessibility;
   const registerText = texts.pages.client.user.register;
   const verifyText = texts.pages.client.user.verifyEmail;
+  const autoRedirectDescription = verifyText.autoRedirectDescription;
   const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
   const resendButton = formText.button.resendEmail;
 
@@ -57,42 +60,16 @@ const VerifyEmailPageContent = () => {
 
   // Evitar doble ejecución del efecto en modo dev / StrictMode
   const didRunRef = useRef(false);
-  const redirectTimeoutRef = useRef<number | null>(null);
-
-  const clearRedirectTimeout = useCallback(() => {
-    if (redirectTimeoutRef.current) {
-      window.clearTimeout(redirectTimeoutRef.current);
-      redirectTimeoutRef.current = null;
-    }
-  }, []);
-
-  const getAutoRedirectDescription = useCallback(
-    (baseDescription: string) => {
-      const redirectCopy =
-        lang === 'de'
-          ? 'Sie werden in wenigen Sekunden zur Startseite weitergeleitet.'
-          : lang === 'es'
-            ? 'Serás redirigido a la página de inicio en unos segundos.'
-            : 'You will be redirected to the homepage in a few seconds.';
-
-      return `${baseDescription} ${redirectCopy}`.trim();
-    },
-    [lang]
-  );
-
-  const scheduleHomeRedirect = useCallback(() => {
-    clearRedirectTimeout();
-    redirectTimeoutRef.current = window.setTimeout(() => {
-      closeAlert();
-      router.push(href(lang, '/'));
-    }, AUTO_REDIRECT_MS);
-  }, [AUTO_REDIRECT_MS, clearRedirectTimeout, closeAlert, lang, router]);
-
-  useEffect(() => {
-    return () => {
-      clearRedirectTimeout();
-    };
-  }, [clearRedirectTimeout]);
+  const { getAutoRedirectDescription, scheduleRedirect: scheduleHomeRedirect } =
+    useAuthAutoRedirect({
+      redirectTo: homeHref,
+      closeAlert,
+    });
+  const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
+    useAuthAlertActions({
+      buttons: alertButtons,
+      closeAlert,
+    });
 
   const getVerifyFlowPopupDefaultKey = (code?: string, status?: number): PopupCode => {
     switch (code) {
@@ -111,6 +88,25 @@ const VerifyEmailPageContent = () => {
     }
   };
 
+  const getRefreshSyncErrorCopy = useCallback(() => {
+    return {
+      title: verifyText.sessionSyncError?.title,
+      description: verifyText.sessionSyncError?.description,
+    };
+  }, [verifyText.sessionSyncError?.description, verifyText.sessionSyncError?.title]);
+
+  const openVerifyFlowLoading = useCallback(() => {
+    const verifyLoading = loadingMsg.verifyEmail ?? fallbackLoadingMessages.verifyEmail;
+
+    showLoading({
+      response: {
+        status: 102,
+        title: verifyLoading.title,
+        description: verifyLoading.description,
+      },
+    });
+  }, [loadingMsg.verifyEmail, showLoading]);
+
   useEffect(() => {
     // Evita doble ejecución en Strict Mode
     if (didRunRef.current) return;
@@ -126,15 +122,9 @@ const VerifyEmailPageContent = () => {
       }
 
       try {
-        // 1) Loading Verificación
-        const verifyLoading = loadingMsg.verifyEmail ?? fallbackLoadingMessages.verifyEmail;
-        showLoading({
-          response: {
-            status: 102,
-            title: verifyLoading.title,
-            description: verifyLoading.description,
-          },
-        });
+        // Mantiene un único loading visible para todo el flujo compuesto:
+        // verify-email -> magic-login -> refreshAuth.
+        openVerifyFlowLoading();
 
         const result = await handleVerifyEmail(popups, token);
 
@@ -160,42 +150,38 @@ const VerifyEmailPageContent = () => {
               status: 200,
               title: popupData.title,
               description: popupData.description,
-              confirmLabel: alertButtons.goToLogin,
-              cancelLabel: alertButtons.close,
+              confirmLabel: getConfirmActionLabel('goToLogin'),
+              cancelLabel: getCancelActionLabel(),
             },
-            onConfirm: () => {
-              router.push(href(lang, '/user/login'));
-              closeAlert();
-            },
-            onCancel: closeAlert,
+            onConfirm: getConfirmAction('goToLogin'),
+            onCancel: getCancelAction(),
           });
           return;
         }
 
-        // 2) Loading Login
-        const loginLoading = loadingMsg.login ?? fallbackLoadingMessages.login;
-        showLoading({
-          response: {
-            status: 102,
-            title: loginLoading.title,
-            description: loginLoading.description,
-          },
-        });
-
         const login = await handleMagicLogin(popups, magicToken);
         if (!login.ok) return;
 
-        await refreshAuth();
+        const refreshResult = await refreshAuth();
 
-        // 3) Loading Refresh
-        const createUserLoading = loadingMsg.createUser ?? fallbackLoadingMessages.createUser;
-        showLoading({
-          response: {
-            status: 102,
-            title: createUserLoading.title,
-            description: createUserLoading.description,
-          },
-        });
+        if (!refreshResult.syncedFromServer || !refreshResult.auth.isLogged) {
+          if (!refreshResult.userNotified) {
+            const syncCopy = getRefreshSyncErrorCopy();
+
+            showError({
+              response: {
+                status: refreshResult.isOffline ? 503 : 500,
+                title: syncCopy.title,
+                description: syncCopy.description,
+                confirmLabel: getConfirmActionLabel('reload'),
+                cancelLabel: getCancelActionLabel('goToLogin'),
+              },
+              onConfirm: getConfirmAction('reload', () => router.refresh()),
+              onCancel: getCancelAction('goToLogin'),
+            });
+          }
+          return;
+        }
 
         // 4) Done!
         const popupData = getPopup(
@@ -209,7 +195,7 @@ const VerifyEmailPageContent = () => {
           response: {
             status: 200,
             title: popupData.title,
-            description: getAutoRedirectDescription(popupData.description),
+            description: getAutoRedirectDescription(popupData.description, autoRedirectDescription),
             cancelLabel: '',
           },
         });
@@ -231,17 +217,11 @@ const VerifyEmailPageContent = () => {
             status,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: alertButtons.reload,
-            cancelLabel: alertButtons.goToHome,
+            confirmLabel: getConfirmActionLabel('reload'),
+            cancelLabel: getCancelActionLabel('goToHome'),
           },
-          onConfirm: () => {
-            closeAlert();
-            router.refresh();
-          },
-          onCancel: () => {
-            router.push(href(lang, '/'));
-            closeAlert();
-          },
+          onConfirm: getConfirmAction('reload', () => router.refresh()),
+          onCancel: getCancelAction('goToHome'),
         });
       }
     });
@@ -250,18 +230,20 @@ const VerifyEmailPageContent = () => {
     handleMagicLogin,
     handleVerifyEmail,
     lang,
-    loadingMsg.createUser,
-    loadingMsg.login,
-    loadingMsg.verifyEmail,
+    openVerifyFlowLoading,
     popups,
     refreshAuth,
     router,
     showError,
-    showLoading,
     showSuccess,
     token,
-    clearRedirectTimeout,
+    autoRedirectDescription,
+    getCancelAction,
+    getCancelActionLabel,
     getAutoRedirectDescription,
+    getConfirmAction,
+    getConfirmActionLabel,
+    getRefreshSyncErrorCopy,
     scheduleHomeRedirect,
   ]);
 
@@ -288,60 +270,45 @@ const VerifyEmailPageContent = () => {
   // RENDER
   // ---------------------------
   return (
-    <section
-      className={`${styles.authSection} card card--primary`}
-      aria-labelledby="verify-title"
-      aria-describedby="verify-desc"
+    <AuthPageShell
+      headingId="verify-title"
+      descriptionId="verify-desc"
+      title={verifyText.title}
+      description={verifyText.info}
+      homeHref={homeHref}
+      homeLabel={navText.homeLink}
+      logoAlt={navText.logoAlt}
+      footerLabel={navText.authFooter}
+      footer={
+        <>
+          <div className={styles.authFooterActions}>
+            <Link className={styles.link} href={href(lang, '/user/login')}>
+              {formText.button.login}
+            </Link>
+          </div>
+          <div className={`${styles.authFooterActions} ${styles.authFooterSecondary}`}>
+            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/register')}>
+              {registerText.title}
+            </Link>
+            <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>
+              <IoMdArrowRoundBack /> {navText.homeLink}
+            </Link>
+          </div>
+        </>
+      }
     >
-      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
-        <Image
-          className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
-          alt={navText.logoAlt}
-          width={80}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className={styles.authFormContainer}>
-        <header className={styles.authHeader}>
-          <h1 id="verify-title" className={styles.authTitle}>
-            {verifyText.title}
-          </h1>
-          <p id="verify-desc" className={styles.authDescription}>
-            {verifyText.info}
-          </p>
-        </header>
-
-        <FormWrapper<ResendVerificationEmailPayload>
-          fields={['email', 'language', 'clientId'] as const}
-          onSubmit={onResendSubmit}
-          button={resendButton}
-          initialValues={{
-            email: auth?.email ?? '',
-            clientId: client._id,
-            language: profile?.language ?? lang ?? 'de',
-          }}
-          loading={loading}
-        />
-      </div>
-
-      <footer className={styles.authFooter}>
-        <div className={styles.authFooterActions}>
-          <Link className={styles.link} href={href(lang, '/user/register')}>
-            {registerText.title}
-          </Link>
-        </div>
-        <div className={`${styles.authFooterActions} ${styles.authFooterSecondary}`}>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/login')}>
-            {formText.button.login}
-          </Link>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
-            <IoMdArrowRoundBack /> {navText.homeLink}
-          </Link>
-        </div>
-      </footer>
-    </section>
+      <FormWrapper<ResendVerificationEmailPayload>
+        fields={['email', 'language', 'clientId'] as const}
+        onSubmit={onResendSubmit}
+        button={resendButton}
+        initialValues={{
+          email: auth?.email ?? '',
+          clientId: client._id,
+          language: profile?.language ?? lang ?? 'de',
+        }}
+        loading={loading}
+      />
+    </AuthPageShell>
   );
 };
 

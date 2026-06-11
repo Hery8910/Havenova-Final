@@ -1,23 +1,26 @@
 'use client';
 
-import { useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import styles from './CleaningRequestForm.module.css';
 import CustomerFrequencyStep from './CustomerFrequencyStep/CustomerFrequencyStep';
 import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
 import ProcessStepsHeader from './ProcessStepsHeader/ProcessStepsHeader';
 import AvailabilityCalendar from './AvailabilityCalendar/AvailabilityCalendar';
-import WorkAddressSelector from './WorkAddressSelector/WorkAddressSelector';
+import ServiceProfileStep from './ServiceProfileStep/ServiceProfileStep';
 import ReviewStep from './ReviewStep/ReviewStep';
-import { useClientCalendarSettings } from '../../../../../hooks';
+import { useClientCalendarSettings, usePersistentDraft } from '../../../../../hooks';
 import {
-  CleaningCustomerType,
   CleaningFrequency,
-  CleaningRequestDetailsInput,
-  CleaningRequestSubmission,
+  CleaningRequestDetails,
   PropertySizeRange,
-  WorkAddressSelection,
 } from '../../../../../types/services';
 import type { SelectedCalendarSlot } from '../../../../../types/calendar';
+import type {
+  CleaningRequestCustomerType,
+  CleaningRequestFormSubmission,
+  CleaningWorkAddressSelection,
+} from './cleaningRequest.types';
+export type { CleaningRequestFormSubmission } from './cleaningRequest.types';
 
 type FieldErrors = Partial<
   Record<
@@ -33,7 +36,7 @@ type FieldErrors = Partial<
 >;
 
 type FormState = {
-  customerType: CleaningCustomerType | '';
+  customerType: CleaningRequestCustomerType | '';
   frequency: CleaningFrequency | '';
   sizeRange: PropertySizeRange | '';
   roomsCount: string;
@@ -42,10 +45,29 @@ type FormState = {
   hasPets: boolean;
   details: string;
   preferredVisitSlot: SelectedCalendarSlot | null;
-  workAddress: WorkAddressSelection | null;
+  workAddress: CleaningWorkAddressSelection | null;
 };
 
-export interface CleaningRequestFormSubmission extends CleaningRequestSubmission {}
+type DraftStep = 1 | 2 | 3 | 4 | 5;
+
+interface CleaningRequestDraftPayload {
+  step: DraftStep;
+  values: {
+    customerType: CleaningRequestCustomerType | '';
+    frequency: CleaningFrequency | '';
+    sizeRange: PropertySizeRange | '';
+    roomsCount: string;
+    hasBalcony: boolean;
+    hasIndoorStairs: boolean;
+    hasPets: boolean;
+    details: string;
+    preferredVisitSlot: {
+      start: string;
+      end: string;
+    } | null;
+    workAddress: CleaningWorkAddressSelection | null;
+  };
+}
 
 export interface CleaningRequestFormTexts {
   process: {
@@ -75,10 +97,10 @@ export interface CleaningRequestFormTexts {
       };
     };
   };
-  customerType: {
-    label: string;
-    options: Record<CleaningCustomerType, string>;
-  };
+    customerType: {
+      label: string;
+      options: Record<CleaningRequestCustomerType, string>;
+    };
   frequency: {
     label: string;
     options: Record<CleaningFrequency, string>;
@@ -133,6 +155,10 @@ export interface CleaningRequestFormTexts {
     savedAddressLabel?: string;
     savedAddressPlaceholder?: string;
     manualSectionTitle?: string;
+    differentAddressPromptTitle?: string;
+    differentAddressPromptDescription?: string;
+    differentAddressPromptButton?: string;
+    differentAddressPromptButtonAriaLabel?: string;
     addressDetailsAriaLabel?: string;
     sourceLabels?: {
       primary?: string;
@@ -144,6 +170,27 @@ export interface CleaningRequestFormTexts {
       postalCode?: string;
       district?: string;
       floor?: string;
+    };
+    profileStep?: {
+      title?: string;
+      description?: string;
+      missingFieldsLabel?: string;
+      summaryTitle?: string;
+      summaryDescription?: string;
+      summaryAriaLabel?: string;
+      saveButton?: string;
+      saving?: string;
+      labels?: {
+        name?: string;
+        email?: string;
+        phone?: string;
+        primaryAddress?: string;
+      };
+      errors?: {
+        required?: string;
+        invalidName?: string;
+        invalidPhone?: string;
+      };
     };
     stepAriaLabel?: string;
     required?: string;
@@ -206,35 +253,84 @@ const FREQUENCY_ORDER: CleaningFrequency[] = ['once', 'two_per_month', 'three_pe
 const sanitizeText = (value: string) =>
   value.normalize('NFKC').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
 
+const CLEANING_REQUEST_DRAFT_VERSION = 1;
+
+const createInitialFormState = (): FormState => ({
+  customerType: 'private',
+  frequency: '',
+  sizeRange: '',
+  roomsCount: '1',
+  hasBalcony: false,
+  hasIndoorStairs: false,
+  hasPets: false,
+  details: '',
+  preferredVisitSlot: null,
+  workAddress: null,
+});
+
+const isDraftStep = (value: unknown): value is DraftStep =>
+  value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
+
+const serializeDraft = (values: FormState, step: DraftStep): CleaningRequestDraftPayload => ({
+  step,
+  values: {
+    ...values,
+    preferredVisitSlot: values.preferredVisitSlot
+      ? {
+          start: values.preferredVisitSlot.start.toISOString(),
+          end: values.preferredVisitSlot.end.toISOString(),
+        }
+      : null,
+  },
+});
+
+const parseDraft = (
+  parsed: CleaningRequestDraftPayload | null
+): { step: DraftStep; values: FormState } | null => {
+  if (!parsed || !isDraftStep(parsed.step)) return null;
+
+  return {
+    step: parsed.step,
+    values: {
+      ...createInitialFormState(),
+      ...parsed.values,
+      preferredVisitSlot: parsed.values?.preferredVisitSlot
+        ? {
+            start: new Date(parsed.values.preferredVisitSlot.start),
+            end: new Date(parsed.values.preferredVisitSlot.end),
+          }
+        : null,
+    },
+  };
+};
+
 export default function CleaningRequestForm({
   texts,
   loading = false,
   canSubmit = true,
+  draftStorageKey,
+  draftOwnerKey = 'guest',
   onRequireAuth,
   onSubmit,
 }: {
   texts: CleaningRequestFormTexts;
   loading?: boolean;
   canSubmit?: boolean;
+  draftStorageKey?: string;
+  draftOwnerKey?: string;
   onRequireAuth?: () => void;
-  onSubmit: (data: CleaningRequestFormSubmission) => Promise<void> | void;
+  onSubmit: (data: CleaningRequestFormSubmission) => Promise<boolean> | boolean;
 }) {
   const sectionTitleId = useId();
   const stepTitleId = useId();
   const validationMessageId = useId();
   const clientCalendarSettings = useClientCalendarSettings();
-  const [values, setValues] = useState<FormState>({
-    customerType: 'private',
-    frequency: '',
-    sizeRange: '',
-    roomsCount: '1',
-    hasBalcony: false,
-    hasIndoorStairs: false,
-    hasPets: false,
-    details: '',
-    preferredVisitSlot: null,
-    workAddress: null,
+  const { clearDraft, persistDraft, storedDraft } = usePersistentDraft<CleaningRequestDraftPayload>({
+    ownerKey: draftOwnerKey,
+    storageKey: draftStorageKey,
+    version: CLEANING_REQUEST_DRAFT_VERSION,
   });
+  const [values, setValues] = useState<FormState>(createInitialFormState);
   const [touched, setTouched] = useState<Record<keyof FormState, boolean>>({
     customerType: false,
     frequency: false,
@@ -248,7 +344,21 @@ export default function CleaningRequestForm({
     workAddress: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [step, setStep] = useState<DraftStep>(1);
+
+  useEffect(() => {
+    const parsedDraft = parseDraft(storedDraft);
+    if (!parsedDraft) return;
+
+    setValues(parsedDraft.values);
+    setStep(parsedDraft.step);
+  }, [storedDraft]);
+
+  useEffect(() => {
+    if (!draftStorageKey) return;
+
+    persistDraft(serializeDraft(values, step));
+  }, [draftStorageKey, persistDraft, step, values]);
   const processTexts = useMemo(
     () => ({
       ...texts.process,
@@ -444,7 +554,7 @@ export default function CleaningRequestForm({
     const roomsCount = Number(values.roomsCount);
     if (!Number.isInteger(roomsCount)) return;
 
-    const payload: CleaningRequestDetailsInput = {
+    const details: CleaningRequestDetails = {
       frequency: values.frequency,
       property: {
         sizeRange: values.sizeRange,
@@ -456,12 +566,20 @@ export default function CleaningRequestForm({
       },
     };
 
-    await onSubmit({
+    const success = await onSubmit({
+      serviceType: 'cleaning',
       customerType: values.customerType,
-      details: payload,
-      preferredVisitSlot: values.preferredVisitSlot,
+      details,
+      preferredVisitSlot: {
+        start: values.preferredVisitSlot.start.toISOString(),
+        end: values.preferredVisitSlot.end.toISOString(),
+      },
       workAddress: values.workAddress,
     });
+
+    if (success && draftStorageKey) {
+      clearDraft();
+    }
   };
 
   return (
@@ -593,8 +711,7 @@ export default function CleaningRequestForm({
                   texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
                 }
               >
-                <WorkAddressSelector
-                  showHeader={false}
+                <ServiceProfileStep
                   texts={texts.serviceAddress}
                   value={values.workAddress}
                   onChange={(workAddress) => {

@@ -3,6 +3,7 @@ export * from './calendar';
 export * from './client';
 export * from './profile';
 export * from './service';
+export * from './serviceRequest';
 export * from './cleaning';
 export * from './auth';
 export * from './contact';

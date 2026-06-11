@@ -1,80 +1,43 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import styles from './ContactForm.module.css';
-import { createContactMessage } from '../../../../../services/contact';
+import { useEffect, useState } from 'react';
 import { useAuth, useGlobalAlert, useI18n, useProfile } from '../../../../../contexts';
 import { getI18nFallbacks } from '../../../../../contexts/i18n';
-import { getPopup } from '../../../../../utils/alertType';
-
-type ContactFormState = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
-
-interface ContactFormTexts {
-  labels?: {
-    name?: string;
-    email?: string;
-    subject?: string;
-    message?: string;
-  };
-  placeholders?: {
-    name?: string;
-    email?: string;
-    subject?: string;
-    message?: string;
-  };
-  error?: {
-    name?: { required?: string };
-    email?: { required?: string; invalid?: string };
-    subject?: { required?: string };
-    message?: { required?: string; tooShort?: string; tooLong?: string };
-  };
-  subjects?: {
-    contact?: string[];
-  };
-  button?: {
-    contact?: string;
-  };
-}
-
-const DEFAULT_SUBJECTS = [
-  'Pricing question',
-  'Service request',
-  'Availability and schedules',
-  'Changes or cancellations',
-  'Other',
-];
-
-const isValidEmail = (value: string) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim().toLowerCase());
+import { useContactFormSubmission } from './useContactFormSubmission';
+import {
+  type ContactFormField,
+  type ContactFormState,
+  type ContactFormTexts,
+} from './contactForm.types';
+import { useContactFormValidation } from './useContactFormValidation';
+import { resolveContactFormTexts } from './contactForm.fallbacks';
+import { ContactFormView } from './ContactForm.view';
+import { resolvePreferredContactEmail } from '../../../../../utils';
 
 export function ContactFormSection() {
   const { texts, language } = useI18n();
-  const { fallbackButtons, fallbackGlobalError, fallbackGlobalLoading, fallbackPopups } =
-    getI18nFallbacks(language);
+  const { fallbackButtons, fallbackGlobalError, fallbackPopups } = getI18nFallbacks(language);
   const { auth } = useAuth();
   const { profile } = useProfile();
-  const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
+  const { showError, closeAlert } = useGlobalAlert();
+  const { submit } = useContactFormSubmission();
 
   const formTexts = texts?.components?.client?.form as ContactFormTexts | undefined;
-  const labels = formTexts?.labels;
-  const placeholders = formTexts?.placeholders;
+  const resolvedTexts = resolveContactFormTexts(formTexts, language);
   const errorTexts = formTexts?.error;
-  const subjectOptions = formTexts?.subjects?.contact ?? DEFAULT_SUBJECTS;
-  const submitLabel = formTexts?.button?.contact || 'Send message';
+  const submitLabel = resolvedTexts.submitLabel;
+  const successDescription = resolvedTexts.successDescription;
   const sendingLabel = `${submitLabel}...`;
+  const profileEmail = profile?.contactEmail;
+  const sessionEmail = auth?.email;
 
   const [values, setValues] = useState<ContactFormState>({
     name: profile?.name ?? '',
-    email: auth?.email ?? '',
+    email: resolvePreferredContactEmail(profileEmail, sessionEmail),
     subject: '',
     message: '',
   });
-  const [touched, setTouched] = useState<Record<keyof ContactFormState, boolean>>({
+  const [touched, setTouched] = useState<Record<ContactFormField, boolean>>({
     name: false,
     email: false,
     subject: false,
@@ -87,38 +50,17 @@ export function ContactFormSection() {
     setValues((prev) => ({
       ...prev,
       name: prev.name || profile?.name || '',
-      email: prev.email || auth?.email || '',
+      email: prev.email || resolvePreferredContactEmail(profileEmail, sessionEmail),
     }));
-  }, [profile?.name, auth?.email]);
+  }, [profile?.name, profileEmail, sessionEmail]);
 
-  const errors = useMemo(() => {
-    const next: Partial<Record<keyof ContactFormState, string>> = {};
-    const nameValue = values.name.trim();
-    const emailValue = values.email.trim();
-    const subjectValue = values.subject.trim();
-    const messageValue = values.message.trim();
+  const { errors, hasErrors } = useContactFormValidation(values, errorTexts);
 
-    if (!nameValue) next.name = errorTexts?.name?.required ?? 'Name is required.';
-    if (!emailValue) next.email = errorTexts?.email?.required ?? 'Email is required.';
-    if (emailValue && !isValidEmail(emailValue))
-      next.email = errorTexts?.email?.invalid ?? 'Invalid email format.';
-    if (!subjectValue) next.subject = errorTexts?.subject?.required ?? 'Subject is required.';
-    if (!messageValue) next.message = errorTexts?.message?.required ?? 'Message is required.';
-    if (messageValue && messageValue.length < 10)
-      next.message = errorTexts?.message?.tooShort ?? 'Message must be at least 10 characters';
-    if (messageValue && messageValue.length > 1000)
-      next.message = errorTexts?.message?.tooLong ?? 'Message must not exceed 1000 characters';
-
-    return next;
-  }, [values, errorTexts]);
-
-  const hasErrors = Object.keys(errors).length > 0;
-
-  const handleChange = (field: keyof ContactFormState, value: string) => {
+  const handleChange = (field: ContactFormField, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleBlur = (field: keyof ContactFormState) => {
+  const handleBlur = (field: ContactFormField) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
@@ -126,7 +68,7 @@ export function ContactFormSection() {
     event.preventDefault();
     setSubmitted(true);
 
-    if (hasErrors || !auth?.clientId) {
+    if (hasErrors) {
       const validationPopup =
         (texts.popups as any)?.VALIDATION_ERROR ??
         (fallbackPopups as any).VALIDATION_ERROR ??
@@ -144,44 +86,22 @@ export function ContactFormSection() {
       return;
     }
 
-    setSubmitting(true);
-    const loadingPopup = getPopup(
-      texts.popups,
-      'GLOBAL_LOADING',
-      'GLOBAL_LOADING',
-      fallbackGlobalLoading
-    );
-    showLoading({
-      response: {
-        status: 102,
-        title: loadingPopup.title,
-        description: loadingPopup.description,
-      },
-    });
-
     try {
-      await createContactMessage({
-        clientId: auth.clientId,
-        userId: auth.userId || undefined,
-        name: values.name.trim(),
-        email: values.email.trim(),
-        subject: values.subject.trim(),
-        message: values.message.trim(),
-        profileImage: profile?.profileImage,
-      });
-
-      closeAlert();
-      showSuccess({
-        response: {
-          status: 200,
-          title: submitLabel,
-          description:
-            texts?.pages?.client?.contact?.hero?.descriptions?.[0] ||
-            'Thanks for reaching out. We will reply by email as soon as possible.',
-          cancelLabel: texts.popups?.button?.close ?? fallbackButtons.close,
+      setSubmitting(true);
+      const wasSubmitted = await submit(
+        {
+          name: values.name,
+          email: values.email,
+          subject: values.subject,
+          message: values.message,
+          profileImage: profile?.profileImage,
         },
-        onCancel: closeAlert,
-      });
+        {
+          successTitle: submitLabel,
+          successDescription,
+        }
+      );
+      if (!wasSubmitted) return;
 
       setValues((prev) => ({
         ...prev,
@@ -195,163 +115,27 @@ export function ContactFormSection() {
         message: false,
       });
       setSubmitted(false);
-    } catch (error: any) {
-      closeAlert();
-      const errorKey = error?.response?.data?.errorCode;
-      const popupData = getPopup(
-        texts.popups,
-        errorKey,
-        'GLOBAL_INTERNAL_ERROR',
-        fallbackGlobalError
-      );
-
-      showError({
-        response: {
-          status: error?.response?.status || 500,
-          title: popupData.title,
-          description: popupData.description || error?.response?.data?.message,
-          cancelLabel: popupData.close ?? fallbackButtons.close,
-        },
-        onCancel: closeAlert,
-      });
     } finally {
       setSubmitting(false);
     }
   };
 
-  const showFieldError = (field: keyof ContactFormState) =>
+  const showFieldError = (field: ContactFormField) =>
     (touched[field] || submitted) && errors[field];
 
   return (
-    <section
-      className={`${styles.section} card card--secondary`}
-      aria-labelledby="contact-form-title"
-    >
-      <article className={styles.card}>
-        <h3 id="contact-form-title" className="type-title-md">
-          {submitLabel}
-        </h3>
-
-        <form className={styles.form} onSubmit={handleSubmit} noValidate aria-busy={submitting}>
-          <div className={styles.row}>
-            <label className={styles.field} htmlFor="contact-name">
-              <span className={`${styles.label} type-body-md`}>{labels?.name ?? 'Name'}</span>
-              <input
-                id="contact-name"
-                className="input"
-                type="text"
-                name="name"
-                autoComplete="name"
-                placeholder={placeholders?.name ?? 'John Doe'}
-                value={values.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-                onBlur={() => handleBlur('name')}
-                aria-invalid={!!showFieldError('name')}
-                aria-describedby="contact-name-error"
-                required
-              />
-              <span
-                id="contact-name-error"
-                className={`${styles.error} type-caption`}
-                aria-live="polite"
-              >
-                {showFieldError('name') ?? ''}
-              </span>
-            </label>
-
-            <label className={styles.field} htmlFor="contact-email">
-              <span className={`${styles.label} type-body-md`}>{labels?.email ?? 'Email'}</span>
-              <input
-                id="contact-email"
-                className="input"
-                type="email"
-                name="email"
-                autoComplete="email"
-                inputMode="email"
-                placeholder={placeholders?.email ?? 'john.doe@example.com'}
-                value={values.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                onBlur={() => handleBlur('email')}
-                aria-invalid={!!showFieldError('email')}
-                aria-describedby="contact-email-error"
-                required
-              />
-              <span
-                id="contact-email-error"
-                className={`${styles.error} type-caption`}
-                aria-live="polite"
-              >
-                {showFieldError('email') ?? ''}
-              </span>
-            </label>
-          </div>
-
-          <label className={styles.field} htmlFor="contact-subject">
-            <span className={`${styles.label} type-body-md`}>{labels?.subject ?? 'Subject'}</span>
-            <select
-              id="contact-subject"
-              className="input"
-              name="subject"
-              value={values.subject}
-              onChange={(e) => handleChange('subject', e.target.value)}
-              onBlur={() => handleBlur('subject')}
-              aria-invalid={!!showFieldError('subject')}
-              aria-describedby="contact-subject-error"
-              required
-            >
-              <option value="" disabled>
-                {placeholders?.subject ?? 'Select a subject'}
-              </option>
-              {subjectOptions.map((subject) => (
-                <option key={subject} value={subject}>
-                  {subject}
-                </option>
-              ))}
-            </select>
-            <span
-              id="contact-subject-error"
-              className={`${styles.error} type-caption`}
-              aria-live="polite"
-            >
-              {showFieldError('subject') ?? ''}
-            </span>
-          </label>
-
-          <label className={styles.field} htmlFor="contact-message">
-            <span className={`${styles.label} type-body-md`}>{labels?.message ?? 'Message'}</span>
-            <textarea
-              id="contact-message"
-              className="input"
-              name="message"
-              rows={6}
-              placeholder={placeholders?.message ?? 'Your question or message...'}
-              value={values.message}
-              onChange={(e) => handleChange('message', e.target.value)}
-              onBlur={() => handleBlur('message')}
-              aria-invalid={!!showFieldError('message')}
-              aria-describedby="contact-message-error"
-              required
-            />
-            <span
-              id="contact-message-error"
-              className={`${styles.error} type-caption`}
-              aria-live="polite"
-            >
-              {showFieldError('message') ?? ''}
-            </span>
-          </label>
-
-          <div className={styles.actions}>
-            <button
-              className={` button button--primary ${styles.submit}`}
-              type="submit"
-              disabled={submitting}
-            >
-              {submitting ? sendingLabel : submitLabel}
-            </button>
-          </div>
-        </form>
-      </article>
-    </section>
+    <ContactFormView
+      values={values}
+      submitting={submitting}
+      submitLabel={submitLabel}
+      sendingLabel={sendingLabel}
+      subjectOptions={resolvedTexts.subjectOptions}
+      labels={resolvedTexts.labels}
+      placeholders={resolvedTexts.placeholders}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onSubmit={handleSubmit}
+      showFieldError={showFieldError}
+    />
   );
 }

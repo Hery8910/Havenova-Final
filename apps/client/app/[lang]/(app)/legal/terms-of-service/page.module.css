@@ -78,6 +78,11 @@
   color: var(--text-secondary);
   overflow-wrap: anywhere;
 }
+.address {
+  font-style: normal;
+  line-height: 1.6;
+  margin: 0;
+}
 .note {
   font-style: italic;
 }

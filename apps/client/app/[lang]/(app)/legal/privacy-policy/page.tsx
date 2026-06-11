@@ -5,6 +5,11 @@ import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
 import { useClient, useI18n } from '../../../../../../../packages/contexts';
+import type {
+  ClientLegalDpoContact,
+  ClientLegalNamedParty,
+  ClientLegalThirdPartyProvider,
+} from '../../../../../../../packages/types';
 
 export interface PrivacyPageTexts {
   hero: {
@@ -30,6 +35,35 @@ export interface PrivacyPageTexts {
       body: string;
     };
     links: { label: string; href: string }[];
+  };
+  contacts: {
+    title: string;
+    intro: string;
+    controller: {
+      title: string;
+      description: string;
+    };
+    technicalOperator: {
+      title: string;
+      description: string;
+    };
+    dpo: {
+      title: string;
+      description: string;
+    };
+    fields: {
+      businessName: string;
+      legalName: string;
+      representedBy: string;
+      address: string;
+      email: string;
+      phone: string;
+      name: string;
+    };
+    unavailable: {
+      notApplicable: string;
+      notAvailable: string;
+    };
   };
   accountStructure: {
     title: string;
@@ -103,36 +137,178 @@ export interface PrivacyPageTexts {
     items: { label: string; href: string }[];
   };
 }
-export interface ContactTexts {
-  title: string;
-  items: {
-    label: string;
-    name: { label: string; value: string };
-    phone: { label: string; value: string };
-    address: { label: string; value: string };
-    email: { label: string; value: string };
-  }[];
-  cta: { label: string; href: string };
+
+type ContactItem = {
+  label: string;
+  value: string;
+  isAddress?: boolean;
+  isEmail?: boolean;
+};
+
+function buildNamedPartyItems(
+  party: ClientLegalNamedParty | undefined,
+  fields: PrivacyPageTexts['contacts']['fields']
+): ContactItem[] {
+  if (!party) return [];
+
+  return [
+    {
+      label: fields.businessName,
+      value: party.businessName ?? '',
+    },
+    {
+      label: fields.legalName,
+      value: party.legalName ?? '',
+    },
+    {
+      label: fields.representedBy,
+      value: party.representedBy ?? '',
+    },
+    {
+      label: fields.address,
+      value: party.contact?.address ?? '',
+      isAddress: true,
+    },
+    {
+      label: fields.email,
+      value: party.contact?.email ?? '',
+      isEmail: true,
+    },
+    {
+      label: fields.phone,
+      value: party.contact?.phone ?? '',
+    },
+  ].filter((item) => Boolean(item.value));
+}
+
+function buildDpoItems(
+  dpo: ClientLegalDpoContact | undefined,
+  fields: PrivacyPageTexts['contacts']['fields'],
+  unavailable: PrivacyPageTexts['contacts']['unavailable']
+): ContactItem[] {
+  if (!dpo) return [];
+
+  if (dpo.status !== 'available') {
+    return [
+      {
+        label: fields.name,
+        value: dpo.status === 'not_applicable' ? unavailable.notApplicable : unavailable.notAvailable,
+      },
+    ];
+  }
+
+  return [
+    {
+      label: fields.name,
+      value: dpo.name ?? '',
+    },
+    {
+      label: fields.email,
+      value: dpo.email ?? '',
+      isEmail: true,
+    },
+    {
+      label: fields.address,
+      value: dpo.address ?? '',
+      isAddress: true,
+    },
+  ].filter((item) => Boolean(item.value));
+}
+
+function renderContactList(items: ContactItem[], stylesRef: typeof styles) {
+  return (
+    <dl className={stylesRef.contact_list}>
+      {items.map((item) => (
+        <div className={stylesRef.contact_item} key={item.label}>
+          <dt className={stylesRef.contact_term}>{item.label}</dt>
+          <dd className={stylesRef.contact_desc}>
+            {item.isEmail ? (
+              <Link className={stylesRef.link} href={`mailto:${item.value}`}>
+                {item.value}
+              </Link>
+            ) : item.isAddress ? (
+              <address className={stylesRef.address}>{item.value}</address>
+            ) : (
+              item.value
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
 }
 
 export default function PrivacyPolicyPage() {
   const { client } = useClient();
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
   const privacy: PrivacyPageTexts = texts.pages.client.legal.privacy;
 
   if (!client || !privacy) return null;
 
   const legalUpdates = client.legal?.updates;
 
+  const serviceProvider = client.legal?.serviceProvider ?? {
+    businessName: client.identity.displayName ?? client.identity.companyName,
+    legalName: client.identity.legalName,
+    contact: {
+      address: client.identity.address,
+      email: client.identity.contactEmail,
+      phone: client.identity.phone,
+    },
+  };
+
+  const technicalOperator =
+    client.legal?.technicalOperator ??
+    (privacy.thirdParties.table.body.length > 0
+      ? {
+          businessName: 'Maped Solutions',
+          legalName: 'Heriberto Santana',
+          representedBy: 'Heriberto Santana',
+          contact: {
+            address: 'Sarah-Kirsch-Str. 5, 12629 Berlin',
+            email: 'contact@mapedsolutions.com',
+            phone: '+49 177 7312 606',
+          },
+        }
+      : undefined);
+
+  const privacyController: ClientLegalNamedParty | undefined =
+    client.legal?.privacyController?.sameAs === 'technicalOperator'
+      ? technicalOperator
+      : client.legal?.privacyController?.sameAs === 'serviceProvider'
+        ? serviceProvider
+        : client.legal?.privacyController
+          ? {
+              businessName: client.legal.privacyController.name,
+              legalName: client.legal.privacyController.legalName,
+              representedBy: client.legal.privacyController.representedBy,
+              contact: client.legal.privacyController.contact,
+            }
+          : serviceProvider;
+
+  const thirdPartyProviders =
+    client.legal?.thirdPartyProviders && client.legal.thirdPartyProviders.length > 0
+      ? client.legal.thirdPartyProviders
+      : privacy.thirdParties.table.body.map((item) => ({
+          name: item.name,
+          purpose: item.purpose,
+          region: item.region,
+          privacyUrl: item.privacyUrl.href,
+        }));
+
+  const controllerItems = buildNamedPartyItems(privacyController, privacy.contacts.fields);
+  const technicalOperatorItems = buildNamedPartyItems(technicalOperator, privacy.contacts.fields);
+  const dpoItems = buildDpoItems(client.legal?.dpo, privacy.contacts.fields, privacy.contacts.unavailable);
+
   function formatDate(dateString: string): string {
     if (!dateString) return '';
     const date = new Date(dateString);
     if (Number.isNaN(date.getTime())) return '';
-    return new Intl.DateTimeFormat('de-DE').format(date);
+    return new Intl.DateTimeFormat(language).format(date);
   }
 
   return (
-    <main className={styles.main}>
+    <main id="app-main-content" tabIndex={-1} className={styles.main}>
       <section className={styles.section}>
         <h1>{privacy?.hero.headline1}</h1>
         <h3 className={styles.h3}>{privacy.hero.headline2}</h3>
@@ -176,6 +352,31 @@ export default function PrivacyPolicyPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{privacy.contacts.title}</h3>
+        <p>{privacy.contacts.intro}</p>
+
+        <h4 className={styles.h4}>{privacy.contacts.controller.title}</h4>
+        <p>{privacy.contacts.controller.description}</p>
+        {renderContactList(controllerItems, styles)}
+
+        {technicalOperatorItems.length > 0 ? (
+          <>
+            <h4 className={styles.h4}>{privacy.contacts.technicalOperator.title}</h4>
+            <p>{privacy.contacts.technicalOperator.description}</p>
+            {renderContactList(technicalOperatorItems, styles)}
+          </>
+        ) : null}
+
+        {dpoItems.length > 0 ? (
+          <>
+            <h4 className={styles.h4}>{privacy.contacts.dpo.title}</h4>
+            <p>{privacy.contacts.dpo.description}</p>
+            {renderContactList(dpoItems, styles)}
+          </>
+        ) : null}
       </section>
 
       <section className={styles.section}>
@@ -253,20 +454,22 @@ export default function PrivacyPolicyPage() {
                 </tr>
               </thead>
               <tbody className={styles.body}>
-                {privacy.thirdParties.table.body.map((item) => (
+                {thirdPartyProviders.map((item: ClientLegalThirdPartyProvider) => (
                   <tr className={styles.tr} key={item.name}>
                     <td className={styles.td}>{item.name}</td>
                     <td className={styles.td}>{item.purpose}</td>
-                    <td className={styles.td}>{item.region}</td>
+                    <td className={styles.td}>{item.region ?? ''}</td>
                     <td className={styles.td}>
-                      <Link
-                        className={styles.link}
-                        href={item.privacyUrl.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {item.privacyUrl.label} <FiExternalLink />
-                      </Link>
+                      {item.privacyUrl ? (
+                        <Link
+                          className={styles.link}
+                          href={item.privacyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {privacy.thirdParties.table.headers.privacy} <FiExternalLink />
+                        </Link>
+                      ) : null}
                     </td>
                   </tr>
                 ))}

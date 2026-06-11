@@ -1,9 +1,8 @@
 'use client';
 import { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { PopupCode, useI18n } from '@/packages/contexts';
 import {
   fallbackButtons,
   fallbackGlobalError,
@@ -14,16 +13,21 @@ import { FormWrapper } from '@/packages/components/client/user/auth';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
 import styles from '../userAuth.module.css';
-import { href } from '../../../../../../../packages/utils/navigation';
+import { href } from '../../../../../../../packages/utils';
 import { useLang } from '../../../../../../../packages/hooks';
 import Link from 'next/link';
-import { PopupCode } from '@/packages/contexts/alert/alert.types';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { AuthPageShell } from '../AuthPageShell';
+import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface ResetPasswordData {
   title: string;
   info: string;
   button: string;
+  linkErrors?: {
+    invalidOrExpired?: string;
+    missingToken?: string;
+  };
 }
 export interface accessDeniedText {
   title: string;
@@ -36,9 +40,9 @@ interface ResetPasswordFormData {
 
 const ResetPasswordContent = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
-  const router = useRouter();
   const lang = useLang();
   const searchParams = useSearchParams();
+  const homeHref = href(lang, '/');
 
   const { texts } = useI18n();
   const formText = texts.components.client.form;
@@ -46,14 +50,23 @@ const ResetPasswordContent = () => {
   const popups = texts.popups;
   const alertButtons = popups.button ?? fallbackButtons;
   const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
-  const resetButton = formText.button.resetPassword;
+  const invalidOrExpiredLinkCopy = resetPasswordText.linkErrors?.invalidOrExpired;
+  const missingTokenCopy = resetPasswordText.linkErrors?.missingToken;
+  const invalidTokenPopupDescription = texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description;
+  const resetButton = resetPasswordText.button || formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);
+  const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
+    useAuthAlertActions({
+      buttons: alertButtons,
+      closeAlert,
+    });
 
   const token = searchParams.get('token');
   const status = searchParams.get('status');
   const code = searchParams.get('code');
   const http = Number(searchParams.get('http')) || 200;
+  const hasFatalLinkState = !token || status === 'error';
 
   const getResetPasswordErrorStatus = (errorCode?: string, fallbackStatus = 500) => {
     switch (errorCode) {
@@ -106,12 +119,9 @@ const ResetPasswordContent = () => {
           status: 400,
           title: popupData.title,
           description: popupData.description,
-          cancelLabel: alertButtons.goToHome,
+          cancelLabel: getCancelActionLabel('goToHome'),
         },
-        onCancel: () => {
-          closeAlert();
-          router.push(href(lang, '/'));
-        },
+        onCancel: getCancelAction('goToHome'),
       });
 
       return;
@@ -130,33 +140,28 @@ const ResetPasswordContent = () => {
           status: http || 400,
           title: popupData.title,
           description:
-            popupData.description ||
-            texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description ||
-            'Invalid or expired link.',
-          confirmLabel: alertButtons.requestNewLink,
-          cancelLabel: alertButtons.goToHome,
+            popupData.description || invalidTokenPopupDescription || invalidOrExpiredLinkCopy,
+          confirmLabel: getConfirmActionLabel('requestNewLink'),
+          cancelLabel: getCancelActionLabel('goToHome'),
         },
-        onConfirm: () => {
-          closeAlert();
-          router.push(href(lang, '/user/forgot-password'));
-        },
-        onCancel: () => {
-          closeAlert();
-          router.push(href(lang, '/'));
-        },
+        onConfirm: getConfirmAction('requestNewLink'),
+        onCancel: getCancelAction('goToHome'),
       });
     }
   }, [
-    token,
-    status,
-    code,
-    http,
-    popups,
-    router,
-    showError,
     closeAlert,
-    lang,
-    texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description,
+    code,
+    getCancelAction,
+    getCancelActionLabel,
+    getConfirmAction,
+    getConfirmActionLabel,
+    http,
+    invalidOrExpiredLinkCopy,
+    invalidTokenPopupDescription,
+    popups,
+    showError,
+    status,
+    token,
   ]);
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
@@ -172,21 +177,15 @@ const ResetPasswordContent = () => {
         );
 
         showError({
-        response: {
-          status: 400,
-          title: popupData.title,
-          description: popupData.description || 'Missing token or invalid link.',
-          confirmLabel: alertButtons.requestNewLink,
-          cancelLabel: alertButtons.goToHome,
-        },
-          onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/user/forgot-password'));
+          response: {
+            status: 400,
+            title: popupData.title,
+            description: popupData.description || missingTokenCopy,
+            confirmLabel: getConfirmActionLabel('requestNewLink'),
+            cancelLabel: getCancelActionLabel('goToHome'),
           },
-          onCancel: () => {
-            closeAlert();
-            router.push(href(lang, '/'));
-          },
+          onConfirm: getConfirmAction('requestNewLink'),
+          onCancel: getCancelAction('goToHome'),
         });
         return;
       }
@@ -222,26 +221,23 @@ const ResetPasswordContent = () => {
         );
 
         showError({
-        response: {
-          status: getResetPasswordErrorStatus(response.code, 400),
-          title: popupData.title,
-          description: popupData.description,
-          confirmLabel:
-            response.code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
-            response.code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED'
-              ? alertButtons.requestNewLink
-              : undefined,
-          cancelLabel: alertButtons.close,
-        },
+          response: {
+            status: getResetPasswordErrorStatus(response.code, 400),
+            title: popupData.title,
+            description: popupData.description,
+            confirmLabel:
+              response.code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
+              response.code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED'
+                ? getConfirmActionLabel('requestNewLink')
+                : undefined,
+            cancelLabel: getCancelActionLabel(),
+          },
           onConfirm:
             response.code === 'USER_RESET_PASSWORD_INVALID_TOKEN' ||
             response.code === 'USER_RESET_PASSWORD_TOKEN_EXPIRED'
-              ? () => {
-                  closeAlert();
-                  router.push(href(lang, '/user/forgot-password'));
-                }
+              ? getConfirmAction('requestNewLink')
               : undefined,
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
@@ -258,12 +254,9 @@ const ResetPasswordContent = () => {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: alertButtons.goToLogin,
+          confirmLabel: getConfirmActionLabel('goToLogin'),
         },
-        onConfirm: () => {
-          closeAlert();
-          router.push(href(lang, '/user/login'));
-        },
+        onConfirm: getConfirmAction('goToLogin'),
       });
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
@@ -287,23 +280,17 @@ const ResetPasswordContent = () => {
           confirmLabel:
             canRequestNewLink || canRetry
               ? canRequestNewLink
-                ? alertButtons.requestNewLink
-                : alertButtons.reload
+                ? getConfirmActionLabel('requestNewLink')
+                : getConfirmActionLabel('reload')
               : undefined,
-          cancelLabel: alertButtons.close,
+          cancelLabel: getCancelActionLabel(),
         },
         onConfirm: canRequestNewLink
-          ? () => {
-              closeAlert();
-              router.push(href(lang, '/user/forgot-password'));
-            }
+          ? getConfirmAction('requestNewLink')
           : canRetry
-            ? () => {
-                closeAlert();
-                void handleResetPassword(data);
-              }
+            ? getConfirmAction('reload', () => void handleResetPassword(data))
             : undefined,
-        onCancel: closeAlert,
+        onCancel: getCancelAction(),
       });
     } finally {
       setLoading(false);
@@ -311,31 +298,27 @@ const ResetPasswordContent = () => {
   };
 
   return (
-    <section
-      className={`${styles.authSection} card card--primary`}
-      aria-labelledby="reset-password-title"
-      aria-describedby="reset-password-description"
+    <AuthPageShell
+      headingId="reset-password-title"
+      descriptionId="reset-password-description"
+      title={resetPasswordText.title || formText.labels.resetPassword}
+      description={resetPasswordText.info}
+      homeHref={homeHref}
+      homeLabel={navText.homeLink}
+      logoAlt={navText.logoAlt}
+      footerLabel={navText.authFooter}
+      footer={
+        <div className={styles.authFooterActions}>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/login')}>
+            {formText.button.login}
+          </Link>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
+          </Link>
+        </div>
+      }
     >
-      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
-        <Image
-          className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
-          alt={navText.logoAlt}
-          width={80}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className={styles.authFormContainer}>
-        <header className={styles.authHeader}>
-          <h1 id="reset-password-title" className={styles.authTitle}>
-            {resetPasswordText.title || formText.labels.resetPassword}
-          </h1>
-          <p id="reset-password-description" className={styles.authDescription}>
-            {resetPasswordText.info}
-          </p>
-        </header>
-
+      {hasFatalLinkState ? null : (
         <FormWrapper<ResetPasswordFormData>
           showHintPassword
           fields={['password'] as const}
@@ -344,19 +327,8 @@ const ResetPasswordContent = () => {
           initialValues={{ password: '' }}
           loading={loading}
         />
-      </div>
-
-      <footer className={styles.authFooter}>
-        <div className={styles.authFooterActions}>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/login')}>
-            {formText.button.login}
-          </Link>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
-            <IoMdArrowRoundBack /> {navText.homeLink}
-          </Link>
-        </div>
-      </footer>
-    </section>
+      )}
+    </AuthPageShell>
   );
 };
 

@@ -17,7 +17,7 @@ Su objetivo actual es:
 - bootstrap público del tenant vía `GET /api/clients/tenant/:tenantKey`
 - estado global en memoria de `client` dentro de `ClientProvider`
 - integración del fallo de bootstrap con `AlertContext`
-- fallback visual temporal en desarrollo cuando no hay cliente cargado
+- control de reintentos del bootstrap cuando la carga del cliente falla
 
 ### No incluye
 
@@ -81,30 +81,25 @@ Campos opcionales por compatibilidad:
 1. Layout (`apps/client` y `apps/dashboard`) resuelve `tenantKey` con helper compartido:
    `resolveTenantKey()`.
 2. Layout llama `getClient(tenantKey)` en servidor para bootstrap público.
-3. Si el bootstrap falla y la app está en `development`, el layout puede inyectar un cliente visual local con `createVisualFallbackClient(tenantKey)`.
-4. Layout inyecta `initialClient` en `ClientProvider`.
-5. `ClientProvider` hidrata estado local y expone `client`.
-6. Si `client` es `null`, dispara `showError(...)` según `code/status` del backend y no renderiza hijos.
-7. En `development`, además puede renderizar `ClientBootstrapFallback` para permitir inspección visual sin backend desplegado.
+3. Layout inyecta `initialClient`, `initialError` y el `loadingFallback` visual en `ClientProvider`.
+4. `ClientProvider` hidrata estado local y expone `client`.
+5. Si `client` es `null`, dispara `showError(...)` según `code/status` del backend y no renderiza hijos.
+6. Si el error de bootstrap es recuperable, ofrece un único CTA `Retry`.
+7. Si el usuario agota el número permitido de recargas en la misma sesión, el flujo elimina el CTA y muestra solo el mensaje para intentar más tarde.
 
-## Fallback temporal de desarrollo
+## Política actual de error y reintento
 
-Comportamiento activo en esta fase:
+Decisión vigente:
 
-- `apps/client` y `apps/dashboard` crean un cliente visual local si falla `getClient(tenantKey)` y la app no está en producción
-- esto evita bloquear el árbol antes de montar `AuthProvider`, `ProfileProvider` y `WorkerProvider`
-- el fallback visual usa `createVisualFallbackClient(...)`
-- `ClientProvider` sigue conservando su fallback visual interno (`ClientBootstrapFallback`) como red de seguridad adicional para desarrollo
+- se eliminó el visual fallback de desarrollo
+- el próximo chequeo visual del proyecto asume backend disponible
+- el contexto ya no intenta sostener una UI artificial cuando no puede cargar el tenant real
 
-Objetivo de este fallback:
+Regla UX actual:
 
-- poder trabajar frontend y backend por separado durante desarrollo
-- evitar que la caída del bootstrap público del tenant deje la app inutilizable
-
-Restricción importante:
-
-- este comportamiento no forma parte del diseño objetivo de producción
-- antes del despliegue final debe revertirse o quedar explícitamente desactivado fuera de desarrollo
+- un error recuperable no puede dejar al usuario con una CTA que cierre la alerta y conserve una pantalla vacía
+- por eso el flujo usa solo `Retry` como CTA mientras el reintento siga permitido
+- después de `3` intentos de recarga en la misma sesión, se bloquea el reintento, se elimina el CTA y se informa al usuario que lo intente más tarde
 
 ## Dependencias directas
 
@@ -127,8 +122,7 @@ Restricción importante:
 - El dashboard todavía no consume `getClientDashboard(clientId)` como bootstrap específico de settings
 - El contexto ya clasifica errores de bootstrap por `code/status` y aplica CTA según recuperabilidad
 - Fallback i18n compartido ya resuelve EN/DE por `locale` mediante `getI18nFallbacks(language)`
-- `ClientBootstrapFallback` debe dejar de ser parte del flujo activo antes del despliegue productivo final; su uso actual queda limitado a desarrollo
-- el uso automático de `createVisualFallbackClient(...)` en layouts también es temporal y solo existe para desarrollo local
+- el mensaje de bloqueo por exceso de reintentos aún no tiene código/popup dedicado en i18n y hoy se resuelve con copy compuesto desde el contexto
 
 ## Checklist de cambios
 
@@ -145,6 +139,10 @@ Restricción importante:
 - [x] Propagar `code/status` reales de fallo de bootstrap hasta `ClientProvider`
 - [x] Reemplazar fallback único `CLIENT_FETCH_FAILED` por mapa de códigos (`CLIENT_NOT_FOUND`, `VALIDATION_ERROR`, `GLOBAL_INTERNAL_ERROR`)
 - [x] Definir UX por error recuperable vs no recuperable (reload vs navegación)
+- [x] Eliminar CTA de cierre vacío en errores recuperables
+- [x] Añadir límite de reintentos por sesión para el bootstrap recuperable
+- [x] Reducir el error recuperable a un único CTA `Retry`
+- [x] Eliminar el CTA al agotarse el límite de reintentos
 
 ### Fase 3: Resolución de tenant
 
@@ -197,8 +195,9 @@ NEXT_PUBLIC_TENANT_KEY_FALLBACK=tnk_havenova_backup
 - [x] Añadir tests de contrato para bootstrap: resolución de tenant, host allowlist, endpoints y manejo de error estructurado
 - [x] Añadir tests de mapeo de popups por código en EN/DE
 - [x] Corregir fallback i18n compartido para respetar `en` y `de` según idioma activo
-- [ ] eliminar o desactivar `ClientBootstrapFallback` para producción cuando el backend ya esté desplegado
-- [ ] revertir o desactivar el uso automático de `createVisualFallbackClient(...)` en layouts antes del despliegue final
+- [x] eliminar `ClientBootstrapFallback`
+- [x] eliminar `createVisualFallbackClient(...)` de los layouts
+- [ ] extraer a i18n un código/popup específico para bloqueo por exceso de reintentos
 
 ## Legacy Soportado
 
@@ -232,23 +231,19 @@ Cobertura actual:
 - contrato de `resolveTenantKey()` y `assertAllowedAppHost()` sobre código fuente
 - contrato de `getClient()` y `getClientDashboard()` sobre endpoints, validación y manejo de error estructurado
 - paridad de claves popup entre EN/DE
-- presencia de CTA dobles donde son requeridos
+- presencia de CTA acordes al tipo de error
+- bloqueo del reintento después del límite por sesión
+- error recuperable con único CTA mientras el límite no se agota
 - conservación explícita de aliases legacy en i18n, sin dependencia activa en contextos/fallbacks
 - integración UI con `Jest` + `React Testing Library` para `ClientProvider` y `AlertContext`
 - wrapper compartido de tests en `tests/jest/utils/test-providers.jsx` para componer `I18nProvider`, `AlertProvider` y `ClientProvider`
 
 Matriz UX actual de bootstrap:
 
-- `CLIENT_NOT_FOUND` y `AUTH_FORBIDDEN`: navegación a inicio o cierre
-- `GLOBAL_INTERNAL_ERROR`, red o `5xx`: reintento o cierre
+- `CLIENT_NOT_FOUND` y `AUTH_FORBIDDEN`: navegación segura a inicio
+- `GLOBAL_INTERNAL_ERROR`, red o `5xx`: único CTA `Retry`
 - `VALIDATION_ERROR` y errores no recuperables: cierre simple
-
-Nota temporal de desarrollo:
-
-- mientras el backend no esté desplegado, se mantiene `ClientBootstrapFallback` como apoyo visual en `development`
-- además, los layouts `client` y `dashboard` pueden inyectar un cliente visual local si falla la primera llamada de tenant
-- en producción el canal esperado del bootstrap error es `AlertContext`
-- antes del despliegue final hay que eliminarlo o dejarlo explícitamente desactivado fuera de desarrollo
+- límite de recargas agotado: sin CTA y mensaje para intentar más tarde
 
 ## Referencias
 

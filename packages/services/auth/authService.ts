@@ -1,5 +1,5 @@
 import api from '../api/api';
-import { ApiResponse } from '@/packages/types/api';
+import { ApiResponse } from '@/packages/types';
 import {
   AuthUser,
   AuthSessionApiUser,
@@ -23,7 +23,8 @@ import {
   ChangeEmailResponse,
   ChangeEmailConfirmPayload,
   ChangeEmailConfirmResponse,
-} from '@/packages/types/auth/authTypes';
+} from '@/packages/types';
+import { normalizeAuthSession } from '@/packages/utils';
 
 type AuthEnvelope<TUser> = {
   success: boolean;
@@ -32,19 +33,11 @@ type AuthEnvelope<TUser> = {
   user?: TUser;
 };
 
-const normalizeAuthUser = (user: AuthSessionApiUser): AuthUser => ({
-  authId: user.authId,
-  userClientId: user.userClientId,
-  clientId: user.clientId,
-  email: user.email,
-  role: user.role,
-  status: user.status,
-  isVerified: user.isVerified,
-  isNewUser: user.isNewUser,
-  isLogged: true,
-  // compatibilidad transitoria para el resto del frontend
-  userId: user.userClientId,
-});
+const normalizeAuthUser = (user: AuthSessionApiUser): AuthUser =>
+  normalizeAuthSession(user, {
+    isLogged: true,
+    isNewUser: user.isNewUser ?? false,
+  });
 
 const requireAuthUser = (
   user: AuthSessionApiUser | undefined,

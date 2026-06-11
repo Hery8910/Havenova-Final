@@ -1,11 +1,9 @@
 // types/cookies.ts
-export type CookieCategory = 'necessary' | 'statistics';
+export type CookieCategory = 'necessary';
 
 export interface CookieConsent {
   /** Técnicamente siempre true, no se puede desactivar */
   necessary: boolean;
-  /** Para analítica (p. ej., Google Analytics en el futuro) */
-  statistics: boolean;
 }
 
 export interface CookiePrefs {
@@ -19,4 +17,4 @@ export interface CookiePrefs {
 
 export const COOKIE_NAME = 'hn_cprefs';
 /** Incrementa cuando cambies textos/categorías para re-preguntar */
-export const COOKIE_POLICY_VERSION = 1;
+export const COOKIE_POLICY_VERSION = 2;

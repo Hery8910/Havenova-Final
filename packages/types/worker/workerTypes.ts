@@ -5,7 +5,7 @@ export type WorkerLanguage = 'de' | 'en' | 'es';
 
 export interface WorkerRecord {
   id?: string;
-  userId: string;
+  userClientId: string;
   clientId: string;
   email?: string;
   name?: string;
@@ -24,7 +24,7 @@ export interface WorkerRecord {
 
 export interface WorkerDetailData {
   id?: string;
-  userId: string;
+  userClientId: string;
   clientId?: string;
   name?: string;
   email?: string;
@@ -71,7 +71,7 @@ export interface WorkerListParams {
 }
 
 export interface WorkerListItem {
-  userId: string;
+  userClientId: string;
   clientId: string;
   name: string;
   email: string;

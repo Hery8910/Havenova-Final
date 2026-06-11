@@ -90,14 +90,17 @@ test('i18n fallback layer resolves locale-aware resources instead of exporting D
   assert.match(i18nFallbackSource, /Legacy default exports remain DE-only/);
 });
 
-test('auth service normalizes session payloads to the frontend auth model with compatibility alias', () => {
+test('auth session model keeps userClientId as the only supported session identity', () => {
   assert.match(authTypesSource, /authId: string/);
   assert.match(authTypesSource, /userClientId: string/);
-  assert.match(authTypesSource, /compatibilidad transitoria con consumidores que aún esperan `userId`/);
+  assert.doesNotMatch(authTypesSource, /userId: string/);
   assert.match(authServiceSource, /const normalizeAuthUser =/);
-  assert.match(authServiceSource, /userId: user\.userClientId/);
   assert.match(authServiceSource, /AuthEnvelope<AuthSessionApiUser>/);
   assert.match(authServiceSource, /Auth session payload is missing user data\./);
+  assert.match(
+    fs.readFileSync('packages/utils/auth/authSession.ts', 'utf8'),
+    /value\?\.userClientId \|\| fallbacks\?\.userClientId/
+  );
 });
 
 test('profile contract keeps contactEmail explicit across types and service normalization', () => {

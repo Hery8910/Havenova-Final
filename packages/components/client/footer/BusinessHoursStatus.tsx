@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useState } from 'react';
 import type { WeeklySchedule } from '../../../types/calendar';
-import { useI18n } from '../../../contexts';
 import { LuChevronDown, LuClock3 } from 'react-icons/lu';
 import styles from './BusinessHoursStatus.module.css';
 
@@ -148,11 +147,12 @@ function resolveStatus(schedule: WeeklySchedule, locale: string, now: Date, copy
 export function BusinessHoursStatus({
   schedule,
   copy,
+  locale,
 }: {
   schedule: WeeklySchedule;
   copy?: FooterHoursStatusCopy;
+  locale: string;
 }) {
-  const { language } = useI18n();
   const [now, setNow] = useState(() => new Date());
   const [isExpanded, setIsExpanded] = useState(false);
   const headingId = useId();
@@ -167,7 +167,7 @@ export function BusinessHoursStatus({
     return () => window.clearInterval(intervalId);
   }, []);
 
-  const status = resolveStatus(schedule, language, now, copy ?? {});
+  const status = resolveStatus(schedule, locale, now, copy ?? {});
   const statusLabel = status.isOpen ? copy?.open ?? 'Open' : copy?.closed ?? 'Closed';
   const fullStatusLabel = [statusLabel, status.detail].filter(Boolean).join('. ');
   const toggleLabel = isExpanded
@@ -232,12 +232,12 @@ export function BusinessHoursStatus({
             const daySchedule = schedule[dayKey];
             const isToday = index === now.getDay();
             const timeRange = daySchedule
-              ? `${formatTime(language, daySchedule.start)} - ${formatTime(language, daySchedule.end)}`
+              ? `${formatTime(locale, daySchedule.start)} - ${formatTime(locale, daySchedule.end)}`
               : (copy?.dayClosed ?? 'Closed');
 
             return (
               <li key={dayKey} className={`${styles.weekItem} ${isToday ? styles.today : ''}`}>
-                <span className={styles.dayLabel}>{formatDayLabel(language, index)}</span>
+                <span className={styles.dayLabel}>{formatDayLabel(locale, index)}</span>
                 <span className={styles.timeLabel}>{timeRange}</span>
               </li>
             );

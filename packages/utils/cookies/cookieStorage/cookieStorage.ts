@@ -8,13 +8,12 @@ import {
 } from '../../../types/cookies/cookiesTypes';
 
 /** Serializa preferencias en un valor compacto de cookie.
- * Ej: v=1&ts=2025-09-02T10%3A00%3A00.000Z&nec=1&stat=0
+ * Ej: v=2&ts=2025-09-02T10%3A00%3A00.000Z&nec=1
  */
 export function serializeCookiePrefs(prefs: CookiePrefs): string {
   const nec = prefs.consent.necessary ? 1 : 0;
-  const stat = prefs.consent.statistics ? 1 : 0;
   const safeTs = encodeURIComponent(prefs.ts);
-  return `v=${prefs.v}&ts=${safeTs}&nec=${nec}&stat=${stat}`;
+  return `v=${prefs.v}&ts=${safeTs}&nec=${nec}`;
 }
 
 /** Parsea el valor de cookie a objeto */
@@ -29,12 +28,11 @@ export function parseCookiePrefs(value?: string | null): CookiePrefs | null {
     const v = Number(parts['v']);
     const ts = parts['ts'] ?? new Date().toISOString();
     const nec = parts['nec'] === '1';
-    const stat = parts['stat'] === '1';
     if (!v) return null;
     return {
       v,
       ts,
-      consent: { necessary: nec, statistics: stat },
+      consent: { necessary: nec },
     };
   } catch {
     return null;
@@ -70,7 +68,7 @@ export function deleteCookie(name: string) {
 
 /* ---- Persistencia combinada: cookie + localStorage ---- */
 
-const LS_KEY = 'havenova_cookie_prefs_v1';
+const LS_KEY = 'havenova_cookie_prefs_v2';
 
 export function getPrefsFromLocalStorage(): CookiePrefs | null {
   if (typeof localStorage === 'undefined') return null;
@@ -103,14 +101,13 @@ export function shouldRePrompt(existing: CookiePrefs | null): boolean {
   return existing.v !== COOKIE_POLICY_VERSION;
 }
 
-/** Estado por defecto: necesarias=true, estadísticas=false */
+/** Estado por defecto: solo tecnologias necesarias */
 export function defaultPrefs(): CookiePrefs {
   return {
     v: COOKIE_POLICY_VERSION,
     ts: new Date().toISOString(),
     consent: {
       necessary: true,
-      statistics: false,
     },
   };
 }
@@ -131,19 +128,5 @@ export function eraseCookie(name: string, path = '/', domains?: string[]) {
       document.cookie = `${base} Domain=${d}; SameSite=Lax; Secure;`;
       document.cookie = `${base} SameSite=Lax; Secure;`;
     }
-  }
-}
-
-export function cleanupAnalyticsCookies() {
-  if (typeof document === 'undefined') return;
-  const all = document.cookie ? document.cookie.split('; ') : [];
-  const gaLike = all
-    .map((c) => c.split('=')[0])
-    .filter(
-      (name) => name === '_ga' || name.startsWith('_ga_') || name === '_gid' || name === '_gat'
-    );
-
-  for (const name of gaLike) {
-    eraseCookie(name, '/');
   }
 }

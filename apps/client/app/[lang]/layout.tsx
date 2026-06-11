@@ -1,17 +1,19 @@
 // apps/client/src/app/[lang]/layout.tsx
 import '../global.css';
 import type { Locale } from '@havenova/i18n';
-import type { ClientPublicConfig } from '../../../../packages/types/client/clientTypes';
-import { resolveTenantKey } from '../../../../packages/services/client/tenantResolver';
-import { getClient } from '../../../../packages/services/client/clientServices';
-import { AlertProvider } from '../../../../packages/contexts/alert/AlertContext';
-import { AuthProvider } from '../../../../packages/contexts/auth/authContext';
-import { ClientProvider } from '../../../../packages/contexts/client/ClientContext';
-import { createVisualFallbackClient } from '../../../../packages/contexts/client/clientVisualFallback';
-import { CookiesProvider } from '../../../../packages/contexts/cookies/CookiesContext';
-import { I18nProvider } from '../../../../packages/contexts/i18n/I18nContext';
-import { ProfileProvider } from '../../../../packages/contexts/profile/ProfileContext';
+import type { ClientPublicConfig } from '../../../../packages/types';
+import { getClient, resolveTenantKey } from '../../../../packages/services';
+import {
+  AlertProvider,
+  AuthProvider,
+  ClientProvider,
+  CookiesProvider,
+  I18nProvider,
+  ProfileProvider,
+} from '../../../../packages/contexts';
+import { AlertViewport } from '../../../../packages/components/alert';
 import { CookieBannerContainer } from '../../../../packages/components/cookieBanner';
+import Loading from '../../../../packages/components/loading/Loading';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }, { lang: 'es' }];
@@ -37,20 +39,10 @@ export default async function LangLayout({
   let initialClient: ClientPublicConfig | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
   let tenantKey: string | null = null;
-  const allowVisualFallback =
-    process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true' ||
-    process.env.NODE_ENV !== 'production';
-  const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
 
   try {
     tenantKey = resolveTenantKey();
-
-    if (allowVisualFallback && isBuildPhase) {
-      initialClient = createVisualFallbackClient(tenantKey);
-      console.warn('⚠️ Using visual fallback client during production build.');
-    } else {
-      initialClient = await getClient(tenantKey);
-    }
+    initialClient = await getClient(tenantKey);
   } catch (error: unknown) {
     const resolvedError = error as TenantBootstrapError;
     clientError = {
@@ -59,12 +51,6 @@ export default async function LangLayout({
       message: resolvedError?.response?.data?.message ?? resolvedError?.message,
     };
     console.error('⚠️ Could not load client:', resolvedError);
-
-    if (allowVisualFallback) {
-      initialClient = createVisualFallbackClient(tenantKey ?? 'tnk_visual_fallback');
-      clientError = null;
-      console.warn('⚠️ Using visual fallback client because tenant bootstrap failed.');
-    }
   }
 
   return (
@@ -88,10 +74,12 @@ export default async function LangLayout({
       />
       <I18nProvider initialLanguage={params.lang}>
         <AlertProvider>
+          <AlertViewport />
           <ClientProvider
             initialClient={initialClient}
             initialError={clientError}
             tenantKey={tenantKey}
+            loadingFallback={<Loading theme="light" />}
           >
             <AuthProvider>
               <ProfileProvider>

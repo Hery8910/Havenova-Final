@@ -13,6 +13,7 @@ import { NavbarPanelSection } from '../components/NavbarPanelSection';
 import { NavbarProfileTrigger } from '../components/NavbarProfileTrigger';
 import { useDismissibleLayer } from '../hooks/useDismissibleLayer';
 import { useNavbarPanelState } from '../hooks/useNavbarPanelState';
+import { useFocusTrap } from '../../../../utils/accessibility/useFocusTrap';
 
 type TabletPanel = 'menu' | 'account' | null;
 
@@ -34,6 +35,9 @@ export function NavbarTabletView({
   bellSlot,
 }: NavbarTabletViewProps) {
   const tabletNavRef = useRef<HTMLElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const accountTriggerRef = useRef<HTMLButtonElement>(null);
+  const activePanelRef = useRef<HTMLElement>(null);
   const accountPanelId = useId();
   const menuPanelId = useId();
   const accountTitleId = useId();
@@ -55,6 +59,13 @@ export function NavbarTabletView({
     enabled: Boolean(activePanel),
     refs: [tabletNavRef],
     onDismiss: closePanel,
+  });
+
+  useFocusTrap({
+    enabled: Boolean(activePanel),
+    containerRef: activePanelRef,
+    returnFocusRef: activePanel === 'menu' ? menuTriggerRef : accountTriggerRef,
+    onEscape: closePanel,
   });
 
   const handlePanelNavigation = (href: string) => {
@@ -110,6 +121,7 @@ export function NavbarTabletView({
                   </div>
                 ) : null}
                 <button
+                  ref={accountTriggerRef}
                   type="button"
                   className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton}`}
                   aria-label={a11y.profileToggle}
@@ -127,6 +139,7 @@ export function NavbarTabletView({
               </div>
             ) : null}
             <button
+              ref={menuTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.menuButton} ${styles.menuButton} ${
                 menuOpen ? styles.menuButtonOpen : ''
@@ -144,11 +157,13 @@ export function NavbarTabletView({
         <div className={styles.panelWrapper}>
           <div className={styles.tabletSection}>
             <nav
+              ref={activePanelRef}
               className={`${styles.tabletPanel} card card--neutral ${
                 activePanel && (!hideAccountControls || activePanel === 'menu')
                   ? styles.tabletPanelOpen
                   : ''
               }`}
+              tabIndex={-1}
               id={activePanel ? (activePanel === 'menu' ? menuPanelId : accountPanelId) : undefined}
               aria-labelledby={
                 activePanel ? (activePanel === 'menu' ? menuTitleId : accountTitleId) : undefined

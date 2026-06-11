@@ -11,7 +11,7 @@ interface ContactMessageResponderProps {
   onSubmitted: (payload: {
     text: string;
     respondedAt?: string;
-    respondedBy?: string;
+    respondedByUserClientId?: string;
     respondedByName?: string;
     respondedByProfileImage?: string;
   }) => void;
@@ -63,7 +63,13 @@ export function ContactMessageResponder({
       };
 
       showSuccess({ response: successPopup, onCancel: closeAlert });
-      onSubmitted({ text: text.trim(), respondedAt: new Date().toISOString() });
+      onSubmitted({
+        text: res.data?.response?.text || text.trim(),
+        respondedAt: res.data?.response?.respondedAt || new Date().toISOString(),
+        respondedByUserClientId: res.data?.response?.respondedByUserClientId || undefined,
+        respondedByName: res.data?.response?.respondedByName || undefined,
+        respondedByProfileImage: res.data?.response?.respondedByProfileImage || undefined,
+      });
       onClose();
     } catch (error: any) {
       closeAlert();

@@ -29,7 +29,9 @@ export type HomeServicesFeatureKey = (typeof HOME_SERVICES_FEATURES)[number];
 export type ClientStatus = 'active' | 'trial' | 'inactive' | 'suspended' | 'archived';
 export type BillingStatus = 'active' | 'paused' | 'cancelled';
 export type OnboardingStatus = 'pending' | 'in_progress' | 'completed';
-export type LegalDocumentType = 'privacy' | 'cookies' | 'terms';
+export type LegalDocumentType = 'imprint' | 'privacy' | 'cookies' | 'terms';
+
+export type LegalFieldStatus = 'available' | 'not_applicable' | 'not_available';
 
 export interface ClientDaySchedule {
   start: string;
@@ -70,6 +72,83 @@ export interface LegalHistoryEntry {
   type: LegalDocumentType;
   version: string;
   updatedAt: Date | string;
+}
+
+export interface ClientLegalField {
+  status: LegalFieldStatus;
+  value?: string;
+  note?: string;
+}
+
+export interface ClientLegalRegisterEntry {
+  status: LegalFieldStatus;
+  court?: string;
+  number?: string;
+  note?: string;
+}
+
+export interface ClientLegalContactDetails {
+  email?: string;
+  phone?: string;
+  address?: string;
+}
+
+export interface ClientLegalNamedParty {
+  businessName?: string;
+  legalName?: string;
+  representedBy?: string;
+  contact?: ClientLegalContactDetails;
+}
+
+export interface ClientLegalServiceProvider extends ClientLegalNamedParty {
+  vatId?: ClientLegalField;
+  register?: ClientLegalRegisterEntry;
+}
+
+export interface ClientLegalTechnicalOperator extends ClientLegalNamedParty {}
+
+export interface ClientLegalPrivacyController {
+  sameAs?: 'serviceProvider' | 'technicalOperator';
+  name?: string;
+  legalName?: string;
+  representedBy?: string;
+  contact?: ClientLegalContactDetails;
+}
+
+export interface ClientLegalDpoContact {
+  status: LegalFieldStatus;
+  name?: string;
+  email?: string;
+  address?: string;
+  note?: string;
+}
+
+export interface ClientLegalConsumerDisputeResolution {
+  participates?: boolean;
+  statement?: string;
+}
+
+export interface ClientLegalThirdPartyProvider {
+  name: string;
+  purpose: string;
+  region?: string;
+  privacyUrl?: string;
+  categories?: string[];
+}
+
+export interface ClientLegalDocuments {
+  privacy?: string;
+  cookies?: string;
+  terms?: string;
+  impressum?: string;
+}
+
+export interface ClientLegalDocumentUpdates {
+  imprint?: LegalSingleUpdate;
+  privacy?: LegalSingleUpdate;
+  cookies?: LegalSingleUpdate;
+  terms?: LegalSingleUpdate;
+  history?: LegalHistoryEntry[];
 }
 
 export interface ClientModuleAccess<
@@ -181,18 +260,14 @@ export interface ClientBilling {
 }
 
 export interface ClientLegal {
-  pages: {
-    privacy?: string;
-    cookies?: string;
-    terms?: string;
-    impressum?: string;
-  };
-  updates: {
-    privacy?: LegalSingleUpdate;
-    cookies?: LegalSingleUpdate;
-    terms?: LegalSingleUpdate;
-    history?: LegalHistoryEntry[];
-  };
+  pages: ClientLegalDocuments;
+  updates: ClientLegalDocumentUpdates;
+  serviceProvider?: ClientLegalServiceProvider;
+  technicalOperator?: ClientLegalTechnicalOperator;
+  privacyController?: ClientLegalPrivacyController;
+  dpo?: ClientLegalDpoContact;
+  consumerDisputeResolution?: ClientLegalConsumerDisputeResolution;
+  thirdPartyProviders?: ClientLegalThirdPartyProvider[];
 }
 
 export interface ClientInternal {

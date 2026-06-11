@@ -1,46 +1,19 @@
 import styles from './InfoSection.module.css';
 import Image from 'next/image';
-import { useClient, useI18n } from '../../../../../contexts';
+import { useClient } from '../../../../../contexts';
 import { CompanyContact } from '../../../companyContact';
-import type { FooterHoursStatusCopy } from '../../../footer/BusinessHoursStatus';
-
-interface ContactInfoAriaTexts {
-  info: string;
-  quickActions: string;
-  call: string;
-  email: string;
-  whatsapp: string;
-}
-
-interface ContactQuickActionTexts {
-  call: string;
-  email: string;
-  whatsapp: string;
-}
+import type { ContactInfoTexts } from '../contact.types';
 
 export default function InfoSection({
   texts,
+  locale,
 }: {
-  texts: {
-    contact: {
-      title: string;
-      email: string;
-      phone: string;
-      address: string;
-    };
-    hoursStatus?: FooterHoursStatusCopy;
-  };
+  texts: ContactInfoTexts;
+  locale: string;
 }) {
   const { client } = useClient();
-  const { texts: i18nTexts } = useI18n();
-  const contactTexts = i18nTexts?.components?.client?.contact as
-    | {
-        aria?: ContactInfoAriaTexts;
-        quickActions?: ContactQuickActionTexts;
-      }
-    | undefined;
-  const ariaTexts = contactTexts?.aria;
-  const quickTexts = contactTexts?.quickActions;
+  const ariaTexts = texts.aria;
+  const quickTexts = texts.quickActions;
 
   const telHref = (() => {
     const phone = texts?.contact?.phone;
@@ -62,10 +35,11 @@ export default function InfoSection({
 
   return (
     <section className={styles.contactSection}>
-      <div className={`${styles.contactCard} card card--secondary`}>
+      <div className={`${styles.contactCard} v2-card v2-card--neutral`}>
         <CompanyContact
           contact={texts.contact}
           schedule={client.operations.schedule}
+          locale={locale}
           hoursStatus={texts.hoursStatus}
           ariaLabel={ariaTexts?.info || 'Contact information'}
           emailAriaLabel={ariaTexts?.email || 'Send email'}

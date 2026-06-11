@@ -1,10 +1,10 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
+  PopupCode,
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingMessages,
@@ -18,14 +18,17 @@ import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
-import { href } from '../../../../../../../packages/utils';
+import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
-import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { AuthPageShell } from '../AuthPageShell';
+import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
+import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface LoginData {
   title: string;
   description?: string;
+  autoRedirectDescription?: string;
   cta: { title: string; label: string; url: string };
   forgotPassword?: { title: string; label: string; url: string };
   image?: { src: string; alt: string };
@@ -34,16 +37,15 @@ export interface LoginData {
 }
 
 const Login = () => {
-  const AUTO_REDIRECT_MS = 4000;
   const { client } = useClient();
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
+  const homeHref = href(lang, '/');
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
-  const redirectTimeoutRef = useRef<number | null>(null);
 
   const popups = texts.popups;
   const alertButtons = popups.button ?? fallbackButtons;
@@ -52,38 +54,16 @@ const Login = () => {
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.client.user.login;
   const loginButton = formText.button.login;
-
-  const clearRedirectTimeout = () => {
-    if (redirectTimeoutRef.current) {
-      window.clearTimeout(redirectTimeoutRef.current);
-      redirectTimeoutRef.current = null;
-    }
-  };
-
-  const getAutoRedirectDescription = (baseDescription: string) => {
-    const redirectCopy =
-      lang === 'de'
-        ? 'Sie werden in wenigen Sekunden zur Startseite weitergeleitet.'
-        : lang === 'es'
-          ? 'Serás redirigido a la página de inicio en unos segundos.'
-          : 'You will be redirected to the homepage in a few seconds.';
-
-    return `${baseDescription} ${redirectCopy}`.trim();
-  };
-
-  const scheduleHomeRedirect = () => {
-    clearRedirectTimeout();
-    redirectTimeoutRef.current = window.setTimeout(() => {
-      closeAlert();
-      router.push(href(lang, '/'));
-    }, AUTO_REDIRECT_MS);
-  };
-
-  useEffect(() => {
-    return () => {
-      clearRedirectTimeout();
-    };
-  }, []);
+  const { getAutoRedirectDescription, scheduleRedirect: scheduleHomeRedirect } =
+    useAuthAutoRedirect({
+      redirectTo: homeHref,
+      closeAlert,
+    });
+  const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
+    useAuthAlertActions({
+      buttons: alertButtons,
+      closeAlert,
+    });
 
   const getLoginPopupDefaultKey = (code?: string): PopupCode => {
     switch (code) {
@@ -111,18 +91,12 @@ const Login = () => {
       case 'USER_CLIENT_NOT_FOUND':
         return {
           status: 404,
-          onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/user/register'));
-          },
+          confirmKind: 'goToRegister' as const,
         };
       case 'CLIENT_NOT_FOUND':
         return {
           status: 404,
-          onConfirm: () => {
-            closeAlert();
-            router.push(href(lang, '/'));
-          },
+          confirmKind: 'goToHome' as const,
         };
       default:
         return null;
@@ -166,9 +140,9 @@ const Login = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
@@ -183,27 +157,24 @@ const Login = () => {
           fallbackGlobalError
         );
 
-        setAuth({
-          ...(auth || {}),
-          isLogged: false,
-          email: payload.email,
-          clientId: payload.clientId,
-          isVerified: false,
-        });
+        setAuth(
+          createLoggedOutAuthSeed({
+            clientId: payload.clientId,
+            email: payload.email,
+            isVerified: false,
+          })
+        );
 
         showError({
           response: {
             status: 403,
             title: popupData.title,
             description: popupData.description,
-            confirmLabel: alertButtons.openVerification,
-            cancelLabel: alertButtons.close,
+            confirmLabel: getConfirmActionLabel('openVerification'),
+            cancelLabel: getCancelActionLabel(),
           },
-          onConfirm: () => {
-            router.push(href(lang, '/user/verify-email'));
-            closeAlert();
-          },
-          onCancel: closeAlert,
+          onConfirm: getConfirmAction('openVerification'),
+          onCancel: getCancelAction(),
         });
         return;
       }
@@ -218,13 +189,10 @@ const Login = () => {
         const failureAction = getLoginFailureAction(response?.code);
         const canRetry = !response?.code;
         const onConfirm =
-          failureAction?.onConfirm ??
-          (canRetry
-            ? () => {
-                closeAlert();
-                void handleLogin(payload);
-              }
-            : undefined);
+          (failureAction?.confirmKind
+            ? getConfirmAction(failureAction.confirmKind)
+            : undefined) ??
+          (canRetry ? getConfirmAction('reload', () => void handleLogin(payload)) : undefined);
 
         showError({
           response: {
@@ -232,32 +200,22 @@ const Login = () => {
             title: popupData.title,
             description: popupData.description,
             confirmLabel: onConfirm
-              ? response?.code === 'USER_CLIENT_NOT_FOUND'
-                ? alertButtons.goToRegister
-                : response?.code === 'CLIENT_NOT_FOUND'
-                    ? alertButtons.goToHome
-                    : canRetry
-                      ? alertButtons.reload
-                      : alertButtons.continue
+              ? failureAction?.confirmKind
+                ? getConfirmActionLabel(failureAction.confirmKind)
+                : canRetry
+                  ? getConfirmActionLabel('reload')
+                  : alertButtons.continue
               : undefined,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
           onConfirm,
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
       const { user } = response;
 
-      setAuth({
-        ...(auth || {}), // conservas language, theme, etc. si ya existían
-        isLogged: true,
-        userId: user.userId,
-        clientId: user.clientId,
-        email: user.email,
-        role: user.role,
-        isVerified: user.isVerified,
-      });
+      setAuth(user);
 
       const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
 
@@ -265,7 +223,10 @@ const Login = () => {
         response: {
           status: 200,
           title: popupData.title,
-          description: getAutoRedirectDescription(popupData.description),
+          description: getAutoRedirectDescription(
+            popupData.description,
+            login.autoRedirectDescription
+          ),
           cancelLabel: '',
         },
       });
@@ -278,13 +239,8 @@ const Login = () => {
       const canRetry = !code || (err.response?.status ?? 500) >= 500;
       const failureAction = getLoginFailureAction(code);
       const onConfirm =
-        failureAction?.onConfirm ??
-        (canRetry
-          ? () => {
-              closeAlert();
-              void handleLogin(payload);
-            }
-          : undefined);
+        (failureAction?.confirmKind ? getConfirmAction(failureAction.confirmKind) : undefined) ??
+        (canRetry ? getConfirmAction('reload', () => void handleLogin(payload)) : undefined);
 
       showError({
         response: {
@@ -292,18 +248,16 @@ const Login = () => {
           title: popupData.title,
           description: popupData.description,
           confirmLabel: onConfirm
-            ? code === 'USER_CLIENT_NOT_FOUND'
-              ? alertButtons.goToRegister
-              : code === 'CLIENT_NOT_FOUND'
-                  ? alertButtons.goToHome
-                  : canRetry
-                    ? alertButtons.reload
-                    : alertButtons.continue
+            ? failureAction?.confirmKind
+              ? getConfirmActionLabel(failureAction.confirmKind)
+              : canRetry
+                ? getConfirmActionLabel('reload')
+                : alertButtons.continue
             : undefined,
-          cancelLabel: alertButtons.close,
+          cancelLabel: getCancelActionLabel(),
         },
         onConfirm,
-        onCancel: closeAlert,
+        onCancel: getCancelAction(),
       });
     } finally {
       setLoading(false);
@@ -311,49 +265,16 @@ const Login = () => {
   };
 
   return (
-    <section
-      className={`${styles.authSection} card card--primary`}
-      aria-labelledby="login-title"
-      aria-describedby="login-description"
-    >
-      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
-        <Image
-          className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
-          alt={navText.logoAlt}
-          width={80}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className={styles.authFormContainer}>
-        <header className={styles.authHeader}>
-          <h1 id="login-title" className={styles.authTitle}>
-            {login.title || 'Sign in'}
-          </h1>
-          <p id="login-description" className={styles.authDescription}>
-            {login.description || 'Access your account and manage your requests.'}
-          </p>
-        </header>
-
-        <FormWrapper<LoginPayload>
-          fields={['email', 'password', 'clientId'] as const}
-          onSubmit={handleLogin}
-          button={loginButton}
-          showForgotPassword
-          onForgotPassword={() => {
-            router.push(href(lang, '/user/forgot-password'));
-          }}
-          initialValues={{
-            clientId: client._id,
-            email,
-            password: '',
-          }}
-          loading={loading}
-        />
-      </div>
-
-      <footer className={styles.authFooter}>
+    <AuthPageShell
+      headingId="login-title"
+      descriptionId="login-description"
+      title={login.title || 'Sign in'}
+      description={login.description || 'Access your account and manage your requests.'}
+      homeHref={homeHref}
+      homeLabel={navText.homeLink}
+      logoAlt={navText.logoAlt}
+      footerLabel={navText.authFooter}
+      footer={
         <div className={styles.authFooterActions}>
           <p className={styles.authFooterText}>
             {login.cta.title}{' '}
@@ -361,12 +282,28 @@ const Login = () => {
               {login.cta.label}
             </Link>
           </p>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>
             <IoMdArrowRoundBack /> {navText.homeLink}
           </Link>
         </div>
-      </footer>
-    </section>
+      }
+    >
+      <FormWrapper<LoginPayload>
+        fields={['email', 'password', 'clientId'] as const}
+        onSubmit={handleLogin}
+        button={loginButton}
+        showForgotPassword
+        onForgotPassword={() => {
+          router.push(href(lang, '/user/forgot-password'));
+        }}
+        initialValues={{
+          clientId: client._id,
+          email,
+          password: '',
+        }}
+        loading={loading}
+      />
+    </AuthPageShell>
   );
 };
 

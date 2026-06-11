@@ -39,8 +39,8 @@ export const updateWorkerProfile = async (
   return data.data;
 };
 
-export const deleteWorkerProfile = async (): Promise<{ userId: string; clientId: string }> => {
-  const { data } = await api.delete<ApiResponse<{ userId: string; clientId: string }>>(
+export const deleteWorkerProfile = async (): Promise<{ userClientId: string; clientId: string }> => {
+  const { data } = await api.delete<ApiResponse<{ userClientId: string; clientId: string }>>(
     WORKER_PROFILE_BASE_PATH,
     { withCredentials: true }
   );

@@ -1,13 +1,13 @@
-import type { UserAddress, UserSavedAddress } from '../../../../../../../types';
+import {
+  createEmptyUserAddress,
+  isCompleteAddress,
+  type UserAddress,
+  type UserSavedAddress,
+} from '../../../../../../../types';
 import type { AddressErrors, ProfileFormState, ProfileSavedAddressFormValue } from '../types';
-import { isAddressComplete } from './profileDetails.helpers';
 
 export const createEmptyAddress = (): UserAddress => ({
-  street: '',
-  streetNumber: '',
-  postalCode: '',
-  district: '',
-  floor: '',
+  ...createEmptyUserAddress(),
 });
 
 export const createEmptySavedAddress = (): ProfileSavedAddressFormValue => ({
@@ -55,7 +55,7 @@ export const buildFormState = (profile?: {
 export const toSavedAddressPayload = (
   savedAddresses: ProfileSavedAddressFormValue[]
 ): UserSavedAddress[] =>
-  savedAddresses.filter((entry) => isAddressComplete(entry.address)).map((entry) => ({
+  savedAddresses.filter((entry) => isCompleteAddress(entry.address)).map((entry) => ({
     label: entry.label.trim() || undefined,
     address: normalizeAddress(entry.address),
   }));

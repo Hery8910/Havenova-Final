@@ -2,7 +2,7 @@
   "client": {
     "home": {
       "hero": {
-        "title": "Find The Right Help Fast",
+        "title": "Find the right help fast",
         "descriptions": [
           "Choose your service, send your request in minutes, and receive a tailored offer. Clear, reliable, and easy from the first step."
         ],
@@ -23,7 +23,7 @@
           "alt": "Havenova home service professional in Berlin"
         },
         "a11y": {
-          "actionsLabel": "Homepage hero actions"
+          "actionsLabel": "Primary actions on the home page"
         }
       },
       "appInstall": {
@@ -110,7 +110,6 @@
         ]
       },
       "benefits": {
-        "kicker": "Benefits",
         "title": "Comfortable for customers — efficient for the team.",
         "description": "Havenova reduces back-and-forth, clarifies requests, and keeps workflows clean: fewer misunderstandings, faster offers, better planning.",
         "items": [
@@ -373,6 +372,10 @@
           "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
           "manualSectionTitle": "New service address",
           "manualHint": "Enter the address where the visit or inspection should take place.",
+          "differentAddressPromptTitle": "Use a different address",
+          "differentAddressPromptDescription": "Enter a new work location for this request.",
+          "differentAddressPromptButton": "Use a different address",
+          "differentAddressPromptButtonAriaLabel": "Open the form to enter a different service address",
           "saveToProfileLabel": "Save this address to my profile",
           "savedAddressLabel": "Label",
           "savedAddressPlaceholder": "Home office, Building A, Parents...",
@@ -383,6 +386,27 @@
             "postalCode": "Postal code",
             "district": "District",
             "floor": "Floor"
+          },
+          "profileStep": {
+            "title": "Complete your profile details",
+            "description": "Before selecting the work address, we need your name, phone, and primary address.",
+            "missingFieldsLabel": "Missing",
+            "summaryTitle": "Profile details",
+            "summaryDescription": "These are the details we have for this request.",
+            "summaryAriaLabel": "Profile details summary",
+            "saveButton": "Save profile details",
+            "saving": "Saving...",
+            "labels": {
+              "name": "Name",
+              "email": "Email",
+              "phone": "Phone",
+              "primaryAddress": "Primary address"
+            },
+            "errors": {
+              "required": "This field is required.",
+              "invalidName": "Enter a valid name.",
+              "invalidPhone": "Enter a valid phone number."
+            }
           },
           "stepAriaLabel": "Service address selection",
           "required": "Please select or enter a work address."
@@ -513,7 +537,6 @@
         },
         "customerType": {
           "label": "Customer type",
-          "helper": "Choose the customer group that matches this home service request.",
           "options": {
             "private": "Private",
             "business": "Business"
@@ -521,27 +544,21 @@
         },
         "serviceType": {
           "label": "Home service type",
-          "helper": "Choose the service that best matches the work you want to request.",
           "options": {
             "painting": {
-              "title": "Painting",
-              "description": "Interior or exterior painting work for walls, ceilings, trims, or selected areas."
+              "title": "Painting"
             },
             "repairs-installations": {
-              "title": "Repairs & Installations",
-              "description": "Practical fixes, replacements, fittings, or installation-related work at the property."
+              "title": "Repairs & Installations"
             },
             "furniture-assembly": {
-              "title": "Furniture Assembly",
-              "description": "Assembly or setup of wardrobes, shelves, beds, tables, and other furniture."
+              "title": "Furniture Assembly"
             },
             "kitchen-assembly": {
-              "title": "Kitchen Assembly",
-              "description": "Assembly and installation support for kitchen cabinets, units, and related components."
+              "title": "Kitchen Assembly"
             },
             "moving-help": {
-              "title": "Moving Help",
-              "description": "Hands-on moving support for carrying, loading, unloading, or in-property relocation."
+              "title": "Moving Help"
             }
           }
         },
@@ -646,6 +663,10 @@
           "useDifferentAddressHint": "Enter a new work location for this request.",
           "emptyState": "No saved addresses found yet. Enter the service address below and save it if you want.",
           "manualHint": "Enter the address where the requested service should take place.",
+          "differentAddressPromptTitle": "Use a different address",
+          "differentAddressPromptDescription": "Enter a new work location for this request.",
+          "differentAddressPromptButton": "Use a different address",
+          "differentAddressPromptButtonAriaLabel": "Open the form to enter a different service address",
           "saveToProfileLabel": "Save this address to my profile",
           "savedAddressLabel": "Label",
           "savedAddressPlaceholder": "Property A, Rear building, Practice...",
@@ -656,6 +677,27 @@
             "postalCode": "Postal code",
             "district": "District",
             "floor": "Floor"
+          },
+          "profileStep": {
+            "title": "Complete your profile details",
+            "description": "Before selecting the work address, we need your name, phone, and primary address.",
+            "missingFieldsLabel": "Missing",
+            "summaryTitle": "Profile details",
+            "summaryDescription": "These are the details we have for this request.",
+            "summaryAriaLabel": "Profile details summary",
+            "saveButton": "Save profile details",
+            "saving": "Saving...",
+            "labels": {
+              "name": "Name",
+              "email": "Email",
+              "phone": "Phone",
+              "primaryAddress": "Primary address"
+            },
+            "errors": {
+              "required": "This field is required.",
+              "invalidName": "Enter a valid name.",
+              "invalidPhone": "Enter a valid phone number."
+            }
           },
           "stepAriaLabel": "Service address selection",
           "required": "Please select or enter a work address."
@@ -741,6 +783,7 @@
       "register": {
         "title": "Create account",
         "description": "Create your account to request and manage services.",
+        "autoRedirectDescription": "You will be redirected to the verification page in a few seconds.",
         "cta": {
           "title": "Already have an account?",
           "label": "Log in now",
@@ -750,6 +793,7 @@
       "login": {
         "title": "Welcome Back",
         "description": "Access your account and manage your requests.",
+        "autoRedirectDescription": "You will be redirected to the homepage in a few seconds.",
         "cta": {
           "title": "Don't have an account yet?",
           "label": "Sign Up",
@@ -771,7 +815,11 @@
       "resetPasswordText": {
         "title": "Set a new password",
         "info": "Choose a new password for your account.",
-        "button": "Save password"
+        "button": "Set new password",
+        "linkErrors": {
+          "invalidOrExpired": "This link is no longer valid or has expired.",
+          "missingToken": "This password reset link is incomplete or invalid."
+        }
       },
       "profileNav": {
         "profile": "Profile",
@@ -782,6 +830,11 @@
       "verifyEmail": {
         "title": "Verify your email",
         "info": "Check your inbox or request a new verification email.",
+        "autoRedirectDescription": "You will be redirected to the homepage in a few seconds.",
+        "sessionSyncError": {
+          "title": "We could not confirm the session",
+          "description": "Your email was verified, but your session could not be fully confirmed. Reload the page or sign in again."
+        },
         "input": {
           "placeholder": "Email address",
           "button": "Resend verification email.",
@@ -844,9 +897,14 @@
             "primaryAddressAriaLabel": "Main profile address details",
             "secondaryAddressAriaLabel": "Secondary address details",
             "secondaryAddressTitle": "Address",
+            "secondaryAddressListAriaLabel": "Saved secondary address list",
             "addSecondaryAddressQuestion": "Do you want to add another address?",
             "addSecondaryAddressButton": "Add address",
             "removeSecondaryAddressButton": "Remove",
+            "selectedSecondaryAddressTitle": "Edit selected address",
+            "selectedSecondaryAddressAriaLabel": "Selected secondary address editor",
+            "editSecondaryAddressButton": "Edit",
+            "editSecondaryAddressAriaLabel": "Edit additional address",
             "addressDetailsAriaLabel": "Address details",
             "saving": "Saving...",
             "fields": {
@@ -919,7 +977,7 @@
         "hero": {
           "headline1": "Privacy Policy",
           "headline2": "Transparency and Data Protection",
-          "subtitle": "This Privacy Policy explains how personal data is processed in connection with this platform and the services offered through it. The platform is technically operated by Maped Solutions (sole proprietorship).",
+          "subtitle": "This Privacy Policy explains how personal data is processed in connection with this platform, the tenant-specific services offered through it, and the technical operation provided by Maped Solutions.",
           "image": {
             "src": "/images/privacy-hero.png",
             "alt": "Data protection and security"
@@ -927,7 +985,7 @@
         },
         "overview": {
           "title": "Overview",
-          "intro": "Protecting personal data is important to us. This Privacy Policy explains who is responsible for data processing, for which purposes data is processed, and what rights users have.",
+          "intro": "Protecting personal data is important to us. This Privacy Policy explains which party is responsible for which processing activity, for which purposes personal data is processed, and what rights users have.",
           "bullets": [
             "For the service relationship with end users, the respective client will usually act as the controller within the meaning of Art. 4(7) GDPR.",
             "Maped Solutions (sole proprietorship) supports the technical operation of the platform and may act, depending on the processing context, as a processor, an independent controller, or a joint controller.",
@@ -948,11 +1006,11 @@
           "title": "Roles and data protection responsibilities",
           "controller": {
             "title": "Role of the respective client",
-            "body": "Where personal data is processed for the initiation, performance, and administration of the specific service offered, the respective client will generally be the controller. This includes, in particular, the operational handling of users, requests, appointments, work orders, billing, and similar service-related processes."
+            "body": "Where personal data is processed for the initiation, performance, and administration of the specific service offered, the respective client will generally be the controller. This includes, in particular, the operational handling of users, service requests, appointments, work orders, customer communication, invoicing, and similar service-related processes."
           },
           "processor": {
-            "title": "Role of Maped Solutions (sole proprietorship)",
-            "body": "Maped Solutions technically operates the platform and supports secure operation, authentication, infrastructure, abuse prevention, and protective measures. In these contexts, Maped Solutions may, depending on the specific processing activity, act not only as a processor but also as an independent controller or joint controller. It would therefore be inaccurate to describe all processing as being carried out exclusively on the client’s instructions."
+            "title": "Role of Maped Solutions as technical operator",
+            "body": "Maped Solutions technically operates the platform and supports secure operation, authentication, infrastructure, abuse prevention, and protective measures. Depending on the specific processing activity, Maped Solutions may act as a processor, an independent controller, or, where legally justified, a joint controller. It would therefore be inaccurate to describe every processing activity on the platform as being carried out exclusively on the client's instructions."
           },
           "links": [
             {
@@ -964,6 +1022,35 @@
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             }
           ]
+        },
+        "contacts": {
+          "title": "Identity and contact details",
+          "intro": "The following contact details identify the parties relevant for data protection in connection with this platform and the offered services.",
+          "controller": {
+            "title": "Controller for the offered services",
+            "description": "For the service relationship with end users, the responsible business shown below is generally the controller."
+          },
+          "technicalOperator": {
+            "title": "Technical platform operator",
+            "description": "The following operator is responsible for the technical operation, security, and infrastructure of the platform."
+          },
+          "dpo": {
+            "title": "Data Protection Officer / privacy contact",
+            "description": "If a Data Protection Officer or dedicated privacy contact exists, the details are shown below."
+          },
+          "fields": {
+            "businessName": "Business / Brand",
+            "legalName": "Legal name",
+            "representedBy": "Represented by",
+            "address": "Address",
+            "email": "Email",
+            "phone": "Phone",
+            "name": "Name"
+          },
+          "unavailable": {
+            "notApplicable": "Not applicable",
+            "notAvailable": "Currently not available"
+          }
         },
         "accountStructure": {
           "title": "Global accounts and service-specific profiles",
@@ -1016,14 +1103,14 @@
             "Account and security data (encrypted passwords, roles, language settings).",
             "Platform authentication account data.",
             "Service request data (descriptions, locations).",
-            "Contractual and payment data (invoices, payments via third parties).",
+            "Contractual and billing-related data (for example invoices or related business records where applicable).",
             "Technical data (IP address, device information, server logs, strictly necessary cookies).",
             "Purpose-bound minimum data in individual technical datasets (e.g. for documentation, billing or fulfillment of legal obligations)."
           ]
         },
         "thirdParties": {
           "title": "Third-Party Service Providers",
-          "subtitle": "This overview refers to technical providers that may be required to operate the platform (e.g., hosting, email delivery, payment processing).",
+          "subtitle": "This overview refers to technical providers that may be required to operate the platform (e.g., hosting, infrastructure, data storage, email delivery).",
           "intro": "No providers are used for analytics or marketing.",
           "table": {
             "headers": {
@@ -1087,7 +1174,7 @@
         },
         "cookies": {
           "title": "Cookies and comparable technologies",
-          "body": "This platform currently uses only strictly necessary cookies and comparable technical storage and access technologies. Where such technologies are required for authentication, security, session control, language settings, or other strictly necessary functions, they are used to ensure the secure operation of the platform. Analytics or tracking functions are not currently used. If non-essential statistics or analytics functions are introduced in the future, they will be used only on the legal basis required for that purpose, in particular after prior consent where required.",
+          "body": "This platform currently uses only strictly necessary cookies and comparable technical storage and access technologies. Where such technologies are required for authentication, security, session control, language settings, or other strictly necessary functions, they are used to ensure the secure operation of the platform. No analytics, marketing, or tracking technologies are implemented on this platform.",
           "cta": {
             "label": "View Cookie Policy",
             "href": "/legal/cookie-policy"
@@ -1102,7 +1189,7 @@
             "Withdrawal of consent (Art. 7(3)) where processing is based on consent.",
             "Right to lodge a complaint with a supervisory authority (Art. 77)."
           ],
-          "howTo": "Requests should generally be addressed to the respective data controller. Maped Solutions may provide technical assistance in handling such requests, in particular where they relate to platform-wide authentication, security, or account administration. We may request identification and generally respond, or assist with the response, within one month."
+          "howTo": "Requests concerning the offered services should generally be addressed to the responsible business shown on this page. Maped Solutions may provide technical assistance in handling requests, in particular where they relate to platform-wide authentication, security, or account administration. Identification may be required, and responses are generally provided, or technically supported, within one month."
         },
         "accountDeletion": {
           "title": "Deletion of a service-specific account",
@@ -1126,7 +1213,7 @@
           "items": [
             {
               "title": "Requirement to provide data",
-              "body": "Providing personal data is necessary to use the platform. Without this data, registration and use of the services are not possible."
+              "body": "Providing personal data is necessary to use the platform and, where applicable, to request or receive the offered services. Without this data, registration, secure login, and use of relevant service functions may not be possible."
             },
             {
               "title": "Data sources",
@@ -1138,7 +1225,7 @@
             },
             {
               "title": "Privacy contact",
-              "body": "If a Data Protection Officer is appointed, their contact details will be provided in the Imprint or upon request."
+              "body": "If a Data Protection Officer or dedicated privacy contact exists, the relevant contact details will be provided on this page, in the Imprint, or upon request."
             }
           ]
         },
@@ -1148,7 +1235,7 @@
         },
         "changes": {
           "title": "Changes to this Privacy Policy",
-          "body": "This Privacy Policy may be updated for legal or operational reasons.",
+          "body": "This Privacy Policy may be updated where legal requirements, technical services, or actual processing activities change.",
           "meta": {
             "lastUpdated": "Last updated:"
           }
@@ -1171,7 +1258,7 @@
         "hero": {
           "headline1": "Cookie Policy",
           "headline2": "Use of Strictly Necessary Cookies",
-          "subtitle": "This policy explains the use of cookies and comparable technologies on this platform, which is technically operated by Maped Solutions (sole proprietorship).",
+          "subtitle": "This policy explains the use of cookies and comparable technologies on this platform, including the strictly necessary technical functions required for authentication, security, language preferences, and related platform operation.",
           "image": {
             "src": "/images/cookies-hero.png",
             "alt": "Cookies and privacy settings"
@@ -1179,10 +1266,10 @@
         },
         "overview": {
           "title": "Overview",
-          "intro": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used. If non-essential technologies are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
+          "intro": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. No analytics, marketing, or tracking technologies are implemented on this platform, and the cookie banner serves as an informational layer for this current setup.",
           "bullets": [
             "Strictly necessary cookies and comparable technologies support core platform functions.",
-            "Analytics or tracking functions are not currently used.",
+            "No analytics or tracking technologies are used.",
             "No advertising or marketing tracking is carried out.",
             "Cookies and local storage technologies can be managed through browser and platform settings."
           ],
@@ -1200,17 +1287,17 @@
           "items": [
             {
               "name": "Strictly necessary technologies",
-              "description": "Strictly necessary cookies or comparable storage mechanisms may be used to provide authentication, security, session management, language settings, and similar core functions."
+              "description": "Strictly necessary cookies or comparable storage mechanisms may be used to provide authentication, security, session management, language settings, and similar core platform functions."
             },
             {
-              "name": "Currently no statistics or analytics features",
-              "description": "No non-essential statistics or analytics features are currently used. If such features are introduced in the future, they will be activated only on the legal basis applicable to that purpose, in particular after prior consent where required."
+              "name": "No analytics or marketing features",
+              "description": "No non-essential analytics, advertising, marketing, or tracking features are implemented on this platform."
             }
           ]
         },
         "thirdParties": {
           "title": "Third-party services",
-          "body": "External technical service providers may be involved where necessary to provide the platform. Where cookies or comparable technologies are used in that context, this is currently limited to strictly necessary functions. If non-essential statistics or analytics features are introduced through third-party services in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
+          "body": "External technical service providers may be involved where necessary to provide the platform infrastructure. Where cookies or comparable technologies are used in that context, this is limited to strictly necessary technical functions only.",
           "table": {
             "headers": {
               "name": "Provider",
@@ -1222,11 +1309,11 @@
         },
         "localStorage": {
           "title": "Browser storage and comparable technologies",
-          "body": "In addition to cookies, the platform may use local browser storage technologies such as localStorage to store technical preferences or states on your device. This information is used for technical delivery and user guidance and is not shared with third parties merely because it is stored locally."
+          "body": "In addition to cookies, the platform may use local browser storage technologies such as localStorage to store technical preferences or states on your device. This may include, for example, language preferences or technical status information related to the current session or cookie notice. This information is used for technical delivery and user guidance and is not shared with third parties merely because it is stored locally."
         },
         "management": {
           "title": "Managing cookies and storage technologies",
-          "intro": "You can manage or delete cookies at any time via your browser settings. You can also remove locally stored information in your browser or on your device. Disabling strictly necessary technologies may affect the functionality of the platform.",
+          "intro": "You can manage or delete cookies at any time via your browser settings. You can also remove locally stored information in your browser or on your device. Disabling strictly necessary technologies may affect the functionality of the platform. The cookie notice can also be reopened to review the current information shown by the platform.",
           "methods": [
             "Manage cookies through browser settings.",
             "Delete stored cookies via the browser.",
@@ -1258,11 +1345,11 @@
         },
         "legalBasis": {
           "title": "Legal basis",
-          "body": "Where access to or storage of information on your device is required for the technically necessary provision of the platform, this takes place on the basis of Section 25 TDDDG for strictly necessary technologies. Where personal data is further processed in that context, such processing will generally rely on Art. 6(1)(b) or (f) GDPR. Non-essential statistics or analytics functions are not currently used; if they are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular on the basis of consent under Section 25 TDDDG and Art. 6(1)(a) GDPR where required."
+          "body": "Where access to or storage of information on your device is required for the technically necessary provision of the platform, this takes place on the basis of Section 25 TDDDG for strictly necessary technologies. Where personal data is further processed in that context, such processing will generally rely on Art. 6(1)(b) or (f) GDPR, depending on whether the processing is required for the requested platform function or for legitimate technical and security interests. No non-essential analytics or marketing technologies are implemented on this platform."
         },
         "changes": {
           "title": "Changes to this Cookie Policy",
-          "body": "This Cookie Policy may be updated for legal or technical reasons. The date of the last update is displayed on this page.",
+          "body": "This Cookie Policy may be updated where legal requirements, technical services, or the actual use of storage technologies on the platform changes. The date of the last update is displayed on this page.",
           "meta": {
             "lastUpdated": "Last updated:"
           }
@@ -1293,7 +1380,7 @@
         },
         "overview": {
           "title": "Scope",
-          "intro": "These Terms of Service apply to the use of the functions and services provided through this platform.",
+          "intro": "These Terms of Service apply to the use of the platform functions made available through this website. Additional service-specific commercial conditions may arise directly between the end user and the responsible business.",
           "bullets": [
             "The platform is technically operated by Maped Solutions (sole proprietorship).",
             "The respective end-user services are generally provided by the respective client.",
@@ -1310,7 +1397,7 @@
             },
             {
               "term": "Client",
-              "definition": "The company offering services to end users through the platform."
+              "definition": "The responsible business offering services to end users through the platform."
             },
             {
               "term": "User",
@@ -1318,7 +1405,7 @@
             },
             {
               "term": "Provider",
-              "definition": "Maped Solutions (sole proprietorship) as the technical operator of the platform."
+              "definition": "Maped Solutions as the technical operator of the platform."
             },
             {
               "term": "Base account",
@@ -1330,10 +1417,30 @@
             }
           ]
         },
+        "parties": {
+          "title": "Contractual parties and platform roles",
+          "intro": "The following information clarifies which business provides the offered services and which party operates the platform technically.",
+          "serviceProvider": {
+            "title": "Business responsible for the offered services",
+            "description": "The contractual relationship for the offered end-user services generally exists with the responsible business shown below."
+          },
+          "technicalOperator": {
+            "title": "Technical platform operator",
+            "description": "The following operator provides the technical platform, infrastructure, maintenance, and security, but does not itself provide the client’s offered services."
+          },
+          "fields": {
+            "businessName": "Business / Brand",
+            "legalName": "Legal name",
+            "representedBy": "Represented by",
+            "address": "Address",
+            "email": "Email",
+            "phone": "Phone"
+          }
+        },
         "serviceDescription": {
           "title": "Service Description",
           "body": "Maped Solutions (sole proprietorship) provides the client with a production-ready software platform. The service includes technical operation, maintenance, and continuous optimization.",
-          "note": "The platform does not act as a service provider or intermediary for the services offered."
+          "note": "Making the platform available does not by itself make Maped Solutions the contractual provider of the services offered by the client."
         },
         "optimization": {
           "title": "Continuous Optimization",
@@ -1367,11 +1474,11 @@
         },
         "payments": {
           "title": "Payments",
-          "body": "Payments and billing are governed by the agreements concluded between Maped Solutions (sole proprietorship) and the client. The platform itself does not provide payment services."
+          "body": "If the offered services involve payments, invoices, or similar commercial arrangements, those matters are generally governed by the relationship between the end user and the responsible client, unless expressly stated otherwise. The platform itself does not provide payment services."
         },
         "termination": {
           "title": "Termination",
-          "body": "Use of a specific service or the relationship with a specific client may be terminated in accordance with the applicable terms. Terminating one service does not automatically delete other active relationships or other service-specific profiles of the same person. Details regarding data deletion are set out in the Privacy Policy."
+          "body": "Use of a specific service or the relationship with a specific client may be terminated in accordance with the applicable terms and any service-specific arrangements. Terminating one service does not automatically delete other active relationships or other service-specific profiles of the same person. Details regarding data deletion are set out in the Privacy Policy."
         },
         "dataProtection": {
           "title": "Data Protection",
@@ -1383,7 +1490,7 @@
         },
         "changes": {
           "title": "Changes to these Terms",
-          "body": "Maped Solutions (sole proprietorship) reserves the right to amend these Terms for legal or operational reasons. The current version is available on this platform.",
+          "body": "These Terms may be updated where legal, technical, or operational requirements change. Where required, users will be informed appropriately about material updates. The current version remains available on this platform.",
           "meta": {
             "lastUpdated": "Last updated:"
           }
@@ -1393,18 +1500,52 @@
         "hero": {
           "headline1": "Imprint",
           "headline2": "Information pursuant to § 5 DDG",
-          "subtitle": "This page contains the legally required information about the provider of this digital service."
+          "subtitle": "This page contains the legally required information about the business responsible for the offered services and about the technical operator of this platform."
         },
-        "providerSection": {
-          "heading": "Service Provider Information",
-          "description": "The service provider for this website is Heriberto Santana, trading as Maped Solutions.",
+        "serviceProviderSection": {
+          "heading": "Business responsible for the offered services",
+          "description": "The services offered through this website are provided by the respective business shown below. For questions about service requests, appointments, quotes, invoices, cancellations, or customer support, please contact that business directly.",
           "fields": {
-            "companyName": "Company",
-            "owner": "Owner",
+            "businessName": "Business / Brand",
+            "legalName": "Legal name",
+            "representedBy": "Represented by",
             "address": "Address",
             "email": "Email",
-            "phone": "Phone"
+            "phone": "Phone",
+            "vatId": "VAT ID",
+            "register": "Register information"
           },
+          "values": {}
+        },
+        "technicalOperatorSection": {
+          "heading": "Technical platform operator",
+          "description": "This website and the underlying digital platform are technically operated, maintained, and secured by the operator shown below. The technical operator does not provide the household or service work offered by the client business itself.",
+          "fields": {
+            "businessName": "Business / Brand",
+            "legalName": "Legal name",
+            "representedBy": "Represented by",
+            "address": "Address",
+            "email": "Email",
+            "phone": "Phone",
+            "vatId": "VAT ID",
+            "register": "Register information"
+          }
+        },
+        "contactGuidanceSection": {
+          "heading": "Who should I contact?",
+          "items": [
+            "For service requests, appointments, quotes, invoices, cancellations, or complaints about the offered services, contact the responsible business shown above.",
+            "For technical issues with the website, login, account access, or platform security, contact the technical operator."
+          ]
+        },
+        "unavailable": {
+          "notApplicable": "Not applicable",
+          "notAvailable": "Currently not available"
+        },
+        "providerSection": {
+          "heading": "Legacy technical operator",
+          "description": "Fallback values used until tenant-specific legal data is fully populated.",
+          "fields": {},
           "values": {
             "companyName": "Maped Solutions",
             "owner": "Heriberto Santana",

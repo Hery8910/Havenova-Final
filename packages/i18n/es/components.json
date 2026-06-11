@@ -75,8 +75,10 @@
         }
       ],
       "accessibility": {
+        "skipToContent": "Saltar al contenido principal",
         "mainNavigation": "Navegación principal",
         "homeLink": "Ir a la página de inicio",
+        "authFooter": "Acciones de la página de autenticación",
         "logoAlt": "Logo de Havenova",
         "accountLabel": "Cuenta",
         "mobileNavigation": "Navegación móvil",
@@ -154,17 +156,18 @@
         "login": "Iniciar sesión",
         "edit": "Guardar cambios",
         "changePassword": "Guardar contraseña",
-        "forgotPassword": "Restablecer",
-        "resetPassword": "Guardar contraseña",
+        "forgotPassword": "Enviar enlace para restablecer",
+        "resetPassword": "Guardar nueva contraseña",
         "contact": "Enviar mensaje",
         "support": "Crear ticket",
-        "resendEmail": "Reenviar correo"
+        "resendEmail": "Reenviar correo de verificación"
       },
       "labels": {
         "name": "Nombre",
         "email": "Correo electrónico",
         "password": "Contraseña",
-        "errorSummary": "Revisa los campos resaltados.",
+        "invalidData": "Revisa este campo.",
+        "errorSummary": "Revisa los campos resaltados antes de continuar.",
         "forgotPassword": "¿Olvidaste tu contraseña?",
         "resetPassword": "Restablecer contraseña",
         "passwordHint": "Mín. 8 caracteres con mayúscula, número y símbolo.",
@@ -181,11 +184,11 @@
         "message": "Mensaje"
       },
       "placeholders": {
-        "name": "John Doe",
-        "email": "john.doe@example.com",
-        "password": "Min. 8 characters",
-        "address": "Main Street 12, 12345 London",
-        "phone": "+49 7911 123456",
+        "name": "Ana García",
+        "email": "ana.garcia@example.com",
+        "password": "Mín. 8 caracteres",
+        "address": "Calle Principal 12, 28001 Madrid",
+        "phone": "+34 612 345 678",
         "subject": "Selecciona un asunto",
         "message": "Tu pregunta o mensaje..."
       },

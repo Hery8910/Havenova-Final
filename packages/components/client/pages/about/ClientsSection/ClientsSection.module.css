@@ -1,71 +1,74 @@
 .section {
-  padding: clamp(24px, 5vw, 56px) 0;
+  padding: clamp(32px, 6vw, 64px) 0;
 }
 
 .container {
   width: 100%;
-  max-width: var(--container-max);
+  max-width: var(--v2-content-max-width);
   margin: 0 auto;
-  padding: 0;
+  padding: 0 var(--v2-page-inline-padding);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--space-4);
+  gap: clamp(16px, 3vw, 24px);
 }
 
 .title {
   margin: 0;
-  color: var(--color-page-heading);
+  color: var(--v2-page-text-primary);
   text-align: center;
 }
 
 .description {
   max-width: 60ch;
-  margin: 0 5dvw;
-  color: var(--color-page-body);
+  margin: 0;
+  color: var(--v2-page-text-secondary);
   text-align: center;
 }
 
 .list {
   width: 100%;
-  max-width: fit-content;
+  max-width: 100%;
   list-style: none;
-  padding: var(--space-8) 0;
-  margin: 0 auto;
+  padding: clamp(28px, 5vw, 40px) 0 0;
+  margin: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  overflow-x: scroll;
+  overflow-x: auto;
   scrollbar-width: none;
-  gap: var(--space-3);
+  gap: clamp(16px, 2vw, 20px);
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 5dvw;
+  scroll-padding-inline: var(--v2-page-inline-padding);
 }
 
 .list::before,
 .list::after {
   content: '';
-  flex: 0 0 5dvw;
+  flex: 0 0 2px;
 }
 
 .item {
   margin: 0;
   padding: 0;
-  min-width: 350px;
-  min-height: 450px;
+  min-width: min(360px, 78vw);
+  min-height: 460px;
   scroll-snap-align: start;
 }
 
 .card {
-  min-height: 450px;
+  min-height: 460px;
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--v2-radius-lg);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: var(--color-page-surface-subtle);
-  box-shadow: var(--shadow-md);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+    var(--v2-card-neutral-bg2);
+  box-shadow: var(--v2-card-shadow);
+  border-color: var(--v2-card-neutral-border);
 }
 
 .media {
@@ -73,22 +76,22 @@
   inset: 0;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(0.1) contrast(1.05);
-  opacity: 0.75;
+  filter: grayscale(0.08) contrast(1.04);
+  opacity: 0.78;
 }
 
 .content {
   position: relative;
   z-index: 1;
-  padding: var(--space-4);
+  padding: clamp(18px, 3vw, 22px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: var(--space-3);
+  gap: 12px;
   isolation: isolate;
-  margin: var(--space-2);
-  width: calc(100% - (var(--space-2) * 2));
-  min-height: 200px;
+  margin: 12px;
+  width: calc(100% - 24px);
+  min-height: 210px;
 }
 
 .content::before {
@@ -96,14 +99,14 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(18, 18, 18, 0.411) 0%, rgba(18, 18, 18, 0.414) 100%);
-  backdrop-filter: blur(8px);
-  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.48) 0%, rgba(15, 23, 42, 0.7) 100%);
+  backdrop-filter: blur(12px);
+  border-radius: var(--v2-radius-md);
 }
 
 .cardTitle {
   margin: 0;
-  color: var(--text-light-fixed);
+  color: #f8fafc;
   line-height: 1.2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -111,7 +114,7 @@
 }
 
 .cardDescription {
-  color: var(--text-light-fixed);
+  color: rgba(248, 250, 252, 0.92);
   margin: 0;
   min-height: calc(1rem * 1.55 * 5);
   display: -webkit-box;
@@ -120,38 +123,37 @@
 }
 
 .closing {
-  max-width: 800px;
+  max-width: min(800px, calc(100% - (var(--v2-page-inline-padding) * 2)));
   margin: 0 auto;
-  padding: var(--space-4) 5dvw;
-  border-top: 1px solid var(--color-page-border);
-  color: var(--color-page-body);
+  padding: clamp(20px, 4vw, 28px) var(--v2-page-inline-padding) 0;
+  border-top: 1px solid var(--v2-card-neutral-border);
+  color: var(--v2-page-text-secondary);
   text-align: center;
 }
 
 @media (min-width: 1550px) {
   .list {
-    max-width: fit-content;
-    padding: 36px 0;
-    overflow: hidden;
-  }
-  .list::before {
-    padding: 0;
+    overflow: clip;
   }
 }
 
 @media (max-width: 700px) {
   .container {
-    gap: var(--space-3);
+    gap: 16px;
   }
 }
 
 @media (max-width: 640px) {
   .item {
-    min-height: 450px;
+    min-height: 430px;
+  }
+
+  .card {
+    min-height: 430px;
   }
 }
 @media (max-width: 440px) {
   .item {
-    min-width: 300px;
+    min-width: min(300px, 82vw);
   }
 }

@@ -4,7 +4,7 @@ export type NotificationCategory = 'profile' | 'service-request' | 'job' | 'bill
 
 export type NotificationPriority = 'low' | 'normal' | 'high';
 
-export type NotificationActorKind = 'user' | 'worker' | 'admin' | 'system';
+export type NotificationActorKind = 'user' | 'worker' | 'admin' | 'super_admin' | 'system';
 
 export type NotificationEntityType = 'service-request' | 'job' | 'invoice' | 'profile';
 

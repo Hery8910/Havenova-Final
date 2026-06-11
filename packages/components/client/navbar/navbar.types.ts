@@ -31,6 +31,7 @@ export interface HeadersItem {
 }
 
 export interface NavbarAccessibilityConfig {
+  skipToContent?: string;
   mainNavigation?: string;
   homeLink?: string;
   logoAlt?: string;

@@ -117,6 +117,7 @@ export function Footer() {
           <CompanyContact
             contact={footer.contact}
             schedule={client.operations.schedule}
+            locale={language}
             hoursStatus={footer.hoursStatus}
             ariaLabel={a11y.contact}
             emailAriaLabel={a11y.email}

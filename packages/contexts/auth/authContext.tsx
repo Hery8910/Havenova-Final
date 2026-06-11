@@ -14,22 +14,26 @@ import { useClient } from '../client/ClientContext';
 import { useGlobalAlert } from '../alert';
 import { useI18n } from '@havenova/contexts/i18n';
 import { getI18nFallbacks } from '../i18n';
-import { AuthRole, AuthUser } from '@/packages/types/auth/authTypes';
+import { AuthRole, AuthUser } from '@/packages/types';
 import { useRouter } from 'next/navigation';
-import { getPopup } from '@havenova/utils';
+import { getPopup, normalizeAuthSession, type AuthSessionSeed } from '@havenova/utils';
 import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
 const AUTH_REQUEST_TIMEOUT_MS = 8000;
+type AuthSource = 'server' | 'storage' | 'default' | 'dev-fallback';
 
-type PartialAuthUser = Partial<AuthUser> & {
-  authId?: string;
-  userClientId?: string;
-  userId?: string;
+type AuthRefreshResult = {
+  auth: AuthUser;
+  source: AuthSource;
+  isOffline: boolean;
+  lastSyncAt: string | null;
+  syncedFromServer: boolean;
+  userNotified: boolean;
 };
 
-const isDevFallbackAuth = (value?: PartialAuthUser | null) => value?.authId === 'dev-auth';
+const isDevFallbackAuth = (value?: AuthSessionSeed | null) => value?.authId === 'dev-auth';
 
 const isSameAuthState = (left: AuthUser | null, right: AuthUser) => {
   if (!left) return false;
@@ -37,7 +41,6 @@ const isSameAuthState = (left: AuthUser | null, right: AuthUser) => {
   return (
     left.authId === right.authId &&
     left.userClientId === right.userClientId &&
-    left.userId === right.userId &&
     left.clientId === right.clientId &&
     left.email === right.email &&
     left.role === right.role &&
@@ -70,11 +73,11 @@ const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, message: 
 interface AuthContextProps {
   auth: AuthUser;
   loading: boolean;
-  source: 'server' | 'storage' | 'default' | 'dev-fallback';
+  source: AuthSource;
   isOffline: boolean;
   lastSyncAt: string | null;
-  setAuth: (u: AuthUser) => void;
-  refreshAuth: (onSessionExpired?: () => void) => Promise<void>;
+  setAuth: (u: AuthSessionSeed) => void;
+  refreshAuth: (onSessionExpired?: () => void) => Promise<AuthRefreshResult>;
   logout: () => Promise<void>;
   registerSessionCallback: (cb: () => void) => void;
 }
@@ -127,9 +130,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuthState] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [isClientReady, setIsClientReady] = useState(false);
-  const [source, setSource] = useState<'server' | 'storage' | 'default' | 'dev-fallback'>(
-    'default'
-  );
+  const [source, setSource] = useState<AuthSource>('default');
   const [isOffline, setIsOffline] = useState(false);
   const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
 
@@ -137,25 +138,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isRefreshingRef = useRef(false);
 
   const normalizeAuthState = useCallback(
-    (value?: PartialAuthUser | null, overrides?: Partial<AuthUser>): AuthUser => {
-      const sessionIdentity = value?.userClientId || value?.userId || '';
-
-      return {
-        authId: value?.authId || '',
-        userClientId: sessionIdentity,
-        userId: sessionIdentity,
-        clientId: value?.clientId || clientId,
-        email: value?.email || '',
-        role: value?.role || 'guest',
-        status: value?.status || 'active',
-        isVerified: value?.isVerified ?? false,
-        isLogged: value?.isLogged ?? false,
-        isNewUser: value?.isNewUser ?? true,
-        tosAccepted: value?.tosAccepted,
-        cookiePrefs: value?.cookiePrefs,
+    (value?: AuthSessionSeed | null, overrides?: Partial<AuthUser>): AuthUser =>
+      normalizeAuthSession(value, {
+        clientId,
         ...overrides,
-      };
-    },
+      }),
     [clientId]
   );
 
@@ -168,7 +155,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
     if (!raw) return null;
     try {
-      return normalizeAuthState(JSON.parse(raw) as PartialAuthUser);
+      return normalizeAuthState(JSON.parse(raw) as AuthSessionSeed);
     } catch {
       return null;
     }
@@ -201,7 +188,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return normalizeAuthState(stored, {
       authId: '',
       userClientId: '',
-      userId: '',
       role: 'guest',
       isLogged: false,
       clientId: stored?.clientId || clientId,
@@ -212,8 +198,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const stored = loadFromStorage();
     return normalizeAuthState(stored, {
       authId: stored?.authId || 'dev-auth',
-      userClientId: stored?.userClientId || stored?.userId || 'dev-user',
-      userId: stored?.userId || stored?.userClientId || 'dev-user',
+      userClientId: stored?.userClientId || 'dev-user',
       clientId: stored?.clientId || clientId,
       email: stored?.email || 'dev.user@havenova.local',
       role: stored?.role === 'guest' ? 'user' : stored?.role || 'user',
@@ -247,7 +232,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshAuth = useCallback(
     async (onSessionExpired?: () => void) => {
-      if (!clientId || isRefreshingRef.current) return;
+      const createResult = (
+        nextAuth: AuthUser,
+        nextSource: AuthSource,
+        nextIsOffline: boolean,
+        nextLastSyncAt: string | null,
+        userNotified = false
+      ): AuthRefreshResult => ({
+        auth: nextAuth,
+        source: nextSource,
+        isOffline: nextIsOffline,
+        lastSyncAt: nextLastSyncAt,
+        syncedFromServer: nextSource === 'server' && nextAuth.isLogged && !nextIsOffline,
+        userNotified,
+      });
+
+      if (!clientId || isRefreshingRef.current) {
+        const currentAuth = auth ?? createGuest();
+        return createResult(currentAuth, source, isOffline, lastSyncAt);
+      }
+
       isRefreshingRef.current = true;
 
       const stored = loadFromStorage();
@@ -260,7 +264,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         saveToStorage(finalAuth);
         setSource('server');
         setIsOffline(false);
-        setLastSyncAt(new Date().toISOString());
+        const syncedAt = new Date().toISOString();
+        setLastSyncAt(syncedAt);
+        return createResult(finalAuth, 'server', false, syncedAt);
       };
 
       const setGuest = (offline = false) => {
@@ -270,14 +276,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('default');
         setIsOffline(offline);
         setLastSyncAt(null);
+        return createResult(guest, 'default', offline, null);
       };
 
       const setFromStorage = (cachedAuth: AuthUser, offline = false) => {
-        setAuthState(normalizeAuthState(cachedAuth));
+        const normalized = normalizeAuthState(cachedAuth);
+        setAuthState(normalized);
         const useDevFallback = isDevFallbackAuth(cachedAuth);
         setSource(useDevFallback ? 'dev-fallback' : 'storage');
         setIsOffline(useDevFallback || offline);
         setLastSyncAt(null);
+        return createResult(
+          normalized,
+          useDevFallback ? 'dev-fallback' : 'storage',
+          useDevFallback || offline,
+          null
+        );
       };
 
       const setDevFallback = () => {
@@ -287,6 +301,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('dev-fallback');
         setIsOffline(true);
         setLastSyncAt(null);
+        return createResult(devAuth, 'dev-fallback', true, null);
       };
 
       try {
@@ -295,7 +310,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           AUTH_REQUEST_TIMEOUT_MS,
           'Auth bootstrap timed out.'
         );
-        setFromBackend(backendAuth);
+        return setFromBackend(backendAuth);
       } catch (err: any) {
         const status = err?.response?.status;
 
@@ -312,24 +327,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               AUTH_REQUEST_TIMEOUT_MS,
               'Auth bootstrap timed out after refresh.'
             );
-            setFromBackend(backendAuth);
-            return;
+            return setFromBackend(backendAuth);
           } catch (refreshError) {
             if (isOfflineAuthError(refreshError)) {
               if (stored) {
-                setFromStorage(stored, true);
-                return;
+                return setFromStorage(stored, true);
               }
               if (isDevAuthFallbackEnabled) {
-                setDevFallback();
-                return;
+                return setDevFallback();
               }
-              setGuest(true);
-              return;
+              return setGuest(true);
             }
 
             clearUserStorage();
-            setGuest();
+            const guestResult = setGuest();
             const role = stored?.role;
             const shouldOfferContinue = role === 'user';
             const popupKey = shouldOfferContinue ? 'USER_SESSION_EXPIRED' : 'REFRESH_TOKEN_EXPIRED';
@@ -372,35 +383,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               });
             }
             (onSessionExpired || sessionCallbackRef.current)?.();
-            return;
+            return {
+              ...guestResult,
+              userNotified: true,
+            };
           }
         }
 
         // Other errors
         if (stored) {
-          setFromStorage(stored, isOfflineAuthError(err));
-          return;
+          return setFromStorage(stored, isOfflineAuthError(err));
         }
         if (isOfflineAuthError(err) && isDevAuthFallbackEnabled) {
-          setDevFallback();
-          return;
+          return setDevFallback();
         }
-        setGuest(isOfflineAuthError(err));
+        return setGuest(isOfflineAuthError(err));
       } finally {
         isRefreshingRef.current = false;
       }
     },
     [
+      auth,
       clientId,
       createDevFallback,
       createGuest,
       closeAlert,
       isDevAuthFallbackEnabled,
+      isOffline,
+      lastSyncAt,
       language,
       popups,
       router,
       showConfirm,
       showError,
+      source,
       texts,
     ]
   );
@@ -581,7 +597,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // API
   // -------------------
 
-  const setAuth = useCallback((u: AuthUser) => {
+  const setAuth = useCallback((u: AuthSessionSeed) => {
     const normalized = normalizeAuthState(u);
     setAuthState(normalized);
     saveToStorage(normalized);
@@ -628,7 +644,11 @@ export const useRequireRole = (expectedRole: AuthRole) => {
   const router = useRouter();
   const didNotifyRef = useRef(false);
 
-  const isAllowed = Boolean(auth?.isLogged && auth.role === expectedRole);
+  const isAllowed = Boolean(
+    auth?.isLogged &&
+      (auth.role === expectedRole ||
+        (expectedRole === 'admin' && auth.role === 'super_admin'))
+  );
 
   useEffect(() => {
     if (!auth || loading || isAllowed || didNotifyRef.current) return;

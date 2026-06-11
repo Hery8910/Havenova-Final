@@ -12,6 +12,7 @@ import sharedStyles from '../client/navbar/NavbarShared.module.css';
 import linkListStyles from '../client/navbar/components/NavbarLinkList.module.css';
 import styles from './LanguageSwitcher.module.css';
 import type { ResolvedNavbarLanguageSwitcher } from '../client/navbar/navbar.shared';
+import { useFocusTrap } from '../../utils/accessibility/useFocusTrap';
 
 const SUPPORTED_LANGUAGES: AppLanguage[] = ['de', 'en', 'es'];
 
@@ -54,7 +55,7 @@ export default function LanguageSwitcher({
   });
   const switcherRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
-  const firstOptionRef = useRef<HTMLButtonElement>(null);
+  const currentOptionRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
   const titleId = useId();
@@ -93,6 +94,19 @@ export default function LanguageSwitcher({
     ? (labels?.closeButtonLabel ?? 'Close language selector')
     : `${labels?.currentLanguageLabel ?? labels?.title ?? 'Language'}: ${currentLanguage.label}`;
 
+  const closeSwitcher = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  useFocusTrap({
+    enabled: isOpen,
+    containerRef: panelRef,
+    initialFocusRef: currentOptionRef,
+    returnFocusRef: triggerRef,
+    onEscape: closeSwitcher,
+  });
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -108,29 +122,11 @@ export default function LanguageSwitcher({
       }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        if (isModalPresentation) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        setIsOpen(false);
-      }
-    };
-
     document.addEventListener('pointerdown', handlePointerDown);
-    document.addEventListener('keydown', handleKeyDown, isModalPresentation);
 
     return () => {
       document.removeEventListener('pointerdown', handlePointerDown);
-      document.removeEventListener('keydown', handleKeyDown, isModalPresentation);
     };
-  }, [isModalPresentation, isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    firstOptionRef.current?.focus();
   }, [isOpen]);
 
   useLayoutEffect(() => {
@@ -185,11 +181,6 @@ export default function LanguageSwitcher({
     router.push(segments.join('/'));
   };
 
-  const closeSwitcher = () => {
-    setIsOpen(false);
-    triggerRef.current?.focus();
-  };
-
   const switcherContent = (
     <div
       className={
@@ -224,6 +215,7 @@ export default function LanguageSwitcher({
         className={`card card--neutral ${styles.panel} ${
           isModalPresentation ? styles.modalPanel : ''
         } ${isOpen ? styles.panelOpen : ''}`}
+        tabIndex={-1}
         aria-labelledby={isOpen ? titleId : undefined}
         aria-hidden={!isOpen}
         role={isModalPresentation ? 'dialog' : undefined}
@@ -260,7 +252,7 @@ export default function LanguageSwitcher({
                 className={panelVariant === 'navbar' ? linkListStyles.panelItem : ''}
               >
                 <button
-                  ref={option.code === currentLang ? firstOptionRef : undefined}
+                  ref={option.code === currentLang ? currentOptionRef : undefined}
                   type="button"
                   className={[
                     'button',

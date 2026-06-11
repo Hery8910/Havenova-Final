@@ -13,6 +13,23 @@ Su responsabilidad real debería ser:
 
 No debería ser la fuente principal de datos de perfil del usuario.
 
+## Requisito de reutilizacion
+
+Este dominio no debe seguir leyendose solo como contexto interno de esta app.
+
+Debe evolucionar hacia una base reusable para proyectos multi-client que compartan:
+
+- autenticacion
+- restauracion de sesion
+- permisos basicos por rol
+- flujos publicos de auth
+
+Esto implica:
+
+- minimizar dependencias a dominios de negocio de este proyecto
+- dejar el contrato de sesion cerrado y portable
+- documentar flujos y estados visibles de forma reproducible
+
 ## Contrato backend relevante
 
 Según el dominio backend `auth`:
@@ -67,32 +84,34 @@ Restricción importante:
 
 ### Inconsistencias detectadas
 
-1. Contrato de identidad frontend sin decisión explícita cerrada
-- El backend documenta `authId` y `userClientId`
-- El frontend sigue modelando [authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts) con `userId`
-- `getAuthUser()` en [authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts) tipa la respuesta directamente como `AuthUser`, sin adaptar formalmente la decisión de frontend
-- según la decisión actual de dominio, `auth` debe quedar desacoplado del perfil y representar solo la sesión
-- eso implica que la identidad expuesta por `auth` debe elegirse por semántica de autenticación, no por conveniencia para el perfil
+1. El contrato base de sesión ya fue corregido, pero quedan consumidores externos por consolidar
+- [authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts) ya modela `authId` y `userClientId` como identidad de sesión
+- [authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts) ya normaliza `login`, `magic-login` y `GET /me` hacia `AuthUser`
+- el problema real ya no está en el contrato base de `auth`, sino en consumidores externos que todavía mezclan identidad de sesión con perfil
 
-2. `auth` mezcla sesión y datos de usuario
-- `email` hoy se consume como dato de perfil en UI
-- ejemplo: [profile page](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:183)
-- esto contradice el objetivo actual del dominio `profile`, donde `contactEmail` existe precisamente para lectura de perfil
+2. `auth.email` sigue teniendo usos de presentación fuera de auth
+- el objetivo del dominio sigue siendo tratar `auth.email` como dato de sesión
+- parte de la UI ya migró a `profile.contactEmail`, pero aún quedan consumidores secundarios y defaults locales que siguen leyendo `auth.email`
+- esto mantiene un acoplamiento innecesario entre sesión y perfil
 
-3. Nomenclatura frontend antigua propagada
-- `AuthUser.userId` se usa como identidad del usuario en múltiples contextos y servicios
-- pero el backend ya distingue `authId` de `userClientId`
-- con la decisión actual, el frontend debe evitar reutilizar identidad de `auth` para resolver ownership del perfil
+3. La identidad canónica ya quedó cerrada en `userClientId`
+- `AuthUser` ya no expone `userId`
+- `auth`, `profile` y `worker` ya usan `userClientId` como identidad principal
+- el cierre pendiente es solo verificar superficies externas o tipos auxiliares que no formen parte del núcleo ya corregido
 
-4. `AuthContext` alimenta otros contextos con campos conceptualmente incorrectos
-- `ProfileContext` usa `auth.userId` como identidad base
-- `WorkerContext` usa `auth.email` para defaults locales
-- estos acoplamientos hacen que cambios de contrato en auth impacten perfil/worker
+4. `AuthContext` sigue impactando otros dominios por dependencias de sesión
+- `ProfileContext` y `WorkerContext` todavía consumen parte del estado de sesión para defaults, continuidad o bootstrap local
+- esos acoplamientos ya no bloquean el runtime principal, pero sí bloquean el cierre limpio del dominio reusable
 
-5. Los formularios de autenticación comparten infraestructura con formularios de perfil
-- hoy el proyecto reutiliza `FormWrapper` y validators bajo `userForm` tanto para auth como para profile
-- esto ya funciona, pero la separación conceptual no está bien definida
-- auth y profile necesitan contratos/form-state/validaciones claramente diferenciados
+5. La separación de formularios avanzó, pero no está cerrada del todo
+- la separación física inicial entre formularios de auth y profile ya existe
+- `FormWrapper` auth ya no depende de `useProfile()` ni `useWorker()`
+- siguen pendientes contratos tipados más específicos por flujo y algunas decisiones de inicialización
+
+6. Los flujos compuestos ya mejoraron, pero su regla reusable todavía debe cerrarse
+- `verify-email` ya fue corregido para comportarse más cerca de una operación compuesta única
+- falta convertir esa decisión en regla documental estable para todo el dominio auth
+- mientras eso no ocurra, cada página seguirá pudiendo reinventar su propia secuencia de alertas
 
 ## Decisión de diseño propuesta
 
@@ -110,6 +129,12 @@ Esto permite:
 - no romper flujos de auth que aún necesitan `email`
 - reducir acoplamiento entre sesión y perfil
 
+Decisión adicional para flujos:
+
+- un flujo auth debe modelarse como una unidad funcional y visual
+- no se debe exponer un `success` intermedio si el flujo todavía no terminó
+- en flujos compuestos exitosos el estado visible debe permanecer en `loading` hasta la confirmación final
+
 ## Cambios necesarios en Auth
 
 ### Fase 1. Documentación y tipado
@@ -117,7 +142,7 @@ Esto permite:
 - [x] documentar contrato real de `AuthContext`
 - [x] decidir si `AuthUser` expone `authId` y/o `userClientId` explícitos o si se adapta a un modelo frontend reducido de sesión
 - [x] introducir `authId` y `userClientId` en el modelo frontend de sesión
-- [ ] eliminar la ambigüedad actual de `userId`
+- [x] eliminar `userId` del modelo operativo de sesión y dominios relacionados
 - [x] documentar explícitamente que `auth` no es owner del perfil
 
 ### Fase 2. Modelo frontend
@@ -126,7 +151,8 @@ Esto permite:
 - [x] revisar [authService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/auth/authService.ts) para tipar correctamente `GET /api/auth/me`
 - [x] adaptar `login` y `magic login` a envelope tipado con normalización de sesión
 - [x] adaptar `refreshAuth` al contrato real
-- [ ] decidir si `AuthUser.userId` se elimina o se reemplaza por una identidad de sesión explícita
+- [x] eliminar `userId` del contrato principal de `AuthUser`
+- [ ] verificar superficies externas residuales para confirmar que ya no arrastran identidad antigua
 
 ### Fase 3. Responsabilidad del contexto
 
@@ -152,9 +178,15 @@ Esto permite:
 - [ ] corregir formularios actuales de login/register/forgot-password/set-password para que su contrato quede alineado con `auth`
 - [ ] evitar que validaciones o tipos de perfil se mezclen en formularios de autenticación
 
+### Fase 6. Orquestación visual de flujos
+
+- [ ] documentar los estados visibles permitidos por cada flujo auth
+- [ ] evitar secuencias `loading -> success -> loading -> success` en flujos compuestos
+- [ ] tratar `verify-email -> magic-login -> refreshAuth` como una sola operación visible
+- [ ] revisar si `AlertContext` necesita una API específica para flujos compuestos o si basta una convención de uso
+
 ## Riesgos
 
-- renombrar `userId` sin estrategia de transición puede romper `profile`, `worker`, forms y páginas de login
 - mover el consumo de email sin exponer primero `contactEmail` en `ProfileContext` deja vistas sin dato
 
 ## Sugerencia de ejecución
@@ -167,7 +199,8 @@ Recomendación:
 2. exponer `contactEmail` en `profile`
 3. migrar consumidores de UI desde `auth.email` a `profile.contactEmail`
 4. corregir la separación entre formularios de auth y formularios de perfil
-5. dejar `auth.email` como compatibilidad interna hasta cerrar la migración
+5. dejar `auth.email` solo como dato de sesión donde el flujo auth lo siga necesitando
+6. cerrar la orquestación visual de flujos antes del pulido final
 
 ## Plan de Implementación Propuesto
 
@@ -196,11 +229,11 @@ Cambios previstos:
   - `isVerified`
   - `isLogged`
   - `isNewUser`
-- eliminar o deprecar `userId` si ya no representa el contrato actual
+- mantener `userClientId` como única identidad de sesión soportada
 
 Resultado esperado:
 
-- `AuthContext` deja de exponer una identidad ambigua que otros contextos interpretan como perfil
+- `AuthContext` deja una identidad de sesión única y explícita
 
 ### Paso 2. Alinear servicios auth con el contrato elegido
 
@@ -341,7 +374,7 @@ Completado en esta fase:
 
 - `AuthUser` ya expone `authId` y `userClientId`
 - `authService` normaliza `login`, `magic login` y `GET /me` desde el payload backend documentado
-- se mantiene `userId` como alias transitorio apuntando a `userClientId` para no romper consumidores actuales
+- `login` y `magic-login` ya persisten el payload normalizado completo en cliente y dashboard
 
 Pendiente para la siguiente fase:
 
@@ -350,8 +383,7 @@ Pendiente para la siguiente fase:
 
 Completado adicionalmente en esta iteración:
 
-- [AuthContext](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/authContext.tsx) ya normaliza storage legacy y el modelo nuevo de sesión
-- el contexto mantiene `authId`, `userClientId` y `userId` aliasado de forma consistente
+- [AuthContext](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/authContext.tsx) ya normaliza el modelo actual de sesión
 - se añadieron tests de hidratación para guest y storage legado:
   - [auth-context.test.jsx](/home/heriberto/Escritorio/Havenova/havenova/tests/jest/contexts/auth-context.test.jsx)
 - se completó la separación física inicial de componentes de usuario:
@@ -361,8 +393,8 @@ Completado adicionalmente en esta iteración:
 
 Pendiente real a partir del estado actual:
 
-- siguen existiendo consumidores de `auth.email` como dato de presentación, por ejemplo [profile page](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:183)
-- `userId` sigue vivo como alias de compatibilidad en `auth`, `profile`, `worker` y varios payloads de UI
+- siguen existiendo consumidores de `auth.email` como dato de presentación en fallbacks y defaults secundarios fuera del flujo auth
+- la identidad principal ya quedó cerrada en `userClientId`; solo queda verificar superficies externas residuales
 
 Actualización:
 
@@ -371,7 +403,7 @@ Actualización:
 
 Completado en la separación inicial de formularios:
 
-- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx) ya depende solo de `useAuth()` y `useClient()`
+- [FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/formWrapper/FormWrapper.tsx) ya recibe `initialValues` y callbacks desde cada página auth sin depender de `useProfile()` ni `useWorker()`
 - [Form.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/userForm/form/Form.tsx) ya no renderiza `name`, `phone`, `address` ni otros campos de perfil
 - se creó una variante de perfil separada en:
   - `packages/components/client/user/profile/profileForm/*`
@@ -387,24 +419,16 @@ Componente afectado principal:
 
 ### Diagnóstico actual
 
-1. Mezcla de dominios en tiempo de ejecución
+1. La separación de dominios ya avanzó, pero faltan contratos más cerrados por flujo
 
-- `FormWrapper` consume simultáneamente:
-  - `useAuth()`
-  - `useProfile()`
-  - `useWorker()`
-  - `useClient()`
-- eso hace que un formulario de login/register herede defaults de perfil o worker aunque no corresponda
+- `FormWrapper` auth ya no consume `useProfile()` ni `useWorker()`
+- la deuda principal dejó de ser el acoplamiento runtime y pasó a ser la precisión del contrato por flujo
+- siguen faltando tipos más específicos para login, register, forgot-password y reset-password
 
-2. Hidratación implícita de campos
+2. Persisten decisiones de inicialización que conviene cerrar explícitamente
 
-- el wrapper sobreescribe `initialValues` con:
-  - `auth.email`
-  - `profile.name`
-  - `profile.phone`
-  - `profile.language`
-  - `client._id`
-- esto impide separar claramente formularios de auth de formularios de profile
+- auth ya recibe `initialValues` desde cada página
+- todavía conviene decidir con más rigor qué campos deben inyectarse desde contenedor, especialmente `clientId`, `language` y ciertos defaults de continuidad de flujo
 
 3. Tipado de formulario demasiado genérico y poco preciso
 
@@ -430,10 +454,10 @@ Componente afectado principal:
 - links de términos/política no están contextualizados por idioma/ruta
 - el formulario no expone una capa de error resumen o foco al primer error
 
-6. Acoplamiento de presentación y estado
+6. El acoplamiento visual residual ya no está en `profile`, sino en la reutilización excesiva del mismo wrapper
 
-- `Form.tsx` sigue dependiendo de `profile` para resolver valores renderizados como `address` o `phone`
-- eso complica reutilizar la vista del formulario como puro componente presentacional
+- `Form.tsx` auth ya no depende de `profile` para renderizar campos de perfil
+- el riesgo actual es seguir usando una superficie demasiado genérica para flujos auth con necesidades distintas
 
 ## Cambios Propuestos Para El Formulario
 

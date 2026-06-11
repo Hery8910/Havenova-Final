@@ -21,10 +21,12 @@ import type {
   WorkerListItem,
   WorkerDetailData,
   WorkerRecord,
-} from '../../../../../../packages/types/worker/workerTypes';
+} from '../../../../../../packages/types';
 import { IoAdd } from 'react-icons/io5';
 import Image from 'next/image';
 import { IoIosArrowForward } from 'react-icons/io';
+
+const getWorkerIdentity = (worker: Pick<WorkerListItem, 'userClientId'>) => worker.userClientId;
 
 const Employees = () => {
   const isAllowed = useRequireRole('admin');
@@ -191,14 +193,15 @@ const Employees = () => {
         <div className={styles.listCard}>
           <ul className={styles.listBody}>
             {workers.map((worker) => {
-              const isActive = selectedWorkerId === worker.userId;
+              const workerIdentity = getWorkerIdentity(worker);
+              const isActive = selectedWorkerId === workerIdentity;
 
               return (
-                <li key={worker.userId} className={styles.listItem}>
+                <li key={workerIdentity} className={styles.listItem}>
                   <button
                     type="button"
                     className={`${styles.listRow} ${isActive ? styles.listRowActive : ''} card--glass`}
-                    onClick={() => handleSelectWorker(worker.userId)}
+                    onClick={() => handleSelectWorker(workerIdentity)}
                   >
                     <aside className={styles.rowAside}>
                       {worker.profileImage && (

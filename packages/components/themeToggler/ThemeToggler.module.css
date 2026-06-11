@@ -24,6 +24,15 @@
   box-shadow: var(--button-shadow-hover-current);
 }
 
+.toggleButton:focus-visible {
+  outline: 2px solid var(--button-focus-border-current, var(--button-focus-border));
+  outline-offset: 3px;
+}
+
+.toggleButton[aria-pressed='true']:focus-visible {
+  box-shadow: var(--button-shadow), var(--button-focus-shadow-current, var(--button-shadow-focus));
+}
+
 .toggleButtonWithValue {
   display: inline-flex;
   align-items: center;

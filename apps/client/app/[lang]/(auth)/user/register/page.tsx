@@ -1,48 +1,52 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import styles from '../userAuth.module.css';
 import Link from 'next/link';
-import Image from 'next/image';
-import { useClient } from '../../../../../../../packages/contexts/client/ClientContext';
-import { useI18n } from '../../../../../../../packages/contexts/i18n/I18nContext';
 import { RegisterFormData, RegisterPayload } from '../../../../../../../packages/types';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 import {
+  PopupCode,
   fallbackButtons,
   fallbackGlobalError,
+  fallbackLoadingMessages,
   fallbackRegisterSuccess,
   useAuth,
+  useClient,
   useGlobalAlert,
+  useI18n,
   useProfile,
 } from '../../../../../../../packages/contexts';
 import {
+  createLoggedOutAuthSeed,
   loadCookiePrefs,
   getPrefsFromLocalStorage,
   defaultPrefs,
-} from '../../../../../../../packages/utils/cookies/cookieStorage/cookieStorage';
+} from '../../../../../../../packages/utils';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { registerUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
-import { useRouter } from 'next/navigation';
-import { href } from '../../../../../../../packages/utils/navigation';
-import { PopupCode } from '../../../../../../../packages/contexts/alert/alert.types';
+import { href } from '../../../../../../../packages/utils';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { AuthPageShell } from '../AuthPageShell';
+import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
+import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface RegisterData {
   title: string;
   description: string;
   cta: { title: string; label: string; url: string };
+  autoRedirectDescription?: string;
   image?: { src: string; alt: string };
   backgroundImage?: string;
   button?: string;
 }
 
 const Register = () => {
-  const AUTO_REDIRECT_MS = 4000;
-  const router = useRouter();
   const lang = useLang();
+  const verifyEmailHref = href(lang, '/user/verify-email');
+  const homeHref = href(lang, '/');
   const { client } = useClient();
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
   const { updateProfile } = useProfile();
 
   const { texts } = useI18n();
@@ -53,45 +57,20 @@ const Register = () => {
   const register: RegisterData = texts?.pages?.client.user.register;
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
-  const registerLoading = texts.loadings?.loading?.REGISTER_LOADING_SUBMIT ?? {
-    title: 'Processing your registration…',
-    description: 'Please wait a moment.',
-  };
+  const loadingMsg = texts.loadings?.message ?? fallbackLoadingMessages;
+  const registerLoading = texts.loadings?.loading?.REGISTER_LOADING_SUBMIT ?? loadingMsg.login;
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const registerButton = formText.button.register;
-  const redirectTimeoutRef = useRef<number | null>(null);
-
-  const clearRedirectTimeout = () => {
-    if (redirectTimeoutRef.current) {
-      window.clearTimeout(redirectTimeoutRef.current);
-      redirectTimeoutRef.current = null;
-    }
-  };
-
-  const getAutoRedirectDescription = (baseDescription: string) => {
-    const redirectCopy =
-      lang === 'de'
-        ? 'Sie werden in wenigen Sekunden zur Verifizierungsseite weitergeleitet.'
-        : lang === 'es'
-          ? 'Serás redirigido a la página de verificación en unos segundos.'
-          : 'You will be redirected to the verification page in a few seconds.';
-
-    return `${baseDescription} ${redirectCopy}`.trim();
-  };
-
-  const scheduleVerifyRedirect = () => {
-    clearRedirectTimeout();
-    redirectTimeoutRef.current = window.setTimeout(() => {
-      closeAlert();
-      router.push(href(lang, '/user/verify-email'));
-    }, AUTO_REDIRECT_MS);
-  };
-
-  useEffect(() => {
-    return () => {
-      clearRedirectTimeout();
-    };
-  }, []);
+  const { getAutoRedirectDescription, scheduleRedirect: scheduleVerifyRedirect } =
+    useAuthAutoRedirect({
+      redirectTo: verifyEmailHref,
+      closeAlert,
+    });
+  const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
+    useAuthAlertActions({
+      buttons: alertButtons,
+      closeAlert,
+    });
 
   const getRegisterErrorStatus = (code?: string, fallbackStatus = 500) => {
     switch (code) {
@@ -140,20 +119,22 @@ const Register = () => {
       fallbackRegisterSuccess
     );
 
-    setAuth({
-      ...(auth || {}),
-      email,
-      clientId,
-      isLogged: false,
-      isVerified: false,
-      role: auth?.role || 'guest',
-    });
+    setAuth(
+      createLoggedOutAuthSeed({
+        clientId,
+        email,
+        isVerified: false,
+      })
+    );
 
     showSuccess({
       response: {
         status: 200,
         title: popupData.title,
-        description: getAutoRedirectDescription(popupData.description),
+        description: getAutoRedirectDescription(
+          popupData.description,
+          register.autoRedirectDescription
+        ),
         cancelLabel: '',
       },
     });
@@ -181,7 +162,7 @@ const Register = () => {
         password: data.password,
         language: data.language || lang || 'de',
         clientId: data.clientId || client._id,
-        tosAccepted: true,
+        tosAccepted: data.tosAccepted,
         cookiePrefs: storedPrefs,
       };
 
@@ -202,36 +183,39 @@ const Register = () => {
             title: popupData.title,
             description: popupData.description,
             confirmLabel:
-              response?.code === 'USER_REGISTER_ALREADY_REGISTERED'
-                ? alertButtons.goToLogin
+              response?.code === 'USER_REGISTER_ALREADY_REGISTERED' ||
+              response?.code === 'USER_EMAIL_ALREADY_IN_USE'
+                ? getConfirmActionLabel('goToLogin')
                 : response?.code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
-                  ? alertButtons.resetPassword
+                  ? getConfirmActionLabel('resetPassword')
                   : undefined,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
           onConfirm:
-            response?.code === 'USER_REGISTER_ALREADY_REGISTERED'
-              ? () => {
-                  router.push(href(lang, '/user/login'));
-                  closeAlert();
-                }
+            response?.code === 'USER_REGISTER_ALREADY_REGISTERED' ||
+            response?.code === 'USER_EMAIL_ALREADY_IN_USE'
+              ? getConfirmAction('goToLogin')
               : response?.code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
-                ? () => {
-                    router.push(href(lang, '/user/forgot-password'));
-                    closeAlert();
-                  }
+                ? getConfirmAction('resetPassword')
                 : undefined,
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
 
-      // 3.1) Persist local profile data so it survives the verify-email flow
-      const profileLanguage = payload.language === 'en' || payload.language === 'es' ? payload.language : 'de';
+      // Best-effort local continuity: a profile persistence failure must not turn a
+      // successful backend registration into a blocked flow.
+      const profileLanguage =
+        payload.language === 'en' || payload.language === 'es' ? payload.language : 'de';
 
-      await updateProfile({
-        language: profileLanguage,
-      });
+      try {
+        await updateProfile({
+          language: profileLanguage,
+        });
+      } catch {
+        // Registration already succeeded on the backend. Continue into verify-email
+        // instead of surfacing a false-negative error for a local persistence issue.
+      }
 
       // 4) success popup -> continue into verify-email flow
       openRegisterSuccess(payload.email, payload.clientId);
@@ -252,20 +236,11 @@ const Register = () => {
         (err.response?.status ?? 500) < 500;
       const onConfirm =
         code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_IN_USE'
-          ? () => {
-              router.push(href(lang, '/user/login'));
-              closeAlert();
-            }
+          ? getConfirmAction('goToLogin')
           : code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
-            ? () => {
-                router.push(href(lang, '/user/forgot-password'));
-                closeAlert();
-              }
+            ? getConfirmAction('resetPassword')
             : (err.response?.status ?? 500) >= 500
-              ? () => {
-                  closeAlert();
-                  void handleRegister(data);
-                }
+              ? getConfirmAction('reload', () => void handleRegister(data))
               : undefined;
 
       showError({
@@ -275,21 +250,18 @@ const Register = () => {
           description: popupData.description,
           confirmLabel:
             code === 'USER_REGISTER_ALREADY_REGISTERED' || code === 'USER_EMAIL_ALREADY_IN_USE'
-              ? alertButtons.goToLogin
+              ? getConfirmActionLabel('goToLogin')
               : code === 'USER_REGISTER_NEEDS_CORRECT_PASSWORD'
-                ? alertButtons.resetPassword
+                ? getConfirmActionLabel('resetPassword')
                 : onConfirm
-                  ? alertButtons.reload
+                  ? getConfirmActionLabel('reload')
                   : undefined,
-          cancelLabel: alertButtons.close,
+          cancelLabel: shouldStayOnPage
+            ? getCancelActionLabel()
+            : getCancelActionLabel('goToHome'),
         },
         onConfirm,
-        onCancel: shouldStayOnPage
-          ? closeAlert
-          : () => {
-              router.push(href(lang, '/'));
-              closeAlert();
-            },
+        onCancel: shouldStayOnPage ? getCancelAction() : getCancelAction('goToHome'),
       });
     } finally {
       setLoading(false);
@@ -297,61 +269,44 @@ const Register = () => {
   };
 
   return (
-    <section
-      className={`${styles.authSection} card card--primary`}
-      aria-labelledby="register-title"
-      aria-describedby="register-description"
-    >
-      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
-        <Image
-          className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
-          alt={navText.logoAlt}
-          width={80}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className={styles.authFormContainer}>
-        <header className={styles.authHeader}>
-          <h1 id="register-title" className={styles.authTitle}>
-            {register?.title || 'Create account'}
-          </h1>
-          <p id="register-description" className={styles.authDescription}>
-            {register?.description || 'Create your account to request and manage services.'}
-          </p>
-        </header>
-
-        <FormWrapper<RegisterFormData>
-          showHintPassword
-          fields={['email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
-          onSubmit={handleRegister}
-          button={registerButton}
-          initialValues={{
-            email: '',
-            password: '',
-            tosAccepted: false,
-            language: lang || 'de',
-            clientId: client._id || '',
-          }}
-          loading={loading}
-        />
-      </div>
-
-      <footer className={styles.authFooter}>
+    <AuthPageShell
+      headingId="register-title"
+      descriptionId="register-description"
+      title={register?.title || 'Create account'}
+      description={register?.description || 'Create your account to request and manage services.'}
+      homeHref={homeHref}
+      homeLabel={navText.homeLink}
+      logoAlt={navText.logoAlt}
+      footerLabel={navText.authFooter}
+      footer={
         <div className={styles.authFooterActions}>
           <p className={styles.authFooterText}>
             {register?.cta.title}{' '}
             <Link className={styles.link} href={register?.cta.url}>
               {register?.cta.label}
             </Link>
-            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
-              <IoMdArrowRoundBack /> {navText.homeLink}
-            </Link>
           </p>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>
+            <IoMdArrowRoundBack /> {navText.homeLink}
+          </Link>
         </div>
-      </footer>
-    </section>
+      }
+    >
+      <FormWrapper<RegisterFormData>
+        showHintPassword
+        fields={['email', 'password', 'language', 'clientId', 'tosAccepted'] as const}
+        onSubmit={handleRegister}
+        button={registerButton}
+        initialValues={{
+          email: '',
+          password: '',
+          tosAccepted: false,
+          language: lang || 'de',
+          clientId: client._id || '',
+        }}
+        loading={loading}
+      />
+    </AuthPageShell>
   );
 };
 

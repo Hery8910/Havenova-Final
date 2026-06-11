@@ -20,12 +20,13 @@ import type {
   UpdateUserClientProfileInput,
   UserClientProfile,
   UserNotificationPreferences,
-} from '@/packages/types/profile/profileTypes';
+} from '@/packages/types';
 import {
   createUserClientProfile,
   getUserClientProfile,
   updateUserClientProfile,
 } from '@havenova/services';
+import { resolvePreferredContactEmail } from '@havenova/utils';
 
 interface ProfileContextProps {
   profile: UserClientProfile;
@@ -76,7 +77,6 @@ const getStoredLanguage = (): AppLanguage | null => {
 const createEmptyProfile = (overrides?: Partial<UserClientProfile>): UserClientProfile => ({
   _id: '',
   userClientId: '',
-  userId: '',
   clientId: '',
   contactEmail: '',
   name: '',
@@ -146,14 +146,11 @@ const mergeNotificationPreferences = (
 
 const normalizeProfile = (
   profile: Partial<UserClientProfile> | null | undefined,
-  identity?: { userClientId?: string; userId?: string; clientId?: string }
+  identity?: { userClientId?: string; clientId?: string }
 ): UserClientProfile =>
   createEmptyProfile({
     ...profile,
-    userClientId:
-      profile?.userClientId || identity?.userClientId || profile?.userId || identity?.userId || '',
-    userId:
-      profile?.userId || identity?.userId || profile?.userClientId || identity?.userClientId || '',
+    userClientId: profile?.userClientId || identity?.userClientId || '',
     clientId: profile?.clientId || identity?.clientId || '',
     contactEmail: profile?.contactEmail ?? '',
     savedAddresses: profile?.savedAddresses ?? [],
@@ -164,9 +161,8 @@ const normalizeProfile = (
 
 const getProfileStorageKey = (
   clientId?: string | null,
-  userClientId?: string | null,
-  userId?: string | null
-) => `hv-profile:${clientId || 'guest'}:${userClientId || userId || 'guest'}`;
+  userClientId?: string | null
+) => `hv-profile:${clientId || 'guest'}:${userClientId || 'guest'}`;
 
 const isOfflineProfileError = (error: unknown): boolean => {
   const err = error as {
@@ -211,8 +207,8 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const isDevProfileFallbackEnabled = process.env.NODE_ENV !== 'production';
 
   const storageKey = useMemo(
-    () => getProfileStorageKey(auth.clientId, auth.userClientId, auth.userId),
-    [auth.clientId, auth.userClientId, auth.userId]
+    () => getProfileStorageKey(auth.clientId, auth.userClientId),
+    [auth.clientId, auth.userClientId]
   );
   const [profile, setProfile] = useState<UserClientProfile>(createEmptyProfile());
   const [loading, setLoading] = useState(true);
@@ -241,7 +237,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     try {
       return normalizeProfile(JSON.parse(raw) as UserClientProfile, {
         userClientId: authRef.current.userClientId,
-        userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
     } catch {
@@ -275,7 +270,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       storedProfile ??
       normalizeProfile(undefined, {
         userClientId: authRef.current.userClientId,
-        userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
 
@@ -310,7 +304,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     ) => {
       const normalized = normalizeProfile(nextProfile, {
         userClientId: authRef.current.userClientId,
-        userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       });
       setProfile(normalized);
@@ -335,12 +328,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isClientReady) return;
-    if (!auth.userClientId && !auth.userId && !auth.clientId) return;
+    if (!auth.userClientId && !auth.clientId) return;
 
     setProfile((current) => {
       const nextProfile = normalizeProfile(current, {
         userClientId: auth.userClientId,
-        userId: auth.userId,
         clientId: auth.clientId,
       });
 
@@ -354,7 +346,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       saveToStorage(nextProfile);
       return nextProfile;
     });
-  }, [auth.clientId, auth.userClientId, auth.userId, isClientReady, saveToStorage]);
+  }, [auth.clientId, auth.userClientId, isClientReady, saveToStorage]);
 
   const clearIsNewUserFlag = useCallback(() => {
     const currentAuth = authRef.current;
@@ -373,7 +365,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       {
         ...currentProfile,
         _id: currentProfile?._id || 'dev-profile',
-        contactEmail: currentProfile?.contactEmail || authRef.current.email || 'dev.user@havenova.local',
+        contactEmail:
+          resolvePreferredContactEmail(currentProfile?.contactEmail, authRef.current.email) ||
+          'dev.user@havenova.local',
         name: currentProfile?.name || 'Development User',
         phone: currentProfile?.phone || '',
         profileImage: currentProfile?.profileImage || DEFAULT_AVATAR,
@@ -382,7 +376,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       },
       {
         userClientId: authRef.current.userClientId,
-        userId: authRef.current.userId,
         clientId: authRef.current.clientId,
       }
     );
@@ -527,7 +520,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         },
         {
           userClientId: auth.userClientId,
-          userId: auth.userId,
           clientId: auth.clientId,
         }
       ),
@@ -542,7 +534,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     auth.isLogged,
     auth.role,
     auth.userClientId,
-    auth.userId,
     isClientReady,
     profile?.language,
     profile?.profileImage,
@@ -564,7 +555,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         },
         {
           userClientId: auth.userClientId,
-          userId: auth.userId,
           clientId: auth.clientId,
         }
       );
@@ -657,7 +647,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       auth.isLogged,
       auth.role,
       auth.userClientId,
-      auth.userId,
       clearIsNewUserFlag,
       createDevProfileFallback,
       handleProfileBootstrapError,

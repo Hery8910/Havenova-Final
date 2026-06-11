@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { Form } from '../form';
 import {
   validateEmail,
@@ -31,6 +31,8 @@ export interface PlaceholdersTextProps {
 export interface LabelsTextProps {
   email: string;
   password: string;
+  errorSummary: string;
+  invalidData: string;
   forgotPassword: string;
   passwordHint: string;
   tosPrefix: string;
@@ -60,6 +62,7 @@ export default function FormWrapper<T extends Record<string, any>>({
   const placeholderText = texts.components.client.form.placeholders;
   const labelText = texts.components.client.form.labels;
   const initialValuesKey = JSON.stringify(initialValues);
+  const idPrefix = useId().replace(/:/g, '');
 
   const [formData, setFormData] = useState<T>(initialValues);
 
@@ -91,15 +94,18 @@ export default function FormWrapper<T extends Record<string, any>>({
     const errs = validator(value);
 
     if (errs.length > 0) {
-      return formError?.[name]?.[errs[0]] || 'Invalid data';
+      return formError?.[name]?.[errs[0]] || labelText.invalidData;
     }
 
     return '';
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    const fieldName = name as ValidateField;
+    const target = e.target;
+    const { name, type } = target;
+    const fieldName = name as FormField;
+    const value =
+      type === 'checkbox' && target instanceof HTMLInputElement ? target.checked : target.value;
 
     setTouched((prev) => ({ ...prev, [fieldName]: true }));
 
@@ -190,6 +196,7 @@ export default function FormWrapper<T extends Record<string, any>>({
       placeholder={placeholderText}
       labels={labelText}
       loading={loading}
+      idPrefix={idPrefix}
     />
   );
 }

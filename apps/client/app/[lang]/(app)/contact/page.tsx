@@ -1,45 +1,29 @@
-'use client';
-import { FAQSection } from '../../../../../../packages/components';
-import { ContactFormSection } from '../../../../../../packages/components/client/pages/contact';
-import { InfoSection } from '../../../../../../packages/components/client/pages/contact/InfoSection';
-import type { FooterHoursStatusCopy } from '../../../../../../packages/components/client/footer/BusinessHoursStatus';
-import {
-  PageHero,
-  type PageHeroContent,
-} from '../../../../../../packages/components/client/pages/hero';
-import { useI18n } from '../../../../../../packages/contexts';
-import { useLang } from '../../../../../../packages/hooks';
-import styles from './page.module.css';
+import '../../migration-styles/index.css';
+import { resources, type Locale } from '@havenova/i18n';
+import { ContactPageView } from '../../../../../../packages/components/client/pages/contact/ContactPage.view';
+import type { FAQSectionTexts } from '../../../../../../packages/components/client/faqSection/FAQSection';
+import type {
+  ContactInfoTexts,
+  ContactPageTexts,
+} from '../../../../../../packages/components/client/pages/contact/contact.types';
 
-export interface ContactPageTexts {
-  hero: PageHeroContent;
-}
-export interface ContactInfoTexts {
-  contact: {
-    title: string;
-    email: string;
-    phone: string;
-    address: string;
+export default function Contact({
+  params,
+}: {
+  params: {
+    lang: Locale;
   };
-  hoursStatus?: FooterHoursStatusCopy;
-}
+}) {
+  const locale = resources[params.lang] ? params.lang : 'de';
+  const texts = resources[locale];
 
-export default function Contact() {
-  const lang = useLang();
-  const { texts } = useI18n();
-  const contact: ContactPageTexts = texts?.pages?.client?.contact;
-  const contactInfoTexts: ContactInfoTexts = texts?.components?.client?.footer;
+  const contact = texts?.pages?.client?.contact as ContactPageTexts | undefined;
+  const contactInfo = {
+    ...(texts?.components?.client?.footer as ContactInfoTexts | undefined),
+    aria: texts?.components?.client?.contact?.aria,
+    quickActions: texts?.components?.client?.contact?.quickActions,
+  } as ContactInfoTexts | undefined;
+  const faq = texts?.components?.client?.faq as FAQSectionTexts | undefined;
 
-  if (!contact || !contactInfoTexts) return null;
-
-  return (
-    <main className={styles.main}>
-      <PageHero texts={contact.hero} lang={lang} />
-      <div className={styles.wrapper}>
-        <ContactFormSection />
-        <InfoSection texts={contactInfoTexts} />
-      </div>
-      <FAQSection />
-    </main>
-  );
+  return <ContactPageView contact={contact} contactInfo={contactInfo} faq={faq} lang={locale} />;
 }

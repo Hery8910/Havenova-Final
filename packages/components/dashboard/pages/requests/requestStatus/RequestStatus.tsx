@@ -3,10 +3,10 @@ import { FaCheckCircle, FaSpinner } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import { PiFolderSimpleStar } from 'react-icons/pi';
 import styles from './RequestStatus.module.css';
-import { ServiceStatus } from '../../../../../types';
+import type { ServiceRequestStatus } from '../../../../../types';
 
 interface RequestStatusProps {
-  status: ServiceStatus;
+  status: ServiceRequestStatus;
   label: string;
 }
 
@@ -17,13 +17,13 @@ export default function RequestStatus({ status, label }: RequestStatusProps) {
     case 'submitted':
       icon = <IoArrowRedoOutline />;
       break;
-    case 'accepted':
+    case 'under_review':
       icon = <FaCheckCircle />;
       break;
-    case 'in progress':
+    case 'visit_scheduled':
       icon = <FaSpinner />;
       break;
-    case 'completed':
+    case 'visit_completed':
       icon = <PiFolderSimpleStar />;
       break;
     case 'cancelled':

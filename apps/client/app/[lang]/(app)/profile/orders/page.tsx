@@ -1,6 +1,6 @@
 'use client';
 
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
+import { useI18n } from '@/packages/contexts';
 
 export default function OrdersPage() {
   const { texts } = useI18n();

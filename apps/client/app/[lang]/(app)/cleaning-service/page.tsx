@@ -6,13 +6,17 @@ import {
   CleaningRequestForm,
   type CleaningRequestFormSubmission,
 } from '../../../../../../packages/components/client/pages/cleaning-service';
-import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
+import {
+  PageHero,
+  type PageHeroContent,
+} from '../../../../../../packages/components/client/pages/hero';
 import {
   ServiceCrossCtaSection,
   type ServiceCrossCtaSectionTexts,
 } from '../../../../../../packages/components/client/pages/shared';
 import { useLang } from '../../../../../../packages/hooks';
 import {
+  type PopupsTexts,
   useAuth,
   useGlobalAlert,
   useI18n,
@@ -23,10 +27,9 @@ import {
   fallbackGlobalError,
   fallbackPopups,
 } from '../../../../../../packages/contexts/i18n';
-import type { PopupsTexts } from '../../../../../../packages/contexts/alert/alert.types';
 import { createCleaningRequest } from '../../../../../../packages/services';
 import {
-  type CleaningCustomerType,
+  type CustomerType,
   PropertySizeRange,
   type UpdateUserClientProfileInput,
   type UserSavedAddress,
@@ -94,7 +97,7 @@ export interface CleaningServicePageTexts {
     };
     customerType: {
       label: string;
-      options: Record<CleaningCustomerType, string>;
+      options: Record<CustomerType, string>;
     };
     frequency: {
       label: string;
@@ -244,6 +247,8 @@ export default function CleaningService() {
     ...fallbackPopups,
     button: fallbackButtons,
   };
+  const draftOwnerKey = auth?.userClientId || auth?.clientId || 'guest';
+  const draftStorageKey = `cleaning-request-draft:v1:${draftOwnerKey}`;
 
   const handleMainFormSubmit = async (payload: CleaningRequestFormSubmission) => {
     if (!auth?.isLogged || !auth.clientId) {
@@ -264,7 +269,7 @@ export default function CleaningService() {
         onCancel: closeAlert,
       });
       setIsAlertClosed(false);
-      return;
+      return false;
     }
 
     setIsSubmitting(true);
@@ -313,13 +318,20 @@ export default function CleaningService() {
       }
 
       const response = await createCleaningRequest({
-        clientId: auth.clientId,
-        userId: auth.userId || undefined,
-        ...payload,
+        serviceType: payload.serviceType,
+        customerType: payload.customerType,
+        preferredVisitSlot: payload.preferredVisitSlot,
+        workAddress: {
+          address: payload.workAddress.address,
+          source: payload.workAddress.source,
+        },
+        details: payload.details,
       });
 
       if (!response.success) {
-        const error = new Error(response.message || 'Cleaning request submission failed') as Error & {
+        const error = new Error(
+          response.message || 'Cleaning request submission failed'
+        ) as Error & {
           response?: { status: number; data: { code?: string; message?: string } };
         };
         error.response = {
@@ -350,6 +362,7 @@ export default function CleaningService() {
         onCancel: closeAlert,
       });
       setFormResetKey((current) => current + 1);
+      return true;
     } catch (error: unknown) {
       const requestError = error as RequestError;
       closeAlert();
@@ -376,30 +389,37 @@ export default function CleaningService() {
         },
         onCancel: closeAlert,
       });
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <main className={styles.main}>
-      {!auth?.isLogged && !isAlertClosed && (
-        <AuthRequiredAlert
-          texts={cleaning.authAlert}
-          lang={lang}
-          onClose={() => setIsAlertClosed(true)}
-        />
-      )}
+    <>
       <PageHero texts={cleaning.hero} lang={lang} />
-      <CleaningRequestForm
-        key={formResetKey}
-        texts={cleaning.form}
-        loading={isSubmitting}
-        canSubmit={Boolean(auth?.isLogged)}
-        onRequireAuth={() => setIsAlertClosed(false)}
-        onSubmit={handleMainFormSubmit}
-      />
-      <ServiceCrossCtaSection texts={cleaning.relatedServiceCta} lang={lang} />
-    </main>
+      <main id="app-main-content" tabIndex={-1} className={styles.main}>
+        {!auth?.isLogged && !isAlertClosed && (
+          <AuthRequiredAlert
+            texts={cleaning.authAlert}
+            lang={lang}
+            onClose={() => setIsAlertClosed(true)}
+          />
+        )}
+
+        <CleaningRequestForm
+          key={formResetKey}
+          texts={cleaning.form}
+          loading={isSubmitting}
+          canSubmit={Boolean(auth?.isLogged)}
+          draftStorageKey={draftStorageKey}
+          draftOwnerKey={draftOwnerKey}
+          onRequireAuth={() => setIsAlertClosed(false)}
+          onSubmit={handleMainFormSubmit}
+        />
+
+        <ServiceCrossCtaSection texts={cleaning.relatedServiceCta} lang={lang} />
+      </main>
+    </>
   );
 }

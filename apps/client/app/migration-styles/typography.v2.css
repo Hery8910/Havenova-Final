@@ -1,0 +1,12 @@
+/*
+ * Typography primitives for audited pages.
+ * Keep this file minimal until more than one page justifies expansion.
+ */
+
+.v2-page-copy {
+  color: var(--v2-page-text-secondary);
+}
+
+.v2-page-heading {
+  color: var(--v2-page-text-primary);
+}

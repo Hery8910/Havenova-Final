@@ -6,7 +6,6 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
-import { href } from '../../../../../../packages/utils/navigation';
 import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever } from 'react-icons/md';
 import {
@@ -19,10 +18,10 @@ import {
   useRequireRole,
 } from '../../../../../../packages/contexts';
 import { ContactMessage, ContactMessageStatus } from '../../../../../../packages/types';
-import { formatMessageAge, getPopup } from '../../../../../../packages/utils';
-import { deleteContactMessage, getContactMessages } from '../../../../../../packages/services';
-import { ContactMessageResponder } from '../../../../../../packages/components/dashboard/contactMessages/ContactMessageResponder';
+import { formatMessageAge, getPopup, href } from '../../../../../../packages/utils';
+import { deleteContactMessage, listContactMessages } from '../../../../../../packages/services';
 import {
+  ContactMessageResponder,
   DashboardSearchInput,
   DashboardStatusFilters,
   DashboardLoadMore,
@@ -121,13 +120,13 @@ const ContactMessagesPage = () => {
         search: filters.query?.trim() || undefined,
       };
 
-      const data = await getContactMessages(params);
-      const nextMessages = data.messages || [];
+      const data = await listContactMessages(params);
+      const nextMessages = data.data || [];
       setMessages((prev) => (page === 1 ? nextMessages : [...prev, ...nextMessages]));
       setTotals({
-        total: data.totals?.total ?? data.count ?? 0,
-        pending: data.totals?.pending ?? 0,
-        answered: data.totals?.answered ?? 0,
+        total: data.meta?.totals?.total ?? data.meta?.count ?? 0,
+        pending: data.meta?.totals?.pending ?? 0,
+        answered: data.meta?.totals?.answered ?? 0,
       });
     } catch (error: any) {
       let errorToHandle = error;
@@ -136,19 +135,19 @@ const ContactMessagesPage = () => {
       if (status === 401) {
         try {
           await refreshAuth();
-          const retryData = await getContactMessages({
+          const retryData = await listContactMessages({
             clientId: client._id,
             page,
             limit: PAGE_SIZE,
             status: filters.status || undefined,
             search: filters.query?.trim() || undefined,
           });
-          const retryMessages = retryData.messages || [];
+          const retryMessages = retryData.data || [];
           setMessages((prev) => (page === 1 ? retryMessages : [...prev, ...retryMessages]));
           setTotals({
-            total: retryData.totals?.total ?? retryData.count ?? 0,
-            pending: retryData.totals?.pending ?? 0,
-            answered: retryData.totals?.answered ?? 0,
+            total: retryData.meta?.totals?.total ?? retryData.meta?.count ?? 0,
+            pending: retryData.meta?.totals?.pending ?? 0,
+            answered: retryData.meta?.totals?.answered ?? 0,
           });
           return;
         } catch (retryError: any) {
@@ -313,7 +312,7 @@ const ContactMessagesPage = () => {
     payload: {
       text: string;
       respondedAt?: string;
-      respondedBy?: string;
+      respondedByUserClientId?: string;
       respondedByName?: string;
       respondedByProfileImage?: string;
     }
@@ -328,7 +327,8 @@ const ContactMessagesPage = () => {
                 ...msg.response,
                 text: payload.text,
                 respondedAt: payload.respondedAt || msg.response?.respondedAt,
-                respondedBy: payload.respondedBy ?? msg.response?.respondedBy,
+                respondedByUserClientId:
+                  payload.respondedByUserClientId ?? msg.response?.respondedByUserClientId,
                 respondedByName: payload.respondedByName ?? msg.response?.respondedByName,
                 respondedByProfileImage:
                   payload.respondedByProfileImage ?? msg.response?.respondedByProfileImage,
@@ -393,21 +393,28 @@ const ContactMessagesPage = () => {
           </div>
         ) : (
           <ul className={styles.items}>
-            {messages.map((msg) => (
-              <li key={msg._id} className={styles.item}>
-                <div className={styles.wrapper}>
-                  <header className={styles.itemsHeader}>
-                    <Image
-                      className={styles.image}
-                      src={msg.profileImage || '/avatars/avatar-1.svg'}
-                      alt=""
-                      width={40}
-                      height={40}
-                      aria-hidden="true"
-                    />
+            {messages.map((msg) => {
+              const senderName = msg.sender.name;
+              const senderEmail = msg.sender.email;
+              const senderAvatar = msg.sender.profileImage || '/avatars/avatar-1.svg';
+              const subject = msg.content.subject;
+              const body = msg.content.body;
+
+              return (
+                <li key={msg._id} className={styles.item}>
+                  <div className={styles.wrapper}>
+                    <header className={styles.itemsHeader}>
+                      <Image
+                        className={styles.image}
+                        src={senderAvatar}
+                        alt=""
+                        width={40}
+                        height={40}
+                        aria-hidden="true"
+                      />
                     <article className={styles.article}>
-                      <p className={styles.name}>{msg.name}</p>
-                      <p className={styles.email}>{msg.email}</p>
+                      <p className={styles.name}>{senderName}</p>
+                      <p className={styles.email}>{senderEmail}</p>
                     </article>
                     <aside className={styles.aside}>
                       <div className={styles.asideDiv}>
@@ -451,12 +458,12 @@ const ContactMessagesPage = () => {
                         </button>
                       )}
                     </aside>
-                  </header>
-                  <section className={styles.msgSection}>
-                    <article className={styles.msgArticle}>
-                      <p className={styles.subject}>{msg.subject}</p>
-                      <p className={styles.message}>{msg.message}</p>
-                    </article>
+                    </header>
+                    <section className={styles.msgSection}>
+                      <article className={styles.msgArticle}>
+                        <p className={styles.subject}>{subject}</p>
+                        <p className={styles.message}>{body}</p>
+                      </article>
                     <button
                       className={`${
                         msg.status === 'answered' ? styles.showBtn : styles.responseBtn
@@ -488,43 +495,46 @@ const ContactMessagesPage = () => {
                         <IoIosArrowDown />
                       )}
                     </button>
-                  </section>
-                  {activeResponseId === msg._id && (
-                    <aside className={styles.responseAside}>
-                      <Image
-                        className={styles.image}
-                        src={msg.response?.respondedByProfileImage || '/avatars/avatar-1.svg'}
-                        alt=""
-                        width={40}
-                        height={40}
-                        aria-hidden="true"
+                    </section>
+                    {activeResponseId === msg._id && (
+                      <aside className={styles.responseAside}>
+                        <Image
+                          className={styles.image}
+                          src={msg.response?.respondedByProfileImage || '/avatars/avatar-1.svg'}
+                          alt=""
+                          width={40}
+                          height={40}
+                          aria-hidden="true"
+                        />
+                        <article className={styles.responseArticle}>
+                          <div className={styles.responseDiv}>
+                            <p className={styles.name}>
+                              {msg.response?.respondedByName || 'System'}
+                            </p>
+                            {msg.response?.respondedAt && (
+                              <span className={styles.date}>
+                                {formatMessageAge(msg.response?.respondedAt, {
+                                  relativeTime,
+                                  locale: language,
+                                })}
+                              </span>
+                            )}
+                          </div>
+                          <p className={styles.response}>{msg.response?.text}</p>
+                        </article>
+                      </aside>
+                    )}
+                    {activeMessageId === msg._id && (
+                      <ContactMessageResponder
+                        message={msg}
+                        onClose={() => setActiveMessageId(null)}
+                        onSubmitted={(payload) => handleResponseSubmitted(msg._id, payload)}
                       />
-                      <article className={styles.responseArticle}>
-                        <div className={styles.responseDiv}>
-                          <p className={styles.name}>{msg.response?.respondedByName || 'System'}</p>
-                          {msg.response?.respondedAt && (
-                            <span className={styles.date}>
-                              {formatMessageAge(msg.response?.respondedAt, {
-                                relativeTime,
-                                locale: language,
-                              })}
-                            </span>
-                          )}
-                        </div>
-                        <p className={styles.response}>{msg.response?.text}</p>
-                      </article>
-                    </aside>
-                  )}
-                  {activeMessageId === msg._id && (
-                    <ContactMessageResponder
-                      message={msg}
-                      onClose={() => setActiveMessageId(null)}
-                      onSubmitted={(payload) => handleResponseSubmitted(msg._id, payload)}
-                    />
-                  )}
-                </div>
-              </li>
-            ))}
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
 

@@ -42,7 +42,6 @@ export interface UserNotificationPreferencesInput {
 export interface UserClientProfile {
   _id: string;
   userClientId: string;
-  userId: string;
   clientId: string;
   contactEmail: string;
   name?: string;
@@ -108,7 +107,7 @@ export interface DeleteUserClientProfileResponse {
   success: boolean;
   code: string;
   data: {
-    userId: string;
+    userClientId: string;
     clientId: string;
   };
 }

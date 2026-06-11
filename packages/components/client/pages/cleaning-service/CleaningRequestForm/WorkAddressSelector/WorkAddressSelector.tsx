@@ -3,7 +3,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useProfile } from '../../../../../../contexts';
 import type { UserAddress } from '../../../../../../types/profile';
-import type { WorkAddressSelection } from '../../../../../../types/services';
 import AddressFormFields from '../../../../shared/addressFormFields/AddressFormFields';
 import {
   buildAddressOptions,
@@ -15,12 +14,13 @@ import {
   normalizeAddress,
   type NormalizedAddressOption,
 } from './workAddressHelpers';
+import type { CleaningWorkAddressSelection } from '../cleaningRequest.types';
 import styles from './WorkAddressSelector.module.css';
 
 export interface WorkAddressSelectorProps {
   showHeader?: boolean;
-  value: WorkAddressSelection | null;
-  onChange: (value: WorkAddressSelection | null) => void;
+  value: CleaningWorkAddressSelection | null;
+  onChange: (value: CleaningWorkAddressSelection | null) => void;
   texts?: {
     title?: string;
     description?: string;
@@ -34,6 +34,10 @@ export interface WorkAddressSelectorProps {
     savedAddressLabel?: string;
     savedAddressPlaceholder?: string;
     manualSectionTitle?: string;
+    differentAddressPromptTitle?: string;
+    differentAddressPromptDescription?: string;
+    differentAddressPromptButton?: string;
+    differentAddressPromptButtonAriaLabel?: string;
     addressDetailsAriaLabel?: string;
     sourceLabels?: {
       primary?: string;
@@ -76,8 +80,13 @@ export default function WorkAddressSelector({
   const [manualAddress, setManualAddress] = useState<UserAddress>(
     value?.source === 'new' ? value.address : createEmptyUserAddress()
   );
-  const [saveToProfile, setSaveToProfile] = useState(Boolean(value?.source === 'new' && value.saveToProfile));
-  const [savedAddressLabel, setSavedAddressLabel] = useState(value?.source === 'new' ? value.label || '' : '');
+  const [saveToProfile, setSaveToProfile] = useState(
+    Boolean(value?.source === 'new' && value.saveToProfile)
+  );
+  const [savedAddressLabel, setSavedAddressLabel] = useState(
+    value?.source === 'new' ? value.label || '' : ''
+  );
+  const requestAddressLabel = savedAddressLabel.trim();
 
   useEffect(() => {
     if (!hasProfileAddresses) {
@@ -129,7 +138,7 @@ export default function WorkAddressSelector({
   useEffect(() => {
     if (loading) return;
 
-    let nextValue: WorkAddressSelection | null = null;
+    let nextValue: CleaningWorkAddressSelection | null = null;
 
     if (selectionMode === 'new') {
       if (isAddressComplete(manualAddress)) {
@@ -137,7 +146,7 @@ export default function WorkAddressSelector({
           address: normalizeAddress(manualAddress),
           source: 'new',
           saveToProfile,
-          label: saveToProfile ? savedAddressLabel.trim() || undefined : undefined,
+          label: requestAddressLabel,
         };
       }
     } else if (selectedOption) {
@@ -156,6 +165,7 @@ export default function WorkAddressSelector({
     loading,
     manualAddress,
     onChange,
+    requestAddressLabel,
     saveToProfile,
     savedAddressLabel,
     selectedOption,
@@ -167,7 +177,7 @@ export default function WorkAddressSelector({
     <section className={styles.section} aria-labelledby={titleId}>
       {showHeader ? (
         <header className={styles.header}>
-          <h3 id={titleId} className={`${styles.title} type-title-sm`}>
+          <h3 id={titleId} className={`${styles.title} type-title-md`}>
             {texts?.title ?? 'Service address'}
           </h3>
           <p className={`${styles.description} type-body-md`}>
@@ -183,7 +193,9 @@ export default function WorkAddressSelector({
         <>
           {hasProfileAddresses ? (
             <fieldset className={styles.optionsGroup}>
-              <legend className={styles.legend}>{texts?.optionsLegend ?? 'Available address options'}</legend>
+              <legend className={styles.legend}>
+                {texts?.optionsLegend ?? 'Available address options'}
+              </legend>
               {addressOptions.map((option) => {
                 const isChecked =
                   (option.source === 'primary' && selectionMode === 'primary') ||
@@ -192,12 +204,15 @@ export default function WorkAddressSelector({
                     selectedOptionId === option.id);
                 const optionLabel =
                   option.source === 'primary'
-                    ? texts?.sourceLabels?.primary ?? 'Primary address'
+                    ? (texts?.sourceLabels?.primary ?? 'Primary address')
                     : option.savedLabel || texts?.sourceLabels?.saved || 'Saved address';
                 const optionHint = formatAddressLabel(option.address);
 
                 return (
-                  <label key={option.id} className={`${styles.optionCard} ${isChecked ? styles.optionSelected : ''}`}>
+                  <label
+                    key={option.id}
+                    className={`${styles.optionCard} ${isChecked ? styles.optionSelected : ''}`}
+                  >
                     <input
                       className={styles.optionInput}
                       type="radio"
@@ -208,32 +223,16 @@ export default function WorkAddressSelector({
                         setSelectedOptionId(option.id);
                       }}
                     />
-                    <span className={styles.optionLabel}>{optionLabel}</span>
-                    <span className={styles.optionHint}>{optionHint}</span>
+                    <div
+                      className={styles.optionContent}
+                      aria-label={`${optionLabel}: ${optionHint}`}
+                    >
+                      <span className={styles.optionLabel}>{optionLabel}</span>
+                      <span className={styles.optionHint}>{optionHint}</span>
+                    </div>
                   </label>
                 );
               })}
-
-              <label
-                className={`${styles.optionCard} ${selectionMode === 'new' ? styles.optionSelected : ''}`}
-              >
-                <input
-                  className={styles.optionInput}
-                  type="radio"
-                  name="work-address-selection"
-                  checked={selectionMode === 'new'}
-                  onChange={() => {
-                    setSelectionMode('new');
-                    setSelectedOptionId(null);
-                  }}
-                />
-                <span className={styles.optionLabel}>
-                  {texts?.useDifferentAddressLabel ?? 'Use a different address'}
-                </span>
-                <span className={styles.optionHint}>
-                  {texts?.useDifferentAddressHint ?? 'Enter a new work location for this request.'}
-                </span>
-              </label>
             </fieldset>
           ) : (
             <p className={styles.helper}>
@@ -242,38 +241,82 @@ export default function WorkAddressSelector({
             </p>
           )}
 
+          {hasProfileAddresses && selectionMode !== 'new' ? (
+            <section className={`${styles.differentAddressPrompt} card card--primary`}>
+              <div className={styles.differentAddressPromptBody}>
+                <h4 className={`type-title-sm ${styles.optionLabel}`}>
+                  {texts?.differentAddressPromptTitle ??
+                    texts?.useDifferentAddressLabel ??
+                    'Use a different address'}
+                </h4>
+                <p className={styles.differentAddressPromptText}>
+                  {texts?.differentAddressPromptDescription ??
+                    texts?.useDifferentAddressHint ??
+                    'Enter a new work location for this request.'}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="button button--outline button--outline-small"
+                onClick={() => {
+                  setSelectionMode('new');
+                  setSelectedOptionId(null);
+                }}
+                aria-label={
+                  texts?.differentAddressPromptButtonAriaLabel ??
+                  texts?.differentAddressPromptButton ??
+                  texts?.useDifferentAddressLabel ??
+                  'Use a different address'
+                }
+              >
+                {texts?.differentAddressPromptButton ??
+                  texts?.useDifferentAddressLabel ??
+                  'Use a different address'}
+              </button>
+            </section>
+          ) : null}
+
           {(selectionMode === 'new' || !hasProfileAddresses) && (
             <section className={styles.manualSection} aria-labelledby={manualSectionTitleId}>
-              <h4 id={manualSectionTitleId} className={styles.manualTitle}>
-                {texts?.manualSectionTitle ?? texts?.useDifferentAddressLabel ?? 'Use a different address'}
-              </h4>
-              <p className={styles.manualHint}>
-                {texts?.manualHint ?? 'Enter the address where the visit or inspection should take place.'}
-              </p>
+              <div className={styles.manualSectionCard}>
+                <h4 id={manualSectionTitleId} className={styles.manualTitle}>
+                  {texts?.manualSectionTitle ??
+                    texts?.useDifferentAddressLabel ??
+                    'Use a different address'}
+                </h4>
+                <p className={styles.manualHint}>
+                  {texts?.manualHint ??
+                    'Enter the address where the visit or inspection should take place.'}
+                </p>
 
-              <AddressFormFields value={manualAddress} onChange={setManualAddress} texts={texts} />
-
-              <label className={styles.checkboxRow}>
-                <input
-                  type="checkbox"
-                  checked={saveToProfile}
-                  onChange={(event) => setSaveToProfile(event.target.checked)}
-                />
-                <span>{texts?.saveToProfileLabel ?? 'Save this address to my profile'}</span>
-              </label>
-
-              {saveToProfile && (
                 <label className={styles.labelField}>
-                  <span className={styles.label}>{texts?.savedAddressLabel ?? 'Label'}</span>
+                  <span className="label">{texts?.savedAddressLabel ?? 'Label'}</span>
                   <input
-                    className={styles.textInput}
+                    className="input"
                     type="text"
                     value={savedAddressLabel}
                     onChange={(event) => setSavedAddressLabel(event.target.value)}
-                    placeholder={texts?.savedAddressPlaceholder ?? 'Home office, Building A, Parents...'}
+                    placeholder={
+                      texts?.savedAddressPlaceholder ?? 'Home office, Building A, Parents...'
+                    }
                   />
                 </label>
-              )}
+
+                <AddressFormFields
+                  value={manualAddress}
+                  onChange={setManualAddress}
+                  texts={texts}
+                />
+
+                <label className={styles.checkboxRow}>
+                  <input
+                    type="checkbox"
+                    checked={saveToProfile}
+                    onChange={(event) => setSaveToProfile(event.target.checked)}
+                  />
+                  <span>{texts?.saveToProfileLabel ?? 'Save this address to my profile'}</span>
+                </label>
+              </div>
             </section>
           )}
         </>

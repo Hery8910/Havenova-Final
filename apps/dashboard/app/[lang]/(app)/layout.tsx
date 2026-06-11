@@ -9,7 +9,6 @@ import {
   resolveRequestHost,
   resolveTenantKey,
 } from '../../../../../packages/services';
-import { createVisualFallbackClient } from '../../../../../packages/contexts/client/clientVisualFallback';
 import {
   AlertProvider,
   AuthProvider,
@@ -17,8 +16,9 @@ import {
   I18nProvider,
   WorkerProvider,
 } from '../../../../../packages/contexts';
-import DashboardHeader from '../../../../../packages/components/dashboard/dashboardHeader/DashboardHeader';
-import { Sidebar } from '../../../../../packages/components';
+import { AlertViewport } from '../../../../../packages/components/alert';
+import Loading from '../../../../../packages/components/loading/Loading';
+import { DashboardHeader, Sidebar } from '../../../../../packages/components';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }, { lang: 'es' }];
@@ -44,9 +44,6 @@ export default async function LangLayout({
   const requestHost = resolveRequestHost(headers());
   assertAllowedAppHost(requestHost);
   const tenantKey = resolveTenantKey();
-  const allowVisualFallback =
-    process.env.NEXT_PUBLIC_ENABLE_CLIENT_VISUAL_FALLBACK === 'true' ||
-    process.env.NODE_ENV !== 'production';
   let client: Awaited<ReturnType<typeof getClient>> | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
 
@@ -59,12 +56,6 @@ export default async function LangLayout({
       message: error?.response?.data?.message ?? error?.message,
     };
     console.error('⚠️ Could not load client:', error);
-
-    if (allowVisualFallback) {
-      client = createVisualFallbackClient(tenantKey);
-      clientError = null;
-      console.warn('⚠️ Using visual fallback client because tenant bootstrap failed.');
-    }
   }
 
   return (
@@ -72,7 +63,13 @@ export default async function LangLayout({
       <body className={styles.body}>
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>
-            <ClientProvider initialClient={client} initialError={clientError} tenantKey={tenantKey}>
+            <AlertViewport />
+            <ClientProvider
+              initialClient={client}
+              initialError={clientError}
+              tenantKey={tenantKey}
+              loadingFallback={<Loading theme="light" />}
+            >
               <AuthProvider>
                 <WorkerProvider>
                   <div className={styles.layout}>

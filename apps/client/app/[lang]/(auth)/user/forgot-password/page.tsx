@@ -1,16 +1,16 @@
 'use client';
 import { useState } from 'react';
 import styles from '../userAuth.module.css';
-import Image from 'next/image';
-import { useClient } from '@/packages/contexts/client/ClientContext';
-import { useI18n } from '@/packages/contexts/i18n/I18nContext';
 import {
+  PopupCode,
   fallbackButtons,
   fallbackForgotPasswordLoading,
   fallbackForgotPasswordSuccess,
   fallbackGlobalError,
   useAuth,
+  useClient,
   useGlobalAlert,
+  useI18n,
   useProfile,
 } from '@/packages/contexts';
 import { useLang } from '@/packages/hooks';
@@ -19,10 +19,10 @@ import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { href } from '@/packages/utils/navigation';
-import { PopupCode } from '@/packages/contexts/alert/alert.types';
+import { href } from '@/packages/utils';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { AuthPageShell } from '../AuthPageShell';
+import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface ForgotPasswordData {
   title: string;
@@ -35,13 +35,13 @@ const ForgotPassword = () => {
   const descriptionId = 'forgot-password-description';
 
   const { client } = useClient();
-  const router = useRouter();
   const { texts } = useI18n();
   const { auth } = useAuth();
   const { profile } = useProfile();
   const { showError, showLoading, showSuccess, closeAlert } = useGlobalAlert();
   const [loading, setLoading] = useState(false);
   const lang = useLang();
+  const homeHref = href(lang, '/');
 
   const popups = texts.popups;
   const alertButtons = popups.button ?? fallbackButtons;
@@ -49,6 +49,11 @@ const ForgotPassword = () => {
   const navText = texts.components.client.navbar.accessibility;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
+  const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
+    useAuthAlertActions({
+      buttons: alertButtons,
+      closeAlert,
+    });
 
   const getForgotPasswordErrorStatus = (code?: string, fallbackStatus = 500) => {
     switch (code) {
@@ -91,9 +96,9 @@ const ForgotPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
       }
 
@@ -116,9 +121,9 @@ const ForgotPassword = () => {
             status: 400,
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
@@ -153,9 +158,9 @@ const ForgotPassword = () => {
             status: getForgotPasswordErrorStatus(response.code, 400),
             title: popupData.title,
             description: popupData.description,
-            cancelLabel: alertButtons.close,
+            cancelLabel: getCancelActionLabel(),
           },
-          onCancel: closeAlert,
+          onCancel: getCancelAction(),
         });
         return;
       }
@@ -172,14 +177,11 @@ const ForgotPassword = () => {
           status: 200,
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: alertButtons.goToLogin,
-          cancelLabel: alertButtons.close,
+          confirmLabel: getConfirmActionLabel('goToLogin'),
+          cancelLabel: getCancelActionLabel(),
         },
-        onConfirm: () => {
-          closeAlert();
-          router.push(href(lang, '/user/login'));
-        },
-        onCancel: closeAlert,
+        onConfirm: getConfirmAction('goToLogin'),
+        onCancel: getCancelAction(),
       });
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
@@ -198,16 +200,13 @@ const ForgotPassword = () => {
           status: getForgotPasswordErrorStatus(code, err.response?.status ?? 500),
           title: popupData.title,
           description: popupData.description,
-          confirmLabel: canRetry ? alertButtons.reload : undefined,
-          cancelLabel: alertButtons.close,
+          confirmLabel: canRetry ? getConfirmActionLabel('reload') : undefined,
+          cancelLabel: getCancelActionLabel(),
         },
         onConfirm: canRetry
-          ? () => {
-              closeAlert();
-              void handleForgotPassword(data);
-            }
+          ? getConfirmAction('reload', () => void handleForgotPassword(data))
           : undefined,
-        onCancel: closeAlert,
+        onCancel: getCancelAction(),
       });
     } finally {
       setLoading(false);
@@ -215,55 +214,38 @@ const ForgotPassword = () => {
   };
 
   return (
-    <section
-      className={`${styles.authSection} card card--primary`}
-      aria-labelledby={headingId}
-      aria-describedby={descriptionId}
-    >
-      <Link className={styles.authBrand} href={href(lang, '/')} aria-label={navText.homeLink}>
-        <Image
-          className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
-          alt={navText.logoAlt}
-          width={80}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className={styles.authFormContainer}>
-        <header className={styles.authHeader}>
-          <h1 id={headingId} className={styles.authTitle}>
-            {forgotPasswordText.title}
-          </h1>
-          <p id={descriptionId} className={styles.authDescription}>
-            {forgotPasswordText.info}
-          </p>
-        </header>
-
-        <FormWrapper<ForgotPasswordPayload>
-          fields={['email', 'language', 'clientId'] as const}
-          onSubmit={handleForgotPassword}
-          button={forgotButton}
-          initialValues={{
-            clientId: client?._id || '',
-            email: auth?.email || '',
-            language: profile?.language || lang || 'de',
-          }}
-          loading={loading}
-        />
-      </div>
-
-      <footer className={styles.authFooter}>
+    <AuthPageShell
+      headingId={headingId}
+      descriptionId={descriptionId}
+      title={forgotPasswordText.title}
+      description={forgotPasswordText.info}
+      homeHref={homeHref}
+      homeLabel={navText.homeLink}
+      logoAlt={navText.logoAlt}
+      footerLabel={navText.authFooter}
+      footer={
         <div className={styles.authFooterActions}>
           <Link className={styles.link} href={href(lang, '/user/login')}>
             {formText.button.login}
           </Link>
-          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>
             <IoMdArrowRoundBack /> {navText.homeLink}
           </Link>
         </div>
-      </footer>
-    </section>
+      }
+    >
+      <FormWrapper<ForgotPasswordPayload>
+        fields={['email', 'language', 'clientId'] as const}
+        onSubmit={handleForgotPassword}
+        button={forgotButton}
+        initialValues={{
+          clientId: client?._id || '',
+          email: auth?.email || '',
+          language: profile?.language || lang || 'de',
+        }}
+        loading={loading}
+      />
+    </AuthPageShell>
   );
 };
 

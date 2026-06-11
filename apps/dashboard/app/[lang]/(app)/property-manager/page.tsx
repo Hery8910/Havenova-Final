@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './page.module.css';
 
 import { FiPlus } from 'react-icons/fi';
-import { type PropertyManagerFormValues } from '../../../../../../packages/components/dashboard/propertyManagers/propertyManagerForm/PropertyManagerForm';
 import {
   fallbackGlobalError,
   fallbackGlobalLoading,
@@ -33,6 +32,7 @@ import {
   PropertyManagerDetails,
   PropertyManagerForm,
   PropertyManagerList,
+  type PropertyManagerFormValues,
   type DashboardStatusFilterItem,
 } from '../../../../../../packages/components/dashboard';
 import { useRouter } from 'next/navigation';

@@ -12,18 +12,18 @@ export function AppInstalledCard({ content }: AppInstalledCardProps) {
   return (
     <div className={`${styles.appCard} ${styles.appInstalledCard}`} data-state="installed">
       <header className={styles.titleBlock}>
-        <h2 id="home-app-title" className="type-display-md">
+        <h2 id="home-app-title" className="type-display-md v2-page-heading">
           {content.title}
         </h2>
       </header>
 
       <div className={styles.copyBlock}>
-        <p className={`${styles.sectionSubtitle} type-body-lg`}>{content.description}</p>
+        <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>{content.description}</p>
         <div className={styles.appCtas}>
           {content.ctas.map((cta, index) => (
             <Link
               key={`${cta.href}-${index}`}
-              className={`${styles.actionButton}  button button--accent`}
+              className={`${styles.actionButton} v2-button v2-button--accent`}
               href={cta.href}
             >
               {cta.label}

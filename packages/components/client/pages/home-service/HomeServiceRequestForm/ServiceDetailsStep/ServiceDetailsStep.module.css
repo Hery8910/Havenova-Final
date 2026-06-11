@@ -7,65 +7,66 @@
 .header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
+  font-size: var(--type-title-sm-size);
+  line-height: var(--leading-heading);
 }
 
 .description {
   margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: var(--page-text-secondary);
+  line-height: 1.55;
 }
 
 .serviceCard {
   display: grid;
   gap: 10px;
   padding: 16px;
-  border: 1px solid var(--surface-border);
+  border: 1px solid color-mix(in srgb, var(--surface-border) 82%, transparent);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--card-primary-bg) 48%, transparent);
 }
 
 .serviceTitle {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--page-text-primary);
 }
 
 .serviceDescription {
   margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: var(--page-text-secondary);
+  line-height: 1.55;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .label {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: var(--page-text-secondary);
 }
 
 .textarea {
   width: 100%;
   min-height: 140px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  color: var(--page-text-primary);
   background: rgba(255, 255, 255, 0.08);
   font: inherit;
   resize: vertical;
 }
 
 .hint {
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -73,5 +74,10 @@
 .error {
   min-height: 20px;
   color: var(--color-error);
-  font-size: var(--font-size-100);
+  font-size: var(--type-body-sm-size);
+}
+
+.textarea:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
 }

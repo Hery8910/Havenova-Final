@@ -119,7 +119,7 @@ export default function AppInstallSection({
   texts,
   lang,
 }: {
-  texts: AppInstallSectionTexts;
+  texts?: AppInstallSectionTexts;
   lang: 'de' | 'en' | 'es';
 }) {
   const { auth } = useAuth();
@@ -196,18 +196,84 @@ export default function AppInstallSection({
     }
   }, [installPrompt]);
 
+  const installableTitle =
+    texts?.appInstall?.installable?.title ?? 'Installiere Havenova auf deinem Gerät.';
+  const installableDescription =
+    texts?.appInstall?.installable?.description ??
+    'Öffne Havenova schneller und halte den Zugriff auf deine Anfragen jederzeit direkt bereit.';
+  const installableInfo =
+    texts?.appInstall?.installable?.info ??
+    'Du kannst die App direkt in diesem Browser installieren und mit nur einem Tipp öffnen.';
+  const installableCtaLabel =
+    texts?.appInstall?.installable?.cta?.label ?? 'App installieren';
+
+  const iosManualTitle =
+    texts?.appInstall?.iosManual?.title ?? 'Installiere Havenova auf deinem Gerät.';
+  const iosManualDescription =
+    texts?.appInstall?.iosManual?.description ??
+    'Öffne Havenova schneller und halte den Zugriff auf deine Anfragen jederzeit direkt bereit.';
+  const iosManualInfo =
+    texts?.appInstall?.iosManual?.info ??
+    'Tippe in Safari auf „Teilen“ und dann auf „Zum Home-Bildschirm“, um die App zu installieren.';
+
+  const unavailableTitle =
+    texts?.appInstall?.unavailable?.title ?? 'Erfahre, wie Havenova funktioniert.';
+  const unavailableDescription =
+    texts?.appInstall?.unavailable?.description ??
+    'Sieh dir den Ablauf von Anfrage und Service an, um die Plattform Schritt für Schritt besser zu verstehen.';
+  const unavailableCtaLabel =
+    texts?.appInstall?.unavailable?.cta?.label ?? 'So funktioniert’s';
+  const unavailableCtaHref =
+    texts?.appInstall?.unavailable?.cta?.href ?? '/how-it-work';
+
+  const loggedInTitle =
+    texts?.appInstalled?.loggedIn?.title ?? 'Dein Profilbereich ist bereit.';
+  const loggedInDescription =
+    texts?.appInstalled?.loggedIn?.description ??
+    'Öffne dein Profil, um deine Daten zu prüfen, Informationen zu aktualisieren und dein Konto zentral zu verwalten.';
+  const loggedInCtas =
+    texts?.appInstalled?.loggedIn?.ctas?.length
+      ? texts.appInstalled.loggedIn.ctas
+      : [
+          {
+            label: 'Zu meinem Profil',
+            href: '/profile',
+          },
+        ];
+
+  const guestTitle =
+    texts?.appInstalled?.guest?.title ?? 'Dein Zugang zum Profil ist bereit.';
+  const guestDescription =
+    texts?.appInstalled?.guest?.description ??
+    'Melde dich an oder erstelle ein Konto, um deine Daten zu speichern, dein Profil zu verwalten und schneller weiterzumachen.';
+  const guestCtas =
+    texts?.appInstalled?.guest?.ctas?.length
+      ? texts.appInstalled.guest.ctas
+      : [
+          {
+            label: 'Konto erstellen',
+            href: '/user/register',
+          },
+          {
+            label: 'Anmelden',
+            href: '/user/login',
+          },
+        ];
+
   const installedContent =
     auth.isLogged
       ? {
-          ...texts.appInstalled.loggedIn,
-          ctas: texts.appInstalled.loggedIn.ctas.map((cta) => ({
+          title: loggedInTitle,
+          description: loggedInDescription,
+          ctas: loggedInCtas.map((cta) => ({
             ...cta,
             href: href(lang, cta.href),
           })),
         }
       : {
-          ...texts.appInstalled.guest,
-          ctas: texts.appInstalled.guest.ctas.map((cta) => ({
+          title: guestTitle,
+          description: guestDescription,
+          ctas: guestCtas.map((cta) => ({
             ...cta,
             href: href(lang, cta.href),
           })),
@@ -217,14 +283,26 @@ export default function AppInstallSection({
     installState === 'installed' ? 'unavailable' : installState;
   const notInstalledContent =
     notInstalledState === 'installable'
-      ? texts.appInstall.installable
+      ? {
+          title: installableTitle,
+          description: installableDescription,
+          info: installableInfo,
+          cta: {
+            label: installableCtaLabel,
+          },
+        }
       : notInstalledState === 'ios-manual'
-        ? texts.appInstall.iosManual
+        ? {
+            title: iosManualTitle,
+            description: iosManualDescription,
+            info: iosManualInfo,
+          }
         : {
-            ...texts.appInstall.unavailable,
+            title: unavailableTitle,
+            description: unavailableDescription,
             cta: {
-              ...texts.appInstall.unavailable.cta,
-              href: href(lang, texts.appInstall.unavailable.cta.href),
+              label: unavailableCtaLabel,
+              href: href(lang, unavailableCtaHref),
             },
           };
 

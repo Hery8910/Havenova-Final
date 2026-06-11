@@ -1,20 +1,19 @@
-import type { UserAddress, UserSavedAddress } from '../../../../../../types/profile';
-import type { WorkAddressSelection, WorkAddressSource } from '../../../../../../types/services';
+import type {
+  SelectableProfileAddressOption,
+  UserAddress,
+  UserSavedAddress,
+} from '../../../../../../types/profile';
+import {
+  createEmptyUserAddress as createEmptyAddress,
+  getSelectableProfileAddresses,
+  isCompleteAddress,
+  isSameUserAddress,
+} from '../../../../../../types/profile';
+import type { CleaningWorkAddressSelection } from '../cleaningRequest.types';
 
-export interface NormalizedAddressOption {
-  id: string;
-  source: Exclude<WorkAddressSource, 'new'>;
-  address: UserAddress;
-  savedLabel?: string;
-}
+export type NormalizedAddressOption = SelectableProfileAddressOption;
 
-export const createEmptyUserAddress = (): UserAddress => ({
-  street: '',
-  streetNumber: '',
-  postalCode: '',
-  district: '',
-  floor: '',
-});
+export const createEmptyUserAddress = createEmptyAddress;
 
 export const normalizeAddress = (address: UserAddress): UserAddress => ({
   street: address.street.trim(),
@@ -30,35 +29,13 @@ export const formatAddressLabel = (address: UserAddress): string =>
     .filter(Boolean)
     .join(', ');
 
-export const isAddressComplete = (address: UserAddress): boolean => {
-  const normalized = normalizeAddress(address);
+export const isAddressComplete = isCompleteAddress;
 
-  return Boolean(
-    normalized.street &&
-      normalized.streetNumber &&
-      normalized.postalCode &&
-      normalized.district
-  );
-};
-
-export const isSameAddress = (left?: UserAddress, right?: UserAddress): boolean => {
-  if (!left || !right) return false;
-
-  const normalizedLeft = normalizeAddress(left);
-  const normalizedRight = normalizeAddress(right);
-
-  return (
-    normalizedLeft.street === normalizedRight.street &&
-    normalizedLeft.streetNumber === normalizedRight.streetNumber &&
-    normalizedLeft.postalCode === normalizedRight.postalCode &&
-    normalizedLeft.district === normalizedRight.district &&
-    (normalizedLeft.floor || '') === (normalizedRight.floor || '')
-  );
-};
+export const isSameAddress = isSameUserAddress;
 
 export const isSameWorkAddressSelection = (
-  left: WorkAddressSelection | null,
-  right: WorkAddressSelection | null
+  left: CleaningWorkAddressSelection | null,
+  right: CleaningWorkAddressSelection | null
 ): boolean => {
   if (!left && !right) return true;
   if (!left || !right) return false;
@@ -74,25 +51,4 @@ export const isSameWorkAddressSelection = (
 export const buildAddressOptions = (
   primaryAddress?: UserAddress,
   savedAddresses: UserSavedAddress[] = []
-): NormalizedAddressOption[] => {
-  const options: NormalizedAddressOption[] = [];
-
-  if (primaryAddress) {
-    options.push({
-      id: 'primary',
-      source: 'primary',
-      address: primaryAddress,
-    });
-  }
-
-  savedAddresses.forEach((savedAddress, index) => {
-    options.push({
-      id: `saved-${index}`,
-      source: 'saved',
-      address: savedAddress.address,
-      savedLabel: savedAddress.label?.trim() || undefined,
-    });
-  });
-
-  return options;
-};
+): NormalizedAddressOption[] => getSelectableProfileAddresses(primaryAddress, savedAddresses);

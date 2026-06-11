@@ -2,18 +2,18 @@
   "client": {
     "home": {
       "hero": {
-        "title": "Encuentra la ayuda adecuada rápido",
+        "title": "Encuentra rápido la ayuda adecuada",
         "descriptions": [
           "Elige tu servicio, envía tu solicitud en pocos minutos y recibe una propuesta a medida. Claro, fiable y fácil desde el primer paso."
         ],
         "ctas": {
           "primary": {
-            "label": "Servicio de limpieza",
+            "label": "Solicitar limpieza",
             "href": "/cleaning-service",
             "ariaLabel": "Solicitar un servicio de limpieza"
           },
           "secondary": {
-            "label": "Servicio al hogar",
+            "label": "Solicitar servicio al hogar",
             "href": "/home-service",
             "ariaLabel": "Solicitar un servicio al hogar"
           }
@@ -23,7 +23,7 @@
           "alt": "Profesional de servicios para el hogar de Havenova en Berlín"
         },
         "a11y": {
-          "actionsLabel": "Acciones del hero de la página de inicio"
+          "actionsLabel": "Acciones principales de la página de inicio"
         }
       },
       "appInstall": {
@@ -61,7 +61,7 @@
           ]
         },
         "guest": {
-          "title": "Tu acceso a tu perfil está listo.",
+          "title": "Tu acceso al perfil está listo.",
           "description": "Inicia sesión o crea una cuenta para guardar tus datos, gestionar tu perfil y acceder más rápido cuando lo necesites.",
           "ctas": [
             {
@@ -80,14 +80,14 @@
         "subtitle": "Dos caminos claros — elige el servicio adecuado y envía tu solicitud en pocos minutos.",
         "items": [
           {
-            "title": "Servicio de limpieza",
+            "title": "Limpieza",
             "description": "Apoyo profesional de limpieza para viviendas, edificios y necesidades recurrentes, con una coordinación clara y un servicio adaptado al estado y al ritmo de cada espacio.",
             "highlights": [
               "Limpieza de ventanas",
               "Limpieza profunda",
               "Limpieza después de reparaciones",
               "Limpieza de escaleras",
-              "Limpieza de entrada y salida"
+              "Limpieza de mudanza"
             ],
             "ctaLabel": "Descubre más",
             "href": "/cleaning-service",
@@ -110,7 +110,6 @@
         ]
       },
       "benefits": {
-        "kicker": "Ventajas",
         "title": "Cómodo para clientes — eficiente para el equipo.",
         "description": "Havenova reduce idas y vueltas, aclara las solicitudes y mantiene un flujo limpio: menos malentendidos, ofertas más rápidas y mejor planificación.",
         "items": [
@@ -373,6 +372,10 @@
           "emptyState": "Todavía no hay direcciones guardadas. Introduce la dirección del servicio a continuación y guárdala si quieres.",
           "manualSectionTitle": "Nueva dirección del servicio",
           "manualHint": "Introduce la dirección donde debe realizarse la visita o inspección.",
+          "differentAddressPromptTitle": "Usar una dirección diferente",
+          "differentAddressPromptDescription": "Introduce una nueva ubicación de trabajo para esta solicitud.",
+          "differentAddressPromptButton": "Usar una dirección diferente",
+          "differentAddressPromptButtonAriaLabel": "Abrir el formulario para introducir una dirección de servicio diferente",
           "saveToProfileLabel": "Guardar esta dirección en mi perfil",
           "savedAddressLabel": "Etiqueta",
           "savedAddressPlaceholder": "Oficina en casa, Edificio A, Padres...",
@@ -383,6 +386,27 @@
             "postalCode": "Código postal",
             "district": "Distrito",
             "floor": "Piso"
+          },
+          "profileStep": {
+            "title": "Completa los datos de tu perfil",
+            "description": "Antes de seleccionar la dirección del trabajo, necesitamos tu nombre, teléfono y dirección principal.",
+            "missingFieldsLabel": "Faltan",
+            "summaryTitle": "Datos del perfil",
+            "summaryDescription": "Estos son los datos que tenemos para esta solicitud.",
+            "summaryAriaLabel": "Resumen de los datos del perfil",
+            "saveButton": "Guardar datos del perfil",
+            "saving": "Guardando...",
+            "labels": {
+              "name": "Nombre",
+              "email": "Correo electrónico",
+              "phone": "Teléfono",
+              "primaryAddress": "Dirección principal"
+            },
+            "errors": {
+              "required": "Este campo es obligatorio.",
+              "invalidName": "Introduce un nombre válido.",
+              "invalidPhone": "Introduce un teléfono válido."
+            }
           },
           "stepAriaLabel": "Selección de dirección del servicio",
           "required": "Selecciona o introduce una dirección de trabajo."
@@ -399,7 +423,7 @@
           "labels": {
             "customerType": "Tipo de cliente",
             "frequency": "Frecuencia",
-            "sizeRange": "Rango de tamaño de la propiedad",
+            "sizeRange": "Tamaño de la propiedad",
             "roomsCount": "Cantidad de habitaciones",
             "hasBalcony": "Balcón",
             "hasIndoorStairs": "Escaleras interiores",
@@ -513,7 +537,6 @@
         },
         "customerType": {
           "label": "Customer type",
-          "helper": "Choose the customer group that matches this home service request.",
           "options": {
             "private": "Private",
             "business": "Business"
@@ -521,27 +544,21 @@
         },
         "serviceType": {
           "label": "Home service type",
-          "helper": "Choose the service that best matches the work you want to request.",
           "options": {
             "painting": {
-              "title": "Painting",
-              "description": "Interior or exterior painting work for walls, ceilings, trims, or selected areas."
+              "title": "Painting"
             },
             "repairs-installations": {
-              "title": "Repairs & Installations",
-              "description": "Practical fixes, replacements, fittings, or installation-related work at the property."
+              "title": "Repairs & Installations"
             },
             "furniture-assembly": {
-              "title": "Furniture Assembly",
-              "description": "Assembly or setup of wardrobes, shelves, beds, tables, and other furniture."
+              "title": "Furniture Assembly"
             },
             "kitchen-assembly": {
-              "title": "Kitchen Assembly",
-              "description": "Assembly and installation support for kitchen cabinets, units, and related components."
+              "title": "Kitchen Assembly"
             },
             "moving-help": {
-              "title": "Moving Help",
-              "description": "Hands-on moving support for carrying, loading, unloading, or in-property relocation."
+              "title": "Moving Help"
             }
           }
         },
@@ -646,6 +663,10 @@
           "useDifferentAddressHint": "Introduce una nueva ubicación de trabajo para esta solicitud.",
           "emptyState": "Todavía no hay direcciones guardadas. Introduce la dirección del servicio a continuación y guárdala si quieres.",
           "manualHint": "Introduce la dirección donde debe realizarse el servicio solicitado.",
+          "differentAddressPromptTitle": "Usar una dirección diferente",
+          "differentAddressPromptDescription": "Introduce una nueva ubicación de trabajo para esta solicitud.",
+          "differentAddressPromptButton": "Usar una dirección diferente",
+          "differentAddressPromptButtonAriaLabel": "Abrir el formulario para introducir una dirección de servicio diferente",
           "saveToProfileLabel": "Guardar esta dirección en mi perfil",
           "savedAddressLabel": "Etiqueta",
           "savedAddressPlaceholder": "Propiedad A, edificio trasero, consulta...",
@@ -656,6 +677,27 @@
             "postalCode": "Código postal",
             "district": "Distrito",
             "floor": "Piso"
+          },
+          "profileStep": {
+            "title": "Completa los datos de tu perfil",
+            "description": "Antes de seleccionar la dirección del trabajo, necesitamos tu nombre, teléfono y dirección principal.",
+            "missingFieldsLabel": "Faltan",
+            "summaryTitle": "Datos del perfil",
+            "summaryDescription": "Estos son los datos que tenemos para esta solicitud.",
+            "summaryAriaLabel": "Resumen de los datos del perfil",
+            "saveButton": "Guardar datos del perfil",
+            "saving": "Guardando...",
+            "labels": {
+              "name": "Nombre",
+              "email": "Correo electrónico",
+              "phone": "Teléfono",
+              "primaryAddress": "Dirección principal"
+            },
+            "errors": {
+              "required": "Este campo es obligatorio.",
+              "invalidName": "Introduce un nombre válido.",
+              "invalidPhone": "Introduce un teléfono válido."
+            }
           },
           "stepAriaLabel": "Selección de dirección del servicio",
           "required": "Selecciona o introduce una dirección de trabajo."
@@ -741,6 +783,7 @@
       "register": {
         "title": "Crear cuenta",
         "description": "Crea tu cuenta para solicitar y gestionar servicios.",
+        "autoRedirectDescription": "Serás redirigido a la página de verificación en unos segundos.",
         "cta": {
           "title": "¿Ya tienes una cuenta?",
           "label": "Inicia sesión ahora",
@@ -750,6 +793,7 @@
       "login": {
         "title": "Bienvenido de nuevo",
         "description": "Accede a tu cuenta y gestiona tus solicitudes.",
+        "autoRedirectDescription": "Serás redirigido a la página de inicio en unos segundos.",
         "cta": {
           "title": "¿Todavía no tienes una cuenta?",
           "label": "Regístrate",
@@ -771,7 +815,11 @@
       "resetPasswordText": {
         "title": "Establece una nueva contraseña",
         "info": "Elige una nueva contraseña para tu cuenta.",
-        "button": "Guardar contraseña"
+        "button": "Guardar nueva contraseña",
+        "linkErrors": {
+          "invalidOrExpired": "Este enlace ya no es válido o ha caducado.",
+          "missingToken": "Este enlace para restablecer la contraseña está incompleto o no es válido."
+        }
       },
       "profileNav": {
         "profile": "Perfil",
@@ -782,6 +830,11 @@
       "verifyEmail": {
         "title": "Verifica tu correo electrónico",
         "info": "Revisa tu bandeja de entrada o solicita un nuevo correo de verificación.",
+        "autoRedirectDescription": "Serás redirigido a la página de inicio en unos segundos.",
+        "sessionSyncError": {
+          "title": "No se pudo confirmar tu sesión",
+          "description": "Tu correo ya fue verificado, pero no pudimos confirmar completamente tu sesión. Recarga la página o inicia sesión de nuevo."
+        },
         "input": {
           "placeholder": "Dirección de correo electrónico",
           "button": "Reenviar correo de verificación.",
@@ -844,9 +897,14 @@
             "primaryAddressAriaLabel": "Detalles de la dirección principal del perfil",
             "secondaryAddressAriaLabel": "Detalles de la dirección secundaria",
             "secondaryAddressTitle": "Dirección",
+            "secondaryAddressListAriaLabel": "Lista de direcciones secundarias guardadas",
             "addSecondaryAddressQuestion": "¿Quieres añadir otra dirección?",
             "addSecondaryAddressButton": "Añadir dirección",
             "removeSecondaryAddressButton": "Eliminar",
+            "selectedSecondaryAddressTitle": "Editar dirección seleccionada",
+            "selectedSecondaryAddressAriaLabel": "Editor de la dirección secundaria seleccionada",
+            "editSecondaryAddressButton": "Editar",
+            "editSecondaryAddressAriaLabel": "Editar dirección adicional",
             "addressDetailsAriaLabel": "Detalles de la dirección",
             "saving": "Guardando...",
             "fields": {
@@ -917,164 +975,193 @@
     "legal": {
       "privacy": {
         "hero": {
-          "headline1": "Privacy Policy",
-          "headline2": "Transparency and Data Protection",
-          "subtitle": "This Privacy Policy explains how personal data is processed in connection with this platform and the services offered through it. The platform is technically operated by Maped Solutions (sole proprietorship).",
+          "headline1": "Política de Privacidad",
+          "headline2": "Transparencia y protección de datos",
+          "subtitle": "Esta Política de Privacidad explica cómo se tratan los datos personales en relación con esta plataforma, con los servicios específicos del cliente ofrecidos a través de ella y con la operación técnica prestada por Maped Solutions.",
           "image": {
             "src": "/images/privacy-hero.png",
-            "alt": "Data protection and security"
+            "alt": "Protección de datos y seguridad"
           }
         },
         "overview": {
-          "title": "Overview",
-          "intro": "Protecting personal data is important to us. This Privacy Policy explains who is responsible for data processing, for which purposes data is processed, and what rights users have.",
+          "title": "Resumen",
+          "intro": "La protección de los datos personales es importante para nosotros. Esta Política de Privacidad explica qué parte es responsable de cada actividad de tratamiento, con qué finalidades se tratan los datos personales y qué derechos tienen los usuarios.",
           "bullets": [
-            "For the service relationship with end users, the respective client will usually act as the controller within the meaning of Art. 4(7) GDPR.",
-            "Maped Solutions (sole proprietorship) supports the technical operation of the platform and may act, depending on the processing context, as a processor, an independent controller, or a joint controller.",
-            "The platform uses a global base account structure for authentication, security, and technical account administration; service-specific profiles and operational relationships are managed separately for each client or service.",
-            "Depending on the specific processing activity, legal bases may in particular include Art. 6(1)(a), (b), (c), and (f) GDPR.",
-            "Transfers outside the EEA take place only where necessary and subject to appropriate safeguards.",
-            "The specific data protection role of Maped Solutions depends on the respective processing context.",
-            "Maped Solutions can act as its own responsible entity for platform-wide functions such as authentication, security, and technical operation.",
-            "For the processing of personal data in connection with the services offered by the respective customer, Maped Solutions generally acts as a data processor on behalf of the respective customer.",
-            "In some cases, joint responsibilities may also exist."
+            "En la relación de servicio con los usuarios finales, el cliente correspondiente suele actuar como responsable del tratamiento en el sentido del art. 4(7) del GDPR.",
+            "Maped Solutions presta la operación técnica de la plataforma y puede actuar, según el contexto del tratamiento, como encargado del tratamiento, responsable independiente o corresponsable.",
+            "La plataforma utiliza una estructura de cuenta base global para autenticación, seguridad y administración técnica de cuentas; los perfiles y relaciones operativas de cada servicio se gestionan de forma separada por cliente o servicio.",
+            "Según la actividad concreta de tratamiento, las bases jurídicas pueden incluir en particular el art. 6(1)(a), (b), (c) y (f) del GDPR.",
+            "Las transferencias fuera del EEE solo se realizan cuando son necesarias y con garantías adecuadas.",
+            "El papel específico de Maped Solutions en materia de protección de datos depende del contexto concreto de tratamiento.",
+            "Maped Solutions puede actuar como responsable propio para funciones transversales de la plataforma como autenticación, seguridad y operación técnica.",
+            "Para los tratamientos vinculados a los servicios ofrecidos por cada cliente, Maped Solutions actúa normalmente como encargado del tratamiento por cuenta de ese cliente.",
+            "En algunos casos también pueden existir responsabilidades compartidas."
           ],
           "cta": {
-            "label": "Contact the Controller",
+            "label": "Contactar con el responsable",
             "href": "/contact"
           }
         },
         "roles": {
-          "title": "Roles and data protection responsibilities",
+          "title": "Roles y responsabilidades en protección de datos",
           "controller": {
-            "title": "Role of the respective client",
-            "body": "Where personal data is processed for the initiation, performance, and administration of the specific service offered, the respective client will generally be the controller. This includes, in particular, the operational handling of users, requests, appointments, work orders, billing, and similar service-related processes."
+            "title": "Rol del cliente correspondiente",
+            "body": "Cuando los datos personales se tratan para la preparación, prestación y gestión del servicio concreto ofrecido, el cliente correspondiente suele ser el responsable del tratamiento. Esto incluye, en particular, la gestión operativa de usuarios, solicitudes de servicio, citas, órdenes de trabajo, comunicación con clientes, facturación y procesos similares vinculados al servicio."
           },
           "processor": {
-            "title": "Role of Maped Solutions (sole proprietorship)",
-            "body": "Maped Solutions technically operates the platform and supports secure operation, authentication, infrastructure, abuse prevention, and protective measures. In these contexts, Maped Solutions may, depending on the specific processing activity, act not only as a processor but also as an independent controller or joint controller. It would therefore be inaccurate to describe all processing as being carried out exclusively on the client’s instructions."
+            "title": "Rol de Maped Solutions",
+            "body": "Maped Solutions opera técnicamente la plataforma y soporta la operación segura, la autenticación, la infraestructura, la prevención de abusos y las medidas de protección. Según la actividad concreta de tratamiento, Maped Solutions puede actuar como encargado del tratamiento, responsable independiente o, cuando esté jurídicamente justificado, corresponsable. Por ello no sería correcto describir todas las actividades de tratamiento de la plataforma como realizadas exclusivamente siguiendo instrucciones del cliente."
           },
           "links": [
             {
-              "label": "Art. 4(7) GDPR – Controller",
+              "label": "Art. 4(7) GDPR - Responsable",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             },
             {
-              "label": "Art. 28 GDPR – Processor",
+              "label": "Art. 28 GDPR - Encargado del tratamiento",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             }
           ]
         },
+        "contacts": {
+          "title": "Identidad y datos de contacto",
+          "intro": "Los siguientes datos identifican a las partes relevantes en materia de proteccion de datos en relacion con esta plataforma y los servicios ofrecidos.",
+          "controller": {
+            "title": "Responsable del tratamiento para los servicios ofrecidos",
+            "description": "Para la relacion de servicio con los usuarios finales, el negocio responsable indicado a continuacion suele ser el responsable del tratamiento."
+          },
+          "technicalOperator": {
+            "title": "Operador tecnico de la plataforma",
+            "description": "El siguiente operador es responsable del funcionamiento tecnico, la seguridad y la infraestructura de la plataforma."
+          },
+          "dpo": {
+            "title": "Delegado de proteccion de datos / contacto de privacidad",
+            "description": "Si existe un delegado de proteccion de datos o un contacto especifico de privacidad, sus datos se muestran a continuacion."
+          },
+          "fields": {
+            "businessName": "Negocio / Marca",
+            "legalName": "Nombre legal",
+            "representedBy": "Representado por",
+            "address": "Direccion",
+            "email": "Email",
+            "phone": "Telefono",
+            "name": "Nombre"
+          },
+          "unavailable": {
+            "notApplicable": "No aplica",
+            "notAvailable": "Actualmente no disponible"
+          }
+        },
         "accountStructure": {
-          "title": "Global accounts and service-specific profiles",
-          "body": "The platform may use a central base account structure so that the same person can authenticate across multiple services or clients. However, separate relationships and profiles are maintained within each individual service. A profile for one service is therefore not automatically identical to all other uses of the platform."
+          "title": "Cuentas globales y perfiles específicos por servicio",
+          "body": "La plataforma puede utilizar una estructura central de cuenta base para que una misma persona pueda autenticarse en varios servicios o clientes. Sin embargo, dentro de cada servicio se mantienen relaciones y perfiles separados. Un perfil de un servicio no es automáticamente idéntico a todos los demás usos de la plataforma."
         },
         "purposesAndLegalBases": {
-          "title": "Purposes and Legal Bases",
-          "intro": "Personal data is processed exclusively for lawful and clearly defined purposes.",
+          "title": "Finalidades y bases jurídicas",
+          "intro": "Los datos personales se tratan exclusivamente para fines lícitos y claramente definidos.",
           "items": [
             {
-              "purpose": "Service delivery and user management",
+              "purpose": "Prestación del servicio y gestión de usuarios",
               "examples": {
-                "title": "Examples:",
-                "description": "user accounts, service requests, communication, invoicing"
+                "title": "Ejemplos:",
+                "description": "cuentas de usuario, solicitudes de servicio, comunicación, facturación"
               },
               "legalBases": {
-                "title": "Legal basis:",
+                "title": "Base jurídica:",
                 "description": "Art. 6(1)(b) GDPR"
               }
             },
             {
-              "purpose": "Legal obligations",
+              "purpose": "Obligaciones legales",
               "examples": {
-                "title": "Examples:",
-                "description": "tax and accounting retention obligations"
+                "title": "Ejemplos:",
+                "description": "obligaciones de conservación fiscales y contables"
               },
               "legalBases": {
-                "title": "Legal basis:",
+                "title": "Base jurídica:",
                 "description": "Art. 6(1)(c) GDPR"
               }
             },
             {
-              "purpose": "Platform security and operation",
+              "purpose": "Seguridad y operación de la plataforma",
               "examples": {
-                "title": "Examples:",
-                "description": "server logs, abuse prevention, system security"
+                "title": "Ejemplos:",
+                "description": "logs del servidor, prevención de abusos, seguridad del sistema"
               },
               "legalBases": {
-                "title": "Legal basis:",
+                "title": "Base jurídica:",
                 "description": "Art. 6(1)(f) GDPR"
               }
             }
           ]
         },
         "dataCategories": {
-          "title": "Categories of Data",
-          "description": "Depending on platform usage, the following data may be processed:",
+          "title": "Categorías de datos",
+          "description": "Según el uso de la plataforma, pueden tratarse los siguientes datos:",
           "items": [
-            "Identification and contact data (name, email address, phone number, address).",
-            "Account and security data (encrypted passwords, roles, language settings).",
-            "Platform authentication account data.",
-            "Service request data (descriptions, locations).",
-            "Contractual and payment data (invoices, payments via third parties).",
-            "Technical data (IP address, device information, server logs, strictly necessary cookies).",
-            "Purpose-bound minimum data in individual technical datasets (e.g. for documentation, billing or fulfillment of legal obligations)."
+            "Datos de identificación y contacto (nombre, correo electrónico, teléfono, dirección).",
+            "Datos de cuenta y seguridad (contraseñas cifradas, roles, ajustes de idioma).",
+            "Datos de autenticación de la cuenta de plataforma.",
+            "Datos de solicitudes de servicio (descripciones, ubicaciones).",
+            "Datos contractuales y de facturación, cuando proceda, por ejemplo facturas u otros registros comerciales relacionados.",
+            "Datos técnicos (dirección IP, información del dispositivo, logs del servidor, cookies estrictamente necesarias).",
+            "Datos mínimos vinculados a una finalidad concreta en conjuntos técnicos específicos, por ejemplo para documentación, facturación o cumplimiento de obligaciones legales."
           ]
         },
         "thirdParties": {
-          "title": "Third-Party Service Providers",
-          "subtitle": "This overview refers to technical providers that may be required to operate the platform (e.g., hosting, email delivery, payment processing).",
-          "intro": "No providers are used for analytics or marketing.",
+          "title": "Proveedores de servicios de terceros",
+          "subtitle": "Este resumen se refiere a proveedores técnicos que pueden ser necesarios para operar la plataforma, por ejemplo alojamiento, infraestructura, almacenamiento de datos o envío de correo.",
+          "intro": "No se utilizan proveedores con fines de analítica o marketing.",
           "table": {
             "headers": {
-              "name": "Provider",
-              "purpose": "Purpose",
-              "region": "Region",
-              "privacy": "Privacy Policy"
+              "name": "Proveedor",
+              "purpose": "Finalidad",
+              "region": "Región",
+              "privacy": "Política de privacidad"
             },
             "body": [
               {
                 "name": "Vercel",
-                "purpose": "Frontend hosting and operations, technical logs",
-                "region": "Global (region-dependent)",
+                "purpose": "Alojamiento y operación del frontend, logs técnicos",
+                "region": "Global (según región)",
                 "privacyUrl": {
-                  "label": "Privacy Policy",
+                  "label": "Política de privacidad",
                   "href": "https://vercel.com/legal/privacy-policy"
                 }
               },
               {
                 "name": "Cloudflare R2",
-                "purpose": "Storage and delivery of static assets",
-                "region": "Global (region-dependent)",
+                "purpose": "Almacenamiento y entrega de recursos estáticos",
+                "region": "Global (según región)",
                 "privacyUrl": {
-                  "label": "Privacy Policy",
+                  "label": "Política de privacidad",
                   "href": "https://www.cloudflare.com/privacypolicy/"
                 }
               },
               {
                 "name": "Render",
-                "purpose": "Backend hosting, technical logs",
-                "region": "Global (region-dependent)",
+                "purpose": "Alojamiento del backend, logs técnicos",
+                "region": "Global (según región)",
                 "privacyUrl": {
-                  "label": "Privacy Policy",
+                  "label": "Política de privacidad",
                   "href": "https://render.com/privacy"
                 }
               },
               {
                 "name": "MongoDB Atlas",
-                "purpose": "Database hosting",
-                "region": "Global (region-dependent)",
+                "purpose": "Alojamiento de base de datos",
+                "region": "Global (según región)",
                 "privacyUrl": {
-                  "label": "Privacy Policy",
+                  "label": "Política de privacidad",
                   "href": "https://www.mongodb.com/legal/privacy-policy"
                 }
               },
               {
                 "name": "SendGrid",
-                "purpose": "Email delivery",
-                "region": "Global (region-dependent)",
+                "purpose": "Envío de correo electrónico",
+                "region": "Global (según región)",
                 "privacyUrl": {
-                  "label": "Privacy Policy",
+                  "label": "Política de privacidad",
                   "href": "https://www.twilio.com/legal/privacy"
                 }
               }
@@ -1082,86 +1169,86 @@
           }
         },
         "security": {
-          "title": "Security Measures",
-          "body": "Appropriate technical and organizational measures pursuant to Art. 32 GDPR are implemented, including encrypted passwords, secure data transmission (HTTPS/TLS), role-based access control, and firewall/CDN protection."
+          "title": "Medidas de seguridad",
+          "body": "Se aplican medidas técnicas y organizativas adecuadas conforme al art. 32 del GDPR, incluidas contraseñas cifradas, transmisión segura de datos (HTTPS/TLS), control de acceso por roles y protección mediante firewall/CDN."
         },
         "cookies": {
-          "title": "Cookies and comparable technologies",
-          "body": "This platform currently uses only strictly necessary cookies and comparable technical storage and access technologies. Where such technologies are required for authentication, security, session control, language settings, or other strictly necessary functions, they are used to ensure the secure operation of the platform. Analytics or tracking functions are not currently used. If non-essential statistics or analytics functions are introduced in the future, they will be used only on the legal basis required for that purpose, in particular after prior consent where required.",
+          "title": "Cookies y tecnologías comparables",
+          "body": "Esta plataforma utiliza únicamente cookies estrictamente necesarias y tecnologías comparables de almacenamiento o acceso técnico. Cuando estas tecnologías son necesarias para autenticación, seguridad, control de sesión, ajustes de idioma u otras funciones esenciales, se utilizan para garantizar el funcionamiento seguro de la plataforma. No hay tecnologías de analítica, marketing ni rastreo implementadas en esta plataforma.",
           "cta": {
-            "label": "View Cookie Policy",
+            "label": "Ver Política de Cookies",
             "href": "/legal/cookie-policy"
           }
         },
         "userRights": {
-          "title": "Your Rights",
-          "intro": "Data subjects have the following rights under the GDPR:",
+          "title": "Tus derechos",
+          "intro": "Las personas interesadas tienen los siguientes derechos conforme al GDPR:",
           "items": [
-            "Access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18).",
-            "Data portability (Art. 20), objection (Art. 21).",
-            "Withdrawal of consent (Art. 7(3)) where processing is based on consent.",
-            "Right to lodge a complaint with a supervisory authority (Art. 77)."
+            "Acceso (art. 15), rectificación (art. 16), supresión (art. 17) y limitación del tratamiento (art. 18).",
+            "Portabilidad de los datos (art. 20) y oposición (art. 21).",
+            "Retirada del consentimiento (art. 7(3)) cuando el tratamiento se base en él.",
+            "Derecho a presentar una reclamación ante una autoridad de control (art. 77)."
           ],
-          "howTo": "Requests should generally be addressed to the respective data controller. Maped Solutions may provide technical assistance in handling such requests, in particular where they relate to platform-wide authentication, security, or account administration. We may request identification and generally respond, or assist with the response, within one month."
+          "howTo": "Las solicitudes relacionadas con los servicios ofrecidos deben dirigirse en general al negocio responsable indicado en esta página. Maped Solutions puede prestar asistencia técnica en la gestión de solicitudes, en particular cuando se refieran a autenticación, seguridad o administración de cuentas a nivel de plataforma. Puede requerirse verificación de identidad y, normalmente, la respuesta o el soporte técnico se proporcionan en el plazo de un mes."
         },
         "accountDeletion": {
-          "title": "Deletion of a service-specific account",
-          "body": "If you delete your account for a specific service or client, the related service-specific profile will generally be deleted and the active relationship with that service will be ended or deactivated. Any underlying base account structure used for authentication, or other active relationships with other clients or services, will generally remain unaffected. Where other functional domains still require minimal residual data, for example for invoicing, legal documentation, evidentiary purposes, or statutory retention obligations, only the data necessary for that separate purpose will be retained. Such residual data will not be used to recover or reactivate the deleted profile."
+          "title": "Eliminación de una cuenta específica de servicio",
+          "body": "Si eliminas tu cuenta para un servicio o cliente concreto, el perfil específico asociado a ese servicio se eliminará normalmente y la relación activa con ese servicio finalizará o quedará desactivada. La estructura de cuenta base utilizada para autenticación, así como otras relaciones activas con otros clientes o servicios, por lo general no se verán afectadas. Si otros dominios funcionales todavía requieren datos residuales mínimos, por ejemplo para facturación, documentación legal, fines probatorios u obligaciones legales de conservación, solo se mantendrán los datos necesarios para esa finalidad separada. Esos datos residuales no se utilizarán para recuperar ni reactivar el perfil eliminado."
         },
         "retention": {
-          "title": "Data Retention",
-          "body": "Personal data is retained only for as long as necessary for the relevant purpose. If a service-specific profile is deleted, that profile and the related active service relationship will generally be removed or deactivated. Where other functional domains require minimal snapshots or residual records for legal, evidentiary, documentation, or billing purposes, only that purpose-bound data will be kept for the required retention period. Such residual data is not sufficient to reconstruct the deleted profile.",
+          "title": "Conservación de datos",
+          "body": "Los datos personales solo se conservan durante el tiempo necesario para la finalidad correspondiente. Si se elimina un perfil específico de servicio, ese perfil y la relación activa asociada se suprimirán o desactivarán normalmente. Cuando otros dominios funcionales requieran instantáneas mínimas o registros residuales por motivos legales, probatorios, documentales o de facturación, solo se conservarán esos datos vinculados a dicha finalidad durante el plazo exigido. Esos datos residuales no son suficientes para reconstruir el perfil eliminado.",
           "additional": {
-            "title": "The specific storage duration depends in particular on:",
+            "title": "La duración concreta de conservación depende en particular de:",
             "bullets": [
-              "statutory retention obligations",
-              "billing-related requirements",
-              "as well as the need to assert or defend legal claims."
+              "obligaciones legales de conservación",
+              "requisitos relacionados con la facturación",
+              "y de la necesidad de hacer valer o defender reclamaciones legales."
             ],
-            "close": "Once these purposes cease to apply, data will be deleted or, where possible, anonymized."
+            "close": "Una vez que estas finalidades dejan de aplicarse, los datos se eliminan o, cuando es posible, se anonimizarán."
           }
         },
         "additionalInformation": {
-          "title": "Additional Information under Art. 13 GDPR",
+          "title": "Información adicional conforme al art. 13 GDPR",
           "items": [
             {
-              "title": "Requirement to provide data",
-              "body": "Providing personal data is necessary to use the platform. Without this data, registration and use of the services are not possible."
+              "title": "Obligación de facilitar datos",
+              "body": "Facilitar datos personales es necesario para utilizar la plataforma y, cuando corresponda, para solicitar o recibir los servicios ofrecidos. Sin estos datos puede no ser posible registrarse, iniciar sesión de forma segura o utilizar funciones relevantes del servicio."
             },
             {
-              "title": "Data sources",
-              "body": "We process data you provide as well as technical usage data generated when using the platform (e.g., log files)."
+              "title": "Fuentes de los datos",
+              "body": "Tratamos tanto los datos que facilitas como los datos técnicos de uso que se generan al utilizar la plataforma, por ejemplo archivos de log."
             },
             {
-              "title": "Automated decision-making",
-              "body": "No automated decision-making, including profiling within the meaning of Art. 22 GDPR, takes place."
+              "title": "Decisiones automatizadas",
+              "body": "No se realizan decisiones automatizadas, incluido el perfilado en el sentido del art. 22 del GDPR."
             },
             {
-              "title": "Privacy contact",
-              "body": "If a Data Protection Officer is appointed, their contact details will be provided in the Imprint or upon request."
+              "title": "Contacto de privacidad",
+              "body": "Si existe un delegado de protección de datos o un contacto específico de privacidad, sus datos se facilitarán en esta página, en el aviso legal o previa solicitud."
             }
           ]
         },
         "internationalTransfers": {
-          "title": "International Data Transfers",
-          "body": "If personal data is processed outside the EEA, this occurs exclusively with appropriate safeguards, in particular the Standard Contractual Clauses approved by the European Commission. Where necessary, supplementary technical, contractual, or organizational measures are implemented to ensure an adequate level of data protection."
+          "title": "Transferencias internacionales de datos",
+          "body": "Si los datos personales se tratan fuera del EEE, esto se realiza exclusivamente con garantías adecuadas, en particular mediante cláusulas contractuales tipo aprobadas por la Comisión Europea. Cuando sea necesario, se aplican medidas técnicas, contractuales u organizativas complementarias para garantizar un nivel adecuado de protección."
         },
         "changes": {
-          "title": "Changes to this Privacy Policy",
-          "body": "This Privacy Policy may be updated for legal or operational reasons.",
+          "title": "Cambios en esta Política de Privacidad",
+          "body": "Esta Política de Privacidad puede actualizarse cuando cambien los requisitos legales, los servicios técnicos o las actividades reales de tratamiento.",
           "meta": {
-            "lastUpdated": "Last updated:"
+            "lastUpdated": "Última actualización:"
           }
         },
         "legalReferences": {
-          "title": "Legal References",
+          "title": "Referencias legales",
           "items": [
             {
-              "label": "General Data Protection Regulation (GDPR)",
+              "label": "Reglamento General de Protección de Datos (GDPR)",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             },
             {
-              "label": "European Data Protection Board – Supervisory authorities",
+              "label": "European Data Protection Board - Autoridades de control",
               "href": "https://edpb.europa.eu/about-edpb/board/members_en"
             }
           ]
@@ -1169,72 +1256,72 @@
       },
       "cookies": {
         "hero": {
-          "headline1": "Cookie Policy",
-          "headline2": "Use of Strictly Necessary Cookies",
-          "subtitle": "This policy explains the use of cookies and comparable technologies on this platform, which is technically operated by Maped Solutions (sole proprietorship).",
+          "headline1": "Política de Cookies",
+          "headline2": "Uso de cookies estrictamente necesarias",
+          "subtitle": "Esta política explica el uso de cookies y tecnologías comparables en esta plataforma, incluidas las funciones técnicas estrictamente necesarias para autenticación, seguridad, preferencias de idioma y operación relacionada de la plataforma.",
           "image": {
             "src": "/images/cookies-hero.png",
-            "alt": "Cookies and privacy settings"
+            "alt": "Cookies y ajustes de privacidad"
           }
         },
         "overview": {
-          "title": "Overview",
-          "intro": "This platform currently uses only strictly necessary cookies and comparable technologies, such as browser storage, to provide login, security, language settings, session management, and other core functions. Statistics or analytics functions are not currently used. If non-essential technologies are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
+          "title": "Resumen",
+          "intro": "Esta plataforma utiliza unicamente cookies estrictamente necesarias y tecnologias comparables, como el almacenamiento del navegador, para ofrecer inicio de sesion, seguridad, ajustes de idioma, gestion de sesion y otras funciones esenciales. No hay tecnologias de analitica, marketing ni rastreo implementadas en esta plataforma, y el aviso de cookies cumple en este estado una funcion informativa sobre esta configuracion actual.",
           "bullets": [
-            "Strictly necessary cookies and comparable technologies support core platform functions.",
-            "Analytics or tracking functions are not currently used.",
-            "No advertising or marketing tracking is carried out.",
-            "Cookies and local storage technologies can be managed through browser and platform settings."
+            "Las cookies estrictamente necesarias y tecnologias comparables soportan funciones esenciales de la plataforma.",
+            "No se utilizan tecnologias de analitica ni rastreo.",
+            "No se realiza seguimiento publicitario ni de marketing.",
+            "Las cookies y tecnologias de almacenamiento local pueden gestionarse mediante la configuracion del navegador y de la plataforma."
           ],
           "cta": {
-            "label": "View cookie information",
+            "label": "Ver informacion sobre cookies",
             "action": "openCookieBanner"
           }
         },
         "whatAreCookies": {
-          "title": "What are cookies and comparable technologies?",
-          "body": "Cookies are small text files that may be stored on or read from your device. In addition, the platform may use comparable technologies such as browser storage. These technologies support, among other things, secure login, navigation, session management, and protection against misuse."
+          "title": "Que son las cookies y las tecnologias comparables?",
+          "body": "Las cookies son pequenos archivos de texto que pueden almacenarse o leerse desde tu dispositivo. Ademas, la plataforma puede utilizar tecnologias comparables como el almacenamiento del navegador. Estas tecnologias ayudan, entre otras cosas, al inicio de sesion seguro, la navegacion, la gestion de sesion y la proteccion frente a abusos."
         },
         "types": {
-          "title": "What cookies and comparable technologies are used?",
+          "title": "Que cookies y tecnologias comparables se utilizan?",
           "items": [
             {
-              "name": "Strictly necessary technologies",
-              "description": "Strictly necessary cookies or comparable storage mechanisms may be used to provide authentication, security, session management, language settings, and similar core functions."
+              "name": "Tecnologias estrictamente necesarias",
+              "description": "Pueden utilizarse cookies estrictamente necesarias o mecanismos comparables de almacenamiento para ofrecer autenticacion, seguridad, gestion de sesion, ajustes de idioma y funciones esenciales similares de la plataforma."
             },
             {
-              "name": "Currently no statistics or analytics features",
-              "description": "No non-essential statistics or analytics features are currently used. If such features are introduced in the future, they will be activated only on the legal basis applicable to that purpose, in particular after prior consent where required."
+              "name": "Sin funciones de analitica ni marketing",
+              "description": "En esta plataforma no se implementan funciones no esenciales de estadistica, analitica, publicidad ni seguimiento de marketing."
             }
           ]
         },
         "thirdParties": {
-          "title": "Third-party services",
-          "body": "External technical service providers may be involved where necessary to provide the platform. Where cookies or comparable technologies are used in that context, this is currently limited to strictly necessary functions. If non-essential statistics or analytics features are introduced through third-party services in the future, they will be used only on the legal basis applicable to that purpose, in particular after prior consent where required.",
+          "title": "Servicios de terceros",
+          "body": "Pueden intervenir proveedores tecnicos externos cuando sea necesario para prestar la infraestructura de la plataforma. Cuando en ese contexto se utilicen cookies o tecnologias comparables, su uso se limita a funciones tecnicas estrictamente necesarias.",
           "table": {
             "headers": {
-              "name": "Provider",
-              "purpose": "Purpose",
-              "privacy": "Privacy Policy"
+              "name": "Proveedor",
+              "purpose": "Finalidad",
+              "privacy": "Politica de privacidad"
             },
             "body": []
           }
         },
         "localStorage": {
-          "title": "Browser storage and comparable technologies",
-          "body": "In addition to cookies, the platform may use local browser storage technologies such as localStorage to store technical preferences or states on your device. This information is used for technical delivery and user guidance and is not shared with third parties merely because it is stored locally."
+          "title": "Almacenamiento del navegador y tecnologias comparables",
+          "body": "Ademas de las cookies, la plataforma puede utilizar tecnologias de almacenamiento local del navegador como localStorage para guardar preferencias o estados tecnicos en tu dispositivo. Esto puede incluir, por ejemplo, ajustes de idioma o informacion tecnica relacionada con la sesion actual o con el aviso de cookies. Esta informacion se utiliza para la prestacion tecnica y la guia de uso, y no se comparte con terceros solo por estar almacenada localmente."
         },
         "management": {
-          "title": "Managing cookies and storage technologies",
-          "intro": "You can manage or delete cookies at any time via your browser settings. You can also remove locally stored information in your browser or on your device. Disabling strictly necessary technologies may affect the functionality of the platform.",
+          "title": "Gestion de cookies y tecnologias de almacenamiento",
+          "intro": "Puedes gestionar o eliminar cookies en cualquier momento desde la configuracion de tu navegador. Tambien puedes eliminar la informacion almacenada localmente en tu navegador o en tu dispositivo. Desactivar tecnologias estrictamente necesarias puede afectar al funcionamiento de la plataforma. El aviso de cookies tambien puede volver a abrirse para revisar la informacion que la plataforma muestra actualmente.",
           "methods": [
-            "Manage cookies through browser settings.",
-            "Delete stored cookies via the browser.",
-            "Restrict or block cookies using browser features.",
-            "Remove locally stored settings from your device."
+            "Gestionar cookies mediante la configuracion del navegador.",
+            "Eliminar cookies almacenadas desde el navegador.",
+            "Restringir o bloquear cookies mediante funciones del navegador.",
+            "Eliminar ajustes almacenados localmente en tu dispositivo."
           ],
           "cta": {
-            "label": "Reopen cookie information",
+            "label": "Volver a abrir la informacion sobre cookies",
             "action": "openCookieBanner"
           },
           "links": [
@@ -1257,25 +1344,25 @@
           ]
         },
         "legalBasis": {
-          "title": "Legal basis",
-          "body": "Where access to or storage of information on your device is required for the technically necessary provision of the platform, this takes place on the basis of Section 25 TDDDG for strictly necessary technologies. Where personal data is further processed in that context, such processing will generally rely on Art. 6(1)(b) or (f) GDPR. Non-essential statistics or analytics functions are not currently used; if they are introduced in the future, they will be used only on the legal basis applicable to that purpose, in particular on the basis of consent under Section 25 TDDDG and Art. 6(1)(a) GDPR where required."
+          "title": "Base juridica",
+          "body": "Cuando el acceso o almacenamiento de informacion en tu dispositivo es necesario para la prestacion tecnica estrictamente necesaria de la plataforma, esto se realiza sobre la base del § 25 TDDDG para tecnologias estrictamente necesarias. Cuando en ese contexto se traten ademas datos personales, dicho tratamiento se basara normalmente en el art. 6(1)(b) o (f) del GDPR, segun que el tratamiento sea necesario para la funcion de plataforma solicitada o para intereses tecnicos y de seguridad legitimos. En esta plataforma no se implementan tecnologias no esenciales de analitica ni marketing."
         },
         "changes": {
-          "title": "Changes to this Cookie Policy",
-          "body": "This Cookie Policy may be updated for legal or technical reasons. The date of the last update is displayed on this page.",
+          "title": "Cambios en esta Politica de Cookies",
+          "body": "Esta Politica de Cookies puede actualizarse cuando cambien los requisitos legales, los servicios tecnicos o el uso real de tecnologias de almacenamiento en la plataforma. La fecha de la ultima actualizacion se muestra en esta pagina.",
           "meta": {
-            "lastUpdated": "Last updated:"
+            "lastUpdated": "Ultima actualizacion:"
           }
         },
         "legalReferences": {
-          "title": "Legal references",
+          "title": "Referencias legales",
           "items": [
             {
-              "label": "General Data Protection Regulation (GDPR)",
+              "label": "Reglamento General de Proteccion de Datos (GDPR)",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             },
             {
-              "label": "ePrivacy Directive",
+              "label": "Directiva ePrivacy",
               "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058"
             }
           ]
@@ -1283,128 +1370,182 @@
       },
       "terms": {
         "hero": {
-          "headline1": "Terms of Service",
-          "headline2": "Platform Terms and Conditions",
-          "subtitle": "These Terms of Service govern the use of this platform and define the rights and obligations of the involved parties.",
+          "headline1": "Términos del Servicio",
+          "headline2": "Condiciones de uso de la plataforma",
+          "subtitle": "Estos términos regulan el uso de esta plataforma y definen los derechos y obligaciones de las partes implicadas.",
           "image": {
             "src": "/images/terms-hero.png",
-            "alt": "Terms and conditions"
+            "alt": "Términos y condiciones"
           }
         },
         "overview": {
-          "title": "Scope",
-          "intro": "These Terms of Service apply to the use of the functions and services provided through this platform.",
+          "title": "Alcance",
+          "intro": "Estos Términos del Servicio se aplican al uso de las funciones de plataforma disponibles a través de este sitio web. Pueden existir condiciones comerciales o de servicio adicionales directamente entre el usuario final y el negocio responsable.",
           "bullets": [
-            "The platform is technically operated by Maped Solutions (sole proprietorship).",
-            "The respective end-user services are generally provided by the respective client.",
-            "The platform may use a global base account structure for authentication and security.",
-            "Service-specific profiles, operational relationships, and functional records are maintained separately for each client or service."
+            "La plataforma es operada técnicamente por Maped Solutions.",
+            "Los servicios ofrecidos al usuario final suelen ser prestados por el cliente correspondiente.",
+            "La plataforma puede utilizar una estructura de cuenta base global para autenticación y seguridad.",
+            "Los perfiles específicos, las relaciones operativas y los registros funcionales se mantienen de forma separada por cliente o servicio."
           ]
         },
         "definitions": {
-          "title": "Definitions",
+          "title": "Definiciones",
           "items": [
             {
-              "term": "Platform",
-              "definition": "The web-based software solution for managing services and requests."
+              "term": "Plataforma",
+              "definition": "La solución de software basada en web para gestionar servicios y solicitudes."
             },
             {
-              "term": "Client",
-              "definition": "The company offering services to end users through the platform."
+              "term": "Cliente",
+              "definition": "El negocio responsable que ofrece servicios a usuarios finales a través de la plataforma."
             },
             {
-              "term": "User",
-              "definition": "Individuals or legal entities using the platform."
+              "term": "Usuario",
+              "definition": "Las personas físicas o jurídicas que utilizan la plataforma."
             },
             {
-              "term": "Provider",
-              "definition": "Maped Solutions (sole proprietorship) as the technical operator of the platform."
+              "term": "Operador",
+              "definition": "Maped Solutions como operador técnico de la plataforma."
             },
             {
-              "term": "Base account",
-              "definition": "The platform-wide account that may be used for authentication, account security, and technical access administration."
+              "term": "Cuenta base",
+              "definition": "La cuenta de ámbito general de la plataforma que puede utilizarse para autenticación, seguridad de cuenta y administración técnica de acceso."
             },
             {
-              "term": "Service-specific profile",
-              "definition": "The profile maintained within a specific client or service context and not automatically applicable to other services."
+              "term": "Perfil específico de servicio",
+              "definition": "El perfil mantenido dentro de un contexto concreto de cliente o servicio y que no se aplica automáticamente a otros servicios."
             }
           ]
         },
+        "parties": {
+          "title": "Partes contractuales y roles de la plataforma",
+          "intro": "La siguiente informacion aclara que negocio presta los servicios ofrecidos y que parte opera tecnicamente la plataforma.",
+          "serviceProvider": {
+            "title": "Negocio responsable de los servicios ofrecidos",
+            "description": "La relacion contractual por los servicios ofrecidos al usuario final existe normalmente con el negocio responsable indicado a continuacion."
+          },
+          "technicalOperator": {
+            "title": "Operador tecnico de la plataforma",
+            "description": "El siguiente operador proporciona la plataforma tecnica, la infraestructura, el mantenimiento y la seguridad, pero no presta por si mismo los servicios ofrecidos por el cliente."
+          },
+          "fields": {
+            "businessName": "Negocio / Marca",
+            "legalName": "Nombre legal",
+            "representedBy": "Representado por",
+            "address": "Direccion",
+            "email": "Email",
+            "phone": "Telefono"
+          }
+        },
         "serviceDescription": {
-          "title": "Service Description",
-          "body": "Maped Solutions (sole proprietorship) provides the client with a production-ready software platform. The service includes technical operation, maintenance, and continuous optimization.",
-          "note": "The platform does not act as a service provider or intermediary for the services offered."
+          "title": "Descripción del servicio",
+          "body": "Maped Solutions proporciona al cliente una plataforma de software lista para producción. El servicio incluye operación técnica, mantenimiento y optimización continua.",
+          "note": "La mera puesta a disposición de la plataforma no convierte por sí misma a Maped Solutions en la parte contractual de los servicios ofrecidos por el cliente."
         },
         "optimization": {
-          "title": "Continuous Optimization",
-          "body": "Continuous optimization includes technical improvements, security updates, bug fixes, and performance adjustments. Functional extensions require a separate agreement."
+          "title": "Optimización continua",
+          "body": "La optimización continua incluye mejoras técnicas, actualizaciones de seguridad, corrección de errores y ajustes de rendimiento. Las ampliaciones funcionales requieren un acuerdo separado."
         },
         "userObligations": {
-          "title": "User Obligations",
+          "title": "Obligaciones del usuario",
           "items": [
-            "Provide accurate and complete information.",
-            "Keep access credentials confidential.",
-            "No misuse or unlawful use of the platform.",
-            "Compliance with applicable laws."
+            "Facilitar información exacta y completa.",
+            "Mantener confidenciales las credenciales de acceso.",
+            "No hacer un uso indebido o ilícito de la plataforma.",
+            "Cumplir la legislación aplicable."
           ]
         },
         "availability": {
-          "title": "Availability",
-          "body": "Maped Solutions (sole proprietorship) strives to ensure high platform availability. Continuous or uninterrupted availability cannot be guaranteed."
+          "title": "Disponibilidad",
+          "body": "Maped Solutions procura garantizar una alta disponibilidad de la plataforma. No puede garantizarse una disponibilidad continua o ininterrumpida."
         },
         "externalContractors": {
-          "title": "External Contractors",
-          "body": "Clients may engage external contractors to deliver their services. The client is solely responsible for the actions and compliance of such contractors."
+          "title": "Colaboradores externos",
+          "body": "Los clientes pueden recurrir a colaboradores externos para prestar sus servicios. El cliente es el único responsable de las actuaciones y del cumplimiento normativo de dichos colaboradores."
         },
         "liability": {
-          "title": "Liability",
-          "body": "Maped Solutions (sole proprietorship) is liable only for damages caused by intent or gross negligence. In cases of slight negligence, liability is limited to breaches of essential contractual obligations and foreseeable damages.",
+          "title": "Responsabilidad",
+          "body": "Maped Solutions solo responde por daños causados con dolo o negligencia grave. En casos de negligencia leve, la responsabilidad se limita al incumplimiento de obligaciones contractuales esenciales y a los daños previsibles.",
           "limitations": [
-            "No liability for services provided by the client or external contractors.",
-            "No liability for data loss if appropriate backup measures were in place.",
-            "No liability for indirect damages or loss of profit."
+            "No existe responsabilidad por los servicios prestados por el cliente o por colaboradores externos.",
+            "No existe responsabilidad por pérdida de datos cuando debían haberse aplicado medidas adecuadas de respaldo.",
+            "No existe responsabilidad por daños indirectos o lucro cesante."
           ]
         },
         "payments": {
-          "title": "Payments",
-          "body": "Payments and billing are governed by the agreements concluded between Maped Solutions (sole proprietorship) and the client. The platform itself does not provide payment services."
+          "title": "Pagos",
+          "body": "Si los servicios ofrecidos implican pagos, facturas u otras gestiones comerciales similares, esas cuestiones se rigen normalmente por la relación entre el usuario final y el cliente responsable, salvo que se indique expresamente lo contrario. La plataforma por sí misma no presta servicios de pago."
         },
         "termination": {
-          "title": "Termination",
-          "body": "Use of a specific service or the relationship with a specific client may be terminated in accordance with the applicable terms. Terminating one service does not automatically delete other active relationships or other service-specific profiles of the same person. Details regarding data deletion are set out in the Privacy Policy."
+          "title": "Terminación",
+          "body": "El uso de un servicio concreto o la relación con un cliente concreto puede finalizar conforme a las condiciones aplicables y a los acuerdos específicos de ese servicio. Finalizar un servicio no elimina automáticamente otras relaciones activas ni otros perfiles específicos de la misma persona. Los detalles sobre la eliminación de datos se recogen en la Política de Privacidad."
         },
         "dataProtection": {
-          "title": "Data Protection",
-          "body": "Personal data is processed in accordance with this platform’s Privacy Policy. That policy distinguishes between platform-wide account management, service-specific profiles, and other functional records with their own retention purposes."
+          "title": "Protección de datos",
+          "body": "Los datos personales se tratan de acuerdo con la Política de Privacidad de esta plataforma. Esa política distingue entre la gestión transversal de cuentas, los perfiles específicos de servicio y otros registros funcionales con sus propios fines de conservación."
         },
         "governingLaw": {
-          "title": "Governing Law",
-          "body": "The laws of the Federal Republic of Germany apply, excluding the UN Convention on Contracts for the International Sale of Goods."
+          "title": "Ley aplicable",
+          "body": "Se aplica el derecho de la República Federal de Alemania, con exclusión de la Convención de las Naciones Unidas sobre los Contratos de Compraventa Internacional de Mercaderías."
         },
         "changes": {
-          "title": "Changes to these Terms",
-          "body": "Maped Solutions (sole proprietorship) reserves the right to amend these Terms for legal or operational reasons. The current version is available on this platform.",
+          "title": "Cambios en estos términos",
+          "body": "Estos términos pueden actualizarse cuando cambien los requisitos legales, técnicos u operativos. Cuando sea necesario, se informará adecuadamente a los usuarios sobre cambios relevantes. La versión vigente permanece disponible en esta plataforma.",
           "meta": {
-            "lastUpdated": "Last updated:"
+            "lastUpdated": "Última actualización:"
           }
         }
       },
       "imprint": {
         "hero": {
-          "headline1": "Imprint",
-          "headline2": "Information pursuant to § 5 DDG",
-          "subtitle": "This page contains the legally required information about the provider of this digital service."
+          "headline1": "Aviso legal",
+          "headline2": "Informacion conforme al § 5 DDG",
+          "subtitle": "Esta pagina contiene la informacion legalmente requerida sobre el negocio responsable de los servicios ofrecidos y sobre el operador tecnico de esta plataforma."
+        },
+        "serviceProviderSection": {
+          "heading": "Negocio responsable de los servicios ofrecidos",
+          "description": "Los servicios ofrecidos a traves de este sitio web son prestados por el negocio indicado a continuacion. Para consultas sobre solicitudes de servicio, citas, presupuestos, facturas, cancelaciones o atencion al cliente, contacta directamente con ese negocio.",
+          "fields": {
+            "businessName": "Negocio / Marca",
+            "legalName": "Nombre legal",
+            "representedBy": "Representado por",
+            "address": "Direccion",
+            "email": "Email",
+            "phone": "Telefono",
+            "vatId": "VAT ID",
+            "register": "Datos registrales"
+          },
+          "values": {}
+        },
+        "technicalOperatorSection": {
+          "heading": "Operador tecnico de la plataforma",
+          "description": "Este sitio web y la plataforma digital subyacente son operados, mantenidos y protegidos tecnicamente por el operador indicado a continuacion. El operador tecnico no presta por si mismo los servicios del hogar o del cliente.",
+          "fields": {
+            "businessName": "Negocio / Marca",
+            "legalName": "Nombre legal",
+            "representedBy": "Representado por",
+            "address": "Direccion",
+            "email": "Email",
+            "phone": "Telefono",
+            "vatId": "VAT ID",
+            "register": "Datos registrales"
+          }
+        },
+        "contactGuidanceSection": {
+          "heading": "A quien debo contactar?",
+          "items": [
+            "Para solicitudes de servicio, citas, presupuestos, facturas, cancelaciones o reclamaciones sobre los servicios ofrecidos, contacta con el negocio responsable indicado arriba.",
+            "Para problemas tecnicos con el sitio web, el acceso, el inicio de sesion o la seguridad de la plataforma, contacta con el operador tecnico."
+          ]
+        },
+        "unavailable": {
+          "notApplicable": "No aplica",
+          "notAvailable": "Actualmente no disponible"
         },
         "providerSection": {
-          "heading": "Service Provider Information",
-          "description": "The service provider for this website is Heriberto Santana, trading as Maped Solutions.",
-          "fields": {
-            "companyName": "Company",
-            "owner": "Owner",
-            "address": "Address",
-            "email": "Email",
-            "phone": "Phone"
-          },
+          "heading": "Operador tecnico heredado",
+          "description": "Valores de respaldo usados mientras se completan los datos legales especificos del tenant.",
+          "fields": {},
           "values": {
             "companyName": "Maped Solutions",
             "owner": "Heriberto Santana",
@@ -1414,12 +1555,12 @@
           }
         },
         "liabilitySection": {
-          "heading": "Disclaimer",
-          "text": "Despite careful content control, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content."
+          "heading": "Aviso de responsabilidad",
+          "text": "A pesar del control cuidadoso del contenido, no asumimos responsabilidad por el contenido de enlaces externos. Los operadores de las paginas enlazadas son los unicos responsables de su contenido."
         },
         "odrSection": {
-          "heading": "Consumer dispute resolution",
-          "text": "We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board."
+          "heading": "Resolucion de litigios de consumo",
+          "text": "No estamos obligados ni dispuestos a participar en procedimientos de resolucion de litigios ante una junta arbitral de consumo."
         }
       }
     }

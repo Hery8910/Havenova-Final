@@ -4,7 +4,7 @@ import { CookiePrefs } from '../cookies';
 // AUTH USER (frontend session)
 // ---------------------------
 
-export type AuthRole = 'guest' | 'user' | 'worker' | 'admin';
+export type AuthRole = 'guest' | 'user' | 'worker' | 'admin' | 'super_admin';
 export type AuthStatus = 'active' | 'invited' | 'blocked';
 
 export interface AuthUser {
@@ -21,9 +21,6 @@ export interface AuthUser {
 
   // para el flujo de perfil automático
   isNewUser?: boolean;
-
-  // compatibilidad transitoria con consumidores que aún esperan `userId`
-  userId: string;
 
   // legales
   tosAccepted?: boolean;

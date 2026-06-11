@@ -18,7 +18,7 @@ import {
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
-import { href } from '../../../../../../../packages/utils';
+import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
 
@@ -150,11 +150,13 @@ const Login = () => {
           fallbackGlobalError
         );
 
-        setAuth({
-          ...(auth || {}),
-          isLogged: false,
-          email: payload.email,
-        });
+        setAuth(
+          createLoggedOutAuthSeed({
+            clientId: payload.clientId,
+            email: payload.email,
+            isVerified: false,
+          })
+        );
 
         showError({
           response: {
@@ -169,15 +171,7 @@ const Login = () => {
       }
       const { user } = response;
 
-      setAuth({
-        ...(auth || {}), // conservas language, theme, etc. si ya existían
-        isLogged: true,
-        userId: user.userId,
-        clientId: user.clientId,
-        email: user.email,
-        role: user.role,
-        isVerified: user.isVerified,
-      });
+      setAuth(user);
 
       const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
 

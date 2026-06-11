@@ -78,11 +78,10 @@ Restricción importante:
 - [ProfileContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/profile/ProfileContext.tsx) ya lo incluye en `createEmptyProfile()` y `normalizeProfile()`
 - faltaba fijarlo con tests y dejar de depender de `auth.email` en la UI de perfil
 
-4. La identidad base del perfil debe reflejar la nueva decisión de dominio
-- el frontend sigue usando `userId` como identidad interna del perfil
-- pero la decisión actual es dejar de vincular perfil a `auth` como owner lógico
-- hay que revisar qué identidad mínima necesita realmente el perfil en frontend para persistencia local, delete y responses
-- el objetivo es que eliminar perfil no implique mantener una relación funcional con `auth`
+4. La identidad base del perfil ya se cerró en `userClientId`
+- el perfil usa `userClientId` como identidad primaria
+- `auth` ya no actúa como owner lógico del perfil
+- el objetivo restante es mantener ese contrato limpio en todos los consumidores y responses
 
 5. La UI sigue leyendo el email desde `auth`
 - ejemplo claro: [dashboard profile page](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:183)
@@ -119,8 +118,9 @@ Los componentes pueden mostrarlo como “email” en UI, pero el modelo debería
 ### Fase 1. Tipos y contrato
 
 - [x] añadir `contactEmail` a `UserClientProfile`
-- [ ] revisar si `DeleteUserClientProfileResponse` y otros tipos siguen usando `userId` o deben cambiar a una identidad más coherente con la nueva decisión de dominio
-- [ ] alinear el identity model de perfil con la decisión actual del proyecto y con el backend real donde aplique
+- [x] retirar `userId` del contrato principal de `profile`
+- [x] alinear `DeleteUserClientProfileResponse` con `userClientId`
+- [x] alinear el identity model de perfil con `userClientId`
 - [ ] documentar explícitamente que el perfil no depende de `auth` como owner semántico
 
 ### Fase 2. Servicio
@@ -163,7 +163,6 @@ Los componentes pueden mostrarlo como “email” en UI, pero el modelo debería
 ## Riesgos
 
 - si se migra la UI antes de exponer `contactEmail`, varias pantallas quedarán sin email visible
-- si se cambia `userId` a `userClientId` sin estrategia coordinada con `auth`, el bootstrap del perfil puede romperse
 
 ## Sugerencia de ejecución
 
@@ -206,8 +205,13 @@ Completado en esta fase:
 Pendiente principal a partir de ahora:
 
 1. migrar consumidores secundarios de UI desde `auth.email` a `profile.contactEmail`
-2. revisar identidad de perfil (`userId`/`userClientId`) con la nueva decisión de dominio
-3. decidir el contrato final de delete/responses del perfil
+2. verificar que delete/responses restantes sigan usando `userClientId` de forma consistente
+
+Actualizacion de identidad:
+
+- `UserClientProfile` ya declara `userClientId` como identidad primaria
+- `DeleteUserClientProfileResponse` ya usa `userClientId`
+- el perfil ya no mantiene compatibilidad activa con `userId`
 
 Pendiente adicional antes de despliegue:
 

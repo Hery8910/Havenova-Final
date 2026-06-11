@@ -2,7 +2,7 @@
 
 import styles from './RequestsList.module.css';
 import { useI18n } from '../../../../../contexts/i18n';
-import { ServiceStatus } from '../../../../../types';
+import type { ServiceRequestStatus } from '../../../../../types';
 import { RequestStatus } from '../requestStatus';
 
 export interface RequestsListTexts {
@@ -13,9 +13,12 @@ export interface RequestsListTexts {
 
 export interface RequestStatusTexts {
   submitted: string;
-  accepted: string;
-  inProgress: string;
-  completed: string;
+  accepted?: string;
+  inProgress?: string;
+  completed?: string;
+  underReview?: string;
+  visitScheduled?: string;
+  visitCompleted?: string;
   cancelled: string;
 }
 
@@ -49,6 +52,24 @@ export default function RequestsList({ data, loading, onSelect }: RequestsListPr
   const requestsList = dashboardTexts.requestsList;
   const requestStatus = dashboardTexts.requestStatus;
   const serviceTexts = dashboardTexts.service;
+  const getStatusLabel = (status: ServiceRequestStatus) => {
+    switch (status) {
+      case 'submitted':
+        return requestStatus.submitted;
+      case 'under_review':
+        return requestStatus.underReview ?? requestStatus.accepted ?? status;
+      case 'visit_scheduled':
+        return requestStatus.visitScheduled ?? requestStatus.inProgress ?? status;
+      case 'visit_completed':
+        return requestStatus.visitCompleted ?? requestStatus.completed ?? status;
+      case 'converted_to_work_order':
+        return requestStatus.visitCompleted ?? requestStatus.completed ?? status;
+      case 'cancelled':
+        return requestStatus.cancelled;
+      default:
+        return status;
+    }
+  };
 
   const getServiceLabel = (serviceType: string) => {
     const normalizedKey = serviceType.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
@@ -87,8 +108,8 @@ export default function RequestsList({ data, loading, onSelect }: RequestsListPr
               </p>
 
               <RequestStatus
-                status={req.status as ServiceStatus}
-                label={requestStatus[req.status.replace(' ', '') as keyof typeof requestStatus]}
+                status={req.status as ServiceRequestStatus}
+                label={getStatusLabel(req.status as ServiceRequestStatus)}
               />
 
               <p className={styles.button}>{requestsList.button}</p>

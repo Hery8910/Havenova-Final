@@ -1,8 +1,9 @@
-import AddressFormFields from '../../../../../shared/addressFormFields/AddressFormFields';
-import type { UserAddress } from '../../../../../../../types';
+import { isCompleteAddress, type UserAddress } from '../../../../../../../types';
 import type { AddressErrors, ProfileDetailsTexts, ProfileFormState } from '../types';
 import styles from './UserProfileDetailsForm.module.css';
 import { MdDeleteOutline } from 'react-icons/md';
+import { ProfileBaseDetailsFields } from './ProfileBaseDetailsFields';
+import { SecondaryAddressEditor } from './SecondaryAddressEditor';
 
 export interface UserProfileDetailsFormProps {
   mode: 'full' | 'secondary-only';
@@ -14,26 +15,20 @@ export interface UserProfileDetailsFormProps {
   saving: boolean;
   texts?: ProfileDetailsTexts;
   formButtonLabel: string;
+  selectedSavedAddressIndex?: number | null;
   isSecondaryOnlyExpanded?: boolean;
   showSecondaryOnlyPrompt?: boolean;
   onFieldChange: <K extends keyof ProfileFormState>(field: K, value: ProfileFormState[K]) => void;
   onPrimaryAddressChange: (value: UserAddress) => void;
   onSavedAddressChange: (index: number, value: UserAddress) => void;
   onSavedAddressLabelChange: (index: number, value: string) => void;
+  onSelectSavedAddress?: (index: number | null) => void;
   onAddSecondaryAddress: () => void;
   onRemoveSecondaryAddress: (index: number) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   onAddressClick?: (address: UserAddress) => void;
 }
-
-const isAddressComplete = (address: UserAddress) =>
-  Boolean(
-    address.street.trim() &&
-    address.streetNumber.trim() &&
-    address.postalCode.trim() &&
-    address.district.trim()
-  );
 
 export function UserProfileDetailsForm({
   mode,
@@ -45,12 +40,14 @@ export function UserProfileDetailsForm({
   saving,
   texts,
   formButtonLabel,
+  selectedSavedAddressIndex = null,
   isSecondaryOnlyExpanded = true,
   showSecondaryOnlyPrompt = false,
   onFieldChange,
   onPrimaryAddressChange,
   onSavedAddressChange,
   onSavedAddressLabelChange,
+  onSelectSavedAddress,
   onAddSecondaryAddress,
   onRemoveSecondaryAddress,
   onSubmit,
@@ -58,12 +55,17 @@ export function UserProfileDetailsForm({
   onAddressClick,
 }: UserProfileDetailsFormProps) {
   const isSecondaryOnly = mode === 'secondary-only';
-  const hasPrimaryAddress = isAddressComplete(formState.primaryAddress);
+  const hasPrimaryAddress = isCompleteAddress(formState.primaryAddress);
   const showSecondaryPrompt =
     hasPrimaryAddress && (isSecondaryOnly ? showSecondaryOnlyPrompt : true);
   const showFormActions = !isSecondaryOnly || isSecondaryOnlyExpanded;
   const selectAddressButton = texts?.selectAddressButton ?? 'Select address';
-  const secondaryAddressNameLabel = texts?.form?.secondaryAddressLabelField ?? 'Address name';
+  const editSecondaryAddressButton =
+    texts?.form?.editSecondaryAddressButton ?? texts?.editButton ?? 'Edit';
+  const editSecondaryAddressAriaLabel =
+    texts?.form?.editSecondaryAddressAriaLabel ?? 'Edit additional address';
+  const selectedSavedAddress =
+    selectedSavedAddressIndex !== null ? formState.savedAddresses[selectedSavedAddressIndex] : null;
 
   return (
     <section className={styles.card} aria-labelledby="profile-details-form-title">
@@ -77,83 +79,16 @@ export function UserProfileDetailsForm({
         aria-label={texts?.formAriaLabel ?? 'Edit profile details'}
       >
         {!isSecondaryOnly && (
-          <>
-            <label className={styles.field} htmlFor="profile-name">
-              <span className="label">{texts?.labels?.name ?? 'Name'}</span>
-              <input
-                id="profile-name"
-                className="input"
-                type="text"
-                name="name"
-                autoComplete="name"
-                value={formState.name}
-                onChange={(event) => onFieldChange('name', event.target.value)}
-                aria-invalid={Boolean(nameError)}
-                aria-describedby={nameError ? 'profile-name-error' : undefined}
-              />
-              {nameError && (
-                <p id="profile-name-error" className="type-caption " role="alert">
-                  {nameError}
-                </p>
-              )}
-            </label>
-
-            <label className={styles.field} htmlFor="profile-phone">
-              <span className="label">{texts?.labels?.phone ?? 'Phone'}</span>
-              <input
-                id="profile-phone"
-                className="input"
-                type="tel"
-                name="phone"
-                autoComplete="tel"
-                value={formState.phone}
-                onChange={(event) => onFieldChange('phone', event.target.value)}
-                aria-invalid={Boolean(phoneError)}
-                aria-describedby={phoneError ? 'profile-phone-error' : undefined}
-              />
-              {phoneError && (
-                <p id="profile-phone-error" className="type-caption " role="alert">
-                  {phoneError}
-                </p>
-              )}
-            </label>
-
-            <section
-              className={styles.addressSection}
-              aria-labelledby="profile-primary-address-title"
-            >
-              <div className={styles.addressCard}>
-                <div className={styles.addressCardHeader}>
-                  <h4
-                    id="profile-primary-address-title"
-                    className={`type-title-sm ${styles.addressTitle}`}
-                  >
-                    {texts?.labels?.primaryAddress ?? 'Primary address'}
-                  </h4>
-                  {onAddressClick && isAddressComplete(formState.primaryAddress) && (
-                    <button
-                      type="button"
-                      className="button button--outline"
-                      onClick={() => onAddressClick(formState.primaryAddress)}
-                    >
-                      {selectAddressButton}
-                    </button>
-                  )}
-                </div>
-
-                <AddressFormFields
-                  value={formState.primaryAddress}
-                  onChange={onPrimaryAddressChange}
-                  errors={primaryAddressErrors}
-                  texts={{
-                    addressDetailsAriaLabel:
-                      texts?.form?.addressDetailsAriaLabel ?? 'Address details',
-                    fields: texts?.form?.fields,
-                  }}
-                />
-              </div>
-            </section>
-          </>
+          <ProfileBaseDetailsFields
+            formState={formState}
+            nameError={nameError}
+            phoneError={phoneError}
+            primaryAddressErrors={primaryAddressErrors}
+            texts={texts}
+            onFieldChange={onFieldChange}
+            onPrimaryAddressChange={onPrimaryAddressChange}
+            onAddressClick={onAddressClick}
+          />
         )}
 
         {hasPrimaryAddress ? (
@@ -162,13 +97,77 @@ export function UserProfileDetailsForm({
             aria-labelledby="profile-secondary-addresses-title"
           >
             {formState.savedAddresses.length > 0 && showFormActions && (
-              <div className={styles.secondaryAddressList}>
-                {formState.savedAddresses.map((address, index) => (
-                  <div key={`saved-address-${index}`} className={styles.addressCard}>
+              <>
+                <div className={styles.secondaryAddressList}>
+                  <div className={styles.secondaryAddressHeader}>
+                    <h4 id="profile-secondary-addresses-title" className={`type-title-sm ${styles.addressTitle}`}>
+                      {texts?.form?.secondaryAddressesTitle ?? 'Secondary addresses'}
+                    </h4>
+                    <p className={styles.secondaryAddressHint}>
+                      {texts?.form?.secondaryAddressListHint ??
+                        'Select an address to review or update it.'}
+                    </p>
+                  </div>
+
+                  <ul
+                    className={styles.secondaryAddressOptions}
+                    aria-label={
+                      texts?.form?.secondaryAddressListAriaLabel ?? 'Saved secondary addresses'
+                    }
+                  >
+                    {formState.savedAddresses.map((address, index) => {
+                      const isSelected = index === selectedSavedAddressIndex;
+                      const label =
+                        address.label.trim() ||
+                        `${texts?.form?.secondaryAddressTitle ?? 'Address'} ${index + 1}`;
+
+                      return (
+                        <li
+                          key={`saved-address-${index}`}
+                          className={`${styles.secondaryAddressOption} ${isSelected ? styles.secondaryAddressOptionSelected : ''}`}
+                        >
+                          <div className={styles.secondaryAddressOptionBody}>
+                            <span className={styles.secondaryAddressOptionLabel}>{label}</span>
+                            <span className={styles.secondaryAddressOptionMeta}>
+                              {address.address.street.trim() || address.address.postalCode.trim()
+                                ? [
+                                    address.address.street,
+                                    address.address.streetNumber,
+                                    address.address.postalCode,
+                                    address.address.district,
+                                  ]
+                                    .map((part) => part.trim())
+                                    .filter(Boolean)
+                                    .join(', ')
+                                : texts?.emptyValue ?? 'Not provided'}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className="button button--outline"
+                            onClick={() => onSelectSavedAddress?.(index)}
+                            aria-pressed={isSelected}
+                            aria-label={`${editSecondaryAddressAriaLabel} ${index + 1}`}
+                          >
+                            {editSecondaryAddressButton}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                {selectedSavedAddress && selectedSavedAddressIndex !== null ? (
+                  <section
+                    className={styles.addressCard}
+                    aria-label={
+                      texts?.form?.selectedSecondaryAddressAriaLabel ??
+                      'Selected secondary address editor'
+                    }
+                  >
                     <div className={styles.addressCardHeader}>
                       <h4 className={`type-title-sm ${styles.addressTitle}`}>
-                        {address.label.trim() ||
-                          `${texts?.form?.secondaryAddressTitle ?? 'Address'} ${index + 1}`}
+                        {texts?.form?.selectedSecondaryAddressTitle ?? 'Edit selected address'}
                       </h4>
 
                       <div className={styles.cardActions}>
@@ -176,7 +175,7 @@ export function UserProfileDetailsForm({
                           <button
                             type="button"
                             className="button button--outline"
-                            onClick={() => onAddressClick(address.address)}
+                            onClick={() => onAddressClick(selectedSavedAddress.address)}
                           >
                             {selectAddressButton}
                           </button>
@@ -184,8 +183,8 @@ export function UserProfileDetailsForm({
                         <button
                           type="button"
                           className="button button--outline-danger button--outline-danger-small"
-                          onClick={() => onRemoveSecondaryAddress(index)}
-                          aria-label={`${texts?.form?.removeSecondaryAddressButton ?? 'Remove additional address'} ${index + 1}`}
+                          onClick={() => onRemoveSecondaryAddress(selectedSavedAddressIndex)}
+                          aria-label={`${texts?.form?.removeSecondaryAddressButton ?? 'Remove additional address'} ${selectedSavedAddressIndex + 1}`}
                         >
                           <MdDeleteOutline />
                           {texts?.form?.removeSecondaryAddressButton ?? 'Remove'}
@@ -193,31 +192,22 @@ export function UserProfileDetailsForm({
                       </div>
                     </div>
 
-                    <label className={styles.field} htmlFor={`saved-address-label-${index}`}>
-                      <span className="label">{secondaryAddressNameLabel}</span>
-                      <input
-                        id={`saved-address-label-${index}`}
-                        className="input"
-                        type="text"
-                        value={address.label}
-                        onChange={(event) => onSavedAddressLabelChange(index, event.target.value)}
-                        autoComplete="off"
-                      />
-                    </label>
-
-                    <AddressFormFields
-                      value={address.address}
-                      onChange={(value) => onSavedAddressChange(index, value)}
-                      errors={savedAddressErrors[index]}
+                    <SecondaryAddressEditor
+                      address={selectedSavedAddress.address}
+                      addressErrors={savedAddressErrors[selectedSavedAddressIndex]}
+                      label={selectedSavedAddress.label}
                       texts={{
-                        addressDetailsAriaLabel:
-                          texts?.form?.secondaryAddressAriaLabel ?? 'Secondary address details',
-                        fields: texts?.form?.fields,
+                        label: texts?.form?.secondaryAddressLabelField ?? 'Address name',
                       }}
+                      sharedTexts={texts}
+                      onLabelChange={(value) =>
+                        onSavedAddressLabelChange(selectedSavedAddressIndex, value)
+                      }
+                      onAddressChange={(value) => onSavedAddressChange(selectedSavedAddressIndex, value)}
                     />
-                  </div>
-                ))}
-              </div>
+                  </section>
+                ) : null}
+              </>
             )}
           </section>
         ) : null}

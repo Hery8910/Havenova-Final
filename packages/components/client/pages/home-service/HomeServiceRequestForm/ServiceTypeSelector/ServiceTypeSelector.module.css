@@ -1,42 +1,38 @@
 .group {
   border: none;
-  padding: 12px;
+  padding: 0;
+  margin: 0;
 }
 
 .legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-primary);
-  padding: 0 6px;
-}
-
-.helper {
-  margin: 6px 6px 0;
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.5;
+  color: var(--page-text-secondary);
 }
 
 .serviceGrid {
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.serviceButton {
-  min-height: 92px;
-  padding: 12px 14px;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  text-align: left;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.serviceItem {
+  width: 100%;
+}
+.serviceButton {
+  width: 100%;
+  padding: 14px 16px;
+  color: var(--page-text-secondary);
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -51,23 +47,26 @@
 
 .serviceTitle {
   font-weight: 700;
-}
-
-.serviceDescription {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.45;
+  color: var(--page-text-secondary);
 }
 
 .active {
   border-color: var(--brand-primary);
-  background: var(--card-primary-bg);
+  background: color-mix(in srgb, var(--brand-primary) 10%, white);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent);
+}
+
+.fieldControlError {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
 }
 
 .error {
+  display: block;
   min-height: 20px;
+  margin-top: 10px;
   color: var(--color-error);
-  font-size: var(--font-size-100);
+  font-size: var(--type-body-sm-size);
 }
 
 .serviceButton:focus-visible {

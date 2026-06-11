@@ -1,4 +1,5 @@
 export * from './cookies';
+export * from './auth';
 export * from './user';
 export * from './validators';
 export * from './alertType';

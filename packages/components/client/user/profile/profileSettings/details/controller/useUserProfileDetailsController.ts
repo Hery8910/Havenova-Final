@@ -44,6 +44,7 @@ export function useUserProfileDetailsController({
   const {
     isEditing,
     isAddingSecondaryAddress,
+    selectedSavedAddressIndex,
     saving,
     formState,
     nameError,
@@ -52,6 +53,7 @@ export function useUserProfileDetailsController({
     savedAddressErrors,
     setIsEditing,
     setIsAddingSecondaryAddress,
+    setSelectedSavedAddressIndex,
     setSaving,
     setNameError,
     setPhoneError,
@@ -84,6 +86,7 @@ export function useUserProfileDetailsController({
     syncFormWithProfile();
     setIsAddingSecondaryAddress(false);
     setIsEditing(true);
+    setSelectedSavedAddressIndex(null);
   };
 
   const handleCancel = () => {
@@ -231,10 +234,12 @@ export function useUserProfileDetailsController({
       saving,
       texts: detailTexts,
       formButtonLabel: detailTexts?.saveButton ?? formTexts.button.edit,
+      selectedSavedAddressIndex,
       onFieldChange: handleFieldChange,
       onPrimaryAddressChange: handlePrimaryAddressChange,
       onSavedAddressChange: handleSavedAddressChange,
       onSavedAddressLabelChange: handleSavedAddressLabelChange,
+      onSelectSavedAddress: setSelectedSavedAddressIndex,
       onAddSecondaryAddress: handleAddSecondaryAddress,
       onRemoveSecondaryAddress: handleRemoveSecondaryAddress,
       onSubmit: handleFullSubmit,

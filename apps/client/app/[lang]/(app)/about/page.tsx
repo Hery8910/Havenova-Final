@@ -1,55 +1,6 @@
-'use client';
-
-import {
-  AboutClientsSection,
-  AboutStorySection,
-} from '../../../../../../packages/components/client/pages/about';
-import { PageHero, type PageHeroContent } from '../../../../../../packages/components/client/pages/hero';
-import {
-  ServiceCrossCtaSection,
-  type ServiceCrossCtaSectionTexts,
-} from '../../../../../../packages/components/client/pages/shared';
-import { useI18n } from '../../../../../../packages/contexts';
-import { useLang } from '../../../../../../packages/hooks';
-import styles from './page.module.css';
-
-export interface AboutPageTexts {
-  hero: PageHeroContent;
-  story: {
-    title: string;
-    paragraphs: string[];
-  };
-  clients: {
-    title: string;
-    description: string;
-    a11y?: {
-      sectionLabel?: string;
-      listLabel?: string;
-    };
-    items: {
-      title: string;
-      description: string;
-      image: string;
-      imageAlt: string;
-    }[];
-    closing: string;
-  };
-  servicesCta: ServiceCrossCtaSectionTexts;
-}
+import '../../migration-styles/index.css';
+import { AboutPageClient } from '../../../../../../packages/components/client/pages/about';
 
 export default function About() {
-  const lang = useLang();
-  const { texts } = useI18n();
-  const about: AboutPageTexts = texts?.pages?.client?.about;
-
-  if (!about) return null;
-
-  return (
-    <main className={styles.main}>
-      <PageHero texts={about.hero} lang={lang} />
-      <AboutStorySection texts={about.story} />
-      <AboutClientsSection texts={about.clients} />
-      <ServiceCrossCtaSection texts={about.servicesCta} lang={lang} />
-    </main>
-  );
+  return <AboutPageClient />;
 }

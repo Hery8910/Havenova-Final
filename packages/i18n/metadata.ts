@@ -5,12 +5,13 @@ import type { Locale } from './index';
 export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
   home: {
     en: {
-      title: 'Havenova - Your Trusted Home Service Partner in Berlin',
+      title: 'Havenova | Cleaning and Home Services in Berlin',
       description:
-        'Book reliable handyman, cleaning and home service in Berlin with Havenova. Transparent, fast and professional.',
+        'Request reliable cleaning and home services in Berlin with Havenova. Clear requests, fast coordination, and professional support.',
       openGraph: {
-        title: 'Havenova - Professional Home Services in Berlin',
-        description: 'Discover top-quality handyman, cleaning, and home service in Berlin.',
+        title: 'Havenova | Cleaning and Home Services in Berlin',
+        description:
+          'Discover cleaning and home services in Berlin with clear requests, fast coordination, and professional support.',
         type: 'website',
         url: 'https://havenova.de/en',
         images: [
@@ -29,13 +30,13 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
       },
     },
     de: {
-      title: 'Havenova - Ihr vertrauenswürdiger Partner für Hausservice in Berlin',
+      title: 'Havenova | Reinigungs- und Hausservice in Berlin',
       description:
-        'Buchen Sie zuverlässige Handwerker-, Reinigungs- und Hausservice in Berlin mit Havenova. Transparent, schnell und professionell.',
+        'Frage zuverlässigen Reinigungs- und Hausservice in Berlin mit Havenova an. Klare Anfragen, schnelle Abstimmung und professionelle Unterstützung.',
       openGraph: {
-        title: 'Havenova - Professioneller Hausservice in Berlin',
+        title: 'Havenova | Reinigungs- und Hausservice in Berlin',
         description:
-          'Entdecken Sie hochwertige Handwerker-, Reinigungs- und Hausservice in Berlin.',
+          'Entdecke Reinigungs- und Hausservice in Berlin mit klaren Anfragen, schneller Abstimmung und professioneller Unterstützung.',
         type: 'website',
         url: 'https://havenova.de/de',
         images: [
@@ -46,6 +47,36 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
             alt: 'Havenova Hausservice',
           },
         ],
+      },
+      icons: {
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
+      },
+    },
+    es: {
+      title: 'Havenova | Limpieza y servicio al hogar en Berlín',
+      description:
+        'Solicita servicios de limpieza y servicio al hogar en Berlín con Havenova. Solicitudes claras, coordinación rápida y apoyo profesional.',
+      openGraph: {
+        title: 'Havenova | Limpieza y servicio al hogar en Berlín',
+        description:
+          'Descubre servicios de limpieza y servicio al hogar en Berlín con solicitudes claras, coordinación rápida y apoyo profesional.',
+        type: 'website',
+        url: 'https://havenova.de/es',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/home-desktop-en.png',
+            width: 1280,
+            height: 720,
+            alt: 'Servicios de limpieza y hogar de Havenova',
+          },
+        ],
+      },
+      icons: {
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
       },
     },
   },
@@ -86,6 +117,26 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
             width: 1280,
             height: 720,
             alt: 'Havenova Team',
+          },
+        ],
+      },
+    },
+    es: {
+      title: 'Sobre Havenova - Tu socio de confianza para servicio al hogar en Berlin',
+      description:
+        'Descubre mas sobre Havenova, nuestra mision y el equipo que impulsa una experiencia mas clara para limpieza y servicio al hogar en Berlin.',
+      openGraph: {
+        title: 'Sobre Havenova - Servicio profesional para el hogar',
+        description:
+          'Descubre quienes somos y por que los clientes confian en Havenova para servicio al hogar en Berlin.',
+        type: 'website',
+        url: 'https://havenova.de/es/about',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/about-desktop-en.png',
+            width: 1280,
+            height: 720,
+            alt: 'Equipo de Havenova',
           },
         ],
       },
@@ -170,6 +221,26 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
             width: 1280,
             height: 720,
             alt: 'Havenova Ablaufübersicht',
+          },
+        ],
+      },
+    },
+    es: {
+      title: 'Como funciona | Havenova',
+      description:
+        'Descubre como Havenova gestiona las solicitudes de servicio desde el primer mensaje hasta la finalizacion con un flujo claro y fiable.',
+      openGraph: {
+        title: 'Como funciona | Havenova',
+        description:
+          'Entiende el flujo de Havenova para servicios del hogar: solicitud, revision, coordinacion y cierre.',
+        type: 'website',
+        url: 'https://havenova.de/es/how-it-work',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/how-it-work-desktop-en.png',
+            width: 1280,
+            height: 720,
+            alt: 'Resumen del flujo de Havenova',
           },
         ],
       },
@@ -592,6 +663,28 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         ],
       },
     },
+    es: {
+      title: 'Política de Privacidad | Havenova',
+      description:
+        'Consulta cómo Havenova trata los datos personales, qué bases jurídicas utiliza, cuánto tiempo conserva la información y qué derechos te reconoce el GDPR.',
+      keywords:
+        'política de privacidad, GDPR, protección de datos, datos personales, Havenova, Berlín, derechos del usuario',
+      openGraph: {
+        title: 'Política de Privacidad | Havenova',
+        description:
+          'Consulta cómo Havenova trata y protege tus datos personales conforme al GDPR.',
+        type: 'website',
+        url: 'https://havenova.de/es/legal/privacy-policy',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/privacy-policy-es.png',
+            width: 1280,
+            height: 720,
+            alt: 'Havenova Política de Privacidad',
+          },
+        ],
+      },
+    },
   },
   imprint: {
     en: {
@@ -630,6 +723,27 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
             width: 1280,
             height: 720,
             alt: 'Havenova Impressum',
+          },
+        ],
+      },
+    },
+    es: {
+      title: 'Aviso legal | Havenova',
+      description:
+        'Información legal de Havenova, incluyendo datos del negocio responsable, contacto y avisos exigidos en el contexto de la UE.',
+      keywords:
+        'aviso legal, información del proveedor, datos de contacto, UE, Havenova, Berlín',
+      openGraph: {
+        title: 'Aviso legal | Havenova',
+        description: 'Información legal y datos de contacto de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/legal/imprint',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/imprint-es.png',
+            width: 1280,
+            height: 720,
+            alt: 'Havenova Aviso legal',
           },
         ],
       },
@@ -678,6 +792,28 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
         ],
       },
     },
+    es: {
+      title: 'Términos del Servicio | Havenova',
+      description:
+        'Consulta las condiciones de uso, las reglas de la plataforma, la responsabilidad aplicable y la ley correspondiente en Havenova.',
+      keywords:
+        'términos del servicio, condiciones de la plataforma, obligaciones del usuario, responsabilidad, Havenova, Berlín, legal',
+      openGraph: {
+        title: 'Términos del Servicio | Havenova',
+        description:
+          'Condiciones de uso de la plataforma e información legal de Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/legal/terms-of-service',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/terms-of-service-es.png',
+            width: 1280,
+            height: 720,
+            alt: 'Havenova Términos del Servicio',
+          },
+        ],
+      },
+    },
   },
   cookiePolicy: {
     en: {
@@ -718,6 +854,28 @@ export const pageMetadata: Record<string, Partial<Record<Locale, Metadata>>> = {
             width: 1280,
             height: 720,
             alt: 'Havenova Cookie-Richtlinie',
+          },
+        ],
+      },
+    },
+    es: {
+      title: 'Política de Cookies | Havenova',
+      description:
+        'Consulta cómo Havenova utiliza cookies estrictamente necesarias y cómo puedes gestionar la información almacenada en tu navegador.',
+      keywords:
+        'política de cookies, cookies necesarias, privacidad, consentimiento, Havenova, Berlín, navegador',
+      openGraph: {
+        title: 'Política de Cookies | Havenova',
+        description:
+          'Información sobre las cookies y tecnologías comparables usadas en la plataforma Havenova.',
+        type: 'website',
+        url: 'https://havenova.de/es/legal/cookie-policy',
+        images: [
+          {
+            url: 'https://havenova.de/screenshots/cookie-policy-es.png',
+            width: 1280,
+            height: 720,
+            alt: 'Havenova Política de Cookies',
           },
         ],
       },
