@@ -23,6 +23,7 @@ import type {
 } from '@/packages/types';
 import {
   createUserClientProfile,
+  getCsrfDebugState,
   getUserClientProfile,
   updateUserClientProfile,
 } from '@havenova/services';
@@ -195,6 +196,39 @@ const isOfflineProfileError = (error: unknown): boolean => {
 };
 
 const isDevFallbackProfile = (value?: Partial<UserClientProfile> | null) => value?._id === 'dev-profile';
+
+const isProfileDebugEnabled = (): boolean => process.env.NODE_ENV !== 'production';
+
+const getReadableCookieDiagnostics = () => {
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
+    return {
+      frontendOrigin: '',
+      hasReadableCsrfToken: false,
+      readableCookieNames: [] as string[],
+      accessTokenCookieVisibility: 'server-only/httpOnly',
+      refreshTokenCookieVisibility: 'server-only/httpOnly',
+    };
+  }
+
+  const cookieString = document.cookie || '';
+
+  return {
+    frontendOrigin: window.location.origin,
+    hasReadableCsrfToken: cookieString.includes('csrfToken='),
+    readableCookieNames: cookieString
+      .split(';')
+      .map((part) => part.trim().split('=')[0])
+      .filter(Boolean),
+    accessTokenCookieVisibility: 'server-only/httpOnly',
+    refreshTokenCookieVisibility: 'server-only/httpOnly',
+    ...getCsrfDebugState(),
+  };
+};
+
+const debugProfileTrace = (label: string, payload?: Record<string, unknown>) => {
+  if (!isProfileDebugEnabled() || typeof window === 'undefined') return;
+  console.debug(`[profile-debug] ${label}`, payload ?? {});
+};
 
 export const ProfileContext = createContext<ProfileContextProps | undefined>(undefined);
 
@@ -419,6 +453,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       status: err.response?.status,
       code: err.response?.data?.code,
       message: err.response?.data?.message ?? err.message,
+      authUserClientId: authRef.current.userClientId,
+      clientId: authRef.current.clientId,
+      ...getReadableCookieDiagnostics(),
     });
   }, []);
 
@@ -455,7 +492,19 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       }
 
       if (status === 401 || status === 403) {
+        debugProfileTrace('reloadProfile.protected-fetch-failed', {
+          status,
+          code,
+          authUserClientId: auth.userClientId,
+          clientId: auth.clientId,
+          ...getReadableCookieDiagnostics(),
+        });
         try {
+          debugProfileTrace('reloadProfile.try-refresh-token', {
+            authUserClientId: auth.userClientId,
+            clientId: auth.clientId,
+            ...getReadableCookieDiagnostics(),
+          });
           await refreshToken();
           const backendProfile = await getUserClientProfile();
           applyProfile(backendProfile, {
@@ -465,6 +514,18 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           });
           clearIsNewUserFlag();
         } catch (refreshError) {
+          const refreshErr = refreshError as {
+            response?: { status?: number; data?: { code?: string; message?: string } };
+            message?: string;
+          };
+          console.error('Profile refresh token recovery failed', {
+            status: refreshErr.response?.status,
+            code: refreshErr.response?.data?.code,
+            message: refreshErr.response?.data?.message ?? refreshErr.message,
+            authUserClientId: auth.userClientId,
+            clientId: auth.clientId,
+            ...getReadableCookieDiagnostics(),
+          });
           if (isOfflineProfileError(refreshError)) {
             if (isDevProfileFallbackEnabled && !profileRef.current.contactEmail) {
               applyProfile(createDevProfileFallback(), {

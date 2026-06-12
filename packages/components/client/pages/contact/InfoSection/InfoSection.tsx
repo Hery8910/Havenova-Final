@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './InfoSection.module.css';
 import Image from 'next/image';
 import { useClient } from '../../../../../contexts';

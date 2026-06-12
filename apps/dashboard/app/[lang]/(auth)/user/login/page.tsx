@@ -16,7 +16,7 @@ import {
   useWorker,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
-import { loginUser } from '../../../../../../../packages/services';
+import { getAuthUser, loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
 import { LoginPayload } from '../../../../../../../packages/types';
@@ -76,6 +76,24 @@ const Login = () => {
   const login: LoginData = texts?.pages?.client.user.login;
   const descriptionId = 'login-cta';
   const loginButton = formText.button.login;
+
+  const syncSessionFromServer = async () => {
+    let lastError: unknown;
+
+    for (const delayMs of [0, 250, 500]) {
+      if (delayMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+
+      try {
+        return await getAuthUser();
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError ?? new Error('Could not synchronize auth session after login.');
+  };
 
   const handleLogin = async (data: LoginPayload): Promise<boolean> => {
     try {
@@ -171,7 +189,8 @@ const Login = () => {
       }
       const { user } = response;
 
-      setAuth(user);
+      const syncedUser = await syncSessionFromServer();
+      setAuth(syncedUser ?? user);
 
       const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
 

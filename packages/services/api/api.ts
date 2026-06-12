@@ -8,8 +8,8 @@ const api = axios.create({
 });
 
 const CSRF_HEADER = 'x-csrf-token';
-const CSRF_COOKIE = 'csrfToken';
 const FRONTEND_ORIGIN_HEADER = 'x-frontend-origin';
+let csrfTokenMemory = '';
 
 const csrfProtectedRoutes = new Set([
   '/api/auth/refresh-token',
@@ -27,19 +27,39 @@ const authOriginProtectedRoutes = new Set([
   '/api/auth/change-email',
 ]);
 
-const getCookieValue = (name: string): string => {
-  if (typeof document === 'undefined') return '';
-  const prefix = `${name}=`;
-  const parts = document.cookie.split(';');
+const getHeaderValue = (headers: unknown, name: string): string => {
+  if (!headers) return '';
 
-  for (const part of parts) {
-    const cookie = part.trim();
-    if (cookie.startsWith(prefix)) {
-      return decodeURIComponent(cookie.slice(prefix.length));
-    }
+  if (typeof headers === 'object' && headers !== null && 'get' in headers) {
+    const getter = headers as { get?: (key: string) => string | null | undefined };
+    const value = getter.get?.(name);
+    return typeof value === 'string' ? value : '';
   }
 
-  return '';
+  const record = headers as Record<string, unknown>;
+  const direct = record[name] ?? record[name.toLowerCase()] ?? record[name.toUpperCase()];
+
+  return typeof direct === 'string' ? direct : '';
+};
+
+export const getCsrfToken = (): string => csrfTokenMemory;
+
+export const setCsrfToken = (value?: string | null) => {
+  csrfTokenMemory = value?.trim() || '';
+};
+
+export const clearCsrfToken = () => {
+  csrfTokenMemory = '';
+};
+
+export const getCsrfDebugState = () => ({
+  hasInMemoryCsrfToken: Boolean(csrfTokenMemory),
+});
+
+const updateCsrfTokenFromHeaders = (headers: unknown) => {
+  const nextToken = getHeaderValue(headers, CSRF_HEADER);
+  if (!nextToken) return;
+  setCsrfToken(nextToken);
 };
 
 const getFrontendOrigin = (): string => {
@@ -85,7 +105,7 @@ api.interceptors.request.use((config) => {
   }
 
   if (method === 'POST' && csrfProtectedRoutes.has(path)) {
-    const csrfToken = getCookieValue(CSRF_COOKIE);
+    const csrfToken = getCsrfToken();
     if (csrfToken) {
       config.headers = config.headers ?? {};
       config.headers[CSRF_HEADER] = csrfToken;
@@ -93,6 +113,11 @@ api.interceptors.request.use((config) => {
   }
 
   return config;
+});
+
+api.interceptors.response.use((response) => {
+  updateCsrfTokenFromHeaders(response.headers);
+  return response;
 });
 
 export default api;

@@ -1,4 +1,3 @@
-import '../../migration-styles/index.css';
 import type { Metadata } from 'next';
 import { HomePageClient } from '../../../../../packages/components/client/pages/home';
 import { getPageMetadata } from '../../../../../packages/utils/metadata';

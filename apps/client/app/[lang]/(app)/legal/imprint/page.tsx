@@ -71,13 +71,19 @@ type DefinitionItem = {
   isEmail?: boolean;
 };
 
+function isLegalRegisterEntry(
+  field: ClientLegalField | ClientLegalRegisterEntry
+): field is ClientLegalRegisterEntry {
+  return 'court' in field || 'number' in field;
+}
+
 function resolveFieldValue(
   field: ClientLegalField | ClientLegalRegisterEntry | undefined,
   unavailableTexts: ImprintTexts['unavailable']
 ) {
   if (!field) return '';
   if (field.status === 'available') {
-    if ('value' in field) return field.value ?? '';
+    if (!isLegalRegisterEntry(field)) return field.value ?? '';
     const registerParts = [field.court, field.number].filter(Boolean);
     return registerParts.join(', ');
   }

@@ -166,6 +166,7 @@
 }
 
 .checkboxLabel {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -181,13 +182,14 @@
 
 .checkboxInput {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   padding: 0;
-  margin: -1px;
+  margin: 0;
+  opacity: 0;
   overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+  cursor: inherit;
   border: 0;
 }
 

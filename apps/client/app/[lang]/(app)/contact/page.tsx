@@ -1,4 +1,3 @@
-import '../../migration-styles/index.css';
 import { resources, type Locale } from '@havenova/i18n';
 import { ContactPageView } from '../../../../../../packages/components/client/pages/contact/ContactPage.view';
 import type { FAQSectionTexts } from '../../../../../../packages/components/client/faqSection/FAQSection';

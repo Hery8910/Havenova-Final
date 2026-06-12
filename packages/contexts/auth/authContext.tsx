@@ -17,11 +17,13 @@ import { getI18nFallbacks } from '../i18n';
 import { AuthRole, AuthUser } from '@/packages/types';
 import { useRouter } from 'next/navigation';
 import { getPopup, normalizeAuthSession, type AuthSessionSeed } from '@havenova/utils';
-import { getAuthUser, logoutUser, refreshToken } from '@havenova/services';
+import { clearCsrfToken, getAuthUser, getCsrfDebugState, logoutUser, refreshToken } from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
+const AUTH_RECENT_LOGIN_KEY = 'hv-auth-recent-login-at';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
 const AUTH_REQUEST_TIMEOUT_MS = 8000;
+const AUTH_RECENT_LOGIN_GRACE_MS = 5000;
 type AuthSource = 'server' | 'storage' | 'default' | 'dev-fallback';
 
 type AuthRefreshResult = {
@@ -114,6 +116,43 @@ const isOfflineAuthError = (error: unknown): boolean => {
   return false;
 };
 
+const isAuthDebugEnabled = (): boolean => process.env.NODE_ENV !== 'production';
+
+const getBrowserCookiePresence = () => {
+  if (typeof document === 'undefined') {
+    return {
+      frontendOrigin: '',
+      hasReadableCsrfToken: false,
+      readableCookieNames: [] as string[],
+      accessTokenCookieVisibility: 'server-only/httpOnly',
+      refreshTokenCookieVisibility: 'server-only/httpOnly',
+    };
+  }
+
+  const cookieString = document.cookie || '';
+  const readableCookieNames = cookieString
+    .split(';')
+    .map((part) => part.trim().split('=')[0])
+    .filter(Boolean);
+
+  return {
+    frontendOrigin: window.location.origin,
+    hasReadableCsrfToken: cookieString.includes('csrfToken='),
+    readableCookieNames,
+    accessTokenCookieVisibility: 'server-only/httpOnly',
+    refreshTokenCookieVisibility: 'server-only/httpOnly',
+    ...getCsrfDebugState(),
+  };
+};
+
+const debugAuthTrace = (
+  label: string,
+  payload?: Record<string, unknown> | undefined
+) => {
+  if (!isAuthDebugEnabled() || typeof window === 'undefined') return;
+  console.debug(`[auth-debug] ${label}`, payload ?? {});
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { client } = useClient();
   const clientId = client?._id || '';
@@ -136,6 +175,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const sessionCallbackRef = useRef<(() => void) | null>(null);
   const isRefreshingRef = useRef(false);
+  const bootstrapClientKeyRef = useRef<string | null>(null);
 
   const normalizeAuthState = useCallback(
     (value?: AuthSessionSeed | null, overrides?: Partial<AuthUser>): AuthUser =>
@@ -170,10 +210,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(value));
   };
 
+  const markRecentLogin = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(AUTH_RECENT_LOGIN_KEY, String(Date.now()));
+  }, []);
+
+  const clearRecentLogin = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem(AUTH_RECENT_LOGIN_KEY);
+  }, []);
+
+  const isWithinRecentLoginGrace = useCallback(() => {
+    if (typeof window === 'undefined') return false;
+
+    const raw = localStorage.getItem(AUTH_RECENT_LOGIN_KEY);
+    if (!raw) return false;
+
+    const savedAt = Number(raw);
+    if (!Number.isFinite(savedAt) || savedAt <= 0) {
+      localStorage.removeItem(AUTH_RECENT_LOGIN_KEY);
+      return false;
+    }
+
+    const withinGrace = Date.now() - savedAt <= AUTH_RECENT_LOGIN_GRACE_MS;
+    if (!withinGrace) {
+      localStorage.removeItem(AUTH_RECENT_LOGIN_KEY);
+    }
+
+    return withinGrace;
+  }, []);
+
   const clearUserStorage = () => {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem(AUTH_RECENT_LOGIN_KEY);
     localStorage.removeItem(WORKER_STORAGE_KEY);
+    clearCsrfToken();
     Object.keys(localStorage)
       .filter((key) => key.startsWith('hv-profile:'))
       .forEach((key) => localStorage.removeItem(key));
@@ -193,6 +265,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       clientId: stored?.clientId || clientId,
     });
   }, [clientId, normalizeAuthState]);
+
+  const createRenderGuest = useCallback(
+    (): AuthUser =>
+      normalizeAuthState(null, {
+        authId: '',
+        userClientId: '',
+        role: 'guest',
+        isLogged: false,
+        clientId,
+      }),
+    [clientId, normalizeAuthState]
+  );
 
   const createDevFallback = useCallback((): AuthUser => {
     const stored = loadFromStorage();
@@ -249,12 +333,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!clientId || isRefreshingRef.current) {
         const currentAuth = auth ?? createGuest();
+        debugAuthTrace('refreshAuth.skipped', {
+          clientId,
+          isRefreshing: isRefreshingRef.current,
+          authRole: currentAuth.role,
+          isLogged: currentAuth.isLogged,
+        });
         return createResult(currentAuth, source, isOffline, lastSyncAt);
       }
 
       isRefreshingRef.current = true;
 
       const stored = loadFromStorage();
+      debugAuthTrace('refreshAuth.started', {
+        clientId,
+        storedRole: stored?.role,
+        storedIsLogged: stored?.isLogged,
+        ...getBrowserCookiePresence(),
+      });
       const setFromBackend = (backendAuth: AuthUser) => {
         const finalAuth = normalizeAuthState(backendAuth, {
           isLogged: true,
@@ -266,6 +362,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsOffline(false);
         const syncedAt = new Date().toISOString();
         setLastSyncAt(syncedAt);
+        clearRecentLogin();
+        debugAuthTrace('refreshAuth.server-success', {
+          role: finalAuth.role,
+          isLogged: finalAuth.isLogged,
+          syncedAt,
+          ...getBrowserCookiePresence(),
+        });
         return createResult(finalAuth, 'server', false, syncedAt);
       };
 
@@ -276,6 +379,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('default');
         setIsOffline(offline);
         setLastSyncAt(null);
+        clearRecentLogin();
+        debugAuthTrace('refreshAuth.set-guest', {
+          offline,
+          ...getBrowserCookiePresence(),
+        });
         return createResult(guest, 'default', offline, null);
       };
 
@@ -286,6 +394,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource(useDevFallback ? 'dev-fallback' : 'storage');
         setIsOffline(useDevFallback || offline);
         setLastSyncAt(null);
+        debugAuthTrace('refreshAuth.storage-fallback', {
+          offline,
+          role: normalized.role,
+          isLogged: normalized.isLogged,
+          useDevFallback,
+          ...getBrowserCookiePresence(),
+        });
         return createResult(
           normalized,
           useDevFallback ? 'dev-fallback' : 'storage',
@@ -301,6 +416,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('dev-fallback');
         setIsOffline(true);
         setLastSyncAt(null);
+        debugAuthTrace('refreshAuth.dev-fallback', getBrowserCookiePresence());
         return createResult(devAuth, 'dev-fallback', true, null);
       };
 
@@ -313,15 +429,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return setFromBackend(backendAuth);
       } catch (err: any) {
         const status = err?.response?.status;
+        const code = err?.response?.data?.code;
+        debugAuthTrace('refreshAuth.getAuthUser-error', {
+          status,
+          code,
+          message: err?.message,
+          ...getBrowserCookiePresence(),
+        });
 
         // TOKEN EXPIRED
         if (status === 401 || status === 403) {
           try {
+            debugAuthTrace('refreshAuth.try-refresh-token', getBrowserCookiePresence());
             await withTimeout(
               refreshToken(),
               AUTH_REQUEST_TIMEOUT_MS,
               'Auth refresh token request timed out.'
             );
+            debugAuthTrace('refreshAuth.refresh-token-success', getBrowserCookiePresence());
             const backendAuth = await withTimeout(
               getAuthUser(),
               AUTH_REQUEST_TIMEOUT_MS,
@@ -329,6 +454,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             );
             return setFromBackend(backendAuth);
           } catch (refreshError) {
+            const refreshErr = refreshError as {
+              response?: { status?: number; data?: { code?: string } };
+              message?: string;
+            };
+            debugAuthTrace('refreshAuth.refresh-token-error', {
+              status: refreshErr?.response?.status,
+              code: refreshErr?.response?.data?.code,
+              message: refreshErr?.message,
+              withinRecentLoginGrace: isWithinRecentLoginGrace(),
+              ...getBrowserCookiePresence(),
+            });
             if (isOfflineAuthError(refreshError)) {
               if (stored) {
                 return setFromStorage(stored, true);
@@ -337,6 +473,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 return setDevFallback();
               }
               return setGuest(true);
+            }
+
+            if (
+              stored &&
+              stored.isLogged &&
+              stored.role !== 'guest' &&
+              isWithinRecentLoginGrace()
+            ) {
+              return setFromStorage(stored, false);
             }
 
             clearUserStorage();
@@ -405,11 +550,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     [
       auth,
       clientId,
+      clearRecentLogin,
       createDevFallback,
       createGuest,
       closeAlert,
       isDevAuthFallbackEnabled,
       isOffline,
+      isWithinRecentLoginGrace,
       lastSyncAt,
       language,
       popups,
@@ -427,6 +574,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isClientReady) return;
+
+    const bootstrapKey = clientId || '__no-client__';
+    if (bootstrapClientKeyRef.current === bootstrapKey) {
+      return;
+    }
+    bootstrapClientKeyRef.current = bootstrapKey;
 
     const stored = loadFromStorage();
     const normalizedStored = stored ? normalizeAuthState(stored) : null;
@@ -603,13 +756,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     saveToStorage(normalized);
     setSource('storage');
     setIsOffline(false);
-  }, [normalizeAuthState]);
+    setLastSyncAt(null);
+    debugAuthTrace('setAuth', {
+      role: normalized.role,
+      isLogged: normalized.isLogged,
+      userClientId: normalized.userClientId,
+      clientId: normalized.clientId,
+      ...getBrowserCookiePresence(),
+    });
+
+    if (normalized.isLogged && normalized.role !== 'guest') {
+      markRecentLogin();
+      return;
+    }
+
+    clearRecentLogin();
+  }, [clearRecentLogin, markRecentLogin, normalizeAuthState]);
 
   const registerSessionCallback = useCallback((cb: () => void) => {
     sessionCallbackRef.current = cb;
   }, []);
 
-  const authValue = auth ?? createGuest();
+  const authValue = auth ?? createRenderGuest();
 
   return (
     <AuthContext.Provider

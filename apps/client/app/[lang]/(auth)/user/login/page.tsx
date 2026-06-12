@@ -15,7 +15,7 @@ import {
   useI18n,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
-import { loginUser } from '../../../../../../../packages/services';
+import { getAuthUser, getCsrfDebugState, loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
@@ -64,6 +64,28 @@ const Login = () => {
       buttons: alertButtons,
       closeAlert,
     });
+
+  const getReadableCookieDiagnostics = () => {
+    if (typeof document === 'undefined' || typeof window === 'undefined') {
+      return {
+        frontendOrigin: '',
+        hasReadableCsrfToken: false,
+        readableCookieNames: [] as string[],
+      };
+    }
+
+    const cookieString = document.cookie || '';
+
+    return {
+      frontendOrigin: window.location.origin,
+      hasReadableCsrfToken: cookieString.includes('csrfToken='),
+      readableCookieNames: cookieString
+        .split(';')
+        .map((part) => part.trim().split('=')[0])
+        .filter(Boolean),
+      ...getCsrfDebugState(),
+    };
+  };
 
   const getLoginPopupDefaultKey = (code?: string): PopupCode => {
     switch (code) {
@@ -189,9 +211,7 @@ const Login = () => {
         const failureAction = getLoginFailureAction(response?.code);
         const canRetry = !response?.code;
         const onConfirm =
-          (failureAction?.confirmKind
-            ? getConfirmAction(failureAction.confirmKind)
-            : undefined) ??
+          (failureAction?.confirmKind ? getConfirmAction(failureAction.confirmKind) : undefined) ??
           (canRetry ? getConfirmAction('reload', () => void handleLogin(payload)) : undefined);
 
         showError({
@@ -213,9 +233,15 @@ const Login = () => {
         });
         return;
       }
-      const { user } = response;
+      const confirmedUser = await getAuthUser();
 
-      setAuth(user);
+      console.debug('[auth-login] session confirmed after login', {
+        clientId: payload.clientId,
+        email: payload.email,
+        ...getReadableCookieDiagnostics(),
+      });
+
+      setAuth(confirmedUser);
 
       const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
 
@@ -234,6 +260,14 @@ const Login = () => {
     } catch (error) {
       const err = error as { response?: { data?: { code?: string }; status?: number } };
       const code = err.response?.data?.code;
+
+      console.error('[auth-login] login or session confirmation failed', {
+        status: err.response?.status,
+        code,
+        clientId: payload.clientId,
+        email: payload.email,
+        ...getReadableCookieDiagnostics(),
+      });
 
       const popupData = getPopup(popups, code, getLoginPopupDefaultKey(code), fallbackGlobalError);
       const canRetry = !code || (err.response?.status ?? 500) >= 500;
