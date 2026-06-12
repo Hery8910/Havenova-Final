@@ -279,9 +279,6 @@ importers:
 
   packages/contexts:
     dependencies:
-      '@havenova/components':
-        specifier: workspace:*
-        version: link:../components
       '@havenova/i18n':
         specifier: workspace:*
         version: link:../i18n
