@@ -23,7 +23,7 @@ export function ContactPageView({ contact, contactInfo, faq, lang }: ContactPage
 
   return (
     <>
-      <PageHero texts={resolveContactHeroContent(contact?.hero, lang)} lang={lang} />
+      <PageHero texts={resolveContactHeroContent(contact?.hero, lang)} lang={lang} position={50} />
       <main
         id="app-main-content"
         tabIndex={-1}

@@ -1,5 +1,6 @@
 .main {
+  margin-top: clamp(200px, 10vw, 260px);
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 6vw, 80px);
+  gap: clamp(64px, 6vw, 80px);
 }

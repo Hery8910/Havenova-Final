@@ -37,7 +37,7 @@ export default function InfoSection({
 
   return (
     <section className={styles.contactSection}>
-      <div className={`${styles.contactCard} v2-card v2-card--neutral`}>
+      <div className={`${styles.contactCard} card card--neutral`}>
         <CompanyContact
           contact={texts.contact}
           schedule={client.operations.schedule}
@@ -58,7 +58,7 @@ export default function InfoSection({
           <div className={styles.actionList}>
             {telHref && (
               <a
-                className={styles.actionLink}
+                className={`${styles.actionLink} button button--ghost`}
                 href={telHref}
                 aria-label={ariaTexts?.call || 'Call phone number'}
               >
@@ -75,7 +75,7 @@ export default function InfoSection({
             )}
             {mailHref && (
               <a
-                className={styles.actionLink}
+                className={`${styles.actionLink} button button--ghost`}
                 href={mailHref}
                 aria-label={ariaTexts?.email || 'Send email'}
               >
@@ -92,7 +92,7 @@ export default function InfoSection({
             )}
             {whatsappHref && (
               <a
-                className={styles.actionLink}
+                className={`${styles.actionLink} button button--ghost`}
                 href={whatsappHref}
                 aria-label={ariaTexts?.whatsapp || 'Open WhatsApp chat'}
                 target="_blank"

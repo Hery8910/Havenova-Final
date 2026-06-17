@@ -62,7 +62,7 @@ export default function FAQSection({ texts: providedTexts }: FAQSectionProps) {
       aria-labelledby={sectionTitleId}
       aria-label={faq.a11y?.sectionLabel}
     >
-      <h2 className={`${styles.title} type-title-lg`} id={sectionTitleId}>
+      <h2 className={`${styles.title} type-display-md`} id={sectionTitleId}>
         {faq.title}
       </h2>
       <ul className={styles.ul}>

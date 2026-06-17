@@ -14,7 +14,7 @@
   max-width: 1600px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   gap: 64px;
   padding: 0;
@@ -25,7 +25,7 @@
   max-width: 400px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: var(--space-8);
   align-items: flex-start;
   padding: 0;
@@ -59,7 +59,7 @@
   max-width: 800px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   gap: var(--space-6);
   padding: 0;

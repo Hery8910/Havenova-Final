@@ -19,7 +19,7 @@ interface AboutPageViewProps {
 export function AboutPageView({ about, lang }: AboutPageViewProps) {
   return (
     <>
-      <PageHero texts={resolveAboutHeroContent(about?.hero)} lang={lang} />
+      <PageHero texts={resolveAboutHeroContent(about?.hero)} lang={lang} position={65} />
       <main
         id="app-main-content"
         tabIndex={-1}

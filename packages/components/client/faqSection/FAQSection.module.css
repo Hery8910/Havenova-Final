@@ -1,6 +1,6 @@
 .section {
   margin: var(--space-10) auto;
-  max-width: var(--container-max);
+  max-width: 1200px;
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -3,11 +3,7 @@ import Image from 'next/image';
 import styles from './ClientsSection.module.css';
 import type { AboutClientsTexts } from '../about.types';
 
-export default function ClientsSection({
-  texts,
-}: {
-  texts: AboutClientsTexts;
-}) {
+export default function ClientsSection({ texts }: { texts: AboutClientsTexts }) {
   const titleId = useId();
   const descriptionId = useId();
   const closingId = useId();
@@ -20,17 +16,17 @@ export default function ClientsSection({
       aria-label={texts.a11y?.sectionLabel}
     >
       <div className={styles.container}>
-        <h2 id={titleId} className={`${styles.title} type-title-lg v2-page-heading`}>
+        <h2 id={titleId} className={`${styles.title} type-display-md`}>
           {texts.title}
         </h2>
-        <p id={descriptionId} className={`${styles.description} type-body-md v2-page-copy`}>
+        <p id={descriptionId} className={`${styles.description} type-body-md`}>
           {texts.description}
         </p>
         <ul className={styles.list} aria-label={texts.a11y?.listLabel}>
           {texts.items.map((item, index) => (
             <li className={styles.item} key={`${item.title}-${index}`}>
               <article
-                className={`${styles.card} v2-card v2-card--neutral`}
+                className={`${styles.card} card card--neutral`}
                 aria-labelledby={`about-client-title-${index}`}
                 aria-describedby={`about-client-description-${index}`}
               >

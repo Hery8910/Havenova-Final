@@ -30,9 +30,11 @@
 }
 
 .contactCard {
-  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
   width: 100%;
-  border-radius: var(--v2-radius-lg);
 }
 
 .contact {
@@ -57,22 +59,12 @@
 }
 
 .actionLink {
+  padding: 0;
   width: 64px;
   height: 64px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  border: 1px solid var(--v2-card-neutral-border);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
-    var(--v2-card-neutral-bg2);
-  box-shadow: var(--v2-card-shadow);
-  transition:
-    transform var(--v2-motion-base) var(--v2-ease-standard),
-    box-shadow var(--v2-motion-base) var(--v2-ease-standard),
-    border-color var(--v2-motion-base) var(--v2-ease-standard),
-    background-color var(--v2-motion-base) var(--v2-ease-standard);
 }
 
 .actionLink:focus-visible {
@@ -113,6 +105,12 @@
     height: 200px;
     bottom: 0%;
     left: 0;
+  }
+}
+@media (max-width: 450px) {
+  .contactCard {
+    border-radius: 0;
+    border-color: transparent;
   }
 }
 

@@ -56,19 +56,21 @@ export function PageHero({ texts, lang, position }: PageHeroProps) {
   return (
     <header className={styles.hero} aria-labelledby={titleId} aria-describedby={descriptionLinkId}>
       <div className={styles.heroMedia}>
-        <Image
-          className={styles.heroImage}
-          src={texts.image.src}
-          alt={texts.image.alt}
-          fill
-          priority={texts.image.priority ?? true}
-          sizes="100vw"
-          style={imageStyle}
-        />
+        <div className={styles.heroMediaFrame}>
+          <Image
+            className={styles.heroImage}
+            src={texts.image.src}
+            alt={texts.image.alt}
+            fill
+            priority={texts.image.priority ?? true}
+            sizes="100vw"
+            style={imageStyle}
+          />
 
-        <h1 id={titleId} className={`${styles.heroTitle} type-display-lg`}>
-          {texts.title}
-        </h1>
+          <h1 id={titleId} className={`${styles.heroTitle} type-display-lg`}>
+            {texts.title}
+          </h1>
+        </div>
       </div>
 
       <article className={styles.heroCopy}>

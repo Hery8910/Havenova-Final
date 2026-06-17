@@ -17,7 +17,7 @@ interface HowItWorksPageViewProps {
 export function HowItWorksPageView({ howItWorks, lang }: HowItWorksPageViewProps) {
   return (
     <>
-      <PageHero texts={resolveHowItWorksHeroContent(howItWorks?.hero)} lang={lang} />
+      <PageHero texts={resolveHowItWorksHeroContent(howItWorks?.hero)} lang={lang} position={5} />
       <main
         id="app-main-content"
         tabIndex={-1}
