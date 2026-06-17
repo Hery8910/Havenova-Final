@@ -28,7 +28,11 @@ export function AboutPageView({ about, lang }: AboutPageViewProps) {
       >
         <AboutStorySection texts={resolveAboutStory(about?.story)} />
         <AboutClientsSection texts={resolveAboutClients(about?.clients)} />
-        <ServiceCrossCtaSection texts={resolveAboutServicesCta(about?.servicesCta)} lang={lang} />
+        <ServiceCrossCtaSection
+          texts={resolveAboutServicesCta(about?.servicesCta)}
+          lang={lang}
+          surface="about"
+        />
       </main>
     </>
   );

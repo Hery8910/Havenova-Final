@@ -14,6 +14,8 @@ import {
   ServiceCrossCtaSection,
   type ServiceCrossCtaSectionTexts,
 } from '../../../../../../packages/components/client/pages/shared';
+import { FAQSection } from '../../../../../../packages/components/client/faqSection';
+import type { FAQSectionTexts } from '../../../../../../packages/components/client/faqSection/FAQSection';
 import {
   type PopupsTexts,
   useAuth,
@@ -37,6 +39,7 @@ import styles from './page.module.css';
 
 interface HomeServicePageTexts {
   hero: PageHeroContent;
+  faq: FAQSectionTexts;
   relatedServiceCta: ServiceCrossCtaSectionTexts;
   authAlert: {
     title: string;
@@ -230,7 +233,13 @@ export default function HomeService() {
           onSubmit={handleSubmit}
         />
 
-        <ServiceCrossCtaSection texts={homeService.relatedServiceCta} lang={lang} />
+        <FAQSection texts={homeService.faq} />
+
+        <ServiceCrossCtaSection
+          texts={homeService.relatedServiceCta}
+          lang={lang}
+          surface="cleaning-service"
+        />
       </main>
     </>
   );

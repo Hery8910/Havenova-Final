@@ -197,6 +197,8 @@
 }
 
 .button--close {
+  font-size: clamp(24px, 2.2vw, 30px);
+  padding: 4px;
   --button-text: var(--button-close-text);
   --button-bg: var(--button-close-bg);
   --button-bg-image: var(--button-close-bg-image);

@@ -18,7 +18,7 @@ export default function CustomerTypeSelector({ label, options, value, error, onC
       <legend className={styles.legend}>{label}</legend>
       <ul className={styles.toggleGrid}>
         {(Object.keys(options) as CustomerType[]).map((type) => (
-          <li key={type}>
+          <li key={type} className={styles.li}>
             <button
               type="button"
               className={` button button--outline ${styles.choiceButton} ${value === type ? styles.active : ''} ${

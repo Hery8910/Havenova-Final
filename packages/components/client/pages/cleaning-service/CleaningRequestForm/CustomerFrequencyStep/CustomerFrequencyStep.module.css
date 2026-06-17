@@ -143,11 +143,6 @@
     flex-direction: column;
   }
 
-  .frequencyButton {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .frequencyContent {
     width: 100%;
     justify-content: space-between;

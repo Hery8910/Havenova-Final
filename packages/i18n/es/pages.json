@@ -234,7 +234,7 @@
         },
         "ctas": {
           "login": {
-            "label": "Ir al inicio de sesión",
+            "label": "Iniciar sesión",
             "href": "/user/login"
           },
           "register": {
@@ -259,6 +259,32 @@
             "variant": "secondary"
           }
         ]
+      },
+      "faq": {
+        "title": "Preguntas sobre el servicio de limpieza",
+        "items": [
+          {
+            "question": "¿Qué tipo de limpieza puedo solicitar?",
+            "answer": "Puedes solicitar limpiezas puntuales, servicios recurrentes, limpiezas profundas y apoyo antes de entrar o después de salir de una vivienda. El formulario nos ayuda a entender el inmueble, el alcance y la frecuencia que necesitas."
+          },
+          {
+            "question": "¿Necesito tener todos los detalles definidos antes de enviar la solicitud?",
+            "answer": "No. Puedes enviarla con la información principal que ya tengas. Si todavía falta aclarar algo, revisamos contigo esos puntos en el siguiente paso antes de confirmar el servicio."
+          },
+          {
+            "question": "¿Cómo se organiza la primera visita?",
+            "answer": "En el formulario eliges una fecha y una franja horaria preferida para la primera visita. Después revisamos disponibilidad, esfuerzo estimado y condiciones de acceso para responderte con la confirmación o los siguientes pasos."
+          },
+          {
+            "question": "¿Puedo indicar condiciones especiales de la vivienda o del inmueble?",
+            "answer": "Sí. Puedes añadir notas sobre habitaciones, mascotas, escaleras, balcones u otras particularidades relevantes. Eso ayuda a que el equipo llegue mejor preparado al servicio."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Preguntas frecuentes sobre el servicio de limpieza",
+          "openItem": "Abrir respuesta de esta pregunta",
+          "closeItem": "Cerrar respuesta de esta pregunta"
+        }
       },
       "form": {
         "process": {
@@ -489,7 +515,7 @@
         },
         "ctas": {
           "login": {
-            "label": "Ir al inicio de sesión",
+            "label": "Iniciar sesión",
             "href": "/user/login"
           },
           "register": {
@@ -514,6 +540,32 @@
             "variant": "secondary"
           }
         ]
+      },
+      "faq": {
+        "title": "Preguntas sobre el servicio al hogar",
+        "items": [
+          {
+            "question": "¿Qué trabajos entran en el servicio al hogar?",
+            "answer": "El servicio al hogar cubre ayudas prácticas como montajes, pequeñas reparaciones, pintura, instalaciones y determinadas tareas domésticas. El formulario empieza por ayudarte a elegir la categoría que mejor describe tu necesidad."
+          },
+          {
+            "question": "¿Puedo enviar una solicitud si la tarea combina varias cosas o todavía no está del todo definida?",
+            "answer": "Sí. Si tu necesidad mezcla varias tareas pequeñas o el alcance aún no está completamente cerrado, puedes explicarlo en el formulario y revisaremos cómo estructurarlo correctamente."
+          },
+          {
+            "question": "¿Qué información ayuda a evaluar mejor la solicitud?",
+            "answer": "Nos sirve saber qué trabajo necesitas, dónde se realizará, cómo es el acceso, qué materiales o muebles están implicados y qué fecha prefieres. Cuanto más claro sea el contexto, mejor podremos estimar el esfuerzo y los siguientes pasos."
+          },
+          {
+            "question": "¿Qué pasa después de enviar la solicitud?",
+            "answer": "Después de enviarla revisamos tus datos, comprobamos disponibilidad y esfuerzo previsto y te contactamos con el siguiente paso. Si falta información, la aclaramos contigo antes de organizar la visita."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Preguntas frecuentes sobre el servicio al hogar",
+          "openItem": "Abrir respuesta de esta pregunta",
+          "closeItem": "Cerrar respuesta de esta pregunta"
+        }
       },
       "form": {
         "process": {

@@ -95,8 +95,8 @@
   opacity: 0.55;
 }
 
-@media (min-width: 768px) {
-}
-
-@media (min-width: 1024px) {
+@media (max-width: 768px) {
+  .header {
+    padding: 0 5dvw;
+  }
 }

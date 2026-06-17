@@ -32,7 +32,7 @@ export default function AuthRequiredAlert({
   return (
     <div className={styles.overlay}>
       <aside
-        className={styles.alert}
+        className={`${styles.alert} card card--accent`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="cleaning-auth-alert-title"
@@ -41,14 +41,12 @@ export default function AuthRequiredAlert({
       >
         <header className={styles.heading}>
           <div className={styles.iconContainer}>
-            <div className={styles.imageWrapper}>
-              <h2 id="cleaning-auth-alert-title" className={styles.title}>
-                {texts.title}
-              </h2>
-            </div>
+            <h2 id="cleaning-auth-alert-title" className={styles.title}>
+              {texts.title}
+            </h2>
 
             <button
-              className={`button_close ${styles.closeButton}`}
+              className={`button button--close ${styles.closeButton}`}
               type="button"
               onClick={onClose}
               aria-label={texts.closeLabel}
@@ -64,14 +62,14 @@ export default function AuthRequiredAlert({
         </article>
         <nav className={styles.actions} aria-label={texts.a11y.actionsLabel}>
           <Link
-            className={styles.loginLink}
+            className={`${styles.link} button button--primary`}
             href={href(lang, texts.ctas.login.href)}
             aria-label={texts.a11y.loginLabel}
           >
             {texts.ctas.login.label}
           </Link>
           <Link
-            className={styles.registerLink}
+            className={`${styles.link} button button--secondary`}
             href={href(lang, texts.ctas.register.href)}
             aria-label={texts.a11y.registerLabel}
           >

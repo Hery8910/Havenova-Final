@@ -260,6 +260,32 @@
           }
         ]
       },
+      "faq": {
+        "title": "Questions About Cleaning Service",
+        "items": [
+          {
+            "question": "What kind of cleaning can I request?",
+            "answer": "You can request one-time cleaning, recurring visits, deep cleaning, and support before move-in or after move-out. The form helps us capture the core details about the property, scope, and preferred rhythm."
+          },
+          {
+            "question": "Do I need to know every detail before sending my request?",
+            "answer": "No. You can send the request with the main information you already have. If anything still needs clarification, we review it with you in the next step before the service is scheduled."
+          },
+          {
+            "question": "How is the first visit planned?",
+            "answer": "You choose a preferred date and time window in the form. We then review availability, expected effort, and access details and come back to you with confirmation or the next step."
+          },
+          {
+            "question": "Can I mention special conditions in the home or property?",
+            "answer": "Yes. You can share notes about rooms, pets, stairs, balconies, or any other relevant details. This helps our team prepare more accurately for the visit."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Frequently asked questions about cleaning service",
+          "openItem": "Open answer for this question",
+          "closeItem": "Close answer for this question"
+        }
+      },
       "form": {
         "process": {
           "title": "Complete your cleaning request in 5 steps",
@@ -514,6 +540,32 @@
             "variant": "secondary"
           }
         ]
+      },
+      "faq": {
+        "title": "Questions About Home Service",
+        "items": [
+          {
+            "question": "What kind of work is covered by home service?",
+            "answer": "Home service covers practical support such as assembly, small repairs, painting work, installations, and selected household tasks. The form starts by helping you choose the kind of service that best matches your request."
+          },
+          {
+            "question": "Can I send a request if the task is mixed or not fully defined yet?",
+            "answer": "Yes. If your request includes several small tasks or the scope is still evolving, you can describe the situation in the form and we will review how to structure it correctly."
+          },
+          {
+            "question": "What information helps you assess the request faster?",
+            "answer": "Useful details include the task itself, where it takes place, access conditions, relevant materials or furniture, and your preferred timing. Clear information helps us estimate effort and next steps more accurately."
+          },
+          {
+            "question": "What happens after I submit the request?",
+            "answer": "After submission, we review your details, check availability and expected effort, and then contact you about the next step. If anything is missing, we clarify it with you before the visit is arranged."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Frequently asked questions about home service",
+          "openItem": "Open answer for this question",
+          "closeItem": "Close answer for this question"
+        }
       },
       "form": {
         "process": {

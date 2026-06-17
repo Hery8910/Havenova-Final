@@ -260,6 +260,32 @@
           }
         ]
       },
+      "faq": {
+        "title": "Fragen zum Reinigungsservice",
+        "items": [
+          {
+            "question": "Welche Arten von Reinigung kann ich anfragen?",
+            "answer": "Sie können einmalige Reinigungen, wiederkehrende Einsätze, Grundreinigungen sowie Unterstützung vor Einzug oder nach Auszug anfragen. Über das Formular erfassen wir die wichtigsten Angaben zu Objekt, Umfang und Rhythmus."
+          },
+          {
+            "question": "Muss ich vor der ersten Reinigung schon alle Details festlegen?",
+            "answer": "Nein. Sie können den aktuellen Bedarf mit den wichtigsten Informationen senden. Wenn vor dem Start noch Fragen offen sind, klären wir diese im nächsten Schritt gemeinsam mit Ihnen."
+          },
+          {
+            "question": "Wie wird der erste Termin geplant?",
+            "answer": "Sie wählen im Formular einen bevorzugten Zeitraum für den Erstbesuch. Danach prüfen wir Verfügbarkeit, Aufwand und Zugangssituation und melden uns mit einer konkreten Bestätigung oder den nächsten Schritten."
+          },
+          {
+            "question": "Kann ich besondere Hinweise zur Wohnung oder zum Objekt angeben?",
+            "answer": "Ja. Im Formular können Sie zusätzliche Hinweise zu Räumen, Haustieren, Treppen, Balkon oder anderen Besonderheiten hinterlassen. So kann sich unser Team besser auf den Einsatz vorbereiten."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Häufig gestellte Fragen zum Reinigungsservice",
+          "openItem": "Antwort zur Frage öffnen",
+          "closeItem": "Antwort zur Frage schließen"
+        }
+      },
       "form": {
         "process": {
           "title": "Schließen Sie Ihre Reinigungsanfrage in 5 Schritten ab",
@@ -514,6 +540,32 @@
             "variant": "secondary"
           }
         ]
+      },
+      "faq": {
+        "title": "Fragen zum Hausservice",
+        "items": [
+          {
+            "question": "Welche Arbeiten gehören zum Hausservice?",
+            "answer": "Der Hausservice deckt praktische Leistungen wie Montage, kleinere Reparaturen, Malerarbeiten, Installationen und Unterstützung bei ausgewählten Alltagsaufgaben ab. Über das Formular wählen Sie zuerst die passende Leistungsart."
+          },
+          {
+            "question": "Kann ich auch unklare oder gemischte Aufgaben anfragen?",
+            "answer": "Ja. Wenn Ihr Bedarf mehrere kleine Aufgaben umfasst, können Sie die Situation im Formular beschreiben. Wir prüfen dann, wie sich die Anfrage sinnvoll einordnen und vorbereiten lässt."
+          },
+          {
+            "question": "Was sollte ich für eine präzise Anfrage angeben?",
+            "answer": "Hilfreich sind Angaben zu Aufgabe, Ort, Zugang, betroffenen Materialien oder Möbeln sowie zum gewünschten Termin. Je klarer die Ausgangslage ist, desto besser können wir Aufwand und nächste Schritte einschätzen."
+          },
+          {
+            "question": "Wie geht es nach dem Absenden meiner Anfrage weiter?",
+            "answer": "Nach dem Absenden prüfen wir Ihre Angaben, gleichen Verfügbarkeit und Aufwand ab und melden uns mit einer Rückmeldung zum weiteren Ablauf. Falls Informationen fehlen, klären wir diese vor dem Einsatz mit Ihnen."
+          }
+        ],
+        "a11y": {
+          "sectionLabel": "Häufig gestellte Fragen zum Hausservice",
+          "openItem": "Antwort zur Frage öffnen",
+          "closeItem": "Antwort zur Frage schließen"
+        }
       },
       "form": {
         "process": {

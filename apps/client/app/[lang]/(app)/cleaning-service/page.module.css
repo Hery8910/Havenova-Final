@@ -5,6 +5,7 @@
   gap: clamp(var(--space-6), 5vw, calc(var(--space-section) * 0.75));
   padding-bottom: clamp(var(--space-8), 6vw, calc(var(--space-section) * 0.85));
   overflow: clip;
+  margin-top: clamp(200px, 10vw, 260px);
 }
 
 .heroSection,

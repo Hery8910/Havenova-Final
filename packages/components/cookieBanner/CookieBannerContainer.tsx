@@ -1,5 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useCookies } from '@havenova/contexts/cookies';
 import { useI18n } from '@havenova/contexts/i18n';
 import { CookieBannerView } from './CookieBannerView';
@@ -10,6 +11,7 @@ export function CookieBannerContainer() {
 
   const [isRendered, setIsRendered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
   const dialogRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -18,6 +20,10 @@ export function CookieBannerContainer() {
   const handleAcknowledge = useCallback(() => {
     saveSelection({});
   }, [saveSelection]);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -91,9 +97,9 @@ export function CookieBannerContainer() {
     };
   }, [handleAcknowledge, isRendered]);
 
-  if (!cookieTexts || loading || !isRendered) return null;
+  if (!cookieTexts || loading || !isRendered || !portalReady) return null;
 
-  return (
+  return createPortal(
     <CookieBannerView
       texts={cookieTexts}
       isOpen={isOpen}
@@ -101,6 +107,7 @@ export function CookieBannerContainer() {
       titleId={titleId}
       descriptionId={descriptionId}
       onAcknowledge={handleAcknowledge}
-    />
-  );
+    />,
+    document.body
+  ) as unknown as JSX.Element;
 }
