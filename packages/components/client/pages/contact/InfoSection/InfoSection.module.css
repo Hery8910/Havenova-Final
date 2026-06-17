@@ -41,10 +41,6 @@
   padding: clamp(18px, 2.5vw, 24px) clamp(20px, 3vw, 32px);
 }
 
-.contactTitle {
-  color: var(--v2-page-text-primary);
-}
-
 .quickActions {
   display: none;
   justify-content: center;

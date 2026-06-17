@@ -13,6 +13,12 @@
   letter-spacing: var(--tracking-display);
 }
 
+.type-display-sm {
+  font-size: var(--type-display-sm-size);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+
 .type-title-xl {
   font-size: var(--type-title-xl-size);
   line-height: var(--leading-heading);

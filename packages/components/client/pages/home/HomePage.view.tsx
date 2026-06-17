@@ -14,7 +14,7 @@ interface HomePageViewProps {
 export function HomePageView({ home, lang }: HomePageViewProps) {
   return (
     <>
-      <PageHero texts={resolveHomeHeroContent(home?.hero)} lang={lang} />
+      <PageHero texts={resolveHomeHeroContent(home?.hero)} lang={lang} position={82} />
       <main
         id="app-main-content"
         tabIndex={-1}

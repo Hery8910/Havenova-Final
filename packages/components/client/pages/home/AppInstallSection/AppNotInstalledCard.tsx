@@ -25,16 +25,21 @@ export function AppNotInstalledCard({ state, content, onInstall }: AppNotInstall
       data-state={state}
     >
       <header className={styles.titleBlock}>
-        <h2 id="home-app-title" className="type-display-md v2-page-heading">
+        <h2 id="home-app-title" className="type-display-md">
           {content.title}
         </h2>
       </header>
 
       <div className={styles.copyBlock}>
-        <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>{content.description}</p>
+        <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>
+          {content.description}
+        </p>
         {fallbackCta ? (
           <div className={styles.appCtas}>
-            <Link className={`${styles.actionButton} v2-button v2-button--outline`} href={fallbackCta.href}>
+            <Link
+              className={`${styles.actionButton} button button--accent`}
+              href={fallbackCta.href}
+            >
               {fallbackCta.label}
             </Link>
           </div>
@@ -49,7 +54,7 @@ export function AppNotInstalledCard({ state, content, onInstall }: AppNotInstall
           {installCta ? (
             <button
               type="button"
-              className={`${styles.actionButton} v2-button v2-button--outline`}
+              className={`${styles.actionButton} button button--accent`}
               onClick={onInstall}
             >
               {installCta.label}

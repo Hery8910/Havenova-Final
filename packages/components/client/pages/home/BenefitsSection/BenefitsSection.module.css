@@ -3,7 +3,7 @@
   z-index: 1;
   width: 100%;
   max-width: var(--v2-content-max-width);
-  padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
+  padding: var(--space-section) 5dvw;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;

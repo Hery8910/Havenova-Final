@@ -249,7 +249,6 @@
         "legal": "Legal"
       },
       "contact": {
-        "title": "Contacto",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"
@@ -287,20 +286,6 @@
         {
           "label": "Aviso legal",
           "href": "/legal/imprint"
-        }
-      ],
-      "social": [
-        {
-          "label": "Facebook",
-          "href": "https://facebook.com/havenova"
-        },
-        {
-          "label": "Instagram",
-          "href": "https://instagram.com/havenova"
-        },
-        {
-          "label": "LinkedIn",
-          "href": "https://linkedin.com/company/havenova"
         }
       ],
       "cta": {
@@ -343,6 +328,7 @@
         "quickActions": "Acciones rápidas de contacto",
         "call": "Llamar al número de teléfono",
         "email": "Enviar correo electrónico",
+        "address": "Abrir la dirección en Google Maps",
         "whatsapp": "Abrir chat de WhatsApp"
       },
       "quickActions": {

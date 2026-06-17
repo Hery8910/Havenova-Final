@@ -249,7 +249,6 @@
         "legal": "Legal"
       },
       "contact": {
-        "title": "Kontakt",
         "email": "contact@havenova.de",
         "phone": "+49 176 7091 7803",
         "address": "Stollberger Str.43, 12627 Berlin"
@@ -287,20 +286,6 @@
         {
           "label": "Impresum",
           "href": "/legal/imprint"
-        }
-      ],
-      "social": [
-        {
-          "label": "Facebook",
-          "href": "https://facebook.com/havenova"
-        },
-        {
-          "label": "Instagram",
-          "href": "https://instagram.com/havenova"
-        },
-        {
-          "label": "LinkedIn",
-          "href": "https://linkedin.com/company/havenova"
         }
       ],
       "cta": {
@@ -343,6 +328,7 @@
         "quickActions": "Schnellkontakt",
         "call": "Telefonnummer anrufen",
         "email": "E-Mail senden",
+        "address": "Adresse in Google Maps oeffnen",
         "whatsapp": "WhatsApp-Chat öffnen"
       },
       "quickActions": {

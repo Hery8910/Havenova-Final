@@ -2,9 +2,8 @@ import type { PageHeroContent } from '../hero';
 import type { ServiceCrossCtaSectionTexts } from '../shared';
 import type { AboutClientsItemTexts, AboutClientsTexts, AboutPageTexts, AboutStoryTexts } from './about.types';
 
-const ABOUT_HERO_DESCRIPTIONS_FALLBACK = [
-  'Erfahre, wie Havenova persoenlichen Service, klare Kommunikation und digitale Verbesserung zusammenbringt, um Hausservice in Berlin transparenter zu machen.',
-];
+const ABOUT_HERO_DESCRIPTION_FALLBACK =
+  'Erfahre, wie Havenova persoenlichen Service, klare Kommunikation und digitale Verbesserung zusammenbringt, um Hausservice in Berlin transparenter zu machen.';
 
 const ABOUT_STORY_PARAGRAPHS_FALLBACK = [
   'Havenova wurde mit dem Ziel aufgebaut, Reinigung und Hausservice in Berlin klarer, verlaesslicher und besser organisiert anzubieten.',
@@ -39,7 +38,7 @@ const ABOUT_CLIENTS_ITEMS_FALLBACK: AboutClientsItemTexts[] = [
 export function resolveAboutHeroContent(texts: AboutPageTexts['hero'] | undefined): PageHeroContent {
   return {
     title: texts?.title ?? 'Warum Hausservice einfacher wirken kann',
-    descriptions: texts?.descriptions?.length ? texts.descriptions : ABOUT_HERO_DESCRIPTIONS_FALLBACK,
+    descriptions: texts?.descriptions?.[0] ?? ABOUT_HERO_DESCRIPTION_FALLBACK,
     image: {
       src: texts?.image?.src ?? '/images/about.png',
       alt: texts?.image?.alt ?? 'Havenova Hausservice-Fachkraft in Berlin',

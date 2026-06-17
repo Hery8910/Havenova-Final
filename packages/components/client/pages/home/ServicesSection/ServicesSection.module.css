@@ -1,5 +1,5 @@
 .services {
-  padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
+  padding: 0 5dvw var(--space-6);
   margin: 0 auto;
   width: 100%;
   position: relative;
@@ -15,6 +15,18 @@
   background-position: left;
   opacity: 0.6;
   z-index: 0;
+  -webkit-mask-image: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.92) 65%,
+    transparent 80%
+  );
+  mask-image: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.92) 65%,
+    transparent 80%
+  );
 }
 
 :global([data-theme='dark']) .services::before {
@@ -23,7 +35,6 @@
 .container {
   width: 100%;
   height: 100%;
-  max-width: var(--v2-content-max-width);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -32,13 +43,17 @@
   position: relative;
   z-index: 1;
 }
+
 .sectionTitle {
-  margin: 0;
-  color: var(--v2-page-text-primary);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 500px;
+  color: var(--page-text-primary);
 }
 .sectionSubtitle {
-  color: var(--v2-page-text-secondary);
-  max-width: 500px;
+  text-align: center;
+  color: var(--page-text-secondary);
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -56,44 +71,44 @@
 }
 
 .card {
-  padding: clamp(20px, 3vw, 24px) clamp(20px, 3vw, 24px) clamp(24px, 4vw, 32px);
+  padding: var(--space-6);
   width: 100%;
-  max-width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: var(--space-4);
   transition: all 0.2s ease-in-out;
   position: relative;
-  box-shadow: var(--v2-card-shadow);
+  box-shadow: var(--shadow-md);
 }
 .cardIcon {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 16px;
+  padding-bottom: var(--space-2);
 }
 
 .iconSurface {
+  width: clamp(60px, 12vw, 90px);
+  height: clamp(60px, 12vw, 90px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--v2-service-icon-surface-size);
-  min-width: var(--v2-service-icon-surface-size);
-  height: var(--v2-service-icon-surface-size);
-  padding: var(--space-2);
+  padding: 0;
   border-color: transparent;
-  border-radius: var(--v2-radius-lg);
 }
 
 .icon {
-  width: var(--v2-service-icon-size);
-  height: var(--v2-service-icon-size);
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 .cardAside {
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--page-text-secondary);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -103,12 +118,12 @@
 }
 .cardTitle {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--page-text-primary);
   max-width: 12ch;
 }
 .cardText {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--page-text-secondary);
 }
 .serviceList {
   width: 100%;
@@ -124,6 +139,7 @@
 }
 .serviceListItem {
   line-height: 1.45;
+  font-weight: 600;
 }
 .cardLink {
   padding: 8px 32px;
@@ -139,25 +155,6 @@
   }
   .cardGrid {
     grid-template-columns: 1fr;
-  }
-
-  .card {
-    max-width: 640px;
-  }
-
-  .cardIcon {
-    align-items: center;
-  }
-
-  .iconSurface {
-    width: clamp(68px, 22vw, 84px);
-    min-width: clamp(68px, 22vw, 84px);
-    height: clamp(68px, 22vw, 84px);
-  }
-
-  .icon {
-    width: clamp(42px, 14vw, 58px);
-    height: clamp(42px, 14vw, 58px);
   }
 }
 

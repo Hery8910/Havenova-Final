@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './ServicesSection.module.css';
 import { href } from '../../../../../utils/navigation';
 import Image from 'next/image';
-import { resolveHomeServicesItems } from '../home.fallbacks';
+import { resolveHomeServicesContent } from '../home.fallbacks';
 import type { HomeServicesSectionTexts } from '../home.types';
 
 export default function ServicesSection({
@@ -12,34 +12,32 @@ export default function ServicesSection({
   texts?: HomeServicesSectionTexts;
   lang: 'de' | 'en' | 'es';
 }) {
-  const items = resolveHomeServicesItems(texts);
+  const content = resolveHomeServicesContent(texts, lang);
+  const items = content.items;
 
   return (
     <section className={styles.services} aria-labelledby="home-services-title">
       <div className={styles.container}>
         <header className={styles.sectionHeader}>
-          <h2 id="home-services-title" className={`${styles.sectionTitle} type-title-xl v2-page-heading`}>
-            {texts?.title ?? 'Unsere Services'}
+          <h2 id="home-services-title" className={`${styles.sectionTitle} type-display-md`}>
+            {content.title}
           </h2>
-          <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>
-            {texts?.subtitle ??
-              'Zwei klare Wege – wähle den passenden Service und sende deine Anfrage in wenigen Minuten.'}
-          </p>
+          <p className={`${styles.sectionSubtitle} type-body-lg`}>{content.subtitle}</p>
         </header>
         <div className={styles.cardGrid}>
           {items.map((item) => {
             const serviceCardClass = item.href.includes('cleaning') ? 'primary' : 'secondary';
 
             return (
-              <article className={`${styles.card} v2-card v2-card--${serviceCardClass}`} key={item.title}>
+              <article className={`${styles.card} card card--${serviceCardClass}`} key={item.title}>
                 <header className={styles.cardIcon}>
-                  <h3 className={`${styles.cardTitle} type-title-md v2-page-heading`}>{item.title}</h3>
-                  <span className={`${styles.iconSurface} v2-card v2-card--neutral`} aria-hidden="true">
+                  <h3 className={`${styles.cardTitle} type-display-sm`}>{item.title}</h3>
+                  <span className={styles.iconSurface} aria-hidden="true">
                     <Image className={styles.icon} src={item.icon} alt="" width={80} height={80} />
                   </span>
                 </header>
                 <aside className={styles.cardAside}>
-                  <p className={`${styles.cardText} type-body-sm v2-page-copy`}>{item.description}</p>
+                  <p className={`${styles.cardText} type-body-sm`}>{item.description}</p>
                   <ul className={styles.serviceList}>
                     {item.highlights.map((highlight) => (
                       <li className={`${styles.serviceListItem} type-body-sm`} key={highlight}>

@@ -6,6 +6,7 @@ export interface ContactInfoAriaTexts {
   quickActions: string;
   call: string;
   email: string;
+  address: string;
   whatsapp: string;
 }
 
@@ -17,7 +18,6 @@ export interface ContactQuickActionTexts {
 
 export interface ContactInfoTexts {
   contact: {
-    title: string;
     email: string;
     phone: string;
     address: string;

@@ -46,9 +46,8 @@ export default function InfoSection({
           ariaLabel={ariaTexts?.info || 'Contact information'}
           emailAriaLabel={ariaTexts?.email || 'Send email'}
           phoneAriaLabel={ariaTexts?.call || 'Call phone number'}
+          addressAriaLabel={ariaTexts?.address || 'Open address in Google Maps'}
           className={styles.contact}
-          headingAs="h3"
-          headingClassName={`${styles.contactTitle} type-title-sm`}
         />
       </div>
       {hasQuickActions && (

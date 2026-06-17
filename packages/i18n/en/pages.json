@@ -76,11 +76,11 @@
         }
       },
       "services": {
-        "title": "Our services",
-        "subtitle": "Two clear paths — choose the right service and send your request in minutes.",
+        "title": "How can we help you?",
+        "subtitle": "Two clear paths for different needs: choose the service that fits your situation, share the most important details, and send your request in just a few minutes. This helps our team understand what you need faster, reduce back-and-forth, and prepare the right next step more clearly.",
         "items": [
           {
-            "title": "Cleaning",
+            "title": "Cleaning service",
             "description": "Professional cleaning support for homes, shared buildings, and recurring maintenance needs, with clear coordination and service adapted to the condition and rhythm of each space.",
             "highlights": [
               "Window cleaning",

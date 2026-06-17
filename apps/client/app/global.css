@@ -1,1 +1,9 @@
-@import './global.legacy.css';
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/typography.css';
+@import './styles/badges.css';
+@import './styles/buttons.css';
+@import './styles/forms.css';
+@import './styles/cards.css';
+@import './styles/motion.css';
+@import './styles/helpers.css';

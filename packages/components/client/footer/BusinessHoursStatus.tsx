@@ -111,7 +111,12 @@ function getNextOpening(
   return copy.unavailable ?? '';
 }
 
-function resolveStatus(schedule: WeeklySchedule, locale: string, now: Date, copy: FooterHoursStatusCopy) {
+function resolveStatus(
+  schedule: WeeklySchedule,
+  locale: string,
+  now: Date,
+  copy: FooterHoursStatusCopy
+) {
   const today = schedule[DAY_KEYS[now.getDay()]];
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
@@ -158,6 +163,7 @@ export function BusinessHoursStatus({
   const headingId = useId();
   const summaryId = useId();
   const panelId = useId();
+  const headingLabel = copy?.heading ?? 'Business hours';
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -168,20 +174,20 @@ export function BusinessHoursStatus({
   }, []);
 
   const status = resolveStatus(schedule, locale, now, copy ?? {});
-  const statusLabel = status.isOpen ? copy?.open ?? 'Open' : copy?.closed ?? 'Closed';
+  const statusLabel = status.isOpen ? (copy?.open ?? 'Open') : (copy?.closed ?? 'Closed');
   const fullStatusLabel = [statusLabel, status.detail].filter(Boolean).join('. ');
   const toggleLabel = isExpanded
-    ? copy?.collapseHours ?? 'Hide business hours'
-    : copy?.expandHours ?? 'Show business hours';
+    ? (copy?.collapseHours ?? 'Hide business hours')
+    : (copy?.expandHours ?? 'Show business hours');
 
   return (
     <section className={styles.hoursStatus} aria-labelledby={headingId}>
       <h3 className={styles.srOnly} id={headingId}>
-        {copy?.heading}
+        {headingLabel}
       </h3>
 
       <button
-        className={styles.summaryButton}
+        className={`${styles.summaryButton} button button--ghost`}
         type="button"
         aria-expanded={isExpanded}
         aria-controls={panelId}
@@ -198,7 +204,9 @@ export function BusinessHoursStatus({
           role="status"
           aria-live="polite"
           aria-label={
-            copy?.ariaCurrentStatus ? `${copy.ariaCurrentStatus}: ${fullStatusLabel}` : fullStatusLabel
+            copy?.ariaCurrentStatus
+              ? `${copy.ariaCurrentStatus}: ${fullStatusLabel}`
+              : fullStatusLabel
           }
           id={summaryId}
         >
@@ -224,7 +232,7 @@ export function BusinessHoursStatus({
       {isExpanded ? (
         <ol
           className={styles.weekList}
-          aria-label={copy?.ariaWeeklyHours}
+          aria-label={copy?.ariaWeeklyHours ?? 'Weekly business hours'}
           aria-describedby={summaryId}
           id={panelId}
         >

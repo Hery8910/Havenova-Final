@@ -76,11 +76,11 @@
         }
       },
       "services": {
-        "title": "Unsere Services",
-        "subtitle": "Zwei klare Wege – wähle den passenden Service und sende deine Anfrage in wenigen Minuten.",
+        "title": "Wie können wir Ihnen helfen?",
+        "subtitle": "Zwei klare Wege fuer unterschiedliche Anliegen: Wählen Sie den passenden Service, teilen Sie uns die wichtigsten Details mit und senden Sie Ihre Anfrage in nur wenigen Minuten. So kann unser Team Ihren Bedarf schneller einordnen, Rückfragen reduzieren und den passenden nächsten Schritt gezielt vorbereiten.",
         "items": [
           {
-            "title": "Reinigung",
+            "title": "Reinigung anfragen",
             "description": "Professionelle Reinigung für Wohnungen, Gemeinschaftsflächen und wiederkehrende Einsätze, mit klarer Abstimmung und einem Ablauf, der sich am Zustand und Bedarf jedes Objekts orientiert.",
             "highlights": [
               "Fensterreinigung",
@@ -94,7 +94,7 @@
             "icon": "/svg/cleaning.svg"
           },
           {
-            "title": "Hausservice",
+            "title": "Hausservice anfragen",
             "description": "Flexibler Hausservice für praktische Aufgaben, kleine Reparaturen und laufende Unterstützung im Alltag, mit einer einfachen Anfrage und besserer Vorbereitung vor jedem Einsatz.",
             "highlights": [
               "Möbelmontage",

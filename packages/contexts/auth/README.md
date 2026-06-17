@@ -82,6 +82,24 @@ Restricción importante:
 - este comportamiento es temporal y solo existe para desarrollo local
 - antes del despliegue final debe revertirse o quedar desactivado fuera de desarrollo
 
+### Estado actual de CSRF en frontend
+
+Comportamiento activo:
+
+- el frontend mantiene el CSRF en memoria para uso inmediato
+- además persiste una copia de respaldo en `sessionStorage`
+- cuando el token en memoria falta, el dominio `api` intenta rehidratarlo desde `sessionStorage` antes de enviar rutas protegidas como `POST /api/auth/refresh-token`
+
+Motivo:
+
+- navegadores móviles pueden suspender o reciclar pestañas y perder memoria JS mientras el `refreshToken` cookie sigue vigente
+- ese escenario dejaba sesiones parcialmente vivas pero incapaces de renovar `accessToken` por falta de header `x-csrf-token`
+
+Límite actual:
+
+- si el CSRF ya no es válido, el frontend todavía no tiene una vía dedicada para pedir uno nuevo sin relogin
+- eso requiere soporte backend explícito
+
 ### Inconsistencias detectadas
 
 1. El contrato base de sesión ya fue corregido, pero quedan consumidores externos por consolidar
@@ -184,6 +202,13 @@ Decisión adicional para flujos:
 - [ ] evitar secuencias `loading -> success -> loading -> success` en flujos compuestos
 - [ ] tratar `verify-email -> magic-login -> refreshAuth` como una sola operación visible
 - [ ] revisar si `AlertContext` necesita una API específica para flujos compuestos o si basta una convención de uso
+
+### Fase 7. Recuperación robusta de CSRF
+
+- [x] persistir respaldo de CSRF en `sessionStorage`
+- [x] rehidratar CSRF desde `sessionStorage` antes de rutas protegidas
+- [ ] añadir endpoint backend para reemitir/bootstrapping de CSRF válido sin depender del valor previo en memoria
+- [ ] definir cuándo el frontend debe intentar recuperar CSRF antes de degradar la sesión a login manual
 
 ## Riesgos
 

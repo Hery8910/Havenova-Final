@@ -1,13 +1,11 @@
 'use client';
 
-import { useId } from 'react';
 import { LuMail, LuMapPin, LuPhone } from 'react-icons/lu';
 import type { WeeklySchedule } from '../../../types/calendar';
 import { BusinessHoursStatus, type FooterHoursStatusCopy } from '../footer/BusinessHoursStatus';
 import styles from './CompanyContact.module.css';
 
 export interface CompanyContactDetails {
-  title?: string;
   email: string;
   phone: string;
   address: string;
@@ -21,9 +19,8 @@ export interface CompanyContactProps {
   ariaLabel?: string;
   emailAriaLabel?: string;
   phoneAriaLabel?: string;
+  addressAriaLabel?: string;
   className?: string;
-  headingClassName?: string;
-  headingAs?: 'h2' | 'h3' | 'h4';
 }
 
 function cx(...classNames: Array<string | undefined>) {
@@ -38,18 +35,13 @@ export function CompanyContact({
   ariaLabel,
   emailAriaLabel,
   phoneAriaLabel,
+  addressAriaLabel,
   className,
-  headingClassName,
-  headingAs = 'h2',
 }: CompanyContactProps) {
-  const headingId = useId();
-  const Heading = headingAs;
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`;
 
   return (
-    <section className={cx(styles.contactSection, className)} aria-label={ariaLabel} aria-labelledby={headingId}>
-      <Heading className={cx(styles.heading, headingClassName)} id={headingId}>
-        {contact.title}
-      </Heading>
+    <section className={cx(styles.contactSection, className)} aria-label={ariaLabel}>
       <address className={styles.contactDetails}>
         <ul className={styles.contactList}>
           <li className={styles.contactItem}>
@@ -57,7 +49,7 @@ export function CompanyContact({
               <LuMail />
             </span>
             <a
-              className={styles.contactLink}
+              className={`button-link ${styles.contactLink}`}
               href={`mailto:${contact.email}`}
               aria-label={emailAriaLabel}
             >
@@ -69,7 +61,7 @@ export function CompanyContact({
               <LuPhone />
             </span>
             <a
-              className={styles.contactLink}
+              className={`button-link ${styles.contactLink}`}
               href={`tel:${contact.phone.replace(/[^\d+]/g, '')}`}
               aria-label={phoneAriaLabel}
             >
@@ -80,7 +72,15 @@ export function CompanyContact({
             <span className={styles.contactIcon} aria-hidden="true">
               <LuMapPin />
             </span>
-            <p className={styles.contactLabel}>{contact.address}</p>
+            <a
+              className={`button-link ${styles.contactLink}`}
+              href={mapsHref}
+              aria-label={addressAriaLabel}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {contact.address}
+            </a>
           </li>
         </ul>
       </address>

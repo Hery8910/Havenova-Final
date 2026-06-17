@@ -3,14 +3,14 @@
   justify-content: center;
   align-items: center;
   background: transparent;
-  padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
+  padding: var(--space-section) 5dvw;
 }
 
 .appCard {
   width: 100%;
   max-width: var(--v2-content-max-width);
   display: grid;
-  gap: 24px;
+  column-gap: 24px;
   align-items: center;
   justify-content: center;
 }
@@ -81,7 +81,7 @@
   grid-template-areas:
     'copy title'
     'support support';
-  justify-content: space-between;
+  justify-content: center;
   column-gap: 20px;
 }
 
@@ -111,7 +111,7 @@
 .appNotInstalledCard .copyBlock,
 .appSkeleton .copyBlock {
   grid-area: copy;
-  justify-self: start;
+  justify-self: flex-end;
 }
 
 .appSkeleton .copyBlock {
@@ -313,12 +313,6 @@
 @keyframes appSkeleton {
   100% {
     transform: translateX(100%);
-  }
-}
-
-@media (min-width: 1280px) {
-  .appInstall {
-    padding: var(--v2-section-space-y) var(--v2-page-inline-padding);
   }
 }
 

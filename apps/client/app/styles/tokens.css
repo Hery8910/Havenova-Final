@@ -41,7 +41,7 @@
   --feedback-success-bg-strong: rgba(21, 128, 61, 0.18);
   --feedback-success-bg-image: rgba(21, 128, 61, 0.18);
   --feedback-success-border: rgba(21, 128, 61, 0.28);
-  --feedback-success-text: #255239;
+  --feedback-success-text: #075229;
 
   --feedback-error-bg: rgba(220, 38, 38, 0.12);
   --feedback-error-bg-strong: rgba(220, 38, 38, 0.18);
@@ -317,13 +317,14 @@
   --tracking-body: -0.01em;
   --tracking-label: 0.08em;
 
-  --type-display-lg-size: clamp(4rem, 6vw, 6.75rem);
-  --type-display-md-size: clamp(2.125rem, 4.8vw, 3.75rem);
+  --type-display-lg-size: clamp(3.2rem, 10vw, 5.75rem);
+  --type-display-md-size: clamp(2.7rem, 8vw, 3.75rem);
+  --type-display-sm-size: clamp(2.25rem, 6vw, 3rem);
   --type-title-xl-size: clamp(1.875rem, 3.6vw, 3rem);
   --type-title-lg-size: clamp(1.5rem, 2.8vw, 2rem);
   --type-title-md-size: clamp(1.25rem, 2.2vw, 1.5rem);
   --type-title-sm-size: clamp(1.0625rem, 1.7vw, 1.25rem);
-  --type-body-lg-size: clamp(1.0625rem, 1.7vw, 1.1875rem);
+  --type-body-lg-size: clamp(1.0625rem, 3vw, 1.1875rem);
   --type-body-md-size: clamp(1rem, 1.35vw, 1.0625rem);
   --type-body-sm-size: clamp(0.9375rem, 1.1vw, 1rem);
   --type-label-size: clamp(0.75rem, 0.95vw, 0.8125rem);
@@ -348,9 +349,10 @@
   --space-6: 32px;
   --space-8: 48px;
   --space-10: 64px;
-  --space-section: 88px;
+  --space-section: clamp(250px, 10vw, 300px);
   --navbar-height: 55px;
-  --container-max: 1600px;
+  --container-max-width: 1400px;
+  --content-max-width: 1000px;
 
   /* ==========================================
      10. SHADOWS AND MOTION

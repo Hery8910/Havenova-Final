@@ -6,9 +6,8 @@ import type {
   HowItWorksWorkflowTexts,
 } from './howItWorks.types';
 
-const HOW_IT_WORKS_HERO_DESCRIPTIONS_FALLBACK = [
-  'Havenova strukturiert Anfragen fuer Reinigung und Hausservice so, dass Kund:innen schnell anfragen koennen und der Ablauf fuer alle Seiten klar bleibt.',
-];
+const HOW_IT_WORKS_HERO_DESCRIPTION_FALLBACK =
+  'Havenova strukturiert Anfragen fuer Reinigung und Hausservice so, dass Kund:innen schnell anfragen koennen und der Ablauf fuer alle Seiten klar bleibt.';
 
 const HOW_IT_WORKS_WORKFLOW_STEPS_FALLBACK: HowItWorksWorkflowStepTexts[] = [
   {
@@ -33,9 +32,7 @@ export function resolveHowItWorksHeroContent(
 ): PageHeroContent {
   return {
     title: texts?.title ?? 'So funktioniert Havenova fuer Kund:innen',
-    descriptions: texts?.descriptions?.length
-      ? texts.descriptions
-      : HOW_IT_WORKS_HERO_DESCRIPTIONS_FALLBACK,
+    descriptions: texts?.descriptions?.[0] ?? HOW_IT_WORKS_HERO_DESCRIPTION_FALLBACK,
     image: {
       src: texts?.image?.src ?? '/images/how-it-works.png',
       alt: texts?.image?.alt ?? 'Havenova Ablauf fuer Hausservices in Berlin',

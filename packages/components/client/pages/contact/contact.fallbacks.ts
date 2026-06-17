@@ -13,7 +13,7 @@ const CONTACT_HERO_FALLBACKS: Record<
   ContactLocale,
   {
     title: string;
-    descriptions: string[];
+    descriptions: string;
     primaryLabel: string;
     primaryAria: string;
     secondaryLabel: string;
@@ -24,9 +24,8 @@ const CONTACT_HERO_FALLBACKS: Record<
 > = {
   de: {
     title: 'Fragen, Ideen, lassen Sie es uns wissen',
-    descriptions: [
+    descriptions:
       'Diese Seite ist fuer allgemeine Fragen, Unternehmensanliegen und den direkten Austausch gedacht. Fuer konkrete Serviceanfragen nutzen Sie bitte unsere spezialisierten Formulare.',
-    ],
     primaryLabel: 'Reinigung anfragen',
     primaryAria: 'Formular fuer Reinigungsservice oeffnen',
     secondaryLabel: 'Hausservice anfragen',
@@ -36,9 +35,8 @@ const CONTACT_HERO_FALLBACKS: Record<
   },
   en: {
     title: 'Questions, ideas, let us know',
-    descriptions: [
+    descriptions:
       'This page is intended for general questions, company matters, and direct contact. For specific service requests, please use our dedicated forms.',
-    ],
     primaryLabel: 'Request cleaning',
     primaryAria: 'Open the cleaning service form',
     secondaryLabel: 'Request home service',
@@ -48,9 +46,8 @@ const CONTACT_HERO_FALLBACKS: Record<
   },
   es: {
     title: 'Preguntas, ideas, cuentanos',
-    descriptions: [
+    descriptions:
       'Esta pagina esta pensada para preguntas generales, asuntos de la empresa y contacto directo. Para solicitudes concretas de servicio, usa nuestros formularios especializados.',
-    ],
     primaryLabel: 'Solicitar limpieza',
     primaryAria: 'Abrir el formulario de servicio de limpieza',
     secondaryLabel: 'Solicitar servicio del hogar',
@@ -63,18 +60,17 @@ const CONTACT_HERO_FALLBACKS: Record<
 const CONTACT_INFO_FALLBACKS: Record<
   ContactLocale,
   {
-    title: string;
     aria: ContactInfoAriaTexts;
     quickActions: ContactQuickActionTexts;
   }
 > = {
   de: {
-    title: 'Kontakt',
     aria: {
       info: 'Kontaktinformationen',
       quickActions: 'Schnelle Kontaktaktionen',
       call: 'Telefonnummer anrufen',
       email: 'E-Mail senden',
+      address: 'Adresse in Google Maps oeffnen',
       whatsapp: 'WhatsApp-Chat oeffnen',
     },
     quickActions: {
@@ -84,12 +80,12 @@ const CONTACT_INFO_FALLBACKS: Record<
     },
   },
   en: {
-    title: 'Contact',
     aria: {
       info: 'Contact information',
       quickActions: 'Quick contact actions',
       call: 'Call phone number',
       email: 'Send email',
+      address: 'Open address in Google Maps',
       whatsapp: 'Open WhatsApp chat',
     },
     quickActions: {
@@ -99,12 +95,12 @@ const CONTACT_INFO_FALLBACKS: Record<
     },
   },
   es: {
-    title: 'Contacto',
     aria: {
       info: 'Informacion de contacto',
       quickActions: 'Acciones rapidas de contacto',
       call: 'Llamar por telefono',
       email: 'Enviar correo electronico',
+      address: 'Abrir la direccion en Google Maps',
       whatsapp: 'Abrir chat de WhatsApp',
     },
     quickActions: {
@@ -204,7 +200,7 @@ export function resolveContactHeroContent(
 
   return {
     title: texts?.title ?? fallback.title,
-    descriptions: texts?.descriptions?.length ? texts.descriptions : fallback.descriptions,
+    descriptions: texts?.descriptions?.[0] ?? fallback.descriptions,
     ctas: {
       primary: {
         label: texts?.ctas?.primary?.label ?? fallback.primaryLabel,
@@ -238,7 +234,6 @@ export function resolveContactInfoTexts(
 
   return {
     contact: {
-      title: texts?.contact?.title ?? fallback.title,
       email: texts?.contact?.email ?? 'contact@havenova.de',
       phone: texts?.contact?.phone ?? '+49 176 7091 7803',
       address: texts?.contact?.address ?? 'Stollberger Str.43, 12627 Berlin',
@@ -249,6 +244,7 @@ export function resolveContactInfoTexts(
       quickActions: texts?.aria?.quickActions ?? fallback.aria.quickActions,
       call: texts?.aria?.call ?? fallback.aria.call,
       email: texts?.aria?.email ?? fallback.aria.email,
+      address: texts?.aria?.address ?? fallback.aria.address,
       whatsapp: texts?.aria?.whatsapp ?? fallback.aria.whatsapp,
     } satisfies ContactInfoAriaTexts,
     quickActions: {

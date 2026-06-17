@@ -149,6 +149,14 @@ CSRF-protected routes in this domain:
 - `POST /logout-all-sessions`
 - `POST /change-email`
 
+## Pending Improvement
+
+Recommended backend follow-up:
+
+- add a dedicated CSRF bootstrap/reissue endpoint for authenticated cookie sessions
+- expected purpose: allow the frontend to recover a fresh readable CSRF token after mobile tab suspension or memory loss, before attempting `POST /refresh-token`
+- this endpoint should not replace session auth; it should only re-establish the CSRF part of the cookie + header contract
+
 ## Authenticated User Shapes
 
 ### Returned by login and magic login

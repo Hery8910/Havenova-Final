@@ -7,9 +7,10 @@ import type {
   HomeServicesSectionTexts,
 } from './home.types';
 
-const HOME_HERO_DESCRIPTIONS_FALLBACK = [
-  'Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein passendes Angebot. Klar, zuverlässig und einfach ab dem ersten Schritt.',
-];
+type HomeLocale = 'de' | 'en' | 'es';
+
+const HOME_HERO_DESCRIPTION_FALLBACK =
+  'Wähle deinen Service, sende deine Anfrage in wenigen Minuten und erhalte ein passendes Angebot. Klar, zuverlässig und einfach ab dem ersten Schritt.';
 
 export const HOME_SERVICES_ITEMS_FALLBACK: HomeServicesSectionItemTexts[] = [
   {
@@ -63,10 +64,31 @@ export const HOME_BENEFITS_ITEMS_FALLBACK: HomeBenefitsSectionItemTexts[] = [
   },
 ];
 
+const HOME_SERVICES_SECTION_FALLBACKS: Record<
+  HomeLocale,
+  Pick<HomeServicesSectionTexts, 'title' | 'subtitle'>
+> = {
+  de: {
+    title: 'Wie können wir Ihnen helfen?',
+    subtitle:
+      'Zwei klare Wege fuer unterschiedliche Anliegen: Wählen Sie den passenden Service, teilen Sie uns die wichtigsten Details mit und senden Sie Ihre Anfrage in nur wenigen Minuten. So kann unser Team Ihren Bedarf schneller einordnen, Rückfragen reduzieren und den passenden nächsten Schritt gezielt vorbereiten.',
+  },
+  en: {
+    title: 'How can we help you?',
+    subtitle:
+      'Two clear paths for different needs: choose the service that fits your situation, share the most important details, and send your request in just a few minutes. This helps our team understand what you need faster, reduce back-and-forth, and prepare the right next step more clearly.',
+  },
+  es: {
+    title: 'Cuentanos como podemos ayudarte',
+    subtitle:
+      'Dos caminos claros para distintas necesidades: elige el servicio que mejor encaje con tu situacion, cuentanos los detalles mas importantes y envia tu solicitud en solo unos minutos. Asi nuestro equipo puede entender mejor lo que necesitas, reducir vueltas innecesarias y preparar con mas rapidez el siguiente paso adecuado.',
+  },
+};
+
 export function resolveHomeHeroContent(texts: HomePageTexts['hero'] | undefined): PageHeroContent {
   return {
     title: texts?.title ?? 'Finde schnell die richtige Hilfe',
-    descriptions: texts?.descriptions?.length ? texts.descriptions : HOME_HERO_DESCRIPTIONS_FALLBACK,
+    descriptions: texts?.descriptions?.[0] ?? HOME_HERO_DESCRIPTION_FALLBACK,
     ctas: {
       primary: {
         label: texts?.ctas?.primary?.label ?? 'Reinigung anfragen',
@@ -96,6 +118,19 @@ export function resolveHomeServicesItems(
   texts: HomeServicesSectionTexts | undefined
 ): HomeServicesSectionItemTexts[] {
   return texts?.items?.length ? texts.items : HOME_SERVICES_ITEMS_FALLBACK;
+}
+
+export function resolveHomeServicesContent(
+  texts: HomeServicesSectionTexts | undefined,
+  locale: HomeLocale
+): HomeServicesSectionTexts {
+  const fallback = HOME_SERVICES_SECTION_FALLBACKS[locale];
+
+  return {
+    title: texts?.title ?? fallback.title,
+    subtitle: texts?.subtitle ?? fallback.subtitle,
+    items: resolveHomeServicesItems(texts),
+  };
 }
 
 export function resolveHomeBenefitsItems(

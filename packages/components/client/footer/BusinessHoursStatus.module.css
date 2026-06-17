@@ -29,12 +29,6 @@
   cursor: pointer;
 }
 
-.summaryButton:focus-visible {
-  outline: none;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 3px var(--button-shadow-focus);
-}
-
 .leadingIcon,
 .chevron {
   display: inline-flex;
@@ -58,19 +52,26 @@
 }
 
 .badge {
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: var(--type-body-sm-size);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
 }
 
 .badgeOpen {
+  border-color: var(--feedback-success-border);
+  background-color: var(--feedback-success-bg);
   color: var(--color-feedback-success-text);
 }
 
 .badgeClosed {
+  border-color: var(--feedback-error-border);
+  background-color: var(--feedback-error-bg);
   color: var(--color-feedback-error-text);
 }
 
@@ -79,6 +80,7 @@
 }
 
 .detail {
+  font-weight: 600;
   color: var(--color-page-heading);
   font-size: var(--type-body-sm-size);
   line-height: 1.35;

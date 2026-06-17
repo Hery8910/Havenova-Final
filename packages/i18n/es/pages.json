@@ -8,12 +8,12 @@
         ],
         "ctas": {
           "primary": {
-            "label": "Solicitar limpieza",
+            "label": "Servicio de limpieza",
             "href": "/cleaning-service",
             "ariaLabel": "Solicitar un servicio de limpieza"
           },
           "secondary": {
-            "label": "Solicitar servicio al hogar",
+            "label": "Servicio al hogar",
             "href": "/home-service",
             "ariaLabel": "Solicitar un servicio al hogar"
           }
@@ -76,11 +76,11 @@
         }
       },
       "services": {
-        "title": "Nuestros servicios",
-        "subtitle": "Dos caminos claros — elige el servicio adecuado y envía tu solicitud en pocos minutos.",
+        "title": "Cuentanos cómo podemos ayudarte",
+        "subtitle": "Dos caminos claros para distintas necesidades: elige el servicio que mejor encaje con tu situación, cuentanos los detalles mas importantes y envia tu solicitud en solo unos minutos. Asi nuestro equipo puede entender mejor lo que necesitas, reducir vueltas innecesarias y preparar con mas rapidez el siguiente paso adecuado.",
         "items": [
           {
-            "title": "Limpieza",
+            "title": "Servicio de limpieza",
             "description": "Apoyo profesional de limpieza para viviendas, edificios y necesidades recurrentes, con una coordinación clara y un servicio adaptado al estado y al ritmo de cada espacio.",
             "highlights": [
               "Limpieza de ventanas",

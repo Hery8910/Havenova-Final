@@ -67,7 +67,6 @@
 .button:focus-visible {
   outline: 2px solid var(--button-focus-border-current);
   outline-offset: 3px;
-  border-color: var(--button-focus-border-current);
   box-shadow: var(--button-shadow), var(--button-focus-shadow-current);
 }
 
@@ -224,6 +223,33 @@
   background-image: var(--button-active-bg-image);
   border-color: var(--button-active-border);
   box-shadow: var(--button-active-shadow);
+}
+
+.button-link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--motion-base) var(--ease-standard),
+    text-decoration-color var(--motion-base) var(--ease-standard),
+    outline-color var(--motion-base) var(--ease-standard);
+}
+
+.button-link:hover,
+.button-link:active,
+.button-link:focus-visible,
+.button-link[aria-current='page'] {
+  color: var(--brand-primary);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
+.button-link:focus-visible {
+  outline: 2px solid var(--button-focus-border);
+  outline-offset: 3px;
 }
 
 /* ==========================================
