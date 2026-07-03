@@ -1,5 +1,9 @@
 # Auditoría de la Ruta `(auth)` en `apps/client`
 
+Contrato general del flujo de auth para esta app:
+
+- [AUTH_FLOW_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/AUTH_FLOW_CONTRACT.md:1)
+
 Este documento resume el estado actual de `apps/client/app/[lang]/(auth)` con foco en:
 
 - consistencia visual y responsive
@@ -25,6 +29,23 @@ Eso obliga a documentar por flujo:
 - transiciones visuales permitidas
 - pasos intermedios invisibles para el usuario
 - side effects de sesión y navegación
+
+## Decision cerrada de integracion
+
+Esta ruta ya no debe pensarse como cliente browser-direct contra el backend central.
+
+Decision cerrada:
+
+- el navegador debe consumir rutas same-origin del frontend
+- el frontend debe implementar una capa BFF hacia backend
+- `auth` es el primer dominio que se migrará a esa capa
+
+Consecuencia:
+
+- la evidencia cross-origin existente en esta carpeta sigue siendo útil como historial de transición
+- pero no describe la arquitectura activa del producto
+- el runtime actual ya monta rutas same-origin en `apps/client/app/api/auth/[...auth]/route.ts`
+- los servicios de auth del navegador ya consumen el BFF del frontend como contrato canónico
 
 Archivos revisados:
 
@@ -190,7 +211,7 @@ Nota:
 - Todas las páginas auth principales usan `section`, `header` y `footer`.
 - Los títulos visibles ya usan ids estáticos y evitamos depender del texto traducido como id.
 - `register` ya toma su loading desde `texts.loadings`.
-- el cliente HTTP ya envía `credentials: include`, `x-csrf-token` y `x-frontend-origin` para las rutas auth que lo requieren.
+- el cliente HTTP ya envía `credentials: include`, `x-csrf-token` y `x-frontend-origin` para la fase transicional actual.
 - Cada subruta auth tiene `generateMetadata(...)` conectado con `getPageMetadata(...)`.
 - `register` ya continúa al flujo de verificación y dejó de cerrar en home como success genérico.
 - `login` y `magic-login` ya usan success con redirección automática a home tras un timeout corto.

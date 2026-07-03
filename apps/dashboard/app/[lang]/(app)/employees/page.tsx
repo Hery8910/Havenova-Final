@@ -6,16 +6,19 @@ import {
   useGlobalAlert,
   useI18n,
   fallbackGlobalError,
+  useAuth,
 } from '../../../../../../packages/contexts';
 import {
   DashboardLoadMore,
   DashboardSearchInput,
-  StatusBadge,
-  WorkerCreateButton,
   WorkerCreateForm,
   WorkerDetails,
 } from '../../../../../../packages/components/dashboard';
-import { getWorkerById, listWorkers, refreshToken } from '../../../../../../packages/services';
+import {
+  getWorkerById,
+  listWorkers,
+  resendWorkerInvite,
+} from '../../../../../../packages/services';
 import { getPopup } from '../../../../../../packages/utils';
 import type {
   WorkerListItem,
@@ -30,9 +33,10 @@ const getWorkerIdentity = (worker: Pick<WorkerListItem, 'userClientId'>) => work
 
 const Employees = () => {
   const isAllowed = useRequireRole('admin');
-  const { texts } = useI18n();
+  const { refreshAuth } = useAuth();
+  const { texts, language } = useI18n();
   const popups = texts.popups;
-  const { showError, closeAlert } = useGlobalAlert();
+  const { showError, showLoading, showSuccess, closeAlert } = useGlobalAlert();
 
   const [workers, setWorkers] = useState<WorkerListItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -43,6 +47,7 @@ const Employees = () => {
   const [selectedWorker, setSelectedWorker] = useState<WorkerDetailData | null>(null);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [resendInviteLoading, setResendInviteLoading] = useState(false);
 
   const hasMore = useMemo(() => {
     if (!meta) return false;
@@ -66,7 +71,10 @@ const Employees = () => {
         const status = err?.response?.status;
         if (status === 401) {
           try {
-            await refreshToken();
+            const refreshResult = await refreshAuth();
+            if (!refreshResult.syncedFromServer) {
+              return;
+            }
             const { workers: nextWorkers, meta: nextMeta } = await listWorkers({
               page: nextPage,
               limit: 20,
@@ -95,7 +103,7 @@ const Employees = () => {
         setLoading(false);
       }
     },
-    [closeAlert, popups, showError]
+    [closeAlert, popups, refreshAuth, showError]
   );
 
   const handleSelectWorker = useCallback(
@@ -110,7 +118,10 @@ const Employees = () => {
         const status = err?.response?.status;
         if (status === 401) {
           try {
-            await refreshToken();
+            const refreshResult = await refreshAuth();
+            if (!refreshResult.syncedFromServer) {
+              return;
+            }
             const worker = await getWorkerById(workerId);
             setSelectedWorker(worker);
             return;
@@ -133,7 +144,7 @@ const Employees = () => {
         setDetailsLoading(false);
       }
     },
-    [closeAlert, popups, showError]
+    [closeAlert, popups, refreshAuth, showError]
   );
 
   const handleCreateWorker = useCallback(() => {
@@ -161,6 +172,82 @@ const Employees = () => {
     fetchWorkers(page + 1, queryInput, true);
   }, [fetchWorkers, hasMore, loading, page, queryInput]);
 
+  const handleResendInvite = useCallback(
+    async (worker: WorkerDetailData) => {
+      if (!worker.clientId || !worker.email) return;
+
+      setResendInviteLoading(true);
+      const loadingPopup = getPopup(
+        popups,
+        'GLOBAL_LOADING',
+        'GLOBAL_LOADING',
+        fallbackGlobalError
+      );
+
+      showLoading({
+        response: {
+          status: 102,
+          title: loadingPopup.title,
+          description: loadingPopup.description,
+        },
+      });
+
+      try {
+        const response = await resendWorkerInvite({
+          clientId: worker.clientId,
+          email: worker.email,
+          language,
+        });
+        const popup = getPopup(
+          popups,
+          response.code,
+          'WORKER_INVITE_RESENT',
+          fallbackGlobalError
+        );
+
+        closeAlert();
+        showSuccess({
+          response: {
+            status: 200,
+            title: popup.title,
+            description: popup.description,
+            cancelLabel: popup.close,
+          },
+          onCancel: closeAlert,
+        });
+
+        if (selectedWorkerId) {
+          await handleSelectWorker(selectedWorkerId);
+        }
+      } catch (err: any) {
+        const code = err?.response?.data?.code;
+        const popup = getPopup(popups, code, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
+        closeAlert();
+        showError({
+          response: {
+            status: err?.response?.status ?? 500,
+            title: popup.title,
+            description: popup.description,
+            cancelLabel: popup.close,
+          },
+          onCancel: closeAlert,
+        });
+      } finally {
+        setResendInviteLoading(false);
+      }
+    },
+    [
+      closeAlert,
+      handleSelectWorker,
+      language,
+      popups,
+      selectedWorkerId,
+      showError,
+      showLoading,
+      showSuccess,
+    ]
+  );
+
   useEffect(() => {
     if (!isAllowed) return;
     fetchWorkers(1, '', false);
@@ -170,7 +257,7 @@ const Employees = () => {
 
   return (
     <section className={styles.main}>
-      <section className={`${styles.leftPanel} card--glass`}>
+      <section className={`${styles.leftPanel} glass-panel--base`}>
         <header className={styles.headerRow}>
           <aside className={styles.totalCard}>
             <p className={styles.totalValue}>{meta?.total ?? 0}</p>
@@ -178,7 +265,7 @@ const Employees = () => {
               {texts.components?.dashboard?.pages?.employees?.totalLabel || 'Total Mitarbeiter'}
             </p>
           </aside>
-          <button type="button" className="button" onClick={handleCreateWorker}>
+          <button type="button" className="button button--primary" onClick={handleCreateWorker}>
             <IoAdd aria-hidden="true" />
             {texts.components?.dashboard?.pages?.employees?.createButton || 'Mitarbeiter anlegen'}
           </button>
@@ -200,7 +287,7 @@ const Employees = () => {
                 <li key={workerIdentity} className={styles.listItem}>
                   <button
                     type="button"
-                    className={`${styles.listRow} ${isActive ? styles.listRowActive : ''} card--glass`}
+                    className={`${styles.listRow} ${isActive ? styles.listRowActive : ''}`}
                     onClick={() => handleSelectWorker(workerIdentity)}
                   >
                     <aside className={styles.rowAside}>
@@ -244,12 +331,17 @@ const Employees = () => {
           loadingLabel={texts.components?.dashboard?.pagination?.loading || 'Loading...'}
         />
       </section>
-      <section className={`${styles.rightPanel} card--glass`}>
+      <section className={`${styles.rightPanel} glass-panel--base`}>
         <div className={styles.rightScroll}>
           {isCreating ? (
             <WorkerCreateForm onCreated={handleWorkerCreated} />
           ) : (
-            <WorkerDetails worker={selectedWorker} loading={detailsLoading} />
+            <WorkerDetails
+              worker={selectedWorker}
+              loading={detailsLoading}
+              resendInviteLoading={resendInviteLoading}
+              onResendInvite={handleResendInvite}
+            />
           )}
         </div>
       </section>

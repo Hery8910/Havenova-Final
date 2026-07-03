@@ -15,7 +15,7 @@ import { href } from '@havenova/utils/navigation';
 import { MdOutlinePhotoCamera } from 'react-icons/md';
 import { useAuth, useGlobalAlert, useProfile } from '../../../../../contexts';
 
-const avatarList = Array.from({ length: 10 }, (_, i) => `/avatars/avatar-${i + 1}.png`);
+const avatarList = Array.from({ length: 10 }, (_, i) => `/shared/avatars/avatar-${i + 1}.png`);
 
 export default function AvatarSelector() {
   const [open, setOpen] = useState(false);

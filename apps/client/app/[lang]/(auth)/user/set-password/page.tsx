@@ -9,16 +9,17 @@ import {
   fallbackGlobalLoading,
   useGlobalAlert,
 } from '@/packages/contexts';
-import { FormWrapper } from '@/packages/components/client/user/auth';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '@/packages/components/client/user/auth';
+import styles from '@/packages/components/client/user/auth/authShell/authShell.module.css';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
-import styles from '../userAuth.module.css';
 import { href } from '../../../../../../../packages/utils';
-import { useLang } from '../../../../../../../packages/hooks';
+import { useAuthAlertActions, useLang } from '../../../../../../../packages/hooks';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { AuthPageShell } from '../AuthPageShell';
-import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface ResetPasswordData {
   title: string;
@@ -48,11 +49,16 @@ const ResetPasswordContent = () => {
   const formText = texts.components.client.form;
   const navText = texts.components.client.navbar.accessibility;
   const popups = texts.popups;
-  const alertButtons = popups.button ?? fallbackButtons;
+  const alertButtons = { ...fallbackButtons, ...popups.button };
   const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
   const invalidOrExpiredLinkCopy = resetPasswordText.linkErrors?.invalidOrExpired;
   const missingTokenCopy = resetPasswordText.linkErrors?.missingToken;
-  const invalidTokenPopupDescription = texts.popups.USER_RESET_PASSWORD_INVALID_TOKEN.description;
+  const invalidTokenPopupDescription = getPopup(
+    popups,
+    'USER_RESET_PASSWORD_INVALID_TOKEN',
+    'USER_RESET_PASSWORD_INVALID_TOKEN',
+    fallbackGlobalError
+  ).description;
   const resetButton = resetPasswordText.button || formText.button.resetPassword;
 
   const [loading, setLoading] = useState(false);

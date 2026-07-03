@@ -147,6 +147,10 @@
         "subject": {
           "required": "Subject is required."
         },
+        "confirmPassword": {
+          "required": "Please confirm your password.",
+          "mismatch": "The passwords do not match."
+        },
         "tosAccepted": {
           "required": "You must accept the terms and conditions"
         }
@@ -166,11 +170,13 @@
         "name": "Name",
         "email": "Email",
         "password": "Password",
+        "confirmPassword": "Confirm password",
         "invalidData": "Please review this field.",
         "errorSummary": "Please review the highlighted fields before continuing.",
         "forgotPassword": "Forgot Password?",
         "resetPassword": "Reset Password",
         "passwordHint": "Min. 8 characters with uppercase, number and symbol.",
+        "confirmPasswordHint": "Repeat the same password to confirm it before continuing.",
         "showPassword": "Show password",
         "hidePassword": "Hide password",
         "tosPrefix": " I agree to the ",
@@ -187,6 +193,7 @@
         "name": "Jane Doe",
         "email": "john.doe@example.com",
         "password": "Min. 8 characters",
+        "confirmPassword": "Repeat your password",
         "address": "221B Baker Street, London NW1",
         "phone": "+44 20 7946 0958",
         "subject": "Select a subject",
@@ -341,6 +348,12 @@
 
   "dashboard": {
     "profileButton": "Open profile",
+    "auth": {
+      "login": {
+        "title": "Access your profile",
+        "description": "Sign in to access your profile and manage your workspace."
+      }
+    },
     "header": {
       "dashboard": "Overview",
       "requests": "Requests",

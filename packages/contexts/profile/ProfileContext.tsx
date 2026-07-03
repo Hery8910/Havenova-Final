@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from 'react';
 import Cookies from 'js-cookie';
-import { refreshToken } from '@havenova/services';
 import { useAuth } from '../auth/authContext';
 import type {
   AppLanguage,
@@ -42,7 +41,7 @@ interface ProfileContextProps {
   setProfileImage: (profileImage: string) => Promise<void>;
 }
 
-const DEFAULT_AVATAR = '/avatars/avatar-1.png';
+const DEFAULT_AVATAR = '/shared/avatars/avatar-1.png';
 
 const getDefaultNotificationPreferences = (): UserNotificationPreferences => ({
   inApp: {
@@ -203,22 +202,14 @@ const getReadableCookieDiagnostics = () => {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return {
       frontendOrigin: '',
-      hasReadableCsrfToken: false,
-      readableCookieNames: [] as string[],
       accessTokenCookieVisibility: 'server-only/httpOnly',
       refreshTokenCookieVisibility: 'server-only/httpOnly',
+      ...getCsrfDebugState(),
     };
   }
 
-  const cookieString = document.cookie || '';
-
   return {
     frontendOrigin: window.location.origin,
-    hasReadableCsrfToken: cookieString.includes('csrfToken='),
-    readableCookieNames: cookieString
-      .split(';')
-      .map((part) => part.trim().split('=')[0])
-      .filter(Boolean),
     accessTokenCookieVisibility: 'server-only/httpOnly',
     refreshTokenCookieVisibility: 'server-only/httpOnly',
     ...getCsrfDebugState(),
@@ -235,7 +226,7 @@ export const ProfileContext = createContext<ProfileContextProps | undefined>(und
 export const useOptionalProfileContext = () => useContext(ProfileContext);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  const { auth, loading: authLoading, setAuth } = useAuth();
+  const { auth, loading: authLoading, refreshAuth, setAuth } = useAuth();
   const creatingProfileRef = useRef(false);
   const authRef = useRef(auth);
   const isDevProfileFallbackEnabled = process.env.NODE_ENV !== 'production';
@@ -505,7 +496,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             clientId: auth.clientId,
             ...getReadableCookieDiagnostics(),
           });
-          await refreshToken();
+          const refreshResult = await refreshAuth();
+          if (!refreshResult.syncedFromServer) {
+            return;
+          }
           const backendProfile = await getUserClientProfile();
           applyProfile(backendProfile, {
             source: 'server',
@@ -560,6 +554,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     ensureBackendProfile,
     handleProfileBootstrapError,
     isDevProfileFallbackEnabled,
+    refreshAuth,
   ]);
 
   useEffect(() => {
@@ -668,7 +663,10 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
         if (err.response?.status === 401 || err.response?.status === 403) {
           try {
-            await refreshToken();
+            const refreshResult = await refreshAuth();
+            if (!refreshResult.syncedFromServer) {
+              return;
+            }
             const response = await updateUserClientProfile(patch);
             applyProfile(response.profile, {
               source: 'server',
@@ -713,6 +711,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       handleProfileBootstrapError,
       isDevProfileFallbackEnabled,
       profile,
+      refreshAuth,
     ]
   );
 

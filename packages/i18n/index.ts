@@ -1,3 +1,5 @@
+import type { PopupsTexts } from '../contexts/alert/alert.types';
+
 import de_common from './de/common.json';
 import de_popups from './de/popups.json';
 import de_loadings from './de/loadings.json';
@@ -15,6 +17,18 @@ import es_popups from './es/popups.json';
 import es_loadings from './es/loadings.json';
 import es_pages from './es/pages.json';
 import es_components from './es/components.json';
+
+export interface Messages {
+  date: typeof de_common.date;
+  popups: PopupsTexts;
+  loadings: typeof de_loadings;
+  pages: typeof de_pages;
+  components: typeof de_components;
+  metadata?: {
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
 
 export const resources = {
   de: {
@@ -38,7 +52,6 @@ export const resources = {
     pages: es_pages,
     components: es_components,
   },
-};
+} satisfies Record<string, Messages>;
 
 export type Locale = keyof typeof resources;
-export type Messages = typeof resources.de;

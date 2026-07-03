@@ -19,22 +19,31 @@ interface WrapperProps<T extends Record<string, any>> {
   loading: boolean;
   onForgotPassword?: () => void;
 }
-type ValidateField = 'email' | 'password' | 'tosAccepted';
+type ValidateField = 'email' | 'password' | 'tosAccepted' | 'confirmPassword';
 
-export type FormField = 'email' | 'password' | 'language' | 'clientId' | 'tosAccepted';
+export type FormField =
+  | 'email'
+  | 'password'
+  | 'confirmPassword'
+  | 'language'
+  | 'clientId'
+  | 'tosAccepted';
 
 export interface PlaceholdersTextProps {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 export interface LabelsTextProps {
   email: string;
   password: string;
+  confirmPassword: string;
   errorSummary: string;
   invalidData: string;
   forgotPassword: string;
   passwordHint: string;
+  confirmPasswordHint: string;
   tosPrefix: string;
   tosTerms: string;
   tosConnector: string;
@@ -72,7 +81,7 @@ export default function FormWrapper<T extends Record<string, any>>({
 
   useEffect(() => {
     setFormData(initialValues);
-  }, [initialValues, initialValuesKey]);
+  }, [initialValuesKey]);
 
   const passwordValidator = (value: string): string[] => {
     if (showHintPassword) {
@@ -85,6 +94,14 @@ export default function FormWrapper<T extends Record<string, any>>({
     email: validateEmail,
     password: passwordValidator,
     tosAccepted: validateTosAccepted,
+    confirmPassword: (value: string) => {
+      const passwordValue = String(formData.password ?? '');
+      const confirmValue = String(value ?? '');
+
+      if (!confirmValue.trim()) return ['required'];
+      if (confirmValue !== passwordValue) return ['mismatch'];
+      return [];
+    },
   };
 
   const getValidationError = (name: FormField, value: any) => {

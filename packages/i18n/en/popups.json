@@ -37,15 +37,21 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Access forbidden",
-    "description": "You do not have permission to perform this action."
+    "description": "You do not have permission to perform this action.",
+    "confirm": "Go to login",
+    "close": "Close"
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Login required to continue",
-    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now."
+    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
+    "confirm": "Go to login",
+    "close": "Continue browsing"
   },
   "USER_SESSION_EXPIRED": {
     "title": "Session expired",
-    "description": "Your session has expired. You can keep browsing or go to login."
+    "description": "Your session has expired. You can keep browsing or go to login.",
+    "confirm": "Go to login",
+    "close": "Continue browsing"
   },
   "AUTH_BLOCKED": {
     "title": "Account blocked",
@@ -135,7 +141,9 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client not found",
-    "description": "The specified client does not exist."
+    "description": "The specified client does not exist.",
+    "confirm": "Go to home",
+    "close": "Close"
   },
   "USER_REGISTER_SUCCESS": {
     "title": "Registration successful",
@@ -407,6 +415,10 @@
   "WORKER_FOUND": {
     "title": "Worker loaded",
     "description": "The worker details were retrieved successfully."
+  },
+  "WORKER_INVITE_RESENT": {
+    "title": "Invite resent",
+    "description": "The worker invitation has been sent again."
   },
   "WORKER_LIST": {
     "title": "Workers loaded",

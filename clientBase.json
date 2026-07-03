@@ -1,33 +1,33 @@
 {
-  "companyName": "Berlin Cleaners",
-  "domain": "berlincleaners.de",
-  "email": "info@berlincleaners.de",
-  "phone": "+49 1761234567",
-  "address": "Alexanderplatz 1, Berlin",
+  "companyName": "Havenova",
+  "domain": "havenova.de",
+  "email": "admin@havenova.de",
+  "phone": "+49 000 000000",
+  "address": "TODO Havenova Legal Address",
   "language": "de",
 
   "logos": {
-    "main": "https://cdn.example.com/logos/berlin-cleaners-light.png",
-    "mainDark": "https://cdn.example.com/logos/berlin-cleaners-dark.png",
-    "small": "https://cdn.example.com/logos/berlin-cleaners-small.png",
-    "smallDark": "https://cdn.example.com/logos/berlin-cleaners-small-dark.png",
-    "favicon": "https://cdn.example.com/logos/favicon.png",
-    "faviconDark": "https://cdn.example.com/logos/favicon-dark.png"
+    "main": "https://example.com/assets/havenova/logo-primary.png",
+    "mainDark": "https://example.com/assets/havenova/logo-primary-dark.png",
+    "small": "https://example.com/assets/havenova/logo-compact.png",
+    "smallDark": "https://example.com/assets/havenova/logo-compact-dark.png",
+    "favicon": "https://example.com/assets/havenova/favicon.ico",
+    "faviconDark": "https://example.com/assets/havenova/favicon-dark.ico"
   },
 
   "images": {
-    "backgroundImage": "https://cdn.example.com/bg/bg-pattern.svg",
-    "emailHeader": "https://cdn.example.com/email/header.png"
+    "backgroundImage": "https://example.com/assets/havenova/dashboard-background.jpg",
+    "emailHeader": "https://example.com/assets/havenova/email-header.png"
   },
 
   "pages": {
-    "contact": "https://berlincleaners.de/contact",
-    "faq": "https://berlincleaners.de/faq",
+    "contact": "https://havenova.de/contact",
+    "faq": "https://havenova.de/faq",
     "legal": {
-      "privacy": "https://berlincleaners.de/legal/privacy-policy",
-      "cookie": "https://berlincleaners.de/legal/cookie-policy",
-      "terms": "https://berlincleaners.de/legal/terms-of-service",
-      "impresum": "https://berlincleaners.de/legal/impresum"
+      "privacy": "https://havenova.de/legal/privacy-policy",
+      "cookie": "https://havenova.de/legal/cookie-policy",
+      "terms": "https://havenova.de/legal/terms-of-service",
+      "impresum": "https://havenova.de/legal/imprint"
     }
   },
 

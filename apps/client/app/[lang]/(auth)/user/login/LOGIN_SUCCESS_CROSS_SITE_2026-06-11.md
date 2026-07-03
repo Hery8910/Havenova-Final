@@ -1,5 +1,15 @@
 # Evidencia: Login, Sesión, Refresh Y Logout Cross-Site
 
+## Estado documental
+
+Este archivo conserva evidencia positiva de una fase transicional cross-site.
+
+Debe leerse como historial técnico, no como definición de la arquitectura objetivo actual.
+
+La arquitectura objetivo ahora es:
+
+- navegador -> frontend BFF -> backend
+
 ## Fecha
 
 - `2026-06-11`

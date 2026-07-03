@@ -6,23 +6,23 @@ import { useRouter } from 'next/navigation';
 
 import styles from './page.module.css';
 import { getPopup } from '../../../../../../packages/utils/alertType';
-import { UpdateUserClientProfileInput, formatUserAddress } from '../../../../../../packages/types';
+import { UpdateAdminProfilePayload } from '../../../../../../packages/types';
 import {
+  useAdmin,
   fallbackButtons,
   fallbackGlobalError,
   fallbackLoadingMessages,
   fallbackPopups,
   useGlobalAlert,
   useI18n,
-  useProfile,
 } from '../../../../../../packages/contexts';
 import { useLang } from '../../../../../../packages/hooks';
 import { useRequireLogin } from '../../../../../../packages/hooks/useRequireLogin';
 import { href } from '../../../../../../packages/utils';
-import { AvatarSelector, FormWrapper } from '../../../../../../packages/components/client/user/profile';
+import { FormWrapper } from '../../../../../../packages/components/client/user/profile';
 
 type ProfileFormData = Pick<
-  UpdateUserClientProfileInput,
+  UpdateAdminProfilePayload,
   'name' | 'phone'
 >;
 export interface ProfileData {
@@ -57,7 +57,7 @@ const Profile = () => {
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const [saving, setSaving] = useState(false);
 
-  const { profile: userProfile, updateProfile, reloadProfile } = useProfile();
+  const { admin, updateAdmin, reloadAdmin } = useAdmin();
   const { showError, showConfirm, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const router = useRouter();
   const lang = useLang();
@@ -66,7 +66,7 @@ const Profile = () => {
 
   const handleProfileUpdate = async (data: ProfileFormData) => {
     try {
-      if (!userProfile.userClientId || !userProfile.clientId) {
+      if (!admin.userClientId || !admin.clientId) {
         const popupData = getPopup(
           popups,
           'USER_NEED_TO_LOGIN',
@@ -107,11 +107,11 @@ const Profile = () => {
         },
       });
 
-      await updateProfile({
+      await updateAdmin({
         name: data?.name?.trim(),
         phone: data?.phone?.trim(),
       });
-      await reloadProfile();
+      await reloadAdmin();
 
       const successPopup = getPopup(
         popups,
@@ -152,53 +152,71 @@ const Profile = () => {
   };
 
   const editButton = formText.button.edit;
-  const avatarAlt = userProfile.name
-    ? `${userProfile.name} avatar`
+  const avatarAlt = admin.name
+    ? `${admin.name} avatar`
     : (profileTexts?.manageAccount ?? 'User avatar');
 
   return (
     <div className={styles.wrapper}>
       <section
-        className={`${styles.section} card--glass`}
+        className={`${styles.section} glass-panel--base`}
         aria-labelledby="profile-title"
         aria-describedby="profile-description"
       >
         <header className={styles.header}>
-          <h3 id="profile-title" className={styles.h3}>
-            {userProfile.name || profileTexts?.name}
-          </h3>
-          <div className={styles.div}>
+          <p className={styles.eyebrow}>Account Overview</p>
+          <h1 id="profile-title" className={styles.h1}>
+            {admin.name || profileTexts?.name}
+          </h1>
+          <div className={styles.avatarWrap}>
             <Image
-              src={userProfile.profileImage || '/avatars/avatar-1.svg'}
+              src={admin.profileImage || '/shared/avatars/avatar-1.png'}
               alt={avatarAlt}
-              width={70}
-              height={70}
+              width={84}
+              height={84}
               className={styles.image}
             />
-            <AvatarSelector />
           </div>
-          <p>{userProfile.contactEmail}</p>
-          <p>
+          <p className={styles.identity}>{admin.email || ''}</p>
+          <p className={styles.meta}>
             {profileTexts?.memberSince}{' '}
-            {userProfile?.createdAt ? new Date(userProfile.createdAt).toLocaleDateString() : ''}
+            {admin?.createdAt ? new Date(admin.createdAt).toLocaleDateString() : ''}
           </p>
           <aside aria-label={profileTexts?.manageAccount}></aside>
         </header>
 
-        <FormWrapper<ProfileFormData>
-          key={`${userProfile.name ?? ''}-${userProfile.phone ?? ''}-${userProfile.updatedAt ?? ''}`}
-          fields={['name', 'phone'] as const}
-          onSubmit={handleProfileUpdate}
-          button={editButton}
-          initialValues={{
-            name: userProfile.name || '',
-            phone: userProfile.phone || '',
-          }}
-          loading={saving}
-        />
-        {userProfile.primaryAddress && (
-          <p>{formatUserAddress(userProfile.primaryAddress)}</p>
-        )}
+        <div className={styles.content}>
+          <article className={styles.infoCard}>
+            <div className={styles.infoGrid}>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>{profileTexts?.email}</span>
+                <span className={styles.infoValue}>{admin.email || '-'}</span>
+              </div>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>{profileTexts?.phone}</span>
+                <span className={styles.infoValue}>{admin.phone || '-'}</span>
+              </div>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>{profileTexts?.address}</span>
+                <span className={styles.infoValue}>{admin.address || '-'}</span>
+              </div>
+            </div>
+          </article>
+
+          <article className={styles.formCard}>
+            <FormWrapper<ProfileFormData>
+              key={`${admin.name ?? ''}-${admin.phone ?? ''}-${admin.updatedAt ?? ''}`}
+              fields={['name', 'phone'] as const}
+              onSubmit={handleProfileUpdate}
+              button={editButton}
+              initialValues={{
+                name: admin.name || '',
+                phone: admin.phone || '',
+              }}
+              loading={saving}
+            />
+          </article>
+        </div>
       </section>
     </div>
   );

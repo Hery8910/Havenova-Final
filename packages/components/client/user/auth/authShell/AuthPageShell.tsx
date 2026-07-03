@@ -1,7 +1,7 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
-import styles from './userAuth.module.css';
+import styles from './authShell.module.css';
 
 interface AuthPageShellProps {
   headingId: string;
@@ -12,8 +12,8 @@ interface AuthPageShellProps {
   homeLabel: string;
   logoAlt: string;
   footerLabel?: string;
-  children: ReactNode;
-  footer?: ReactNode;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export function AuthPageShell({
@@ -37,7 +37,7 @@ export function AuthPageShell({
       <Link className={styles.authBrand} href={homeHref} aria-label={homeLabel}>
         <Image
           className={styles.authBrandImage}
-          src="/logos/logo-small-dark.webp"
+          src="/shared/logos/logo-small-dark.webp"
           alt={logoAlt}
           width={80}
           height={80}

@@ -80,9 +80,23 @@ The frontend should converge toward:
 - clear dependency direction
 - predictable file ownership
 - server-first route composition
+- frontend-owned backend integration boundaries
 - reusable domain modules
 - explicit documentation contracts
 - bounded migrations
+
+## Closed Integration Rule
+
+The canonical browser integration model is:
+
+- `browser -> frontend BFF -> central backend`
+
+Implications:
+
+- direct browser calls to the central backend are transitional, not target architecture
+- auth is the first domain to move behind the BFF
+- other protected and tenant-aware domains should progressively follow the same model
+- backend contract mapping logic should converge into server-side integration layers, not remain broadly distributed across browser services
 
 ## Target Layer Model
 
@@ -92,6 +106,7 @@ Location:
 
 - `apps/client`
 - `apps/dashboard`
+- `apps/worker`
 
 Responsibility:
 
@@ -123,7 +138,9 @@ Location candidates:
 - `packages/contexts`
 - `packages/services`
 - `packages/types`
+- `packages/styles`
 - parts of `packages/utils`
+- selected `src/server/*` or app-level server integration helpers
 
 Examples:
 
@@ -131,7 +148,10 @@ Examples:
 - alert
 - client/tenant bootstrap
 - profile
+- admin
+- worker
 - i18n
+- shared style foundation
 
 Responsibility:
 
@@ -141,7 +161,28 @@ Responsibility:
 - runtime policies
 - flow rules
 
+For backend communication, this platform direction now includes:
+
+- server-side backend clients
+- BFF request/response policies
+- auth/session integration adapters
+- domain gateway/proxy helpers where explicit adaptation is not required
+
 This is the layer that must become reusable across future projects.
+
+## 2.1. Frontend Integration Boundary
+
+The workspace should also converge toward an explicit server-side integration boundary.
+
+Canonical responsibilities:
+
+- same-origin browser entrypoints under `/api/*`
+- controlled server-to-server calls to the backend
+- auth cookie bridging and CSRF forwarding
+- selective forwarding of tenant/origin/request metadata
+- shared observability and error propagation rules
+
+This boundary exists to prevent product replication from depending on browser-specific cross-origin behavior.
 
 ## 3. Feature UI Layer
 

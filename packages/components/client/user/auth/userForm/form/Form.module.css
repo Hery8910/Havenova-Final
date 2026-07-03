@@ -16,8 +16,9 @@
 }
 
 .input {
-  min-height: 3rem;
-  padding: 0.9rem 1rem;
+  min-height: 3.35rem;
+  padding: 1rem 1.1rem;
+  padding-right: 3rem;
   border-radius: var(--radius-input);
   width: 100%;
   font-size: var(--type-body-md-size);

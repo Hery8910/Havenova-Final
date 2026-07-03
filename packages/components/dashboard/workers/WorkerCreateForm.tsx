@@ -208,7 +208,7 @@ const WorkerCreateForm = ({ title = 'Crear trabajador', onCreated }: WorkerCreat
           description={alert.description}
           media={{
             kind: 'image',
-            src: `/alert/${alert.variant}.svg`,
+            src: `/shared/alert/${alert.variant}.svg`,
             alt: alert.variant === 'success' ? 'Success' : 'Error',
           }}
           primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}

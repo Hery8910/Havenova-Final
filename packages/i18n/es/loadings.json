@@ -14,6 +14,10 @@
       "title": "Iniciando tu sesión…",
       "description": "Estamos preparando tu sesión. Esto puede tardar un momento."
     },
+    "dashboardLogin": {
+      "title": "Accediendo a tu perfil…",
+      "description": "Estamos preparando tu espacio de trabajo. Esto puede tardar un momento."
+    },
     "createUser": {
       "title": "Cargando tu cuenta…",
       "description": "Estamos configurando tu perfil y tus preferencias."

@@ -146,7 +146,7 @@ export function Footer() {
       <Link className={styles.logoLink} href={href(language, '/')} aria-label={a11y.home}>
         <Image
           className={styles.logoImage}
-          src="/logos/logo-dark.webp"
+          src="/shared/logos/logo-dark.webp"
           alt=""
           width={200}
           height={50}

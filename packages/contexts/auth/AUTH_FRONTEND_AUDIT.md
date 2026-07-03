@@ -105,11 +105,30 @@ Estado real:
 - el `AuthContext` ya fue movido hacia un modelo de sesion mas correcto
 - la identidad principal ya quedo cerrada en `userClientId`
 - la deuda activa ya no esta en compatibilidad legacy, sino en consumidores residuales, politicas de entorno y flujos compuestos
+- el repo sigue sin una capa BFF canonica y todavia integra `auth` desde navegador hacia backend directo
 
 Conclusion cerrada:
 
 - `auth` puede seguir usandose para desarrollo y para integracion incremental
-- `auth` no deberia considerarse listo para despliegue restringido hasta cerrar consumidores residuales, politicas de fallback por entorno y contratos visuales de flujo
+- `auth` no deberia considerarse listo para despliegue restringido hasta cerrar consumidores residuales, politicas de fallback por entorno, contratos visuales de flujo y la migracion a la capa BFF
+
+## Decision Cerrada De Integracion
+
+La estrategia de producto para este dominio ya no debe ser:
+
+- endurecer indefinidamente la integracion browser-direct cross-origin
+
+La decision cerrada es:
+
+- el navegador debe hablar con el frontend
+- el frontend debe hablar con el backend central
+- `auth` sera el primer dominio migrado a esa capa
+- otros servicios deberan migrar progresivamente despues
+
+Consecuencia documental:
+
+- toda referencia a `cross-origin directo` debe tratarse como estado transicional o evidencia historica
+- no como arquitectura objetivo
 
 ## Contrato Canonico Backend Que El Frontend Debe Respetar
 
@@ -248,6 +267,24 @@ Flujos minimos obligatorios:
 - change-email/confirm
 
 ## Desalineaciones Reales Detectadas
+
+### 0. Falta la capa BFF canónica
+
+Estado actual:
+
+- `packages/services/api/api.ts` sigue basando el acceso del navegador en `NEXT_PUBLIC_API_URL`
+- no existen rutas same-origin del frontend como límite canónico de integración auth
+
+Impacto:
+
+- el dominio `auth` sigue dependiendo de un contrato browser-direct que no es la estrategia final del producto
+- la solución todavía no es portable como patrón de plataforma
+
+Cierre esperado:
+
+- introducir primero la infraestructura BFF
+- migrar `auth` como primer dominio
+- re-clasificar la integración actual como histórica una vez completada la migración
 
 ### 1. La persistencia post-login principal ya fue corregida
 

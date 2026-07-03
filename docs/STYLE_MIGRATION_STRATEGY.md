@@ -29,7 +29,13 @@ Important clarification:
 Current global system:
 
 - [apps/client/app/global.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/global.css:1)
-- [apps/client/app/styles](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/styles)
+- [packages/styles](/home/heriberto/Escritorio/Havenova/havenova/packages/styles:1)
+
+Current interpretation:
+
+- the shared style foundation now lives in `packages/styles`
+- app-level `global.css` entrypoints consume that shared baseline
+- the older `apps/*/app/styles/*` trees should be treated as transitional residue until all imports are normalized
 
 Migration layer:
 

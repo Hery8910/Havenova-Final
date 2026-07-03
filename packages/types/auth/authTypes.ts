@@ -119,7 +119,7 @@ export interface ForgotPasswordResponse {
 }
 
 export interface ResetPasswordPayload {
-  token: string;
+  token?: string;
   inviteToken?: string;
   newPassword: string;
 }
@@ -128,6 +128,25 @@ export interface ResetPasswordResponse {
   success: boolean;
   code: string;
   message?: string;
+}
+
+export interface ResolveInvitePayload {
+  inviteToken: string;
+}
+
+export interface ResolveInviteResponse {
+  success: boolean;
+  code: string;
+  message?: string;
+  data?: {
+    emailMasked: string;
+    clientDisplayName: string;
+    role: AuthRole;
+    status?: AuthStatus;
+    senderClientDisplayName?: string;
+    variant?: string;
+    language?: string;
+  };
 }
 
 // ---------------------------

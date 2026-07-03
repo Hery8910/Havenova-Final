@@ -13,6 +13,29 @@ Su responsabilidad real debería ser:
 
 No debería delegar datos de presentación del usuario en `AuthContext`.
 
+Regla de composición:
+
+- `ProfileContext` es el complemento de cuenta para `client`
+- no es el complemento canónico de `dashboard`
+- `dashboard` debe cerrar su capa de cuenta sobre `WorkerContext`
+
+## Decisión cerrada de integración
+
+La integración canónica de frontend para `profile` ya no debe asumirse como:
+
+- navegador -> backend directo
+
+La decisión cerrada es:
+
+- navegador -> rutas same-origin del frontend
+- frontend -> backend central mediante la capa BFF
+
+Estado actual del repo:
+
+- `profile` ya fue migrado al cliente same-origin del frontend
+- existen rutas BFF de `profile` en `client` y `dashboard`
+- `profile` pasa a ser el segundo dominio protegido migrado después de `auth`
+
 ## Contrato backend relevante
 
 Según el dominio backend `profile`:
@@ -41,6 +64,7 @@ Conclusión:
   - `updateUserClientProfile`
 - ya existe estrategia de bootstrap automático para `isNewUser`
 - el contexto ya expone metadatos de origen de perfil para distinguir `server`, `storage`, `default` y `dev-fallback`
+- la capa de servicios ya consume `profile` vía rutas same-origin del frontend en lugar de `NEXT_PUBLIC_API_URL` directo
 
 ### Fallback temporal de desarrollo
 
@@ -126,6 +150,7 @@ Los componentes pueden mostrarlo como “email” en UI, pero el modelo debería
 ### Fase 2. Servicio
 
 - [x] asegurar que [profileService.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/services/profile/profileService.ts) preserve `contactEmail`
+- [x] migrar `profile` al cliente same-origin del frontend sobre la base BFF
 - [ ] verificar que el create/get/update response contract se tipa con el payload real
 
 ### Fase 3. Contexto

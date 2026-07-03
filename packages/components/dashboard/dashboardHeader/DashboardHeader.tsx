@@ -1,15 +1,13 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth, useI18n, useWorker } from '../../../contexts';
-import LanguageSwitcher from '../../languageSwitcher/LanguageSwitcher';
-import ThemeToggler from '../../themeToggler/ThemeToggler';
+import { useAdmin, useAuth, useI18n } from '../../../contexts';
 
 import styles from './DashboardHeader.module.css';
 import Image from 'next/image';
 import { useLang } from '../../../hooks';
 
 export default function DashboardHeader() {
-  const { worker } = useWorker();
+  const { admin } = useAdmin();
   const { auth } = useAuth();
   const pathname = usePathname();
   const lang = useLang();
@@ -25,7 +23,7 @@ export default function DashboardHeader() {
   const title =
     headerTexts[currentSection as keyof typeof headerTexts] || headerTexts.dashboard || '';
   const profileLabel = dashboardTexts.profileButton || headerTexts.profile || 'Profile';
-  const profileName = worker?.name?.trim();
+  const profileName = admin?.name?.trim();
   const profileButtonLabel = profileName ? `${profileLabel}: ${profileName}` : profileLabel;
 
   return (
@@ -39,10 +37,10 @@ export default function DashboardHeader() {
         className={styles.button}
         aria-label={profileButtonLabel}
       >
-        {worker.profileImage && (
+        {admin.profileImage && (
           <Image
             className={styles.image}
-            src={worker.profileImage}
+            src={admin.profileImage}
             alt={
               profileName ? `${profileName}'s profile picture` : `${profileLabel} picture`
             }
@@ -51,7 +49,7 @@ export default function DashboardHeader() {
           />
         )}
         <div className={styles.profileDiv}>
-          <p className={styles.name}>{worker.name}</p>
+          <p className={styles.name}>{admin.name}</p>
           <p className={styles.role}>{auth.role}</p>
         </div>
       </button>

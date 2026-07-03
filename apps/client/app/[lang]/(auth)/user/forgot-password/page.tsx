@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import styles from '../userAuth.module.css';
 import {
   PopupCode,
   fallbackButtons,
@@ -13,16 +12,18 @@ import {
   useI18n,
   useProfile,
 } from '@/packages/contexts';
-import { useLang } from '@/packages/hooks';
-import { FormWrapper } from '@/packages/components/client/user/auth';
+import { useAuthAlertActions, useLang } from '@/packages/hooks';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '@/packages/components/client/user/auth';
+import styles from '@/packages/components/client/user/auth/authShell/authShell.module.css';
 import { getPopup } from '@/packages/utils/alertType';
 import { forgotPassword } from '@/packages/services';
 import { ForgotPasswordPayload } from '@/packages/types';
 import Link from 'next/link';
 import { href } from '@/packages/utils';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { AuthPageShell } from '../AuthPageShell';
-import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface ForgotPasswordData {
   title: string;

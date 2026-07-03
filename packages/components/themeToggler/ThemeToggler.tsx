@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { LuMoon, LuSunMedium } from 'react-icons/lu';
+import { useOptionalAdminContext } from '../../contexts/admin/AdminContext';
 import { useOptionalProfileContext } from '../../contexts/profile/ProfileContext';
 import { useOptionalWorkerContext } from '../../contexts/worker/WorkerContext';
 import sharedStyles from '../client/navbar/NavbarShared.module.css';
@@ -27,11 +28,17 @@ const ThemeToggler = ({
   darkLabel,
   lightLabel,
 }: ThemeTogglerProps) => {
+  const adminContext = useOptionalAdminContext();
   const profileContext = useOptionalProfileContext();
   const workerContext = useOptionalWorkerContext();
 
-  const setTheme = profileContext?.setTheme ?? workerContext?.setTheme;
-  const theme = profileContext?.profile?.theme ?? workerContext?.worker?.theme ?? 'light';
+  const setTheme =
+    adminContext?.setTheme ?? profileContext?.setTheme ?? workerContext?.setTheme;
+  const theme =
+    adminContext?.admin?.theme ??
+    profileContext?.profile?.theme ??
+    workerContext?.worker?.theme ??
+    'light';
   const nextTheme = theme === 'dark' ? 'light' : 'dark';
   const currentThemeLabel =
     theme === 'dark'

@@ -10,6 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 /**/node_modules/       # <-- Ignora node_modules en subcarpetas
+apps/*/public/shared/
 
 # testing
 /coverage

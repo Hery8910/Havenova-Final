@@ -2,7 +2,11 @@
 
 ## Objetivo
 
-Definir una secuencia de trabajo única para cerrar la ruta `apps/client/app/[lang]/(auth)` como feature compartido, corrigiendo a la vez la deuda estructural y la alineación con el backend `auth`.
+Definir la secuencia de trabajo del sub-feature `apps/client/app/[lang]/(auth)` dentro del plan mayor de `auth` end-to-end del workspace.
+
+Documento rector actual:
+
+- [docs/AUTH_END_TO_END_PLAN.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_END_TO_END_PLAN.md:1)
 
 Estado del documento:
 
@@ -19,18 +23,19 @@ Este plan cubre:
 - el dominio frontend compartido de `auth` que impacta estos flujos
 - la documentación operativa necesaria para continuar sin redescubrir contexto
 
-No cubre en esta primera pasada:
+No cubre como objetivo principal:
 
 - screenshots finales
 - evidencia manual final posterior a implementación
 - automatización E2E nueva
-- revisión de flujos privados de dashboard o worker auth
+- el cierre completo de `dashboard auth`, que ahora queda gobernado por el plan end-to-end
 
 ## Resultado esperado
 
 Al terminar esta línea de trabajo, `(auth)` debe cumplir como mínimo:
 
 - auditoría y plan unificados para toda la ruta
+- decisión BFF registrada como regla de plataforma
 - ownership claro entre layout, páginas y componentes compartidos
 - contrato frontend `auth` alineado con el backend vigente
 - reducción explícita de duplicación entre páginas
@@ -38,6 +43,19 @@ Al terminar esta línea de trabajo, `(auth)` debe cumplir como mínimo:
 - pendientes manuales finales documentados
 
 ## Fases
+
+### Fase 0. Capa BFF base
+
+Tareas:
+
+- registrar el BFF como límite estándar de integración frontend
+- definir la infraestructura server-side reusable mínima
+- clasificar la integración browser-direct actual como transicional
+- preparar la migración de `auth` como primer dominio sobre esa base
+
+Criterio de cierre:
+
+- la arquitectura objetivo queda cerrada antes de seguir endureciendo el feature auth como si fuera browser-direct
 
 ### Fase 1. Baseline documental
 
@@ -68,22 +86,24 @@ Estado actual:
 - la ruta ya cuenta con un shell presentacional compartido para la estructura base de las páginas auth
 - la lógica de cada flujo sigue separada por página
 
-### Fase 3. Alineación del dominio frontend `auth` con backend
+### Fase 3. Alineación del dominio frontend `auth` con backend y BFF
 
 Tareas:
 
 - revisar [FRONTEND_INTEGRATION.md](/home/heriberto/Escritorio/Backend/havenova-backend/src/core/auth/FRONTEND_INTEGRATION.md:1) contra `services`, `types`, `contexts` y páginas
+- revisar [docs/FRONTEND_BFF_STRATEGY.md](/home/heriberto/Escritorio/Havenova/havenova/docs/FRONTEND_BFF_STRATEGY.md:1) contra `services`, `types`, `contexts` y páginas
 - validar rutas que requieren `credentials`, `x-csrf-token` y `x-frontend-origin`
 - revisar shape de `login`, `magic-login`, `verify-email`, `forgot-password`, `reset-password`, `logout` y `refresh`
 - confirmar que `GET /me` siga siendo la fuente de verdad posterior al login
 
 Criterio de cierre:
 
-- el dominio frontend de `auth` queda consistente con el backend actual
+- el dominio frontend de `auth` queda consistente con el backend actual y con la nueva capa BFF objetivo
 
 Estado actual:
 
 - iniciada en su primera pasada
+- la infraestructura base ya quedó abierta en código con rutas same-origin `/api/auth/*` y helpers BFF reutilizables
 - la normalización de sesión ya fue centralizada para servicio, contexto y escrituras manuales principales de `setAuth(...)`
 - `userId` ya fue retirado del contrato de sesión `auth`; la identidad de sesión queda en `userClientId`
 
@@ -230,22 +250,23 @@ Criterio de cierre:
 
 ## Orden recomendado
 
-1. baseline documental
-2. inventario estructural y ownership
-3. alineación backend del dominio `auth`
-4. bloque A: estructura shared de la ruta
-5. bloque B: formulario shared auth
-6. bloque C: textos e i18n del feature
-7. bloque D: revisión por página y flujo
-8. bloque E: cierre documental
-9. validación manual/visual final
+1. fase 0: decisión y baseline BFF
+2. baseline documental
+3. inventario estructural y ownership
+4. alineación backend/BFF del dominio `auth`
+5. bloque A: estructura shared de la ruta
+6. bloque B: formulario shared auth
+7. bloque C: textos e i18n del feature
+8. bloque D: revisión por página y flujo
+9. bloque E: cierre documental
+10. validación manual/visual final
 
 ## Reglas de ejecución
 
 Mientras `(auth)` siga abierta:
 
 - no tratar cada página como un proyecto aislado
-- no hacer retrabajo visual antes de revisar el contrato backend
+- no hacer retrabajo visual antes de revisar el contrato backend y la estrategia BFF
 - no fusionar toda la lógica en un único controller si la separación por responsabilidad sigue siendo más clara
 - no cerrar la ruta sin dejar documentado qué validación manual queda pendiente
 

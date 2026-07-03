@@ -1,23 +1,26 @@
-import '../../global.css';
 import styles from './layout.module.css';
 import { Metadata } from 'next';
 import React from 'react';
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import {
   assertAllowedAppHost,
   getClient,
+  getServerAuthUser,
+  hasDashboardAccess,
   resolveRequestHost,
   resolveTenantKey,
 } from '../../../../../packages/services';
 import {
+  AdminProvider,
   AlertProvider,
   AuthProvider,
   ClientProvider,
   I18nProvider,
-  WorkerProvider,
 } from '../../../../../packages/contexts';
 import { AlertViewport } from '../../../../../packages/components/alert';
 import Loading from '../../../../../packages/components/loading/Loading';
+import { href, userAuthRoutes } from '../../../../../packages/utils';
 import { DashboardHeader, Sidebar } from '../../../../../packages/components';
 
 export async function generateStaticParams() {
@@ -41,8 +44,15 @@ export default async function LangLayout({
   children: React.ReactNode;
   params: { lang: 'de' | 'en' | 'es' };
 }) {
-  const requestHost = resolveRequestHost(headers());
+  const requestHeaders = headers();
+  const requestHost = resolveRequestHost(requestHeaders);
   assertAllowedAppHost(requestHost);
+
+  const auth = await getServerAuthUser(requestHeaders);
+  if (!hasDashboardAccess(auth)) {
+    redirect(href(params.lang, userAuthRoutes.login));
+  }
+
   const tenantKey = resolveTenantKey();
   let client: Awaited<ReturnType<typeof getClient>> | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
@@ -71,17 +81,25 @@ export default async function LangLayout({
               loadingFallback={<Loading theme="light" />}
             >
               <AuthProvider>
-                <WorkerProvider>
-                  <div className={styles.layout}>
-                    <aside className={styles.nav}>
-                      <Sidebar />
-                    </aside>
-                    <header className={styles.header}>
-                      <DashboardHeader />
-                    </header>
-                    <main className={styles.main}>{children}</main>
-                  </div>
-                </WorkerProvider>
+                <AdminProvider>
+                  <main className={styles.page}>
+                    <section
+                      className={`${styles.workspace} card card--primary`}
+                      aria-label="Dashboard workspace"
+                    >
+                      <aside className={styles.navColumn} aria-label="Dashboard navigation">
+                        <Sidebar />
+                      </aside>
+
+                      <section className={styles.contentColumn}>
+                        <header className={styles.header}>
+                          <DashboardHeader />
+                        </header>
+                        <section className={styles.main}>{children}</section>
+                      </section>
+                    </section>
+                  </main>
+                </AdminProvider>
               </AuthProvider>
             </ClientProvider>
           </AlertProvider>

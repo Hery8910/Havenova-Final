@@ -4,11 +4,13 @@ import { useState } from 'react';
 
 import styles from './CreateWorkerForm.module.css';
 import { useClient } from '../../../contexts/client/ClientContext';
+import { getI18nFallbacks } from '../../../contexts/i18n/fallbackText';
 import { useI18n } from '../../../contexts/i18n/I18nContext';
 import AlertPopup from '../../alert/alertPopup/AlertPopup';
 import { createWorkerProfile } from '../../../services/worker';
 import { CreateWorkerProfilePayload } from '../../../types/worker/workerTypes';
 import type { AlertVisualState } from '../../../contexts/alert/useAlert';
+import { getPopup } from '../../../utils/alertType/getPopup';
 
 type FormState = Omit<CreateWorkerProfilePayload, 'clientId'>;
 
@@ -16,6 +18,7 @@ const CreateWorkerForm = () => {
   const { client } = useClient();
   const { language, texts } = useI18n();
   const popups = texts.popups;
+  const { fallbackGlobalError } = getI18nFallbacks(language);
 
   const [formData, setFormData] = useState<FormState>({
     name: '',
@@ -37,7 +40,7 @@ const CreateWorkerForm = () => {
 
   function getRandomAvatarPath(): string {
     const number = Math.floor(Math.random() * 10) + 1;
-    return `/avatars/avatar-${number}.svg`;
+    return `/shared/avatars/avatar-${number}.png`;
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -72,12 +75,11 @@ const CreateWorkerForm = () => {
       };
 
       await createWorkerProfile(payload);
-      const popupData = popups?.WORKER_CREATED || {};
+      const popupData = getPopup(popups, 'WORKER_CREATED', 'WORKER_CREATED', fallbackGlobalError);
       setAlert({
         variant: 'success',
         title: popupData.title || 'Mitarbeiter erstellt',
-        description:
-          popupData.description || 'Der Mitarbeiter wurde erfolgreich erstellt.',
+        description: popupData.description || 'Der Mitarbeiter wurde erfolgreich erstellt.',
       });
       setFormData({
         name: '',
@@ -92,20 +94,18 @@ const CreateWorkerForm = () => {
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorKey = error.response.data.errorCode || error.response.data.code;
-        const popupData = errorKey ? (popups as Record<string, any>)?.[errorKey] || {} : {};
+        const popupData = getPopup(popups, errorKey, 'GLOBAL_INTERNAL_ERROR', fallbackGlobalError);
         setAlert({
           variant: 'error',
-          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          title: popupData.title || fallbackGlobalError.title,
           description:
-            popupData.description ||
-            error.response.data.message ||
-            popups.GLOBAL_INTERNAL_ERROR.description,
+            popupData.description || error.response.data.message || fallbackGlobalError.description,
         });
       } else {
         setAlert({
           variant: 'error',
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
+          title: fallbackGlobalError.title,
+          description: fallbackGlobalError.description,
         });
       }
     } finally {
@@ -190,7 +190,7 @@ const CreateWorkerForm = () => {
           description={alert.description}
           media={{
             kind: 'image',
-            src: `/alert/${alert.variant}.svg`,
+            src: `/shared/alert/${alert.variant}.svg`,
             alt: alert.variant === 'success' ? 'Success' : 'Error',
           }}
           primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}

@@ -122,23 +122,14 @@ const getBrowserCookiePresence = () => {
   if (typeof document === 'undefined') {
     return {
       frontendOrigin: '',
-      hasReadableCsrfToken: false,
-      readableCookieNames: [] as string[],
       accessTokenCookieVisibility: 'server-only/httpOnly',
       refreshTokenCookieVisibility: 'server-only/httpOnly',
+      ...getCsrfDebugState(),
     };
   }
 
-  const cookieString = document.cookie || '';
-  const readableCookieNames = cookieString
-    .split(';')
-    .map((part) => part.trim().split('=')[0])
-    .filter(Boolean);
-
   return {
     frontendOrigin: window.location.origin,
-    hasReadableCsrfToken: cookieString.includes('csrfToken='),
-    readableCookieNames,
     accessTokenCookieVisibility: 'server-only/httpOnly',
     refreshTokenCookieVisibility: 'server-only/httpOnly',
     ...getCsrfDebugState(),
@@ -161,8 +152,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { texts, language } = useI18n();
   const { fallbackButtons, fallbackLogoutError, fallbackLogoutSuccess, fallbackPopups } =
     getI18nFallbacks(language);
-  const popups = texts.popups;
-  const alertButtons = popups.button ?? fallbackButtons;
+  const popups = texts?.popups ?? {};
+  const alertButtons = { ...fallbackButtons, ...popups.button };
   const { showError, showSuccess, showConfirm, closeAlert } = useGlobalAlert();
   const isDevAuthFallbackEnabled = process.env.NODE_ENV !== 'production';
 

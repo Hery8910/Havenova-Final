@@ -1,5 +1,15 @@
 # Estado Actual: Contrato CSRF Cross-Origin
 
+## Estado documental
+
+Este documento queda preservado como referencia histórica de la fase cross-origin directa.
+
+No describe la arquitectura objetivo cerrada del producto.
+
+La arquitectura objetivo ahora es:
+
+- navegador -> frontend BFF -> backend
+
 ## Objetivo
 
 Resumir el contrato CSRF vigente después de la corrección coordinada entre backend y frontend para escenario multicliente cross-origin.

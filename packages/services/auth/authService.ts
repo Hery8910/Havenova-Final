@@ -1,4 +1,4 @@
-import api from '../api/api';
+import authApi from '../api/authApi';
 import { ApiResponse } from '@/packages/types';
 import {
   AuthUser,
@@ -19,6 +19,8 @@ import {
   ChangePasswordResponse,
   ResendVerificationEmailPayload,
   ResendVerificationEmailResponse,
+  ResolveInvitePayload,
+  ResolveInviteResponse,
   ChangeEmailPayload,
   ChangeEmailResponse,
   ChangeEmailConfirmPayload,
@@ -55,7 +57,7 @@ const requireAuthUser = (
 // ---------------------------
 
 export const refreshToken = async (): Promise<void> => {
-  await api.post('/api/auth/refresh-token', {}, { withCredentials: true });
+  await authApi.post('/api/auth/refresh-token', {}, { withCredentials: true });
 };
 
 // ---------------------------
@@ -63,7 +65,7 @@ export const refreshToken = async (): Promise<void> => {
 // ---------------------------
 
 export const registerUser = async (payload: RegisterPayload): Promise<RegisterResponse> => {
-  const { data } = await api.post<RegisterResponse>('/api/auth/register', payload, {
+  const { data } = await authApi.post<RegisterResponse>('/api/auth/register', payload, {
     withCredentials: true,
   });
   return data;
@@ -74,7 +76,7 @@ export const registerUser = async (payload: RegisterPayload): Promise<RegisterRe
 // ---------------------------
 
 export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> => {
-  const { data } = await api.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/login', payload, {
+  const { data } = await authApi.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/login', payload, {
     withCredentials: true,
   });
 
@@ -90,7 +92,7 @@ export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> =
 // ---------------------------
 
 export const getAuthUser = async (): Promise<AuthUser> => {
-  const { data } = await api.get<AuthEnvelope<AuthSessionApiUser>>('/api/auth/me', {
+  const { data } = await authApi.get<AuthEnvelope<AuthSessionApiUser>>('/api/auth/me', {
     withCredentials: true,
   });
   return normalizeAuthUser(requireAuthUser(data.user, 'Auth session payload is missing user data.'));
@@ -103,7 +105,7 @@ export const getAuthUser = async (): Promise<AuthUser> => {
 export const changePassword = async (
   payload: ChangePasswordPayload
 ): Promise<ChangePasswordResponse> => {
-  const { data } = await api.post<ChangePasswordResponse>('/api/auth/update-password', payload, {
+  const { data } = await authApi.post<ChangePasswordResponse>('/api/auth/update-password', payload, {
     withCredentials: true,
   });
   return data;
@@ -112,7 +114,7 @@ export const changePassword = async (
 export const forgotPassword = async (
   payload: ForgotPasswordPayload
 ): Promise<ForgotPasswordResponse> => {
-  const { data } = await api.post<ForgotPasswordResponse>('/api/auth/forgot-password', payload, {
+  const { data } = await authApi.post<ForgotPasswordResponse>('/api/auth/forgot-password', payload, {
     withCredentials: true,
   });
   return data;
@@ -121,10 +123,17 @@ export const forgotPassword = async (
 export const resetPassword = async (
   payload: ResetPasswordPayload
 ): Promise<ResetPasswordResponse> => {
-  const { data } = await api.post<ResetPasswordResponse>(
+  const { data } = await authApi.post<ResetPasswordResponse>(
     '/api/auth/reset-password-confirm',
     payload
   );
+  return data;
+};
+
+export const resolveInvite = async (
+  payload: ResolveInvitePayload
+): Promise<ResolveInviteResponse> => {
+  const { data } = await authApi.post<ResolveInviteResponse>('/api/auth/invite/resolve', payload);
   return data;
 };
 
@@ -133,7 +142,7 @@ export const resetPassword = async (
 // ---------------------------
 
 export const logoutUser = async (): Promise<ApiResponse<null>> => {
-  const { data } = await api.post<ApiResponse<null>>(
+  const { data } = await authApi.post<ApiResponse<null>>(
     '/api/auth/logout',
     {},
     { withCredentials: true }
@@ -142,7 +151,7 @@ export const logoutUser = async (): Promise<ApiResponse<null>> => {
 };
 
 export const logoutAllSessions = async (): Promise<ApiResponse<null>> => {
-  const { data } = await api.post<ApiResponse<null>>(
+  const { data } = await authApi.post<ApiResponse<null>>(
     '/api/auth/logout-all-sessions',
     {},
     { withCredentials: true }
@@ -157,14 +166,14 @@ export const logoutAllSessions = async (): Promise<ApiResponse<null>> => {
 export const verifyEmailRequest = async (
   payload: VerifyEmailPayload
 ): Promise<VerifyEmailResponse> => {
-  const { data } = await api.post<VerifyEmailResponse>('/api/auth/verify-email', payload);
+  const { data } = await authApi.post<VerifyEmailResponse>('/api/auth/verify-email', payload);
   return data;
 };
 
 export const resendVerificationEmail = async (
   payload: ResendVerificationEmailPayload
 ): Promise<ResendVerificationEmailResponse> => {
-  const { data } = await api.post<ResendVerificationEmailResponse>(
+  const { data } = await authApi.post<ResendVerificationEmailResponse>(
     '/api/auth/resend-verification',
     payload,
     {
@@ -175,7 +184,7 @@ export const resendVerificationEmail = async (
 };
 
 export const changeEmail = async (payload: ChangeEmailPayload): Promise<ChangeEmailResponse> => {
-  const { data } = await api.post<ChangeEmailResponse>('/api/auth/change-email', payload, {
+  const { data } = await authApi.post<ChangeEmailResponse>('/api/auth/change-email', payload, {
     withCredentials: true,
   });
   return data;
@@ -184,7 +193,7 @@ export const changeEmail = async (payload: ChangeEmailPayload): Promise<ChangeEm
 export const confirmChangeEmail = async (
   payload: ChangeEmailConfirmPayload
 ): Promise<ChangeEmailConfirmResponse> => {
-  const { data } = await api.post<ChangeEmailConfirmResponse>(
+  const { data } = await authApi.post<ChangeEmailConfirmResponse>(
     '/api/auth/change-email/confirm',
     payload
   );
@@ -198,7 +207,7 @@ export const confirmChangeEmail = async (
 export const magicLoginRequest = async (
   payload: MagicLoginPayload
 ): Promise<MagicLoginResponse> => {
-  const { data } = await api.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/magic-login', payload, {
+  const { data } = await authApi.post<AuthEnvelope<AuthSessionApiUser>>('/api/auth/magic-login', payload, {
     withCredentials: true,
   });
 

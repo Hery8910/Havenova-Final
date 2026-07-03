@@ -9,6 +9,7 @@ export * from './page';
 export * from './pages';
 export * from './services';
 export * from './profile';
+export * from './admin';
 export * from './userForm';
 export * from './worker';
 export * from './auth';

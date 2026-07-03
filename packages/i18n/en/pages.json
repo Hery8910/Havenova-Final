@@ -868,6 +868,11 @@
         "title": "Set a new password",
         "info": "Choose a new password for your account.",
         "button": "Set new password",
+        "invite": {
+          "title": "Activate your dashboard access",
+          "info": "Set your password to activate the invitation and continue with your first dashboard access.",
+          "resolvedDescription": "This invitation is linked to {email}."
+        },
         "linkErrors": {
           "invalidOrExpired": "This link is no longer valid or has expired.",
           "missingToken": "This password reset link is incomplete or invalid."

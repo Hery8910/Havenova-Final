@@ -52,7 +52,9 @@ export default function Form<T extends Record<string, any>>({
   const errorSummaryId = `${idPrefix}-error-summary`;
   const emailErrorId = `${idPrefix}-email-error`;
   const passwordErrorId = `${idPrefix}-password-error`;
+  const confirmPasswordErrorId = `${idPrefix}-confirm-password-error`;
   const passwordHintId = `${idPrefix}-password-hint`;
+  const confirmPasswordHintId = `${idPrefix}-confirm-password-hint`;
   const tosErrorId = `${idPrefix}-tos-error`;
   const tosHelpId = `${idPrefix}-tos-help`;
   const tosLegendId = `${idPrefix}-tos-legend`;
@@ -66,6 +68,18 @@ export default function Form<T extends Record<string, any>>({
   const tosDescriptionId = useMemo(() => {
     return errors.tosAccepted ? `${tosErrorId} ${tosHelpId}` : tosHelpId;
   }, [errors.tosAccepted, tosErrorId, tosHelpId]);
+
+  const confirmPasswordDescriptionId = useMemo(() => {
+    if (touched.confirmPassword && errors.confirmPassword) return confirmPasswordErrorId;
+    if (showHintPassword) return confirmPasswordHintId;
+    return undefined;
+  }, [
+    confirmPasswordErrorId,
+    confirmPasswordHintId,
+    errors.confirmPassword,
+    showHintPassword,
+    touched.confirmPassword,
+  ]);
 
   return (
     <form
@@ -91,7 +105,7 @@ export default function Form<T extends Record<string, any>>({
             {labels.email}
           </label>
           <input
-            className="input"
+            className={`${styles.input} input`}
             type="email"
             name="email"
             id={`${idPrefix}-email`}
@@ -142,7 +156,7 @@ export default function Form<T extends Record<string, any>>({
 
           <div className={styles.div}>
             <input
-              className="input"
+              className={`${styles.input} input`}
               type={showPassword ? 'text' : 'password'}
               name="password"
               id={`${idPrefix}-password`}
@@ -185,6 +199,69 @@ export default function Form<T extends Record<string, any>>({
               aria-live="polite"
             >
               {labels.passwordHint}
+            </p>
+          ) : (
+            <p className={`${styles.feedback} ${styles.hidden}`} aria-hidden="true">
+              {'\u00A0'}
+            </p>
+          )}
+        </div>
+      )}
+      {fields.includes('confirmPassword') && (
+        <div className={styles.wrapper}>
+          <label className={styles.label} htmlFor={`${idPrefix}-confirmPassword`}>
+            {labels.confirmPassword}
+          </label>
+
+          <div className={styles.div}>
+            <input
+              className={`${styles.input} input`}
+              type={showPassword ? 'text' : 'password'}
+              name="confirmPassword"
+              id={`${idPrefix}-confirmPassword`}
+              placeholder={placeholder.confirmPassword}
+              value={formData.confirmPassword || ''}
+              onChange={onChange}
+              onBlur={onBlur}
+              autoComplete="new-password"
+              required
+              aria-invalid={Boolean(touched.confirmPassword && errors.confirmPassword)}
+              aria-describedby={confirmPasswordDescriptionId}
+              aria-errormessage={
+                touched.confirmPassword && errors.confirmPassword
+                  ? confirmPasswordErrorId
+                  : undefined
+              }
+            />
+            <button
+              className={styles.show}
+              type="button"
+              onClick={onTogglePassword}
+              aria-pressed={showPassword}
+              aria-label={showPassword ? labels.hidePassword : labels.showPassword}
+              aria-controls={`${idPrefix}-confirmPassword`}
+              title={showPassword ? labels.hidePassword : labels.showPassword}
+            >
+              {showPassword ? <ImEye /> : <ImEyeBlocked />}
+            </button>
+          </div>
+
+          {touched.confirmPassword && errors.confirmPassword ? (
+            <p
+              className={`${styles.feedback} ${styles.error}`}
+              id={confirmPasswordErrorId}
+              role="alert"
+              aria-live="assertive"
+            >
+              {errors.confirmPassword}
+            </p>
+          ) : showHintPassword ? (
+            <p
+              className={`${styles.feedback} ${styles.hint}`}
+              id={confirmPasswordHintId}
+              aria-live="polite"
+            >
+              {labels.confirmPasswordHint}
             </p>
           ) : (
             <p className={`${styles.feedback} ${styles.hidden}`} aria-hidden="true">

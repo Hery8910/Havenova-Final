@@ -114,6 +114,7 @@ export interface PopupsTexts {
   WORKER_CREATED?: PopupText;
   WORKER_DELETED?: PopupText;
   WORKER_FOUND?: PopupText;
+  WORKER_INVITE_RESENT?: PopupText;
   WORKER_LIST?: PopupText;
   WORKER_LOAD_FAILED?: PopupText;
   WORKER_NOT_FOUND?: PopupText;

@@ -13,7 +13,7 @@ const Loading: React.FC<LoadingData> = ({ theme }) => {
       </aside>
       <div className={styles.logoWrapper}>
         <Image
-          src={'/logos/logo-dark.webp'}
+          src={'/shared/logos/logo-dark.webp'}
           alt="Havenova Logo"
           width={200}
           height={50}

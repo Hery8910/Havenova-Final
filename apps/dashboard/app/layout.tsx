@@ -1,5 +1,6 @@
 // apps/dashboard/src/app/layout.tsx
 import type { Metadata } from 'next';
+import './global.css';
 
 export const metadata: Metadata = {
   manifest: '/site.webmanifest',

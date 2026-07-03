@@ -396,7 +396,7 @@ const ContactMessagesPage = () => {
             {messages.map((msg) => {
               const senderName = msg.sender.name;
               const senderEmail = msg.sender.email;
-              const senderAvatar = msg.sender.profileImage || '/avatars/avatar-1.svg';
+              const senderAvatar = msg.sender.profileImage || '/shared/avatars/avatar-1.png';
               const subject = msg.content.subject;
               const body = msg.content.body;
 
@@ -500,7 +500,7 @@ const ContactMessagesPage = () => {
                       <aside className={styles.responseAside}>
                         <Image
                           className={styles.image}
-                          src={msg.response?.respondedByProfileImage || '/avatars/avatar-1.svg'}
+                          src={msg.response?.respondedByProfileImage || '/shared/avatars/avatar-1.png'}
                           alt=""
                           width={40}
                           height={40}

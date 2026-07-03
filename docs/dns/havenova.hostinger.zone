@@ -1,0 +1,19 @@
+$ORIGIN havenova.de.
+$TTL 3600
+
+@                 IN A      76.76.21.21
+www               IN CNAME  cname.vercel-dns.com.
+dashboard         IN CNAME  2ce7c1a903a12f7e.vercel-dns-017.com.
+
+@                 IN MX     10 mx.zoho.eu.
+@                 IN MX     20 mx2.zoho.eu.
+@                 IN MX     50 mx3.zoho.eu.
+
+@                 IN TXT    "v=spf1 include:zohomail.eu ~all"
+@                 IN TXT    "zoho-verification=zb26252521.zmverify.zoho.eu"
+_dmarc            IN TXT    "v=DMARC1; p=none; rua=mailto:c271d6cb8ad94c94a533e81489ed3557@dmarc-reports.cloudflare.net"
+zoho._domainkey   IN TXT    "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHP5J/IfhON3hs90N5X/6nd5E6uNKVUq1YhB9TLJpAhBF5sWySHBknX2knIdFVyFeSN2zAy7TGoWrbZtATACsYonpuEo+20EpsmjV+jNffjBp6/E58LOzwWXIIPBLFYzY1ShlI+6bZb5CggYr4X+Wspr6teeGG8FaolexKAGMEWwIDAQAB"
+
+em4497            IN CNAME  u48827746.wl247.sendgrid.net.
+s1._domainkey     IN CNAME  s1.domainkey.u48827746.wl247.sendgrid.net.
+s2._domainkey     IN CNAME  s2.domainkey.u48827746.wl247.sendgrid.net.

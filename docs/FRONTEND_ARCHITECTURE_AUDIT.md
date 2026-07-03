@@ -46,11 +46,13 @@ Current diagnosis:
 - the repository contains both current architecture and unresolved legacy structure
 - documentation volume is high, but the documentation model is not standardized
 - rendering strategy is partially reorganized, not consistently applied
+- the canonical BFF boundary now exists, but migration is still incomplete across domains
 
 Closed conclusion:
 
 - deployment should not continue as a pure feature-push exercise
 - the next phase should focus on architectural consolidation before adding more cross-cutting complexity
+- backend integration should finish converging toward the frontend BFF model instead of keeping residual direct browser/backend exceptions
 
 ## Progress Since Audit
 
@@ -70,6 +72,20 @@ Current interpretation:
 
 - the audit findings remain directionally valid
 - but the repository is now in a stronger consolidation state than the original snapshot
+- a new closed decision now also exists: auth should be implemented first on top of a workspace-wide BFF direction, not as an isolated browser-direct exception
+
+## Closed Integration Update
+
+Since the original audit, the workspace reached a clearer conclusion about backend integration:
+
+- auth should not be solved as an isolated cross-origin browser contract
+- the canonical browser integration model should be `browser -> frontend BFF -> backend`
+- auth is the first domain to migrate, not the only one that should ever use that pattern
+
+Architectural implication:
+
+- frontend API integration is now a platform concern, not just a per-service convenience
+- future reuse across projects depends on stabilizing that server-side integration boundary
 
 ## Current Structural Snapshot
 
@@ -96,8 +112,8 @@ Strong signals:
 
 Weak signals:
 
-- the root README was still the default Next.js template
-- source and legacy output coexist in `packages/components`
+- some docs still describe older snapshots of the architecture
+- source and legacy output/residue have not been fully retired everywhere
 - rendering and wrapper strategies are inconsistent across routes
 - package boundaries are not fully respected
 

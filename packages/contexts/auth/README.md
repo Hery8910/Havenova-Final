@@ -13,6 +13,29 @@ Su responsabilidad real debería ser:
 
 No debería ser la fuente principal de datos de perfil del usuario.
 
+## Decisión cerrada de arquitectura
+
+La integración canónica de frontend para este dominio ya no debe asumirse como:
+
+- navegador -> backend directo
+
+La decisión cerrada es:
+
+- navegador -> BFF del frontend -> backend central
+
+Implicaciones:
+
+- `auth` será el primer dominio migrado a esta capa
+- no debe implementarse como un parche aislado respecto al resto del proyecto
+- la solución reusable que se busca para futuros proyectos depende tanto del contrato de `auth` como de la infraestructura BFF que lo soporta
+
+Estado actual del repo:
+
+- `auth` ya opera sobre rutas same-origin del frontend
+- la captura y reenvío de `x-csrf-token` ya fue corregida
+- la capa BFF ya existe como límite canónico dentro del workspace
+- aún quedan servicios browser-direct transicionales en otros dominios fuera de `auth`
+
 ## Requisito de reutilizacion
 
 Este dominio no debe seguir leyendose solo como contexto interno de esta app.
@@ -29,6 +52,17 @@ Esto implica:
 - minimizar dependencias a dominios de negocio de este proyecto
 - dejar el contrato de sesion cerrado y portable
 - documentar flujos y estados visibles de forma reproducible
+
+Modelo reusable cerrado por app:
+
+- `client` reutiliza `auth` con complemento `profile`
+- `dashboard` reutiliza `auth` con complemento `admin`
+- `worker` reutiliza `auth` con complemento `worker`
+
+Regla:
+
+- `auth` no debe convertirse en owner de los datos de cuenta visibles
+- cada app completa la sesión con su propio contexto complementario
 
 ## Contrato backend relevante
 
@@ -87,18 +121,23 @@ Restricción importante:
 Comportamiento activo:
 
 - el frontend mantiene el CSRF en memoria para uso inmediato
-- además persiste una copia de respaldo en `sessionStorage`
-- cuando el token en memoria falta, el dominio `api` intenta rehidratarlo desde `sessionStorage` antes de enviar rutas protegidas como `POST /api/auth/refresh-token`
+- la rehidratación del token depende de capturarlo de nuevo desde respuestas autenticadas como `GET /api/auth/me`
 
 Motivo:
 
-- navegadores móviles pueden suspender o reciclar pestañas y perder memoria JS mientras el `refreshToken` cookie sigue vigente
-- ese escenario dejaba sesiones parcialmente vivas pero incapaces de renovar `accessToken` por falta de header `x-csrf-token`
+- el contrato vigente del backend fija `x-csrf-token` en memoria como fuente de verdad
+- el frontend no debe depender de cookies legibles ni persistencia local para reconstruirlo
 
 Límite actual:
 
 - si el CSRF ya no es válido, el frontend todavía no tiene una vía dedicada para pedir uno nuevo sin relogin
 - eso requiere soporte backend explícito
+
+Interpretación nueva:
+
+- esta lógica sigue siendo útil como referencia de comportamiento
+- hoy ya vive detrás de una integración same-origin servida por el BFF en los flujos de `auth`
+- la arquitectura objetivo ya no es endurecer indefinidamente el flujo browser-direct cross-origin
 
 ### Inconsistencias detectadas
 
@@ -133,12 +172,15 @@ Límite actual:
 
 ## Decisión de diseño propuesta
 
-Mantener `auth` y `profile` como responsabilidades separadas:
+Mantener `auth` y sus complementos como responsabilidades separadas:
 
 - `auth` conserva `email` porque el backend lo incluye en el payload de sesión
 - pero `auth.email` pasa a considerarse un dato de sesión, no de presentación de perfil
 - toda UI que muestre contacto del usuario debe leer desde `profile.contactEmail`
+- toda UI de dashboard que muestre identidad operativa debe leer desde `admin`
+- toda UI de `apps/worker` que muestre identidad operativa debe leer desde `worker`
 - `auth` no debe usarse para vincular ni reconstruir identidad de perfil
+- `auth` tampoco debe reemplazar al dominio `worker` en dashboard
 - el hecho de que backend documente `userClientId` no obliga a que `profile` dependa de `auth` como owner semántico
 
 Esto permite:
@@ -146,6 +188,14 @@ Esto permite:
 - mantener alineación con el backend
 - no romper flujos de auth que aún necesitan `email`
 - reducir acoplamiento entre sesión y perfil
+- reducir acoplamiento entre sesión y cuenta operativa de dashboard
+
+Decisión adicional de acceso:
+
+- `client` mantiene registro público normal
+- `dashboard` no debe exponer `register`
+- `dashboard` activa cuentas nuevas mediante invitación y `set-password`
+- esa activación debe construirse sobre la misma base reusable de `auth`
 
 Decisión adicional para flujos:
 
@@ -154,6 +204,13 @@ Decisión adicional para flujos:
 - en flujos compuestos exitosos el estado visible debe permanecer en `loading` hasta la confirmación final
 
 ## Cambios necesarios en Auth
+
+### Fase 0. Infraestructura BFF base
+
+- [x] documentar y fijar el BFF como límite estándar del frontend
+- [x] definir helpers server-side reutilizables para backend client, cookies y CSRF
+- [x] migrar `auth` para que el navegador deje de hablar directo con el backend central
+- [x] dejar `auth` como primer dominio montado sobre esa infraestructura reusable
 
 ### Fase 1. Documentación y tipado
 
@@ -205,8 +262,8 @@ Decisión adicional para flujos:
 
 ### Fase 7. Recuperación robusta de CSRF
 
-- [x] persistir respaldo de CSRF en `sessionStorage`
-- [x] rehidratar CSRF desde `sessionStorage` antes de rutas protegidas
+- [x] capturar `x-csrf-token` desde respuestas autenticadas del backend/BFF
+- [x] reenviar el último token en memoria en rutas CSRF-protected
 - [ ] añadir endpoint backend para reemitir/bootstrapping de CSRF válido sin depender del valor previo en memoria
 - [ ] definir cuándo el frontend debe intentar recuperar CSRF antes de degradar la sesión a login manual
 
@@ -216,16 +273,18 @@ Decisión adicional para flujos:
 
 ## Sugerencia de ejecución
 
-No conviene implementar `auth` aislado del `profile`.
+No conviene implementar `auth` como parche aislado del resto de la arquitectura ni aislado del `profile`.
 
 Recomendación:
 
-1. corregir primero el contrato tipado/documentado de `auth`
-2. exponer `contactEmail` en `profile`
-3. migrar consumidores de UI desde `auth.email` a `profile.contactEmail`
-4. corregir la separación entre formularios de auth y formularios de perfil
-5. dejar `auth.email` solo como dato de sesión donde el flujo auth lo siga necesitando
-6. cerrar la orquestación visual de flujos antes del pulido final
+1. fijar primero la infraestructura BFF y la decisión same-origin
+2. migrar `auth` sobre esa base
+3. corregir el contrato tipado/documentado de `auth`
+4. exponer `contactEmail` en `profile`
+5. migrar consumidores de UI desde `auth.email` a `profile.contactEmail`
+6. corregir la separación entre formularios de auth y formularios de perfil
+7. dejar `auth.email` solo como dato de sesión donde el flujo auth lo siga necesitando
+8. cerrar la orquestación visual de flujos antes del pulido final
 
 ## Plan de Implementación Propuesto
 

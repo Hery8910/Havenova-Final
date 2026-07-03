@@ -1,9 +1,12 @@
 'use client';
 import { useState } from 'react';
-import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import { RegisterFormData, RegisterPayload } from '../../../../../../../packages/types';
-import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '../../../../../../../packages/components/client/user/auth';
+import styles from '../../../../../../../packages/components/client/user/auth/authShell/authShell.module.css';
 import {
   PopupCode,
   fallbackButtons,
@@ -24,12 +27,13 @@ import {
 } from '../../../../../../../packages/utils';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { registerUser } from '../../../../../../../packages/services';
-import { useLang } from '../../../../../../../packages/hooks';
+import {
+  useAuthAlertActions,
+  useAuthAutoRedirect,
+  useLang,
+} from '../../../../../../../packages/hooks';
 import { href } from '../../../../../../../packages/utils';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { AuthPageShell } from '../AuthPageShell';
-import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
-import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface RegisterData {
   title: string;

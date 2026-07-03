@@ -5,6 +5,7 @@ import type {
   ClientDashboardView,
 } from '../../types/client/clientTypes';
 import api from '../api/api';
+import sameOriginApi from '../api/sameOriginApi';
 import { resolveTenantKey } from './tenantResolver';
 
 const buildAuthHeaders = (accessToken?: string) =>
@@ -19,6 +20,8 @@ const toClientResponseError = (message: string, responseData: unknown, status = 
   return error;
 };
 
+const getBootstrapApiClient = () => (typeof window === 'undefined' ? api : sameOriginApi);
+
 export async function getClient(
   tenantKey: string = resolveTenantKey()
 ): Promise<ClientBootstrapConfig> {
@@ -28,9 +31,12 @@ export async function getClient(
   }
 
   const safeTenantKey = encodeURIComponent(normalizedTenantKey);
-  const { data } = await api.get<ClientBootstrapResponse>(`/api/clients/tenant/${safeTenantKey}`, {
-    timeout: 8000,
-  });
+  const { data } = await getBootstrapApiClient().get<ClientBootstrapResponse>(
+    `/api/clients/tenant/${safeTenantKey}`,
+    {
+      timeout: 8000,
+    }
+  );
 
   if (!data?.success || !data?.data) {
     throw toClientResponseError(data?.message || 'Client bootstrap fetch failed', data);

@@ -27,6 +27,7 @@ Antes de un despliegue, esta batería debe permitir responder con evidencia a es
 - los alerts muestran la acción correcta y no exponen CTAs innecesarios
 - la primera conexión y el bootstrap del cliente no rompen la experiencia
 - el frontend, la red y el backend cuentan la misma historia
+- la historia observada corresponde a la fase correcta: transicional histórica o BFF objetivo
 
 ## Baseline actual del feature
 
@@ -36,11 +37,14 @@ Antes de abrir una nueva ronda de pruebas manuales, tomar como estado base:
 - el patrón `success + autoRedirect + cleanup` ya está centralizado
 - las acciones principales de alerts auth (`reload`, `goToHome`, `goToLogin`, `goToRegister`, `openVerification`, `resetPassword`, `requestNewLink`) ya salen de una utilidad shared
 - los mapeos de `code -> popup/status` siguen locales por flujo de forma intencional para conservar legibilidad
+- la integración browser-direct actual debe interpretarse como estado transicional previo a la migración BFF
 
 Implicación para testing:
 
 - si aparece una inconsistencia de CTA o navegación entre páginas, primero verificar si nace en el flujo local o en la capa shared
 - si aparece una inconsistencia de `popupKey` o `status`, revisar primero la página específica porque esa lógica aún no está centralizada
+- los resultados positivos de la fase cross-origin histórica no deben usarse como prueba final de la arquitectura objetivo
+- la fase objetivo deberá repetir esta batería sobre rutas same-origin servidas por el frontend
 
 ## Alcance
 
@@ -259,6 +263,18 @@ Conclusión:
 - esto no corresponde a un caso `cold`
 - corresponde a un caso `warm-authenticated` o `expired-session`
 - el comportamiento es sano si la UI no mostró error bloqueante y terminó autenticada
+
+## Regla de clasificación de evidencia
+
+Toda evidencia nueva debe etiquetarse explícitamente como una de estas:
+
+- `historical-cross-origin`
+- `transitional-browser-direct`
+- `target-bff-same-origin`
+
+Regla:
+
+- mientras `auth` siga migrándose, no mezclar evidencia de fases distintas dentro del mismo resultado sin marcarlo explícitamente
 
 Cómo documentarlo:
 

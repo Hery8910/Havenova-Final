@@ -1,5 +1,15 @@
 # Estado Actual: Contrato De Sesión Cross-Origin
 
+## Estado documental
+
+Este documento queda preservado como referencia histórica de la fase cross-origin directa.
+
+No describe la arquitectura objetivo cerrada del producto.
+
+La arquitectura objetivo ahora es:
+
+- navegador -> frontend BFF -> backend
+
 ## Objetivo
 
 Dejar documentado el estado actual de la integración de sesión `auth` después de los cambios coordinados entre backend y frontend para escenario cross-origin multicliente.

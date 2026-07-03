@@ -147,6 +147,10 @@
         "subject": {
           "required": "El asunto es obligatorio."
         },
+        "confirmPassword": {
+          "required": "Confirma tu contraseña.",
+          "mismatch": "Las contraseñas no coinciden."
+        },
         "tosAccepted": {
           "required": "Debes aceptar los términos y condiciones"
         }
@@ -166,11 +170,13 @@
         "name": "Nombre",
         "email": "Correo electrónico",
         "password": "Contraseña",
+        "confirmPassword": "Confirmar contraseña",
         "invalidData": "Revisa este campo.",
         "errorSummary": "Revisa los campos resaltados antes de continuar.",
         "forgotPassword": "¿Olvidaste tu contraseña?",
         "resetPassword": "Restablecer contraseña",
         "passwordHint": "Mín. 8 caracteres con mayúscula, número y símbolo.",
+        "confirmPasswordHint": "Repite la misma contraseña antes de continuar.",
         "showPassword": "Mostrar contraseña",
         "hidePassword": "Ocultar contraseña",
         "tosPrefix": "Acepto los ",
@@ -187,6 +193,7 @@
         "name": "Ana García",
         "email": "ana.garcia@example.com",
         "password": "Mín. 8 caracteres",
+        "confirmPassword": "Repite tu contraseña",
         "address": "Calle Principal 12, 28001 Madrid",
         "phone": "+34 612 345 678",
         "subject": "Selecciona un asunto",
@@ -341,6 +348,12 @@
 
   "dashboard": {
     "profileButton": "Open profile",
+    "auth": {
+      "login": {
+        "title": "Accede a tu perfil",
+        "description": "Inicia sesión para acceder a tu perfil y gestionar tu espacio de trabajo."
+      }
+    },
     "header": {
       "dashboard": "Overview",
       "requests": "Requests",

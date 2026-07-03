@@ -197,10 +197,10 @@ function resolveAccessibility(
 function resolveBranding(branding: NavbarBrandingConfig | undefined): ResolvedNavbarBranding {
   return {
     homeHref: branding?.homeHref ?? '/',
-    desktopLogoSrc: branding?.desktopLogoSrc ?? '/logos/logo-dark.webp',
+    desktopLogoSrc: branding?.desktopLogoSrc ?? '/shared/logos/logo-dark.webp',
     desktopLogoWidth: branding?.desktopLogoWidth ?? 200,
     desktopLogoHeight: branding?.desktopLogoHeight ?? 50,
-    mobileLogoSrc: branding?.mobileLogoSrc ?? '/logos/logo-small-dark.webp',
+    mobileLogoSrc: branding?.mobileLogoSrc ?? '/shared/logos/logo-small-dark.webp',
     mobileLogoWidth: branding?.mobileLogoWidth ?? 20,
     mobileLogoHeight: branding?.mobileLogoHeight ?? 20,
   };

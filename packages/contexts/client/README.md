@@ -34,6 +34,12 @@ Su objetivo actual es:
 - `GET /api/clients/dashboard/:clientId` para configuración protegida del dashboard
 - Servicio: `packages/services/client/clientServices.ts`
 
+Regla actual:
+
+- en navegador, `getClient()` consume la ruta same-origin del frontend BFF
+- en SSR, `getClient()` mantiene el fetch servidor-servidor transicional existente
+- esto evita reintroducir llamadas cross-origin desde el browser cuando `ClientProvider` reintenta bootstrap
+
 ### Contrato esperado del backend
 
 Formato estándar:
@@ -114,6 +120,7 @@ Regla UX actual:
 
 - Uso de ruta canónica `/api/clients/...` (no `/api/client`)
 - Bootstrap público por `tenantKey`
+- Reintento de bootstrap en navegador alineado a BFF same-origin
 - Tipos de bootstrap alineados con vista mínima del backend
 
 ### Inconsistencias abiertas
@@ -188,6 +195,7 @@ NEXT_PUBLIC_TENANT_KEY_FALLBACK=tnk_havenova_backup
 - [x] Decidir alcance del frontend: solo `/api/clients/dashboard/:clientId`, sin `admin`
 - [ ] Definir si dashboard debe bootstrapear por `/api/clients/dashboard/:clientId`
 - [x] Ajustar servicios/tipos para vistas `ClientBootstrapConfig` y `ClientDashboardView`
+- [x] Exponer `GET /api/clients/tenant/:tenantKey` vía BFF same-origin para reintentos en navegador
 
 ### Fase 5: Limpieza y hardening
 

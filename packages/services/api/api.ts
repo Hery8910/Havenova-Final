@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { getCsrfToken, setCsrfToken } from './csrfTokenStore';
 
+// Transitional browser-direct backend client.
+// New domains should prefer same-origin frontend routes backed by the BFF layer.
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
-const CSRF_STORAGE_KEY = 'hv-csrf-token';
 
 const api = axios.create({
   baseURL: baseURL || undefined,
@@ -10,7 +12,6 @@ const api = axios.create({
 
 const CSRF_HEADER = 'x-csrf-token';
 const FRONTEND_ORIGIN_HEADER = 'x-frontend-origin';
-let csrfTokenMemory = '';
 
 const csrfProtectedRoutes = new Set([
   '/api/auth/refresh-token',
@@ -42,59 +43,6 @@ const getHeaderValue = (headers: unknown, name: string): string => {
 
   return typeof direct === 'string' ? direct : '';
 };
-
-const readStoredCsrfToken = (): string => {
-  if (typeof window === 'undefined') return '';
-
-  try {
-    return window.sessionStorage.getItem(CSRF_STORAGE_KEY)?.trim() || '';
-  } catch {
-    return '';
-  }
-};
-
-const writeStoredCsrfToken = (value: string) => {
-  if (typeof window === 'undefined') return;
-
-  try {
-    if (!value) {
-      window.sessionStorage.removeItem(CSRF_STORAGE_KEY);
-      return;
-    }
-
-    window.sessionStorage.setItem(CSRF_STORAGE_KEY, value);
-  } catch {
-    // Ignore storage failures and keep the in-memory fallback.
-  }
-};
-
-const hydrateCsrfToken = (): string => {
-  if (csrfTokenMemory) return csrfTokenMemory;
-
-  const storedToken = readStoredCsrfToken();
-  if (storedToken) {
-    csrfTokenMemory = storedToken;
-  }
-
-  return csrfTokenMemory;
-};
-
-export const getCsrfToken = (): string => hydrateCsrfToken();
-
-export const setCsrfToken = (value?: string | null) => {
-  csrfTokenMemory = value?.trim() || '';
-  writeStoredCsrfToken(csrfTokenMemory);
-};
-
-export const clearCsrfToken = () => {
-  csrfTokenMemory = '';
-  writeStoredCsrfToken('');
-};
-
-export const getCsrfDebugState = () => ({
-  hasInMemoryCsrfToken: Boolean(csrfTokenMemory),
-  hasSessionStorageCsrfToken: Boolean(readStoredCsrfToken()),
-});
 
 const updateCsrfTokenFromHeaders = (headers: unknown) => {
   const nextToken = getHeaderValue(headers, CSRF_HEADER);

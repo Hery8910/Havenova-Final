@@ -1,4 +1,4 @@
-import api from '../api/api';
+import sameOriginApi from '../api/sameOriginApi';
 import { ApiResponse } from '@/packages/types/api';
 import {
   ContactMessage,
@@ -69,7 +69,7 @@ const normalizeContactMessage = (message: any): ContactMessage => ({
 export const createContactMessage = async (
   payload: ContactMessageCreatePayload
 ): Promise<ContactMessageCreateResponse> => {
-  const { data } = await api.post<ApiResponse<{ id: string }>>('/api/contact', payload, {
+  const { data } = await sameOriginApi.post<ApiResponse<{ id: string }>>('/api/contact', payload, {
     withCredentials: true,
   });
 
@@ -85,7 +85,7 @@ export const listContactMessages = async (
   params: ContactMessagesQuery,
   accessToken?: string
 ): Promise<ContactMessagesListResponse> => {
-  const { data } = await api.get<ApiResponse<any[]>>('/api/contact', {
+  const { data } = await sameOriginApi.get<ApiResponse<any[]>>('/api/contact', {
     params,
     withCredentials: true,
     headers: buildAuthHeaders(accessToken),
@@ -109,7 +109,7 @@ export const respondContactMessage = async (
   payload: ContactMessageRespondPayload,
   accessToken?: string
 ): Promise<ContactMessageRespondResponse> => {
-  const { data } = await api.patch<ApiResponse<any>>(
+  const { data } = await sameOriginApi.patch<ApiResponse<any>>(
     `/api/contact/${id}/respond`,
     payload,
     {
@@ -130,7 +130,7 @@ export const deleteContactMessage = async (
   id: string,
   accessToken?: string
 ): Promise<ContactMessageDeleteResponse> => {
-  const { data } = await api.delete<ContactMessageDeleteResponse>(`/api/contact/${id}`, {
+  const { data } = await sameOriginApi.delete<ContactMessageDeleteResponse>(`/api/contact/${id}`, {
     withCredentials: true,
     headers: buildAuthHeaders(accessToken),
   });
@@ -141,7 +141,7 @@ export const deleteContactMessage = async (
 export const deleteContactMessages = async (
   accessToken?: string
 ): Promise<ContactMessageBulkDeleteResponse> => {
-  const { data } = await api.delete<ContactMessageBulkDeleteResponse>('/api/contact', {
+  const { data } = await sameOriginApi.delete<ContactMessageBulkDeleteResponse>('/api/contact', {
     withCredentials: true,
     headers: buildAuthHeaders(accessToken),
   });

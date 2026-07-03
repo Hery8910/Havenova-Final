@@ -379,6 +379,10 @@ export const fallbackPopups: Record<string, PopupFallback> = {
   WORKER_CREATED: withClose('Mitarbeiter erstellt', 'Der Mitarbeiter wurde erfolgreich erstellt.'),
   WORKER_DELETED: withClose('Mitarbeiter gelöscht', 'Der Mitarbeiter wurde entfernt.'),
   WORKER_FOUND: withClose('Mitarbeiter geladen', 'Die Mitarbeiterdetails wurden erfolgreich geladen.'),
+  WORKER_INVITE_RESENT: withClose(
+    'Einladung erneut gesendet',
+    'Die Einladung fuer den Mitarbeiter wurde erneut versendet.'
+  ),
   WORKER_LIST: withClose('Mitarbeiter geladen', 'Die Mitarbeiterliste wurde erfolgreich geladen.'),
   WORKER_UPDATED: withClose(
     'Mitarbeiter aktualisiert',

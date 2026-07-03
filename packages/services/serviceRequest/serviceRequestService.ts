@@ -1,4 +1,4 @@
-import api from '../api/api';
+import sameOriginApi from '../api/sameOriginApi';
 import type { ApiResponse } from '@/packages/types';
 import type {
   CreateServiceRequestInput,
@@ -19,7 +19,7 @@ export interface CreateServiceRequestResponse<TServiceType extends ServiceType =
 export const createServiceRequest = async <TServiceType extends ServiceType>(
   payload: CreateServiceRequestPayload<TServiceType>
 ): Promise<CreateServiceRequestResponse<TServiceType>> => {
-  const { data } = await api.post<ApiResponse<ServiceRequest<TServiceType>>>(
+  const { data } = await sameOriginApi.post<ApiResponse<ServiceRequest<TServiceType>>>(
     '/api/home-services/service-request',
     payload,
     {

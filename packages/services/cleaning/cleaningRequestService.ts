@@ -1,4 +1,4 @@
-import api from '../api/api';
+import sameOriginApi from '../api/sameOriginApi';
 import type { ApiResponse } from '@/packages/types';
 import type {
   CleaningServiceRequest,
@@ -17,7 +17,7 @@ export interface CleaningRequestCreateResponse {
 export const createCleaningRequest = async (
   payload: CleaningRequestCreatePayload
 ): Promise<CleaningRequestCreateResponse> => {
-  const { data } = await api.post<ApiResponse<CleaningServiceRequest>>(
+  const { data } = await sameOriginApi.post<ApiResponse<CleaningServiceRequest>>(
     '/api/home-services/service-request',
     payload,
     {

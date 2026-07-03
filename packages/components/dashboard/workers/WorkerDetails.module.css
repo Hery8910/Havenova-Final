@@ -23,7 +23,12 @@
 }
 .headerDiv {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+.actionButton {
+  margin-left: auto;
 }
 .avatarWrap {
   display: flex;

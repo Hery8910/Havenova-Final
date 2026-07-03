@@ -3,9 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
-import { useLang } from '../../../../../../packages/hooks';
-import { href } from '../../../../../../packages/utils';
-import { fallbackButtons } from '../../../../../../packages/contexts';
+import { fallbackButtons } from '../contexts';
+import type { PopupsTexts } from '../contexts/alert/alert.types';
+import { href } from '../utils';
+import { useLang } from './useLang';
 
 type AuthAlertButtons = typeof fallbackButtons;
 type AuthConfirmActionKind =
@@ -20,13 +21,17 @@ type AuthConfirmActionKind =
 type AuthCancelActionKind = 'close' | 'goToHome' | 'goToLogin';
 
 interface UseAuthAlertActionsOptions {
-  buttons: AuthAlertButtons;
+  buttons?: PopupsTexts['button'];
   closeAlert: () => void;
 }
 
 export function useAuthAlertActions({ buttons, closeAlert }: UseAuthAlertActionsOptions) {
   const router = useRouter();
   const lang = useLang();
+  const resolvedButtons: AuthAlertButtons = {
+    ...fallbackButtons,
+    ...buttons,
+  };
 
   const navigateAndClose = useCallback(
     (path: string) => {
@@ -40,22 +45,22 @@ export function useAuthAlertActions({ buttons, closeAlert }: UseAuthAlertActions
     (kind: AuthConfirmActionKind) => {
       switch (kind) {
         case 'reload':
-          return buttons.reload;
+          return resolvedButtons.reload;
         case 'goToHome':
-          return buttons.goToHome;
+          return resolvedButtons.goToHome;
         case 'goToLogin':
-          return buttons.goToLogin;
+          return resolvedButtons.goToLogin;
         case 'goToRegister':
-          return buttons.goToRegister;
+          return resolvedButtons.goToRegister;
         case 'openVerification':
-          return buttons.openVerification;
+          return resolvedButtons.openVerification;
         case 'resetPassword':
-          return buttons.resetPassword;
+          return resolvedButtons.resetPassword;
         case 'requestNewLink':
-          return buttons.requestNewLink;
+          return resolvedButtons.requestNewLink;
       }
     },
-    [buttons]
+    [resolvedButtons]
   );
 
   const getConfirmAction = useCallback(
@@ -89,14 +94,14 @@ export function useAuthAlertActions({ buttons, closeAlert }: UseAuthAlertActions
     (kind: AuthCancelActionKind = 'close') => {
       switch (kind) {
         case 'goToHome':
-          return buttons.goToHome;
+          return resolvedButtons.goToHome;
         case 'goToLogin':
-          return buttons.goToLogin;
+          return resolvedButtons.goToLogin;
         default:
-          return buttons.close;
+          return resolvedButtons.close;
       }
     },
-    [buttons]
+    [resolvedButtons]
   );
 
   const getCancelAction = useCallback(

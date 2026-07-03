@@ -85,7 +85,7 @@ test('i18n fallback layer resolves locale-aware resources instead of exporting D
   assert.match(i18nIndexSource, /fallbackText/);
   assert.doesNotMatch(i18nIndexSource, /fallbackText\.de/);
   assert.match(i18nFallbackSource, /getI18nFallbacks/);
-  assert.match(i18nFallbackSource, /language === 'en' \? 'en' : 'de'/);
+  assert.match(i18nFallbackSource, /language === 'en' \|\| language === 'es' \? language : 'de'/);
   assert.match(i18nFallbackSource, /resources\[locale\]/);
   assert.match(i18nFallbackSource, /Legacy default exports remain DE-only/);
 });

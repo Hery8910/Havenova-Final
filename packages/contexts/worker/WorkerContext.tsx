@@ -2,20 +2,21 @@
 
 import {
   createContext,
-  useCallback,
   useContext,
-  useEffect,
+  useCallback,
   useMemo,
-  useRef,
-  useState,
   ReactNode,
 } from 'react';
 import Cookies from 'js-cookie';
 import { useGlobalAlert } from '../alert';
 import { useI18n, getI18nFallbacks } from '../i18n';
 import { useAuth } from '../auth/authContext';
-import { getWorkerProfile, refreshToken, updateWorkerProfile } from '@havenova/services';
-import { getPopup, resolvePreferredContactEmail } from '@havenova/utils';
+import {
+  SessionComplementSource,
+  useSessionComplement,
+} from '../sessionComplement/useSessionComplement';
+import { getWorkerProfile, updateWorkerProfile } from '@havenova/services';
+import { resolvePreferredContactEmail } from '@havenova/utils';
 import {
   UpdateWorkerProfilePayload,
   WorkerLanguage,
@@ -23,12 +24,13 @@ import {
   ThemeMode,
 } from '@/packages/types';
 
-const WORKER_STORAGE_KEY = 'hv-worker-profile';
-
 interface WorkerContextProps {
   worker: WorkerRecord;
+  isOffline: boolean;
+  lastSyncAt: string | null;
   loading: boolean;
   reloadWorker: () => Promise<void>;
+  source: SessionComplementSource;
   updateWorker: (patch: UpdateWorkerProfilePayload) => Promise<void>;
   setLanguage: (lang: WorkerLanguage) => Promise<void>;
   setTheme: (theme: ThemeMode) => Promise<void>;
@@ -39,59 +41,66 @@ export const WorkerContext = createContext<WorkerContextProps | undefined>(undef
 
 export const useOptionalWorkerContext = () => useContext(WorkerContext);
 
+const DEFAULT_WORKER_AVATAR = '/shared/avatars/avatar-1.png';
+const getWorkerStorageKey = (
+  clientId?: string | null,
+  userClientId?: string | null
+) => `hv-worker:${clientId || 'guest'}:${userClientId || 'guest'}`;
+
+const isSameWorkerState = (left: WorkerRecord | null, right: WorkerRecord) => {
+  if (!left) return false;
+
+  return (
+    left.userClientId === right.userClientId &&
+    left.clientId === right.clientId &&
+    left.email === right.email &&
+    left.name === right.name &&
+    left.phone === right.phone &&
+    left.address === right.address &&
+    left.profileImage === right.profileImage &&
+    left.language === right.language &&
+    left.theme === right.theme &&
+    JSON.stringify(left.extra ?? null) === JSON.stringify(right.extra ?? null) &&
+    left.createdAt === right.createdAt &&
+    left.updatedAt === right.updatedAt
+  );
+};
+
 export const WorkerProvider = ({ children }: { children: ReactNode }) => {
-  const { auth } = useAuth();
+  const { auth, refreshAuth } = useAuth();
   const { showError, closeAlert } = useGlobalAlert();
   const { texts, language } = useI18n();
   const { fallbackPopups } = getI18nFallbacks(language);
   const popups = useMemo(() => texts?.popups ?? {}, [texts]);
   const clientId = auth.clientId;
-  const [worker, setWorker] = useState<WorkerRecord | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isClientReady, setIsClientReady] = useState(false);
-  const isRefreshingRef = useRef(false);
-  const notFoundRef = useRef(false);
-  const didNotifyRef = useRef(false);
-  const workerRef = useRef<WorkerRecord | null>(null);
-  const globalInternalErrorFallback = fallbackPopups.GLOBAL_INTERNAL_ERROR;
+  const storageKey = useMemo(
+    () => getWorkerStorageKey(auth.clientId, auth.userClientId),
+    [auth.clientId, auth.userClientId]
+  );
   const workerLoadFailedFallback =
     fallbackPopups.WORKER_LOAD_FAILED ?? fallbackPopups.GLOBAL_INTERNAL_ERROR;
-
-  const loadFromStorage = (): WorkerRecord | null => {
-    if (typeof window === 'undefined') return null;
-    const raw = localStorage.getItem(WORKER_STORAGE_KEY);
-    if (!raw) return null;
-    try {
-      return JSON.parse(raw) as WorkerRecord;
-    } catch {
-      return null;
-    }
-  };
-
-  const saveToStorage = (value: WorkerRecord | null) => {
-    if (typeof window === 'undefined') return;
-    if (!value) {
-      localStorage.removeItem(WORKER_STORAGE_KEY);
-      return;
-    }
-    localStorage.setItem(WORKER_STORAGE_KEY, JSON.stringify(value));
-  };
-
-  const createLocalDefault = useCallback(
-    (previous?: WorkerRecord | null): WorkerRecord => ({
-      userClientId: previous?.userClientId ?? auth.userClientId ?? '',
-      clientId: previous?.clientId ?? clientId ?? '',
-      email: resolvePreferredContactEmail(previous?.email, auth.email),
-      name: previous?.name ?? '',
-      phone: previous?.phone,
-      address: previous?.address,
-      profileImage: previous?.profileImage ?? '/avatars/avatar-1.svg',
-      language: previous?.language ?? 'de',
-      theme: previous?.theme ?? 'light',
-      extra: previous?.extra,
-      createdAt: previous?.createdAt,
-      updatedAt: previous?.updatedAt,
-    }),
+  const createLocalDefault = useMemo(
+    () =>
+      (previous?: WorkerRecord | null): WorkerRecord => ({
+        userClientId: previous?.userClientId ?? auth.userClientId ?? '',
+        clientId: previous?.clientId ?? clientId ?? '',
+        email: resolvePreferredContactEmail(previous?.email, auth.email),
+        name: previous?.name ?? '',
+        phone: previous?.phone,
+        address: previous?.address,
+        profileImage: previous?.profileImage ?? DEFAULT_WORKER_AVATAR,
+        language: previous?.language ?? 'de',
+        theme: previous?.theme ?? 'light',
+        extra: previous?.extra,
+        roles: previous?.roles,
+        jobTitle: previous?.jobTitle,
+        status: previous?.status,
+        isVerified: previous?.isVerified,
+        authCreated: previous?.authCreated,
+        userClientCreated: previous?.userClientCreated,
+        createdAt: previous?.createdAt,
+        updatedAt: previous?.updatedAt,
+      }),
     [auth.email, auth.userClientId, clientId]
   );
 
@@ -106,180 +115,79 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     const stored = Cookies.get('lang');
     return stored === 'de' || stored === 'en' || stored === 'es' ? stored : null;
   };
+  const alertApi = useMemo(
+    () => ({
+      showError,
+      closeAlert,
+    }),
+    [showError, closeAlert]
+  );
 
-  useEffect(() => {
-    setIsClientReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClientReady) return;
-
-    const stored = loadFromStorage();
-    if (stored) {
-      setWorker(stored);
-    } else {
-      const local = createLocalDefault(null);
-      setWorker(local);
-      saveToStorage(local);
-    }
-    setLoading(false);
-  }, [createLocalDefault, isClientReady]);
-
-  useEffect(() => {
-    if (!isClientReady || !worker) return;
-    saveToStorage(worker);
-  }, [worker, isClientReady]);
-
-  useEffect(() => {
-    if (!isClientReady) return;
-    if (!worker?.theme) return;
-
-    document.documentElement.setAttribute('data-theme', worker.theme);
-    localStorage.setItem('theme', worker.theme);
-  }, [isClientReady, worker?.theme]);
-
-  useEffect(() => {
-    workerRef.current = worker;
-  }, [worker]);
-
-  const reloadWorker = useCallback(async () => {
-    if (!auth.isLogged || auth.role === 'guest' || isRefreshingRef.current) return;
-    if (notFoundRef.current) return;
-    isRefreshingRef.current = true;
-
-    try {
-      const backendWorker = await getWorkerProfile();
-      const merged = { ...createLocalDefault(workerRef.current), ...backendWorker };
-      setWorker(merged);
-      saveToStorage(merged);
-      notFoundRef.current = false;
-      didNotifyRef.current = false;
-    } catch (err: any) {
-      const status = err?.response?.status;
-      const code = err?.response?.data?.code;
-
-      if (status === 404 || code === 'WORKER_NOT_FOUND') {
-        notFoundRef.current = true;
-        const local = createLocalDefault(workerRef.current);
-        setWorker(local);
-        saveToStorage(local);
-        if (!didNotifyRef.current) {
-          didNotifyRef.current = true;
-          const popup = getPopup(
-            popups,
-            'WORKER_LOAD_FAILED',
-            'GLOBAL_INTERNAL_ERROR',
-            workerLoadFailedFallback
-          );
-          showError({
-            response: {
-              status: 404,
-              title: popup.title,
-              description: popup.description,
-              cancelLabel: popup.close ?? globalInternalErrorFallback.close,
-            },
-            onCancel: closeAlert,
-          });
-        }
-        return;
-      }
-
-      if (status === 401 || status === 403) {
-        try {
-          await refreshToken();
-          const backendWorker = await getWorkerProfile();
-          const merged = { ...createLocalDefault(workerRef.current), ...backendWorker };
-          setWorker(merged);
-          saveToStorage(merged);
-          notFoundRef.current = false;
-        } catch {
-          // AuthContext should handle the session fallback.
-        }
-      }
-    } finally {
-      isRefreshingRef.current = false;
-    }
-  }, [
-    auth.isLogged,
-    auth.role,
-    closeAlert,
-    createLocalDefault,
-    globalInternalErrorFallback,
-    popups,
-    showError,
-    workerLoadFailedFallback,
-  ]);
-
-  useEffect(() => {
-    if (!auth.isLogged || auth.role === 'guest') return;
-    reloadWorker();
-  }, [auth.isLogged, auth.role, reloadWorker]);
-
-  useEffect(() => {
-    if (!isClientReady) return;
-    if (auth.isLogged && auth.role !== 'guest') return;
-    notFoundRef.current = false;
-    didNotifyRef.current = false;
-    const lastWorker = worker ?? loadFromStorage();
-    const local = {
+  const createLoggedOutLocal = useCallback(
+    (previous?: WorkerRecord | null): WorkerRecord => ({
       ...createLocalDefault(null),
       userClientId: '',
       email: '',
       name: '',
       phone: '',
       address: '',
-      language: lastWorker?.language ?? getStoredLanguage() ?? 'de',
-      theme: lastWorker?.theme ?? getStoredTheme() ?? 'light',
-    };
-    setWorker(local);
-    saveToStorage(local);
-  }, [auth.isLogged, auth.role, createLocalDefault, isClientReady, worker]);
-
-  const updateWorker = useCallback(
-    async (patch: UpdateWorkerProfilePayload) => {
-      if (!worker) return;
-
-      const updatedLocal = { ...worker, ...patch };
-      setWorker(updatedLocal);
-      saveToStorage(updatedLocal);
-
-      if (auth.isLogged && auth.role !== 'guest') {
-        try {
-          await updateWorkerProfile(patch);
-          await reloadWorker();
-        } catch (err: any) {
-          const status = err?.response?.status;
-          if (status === 401 || status === 403) {
-            try {
-              await refreshToken();
-              await updateWorkerProfile(patch);
-              await reloadWorker();
-            } catch {
-              // AuthContext should handle the session fallback.
-            }
-          }
-        }
-      }
-    },
-    [auth.isLogged, auth.role, worker, reloadWorker]
+      language: previous?.language ?? getStoredLanguage() ?? 'de',
+      theme: previous?.theme ?? getStoredTheme() ?? 'light',
+    }),
+    [createLocalDefault]
   );
 
-  const setLanguage = (lang: WorkerLanguage) => updateWorker({ language: lang });
-  const setTheme = (theme: ThemeMode) => updateWorker({ theme });
-  const setProfileImage = (profileImage: string) => updateWorker({ profileImage });
+  const updateRemote = useCallback(async (patch: Partial<UpdateWorkerProfilePayload>) => {
+    await updateWorkerProfile(patch);
+  }, []);
 
-  if (!isClientReady || loading || !worker) return null;
+  const isNotFoundError = useCallback(
+    (status?: number, code?: string) => status === 404 || code === 'WORKER_NOT_FOUND',
+    []
+  );
+
+  const {
+    entity: worker,
+    isOffline,
+    lastSyncAt,
+    loading,
+    reloadEntity: reloadWorker,
+    setLanguage,
+    setProfileImage,
+    setTheme,
+    source,
+    updateEntity: updateWorker,
+  } = useSessionComplement<WorkerRecord, UpdateWorkerProfilePayload>({
+    auth,
+    refreshAuth,
+    storageKey,
+    createLocalDefault,
+    createLoggedOutLocal,
+    isSameState: isSameWorkerState,
+    fetchRemote: getWorkerProfile,
+    updateRemote,
+    isNotFoundError,
+    missingEntityPopupKey: 'WORKER_LOAD_FAILED',
+    missingEntityFallback: workerLoadFailedFallback,
+    popups,
+    alert: alertApi,
+  });
+
+  if (loading || !worker) return null;
 
   return (
     <WorkerContext.Provider
       value={{
         worker,
+        isOffline,
+        lastSyncAt,
         loading,
         reloadWorker,
+        source,
         updateWorker,
-        setLanguage,
-        setTheme,
-        setProfileImage,
+        setLanguage: (lang) => setLanguage(lang),
+        setTheme: (theme) => setTheme(theme),
+        setProfileImage: (profileImage) => setProfileImage(profileImage),
       }}
     >
       {children}

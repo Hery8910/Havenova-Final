@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '../userAuth.module.css';
 import Link from 'next/link';
 import {
   PopupCode,
@@ -16,14 +15,19 @@ import {
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { getAuthUser, getCsrfDebugState, loginUser } from '../../../../../../../packages/services';
-import { useLang } from '../../../../../../../packages/hooks';
+import {
+  useAuthAlertActions,
+  useAuthAutoRedirect,
+  useLang,
+} from '../../../../../../../packages/hooks';
 import { LoginPayload } from '../../../../../../../packages/types';
 import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
-import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '../../../../../../../packages/components/client/user/auth';
+import styles from '../../../../../../../packages/components/client/user/auth/authShell/authShell.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { AuthPageShell } from '../AuthPageShell';
-import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
-import { useAuthAlertActions } from '../useAuthAlertActions';
 
 export interface LoginData {
   title: string;
@@ -69,20 +73,12 @@ const Login = () => {
     if (typeof document === 'undefined' || typeof window === 'undefined') {
       return {
         frontendOrigin: '',
-        hasReadableCsrfToken: false,
-        readableCookieNames: [] as string[],
+        ...getCsrfDebugState(),
       };
     }
 
-    const cookieString = document.cookie || '';
-
     return {
       frontendOrigin: window.location.origin,
-      hasReadableCsrfToken: cookieString.includes('csrfToken='),
-      readableCookieNames: cookieString
-        .split(';')
-        .map((part) => part.trim().split('=')[0])
-        .filter(Boolean),
       ...getCsrfDebugState(),
     };
   };

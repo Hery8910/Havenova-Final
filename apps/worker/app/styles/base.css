@@ -1,0 +1,141 @@
+/* ==========================================
+   12. RESET / BASE
+   ========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-page-bg);
+  color: var(--color-page-body);
+  font-family: var(--font-family-body);
+  font-size: var(--type-body-md-size);
+  line-height: var(--leading-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -100;
+  pointer-events: none;
+  background-color: var(--color-page-bg);
+  background-image: var(--gradient-page);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+main {
+  display: block;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  padding-left: 1.25rem;
+}
+
+/* ==========================================
+   13. DEFAULT TYPOGRAPHY
+   ========================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--color-page-heading);
+  font-family: var(--font-family-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+h1 {
+  font-size: var(--type-display-md-size);
+}
+
+h2 {
+  font-size: var(--type-title-xl-size);
+}
+
+h3 {
+  font-size: var(--type-title-lg-size);
+}
+
+h4 {
+  font-size: var(--type-title-md-size);
+}
+
+h5 {
+  font-size: var(--type-title-sm-size);
+}
+
+h6 {
+  font-size: var(--type-body-lg-size);
+}
+
+p {
+  margin: 0;
+  color: var(--color-page-body);
+}
+
+/* ==========================================
+   14. LAYOUT HELPERS
+   ========================================== */
+.container {
+  width: min(100% - (var(--space-4) * 2), var(--container-max));
+  margin-inline: auto;
+}
+
+.section-padding {
+  padding-block: var(--space-section);
+}

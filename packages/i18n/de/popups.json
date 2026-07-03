@@ -37,15 +37,21 @@
   },
   "AUTH_FORBIDDEN": {
     "title": "Zugriff verboten",
-    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen."
+    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
+    "confirm": "Zum Login",
+    "close": "Schließen"
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
-    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen."
+    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
+    "confirm": "Zum Login",
+    "close": "Weiter stöbern"
   },
   "USER_SESSION_EXPIRED": {
     "title": "Sitzung abgelaufen",
-    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden."
+    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden.",
+    "confirm": "Zum Login",
+    "close": "Weiter stöbern"
   },
   "AUTH_BLOCKED": {
     "title": "Konto gesperrt",
@@ -135,7 +141,9 @@
   },
   "CLIENT_NOT_FOUND": {
     "title": "Client nicht gefunden",
-    "description": "Der angegebene Client existiert nicht."
+    "description": "Der angegebene Client existiert nicht.",
+    "confirm": "Zur Startseite",
+    "close": "Schließen"
   },
   "USER_REGISTER_SUCCESS": {
     "title": "Registrierung erfolgreich",
@@ -407,6 +415,10 @@
   "WORKER_FOUND": {
     "title": "Mitarbeiter geladen",
     "description": "Die Mitarbeiterdetails wurden erfolgreich geladen."
+  },
+  "WORKER_INVITE_RESENT": {
+    "title": "Einladung erneut gesendet",
+    "description": "Die Einladung fuer den Mitarbeiter wurde erneut versendet."
   },
   "WORKER_LIST": {
     "title": "Mitarbeiter geladen",

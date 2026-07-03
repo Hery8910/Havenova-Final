@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { HiMiniLanguage } from 'react-icons/hi2';
 import type { AppLanguage } from '../../types';
+import { useOptionalAdminContext } from '../../contexts/admin/AdminContext';
 import { useOptionalProfileContext } from '../../contexts/profile/ProfileContext';
 import { useOptionalWorkerContext } from '../../contexts/worker/WorkerContext';
 import sharedStyles from '../client/navbar/NavbarShared.module.css';
@@ -45,6 +46,7 @@ export default function LanguageSwitcher({
 }: LanguageSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const adminContext = useOptionalAdminContext();
   const profileContext = useOptionalProfileContext();
   const workerContext = useOptionalWorkerContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +62,8 @@ export default function LanguageSwitcher({
   const menuId = useId();
   const titleId = useId();
 
-  const setLanguage = profileContext?.setLanguage ?? workerContext?.setLanguage;
+  const setLanguage =
+    adminContext?.setLanguage ?? profileContext?.setLanguage ?? workerContext?.setLanguage;
   const currentPathLang = pathname.split('/')[1];
   const currentLang = SUPPORTED_LANGUAGES.includes(currentPathLang as AppLanguage)
     ? (currentPathLang as AppLanguage)

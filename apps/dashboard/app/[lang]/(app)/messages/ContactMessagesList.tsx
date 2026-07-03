@@ -94,7 +94,7 @@ export default function ContactMessagesList({
             const isResponderOpen = activeMessageId === msg._id;
             const senderName = msg.sender.name;
             const senderEmail = msg.sender.email;
-            const senderAvatar = msg.sender.profileImage || '/avatars/avatar-1.svg';
+            const senderAvatar = msg.sender.profileImage || '/shared/avatars/avatar-1.png';
             const subject = msg.content.subject;
             const body = msg.content.body;
 
@@ -179,7 +179,7 @@ export default function ContactMessagesList({
                     <aside className={styles.responseAside} id={responseId}>
                       <Image
                         className={styles.image}
-                        src={msg.response?.respondedByProfileImage || '/avatars/avatar-1.svg'}
+                        src={msg.response?.respondedByProfileImage || '/shared/avatars/avatar-1.png'}
                         alt={msg.response?.respondedByName || 'System'}
                         width={40}
                         height={40}

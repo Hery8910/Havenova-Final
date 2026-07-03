@@ -408,6 +408,10 @@
     "title": "Worker loaded",
     "description": "The worker details were retrieved successfully."
   },
+  "WORKER_INVITE_RESENT": {
+    "title": "Invitacion reenviada",
+    "description": "La invitacion del trabajador se envio nuevamente."
+  },
   "WORKER_LIST": {
     "title": "Workers loaded",
     "description": "The workers list was retrieved successfully."

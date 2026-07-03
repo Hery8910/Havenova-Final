@@ -3,6 +3,7 @@
 import styles from './WorkerDetails.module.css';
 import { formatMessageAge } from '../../../utils';
 import type { WorkerDetailData } from '../../../types/worker/workerTypes';
+import type { RelativeTimeTexts } from '../../../utils/date/dateUtils';
 import Image from 'next/image';
 import { useI18n } from '../../../contexts/i18n/I18nContext';
 import { StatusBadge } from '../statusBadge';
@@ -13,6 +14,8 @@ interface WorkerDetailsProps {
   title?: string;
   emptyLabel?: string;
   loadingLabel?: string;
+  resendInviteLoading?: boolean;
+  onResendInvite?: (worker: WorkerDetailData) => void;
 }
 
 const WorkerDetails = ({
@@ -21,10 +24,14 @@ const WorkerDetails = ({
   title,
   emptyLabel,
   loadingLabel,
+  resendInviteLoading = false,
+  onResendInvite,
 }: WorkerDetailsProps) => {
   const { texts, language } = useI18n();
   const detailTexts = texts.components?.dashboard?.pages?.employees?.details;
-  const relativeTime = texts.date?.relative;
+  const relativeTime = (
+    texts.date as { relative?: Partial<RelativeTimeTexts> } | undefined
+  )?.relative;
 
   const resolvedTitle = title ?? detailTexts?.title ?? 'Worker details';
   const resolvedEmpty = emptyLabel ?? detailTexts?.emptyLabel ?? 'Select a worker to see details.';
@@ -38,7 +45,9 @@ const WorkerDetails = ({
   const accessStatusLabel = detailTexts?.accessStatusLabel ?? 'Access status';
   const createdLabel = detailTexts?.createdLabel ?? 'Created';
   const updatedLabel = detailTexts?.updatedLabel ?? 'Updated';
-  const extraLabel = detailTexts?.extraLabel ?? 'Extra';
+  const resendInviteLabel =
+    (detailTexts as { resendInviteLabel?: string } | undefined)?.resendInviteLabel ??
+    'Resend invite';
   const yesLabel = detailTexts?.yesLabel ?? 'Yes';
   const noLabel = detailTexts?.noLabel ?? 'No';
   if (loading) {
@@ -59,8 +68,9 @@ const WorkerDetails = ({
     );
   }
 
-  const avatarSrc = worker.profileImage || '/avatars/avatar-1.png';
-  const extraContent = worker.extra ? JSON.stringify(worker.extra, null, 2) : null;
+  const avatarSrc = worker.profileImage || '/shared/avatars/avatar-1.png';
+  const rolesValue = worker.roles?.length ? worker.roles.join(', ') : '-';
+  const canResendInvite = worker.status === 'invited' && Boolean(worker.email && worker.clientId);
 
   return (
     <section className={styles.section}>
@@ -68,6 +78,16 @@ const WorkerDetails = ({
         <div className={styles.headerDiv}>
           <StatusBadge label={worker.status} isActive={worker.isVerified} />
           <span className={styles.badge}>{worker.jobTitle || '-'}</span>
+          {canResendInvite && onResendInvite ? (
+            <button
+              type="button"
+              className={`button button--ghost ${styles.actionButton}`}
+              onClick={() => onResendInvite(worker)}
+              disabled={resendInviteLoading}
+            >
+              {resendInviteLoading ? `${resendInviteLabel}...` : resendInviteLabel}
+            </button>
+          ) : null}
         </div>
         <aside className={styles.avatarWrap}>
           {avatarSrc && (
@@ -111,7 +131,7 @@ const WorkerDetails = ({
         </li>
         <li key={roleLabel} className={styles.infoCard}>
           <p className="text-label">{roleLabel}</p>
-          <p className={styles.infoValue}>{worker.role || '-'}</p>
+          <p className={styles.infoValue}>{rolesValue}</p>
         </li>
         <li key={accessStatusLabel} className={styles.infoCard}>
           <p className="text-label">{accessStatusLabel}</p>

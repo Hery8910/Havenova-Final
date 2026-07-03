@@ -46,7 +46,7 @@ export function UserProfileIdentityCard({
       <header className={styles.header}>
         <AvatarSelector />
         <Image
-          src={normalizeAvatar(profile.profileImage) || '/avatars/avatar-5.png'}
+          src={normalizeAvatar(profile.profileImage) || '/shared/avatars/avatar-5.png'}
           alt={avatarAlt}
           width={100}
           height={100}

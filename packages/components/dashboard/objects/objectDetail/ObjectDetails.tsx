@@ -4,6 +4,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import styles from './ObjectDetails.module.css';
 import { BuildingDetail } from '@/packages/types/object';
 import { formatMessageAge } from '../../../../utils';
+import type { RelativeTimeTexts } from '../../../../utils/date/dateUtils';
 import { useI18n } from '../../../../contexts/i18n/I18nContext';
 
 interface ObjectDetailsTexts {
@@ -44,7 +45,9 @@ interface ObjectDetailsProps {
 
 const ObjectDetails = ({ object, texts, loading = false, onEdit }: ObjectDetailsProps) => {
   const { texts: i18nTexts, language } = useI18n();
-  const relativeTime = i18nTexts.date?.relative;
+  const relativeTime = (
+    i18nTexts.date as { relative?: Partial<RelativeTimeTexts> } | undefined
+  )?.relative;
 
   if (loading) {
     return (

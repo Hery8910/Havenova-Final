@@ -1,4 +1,3 @@
-import '../../../global.css';
 import styles from './layout.module.css';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
@@ -9,8 +8,6 @@ import {
   AuthProvider,
   ClientProvider,
   I18nProvider,
-  ProfileProvider,
-  WorkerProvider,
 } from '../../../../../../packages/contexts';
 import { AlertViewport } from '../../../../../../packages/components/alert';
 import Loading from '../../../../../../packages/components/loading/Loading';
@@ -60,24 +57,18 @@ export default async function LangLayout({
   }
 
   return (
-    <html lang={params.lang} data-theme="light">
-      <body className={styles.body}>
-        <I18nProvider initialLanguage={params.lang}>
-          <AlertProvider>
-            <AlertViewport />
-            <ClientProvider
-              initialClient={client}
-              initialError={clientError}
-              tenantKey={tenantKey}
-              loadingFallback={<Loading theme="light" />}
-            >
-              <AuthProvider>
-                <WorkerProvider>{children}</WorkerProvider>
-              </AuthProvider>
-            </ClientProvider>
-          </AlertProvider>
-        </I18nProvider>
-      </body>
-    </html>
+    <I18nProvider initialLanguage={params.lang}>
+      <AlertProvider>
+        <AlertViewport />
+        <ClientProvider
+          initialClient={client}
+          initialError={clientError}
+          tenantKey={tenantKey}
+          loadingFallback={<Loading theme="light" />}
+        >
+          <AuthProvider>{children}</AuthProvider>
+        </ClientProvider>
+      </AlertProvider>
+    </I18nProvider>
   );
 }

@@ -2,12 +2,17 @@
 
 import { useState } from 'react';
 import styles from './page.module.css';
-import { useI18n, useProfile, type AlertVisualState } from '@/packages/contexts';
+import {
+  fallbackGlobalError,
+  useAdmin,
+  useI18n,
+  type AlertVisualState,
+} from '@/packages/contexts';
 import AlertPopup from '@/packages/components/alert/alertPopup/AlertPopup';
 import { FormWrapper } from '@/packages/components/client/user/profile';
 import ThemeToggler from '@/packages/components/themeToggler/ThemeToggler';
 import LanguageSwitcher from '@/packages/components/languageSwitcher/LanguageSwitcher';
-import { formatUserAddress } from '@/packages/types';
+import { getPopup } from '@/packages/utils/alertType';
 
 export interface ThemeData {
   title: string;
@@ -28,12 +33,24 @@ interface EditFormData {
 }
 
 export default function Edit() {
-  const { profile, updateProfile, reloadProfile } = useProfile();
+  const { admin, updateAdmin, reloadAdmin } = useAdmin();
   const { texts } = useI18n();
   const popups = texts.popups;
   const edit: EditData = texts.pages.client.user.edit;
   const formText = texts.components.client.form;
   const editButton = formText.button.edit;
+  const globalErrorPopup = getPopup(
+    popups,
+    'GLOBAL_INTERNAL_ERROR',
+    'GLOBAL_INTERNAL_ERROR',
+    fallbackGlobalError
+  );
+  const authGetSuccessPopup = getPopup(
+    popups,
+    'AUTH_GET_SUCCESS',
+    'AUTH_GET_SUCCESS',
+    fallbackGlobalError
+  );
 
   const [alert, setAlert] = useState<{
     variant: Extract<AlertVisualState, 'success' | 'error'>;
@@ -46,37 +63,37 @@ export default function Edit() {
       if (!data.name || !data.phone) {
         setAlert({
           variant: 'error',
-          title: popups.GLOBAL_INTERNAL_ERROR.title,
-          description: popups.GLOBAL_INTERNAL_ERROR.description,
+          title: globalErrorPopup.title,
+          description: globalErrorPopup.description,
         });
         return;
       }
-      await updateProfile({
+      await updateAdmin({
         name: data.name,
         phone: data.phone,
       });
 
       setAlert({
         variant: 'success',
-        title: popups.AUTH_GET_SUCCESS.title,
-        description: popups.AUTH_GET_SUCCESS.description,
+        title: authGetSuccessPopup.title,
+        description: authGetSuccessPopup.description,
       });
-      await reloadProfile();
+      await reloadAdmin();
       setTimeout(() => {
         setAlert(null);
       }, 3000);
     } catch {
       setAlert({
         variant: 'error',
-        title: popups.GLOBAL_INTERNAL_ERROR.title,
-        description: popups.GLOBAL_INTERNAL_ERROR.description,
+        title: globalErrorPopup.title,
+        description: globalErrorPopup.description,
       });
     }
   };
 
-  if (!profile) return <p>Loading...</p>;
+  if (!admin) return <p>Loading...</p>;
   return (
-    <section className={`${styles.section} card`}>
+    <section className={`${styles.section} glass-panel--base`}>
       <header className={styles.header}>
         <h3>{edit.title}</h3>
         <p>{edit.description}</p>
@@ -101,12 +118,12 @@ export default function Edit() {
           onSubmit={handleEdit}
           button={editButton}
           initialValues={{
-            name: profile.name || '',
-            phone: profile.phone || '',
+            name: admin.name || '',
+            phone: admin.phone || '',
           }}
           loading={false}
         />
-        {profile.primaryAddress && <p>{formatUserAddress(profile.primaryAddress)}</p>}
+        {admin.address ? <p>{admin.address}</p> : null}
       </article>
       {alert && (
         <AlertPopup
@@ -115,7 +132,7 @@ export default function Edit() {
           description={alert.description}
           media={{
             kind: 'image',
-            src: `/alert/${alert.variant}.svg`,
+            src: `/shared/alert/${alert.variant}.svg`,
             alt: alert.variant === 'success' ? 'Success' : 'Error',
           }}
           primaryAction={{ label: 'Cerrar', onAction: () => setAlert(null) }}

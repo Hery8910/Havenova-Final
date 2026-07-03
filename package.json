@@ -12,10 +12,13 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm -r --parallel dev",
+    "sync:assets": "node scripts/sync-shared-assets.mjs",
+    "dev": "pnpm sync:assets && pnpm -r --parallel dev",
     "dev:client": "pnpm --filter @havenova/client dev",
     "dev:dashboard": "pnpm --filter @havenova/dashboard dev",
-    "build": "pnpm --filter @havenova/client build && pnpm --filter @havenova/dashboard build",
+    "dev:worker": "pnpm --filter @havenova/worker dev",
+    "build": "pnpm sync:assets && pnpm --filter @havenova/client build && pnpm --filter @havenova/dashboard build && pnpm --filter @havenova/worker build",
+    "build:worker": "pnpm --filter @havenova/worker build",
     "lint": "pnpm --recursive lint",
     "check:types": "tsc --noEmit",
     "test:client-context": "node --test tests/client-context/*.test.mjs",

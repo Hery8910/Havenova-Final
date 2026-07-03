@@ -1,0 +1,20 @@
+{
+  "name": "@havenova/styles",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./base.css": "./base.css",
+    "./typography.css": "./typography.css",
+    "./badges.css": "./badges.css",
+    "./buttons.css": "./buttons.css",
+    "./forms.css": "./forms.css",
+    "./cards.css": "./cards.css",
+    "./motion.css": "./motion.css",
+    "./helpers.css": "./helpers.css"
+  }
+}

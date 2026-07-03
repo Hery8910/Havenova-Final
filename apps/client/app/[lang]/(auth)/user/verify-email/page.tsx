@@ -16,19 +16,23 @@ import {
   useI18n,
   useProfile,
 } from '../../../../../../../packages/contexts';
-import { useLang } from '../../../../../../../packages/hooks';
+import {
+  useAuthAlertActions,
+  useAuthAutoRedirect,
+  useLang,
+} from '../../../../../../../packages/hooks';
 
-import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
-import styles from '../userAuth.module.css';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '../../../../../../../packages/components/client/user/auth';
+import styles from '../../../../../../../packages/components/client/user/auth/authShell/authShell.module.css';
 import { ResendVerificationEmailPayload } from '../../../../../../../packages/types';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { href } from '../../../../../../../packages/utils';
 import { useVerifyEmailActions } from '../../../../../../../packages/utils';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { AuthPageShell } from '../AuthPageShell';
-import { useAuthAutoRedirect } from '../useAuthAutoRedirect';
-import { useAuthAlertActions } from '../useAuthAlertActions';
 
 const VerifyEmailPageContent = () => {
   const router = useRouter();

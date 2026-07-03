@@ -13,23 +13,17 @@
     max(var(--space-4), env(safe-area-inset-left, 0px));
 }
 
-.authCardWrapper {
-  width: 100%;
-  max-width: 30rem;
-  max-height: 100%;
-  padding: 0;
-  margin: 0 auto;
-}
-
 .authSection {
   width: 100%;
+  max-width: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-4);
   padding: calc(var(--space-8) + env(safe-area-inset-top, 0px)) var(--space-6)
     calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  margin: 0 auto;
 }
 
 .authBrand {
@@ -83,15 +77,6 @@
   text-wrap: pretty;
   text-align: center;
   max-width: 40ch;
-}
-
-.authFormContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: var(--space-4);
 }
 
 .authFooter {
@@ -174,11 +159,6 @@
     padding: var(--space-3);
   }
 
-  .authCardWrapper {
-    max-width: none;
-    max-height: none;
-  }
-
   .authSection {
     min-height: calc(100dvh - (var(--space-3) * 2));
     gap: var(--space-8);
@@ -231,11 +211,6 @@
   .authMainLayout {
     padding: max(var(--space-2), env(safe-area-inset-top, 0px)) var(--space-2)
       max(var(--space-2), env(safe-area-inset-bottom, 0px));
-  }
-
-  .authCardWrapper {
-    min-height: calc(100dvh - (var(--space-2) * 2));
-    height: auto;
   }
 
   .authSection {

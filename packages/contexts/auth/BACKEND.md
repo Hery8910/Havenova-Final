@@ -1,5 +1,28 @@
 # Auth Domain
 
+## Status
+
+This file is now a historical backend-facing snapshot kept inside the frontend repo for reference only.
+
+It is not the canonical frontend integration strategy anymore.
+
+Current closed frontend-side decision:
+
+- browser auth should converge toward `browser -> frontend BFF -> backend`
+- direct browser-to-backend auth should be treated as transitional/historical
+
+Use this file for:
+
+- backend domain concepts
+- response and route reference
+- historical comparison against earlier frontend assumptions
+
+Do not use this file alone as the target frontend architecture source.
+
+For the current platform decision, see:
+
+- [docs/FRONTEND_BFF_STRATEGY.md](/home/heriberto/Escritorio/Havenova/havenova/docs/FRONTEND_BFF_STRATEGY.md:1)
+
 ## Purpose
 
 The `auth` domain is the global authentication and session layer.
@@ -122,6 +145,12 @@ Unexpected errors use:
 ```
 
 ## Session And CSRF
+
+Historical note:
+
+- the cookie and CSRF details below describe the backend contract shape directly
+- the target frontend architecture should consume that contract through a BFF layer
+- frontend browser code should not be treated as the permanent direct consumer of these backend cookies
 
 The auth domain is cookie-based.
 

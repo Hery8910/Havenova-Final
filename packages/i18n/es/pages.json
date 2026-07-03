@@ -868,6 +868,11 @@
         "title": "Establece una nueva contraseña",
         "info": "Elige una nueva contraseña para tu cuenta.",
         "button": "Guardar nueva contraseña",
+        "invite": {
+          "title": "Activa tu acceso al dashboard",
+          "info": "Define tu contraseña para activar la invitación y continuar con tu primer acceso al dashboard.",
+          "resolvedDescription": "Esta invitación está vinculada a {email}."
+        },
         "linkErrors": {
           "invalidOrExpired": "Este enlace ya no es válido o ha caducado.",
           "missingToken": "Este enlace para restablecer la contraseña está incompleto o no es válido."

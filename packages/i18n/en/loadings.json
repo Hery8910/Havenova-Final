@@ -14,6 +14,10 @@
       "title": "Logging you in…",
       "description": "We are preparing your session. This may take a moment."
     },
+    "dashboardLogin": {
+      "title": "Accessing your profile…",
+      "description": "We are preparing your workspace. This may take a moment."
+    },
     "createUser": {
       "title": "Loading your account…",
       "description": "We are setting up your profile and preferences."

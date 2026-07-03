@@ -1,4 +1,4 @@
-import api from '../api/api';
+import sameOriginApi from '../api/sameOriginApi';
 import type { ApiResponse } from '@/packages/types';
 import type {
   CreateUserClientProfileInput,
@@ -144,7 +144,7 @@ const sanitizeProfilePayload = <
 };
 
 export const getUserClientProfile = async (): Promise<UserClientProfile> => {
-  const { data } = await api.get<ApiResponse<UserClientProfile>>(USER_CLIENT_PROFILE_PATH, {
+  const { data } = await sameOriginApi.get<ApiResponse<UserClientProfile>>(USER_CLIENT_PROFILE_PATH, {
     withCredentials: true,
   });
 
@@ -163,7 +163,7 @@ export const getUserClientProfile = async (): Promise<UserClientProfile> => {
 export const updateUserClientProfile = async (
   payload: UpdateUserClientProfileInput
 ): Promise<UserClientProfileMutationResponse> => {
-  const { data } = await api.patch<ApiResponse<UserClientProfile>>(
+  const { data } = await sameOriginApi.patch<ApiResponse<UserClientProfile>>(
     USER_CLIENT_PROFILE_PATH,
     sanitizeProfilePayload(payload),
     {
@@ -181,7 +181,7 @@ export const updateUserClientProfile = async (
 export const createUserClientProfile = async (
   payload: CreateUserClientProfileInput
 ): Promise<UserClientProfileMutationResponse> => {
-  const { data } = await api.post<ApiResponse<UserClientProfile>>(
+  const { data } = await sameOriginApi.post<ApiResponse<UserClientProfile>>(
     USER_CLIENT_PROFILE_PATH,
     sanitizeProfilePayload(payload),
     {
@@ -197,7 +197,7 @@ export const createUserClientProfile = async (
 };
 
 export const deleteUserClientProfile = async (): Promise<DeleteUserClientProfileResponse> => {
-  const { data } = await api.delete<ApiResponse<{ userClientId: string; clientId: string }>>(
+  const { data } = await sameOriginApi.delete<ApiResponse<{ userClientId: string; clientId: string }>>(
     USER_CLIENT_PROFILE_PATH,
     {
       withCredentials: true,

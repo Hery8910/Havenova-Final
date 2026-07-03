@@ -868,6 +868,11 @@
         "title": "Neues Passwort festlegen",
         "info": "Wähle ein neues Passwort für dein Konto.",
         "button": "Neues Passwort speichern",
+        "invite": {
+          "title": "Dashboard-Zugang aktivieren",
+          "info": "Legen Sie Ihr Passwort fest, um die Einladung zu aktivieren und mit dem ersten Zugriff auf das Dashboard fortzufahren.",
+          "resolvedDescription": "Diese Einladung ist mit {email} verknüpft."
+        },
         "linkErrors": {
           "invalidOrExpired": "Dieser Link ist nicht mehr gültig oder bereits abgelaufen.",
           "missingToken": "Dieser Link zum Zurücksetzen des Passworts ist unvollständig oder ungültig."

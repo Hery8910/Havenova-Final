@@ -14,6 +14,10 @@
       "title": "Sie werden angemeldet…",
       "description": "Wir bereiten Ihre Sitzung vor. Einen Moment bitte."
     },
+    "dashboardLogin": {
+      "title": "Ihr Profil wird geöffnet…",
+      "description": "Wir bereiten Ihren Workspace vor. Einen Moment bitte."
+    },
     "createUser": {
       "title": "Konto wird geladen…",
       "description": "Wir richten Ihr Profil und Ihre Einstellungen ein."

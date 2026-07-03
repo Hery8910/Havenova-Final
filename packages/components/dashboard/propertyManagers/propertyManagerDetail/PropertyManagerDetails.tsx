@@ -4,6 +4,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { PropertyManagerDetail } from '@/packages/types';
 import styles from './PropertyManagerDetails.module.css';
 import { formatMessageAge } from '../../../../utils';
+import type { RelativeTimeTexts } from '../../../../utils/date/dateUtils';
 import { useI18n } from '../../../../contexts/i18n/I18nContext';
 
 interface PropertyManagerDetailsTexts {
@@ -42,7 +43,9 @@ const PropertyManagerDetails = ({
   onEdit,
 }: PropertyManagerDetailsProps) => {
   const { texts: i18nTexts, language } = useI18n();
-  const relativeTime = i18nTexts.date?.relative;
+  const relativeTime = (
+    i18nTexts.date as { relative?: Partial<RelativeTimeTexts> } | undefined
+  )?.relative;
 
   if (loading) {
     return (

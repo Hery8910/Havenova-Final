@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './page.module.css';
 import Link from 'next/link';
 import {
   fallbackButtons,
@@ -12,18 +11,26 @@ import {
   useClient,
   useGlobalAlert,
   useI18n,
-  useProfile,
-  useWorker,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
 import { getAuthUser, loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
-import { createLoggedOutAuthSeed, href } from '../../../../../../../packages/utils';
+import {
+  createLoggedOutAuthSeed,
+  href,
+  userAuthRoutes,
+} from '../../../../../../../packages/utils';
 import { LoginPayload } from '../../../../../../../packages/types';
-import { FormWrapper } from '../../../../../../../packages/components/client/user/auth';
+import {
+  AuthPageShell,
+  FormWrapper,
+} from '../../../../../../../packages/components/client/user/auth';
+import styles from '../../../../../../../packages/components/client/user/auth/authShell/authShell.module.css';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export interface LoginData {
   title: string;
+  description?: string;
   cta: { title: string; label: string; url: string };
   forgotPassword?: { title: string; label: string; url: string };
   image?: { src: string; alt: string };
@@ -35,51 +42,49 @@ const Login = () => {
   const { client } = useClient();
   const { auth, setAuth } = useAuth();
   const { texts, language, setLanguage } = useI18n();
-  const { worker } = useWorker();
   const router = useRouter();
   const lang = useLang();
   const isLoggedIn = auth?.isLogged && auth.role !== 'guest';
+  const hasDashboardAccess =
+    auth?.isLogged && (auth.role === 'admin' || auth.role === 'super_admin');
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
 
   useEffect(() => {
-    if (!worker?.theme) return;
-    document.documentElement.setAttribute('data-theme', worker.theme);
-    localStorage.setItem('theme', worker.theme);
-  }, [worker?.theme]);
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme !== 'light' && storedTheme !== 'dark') return;
+    document.documentElement.setAttribute('data-theme', storedTheme);
+  }, []);
 
   useEffect(() => {
-    if (!worker?.language) return;
-    const nextLang = worker.language === 'en' ? 'en' : 'de';
+    if (!hasDashboardAccess) return;
+    router.replace(href(lang, '/'));
+  }, [hasDashboardAccess, lang, router]);
 
-    if (!isLoggedIn) {
-      if (nextLang !== lang) {
-        router.replace(href(nextLang, '/user/login'));
-        return;
-      }
-
-      if (language !== nextLang) {
-        setLanguage(nextLang);
-      }
-      return;
+  useEffect(() => {
+    if (language !== lang) {
+      setLanguage(lang);
     }
-
-    if (language !== nextLang) {
-      setLanguage(nextLang);
-    }
-  }, [worker?.language, lang, language, router, setLanguage, isLoggedIn]);
+  }, [lang, language, setLanguage]);
 
   const popups = texts.popups;
   const alertButtons = popups.button ?? fallbackButtons;
   const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const login: LoginData = texts?.pages?.client.user.login;
+  const dashboardAuthTexts = texts.components.dashboard?.auth?.login;
   const descriptionId = 'login-cta';
   const loginButton = formText.button.login;
+  const authCopy = {
+    title: dashboardAuthTexts?.title || login?.title || 'Sign in',
+    description:
+      dashboardAuthTexts?.description ||
+      login?.description ||
+      'Access your account and manage your profile.',
+  };
 
   const syncSessionFromServer = async () => {
-    let lastError: unknown;
-
     for (const delayMs of [0, 250, 500]) {
       if (delayMs > 0) {
         await new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -87,12 +92,10 @@ const Login = () => {
 
       try {
         return await getAuthUser();
-      } catch (error) {
-        lastError = error;
-      }
+      } catch {}
     }
 
-    throw lastError ?? new Error('Could not synchronize auth session after login.');
+    return null;
   };
 
   const handleLogin = async (data: LoginPayload): Promise<boolean> => {
@@ -100,7 +103,15 @@ const Login = () => {
       setLoading(true);
 
       // 1) Loading
-      const loadingData = loadingText.login ?? fallbackLoadingMessages.login;
+      const loadingData =
+        loadingText.dashboardLogin ?? loadingText.login ?? fallbackLoadingMessages.login;
+
+      const payload: LoginPayload = {
+        email: data.email?.trim() || '',
+        password: data.password || '',
+        clientId: data.clientId || client?._id,
+        language: lang,
+      };
 
       showLoading({
         response: {
@@ -110,12 +121,7 @@ const Login = () => {
         },
       });
 
-      const payload: LoginPayload = {
-        email: data.email?.trim() || '',
-        password: data.password || '',
-        clientId: data.clientId || client._id,
-        language: lang,
-      };
+      setEmail(payload.email);
 
       if (!payload.email || !payload.password || !payload.clientId) {
         const popupData = getPopup(
@@ -233,33 +239,39 @@ const Login = () => {
   };
 
   return (
-    <main
-      className={styles.main}
-      aria-labelledby="login-title"
-      aria-describedby={login?.cta?.title ? descriptionId : undefined}
+    <AuthPageShell
+      headingId="login-title"
+      descriptionId={descriptionId}
+      title={authCopy.title}
+      description={authCopy.description}
+      homeHref={href(lang, '/')}
+      homeLabel={texts.components.client.navbar.accessibility.homeLink}
+      logoAlt={texts.components.client.navbar.accessibility.logoAlt}
+      footerLabel={texts.components.client.navbar.accessibility.authFooter}
+      footer={
+        <div className={styles.authFooterActions}>
+          <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/')}>
+            <IoMdArrowRoundBack /> {texts.components.client.navbar.accessibility.homeLink}
+          </Link>
+        </div>
+      }
     >
-      <div className={`${styles.wrapper} card`} role="region" aria-labelledby="login-title">
-        <header className={styles.header}>
-          <h1 id="login-title" className={styles.h1}>
-            {login.title}
-          </h1>
-        </header>
-        <section className={styles.section}>
-          <FormWrapper<LoginPayload>
-            fields={['email', 'password', 'clientId'] as const}
-            onSubmit={handleLogin}
-            button={loginButton}
-            showForgotPassword
-            initialValues={{
-              clientId: '',
-              email: '',
-              password: '',
-            }}
-            loading={loading}
-          />
-        </section>
-      </div>
-    </main>
+      <FormWrapper<LoginPayload>
+        fields={['email', 'password', 'clientId'] as const}
+        onSubmit={handleLogin}
+        button={loginButton}
+        showForgotPassword
+        onForgotPassword={() => {
+          router.push(href(lang, userAuthRoutes.forgotPassword));
+        }}
+        initialValues={{
+          clientId: client?._id ?? '',
+          email,
+          password: '',
+        }}
+        loading={loading}
+      />
+    </AuthPageShell>
   );
 };
 

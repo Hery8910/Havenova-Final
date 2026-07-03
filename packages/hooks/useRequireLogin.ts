@@ -24,7 +24,7 @@ export const useRequireLogin = () => {
   const lang = useLang();
   const { fallbackButtons, fallbackPopups } = getI18nFallbacks(lang);
   const popups = texts.popups;
-  const alertButtons = popups.button ?? fallbackButtons;
+  const alertButtons = { ...fallbackButtons, ...popups.button };
 
   useEffect(() => {
     if (authLoading) return;
