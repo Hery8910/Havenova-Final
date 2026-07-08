@@ -32,7 +32,10 @@ export function resolveHowItWorksHeroContent(
 ): PageHeroContent {
   return {
     title: texts?.title ?? 'So funktioniert Havenova fuer Kund:innen',
-    descriptions: texts?.descriptions?.[0] ?? HOW_IT_WORKS_HERO_DESCRIPTION_FALLBACK,
+    descriptions:
+      Array.isArray(texts?.descriptions) && texts.descriptions.length > 0
+        ? texts.descriptions
+        : texts?.descriptions ?? HOW_IT_WORKS_HERO_DESCRIPTION_FALLBACK,
     image: {
       src: texts?.image?.src ?? '/images/how-it-works.png',
       alt: texts?.image?.alt ?? 'Havenova Ablauf fuer Hausservices in Berlin',

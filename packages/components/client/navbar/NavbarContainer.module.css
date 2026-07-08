@@ -11,7 +11,7 @@
   left: 0;
   margin: 0 auto;
   z-index: 9;
-  color: var(--color-page-heading);
+  color: var(--text-primary);
   --navbar-hover-bg: hsla(
     var(--brand-primary-h) var(--brand-primary-s) var(--brand-primary-l) / 0.1
   );

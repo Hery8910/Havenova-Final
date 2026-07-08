@@ -23,7 +23,7 @@ No cubre en la primera pasada:
 - actualización del contrato backend de contacto
 - refactor de `packages/services/contact/*`
 - redefinición de tipos compartidos del formulario
-- screenshots reales y evidencia final de fase 2
+- screenshots reales y evidencia final de la pasada manual transversal final
 
 ## Resultado esperado
 
@@ -109,7 +109,8 @@ Estado actual:
 - fase iniciada en su baseline documental
 - `CONTACT_RENDER_TREE.md` ya existe
 - `TESTING.md` ya incluye el caso `K-09`
-- la ejecución manual real y la evidencia final siguen pendientes
+- la revisión semántica por código ya quedó asentada en el audit
+- la ejecución manual real y la evidencia final siguen pendientes para la pasada transversal final
 
 ### Fase 5. Estilos y migración visual del surface no-form
 
@@ -117,20 +118,20 @@ Tareas:
 
 - crear `CONTACT_STYLE_INVENTORY.md`
 - clasificar estilos del route shell, `InfoSection` y `FAQSection`
-- decidir si `contact` entra a `migration-styles/index.css`
-- migrar a `v2` solo lo justificado por inventario real
+- decidir qué parte de `contact` debe converger al sistema compartido
+- migrar solo lo justificado por inventario real
 
 Criterio de cierre:
 
-- cualquier adopción de `v2` queda respaldada por inventario y ownership claros
+- cualquier promoción al sistema compartido queda respaldada por inventario y ownership claros
 
 Estado actual:
 
 - fase iniciada en su baseline documental
 - `CONTACT_STYLE_INVENTORY.md` ya existe
-- la ruta ya activa `migration-styles/index.css`
+- la ruta ya no activa una capa paralela de migración
 - `InfoSection` quedó identificado como principal hotspot visual no-form
-- `InfoSection` ya recibió la primera pasada real de migración hacia `v2`
+- `InfoSection` ya recibió la primera pasada real de convergencia hacia el sistema compartido
 - `FAQSection` quedó identificado como segundo candidato de migración
 - `ContactForm` sigue excluido a propósito de la decisión visual de esta fase
 
@@ -182,6 +183,7 @@ Estado actual:
 - `InfoSection` ya dejó de leer `useI18n()`
 - `FAQSection` y `BusinessHoursStatus` ya dejaron de leer `useI18n()`
 - la reducción del scope cliente no-form queda resuelta en su nivel práctico actual
+- la justificación SSR/CSR correspondiente ya quedó documentada en el audit principal
 
 ### Fase 7. Cierre de la fase actual
 
@@ -190,7 +192,7 @@ Tareas:
 - actualizar checklist viva del audit
 - dejar claro qué quedó resuelto ahora y qué sigue diferido
 
-Pendientes explícitos de fase 2:
+Pendientes explícitos de la pasada manual transversal final:
 
 - screenshots reales
 - evidencia manual final

@@ -224,6 +224,56 @@ Notas:
 - `FAQSection` debe responder a `Enter` o `Space` y mantener foco visible en sus triggers
 - la evidencia debe dejar claro qué observaciones pertenecen a UX/teclado de la página y cuáles se difieren al audit específico del formulario
 
+### K-10. Cleaning Service específico
+
+Objetivo:
+
+- validar el orden de foco real de `cleaning-service`
+- separar la validación de la página del retrabajo pendiente del formulario multi-step
+
+Secuencia esperada aproximada:
+
+1. `skip link`
+2. navegación principal
+3. posibles CTAs del hero
+4. salto a `main`
+5. `AuthRequiredAlert` si está visible
+6. controles del `CleaningRequestForm`
+7. triggers del `FAQSection`
+8. CTAs del `ServiceCrossCtaSection`
+9. footer
+
+Notas:
+
+- la evidencia debe indicar si la validación se hizo con sesión activa o con el alert de auth visible
+- el formulario entra completo al orden de foco, pero su validación funcional profunda sigue siendo deuda separada
+- si existe draft previo, debe anotarse porque cambia el punto de entrada del flow
+
+### K-11. Home Service específico
+
+Objetivo:
+
+- validar el orden de foco real de `home-service`
+- registrar qué variante del formulario se probó
+
+Secuencia esperada aproximada:
+
+1. `skip link`
+2. navegación principal
+3. posibles CTAs del hero
+4. salto a `main`
+5. `AuthRequiredAlert` si está visible
+6. controles del `HomeServiceRequestForm`
+7. triggers del `FAQSection`
+8. CTAs del `ServiceCrossCtaSection`
+9. footer
+
+Notas:
+
+- la evidencia debe indicar si la validación se hizo con sesión activa o con el alert de auth visible
+- la evidencia debe indicar qué tipo de servicio se seleccionó dentro del formulario
+- cualquier inconsistencia del branch de formulario debe registrarse como hallazgo del flow, no como fallo del shell de página
+
 ## Qué registrar
 
 En cada validación guardar:
@@ -258,6 +308,8 @@ En cada validación guardar:
 - K-07:
 - K-08:
 - K-09:
+- K-10:
+- K-11:
 
 ## Hallazgos
 

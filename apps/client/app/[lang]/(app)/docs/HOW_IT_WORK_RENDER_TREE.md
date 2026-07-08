@@ -49,13 +49,13 @@ The route is wrapped by:
 
                     <div class="PageHero.heroContent">
                       <div class="PageHero.heroCopy">
-                        <h1 id="{heroTitleId}" class="type-display-lg v2-page-heading">
+                        <h1 id="{heroTitleId}" class="type-display-lg">
                           {howItWorks.hero.title}
                         </h1>
 
                         <div id="{heroDescriptionId?}" class="PageHero.heroDescriptions">
-                          <p class="type-body-lg v2-page-copy">{howItWorks.hero.descriptions[0]}</p>
-                          <p class="type-body-lg v2-page-copy">{howItWorks.hero.descriptions[n]?}</p>
+                          <p class="type-body-lg">{howItWorks.hero.descriptions[0]}</p>
+                          <p class="type-body-lg">{howItWorks.hero.descriptions[n]?}</p>
                         </div>
                       </div>
                     </div>
@@ -65,7 +65,7 @@ The route is wrapped by:
                 <main
                   id="app-main-content"
                   tabindex="-1"
-                  class="HowItWorksPageView.main"
+                  class="page-flow"
                   data-page="how-it-work"
                 >
                   <section class="WorkflowSection.workflow" aria-labelledby="how-it-works-workflow-title">

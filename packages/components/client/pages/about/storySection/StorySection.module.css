@@ -18,7 +18,7 @@
   width: 100%;
   max-width: 500px;
   margin: 0;
-  color: var(--page-text-primary);
+  color: var(--text-primary);
   text-align: right;
 }
 
@@ -32,7 +32,7 @@
 
 .paragraph {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
   line-height: 1.65;
 }
 

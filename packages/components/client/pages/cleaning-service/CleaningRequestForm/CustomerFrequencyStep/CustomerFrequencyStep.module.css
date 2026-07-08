@@ -27,42 +27,16 @@
   padding: 0;
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
-.customerTypeList,
 .frequencyList {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
-.customerTypeList {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.customerTypeList li {
-  flex: 1 1 180px;
-}
-
-.customerTypeButton,
 .frequencyButton {
   width: 100%;
-}
-
-.customerTypeButton {
-  padding: 12px 16px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.customerTypeLabel {
-  font-weight: 700;
-  font-size: 0.9rem;
 }
 
 .frequencyList {
@@ -89,7 +63,7 @@
 
 .frequencyText {
   font-weight: 700;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .frequencyDiscount {
@@ -101,6 +75,7 @@
   line-height: 1.2;
   border: none;
 }
+
 .recommended {
   position: relative;
   border-color: var(--card-accent-bg);
@@ -121,28 +96,12 @@
   white-space: nowrap;
 }
 
-.active {
-  border-color: var(--brand-primary);
-  background: color-mix(in srgb, var(--brand-primary) 10%, white);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent);
-}
-
-.fieldControlError {
-  border-color: var(--color-error);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
-}
-
 .errorText {
-  margin: 10px 0 0;
   color: var(--color-error);
   font-size: var(--type-body-sm-size);
 }
 
 @media (max-width: 640px) {
-  .customerTypeList {
-    flex-direction: column;
-  }
-
   .frequencyContent {
     width: 100%;
     justify-content: space-between;

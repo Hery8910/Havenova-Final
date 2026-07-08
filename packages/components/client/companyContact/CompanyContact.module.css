@@ -24,7 +24,7 @@
   justify-content: space-between;
   align-items: baseline;
   gap: var(--space-4);
-  color: var(--color-page-body);
+  color: var(--text-secondary);
 }
 
 .contactLink {
@@ -38,7 +38,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-page-soft);
+  color: var(--text-muted);
   font-size: clamp(16px, 1.6vw, 20px);
 }
 

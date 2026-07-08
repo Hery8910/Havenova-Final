@@ -1,30 +1,37 @@
-// apps/dashboard/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+import { buildBackendUrl } from '../../packages/services/bff/backendRequest';
+import {
+  applyAuthCookiesFromBackend,
+  readAuthCookiesFromBackendResponse,
+  type ParsedAuthCookie,
+} from '../../packages/services/bff/authCookieBridge';
+
 const SUPPORTED = ['de', 'en', 'es'] as const;
 const DEFAULT_LANG = 'de';
+const AUTH_FORWARD_HEADERS = ['cookie', 'accept-language', 'x-request-id'] as const;
+const SESSION_GUARD_TIMEOUT_MS = 8000;
 
-export function middleware(req: NextRequest) {
+const isLocalizedPath = (pathname: string) =>
+  SUPPORTED.some((lang) => pathname === `/${lang}` || pathname.startsWith(`/${lang}/`));
+
+const resolveLocalizedPath = (req: NextRequest) => {
   const { pathname } = req.nextUrl;
 
-  // Ignora assets, _next y api
   if (pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.match(/\.[^/]+$/)) {
-    return NextResponse.next();
+    return null;
   }
 
-  // Si ya hay idioma en la ruta (ej. /dashboard/de), sigue normal
-  if (SUPPORTED.some((lang) => pathname.startsWith(`/${lang}`))) {
-    return NextResponse.next();
+  if (isLocalizedPath(pathname)) {
+    return pathname;
   }
 
-  // 1) Cookie
   const cookieLang = req.cookies.get('lang')?.value;
-  if (cookieLang && SUPPORTED.includes(cookieLang as any)) {
-    return NextResponse.redirect(new URL(`/${cookieLang}${pathname}`, req.url));
+  if (cookieLang && SUPPORTED.includes(cookieLang as (typeof SUPPORTED)[number])) {
+    return `/${cookieLang}${pathname}`;
   }
 
-  // 2) Header Accept-Language
   const header = req.headers.get('accept-language') || '';
   const normalizedHeader = header.toLowerCase();
   const preferred = normalizedHeader.startsWith('de')
@@ -32,14 +39,170 @@ export function middleware(req: NextRequest) {
     : normalizedHeader.startsWith('es')
       ? 'es'
       : 'en';
+  const lang = SUPPORTED.includes(preferred as (typeof SUPPORTED)[number]) ? preferred : DEFAULT_LANG;
 
-  // 3) Fallback
-  const lang = SUPPORTED.includes(preferred as any) ? preferred : DEFAULT_LANG;
+  return `/${lang}${pathname}`;
+};
 
-  return NextResponse.redirect(new URL(`/${lang}${pathname}`, req.url));
+const isProtectedDashboardPath = (pathname: string) => {
+  const match = pathname.match(/^\/(de|en|es)(\/.*)?$/);
+  if (!match) return false;
+
+  const suffix = match[2] || '';
+  if (!suffix || suffix === '/') {
+    return true;
+  }
+
+  return !suffix.startsWith('/user');
+};
+
+const buildServerAuthHeaders = (request: NextRequest, cookieHeader?: string): Headers => {
+  const headers = new Headers();
+  headers.set('accept', 'application/json');
+
+  for (const headerName of AUTH_FORWARD_HEADERS) {
+    if (headerName === 'cookie') {
+      const value = cookieHeader ?? request.headers.get('cookie');
+      if (value) {
+        headers.set(headerName, value);
+      }
+      continue;
+    }
+
+    const value = request.headers.get(headerName);
+    if (value) {
+      headers.set(headerName, value);
+    }
+  }
+
+  const csrfToken = request.cookies.get('csrfToken')?.value?.trim();
+  if (csrfToken) {
+    headers.set('x-csrf-token', csrfToken);
+  }
+
+  return headers;
+};
+
+const mergeCookieHeader = (
+  request: NextRequest,
+  authCookies: ParsedAuthCookie[]
+): string => {
+  const cookieStore = new Map<string, string>();
+
+  for (const cookie of request.cookies.getAll()) {
+    cookieStore.set(cookie.name, cookie.value);
+  }
+
+  for (const cookie of authCookies) {
+    const isExpired =
+      cookie.maxAge === 0 ||
+      (cookie.expires instanceof Date && cookie.expires.getTime() <= Date.now());
+
+    if (isExpired) {
+      cookieStore.delete(cookie.name);
+      continue;
+    }
+
+    cookieStore.set(cookie.name, cookie.value);
+  }
+
+  return Array.from(cookieStore.entries())
+    .map(([name, value]) => `${name}=${value}`)
+    .join('; ');
+};
+
+const performSessionGuard = async (request: NextRequest) => {
+  const meResponse = await fetch(buildBackendUrl('/api/auth/me'), {
+    method: 'GET',
+    headers: buildServerAuthHeaders(request),
+    cache: 'no-store',
+    redirect: 'manual',
+    signal: AbortSignal.timeout(SESSION_GUARD_TIMEOUT_MS),
+  });
+
+  if (meResponse.ok) {
+    return null;
+  }
+
+  if (meResponse.status !== 401 && meResponse.status !== 403) {
+    return null;
+  }
+
+  const refreshToken = request.cookies.get('refreshToken')?.value?.trim();
+  const csrfToken = request.cookies.get('csrfToken')?.value?.trim();
+  if (!refreshToken || !csrfToken) {
+    return null;
+  }
+
+  const refreshResponse = await fetch(buildBackendUrl('/api/auth/refresh-token'), {
+    method: 'POST',
+    headers: buildServerAuthHeaders(request),
+    body: '{}',
+    cache: 'no-store',
+    redirect: 'manual',
+    signal: AbortSignal.timeout(SESSION_GUARD_TIMEOUT_MS),
+  });
+
+  if (!refreshResponse.ok) {
+    return null;
+  }
+
+  const authCookies = readAuthCookiesFromBackendResponse(refreshResponse);
+  if (authCookies.length === 0) {
+    return NextResponse.next();
+  }
+
+  const cookieHeader = mergeCookieHeader(request, authCookies);
+  const forwardedHeaders = new Headers(request.headers);
+
+  if (cookieHeader) {
+    forwardedHeaders.set('cookie', cookieHeader);
+  } else {
+    forwardedHeaders.delete('cookie');
+  }
+
+  const updatedCsrfToken = authCookies.find((cookie) => cookie.name === 'csrfToken')?.value?.trim();
+  if (updatedCsrfToken) {
+    forwardedHeaders.set('x-csrf-token', updatedCsrfToken);
+  }
+
+  const response = NextResponse.next({
+    request: {
+      headers: forwardedHeaders,
+    },
+  });
+
+  applyAuthCookiesFromBackend(refreshResponse, response);
+  return response;
+};
+
+export async function middleware(req: NextRequest) {
+  const localizedPath = resolveLocalizedPath(req);
+
+  if (!localizedPath) {
+    return NextResponse.next();
+  }
+
+  if (localizedPath !== req.nextUrl.pathname) {
+    return NextResponse.redirect(new URL(localizedPath, req.url));
+  }
+
+  if (!isProtectedDashboardPath(localizedPath)) {
+    return NextResponse.next();
+  }
+
+  try {
+    const guardedResponse = await performSessionGuard(req);
+    if (guardedResponse) {
+      return guardedResponse;
+    }
+  } catch (error) {
+    console.error('[dashboard-middleware] auth session guard failed', error);
+  }
+
+  return NextResponse.next();
 }
 
-// Opcional pero recomendable: asegurar que corre en todas las rutas “públicas”
 export const config = {
   matcher: ['/((?!_next|api|.*\\..*).*)'],
 };

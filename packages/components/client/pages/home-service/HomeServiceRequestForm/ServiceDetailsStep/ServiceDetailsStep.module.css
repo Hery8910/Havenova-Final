@@ -4,25 +4,6 @@
   gap: 16px;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.title {
-  margin: 0;
-  color: var(--page-text-primary);
-  font-size: var(--type-title-sm-size);
-  line-height: var(--leading-heading);
-}
-
-.description {
-  margin: 0;
-  color: var(--page-text-secondary);
-  line-height: 1.55;
-}
-
 .serviceCard {
   display: grid;
   gap: 10px;
@@ -34,12 +15,12 @@
 
 .serviceTitle {
   margin: 0;
-  color: var(--page-text-primary);
+  color: var(--text-primary);
 }
 
 .serviceDescription {
   margin: 0;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   line-height: 1.55;
 }
 
@@ -50,7 +31,7 @@
 }
 
 .label {
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .textarea {
@@ -59,14 +40,14 @@
   padding: 10px 12px;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-sm);
-  color: var(--page-text-primary);
+  color: var(--text-primary);
   background: rgba(255, 255, 255, 0.08);
   font: inherit;
   resize: vertical;
 }
 
 .hint {
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.5;
 }

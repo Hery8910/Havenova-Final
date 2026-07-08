@@ -15,14 +15,14 @@
 
 .title {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
   text-align: center;
 }
 
 .description {
   max-width: 60ch;
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
   text-align: center;
 }
 
@@ -39,7 +39,7 @@
   scrollbar-width: none;
   gap: clamp(16px, 2vw, 20px);
   scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--v2-page-inline-padding);
+  scroll-padding-inline: var(--page-inline-padding);
 }
 
 .list::before,
@@ -59,15 +59,15 @@
 .card {
   min-height: 460px;
   position: relative;
-  border-radius: var(--v2-radius-lg);
+  border-radius: var(--radius-card);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
-    var(--v2-card-neutral-bg2);
-  box-shadow: var(--v2-card-shadow);
-  border-color: var(--v2-card-neutral-border);
+    var(--card-neutral-bg2);
+  box-shadow: var(--shadow-card);
+  border-color: var(--card-neutral-border);
 }
 
 .media {
@@ -100,7 +100,7 @@
   z-index: -1;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.48) 0%, rgba(15, 23, 42, 0.7) 100%);
   backdrop-filter: blur(12px);
-  border-radius: var(--v2-radius-md);
+  border-radius: var(--radius-md);
 }
 
 .cardTitle {
@@ -122,11 +122,11 @@
 }
 
 .closing {
-  max-width: min(800px, calc(100% - (var(--v2-page-inline-padding) * 2)));
+  max-width: min(800px, calc(100% - (var(--page-inline-padding) * 2)));
   margin: 0 auto;
-  padding: clamp(20px, 4vw, 28px) var(--v2-page-inline-padding) 0;
-  border-top: 1px solid var(--v2-card-neutral-border);
-  color: var(--v2-page-text-secondary);
+  padding: clamp(20px, 4vw, 28px) var(--page-inline-padding) 0;
+  border-top: 1px solid var(--card-neutral-border);
+  color: var(--text-secondary);
   text-align: center;
 }
 

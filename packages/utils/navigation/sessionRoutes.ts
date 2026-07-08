@@ -15,10 +15,10 @@ export const clientSessionRoutes = {
 } as const;
 
 export const adminSessionRoutes = {
-  overview: '/profile',
-  edit: '/profile/edit',
-  notifications: '/profile/notification',
-  requests: '/profile/requests',
+  overview: '/account',
+  edit: '/account/profile',
+  notifications: '/account/notifications',
+  requests: '/requests',
 } as const;
 
 export const workerSessionRoutes = {

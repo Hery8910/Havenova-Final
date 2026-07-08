@@ -31,7 +31,7 @@ export function AppNotInstalledCard({ state, content, onInstall }: AppNotInstall
       </header>
 
       <div className={styles.copyBlock}>
-        <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>
+        <p className={`${styles.sectionSubtitle} type-body-lg`}>
           {content.description}
         </p>
         {fallbackCta ? (
@@ -47,8 +47,8 @@ export function AppNotInstalledCard({ state, content, onInstall }: AppNotInstall
       </div>
 
       {showSupportBar ? (
-        <div className={`${styles.supportBar} v2-card v2-card--neutral`}>
-          <p className={`${styles.supportInfo} type-body-sm v2-page-copy`}>
+        <div className={`${styles.supportBar} card card--neutral`}>
+          <p className={`${styles.supportInfo} type-body-sm`}>
             {'info' in content ? content.info : ''}
           </p>
           {installCta ? (

@@ -9,6 +9,14 @@ La página de `profile/settings` funciona como centro de gestión de la cuenta d
 3. preferencias rápidas;
 4. acciones sensibles separadas del resto.
 
+Contexto de namespace:
+
+- esta ruta ya no se considera de forma aislada; el baseline de la familia privada `profile/*`
+  ahora vive en
+  [../PROFILE_AUDIT.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/PROFILE_AUDIT.md:1)
+  y su plan de normalización en
+  [../PROFILE_PLAN.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/PROFILE_PLAN.md:1)
+
 ## Estado actual
 
 La pantalla está funcionalmente madura y el refactor técnico acordado quedó aplicado.
@@ -510,8 +518,8 @@ Corrección aplicada:
 
 Decisión aplicada:
 
-- las listas del navbar pasan a usar `--page-text-secondary` como color base;
-- los estados enfatizados, hover y selección pasan a usar `--page-text-primary`;
+- las listas del navbar pasan a usar `--text-secondary` como color base;
+- los estados enfatizados, hover y selección pasan a usar `--text-primary`;
 - se evita seguir mezclando `card-text-*` con `page-text-*` dentro de los links del navbar.
 
 Alcance:

@@ -51,26 +51,26 @@ The Home route is wrapped by:
 
                     <div class="PageHero.heroContent">
                       <div class="PageHero.heroCopy">
-                        <h1 id="{heroTitleId}" class="type-display-lg v2-page-heading">
+                        <h1 id="{heroTitleId}" class="type-display-lg">
                           {home.hero.title}
                         </h1>
 
                         <div id="{heroDescriptionId?}" class="PageHero.heroDescriptions">
-                          <p class="type-body-lg v2-page-copy">{home.hero.descriptions[0]}</p>
-                          <p class="type-body-lg v2-page-copy">{home.hero.descriptions[1]?}</p>
-                          <p class="type-body-lg v2-page-copy">{home.hero.descriptions[n]?}</p>
+                          <p class="type-body-lg">{home.hero.descriptions[0]}</p>
+                          <p class="type-body-lg">{home.hero.descriptions[1]?}</p>
+                          <p class="type-body-lg">{home.hero.descriptions[n]?}</p>
                         </div>
 
                         <nav class="PageHero.heroCtas" aria-label="{home.hero.a11y.actionsLabel?}">
-                          <a class="v2-button v2-button--primary">{primary cta}</a>
-                          <a class="v2-button v2-button--secondary">{secondary cta?}</a>
+                          <a class="button button--primary">{primary cta}</a>
+                          <a class="button button--secondary">{secondary cta?}</a>
                         </nav>
                       </div>
                     </div>
                   </div>
                 </header>
 
-                <main id="app-main-content" tabindex="-1" class="HomePageView.main v2-home-page" data-page="home">
+                <main id="app-main-content" tabindex="-1" class="HomePageView.main" data-page="home">
                   <section class="AppInstallSection.appInstall" aria-labelledby="home-app-title">
                     {branch depends on PWA state and auth state}
                   </section>
@@ -78,27 +78,27 @@ The Home route is wrapped by:
                   <section class="ServicesSection.services" aria-labelledby="home-services-title">
                     <div class="ServicesSection.container">
                       <header class="ServicesSection.sectionHeader">
-                        <h2 id="home-services-title" class="type-title-xl v2-page-heading">
+                        <h2 id="home-services-title" class="type-title-xl">
                           {home.services.title}
                         </h2>
-                        <p class="type-body-lg v2-page-copy">{home.services.subtitle}</p>
+                        <p class="type-body-lg">{home.services.subtitle}</p>
                       </header>
 
                       <div class="ServicesSection.cardGrid">
-                        <article class="v2-card v2-card--primary|secondary ServicesSection.card">
+                        <article class="card card--primary|secondary ServicesSection.card">
                           <header class="ServicesSection.cardIcon">
-                            <h3 class="type-title-md v2-page-heading">{service.title}</h3>
-                            <span class="v2-card v2-card--neutral ServicesSection.iconSurface" aria-hidden="true">
+                            <h3 class="type-title-md">{service.title}</h3>
+                            <span class="card card--neutral ServicesSection.iconSurface" aria-hidden="true">
                               <img class="ServicesSection.icon" alt="" />
                             </span>
                           </header>
 
                           <aside class="ServicesSection.cardAside">
-                            <p class="type-body-sm v2-page-copy">{service.description}</p>
+                            <p class="type-body-sm">{service.description}</p>
                             <ul class="ServicesSection.serviceList">
                               <li class="type-body-sm">{highlight}</li>
                             </ul>
-                            <a class="v2-button v2-button--primary|secondary">
+                            <a class="button button--primary|secondary">
                               {service.ctaLabel}
                             </a>
                           </aside>
@@ -112,10 +112,10 @@ The Home route is wrapped by:
                   <section class="BenefitsSection.benefits" aria-labelledby="home-benefits-title">
                     <div class="BenefitsSection.container">
                       <header class="BenefitsSection.benefitsCopy">
-                        <h2 id="home-benefits-title" class="type-display-md v2-page-heading">
+                        <h2 id="home-benefits-title" class="type-display-md">
                           {home.benefits.title}
                         </h2>
-                        <p class="type-body-lg v2-page-copy">{home.benefits.description}</p>
+                        <p class="type-body-lg">{home.benefits.description}</p>
                       </header>
 
                       <ul class="BenefitsSection.benefitsCards">
@@ -125,8 +125,8 @@ The Home route is wrapped by:
                               {icon}
                             </span>
                             <div class="BenefitsSection.benefitHeading">
-                              <h3 class="type-title-sm v2-page-heading">{item.title}</h3>
-                              <p class="type-body-sm v2-page-copy">{item.description}</p>
+                              <h3 class="type-title-sm">{item.title}</h3>
+                              <p class="type-body-sm">{item.description}</p>
                             </div>
                           </article>
                         </li>
@@ -180,14 +180,14 @@ Before install state is resolved:
 <section class="AppInstallSection.appInstall" aria-labelledby="home-app-title">
   <div class="AppInstallSection.appCard AppInstallSection.appInstalledCard" data-state="installed">
     <header class="AppInstallSection.titleBlock">
-      <h2 id="home-app-title" class="type-display-md v2-page-heading">{installed.title}</h2>
+      <h2 id="home-app-title" class="type-display-md">{installed.title}</h2>
     </header>
 
     <div class="AppInstallSection.copyBlock">
-      <p class="type-body-lg v2-page-copy">{installed.description}</p>
+      <p class="type-body-lg">{installed.description}</p>
       <div class="AppInstallSection.appCtas">
-        <a class="v2-button v2-button--accent">{cta}</a>
-        <a class="v2-button v2-button--accent">{cta?}</a>
+        <a class="button button--accent">{cta}</a>
+        <a class="button button--accent">{cta?}</a>
       </div>
     </div>
   </div>
@@ -208,24 +208,24 @@ Installed content branch:
     data-state="installable|ios-manual|unavailable"
   >
     <header class="AppInstallSection.titleBlock">
-      <h2 id="home-app-title" class="type-display-md v2-page-heading">{notInstalled.title}</h2>
+      <h2 id="home-app-title" class="type-display-md">{notInstalled.title}</h2>
     </header>
 
     <div class="AppInstallSection.copyBlock">
-      <p class="type-body-lg v2-page-copy">{notInstalled.description}</p>
+      <p class="type-body-lg">{notInstalled.description}</p>
 
       {state === "unavailable" ? (
         <div class="AppInstallSection.appCtas">
-          <a class="v2-button v2-button--outline">{fallback cta}</a>
+          <a class="button button--secondary">{fallback cta}</a>
         </div>
       ) : null}
     </div>
 
     {state === "installable" || state === "ios-manual" ? (
-      <div class="v2-card v2-card--neutral AppInstallSection.supportBar">
-        <p class="type-body-sm v2-page-copy">{support info}</p>
+      <div class="card card--neutral AppInstallSection.supportBar">
+        <p class="type-body-sm">{support info}</p>
         {state === "installable" ? (
-          <button class="v2-button v2-button--outline">{install cta}</button>
+          <button class="button button--secondary">{install cta}</button>
         ) : null}
       </div>
     ) : null}

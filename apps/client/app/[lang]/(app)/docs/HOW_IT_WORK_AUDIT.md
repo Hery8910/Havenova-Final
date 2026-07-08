@@ -56,7 +56,6 @@ Lo que ya está bien:
 Lo que todavía no cumple el estándar:
 
 - no existe todavía evidencia manual propia ejecutada para esta ruta
-- la estrategia SSR/CSR todavía debe quedar justificada de forma explícita
 - la composición visual del bloque de beneficios ya fue consolidada en código, pero todavía necesita validación visual real
 - la adopción de `v2` quedó iniciada en la ruta, pero su cierre visual todavía no está consolidado
 
@@ -67,7 +66,7 @@ Conclusión:
 
 ## Hallazgos
 
-### 1. La ruta ya fue reducida, pero la estrategia de render todavia debe cerrarse documentalmente
+### 1. La ruta ya fue reducida y la estrategia de render ya quedó justificada
 
 Estado actual:
 
@@ -75,14 +74,16 @@ Estado actual:
 - la orquestación cliente vive en [HowItWorksPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/howItWorks/HowItWorksPage.client.tsx:1)
 - la composición visual vive en [HowItWorksPage.view.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/howItWorks/HowItWorksPage.view.tsx:1)
 
-Problema:
+Lectura actual:
 
-- la separación ya existe, pero todavía falta registrar si el scope cliente actual es el mínimo necesario
-- la página debe explicar por qué sigue leyendo `useI18n()` y `useLang()` desde una capa cliente
+- la separación ya existe
+- `HowItWorksPage.client.tsx` permanece por dependencia real de `useI18n()` y `useLang()`
+- la ruta ya quedó server-first en su entrypoint y el scope cliente está acotado al feature
 
-Objetivo:
+Conclusión:
 
-- dejar documentada la justificación SSR/CSR igual que se hizo en `Home`
+- la justificación SSR/CSR de `how-it-work` queda cerrada para esta fase
+- una reducción adicional del scope cliente tendría beneficio marginal y complejidad mayor en esta página
 
 ### 2. Los contratos ya fueron extraidos, pero la ownership aun necesita inventario completo
 
@@ -113,30 +114,30 @@ Estado actual:
 Deuda restante:
 
 - la metadata `es` estaba incompleta y ya fue corregida en [packages/i18n/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/i18n/metadata.ts:167)
-- sigue pendiente la validación final de screenshots reales en fase 2
+- sigue pendiente la validación final de screenshots reales en la pasada manual transversal de cierre
 - algunas frases fallback siguen siendo una red de seguridad interna y no sustituyen la validación editorial final
 
 Objetivo:
 
 - tratar el audit de copy y traducciones del surface actual como resuelto para esta fase
 
-### 4. La pagina tiene una mezcla de `v2` y legacy que aun no esta auditada
+### 4. La pagina tiene una mezcla de shared primitives y legacy que aun no esta auditada
 
 Estado actual:
 
-- `WorkflowSection` ya usa `v2-card` y `v2-page-*`
-- `BenefitsSplitSection` ya usa `v2-button` y tokens `v2` en su banda principal
-- la ruta ya importa `migration-styles/index.css`
+- `WorkflowSection` ya usa `card` y helpers semánticos de página compartidos
+- `BenefitsSplitSection` ya usa `button` y tokens compartidos en su banda principal
+- la ruta ya no importa una hoja temporal paralela
 - el inventario actual en [HOW_IT_WORK_STYLE_INVENTORY.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/HOW_IT_WORK_STYLE_INVENTORY.md:1) muestra que la deuda legacy restante es mucho menor que al inicio
 
 Problema:
 
-- la ruta ya activó `v2` en varias superficies, pero todavía no hay decisión cerrada sobre su consolidación final
+- la ruta ya converge al sistema compartido en varias superficies, pero todavía no hay decisión cerrada sobre su consolidación final
 - la composición visual del bloque de beneficios ya fue estabilizada estructuralmente, pero sigue pendiente de revisión real en viewport
 
 Objetivo:
 
-- usar esta ruta como segundo consumidor auditado para decidir qué primitives `v2` ya pueden considerarse compartidos
+- usar esta ruta como consumidor auditado para decidir qué primitives compartidos ya pueden considerarse estables
 - validar visualmente el bloque de beneficios antes de marcar la migración visual como cerrada
 
 ### 5. Ya existe baseline de render y testing, pero falta evidencia real
@@ -155,7 +156,7 @@ Señales positivas:
 
 Objetivo:
 
-- ejecutar la validación manual real y dejar evidencia propia de la ruta
+- dejar preparada la ruta para la validación manual transversal final y registrar ahí la evidencia real
 
 ### 6. Metadata sí está alineada, y el inventario de estilos ya tiene baseline
 
@@ -168,7 +169,7 @@ Interpretación:
 
 - metadata no es el problema principal de esta página
 - la cobertura de locale para metadata ya quedó alineada con la ruta
-- el screenshot `es` reutiliza por ahora el asset `en`, igual que en otros cierres parciales, y debe revisarse en fase 2
+- el screenshot `es` reutiliza por ahora el asset `en`, igual que en otros cierres parciales, y debe revisarse en la pasada manual transversal final
 - el inventario visual ya quedó inicializado en [HOW_IT_WORK_STYLE_INVENTORY.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/HOW_IT_WORK_STYLE_INVENTORY.md:1)
 
 ## Resultado del audit de i18n
@@ -203,13 +204,13 @@ Surface revisada:
 
 ### Riesgos residuales
 
-- la validación editorial final del tono todavía puede ajustarse durante la fase 2 si cambia el posicionamiento de la página
+- la validación editorial final del tono todavía puede ajustarse durante la pasada manual transversal final si cambia el posicionamiento de la página
 - los screenshots y sus textos alternativos siguen sujetos al cierre visual real
 
 ## Riesgos
 
 - si se migra la página sin extraer antes sus contratos, se repetirá el patrón que ya se corrigió en `Home`
-- si se activan estilos `v2` sin inventario previo, la capa de migración puede volver a crecer sin ownership claro
+- si se promueven estilos sin inventario previo, la base compartida puede volver a crecer sin ownership claro
 - si no se audita el contenido real, la ruta puede conservar keys no usadas o copy desalineado entre idiomas
 
 ## Decisiones cerradas
@@ -217,7 +218,7 @@ Surface revisada:
 - `Home` se toma como referencia inmediata para el patrón de rectificación de páginas
 - el `Footer` sigue fuera del alcance de cierre de esta ruta, igual que en `Home`
 - el trabajo de `how-it-work` se documentará desde el inicio antes de continuar con implementación
-- las validaciones visuales y manuales restantes se dejan explícitamente pendientes para no bloquear el avance hacia la siguiente página
+- las validaciones visuales y manuales restantes se dejan explícitamente pendientes para la pasada transversal final y no bloquean el cierre técnico actual
 
 ## Estado actual de cierre
 
@@ -231,7 +232,7 @@ Pendientes diferidos:
 
 - validación visual real en desktop y mobile
 - ejecución manual de `K-07`
-- evidencia de cierre final de fase 2
+- evidencia de cierre final de la pasada manual transversal
 
 ## Plan de trabajo
 

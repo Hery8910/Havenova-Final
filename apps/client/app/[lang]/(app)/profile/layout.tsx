@@ -16,7 +16,10 @@ export async function generateMetadata({
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className={styles.page}>
-      <section className={`${styles.workspace} card card--primary`} aria-label="Profile workspace">
+      <section
+        className={`${styles.workspace} card card--secondary`}
+        aria-label="Profile workspace"
+      >
         <aside className={styles.navColumn} aria-label="Profile navigation">
           <ProfileNav />
         </aside>

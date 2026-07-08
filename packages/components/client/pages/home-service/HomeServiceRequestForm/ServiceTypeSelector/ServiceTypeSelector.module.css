@@ -1,81 +1,18 @@
-.group {
-  border: none;
-  padding: 0;
-  margin: 0;
-}
-
-.legend {
-  margin-bottom: 12px;
-  padding: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--page-text-secondary);
-}
-
 .serviceGrid {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 12px;
 }
+
 .serviceItem {
   width: 100%;
 }
-.serviceButton {
-  width: 100%;
-  padding: 14px 16px;
-  color: var(--page-text-secondary);
-  background: transparent;
-  text-align: center;
-  font-weight: 700;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease;
-}
 
-.serviceButton:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+.serviceButton {
+  padding: 14px 16px;
+  color: var(--text-secondary);
 }
 
 .serviceTitle {
   font-weight: 700;
-  color: var(--page-text-secondary);
-}
-
-.active {
-  border-color: var(--brand-primary);
-  background: color-mix(in srgb, var(--brand-primary) 10%, white);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent);
-}
-
-.fieldControlError {
-  border-color: var(--color-error);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 22%, transparent);
-}
-
-.error {
-  display: block;
-  min-height: 20px;
-  margin-top: 10px;
-  color: var(--color-error);
-  font-size: var(--type-body-sm-size);
-}
-
-.serviceButton:focus-visible {
-  outline: 2px solid var(--brand-primary);
-  outline-offset: 2px;
-}
-
-@media (max-width: 768px) {
-  .serviceGrid {
-    grid-template-columns: 1fr;
-  }
+  color: var(--text-secondary);
 }

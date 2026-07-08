@@ -200,7 +200,10 @@ export function resolveContactHeroContent(
 
   return {
     title: texts?.title ?? fallback.title,
-    descriptions: texts?.descriptions?.[0] ?? fallback.descriptions,
+    descriptions:
+      Array.isArray(texts?.descriptions) && texts.descriptions.length > 0
+        ? texts.descriptions
+        : texts?.descriptions ?? fallback.descriptions,
     ctas: {
       primary: {
         label: texts?.ctas?.primary?.label ?? fallback.primaryLabel,

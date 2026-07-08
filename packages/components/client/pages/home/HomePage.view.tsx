@@ -15,12 +15,7 @@ export function HomePageView({ home, lang }: HomePageViewProps) {
   return (
     <>
       <PageHero texts={resolveHomeHeroContent(home?.hero)} lang={lang} position={82} />
-      <main
-        id="app-main-content"
-        tabIndex={-1}
-        className={`${styles.main} v2-home-page`}
-        data-page="home"
-      >
+      <main id="app-main-content" tabIndex={-1} className={styles.main} data-page="home">
         <AppInstallSection
           texts={home ? { appInstall: home.appInstall, appInstalled: home.appInstalled } : undefined}
           lang={lang}

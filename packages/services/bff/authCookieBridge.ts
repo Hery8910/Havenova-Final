@@ -2,7 +2,7 @@ import type { NextResponse } from 'next/server';
 
 const AUTH_COOKIE_NAMES = new Set(['accessToken', 'refreshToken', 'csrfToken']);
 
-type ParsedCookie = {
+export type ParsedAuthCookie = {
   httpOnly?: boolean;
   maxAge?: number;
   name: string;
@@ -13,7 +13,7 @@ type ParsedCookie = {
   expires?: Date;
 };
 
-const parseSameSite = (value: string): ParsedCookie['sameSite'] => {
+const parseSameSite = (value: string): ParsedAuthCookie['sameSite'] => {
   const normalized = value.trim().toLowerCase();
   if (normalized === 'lax' || normalized === 'strict' || normalized === 'none') {
     return normalized;
@@ -21,7 +21,7 @@ const parseSameSite = (value: string): ParsedCookie['sameSite'] => {
   return undefined;
 };
 
-const parseSetCookie = (setCookieValue: string): ParsedCookie | null => {
+const parseSetCookie = (setCookieValue: string): ParsedAuthCookie | null => {
   const parts = setCookieValue
     .split(';')
     .map((part) => part.trim())
@@ -38,7 +38,7 @@ const parseSetCookie = (setCookieValue: string): ParsedCookie | null => {
 
   if (!AUTH_COOKIE_NAMES.has(name)) return null;
 
-  const parsed: ParsedCookie = {
+  const parsed: ParsedAuthCookie = {
     name,
     value,
   };
@@ -87,16 +87,18 @@ const parseSetCookie = (setCookieValue: string): ParsedCookie | null => {
   return parsed;
 };
 
+export const readAuthCookiesFromBackendResponse = (
+  backendResponse: Response
+): ParsedAuthCookie[] => {
+  const setCookies = backendResponse.headers.getSetCookie?.() ?? [];
+  return setCookies.map(parseSetCookie).filter((value): value is ParsedAuthCookie => Boolean(value));
+};
+
 export const applyAuthCookiesFromBackend = (
   backendResponse: Response,
   response: NextResponse
 ) => {
-  const setCookies = backendResponse.headers.getSetCookie?.() ?? [];
-
-  for (const setCookieValue of setCookies) {
-    const parsed = parseSetCookie(setCookieValue);
-    if (!parsed) continue;
-
+  for (const parsed of readAuthCookiesFromBackendResponse(backendResponse)) {
     response.cookies.set({
       name: parsed.name,
       value: parsed.value,

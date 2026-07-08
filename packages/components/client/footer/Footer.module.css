@@ -51,7 +51,7 @@
 
 .sectionHeading {
   margin: 0;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .links {
@@ -77,7 +77,7 @@
 
 .linkHeading {
   margin: 0;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .linkList {
@@ -102,7 +102,7 @@
   display: flex;
   justify-content: flex-start;
   padding: var(--space-1) 0;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   text-align: left;
 }
 

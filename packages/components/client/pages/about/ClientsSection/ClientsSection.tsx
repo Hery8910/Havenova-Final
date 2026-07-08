@@ -40,13 +40,13 @@ export default function ClientsSection({ texts }: { texts: AboutClientsTexts }) 
                 <div className={styles.content}>
                   <h3
                     id={`about-client-title-${index}`}
-                    className={`${styles.cardTitle} type-title-sm v2-page-heading`}
+                    className={`${styles.cardTitle} type-title-sm`}
                   >
                     {item.title}
                   </h3>
                   <p
                     id={`about-client-description-${index}`}
-                    className={`${styles.cardDescription} type-body-sm v2-page-copy`}
+                    className={`${styles.cardDescription} type-body-sm`}
                   >
                     {item.description}
                   </p>
@@ -56,7 +56,7 @@ export default function ClientsSection({ texts }: { texts: AboutClientsTexts }) 
           ))}
         </ul>
       </div>
-      <p id={closingId} className={`${styles.closing} type-body-md v2-page-copy`}>
+      <p id={closingId} className={`${styles.closing} type-body-md`}>
         {texts.closing}
       </p>
     </section>

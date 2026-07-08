@@ -1,0 +1,261 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.description {
+  margin: 0;
+  max-width: 620px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.calendarShell {
+  position: relative;
+}
+
+.stage {
+  min-height: 344px;
+}
+
+.calendarPanel {
+  padding: 14px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.noticeSlot {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.calendarToolbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.navButton {
+  min-height: 34px;
+  min-width: 34px;
+  padding-inline: 12px;
+  font-size: 0.78rem;
+}
+
+.monthHeading {
+  margin: 0;
+  text-align: center;
+  color: var(--text-primary);
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.notice {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--feedback-info-bg);
+  color: var(--card-primary-text-primary);
+  font-size: 0.82rem;
+}
+
+.weekdayRow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.weekdayLabel {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-secondary) 78%, white);
+}
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.dayItem {
+  min-width: 0;
+}
+
+.dayCell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+  padding: 8px;
+  border: 1px solid var(--card-neutral-border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.dayCell:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--brand-primary) 32%, var(--card-neutral-border));
+  background: color-mix(in srgb, white 76%, var(--feedback-info-bg));
+  box-shadow: var(--shadow-sm);
+}
+
+.dayCell:focus-visible {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow:
+    0 0 0 1px var(--brand-primary),
+    0 0 0 4px color-mix(in srgb, var(--brand-primary) 16%, transparent);
+}
+
+.daySelected {
+  border-color: var(--brand-primary);
+  background: color-mix(in srgb, var(--feedback-info-bg-image) 72%, white);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--brand-primary) 10%, transparent);
+}
+
+.dayBlocked {
+  background: color-mix(in srgb, var(--feedback-error-bg) 78%, white);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 65%, var(--card-neutral-border));
+}
+
+.dayBlocked .dayNumber {
+  color: #8f2d2d;
+}
+
+.dayAvailable {
+  background: color-mix(in srgb, var(--feedback-success-bg) 82%, white);
+  border-color: color-mix(
+    in srgb,
+    var(--feedback-success-bg-image) 72%,
+    var(--card-neutral-border)
+  );
+}
+
+.dayAvailable .dayNumber {
+  color: #92c4a8;
+}
+
+.dayUnavailable {
+  opacity: 0.78;
+  cursor: not-allowed;
+  background: var(--feedback-error-bg);
+  background-image: var(--feedback-error-bg-image);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 45%, var(--card-neutral-border));
+}
+
+.outsideMonth {
+  opacity: 0.42;
+  cursor: default;
+  background: var(--feedback-error-bg);
+  background-image: var(--feedback-error-bg-image);
+  border-color: color-mix(in srgb, var(--feedback-error-bg-image) 45%, var(--card-neutral-border));
+}
+
+.dayNumber {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.selectedDaySummary {
+  margin: 0;
+  padding-top: 2px;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .stage {
+    min-height: 320px;
+  }
+
+  .calendarPanel {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .calendarToolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .monthHeading {
+    order: -1;
+  }
+
+  .navButton {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .stage {
+    min-height: 292px;
+  }
+
+  .weekdayRow {
+    display: none;
+  }
+
+  .grid {
+    gap: 5px;
+  }
+
+  .dayCell {
+    padding: 6px;
+    border-radius: 6px;
+  }
+}

@@ -71,7 +71,7 @@ The route is wrapped by:
                   </div>
                 </header>
 
-                <main id="app-main-content" tabindex="-1" class="ContactPageView.main" data-page="contact">
+                <main id="app-main-content" tabindex="-1" class="page-flow" data-page="contact">
                   <div class="ContactPageView.wrapper">
                     <section
                       class="ContactForm.section card card--secondary"

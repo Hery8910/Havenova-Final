@@ -26,16 +26,15 @@ Ruta principal:
 
 Estilos de página:
 
-- [page.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/cleaning-service/page.module.css:1)
+- [CleaningServicePageView.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningServicePageView.module.css:1)
 
 Bloques renderizados hoy:
 
 1. `AuthRequiredAlert`
 2. `PageHero`
 3. `CleaningRequestForm`
-4. `ServiceCrossCtaSection`
-
-No existe todavía una sección FAQ dedicada.
+4. `FAQSection`
+5. `ServiceCrossCtaSection`
 
 ## Estado actual
 
@@ -49,6 +48,7 @@ Estado actual:
 - el formulario ya resuelve persistencia de draft, perfil embebido y envío
 - la página ya orquesta submit, guardado de direcciones nuevas y feedback global
 - la composición es simple y comprensible
+- la ruta ya fue reducida a entrypoint y ahora delega en `CleaningServicePageClient` y `CleaningServicePageView`
 
 Conclusión:
 
@@ -60,7 +60,7 @@ El layout de página está subdefinido.
 
 Observación principal:
 
-- [page.module.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/cleaning-service/page.module.css:1) solo define `main` como columna flex
+- [CleaningServicePageView.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningServicePageView.module.css:1) ya concentra el layout principal de la página y el bloque del formulario
 
 Implicaciones:
 
@@ -176,12 +176,12 @@ Conclusión:
 
 ## FAQ como decisión de producto
 
-Agregar una sección FAQ al final de la página tiene sentido.
+La sección FAQ ya existe, pero todavía no está cerrada como bloque de soporte dentro del journey.
 
 Razones:
 
 - el flujo es transaccional y puede generar dudas justo antes o durante el formulario
-- hoy la página salta del formulario al cross-CTA sin un bloque de soporte intermedio
+- ahora existe un bloque de soporte intermedio, pero todavía falta validar si su contenido y presencia son suficientes
 - una FAQ puede reducir fricción, reforzar confianza y absorber objeciones frecuentes
 
 Preguntas a resolver antes de implementarla:
@@ -216,7 +216,7 @@ El problema principal no es de flujo ni de responsabilidad, sino de:
 
 ### Fase 2. Layout principal
 
-- [x] reforzar `page.module.css` para que la página tenga ritmo y estructura propios
+- [x] reforzar `CleaningServicePageView.module.css` para que la página tenga ritmo y estructura propios
 - [x] revisar separación entre hero, alerta, formulario y cierre
 - [x] decidir si el hero y el formulario comparten un mismo eje/container visual o no
 

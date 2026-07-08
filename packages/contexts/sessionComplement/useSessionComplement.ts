@@ -431,7 +431,15 @@ export const useSessionComplement = <
         }
       }
     },
-    [applyEntity, auth.isLogged, auth.role, refreshAuth, reloadEntity, setOfflineStorageState, updateRemote]
+    [
+      applyEntity,
+      auth.isLogged,
+      auth.role,
+      refreshAuth,
+      reloadEntity,
+      setOfflineStorageState,
+      updateRemote,
+    ]
   );
 
   const setLanguage = useCallback(

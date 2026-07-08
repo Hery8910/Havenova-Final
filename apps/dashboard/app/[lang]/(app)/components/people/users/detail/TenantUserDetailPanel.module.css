@@ -1,0 +1,92 @@
+.root {
+  display: grid;
+  gap: 18px;
+}
+
+.emptyState,
+.hero,
+.section {
+  display: grid;
+  gap: 12px;
+}
+
+.eyebrow,
+.sectionLabel,
+.fieldLabel {
+  margin: 0;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.title,
+.sectionTitle,
+.fieldValue,
+.emptyTitle,
+.errorTitle {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.08;
+}
+
+.description,
+.fieldHint,
+.emptyDescription,
+.errorText {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.metaGrid,
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metaCard,
+.fieldCard,
+.emptyCard,
+.errorCard {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: calc(var(--radius-card) - 8px);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 58%, transparent);
+  background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
+}
+
+.fieldValue {
+  font-weight: 700;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.fieldHint {
+  font-size: 0.92rem;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.errorCard {
+  border-color: color-mix(in srgb, var(--color-feedback-danger-border, var(--border-subtle)) 42%, transparent);
+  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel)) 26%, transparent);
+}
+
+@media (max-width: 900px) {
+  .metaGrid,
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+}

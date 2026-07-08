@@ -7,7 +7,7 @@ This document records the real style dependencies of the `contact` page.
 It exists to decide:
 
 - what should remain in CSS Modules
-- what can reuse the `v2` migration layer already active in other audited pages
+- what already reuses the canonical shared system
 - what remains legacy or shared without clear ownership yet
 - what must stay deferred because it belongs to the form/backend task
 
@@ -18,6 +18,7 @@ Relevant surfaces:
 - [apps/client/app/[lang]/(app)/contact/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/contact/page.tsx:1)
 - [packages/components/client/pages/contact/ContactPage.view.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/ContactPage.view.tsx:1)
 - [packages/components/client/pages/contact/ContactPageView.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/ContactPageView.module.css:1)
+- [packages/styles/helpers.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/helpers.css:1)
 - [packages/components/client/pages/contact/contact.fallbacks.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/contact.fallbacks.ts:1)
 - [packages/components/client/pages/contact/InfoSection/InfoSection.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/InfoSection/InfoSection.tsx:1)
 - [packages/components/client/pages/contact/InfoSection/InfoSection.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/InfoSection/InfoSection.module.css:1)
@@ -43,15 +44,11 @@ Current global layers affecting the page:
 - `motion.css`
 - `helpers.css`
 
-Migration layer status on this route:
-
-- [apps/client/app/migration-styles/index.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/migration-styles/index.css:1) is now imported by `contact`
-
 Current interpretation:
 
-- `contact` now activates the migration layer at route level
-- the route already consumes migrated page text semantics through hero and `v2-contact-page`
-- `InfoSection` is now the first non-form route surface explicitly moved onto `v2`
+- `contact` no longer depends on a parallel migration layer
+- the route consumes shared page semantics through the canonical global foundation
+- `InfoSection` now uses shared tokens and primitives directly
 - `FAQSection` and `ContactForm` still remain on older shared styling contracts
 
 ## Global Base Rules Affecting The Page
@@ -67,7 +64,7 @@ Confirmed dependencies:
 
 Source:
 
-- [apps/client/app/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/styles/base.css:1)
+- [packages/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/base.css:1)
 
 Classification:
 
@@ -145,8 +142,8 @@ Confirmed usage:
 
 Mixed ownership:
 
-- hero uses `PageHero` and therefore already depends on `v2-page-heading` and `v2-page-copy`
-- `InfoSection` now consumes `v2-page-text-primary` at its heading surface
+- hero uses `PageHero` and therefore already depends on shared semantic page text helpers
+- `InfoSection` now consumes shared page text tokens at its heading surface
 - `FAQSection` and `ContactForm` still rely on older typography utility sizes plus legacy text-color tokens
 
 Interpretation:
@@ -167,7 +164,7 @@ Interpretation:
 - hero CTA styling still comes from the current shared button system through `PageHero`
 - form submit uses the legacy/shared primary button contract
 - FAQ triggers rely on the ghost variant and therefore remain tied to the older button layer
-- `InfoSection` quick actions now use page-local `v2` token styling, but not the canonical `v2-button` primitive
+- `InfoSection` quick actions now use page-local shared token styling, but not the canonical button primitive
 
 Decision:
 
@@ -180,8 +177,8 @@ Confirmed usage:
 
 - `card`
 - `card--secondary`
-- `v2-card`
-- `v2-card--neutral`
+- `card`
+- `card--neutral`
 
 Current use cases:
 
@@ -191,34 +188,18 @@ Current use cases:
 Interpretation:
 
 - `ContactForm` still depends on the current shared card system
-- `InfoSection` now validates a first `v2-card` usage on this route
+- `InfoSection` now validates shared card usage on this route
 - the route now mixes card systems intentionally while the form stays deferred
 
 ## Token Families Used By The Page
 
-Confirmed migrated tokens through hero only:
+Confirmed shared tokens through hero and info surfaces:
 
-- `--v2-navbar-height`
-- `--v2-page-text-primary`
-- `--v2-page-text-secondary`
-- `--v2-page-max-width`
-- `--v2-page-inline-padding`
-- `--v2-content-max-width`
-- `--v2-hero-mobile-min-block-offset`
-- `--v2-space-8`
-- `--v2-space-10`
-- `--v2-card-neutral-bg1`
-- `--v2-card-neutral-bg2`
-- `--v2-card-neutral-border`
-- `--v2-card-primary-bg1`
-- `--v2-card-secondary-bg1`
-- `--v2-card-shadow`
-- `--v2-radius-lg`
-- `--v2-motion-base`
-- `--v2-ease-standard`
-- `--v2-button-focus-border`
-- `--v2-button-shadow-focus`
-- `--v2-button-shadow-hover`
+- shared navbar and page layout tokens
+- shared page text tokens
+- shared spacing tokens
+- shared card surface, shadow and radius tokens
+- shared motion timing and button state tokens
 
 Confirmed older shared or legacy tokens:
 
@@ -228,11 +209,7 @@ Confirmed older shared or legacy tokens:
 - `--surface-1`
 - `--surface-3`
 - `--brand-primary`
-- `--page-accent-1`
-- `--page-accent-2`
-- `--color-page-heading`
-- `--color-page-body`
-- `--color-page-border`
+- `--border-subtle`
 - `--color-error`
 - `--container-max`
 - `--font-family-body`
@@ -265,9 +242,9 @@ Previous state:
 
 Current state:
 
-- the route now imports `migration-styles/index.css`
-- `ContactPageView` now declares `v2-contact-page`
-- `InfoSection` now consumes `v2-card` and `v2` token families
+- the temporary migration layer has been removed from runtime
+- `ContactPageView` no longer declares a `v2` page wrapper
+- `InfoSection` now consumes shared tokens and primitives directly
 
 Decision:
 
@@ -328,6 +305,6 @@ Recommended immediate path:
 At the end of the current non-form phase, `contact` should be treated as complete only if:
 
 - `InfoSection` and `FAQSection` have an explicit ownership decision
-- the route-level decision on `migration-styles/index.css` is documented
+- the route-level ownership decision is documented
 - reduced-motion gaps are either fixed or explicitly deferred
 - the form remains clearly excluded from the page-style closure decision

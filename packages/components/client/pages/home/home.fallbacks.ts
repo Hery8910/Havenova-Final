@@ -88,7 +88,10 @@ const HOME_SERVICES_SECTION_FALLBACKS: Record<
 export function resolveHomeHeroContent(texts: HomePageTexts['hero'] | undefined): PageHeroContent {
   return {
     title: texts?.title ?? 'Finde schnell die richtige Hilfe',
-    descriptions: texts?.descriptions?.[0] ?? HOME_HERO_DESCRIPTION_FALLBACK,
+    descriptions:
+      Array.isArray(texts?.descriptions) && texts.descriptions.length > 0
+        ? texts.descriptions
+        : texts?.descriptions ?? HOME_HERO_DESCRIPTION_FALLBACK,
     ctas: {
       primary: {
         label: texts?.ctas?.primary?.label ?? 'Reinigung anfragen',

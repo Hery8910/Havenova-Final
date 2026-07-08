@@ -18,3 +18,4 @@ export * from './propertyManager';
 export * from './object';
 export * from './globalTaskCatalog';
 export * from './notification';
+export * from './tenantUsers';

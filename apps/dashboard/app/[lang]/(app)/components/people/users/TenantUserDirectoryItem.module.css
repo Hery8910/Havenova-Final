@@ -1,0 +1,56 @@
+.button {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 54%, transparent);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: color-mix(in srgb, var(--surface-panel) 74%, transparent);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.button:hover {
+  background: color-mix(in srgb, var(--surface-panel) 88%, transparent);
+  border-color: color-mix(in srgb, var(--border-strong) 42%, transparent);
+}
+
+.active {
+  border-color: color-mix(in srgb, var(--color-feedback-info-border, var(--border-strong)) 54%, transparent);
+  background: color-mix(in srgb, var(--color-feedback-info-surface) 22%, transparent);
+}
+
+.identity {
+  display: grid;
+  gap: 4px;
+}
+
+.name,
+.dateValue {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.meta,
+.dateLabel {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.dateBlock {
+  display: grid;
+  gap: 3px;
+}

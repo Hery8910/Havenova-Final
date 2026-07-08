@@ -41,9 +41,16 @@ export default function AvatarSelector() {
   const normalizeAvatar = (value?: string) => {
     if (!value) return '';
     if (value.startsWith('/')) return value;
+    if (value.startsWith('shared/')) return `/${value}`;
+    if (value.startsWith('avatars/')) return `/${value}`;
     try {
       const parsed = new URL(value);
-      if (parsed.pathname.startsWith('/avatars/')) return parsed.pathname;
+      if (
+        parsed.pathname.startsWith('/avatars/') ||
+        parsed.pathname.startsWith('/shared/avatars/')
+      ) {
+        return parsed.pathname;
+      }
     } catch {
       // ignore invalid URLs and return as-is
     }

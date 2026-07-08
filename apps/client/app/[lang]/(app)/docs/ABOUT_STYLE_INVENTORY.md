@@ -7,7 +7,7 @@ This document records the real style dependencies of the `about` page.
 It exists to decide:
 
 - what should remain in CSS Modules
-- what can reuse the `v2` migration layer
+- what now reuses the canonical shared system
 - what remains legacy or shared without explicit ownership yet
 
 ## Scope
@@ -41,14 +41,10 @@ Current global layers affecting the page:
 - `motion.css`
 - `helpers.css`
 
-Migration layer also active on this route:
-
-- [apps/client/app/migration-styles/index.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/migration-styles/index.css:1)
-
 Current interpretation:
 
-- `about` activates the migration layer because `PageHero` already depends on `v2`
-- `StorySection` and `ClientsSection` now reuse part of the `v2` page and card layer
+- `about` no longer depends on a parallel migration layer
+- `StorySection` and `ClientsSection` now reuse shared semantic tokens and canonical card primitives
 - `ServiceCrossCtaSection` still depends on an older shared visual contract
 
 ## Global Base Rules Affecting The Page
@@ -64,7 +60,7 @@ Confirmed dependencies:
 
 Source:
 
-- [apps/client/app/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/styles/base.css:1)
+- [packages/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/base.css:1)
 
 Classification:
 
@@ -132,35 +128,32 @@ Confirmed usage:
 
 Interpretation:
 
-- `StorySection` and `ClientsSection` now use `v2-page-heading` and `v2-page-copy`
+- `StorySection` and `ClientsSection` now use shared semantic page text helpers
 - typography ownership remains mixed because `ServiceCrossCtaSection` still uses the older shared contract
 
 ## Button Classes Used By The Page
 
 Confirmed usage:
 
-- `v2-button`
-- `v2-button--primary`
-- `v2-button--secondary`
 - `button`
 - `button--primary`
 - `button--secondary`
 
 Interpretation:
 
-- hero uses migrated button semantics only if CTAs are ever introduced
-- current page-owned CTA behavior comes from `ServiceCrossCtaSection`, which still depends on the older button layer
+- hero would reuse the shared button contract if CTAs are introduced
+- current page-owned CTA behavior comes from `ServiceCrossCtaSection`, which still depends on the shared button layer
 
 ## Card And Surface Classes Used By The Page
 
 Confirmed usage:
 
-- `v2-card`
-- `v2-card--neutral`
+- `card`
+- `card--neutral`
 
 Surface reality:
 
-- `ClientsSection.card` is now a page-owned card implementation layered on top of `v2-card--neutral`
+- `ClientsSection.card` is now a page-owned card implementation layered on top of `card--neutral`
 - `ServiceCrossCtaSection.section` is a shared visual surface implemented entirely in its own CSS module
 
 Interpretation:
@@ -180,24 +173,17 @@ Confirmed legacy or older shared tokens:
 - `--space-8`
 - `--radius-md`
 - `--shadow-md`
-- `--color-page-heading`
-- `--color-page-body`
-- `--color-page-border`
-- `--color-page-surface-subtle`
+- `--text-primary`
+- `--text-secondary`
+- `--border-subtle`
+- `--surface-panel-subtle`
 - `--text-light-fixed`
 
-Confirmed migrated tokens through hero only:
- 
-- `--v2-page-text-primary`
-- `--v2-page-text-secondary`
-- `--v2-page-inline-padding`
-- `--v2-content-max-width`
-- `--v2-radius-md`
-- `--v2-radius-lg`
-- `--v2-card-shadow`
-- `--v2-card-neutral-bg2`
-- `--v2-card-neutral-border`
-- `--v2-hero-mobile-min-block-offset`
+Confirmed shared semantic/page tokens through hero:
+
+- semantic page text tokens
+- shared page layout tokens
+- shared radius, shadow and card surface tokens
 
 Confirmed older shared or legacy tokens still active:
 
@@ -207,10 +193,10 @@ Confirmed older shared or legacy tokens still active:
 - `--space-4`
 - `--space-8`
 - `--shadow-md`
-- `--color-page-heading`
-- `--color-page-body`
-- `--color-page-border`
-- `--color-page-surface-subtle`
+- `--text-primary`
+- `--text-secondary`
+- `--border-subtle`
+- `--surface-panel-subtle`
 - `--text-light-fixed`
 
 Interpretation:

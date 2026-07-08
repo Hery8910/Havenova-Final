@@ -92,7 +92,7 @@ Implementacion frontend auditada:
 - [ProfileContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/profile/ProfileContext.tsx:1)
 - [WorkerContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/worker/WorkerContext.tsx:1)
 - [ContactForm.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/ContactForm/ContactForm.tsx:1)
-- [ProfileOverviewClient.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewClient.tsx:1)
+- [ProfileOverviewPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx:1)
 - [ServiceProfileStep.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningRequestForm/ServiceProfileStep/ServiceProfileStep.tsx:1)
 
 ## Diagnostico Ejecutivo
@@ -376,13 +376,13 @@ Aunque el objetivo documental ya dice que `auth.email` es dato de sesion y no de
 
 Casos verificados:
 
-- fallback de nombre en [ProfileOverviewClient.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewClient.tsx:1)
+- fallback de nombre en [ProfileOverviewPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx:1)
 - default local de worker en [WorkerContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/worker/WorkerContext.tsx:1)
 - prefilling de contacto en [ContactForm.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/ContactForm/ContactForm.tsx:1)
 
 Estado real:
 
-- `ContactForm` y `ProfileOverviewClient` ya priorizan `profile.contactEmail` sobre `auth.email`
+- `ContactForm` y `ProfileOverviewPageClient` ya priorizan `profile.contactEmail` sobre `auth.email`
 - `WorkerContext` ya usa la misma convención compartida de resolución de email: dato local/propio primero y `auth.email` solo como fallback de sesión
 - pero la migracion no esta cerrada
 

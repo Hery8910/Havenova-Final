@@ -2,8 +2,8 @@
   margin: 0;
   min-height: 100dvh;
   background:
-    radial-gradient(circle at top, var(--page-accent-1) 0%, transparent 32%),
-    radial-gradient(circle at 85% 12%, var(--page-accent-2) 0%, transparent 26%),
+    radial-gradient(circle at top, rgba(10, 132, 255, 0.14) 0%, transparent 32%),
+    radial-gradient(circle at 85% 12%, rgba(111, 66, 193, 0.1) 0%, transparent 26%),
     linear-gradient(180deg, color-mix(in srgb, var(--bg-app) 86%, white), var(--bg-app));
 }
 

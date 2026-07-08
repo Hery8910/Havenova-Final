@@ -1,19 +1,16 @@
-'use client';
+import { DashboardRoutePlaceholder } from '../components/placeholders';
 
-import styles from './page.module.css';
-import { useRequireRole } from '../../../../../../packages/contexts';
-
-const Notifications = () => {
-  const isAllowed = useRequireRole('admin');
-
-  if (!isAllowed) return null;
-
+export default function NotificationsPage() {
   return (
-    <main className={styles.main}>
-      <h1>Notifications</h1>
-
-    </main>
+    <DashboardRoutePlaceholder
+      eyebrow="Communication"
+      title="Notificaciones"
+      description="Centro de notificaciones del dashboard para eventos relevantes del tenant."
+      routePath="/notifications"
+      domain="Communication"
+      purpose="Agrupar avisos y eventos para el admin."
+      nextStep="Definir tipos, filtros y acciones de marcado."
+      bullets={['Centro de avisos', 'Tipos de evento', 'Estados de lectura']}
+    />
   );
-};
-
-export default Notifications
+}

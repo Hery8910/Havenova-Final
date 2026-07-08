@@ -17,7 +17,8 @@ The goal is to migrate page by page, using audited consumption as the only valid
 
 We will not create a second generic `global.css`.
 
-We will create a **controlled migration layer** that is only populated by styles justified through page audits.
+We used a temporary **controlled migration layer** during the refactor, but that layer has now been
+collapsed back into the canonical shared system in `packages/styles`.
 
 Important clarification:
 
@@ -35,11 +36,13 @@ Current interpretation:
 
 - the shared style foundation now lives in `packages/styles`
 - app-level `global.css` entrypoints consume that shared baseline
-- the older `apps/*/app/styles/*` trees should be treated as transitional residue until all imports are normalized
+- the older `apps/*/app/styles/*` trees were legacy duplicates and have been removed from the active baseline
 
-Migration layer:
+Current status:
 
-- `apps/client/app/migration-styles/*`
+- `apps/client/app/migration-styles/*` was removed from the active runtime
+- the shared style foundation now lives directly in `packages/styles`
+- page-specific exceptions remain in CSS Modules until they justify promotion
 
 ## Migration Principles
 
@@ -81,102 +84,27 @@ The migration layer should prefer:
 
 It should not collect one-off fixes that belong in CSS Modules.
 
-## Migration Layer Structure
+## Removed During Consolidation
 
-Suggested structure:
+- `tokens.v2.css`
+- `buttons.v2.css`
+- `cards.v2.css`
+- `typography.v2.css`
+- `base.v2.css`
+- `motion.v2.css`
+- `forms.v2.css`
+- `page-home.css`
+- `page-about.css`
+- `page-how-it-work.css`
+- `page-contact.css`
+- `index.css`
 
-```text
-apps/client/app/migration-styles/
-  index.css
-  tokens.v2.css
-  base.v2.css
-  motion.v2.css
-  typography.v2.css
-  buttons.v2.css
-  cards.v2.css
-  forms.v2.css
-  page-home.css
-```
-
-## Meaning Of Each File
-
-### `index.css`
-
-Single entrypoint for the migration layer.
-
-Used only where the migration layer is intentionally enabled.
-
-### `tokens.v2.css`
-
-Holds owned tokens that are confirmed by audited usage.
-
-Examples:
-
-- page background and text tokens
-- spacing tokens with real page/layout responsibility
-- card or feedback tokens when a page genuinely needs them
-- controlled replacements for ambiguous legacy tokens
-
-Current status:
-
-- this file now stores owned `v2` values for the first Home migration pass
-- tokens should be named by visual responsibility, not by alias chains
-- it should continue growing only through audited page needs
-
-### `typography.v2.css`
-
-Only typography primitives that are repeatedly needed by audited pages.
-
-### `base.v2.css`
-
-Owns the reset and page-surface baseline for migrated routes.
-
-It exists so migrated pages do not depend silently on undocumented base behavior from the old system.
-
-### `motion.v2.css`
-
-Owns global motion guardrails for migrated routes.
-
-Its first responsibility is reduced-motion safety, before any new animation primitive is introduced.
-
-### `buttons.v2.css`
-
-Canonical button variants for migrated pages.
-
-This is one of the first targets because button drift is already visible.
-
-Current rule:
-
-- do not define alias classes like `.v2-button-outline` unless the migration layer is truly taking ownership of the full button contract
-- simple aliasing through invalid composition or blind duplication is not allowed
-
-### `cards.v2.css`
-
-Canonical card/surface variants for migrated pages.
-
-Current rule:
-
-- do not create wrapper aliases like `.v2-card-neutral` unless the new layer owns the surface semantics and visual contract explicitly
-
-### `forms.v2.css`
-
-Form-level primitives when audited pages actually need them.
-
-### `page-home.css`
-
-Page-scoped migration helpers only for `Home`, when a style must be shared across several `Home` feature sections but does not yet belong in the global final system.
-
-This file is transitional by design.
-
-This is the preferred place for first-pass extraction when:
-
-- a rule is shared inside one audited page
-- the rule is not yet justified as a cross-page primitive
-- duplicating old global utilities would be misleading
+These files were removed once the migrated routes converged back to the canonical shared
+`button`, `card`, semantic text/page primitives, and layout tokens in `packages/styles`.
 
 ## Classification Rule For New Styles
 
-Every rule added to the migration layer must be tagged conceptually as:
+Every rule added during future cleanup must be tagged conceptually as:
 
 ### Final
 
@@ -192,17 +120,17 @@ The rule exists only to avoid visual breakage while older consumers are still al
 
 ## Relationship With Existing Global Styles
 
-The current system remains the production baseline until a migrated replacement is validated.
+The current shared system remains the production baseline until a replacement is validated.
 
 That means:
 
 - we do not delete large pieces of the current style system blindly
 - we only replace rules once a migrated page proves the new layer works
-- the migration layer may import next to the current global system during transition, but only for explicitly audited routes
+- temporary transition layers must be removed once their ownership has converged back into the shared system
 
 ## Page-Level Style Audit Requirements
 
-Before a page contributes to the migration layer, its audit must identify:
+Before a page contributes to any temporary transition layer, its audit must identify:
 
 - global utility classes used
 - typography helpers used
@@ -239,7 +167,7 @@ These are exactly the kinds of cases the migration layer should absorb in a cont
 
 ## Current Technical Constraint
 
-The migration layer must remain valid plain CSS.
+Any temporary transition layer must remain valid plain CSS.
 
 That means:
 
@@ -252,7 +180,7 @@ If a rule cannot stand on its own, it should stay:
 - in a page CSS Module, or
 - as a documented dependency on the existing global layer until the replacement is real
 
-## Initial Adoption Plan
+## Historical Adoption Plan
 
 ### Phase 1. Documentation and structure
 
@@ -266,18 +194,17 @@ If a rule cannot stand on its own, it should stay:
 - identify Home style rules that are:
   - already clean enough to remain
   - page-local only
-  - candidates for v2 system primitives
-- move only proven shared page rules into `page-home.css`
+  - candidates for controlled temporary extraction
 - keep typography/button/card primitives in the existing system unless ownership actually changes
 
 ### Phase 3. Controlled activation
 
-- import the migration layer only when the owning page is ready for it
+- activate any temporary layer only when the owning page is ready for it
 - compare for duplication and conflicts with the current global system
 
 ### Phase 4. Consolidation
 
-- after several pages are migrated, decide which migration rules become the real new global system
+- after several pages are migrated, decide which temporary rules converge into the real shared system
 
 ## Non-Goals
 

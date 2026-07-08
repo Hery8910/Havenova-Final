@@ -14,3 +14,4 @@ export * from './globalTaskCatalog';
 export * from './worker';
 export * from './notification';
 export * from './bff';
+export * from './tenantUsers';

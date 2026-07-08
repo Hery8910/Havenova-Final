@@ -16,6 +16,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  animation: navbarFadeInDownLarge 0.32s var(--ease-standard);
 }
 
 .tabletLayout::before {
@@ -119,11 +120,15 @@
   padding: 18px;
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(-16px);
+  opacity: 0;
 }
 
 .tabletPanelOpen {
   visibility: visible;
   pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
   animation: navbarFadeInDownLarge 0.3s var(--ease-standard);
 }
 

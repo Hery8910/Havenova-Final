@@ -49,20 +49,20 @@ The route is wrapped by:
 
                     <div class="PageHero.heroContent">
                       <div class="PageHero.heroCopy">
-                        <h1 id="{heroTitleId}" class="type-display-lg v2-page-heading">
+                        <h1 id="{heroTitleId}" class="type-display-lg">
                           {about.hero.title}
                         </h1>
 
                         <div id="{heroDescriptionId?}" class="PageHero.heroDescriptions">
-                          <p class="type-body-lg v2-page-copy">{about.hero.descriptions[0]}</p>
-                          <p class="type-body-lg v2-page-copy">{about.hero.descriptions[n]?}</p>
+                          <p class="type-body-lg">{about.hero.descriptions[0]}</p>
+                          <p class="type-body-lg">{about.hero.descriptions[n]?}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </header>
 
-                <main id="app-main-content" tabindex="-1" class="AboutPageView.main" data-page="about">
+                <main id="app-main-content" tabindex="-1" class="page-flow" data-page="about">
                   <section class="StorySection.section" aria-labelledby="about-story-title">
                     <div class="StorySection.container">
                       <h2 id="about-story-title" class="type-title-lg">

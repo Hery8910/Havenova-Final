@@ -21,6 +21,26 @@
   padding: 0;
   position: relative;
   overflow: hidden;
+  background-color: color-mix(in srgb, var(--card-secondary-bg) 92%, transparent);
+  background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card-secondary-bg1) 46%, transparent),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--card-secondary-bg1) 64%, transparent),
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      color-mix(in srgb, var(--card-secondary-bg3) 42%, transparent),
+      transparent 52%
+    );
+  border-color: color-mix(in srgb, var(--card-secondary-border) 78%, transparent);
+  box-shadow:
+    0 18px 38px -28px color-mix(in srgb, var(--border-strong) 24%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 38%, transparent);
 }
 
 .navColumn {
@@ -30,7 +50,7 @@
   min-height: 0;
   position: relative;
   z-index: 1;
-  padding: 6px;
+  padding: 4px;
   background: transparent;
   background-image: none;
   box-shadow: none;
@@ -57,7 +77,7 @@
   }
 
   .navColumn {
-    padding: 8px;
+    padding: 6px;
   }
 
   .navPanel {
@@ -67,6 +87,29 @@
   .section {
     padding-left: 16px;
   }
+}
+
+:global([data-theme='dark']) .workspace {
+  background-color: color-mix(in srgb, var(--card-secondary-bg2) 76%, transparent);
+  background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, white 3%, transparent),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--card-secondary-bg1) 40%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      color-mix(in srgb, var(--card-secondary-bg3) 22%, transparent),
+      transparent 56%
+    );
+  border-color: color-mix(in srgb, var(--card-secondary-border) 54%, transparent);
+  box-shadow:
+    0 22px 46px -34px rgba(2, 6, 23, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
 @media (max-width: 767px) {

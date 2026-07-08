@@ -17,13 +17,22 @@ import { getI18nFallbacks } from '../i18n';
 import { AuthRole, AuthUser } from '@/packages/types';
 import { useRouter } from 'next/navigation';
 import { getPopup, normalizeAuthSession, type AuthSessionSeed } from '@havenova/utils';
-import { clearCsrfToken, getAuthUser, getCsrfDebugState, logoutUser, refreshToken } from '@havenova/services';
+import {
+  clearCsrfToken,
+  getAuthUser,
+  getCsrfDebugState,
+  getCsrfToken,
+  logoutUser,
+  refreshToken,
+} from '@havenova/services';
 
 const AUTH_STORAGE_KEY = 'hv-auth';
 const AUTH_RECENT_LOGIN_KEY = 'hv-auth-recent-login-at';
 const WORKER_STORAGE_KEY = 'hv-worker-profile';
 const AUTH_REQUEST_TIMEOUT_MS = 8000;
 const AUTH_RECENT_LOGIN_GRACE_MS = 5000;
+const AUTH_UNAUTHENTICATED_BOOTSTRAP_COOLDOWN_MS = 3000;
+const AUTH_SERVER_SYNC_COOLDOWN_MS = 1500;
 type AuthSource = 'server' | 'storage' | 'default' | 'dev-fallback';
 
 type AuthRefreshResult = {
@@ -86,6 +95,12 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
+type AuthProviderProps = {
+  children: ReactNode;
+  disableUnauthenticatedBootstrap?: boolean;
+  initialAuth?: AuthSessionSeed | null;
+};
+
 const isOfflineAuthError = (error: unknown): boolean => {
   const err = error as {
     code?: string;
@@ -144,7 +159,39 @@ const debugAuthTrace = (
   console.debug(`[auth-debug] ${label}`, payload ?? {});
 };
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+const unauthenticatedBootstrapByClient = new Map<string, number>();
+
+const getUnauthenticatedBootstrapKey = (clientId?: string | null) => clientId || '__no-client__';
+
+const markUnauthenticatedBootstrap = (clientId?: string | null) => {
+  unauthenticatedBootstrapByClient.set(getUnauthenticatedBootstrapKey(clientId), Date.now());
+};
+
+const clearUnauthenticatedBootstrap = (clientId?: string | null) => {
+  unauthenticatedBootstrapByClient.delete(getUnauthenticatedBootstrapKey(clientId));
+};
+
+const shouldSkipUnauthenticatedBootstrap = (clientId?: string | null): boolean => {
+  const key = getUnauthenticatedBootstrapKey(clientId);
+  const lastFailureAt = unauthenticatedBootstrapByClient.get(key);
+
+  if (!lastFailureAt) {
+    return false;
+  }
+
+  if (Date.now() - lastFailureAt >= AUTH_UNAUTHENTICATED_BOOTSTRAP_COOLDOWN_MS) {
+    unauthenticatedBootstrapByClient.delete(key);
+    return false;
+  }
+
+  return true;
+};
+
+export const AuthProvider = ({
+  children,
+  initialAuth = null,
+  disableUnauthenticatedBootstrap = false,
+}: AuthProviderProps) => {
   const { client } = useClient();
   const clientId = client?._id || '';
 
@@ -167,6 +214,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const sessionCallbackRef = useRef<(() => void) | null>(null);
   const isRefreshingRef = useRef(false);
   const bootstrapClientKeyRef = useRef<string | null>(null);
+  const lastServerSyncRef = useRef<{ authId: string; clientId: string; syncedAtMs: number } | null>(
+    null
+  );
 
   const normalizeAuthState = useCallback(
     (value?: AuthSessionSeed | null, overrides?: Partial<AuthUser>): AuthUser =>
@@ -333,6 +383,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return createResult(currentAuth, source, isOffline, lastSyncAt);
       }
 
+      const recentServerSync = lastServerSyncRef.current;
+      const shouldSkipRecentServerSync =
+        auth?.isLogged &&
+        auth.role !== 'guest' &&
+        recentServerSync?.authId === auth.authId &&
+        recentServerSync?.clientId === clientId &&
+        Date.now() - recentServerSync.syncedAtMs < AUTH_SERVER_SYNC_COOLDOWN_MS;
+
+      if (shouldSkipRecentServerSync) {
+        debugAuthTrace('refreshAuth.skip-recent-server-sync', {
+          clientId,
+          authId: auth?.authId,
+          cooldownMs: AUTH_SERVER_SYNC_COOLDOWN_MS,
+        });
+        return createResult(auth, source, isOffline, lastSyncAt);
+      }
+
       isRefreshingRef.current = true;
 
       const stored = loadFromStorage();
@@ -343,6 +410,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         ...getBrowserCookiePresence(),
       });
       const setFromBackend = (backendAuth: AuthUser) => {
+        clearUnauthenticatedBootstrap(clientId);
         const finalAuth = normalizeAuthState(backendAuth, {
           isLogged: true,
           isNewUser: backendAuth.isNewUser ?? stored?.isNewUser ?? false,
@@ -353,6 +421,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsOffline(false);
         const syncedAt = new Date().toISOString();
         setLastSyncAt(syncedAt);
+        lastServerSyncRef.current = {
+          authId: finalAuth.authId,
+          clientId,
+          syncedAtMs: Date.now(),
+        };
         clearRecentLogin();
         debugAuthTrace('refreshAuth.server-success', {
           role: finalAuth.role,
@@ -370,6 +443,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('default');
         setIsOffline(offline);
         setLastSyncAt(null);
+        lastServerSyncRef.current = null;
         clearRecentLogin();
         debugAuthTrace('refreshAuth.set-guest', {
           offline,
@@ -385,6 +459,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource(useDevFallback ? 'dev-fallback' : 'storage');
         setIsOffline(useDevFallback || offline);
         setLastSyncAt(null);
+        lastServerSyncRef.current = null;
         debugAuthTrace('refreshAuth.storage-fallback', {
           offline,
           role: normalized.role,
@@ -407,8 +482,71 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSource('dev-fallback');
         setIsOffline(true);
         setLastSyncAt(null);
+        lastServerSyncRef.current = null;
         debugAuthTrace('refreshAuth.dev-fallback', getBrowserCookiePresence());
         return createResult(devAuth, 'dev-fallback', true, null);
+      };
+
+      const handleTerminalSessionFailure = (failureStatus?: number) => {
+        if (
+          stored &&
+          stored.isLogged &&
+          stored.role !== 'guest' &&
+          isWithinRecentLoginGrace()
+        ) {
+          return setFromStorage(stored, false);
+        }
+
+        markUnauthenticatedBootstrap(clientId);
+        clearUserStorage();
+        const guestResult = setGuest();
+        const role = stored?.role;
+        const shouldOfferContinue = role === 'user';
+        const popupKey = shouldOfferContinue ? 'USER_SESSION_EXPIRED' : 'REFRESH_TOKEN_EXPIRED';
+        const popup = getPopup(
+          popups,
+          popupKey,
+          popupKey,
+          shouldOfferContinue
+            ? fallbackPopups.USER_SESSION_EXPIRED
+            : fallbackPopups.REFRESH_TOKEN_EXPIRED
+        );
+
+        if (shouldOfferContinue) {
+          showConfirm({
+            response: {
+              status: failureStatus || 401,
+              title: popup.title,
+              description: popup.description,
+              confirmLabel: alertButtons.goToLogin,
+              cancelLabel: alertButtons.continueBrowsing,
+            },
+            onConfirm: () => {
+              closeAlert();
+              router.push(`/${language}/user/login`);
+            },
+            onCancel: closeAlert,
+          });
+        } else {
+          showError({
+            response: {
+              status: failureStatus || 401,
+              title: popup.title,
+              description: popup.description,
+              cancelLabel: alertButtons.goToLogin,
+            },
+            onCancel: () => {
+              closeAlert();
+              router.push(`/${language}/user/login`);
+            },
+          });
+        }
+
+        (onSessionExpired || sessionCallbackRef.current)?.();
+        return {
+          ...guestResult,
+          userNotified: true,
+        };
       };
 
       try {
@@ -430,8 +568,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         // TOKEN EXPIRED
         if (status === 401 || status === 403) {
+          const csrfToken = getCsrfToken();
           try {
-            debugAuthTrace('refreshAuth.try-refresh-token', getBrowserCookiePresence());
+            debugAuthTrace('refreshAuth.try-refresh-token', {
+              status,
+              code,
+              csrfTokenSource: csrfToken ? 'memory' : 'bff-cookie-fallback',
+              ...getBrowserCookiePresence(),
+            });
             await withTimeout(
               refreshToken(),
               AUTH_REQUEST_TIMEOUT_MS,
@@ -465,64 +609,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               }
               return setGuest(true);
             }
-
-            if (
-              stored &&
-              stored.isLogged &&
-              stored.role !== 'guest' &&
-              isWithinRecentLoginGrace()
-            ) {
-              return setFromStorage(stored, false);
-            }
-
-            clearUserStorage();
-            const guestResult = setGuest();
-            const role = stored?.role;
-            const shouldOfferContinue = role === 'user';
-            const popupKey = shouldOfferContinue ? 'USER_SESSION_EXPIRED' : 'REFRESH_TOKEN_EXPIRED';
-            const popup = getPopup(
-              popups,
-              popupKey,
-              popupKey,
-              shouldOfferContinue
-                ? fallbackPopups.USER_SESSION_EXPIRED
-                : fallbackPopups.REFRESH_TOKEN_EXPIRED
-            );
-
-            if (shouldOfferContinue) {
-              showConfirm({
-                response: {
-                  status: status || 401,
-                  title: popup.title,
-                  description: popup.description,
-                  confirmLabel: alertButtons.goToLogin,
-                  cancelLabel: alertButtons.continueBrowsing,
-                },
-                onConfirm: () => {
-                  closeAlert();
-                  router.push(`/${language}/user/login`);
-                },
-                onCancel: closeAlert,
-              });
-            } else {
-              showError({
-                response: {
-                  status: status || 401,
-                  title: popup.title,
-                  description: popup.description,
-                  cancelLabel: alertButtons.goToLogin,
-                },
-                onCancel: () => {
-                  closeAlert();
-                  router.push(`/${language}/user/login`);
-                },
-              });
-            }
-            (onSessionExpired || sessionCallbackRef.current)?.();
-            return {
-              ...guestResult,
-              userNotified: true,
-            };
+            return handleTerminalSessionFailure(status);
           }
         }
 
@@ -572,6 +659,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     bootstrapClientKeyRef.current = bootstrapKey;
 
+    const initialServerAuth = initialAuth
+      ? normalizeAuthState(initialAuth, {
+          isLogged: initialAuth.isLogged ?? true,
+        })
+      : null;
+
+    if (initialServerAuth && initialServerAuth.isLogged && initialServerAuth.role !== 'guest') {
+      setAuthState((current) =>
+        isSameAuthState(current, initialServerAuth) ? current : initialServerAuth
+      );
+      saveToStorage(initialServerAuth);
+      setSource('server');
+      setIsOffline(false);
+      const syncedAt = new Date().toISOString();
+      setLastSyncAt(syncedAt);
+      lastServerSyncRef.current = {
+        authId: initialServerAuth.authId,
+        clientId: initialServerAuth.clientId || clientId,
+        syncedAtMs: Date.now(),
+      };
+      clearRecentLogin();
+      setLoading(false);
+      return;
+    }
+
     const stored = loadFromStorage();
     const normalizedStored = stored ? normalizeAuthState(stored) : null;
 
@@ -582,7 +694,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setSource(isDevFallbackAuth(normalizedStored) ? 'dev-fallback' : 'storage');
       setIsOffline(isDevFallbackAuth(normalizedStored));
       setLastSyncAt(null);
+      lastServerSyncRef.current = null;
       if (normalizedStored.role !== 'guest') {
+        if (disableUnauthenticatedBootstrap) {
+          setLoading(false);
+          return;
+        }
         void refreshAuth().finally(() => {
           setLoading(false);
         });
@@ -603,7 +720,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
 
+        if (disableUnauthenticatedBootstrap) {
+          const guest = createGuest();
+          setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
+          saveToStorage(guest);
+          setSource('default');
+          setIsOffline(false);
+          setLastSyncAt(null);
+          lastServerSyncRef.current = null;
+          setLoading(false);
+          return;
+        }
+
         try {
+          if (shouldSkipUnauthenticatedBootstrap(clientId)) {
+            debugAuthTrace('bootstrapWithoutStoredSession.skip-recent-401', {
+              clientId,
+              cooldownMs: AUTH_UNAUTHENTICATED_BOOTSTRAP_COOLDOWN_MS,
+            });
+            const guest = createGuest();
+            setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
+            saveToStorage(guest);
+            setSource('default');
+            setIsOffline(false);
+            setLastSyncAt(null);
+            return;
+          }
+
           const backendAuth = await withTimeout(
             getAuthUser(),
             AUTH_REQUEST_TIMEOUT_MS,
@@ -612,6 +755,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
           if (cancelled) return;
 
+          clearUnauthenticatedBootstrap(clientId);
           const normalized = normalizeAuthState(backendAuth, {
             isLogged: true,
             isNewUser: backendAuth.isNewUser ?? false,
@@ -620,19 +764,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           saveToStorage(normalized);
           setSource('server');
           setIsOffline(false);
-          setLastSyncAt(new Date().toISOString());
+          const syncedAt = new Date().toISOString();
+          setLastSyncAt(syncedAt);
+          lastServerSyncRef.current = {
+            authId: normalized.authId,
+            clientId,
+            syncedAtMs: Date.now(),
+          };
         } catch (err) {
           if (cancelled) return;
 
           const status = (err as { response?: { status?: number } })?.response?.status;
 
           if (status === 401 || status === 403) {
+            markUnauthenticatedBootstrap(clientId);
             const guest = createGuest();
             setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
             saveToStorage(guest);
             setSource('default');
             setIsOffline(false);
             setLastSyncAt(null);
+            lastServerSyncRef.current = null;
           } else if (isOfflineAuthError(err) && isDevAuthFallbackEnabled) {
             const devAuth = createDevFallback();
             setAuthState(devAuth);
@@ -640,6 +792,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setSource('dev-fallback');
             setIsOffline(true);
             setLastSyncAt(null);
+            lastServerSyncRef.current = null;
           } else {
             const guest = createGuest();
             setAuthState((current) => (isSameAuthState(current, guest) ? current : guest));
@@ -647,6 +800,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setSource('default');
             setIsOffline(isOfflineAuthError(err));
             setLastSyncAt(null);
+            lastServerSyncRef.current = null;
           }
         } finally {
           if (!cancelled) {
@@ -666,6 +820,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clientId,
     createDevFallback,
     createGuest,
+    disableUnauthenticatedBootstrap,
     isClientReady,
     isDevAuthFallbackEnabled,
     normalizeAuthState,
@@ -757,10 +912,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     if (normalized.isLogged && normalized.role !== 'guest') {
+      clearUnauthenticatedBootstrap(normalized.clientId || clientId);
+      lastServerSyncRef.current = null;
       markRecentLogin();
       return;
     }
 
+    lastServerSyncRef.current = null;
     clearRecentLogin();
   }, [clearRecentLogin, markRecentLogin, normalizeAuthState]);
 

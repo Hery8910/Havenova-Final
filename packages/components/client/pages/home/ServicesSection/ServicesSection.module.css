@@ -48,11 +48,11 @@
   text-align: center;
   margin: 0 auto;
   max-width: 500px;
-  color: var(--page-text-primary);
+  color: var(--text-primary);
 }
 .sectionSubtitle {
   text-align: center;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -108,7 +108,7 @@
 }
 .cardAside {
   padding-top: var(--space-2);
-  border-top: 1px solid var(--page-text-secondary);
+  border-top: 1px solid var(--text-secondary);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -118,12 +118,12 @@
 }
 .cardTitle {
   margin: 0;
-  color: var(--page-text-primary);
+  color: var(--text-primary);
   max-width: 12ch;
 }
 .cardText {
   margin: 0;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 .serviceList {
   width: 100%;
@@ -132,10 +132,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
 }
 .serviceListItem::marker {
-  color: var(--v2-list-marker-accent);
+  color: var(--brand-primary);
 }
 .serviceListItem {
   line-height: 1.45;

@@ -27,6 +27,11 @@ export const HOME_SERVICES_FEATURES = [
 export type HomeServicesFeatureKey = (typeof HOME_SERVICES_FEATURES)[number];
 
 export type ClientStatus = 'active' | 'trial' | 'inactive' | 'suspended' | 'archived';
+export type ClientEmailAssetVariantKey =
+  | 'clientAdminInvite'
+  | 'adminInvite'
+  | 'workerInvite'
+  | 'userInvite';
 export type BillingStatus = 'active' | 'paused' | 'cancelled';
 export type OnboardingStatus = 'pending' | 'in_progress' | 'completed';
 export type LegalDocumentType = 'imprint' | 'privacy' | 'cookies' | 'terms';
@@ -225,6 +230,7 @@ export interface ClientPublicProfile {
     email?: {
       headerImage?: string;
       heroImage?: string;
+      variants?: Partial<Record<ClientEmailAssetVariantKey, string>>;
     };
     dashboard?: {
       backgroundImage?: string;

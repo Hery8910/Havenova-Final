@@ -1,1 +1,0 @@
-export { ContactMessageResponder } from './ContactMessageResponder';

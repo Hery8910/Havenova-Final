@@ -3,9 +3,10 @@
   position: relative;
   min-width: 44px;
   max-width: 250px;
-  width: 100%;
+  width: auto;
   border-radius: var(--radius-sm);
   padding: 0;
+  flex: 0 0 auto;
 }
 
 .toggleButton[aria-pressed='true'] {
@@ -65,11 +66,11 @@
 
 .icon {
   font-size: 1.4rem;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .currentValue {
-  color: var(--color-page-muted);
+  color: var(--text-secondary);
   font-weight: 700;
   line-height: 1;
 }

@@ -39,12 +39,12 @@ Includes:
 
 Output:
 
-- `tokens.v2.css` becomes a real token source, not a mirror
+- shared canonical tokens become the single source of truth for Home
 
 Current status:
 
 - partially completed
-- `tokens.v2.css` now owns the first Home baseline values instead of referencing `v1`
+- Home baseline values now live in the shared canonical token source instead of a parallel migration file
 - light and dark mode values are now declared for the migrated Home token subset
 
 ### 2. Base And Page Surface
@@ -67,7 +67,7 @@ Output:
 Current status:
 
 - started
-- `base.v2.css` now defines the first migrated base/page-surface contract
+- the shared base layer now defines the current base/page-surface contract
 
 ### 3. Motion And Reduced-Motion Accessibility
 
@@ -111,7 +111,7 @@ Output:
 Current status:
 
 - started
-- Home now consumes `v2-page-heading` and `v2-page-copy` together with the existing type-size utilities
+- Home now consumes shared semantic page text helpers together with the existing type-size utilities
 
 ### 5. Button Primitives
 
@@ -134,7 +134,7 @@ Output:
 Current status:
 
 - started
-- Home now consumes `v2-button` primitives for the button variants it actually uses
+- Home now consumes shared button primitives for the button variants it actually uses
 
 ### 6. Card And Surface Primitives
 
@@ -156,7 +156,7 @@ Output:
 Current status:
 
 - started
-- Home now consumes `v2-card` primitives for service cards, neutral icon surface, and support bar
+- Home now consumes shared card primitives for service cards, neutral icon surface, and support bar
 
 ### 7. Responsive Consolidation
 
@@ -226,31 +226,25 @@ The next implementation pass should focus only on:
 
 The current first migration pass already covered:
 
-- `tokens.v2.css`
 - global page/base dependencies that Home actually needs
 - reduced-motion gaps that were already visible in Home
-- first route-level `v2` activation for page surface and typography
-- first route-level `v2` activation for buttons and card surfaces in `Home`
+- a temporary route-level transition layer that has since been removed after convergence
 
 ## Consolidation Decision After Home
 
 Current reusable candidates:
 
-- `tokens.v2.css`
-- `base.v2.css`
-- `motion.v2.css`
-- `typography.v2.css`
-- `buttons.v2.css`
-- `cards.v2.css`
+- semantic page tokens in `packages/styles`
+- shared button/card primitives in `packages/styles`
+- reduced-motion guardrails in `packages/styles/base.css`
 
 Current Home-only layer:
 
-- `page-home.css`
 - section-specific decorative treatments
 - page-specific layout composition details
 
 Rule for the next page:
 
-- reuse `v2` primitives first
-- only extend `v2` when the next page reveals a real new responsibility
+- reuse shared primitives first
+- only add new shared tokens when the next page reveals a real new responsibility
 - if the next page needs a one-off treatment, keep it page-local instead of polluting the shared layer

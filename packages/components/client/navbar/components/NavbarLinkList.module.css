@@ -14,13 +14,13 @@
 
 .inlineButton {
   width: auto;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   transition: color var(--motion-base) var(--ease-standard);
 }
 
 .inlineButton:hover,
 .inlineButton:focus-visible {
-  color: var(--page-text-primary);
+  color: var(--text-primary);
 }
 
 .panelList {
@@ -41,7 +41,7 @@
   justify-content: flex-start;
   gap: 8px;
   text-align: left;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   transition:
     color var(--motion-base) var(--ease-standard),
     background-color var(--motion-base) var(--ease-standard);
@@ -49,7 +49,7 @@
 
 .panelButton:hover,
 .panelButton:focus-visible {
-  color: var(--page-text-primary);
+  color: var(--text-primary);
 }
 
 .panelIcon {

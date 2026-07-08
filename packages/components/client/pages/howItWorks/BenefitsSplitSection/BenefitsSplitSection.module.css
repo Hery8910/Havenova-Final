@@ -13,9 +13,9 @@
   gap: 32px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
-    radial-gradient(circle at top left, var(--v2-card-secondary-bg1), transparent 42%),
-    radial-gradient(circle at 85% 30%, var(--v2-card-primary-bg1), transparent 34%),
-    var(--v2-card-neutral-bg2);
+    radial-gradient(circle at top left, var(--card-secondary-bg1), transparent 42%),
+    radial-gradient(circle at 85% 30%, var(--card-primary-bg1), transparent 34%),
+    var(--card-neutral-bg2);
 }
 .header {
   display: flex;
@@ -27,11 +27,11 @@
 }
 .title {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
 }
 .subtitle {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
 }
 .heroCtas {
   width: 100%;

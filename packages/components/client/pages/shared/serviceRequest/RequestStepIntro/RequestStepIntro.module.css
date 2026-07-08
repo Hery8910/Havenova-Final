@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--type-title-sm-size);
+  line-height: var(--leading-heading);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}

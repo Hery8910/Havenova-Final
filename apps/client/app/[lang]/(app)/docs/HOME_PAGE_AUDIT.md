@@ -211,15 +211,14 @@ Observed in current Home surfaces:
 - `type-title-sm`
 - `type-body-lg`
 - `type-body-sm`
-- `v2-button`
-- `v2-button--primary`
-- `v2-button--secondary`
-- `v2-button--accent`
-- `v2-button--outline`
-- `v2-card`
-- `v2-card--primary`
-- `v2-card--secondary`
-- `v2-card--neutral`
+- `button`
+- `button--primary`
+- `button--secondary`
+- `button--accent`
+- `card`
+- `card--primary`
+- `card--secondary`
+- `card--neutral`
 
 Legacy or suspect classes to review:
 
@@ -238,22 +237,11 @@ Current update:
 
 Observed directly in Home CSS modules:
 
-- `--v2-page-text-primary`
-- `--v2-page-text-secondary`
+- `--page-text-primary`
+- `--page-text-secondary`
 - `--space-2`
 - `--space-4`
-- `--v2-card-shadow`
-- `--v2-radius-md`
-- `--v2-radius-lg`
-- `--v2-card-primary-bg1`
-- `--v2-card-secondary-bg2`
-- `--v2-card-neutral-bg1`
-- `--v2-card-neutral-bg2`
-- `--v2-card-neutral-bg3`
-- `--v2-card-neutral-border`
-- `--v2-feedback-info-bg-image`
-- `--v2-list-marker-accent`
-- `--v2-hero-mobile-min-block-offset`
+- current shared page, card, radius and spacing tokens from `packages/styles`
 
 Review note:
 
@@ -277,7 +265,7 @@ Interpretation:
 
 Observed:
 
-- Home now uses a substantially more explicit `v2` page token set, but that set is still only validated against Home
+- Home now uses the shared semantic page token set, but that set still needs cross-route validation as the refactor continues
 
 Interpretation:
 
@@ -304,29 +292,24 @@ Interpretation:
 - responsive behavior for Home is no longer only about breakpoint collapse
 - spacing rhythm, edge padding, max widths, and icon/text proportion are now explicit responsive requirements
 
-### 5. Home now has a controlled parallel migration layer with active button/card adoption
+### 5. Home used a controlled migration layer, but it has now been collapsed back into the shared system
 
 Current state:
 
 - the migration strategy is documented in [docs/STYLE_MIGRATION_STRATEGY.md](/home/heriberto/Escritorio/Havenova/havenova/docs/STYLE_MIGRATION_STRATEGY.md:1)
-- the file structure exists under [apps/client/app/migration-styles](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/migration-styles/index.css:1)
 - the Home-specific style inventory lives in [HOME_STYLE_INVENTORY.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/HOME_STYLE_INVENTORY.md:1)
 
 Interpretation:
 
-- this gives us a real place to move audited style ownership later
-- the layer now owns first-pass `v2` tokens plus base/motion files
-- Home now imports that layer at route level for page surface and typography ownership
-- the migrated token subset now includes light and dark theme values
-- button semantics are now owned by `v2` for the Home surface
-- card semantics are now owned by `v2` for the Home surface
-- this avoids creating a second undocumented global layer
+- the temporary layer served as a transition scaffold only
+- its owned values have now either converged into `packages/styles` or remained page-local in CSS Modules
+- Home no longer imports a parallel style tree at route level
 
 Current consolidation view:
 
-- `tokens.v2.css`, `base.v2.css`, `motion.v2.css`, `typography.v2.css`, `buttons.v2.css`, and `cards.v2.css` are now candidate shared layers
-- `page-home.css` and the decorative page treatments remain Home-owned
-- the next audited page should reuse the shared candidates before creating any new primitive
+- the active shared baseline now lives directly in `packages/styles`
+- decorative page treatments remain Home-owned CSS-module concerns
+- the next cleanup step is pruning outdated route documentation, not sustaining another style layer
 
 ## Current Metadata Status
 

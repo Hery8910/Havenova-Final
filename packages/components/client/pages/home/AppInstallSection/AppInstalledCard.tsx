@@ -18,7 +18,7 @@ export function AppInstalledCard({ content }: AppInstalledCardProps) {
       </header>
 
       <div className={styles.copyBlock}>
-        <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>
+        <p className={`${styles.sectionSubtitle} type-body-lg`}>
           {content.description}
         </p>
         <div className={styles.appCtas}>

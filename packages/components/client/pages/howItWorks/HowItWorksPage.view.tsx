@@ -7,7 +7,6 @@ import {
   resolveHowItWorksWorkflow,
 } from './howItWorks.fallbacks';
 import type { HowItWorksPageTexts } from './howItWorks.types';
-import styles from './HowItWorksPageView.module.css';
 
 interface HowItWorksPageViewProps {
   howItWorks?: HowItWorksPageTexts;
@@ -18,12 +17,7 @@ export function HowItWorksPageView({ howItWorks, lang }: HowItWorksPageViewProps
   return (
     <>
       <PageHero texts={resolveHowItWorksHeroContent(howItWorks?.hero)} lang={lang} position={5} />
-      <main
-        id="app-main-content"
-        tabIndex={-1}
-        className={`${styles.main} v2-how-it-work`}
-        data-page="how-it-work"
-      >
+      <main id="app-main-content" tabIndex={-1} className="page-flow" data-page="how-it-work">
         <WorkflowSection texts={resolveHowItWorksWorkflow(howItWorks?.workflow)} />
         <BenefitsSplitSection texts={resolveHowItWorksBenefits(howItWorks?.benefits)} lang={lang} />
       </main>

@@ -1,10 +1,10 @@
 .workflow {
-  padding: 0 var(--v2-page-inline-padding);
+  padding: 0 var(--page-inline-padding);
   position: relative;
 }
 .container {
   width: 100%;
-  max-width: var(--v2-content-max-width);
+  max-width: var(--content-max-width-page);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -21,11 +21,11 @@
 }
 .title {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
 }
 .subtitle {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
 }
 .stepsGrid {
   list-style: none;
@@ -49,8 +49,8 @@
   flex-direction: column;
   gap: 12px;
   transition:
-    transform var(--v2-motion-base) var(--v2-ease-standard),
-    box-shadow var(--v2-motion-base) var(--v2-ease-standard);
+    transform var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
 }
 .stepCard:hover {
   transform: translateY(-3px);
@@ -65,7 +65,7 @@
 .badge {
   width: 34px;
   height: 34px;
-  border-radius: var(--v2-radius-sm);
+  border-radius: var(--radius-btn);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -75,11 +75,11 @@
 }
 .stepTitle {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
 }
 .stepDescription {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
 }
 .note {
   width: 100%;
@@ -90,11 +90,11 @@
   gap: 8px;
 }
 .noteTitle {
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
   margin: 0;
 }
 .noteDescription {
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
   margin: 0;
 }
 

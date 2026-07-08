@@ -16,6 +16,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  animation: navbarFadeInDownLarge 0.32s var(--ease-standard);
 }
 
 .navActions {
@@ -55,19 +56,23 @@
   width: min(100%, 280px);
   visibility: hidden;
   pointer-events: none;
+  opacity: 0;
 }
 
 .desktopDropdownOpen {
   visibility: visible;
   pointer-events: auto;
+  opacity: 1;
 }
 
 .accountNavigation {
   width: 100%;
   padding: 18px;
+  transform: translateY(-16px);
 }
 
 .accountNavigationOpen {
+  transform: translateY(0);
   animation: navbarFadeInDownLarge 0.3s var(--ease-standard);
 }
 

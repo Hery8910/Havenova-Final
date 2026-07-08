@@ -1,7 +1,7 @@
 .section {
-  --cross-title-color: var(--page-text-primary);
-  --cross-copy-color: var(--page-text-secondary);
-  --cross-chip-bg: color-mix(in srgb, var(--color-page-border) 38%, transparent);
+  --cross-title-color: var(--text-primary);
+  --cross-copy-color: var(--text-secondary);
+  --cross-border-color: var(--border-subtle);
   width: min(1120px, calc(100% - 2rem));
   margin: 0 auto 4rem;
   padding: 0;
@@ -12,19 +12,19 @@
 :global(.card--primary).section {
   --cross-title-color: var(--card-primary-text-primary);
   --cross-copy-color: var(--card-primary-text-secondary);
-  --cross-chip-bg: color-mix(in srgb, var(--card-primary-border) 32%, transparent);
+  --cross-border-color: var(--card-primary-border);
 }
 
 :global(.card--secondary).section {
   --cross-title-color: var(--card-secondary-text-primary);
   --cross-copy-color: var(--card-secondary-text-secondary);
-  --cross-chip-bg: color-mix(in srgb, var(--card-secondary-border) 32%, transparent);
+  --cross-border-color: var(--card-secondary-border);
 }
 
 :global(.card--accent).section {
   --cross-title-color: var(--card-accent-text-primary);
   --cross-copy-color: var(--card-accent-text-secondary);
-  --cross-chip-bg: color-mix(in srgb, var(--card-accent-border) 34%, transparent);
+  --cross-border-color: var(--card-accent-border);
 }
 
 .content {
@@ -51,7 +51,7 @@
   margin: 0;
   padding: 8px 16px;
   border-radius: var(--radius-sm);
-  background: var(--cross-chip-bg);
+  background: color-mix(in srgb, var(--cross-border-color) 34%, transparent);
   color: var(--cross-title-color);
   text-transform: uppercase;
 }
@@ -65,7 +65,7 @@
 .description {
   margin: 0;
   max-width: 350px;
-  color: var(--page-text-secondary);
+  color: var(--cross-copy-color);
 }
 
 .actions {
@@ -132,6 +132,7 @@
   .media {
     order: -1;
   }
+
   .copy {
     width: 100%;
     max-width: 500px;

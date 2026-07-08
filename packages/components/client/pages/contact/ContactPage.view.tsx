@@ -24,12 +24,7 @@ export function ContactPageView({ contact, contactInfo, faq, lang }: ContactPage
   return (
     <>
       <PageHero texts={resolveContactHeroContent(contact?.hero, lang)} lang={lang} position={50} />
-      <main
-        id="app-main-content"
-        tabIndex={-1}
-        className={`${styles.main} v2-contact-page`}
-        data-page="contact"
-      >
+      <main id="app-main-content" tabIndex={-1} className="page-flow" data-page="contact">
         <div className={styles.wrapper}>
           <ContactFormSection />
           <InfoSection texts={resolvedInfo} locale={lang} />

@@ -7,7 +7,7 @@ Definir una secuencia de trabajo controlada para llevar `about` al mismo estánd
 Estado del documento:
 
 - plan de trabajo activo
-- punto de partida previo a la rectificación estructural
+- snapshot de seguimiento posterior a la rectificación estructural base
 
 ## Alcance
 
@@ -21,7 +21,7 @@ No cubre:
 
 - cambios derivados del backend
 - revisión específica del `Footer`
-- screenshots reales y evidencia final de cierre de fase 2
+- screenshots reales y evidencia final de la pasada manual transversal final
 
 ## Resultado esperado
 
@@ -87,7 +87,7 @@ Estado actual:
 - los fallbacks visibles ya viven en `about.fallbacks.ts`
 - el scope renderizado ya fue auditado en `de`, `en` y `es`
 - los `aria-*` activos de `clients` y `servicesCta` ya fueron revisados y alineados entre idiomas
-- metadata `es` ya fue completada; los screenshots reales siguen diferidos a fase 2
+- metadata `es` ya fue completada; los screenshots reales siguen diferidos a la pasada manual transversal final
 
 ### Fase 4. Render, accesibilidad y testing
 
@@ -106,7 +106,8 @@ Estado actual:
 - fase iniciada en su baseline documental
 - el render tree ya existe
 - `TESTING.md` ya incluye el caso `K-08`
-- falta la ejecución manual real
+- la revisión semántica por código ya quedó asentada en el audit
+- la ejecución manual real queda diferida a la pasada transversal final
 
 ### Fase 5. Estilos y migración visual
 
@@ -119,14 +120,14 @@ Tareas:
 
 Criterio de cierre:
 
-- cualquier adopción de `migration-styles` queda respaldada por inventario real
+- cualquier promoción al sistema compartido queda respaldada por inventario real
 
 Estado actual:
 
 - fase iniciada a nivel documental
 - el inventario de estilos ya existe
 - `ClientsSection` ya quedó identificado como principal hotspot visual
-- `StorySection` y `ClientsSection` ya recibieron una primera pasada de migración hacia `v2`
+- `StorySection` y `ClientsSection` ya recibieron una primera pasada de convergencia hacia el sistema compartido
 - falta decidir qué hacer con `ServiceCrossCtaSection` y validar visualmente el comportamiento real
 
 ### Fase 6. Cierre de fase actual
@@ -134,9 +135,9 @@ Estado actual:
 Tareas:
 
 - actualizar checklist viva
-- dejar claro qué queda completo ahora y qué se difiere a fase 2
+- dejar claro qué queda completo ahora y qué se difiere a la pasada manual transversal final
 
-Pendientes explícitos de fase 2:
+Pendientes explícitos de la pasada manual transversal final:
 
 - screenshots reales
 - evidencia manual final
@@ -164,7 +165,7 @@ Mientras esta página siga abierta:
 
 - Fase 2: resuelta en la base
 - Fase 3: resuelta para el surface renderizado actual
-- Fase 4: baseline documental resuelta, evidencia real pendiente
+- Fase 4: baseline documental y semántico resuelto, evidencia real pendiente
 - Fase 5: iniciada en código para `StorySection` y `ClientsSection`
 
 ### Cambios ya aplicados
@@ -172,12 +173,12 @@ Mientras esta página siga abierta:
 - `about` ya usa `AboutPageClient` y `AboutPageView`
 - `about.types.ts` y `about.fallbacks.ts` ya existen
 - metadata `es` ya fue añadida
-- `StorySection` ya consume `v2-page-heading` y `v2-page-copy`
-- `ClientsSection` ya consume `v2-card` y tokens `v2`
+- `StorySection` ya consume helpers semánticos de texto compartidos
+- `ClientsSection` ya consume `card` y tokens de página compartidos
 - `ServiceCrossCtaSection` se dejó sin migrar a propósito para decidir su ownership aparte
 
 ### Primer siguiente paso recomendado
 
-1. revisar si `ServiceCrossCtaSection` debe migrarse a `v2` o mantenerse como superficie compartida auto-contenida
+1. revisar si `ServiceCrossCtaSection` debe converger al sistema compartido o mantenerse como superficie compartida auto-contenida
 2. si se mantiene aparte, documentar esa decisión y pasar a validación visual/manual pendiente
 3. si se migra, hacerlo antes de considerar `About` como casi cerrada para esta fase

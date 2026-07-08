@@ -17,10 +17,10 @@ export default function BenefitsSection({
     <section className={styles.benefits} aria-labelledby="home-benefits-title">
       <div className={styles.container}>
         <header className={styles.benefitsCopy}>
-          <h2 id="home-benefits-title" className={`${styles.sectionTitle} type-display-md v2-page-heading`}>
+          <h2 id="home-benefits-title" className={`${styles.sectionTitle} type-display-md`}>
             {texts?.title ?? 'Für Kund:innen angenehm – für das Team effizient.'}
           </h2>
-          <p className={`${styles.sectionSubtitle} type-body-lg v2-page-copy`}>
+          <p className={`${styles.sectionSubtitle} type-body-lg`}>
             {texts?.description ??
               'Havenova reduziert Hin und Her, macht Anfragen klarer und hält Abläufe sauber: weniger Missverständnisse, schnellere Angebote, bessere Planung.'}
           </p>
@@ -38,8 +38,8 @@ export default function BenefitsSection({
                     </span>
                   ) : null}
                   <div className={styles.benefitHeading}>
-                    <h3 className={`${styles.benefitTitle} type-title-sm v2-page-heading`}>{item.title}</h3>
-                    <p className={`${styles.benefitText} type-body-sm v2-page-copy`}>{item.description}</p>
+                    <h3 className={`${styles.benefitTitle} type-title-sm`}>{item.title}</h3>
+                    <p className={`${styles.benefitText} type-body-sm`}>{item.description}</p>
                   </div>
                 </article>
               </li>

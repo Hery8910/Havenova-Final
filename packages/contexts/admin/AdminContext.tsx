@@ -46,6 +46,21 @@ const getAdminStorageKey = (
   userClientId?: string | null
 ) => `hv-admin:${clientId || 'guest'}:${userClientId || 'guest'}`;
 
+const normalizeAdminRecord = (
+  record: AdminRecord,
+  fallback?: AdminRecord | null
+): AdminRecord => ({
+  ...record,
+  userClientId: record.userClientId || fallback?.userClientId || '',
+  clientId: record.clientId || fallback?.clientId || '',
+  email: resolvePreferredContactEmail(record.email, fallback?.email),
+  name: record.name ?? fallback?.name ?? '',
+  profileImage:
+    record.profileImage?.trim() || fallback?.profileImage || DEFAULT_ADMIN_AVATAR,
+  language: record.language ?? fallback?.language ?? 'de',
+  theme: record.theme ?? fallback?.theme ?? 'light',
+});
+
 const isSameAdminState = (left: AdminRecord | null, right: AdminRecord) => {
   if (!left) return false;
 
@@ -77,33 +92,6 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     [auth.clientId, auth.userClientId]
   );
   const globalInternalErrorFallback = fallbackPopups.GLOBAL_INTERNAL_ERROR;
-  const createLocalDefault = useMemo(
-    () =>
-      (previous?: AdminRecord | null): AdminRecord => ({
-        userClientId: previous?.userClientId ?? auth.userClientId ?? '',
-        clientId: previous?.clientId ?? clientId ?? '',
-        email: resolvePreferredContactEmail(previous?.email, auth.email),
-        name: previous?.name ?? '',
-        phone: previous?.phone,
-        address: previous?.address,
-        profileImage: previous?.profileImage ?? DEFAULT_ADMIN_AVATAR,
-        language: previous?.language ?? 'de',
-        theme: previous?.theme ?? 'light',
-        extra: previous?.extra,
-        roles: previous?.roles,
-        jobTitle: previous?.jobTitle,
-        status: previous?.status,
-        isVerified: previous?.isVerified,
-        authCreated: previous?.authCreated,
-        userClientCreated: previous?.userClientCreated,
-        adminCreated: previous?.adminCreated,
-        adminUpdated: previous?.adminUpdated,
-        inviteSent: previous?.inviteSent,
-        createdAt: previous?.createdAt,
-        updatedAt: previous?.updatedAt,
-      }),
-    [auth.email, auth.userClientId, clientId]
-  );
 
   const getStoredTheme = (): ThemeMode | null => {
     if (typeof window === 'undefined') return null;
@@ -116,6 +104,38 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     const stored = Cookies.get('lang');
     return stored === 'de' || stored === 'en' || stored === 'es' ? stored : null;
   };
+
+  const createLocalDefault = useMemo(
+    () =>
+      (previous?: AdminRecord | null): AdminRecord =>
+        normalizeAdminRecord(
+          {
+            userClientId: previous?.userClientId ?? auth.userClientId ?? '',
+            clientId: previous?.clientId ?? clientId ?? '',
+            email: resolvePreferredContactEmail(previous?.email, auth.email),
+            name: previous?.name ?? '',
+            phone: previous?.phone,
+            address: previous?.address,
+            profileImage: previous?.profileImage ?? DEFAULT_ADMIN_AVATAR,
+            language: previous?.language ?? getStoredLanguage() ?? 'de',
+            theme: previous?.theme ?? getStoredTheme() ?? 'light',
+            extra: previous?.extra,
+            roles: previous?.roles,
+            jobTitle: previous?.jobTitle,
+            status: previous?.status,
+            isVerified: previous?.isVerified,
+            authCreated: previous?.authCreated,
+            userClientCreated: previous?.userClientCreated,
+            adminCreated: previous?.adminCreated,
+            adminUpdated: previous?.adminUpdated,
+            inviteSent: previous?.inviteSent,
+            createdAt: previous?.createdAt,
+            updatedAt: previous?.updatedAt,
+          },
+          previous
+        ),
+    [auth.email, auth.userClientId, clientId]
+  );
   const alertApi = useMemo(
     () => ({
       showError,
@@ -138,8 +158,14 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     [createLocalDefault]
   );
 
+  const fetchRemote = useCallback(async () => {
+    const remoteAdmin = await getAdminProfile();
+    return normalizeAdminRecord(remoteAdmin);
+  }, []);
+
   const updateRemote = useCallback(async (patch: Partial<UpdateAdminProfilePayload>) => {
-    await updateAdminProfile(patch);
+    const updatedAdmin = await updateAdminProfile(patch);
+    return normalizeAdminRecord(updatedAdmin);
   }, []);
 
   const isNotFoundError = useCallback(
@@ -165,7 +191,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     createLocalDefault,
     createLoggedOutLocal,
     isSameState: isSameAdminState,
-    fetchRemote: getAdminProfile,
+    fetchRemote,
     updateRemote,
     isNotFoundError,
     missingEntityPopupKey: 'ADMIN_NOT_FOUND',
@@ -174,12 +200,12 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     alert: alertApi,
   });
 
-  if (loading || !admin) return null;
+  const resolvedAdmin = admin ?? createLocalDefault(null);
 
   return (
     <AdminContext.Provider
       value={{
-        admin,
+        admin: resolvedAdmin,
         isOffline,
         lastSyncAt,
         loading,

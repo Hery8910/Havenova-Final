@@ -9,7 +9,6 @@ import {
   resolveAboutStory,
 } from './about.fallbacks';
 import type { AboutPageTexts } from './about.types';
-import styles from './AboutPageView.module.css';
 
 interface AboutPageViewProps {
   about?: AboutPageTexts;
@@ -20,12 +19,7 @@ export function AboutPageView({ about, lang }: AboutPageViewProps) {
   return (
     <>
       <PageHero texts={resolveAboutHeroContent(about?.hero)} lang={lang} position={65} />
-      <main
-        id="app-main-content"
-        tabIndex={-1}
-        className={`${styles.main} v2-about-page`}
-        data-page="about"
-      >
+      <main id="app-main-content" tabIndex={-1} className="page-flow" data-page="about">
         <AboutStorySection texts={resolveAboutStory(about?.story)} />
         <AboutClientsSection texts={resolveAboutClients(about?.clients)} />
         <ServiceCrossCtaSection

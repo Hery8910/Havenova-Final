@@ -36,12 +36,13 @@ export interface PageHeroProps {
   position?: number;
 }
 
-function resolveDescriptionText(value: string | string[]): string {
+function resolveDescriptionItems(value: string | string[]): string[] {
   if (Array.isArray(value)) {
-    return value.find((item) => item.trim())?.trim() || '';
+    return value.map((item) => item.trim()).filter(Boolean);
   }
 
-  return value.trim();
+  const normalized = value.trim();
+  return normalized ? [normalized] : [];
 }
 
 export function PageHero({ texts, lang, position }: PageHeroProps) {
@@ -49,8 +50,8 @@ export function PageHero({ texts, lang, position }: PageHeroProps) {
   const descriptionId = useId();
   const ctas = [texts.ctas?.primary, texts.ctas?.secondary].filter(Boolean) as PageHeroAction[];
   const actionsLabel = texts.a11y?.actionsLabel ?? 'Aktionen im Startseiten-Hero';
-  const descriptionText = resolveDescriptionText(texts.descriptions);
-  const descriptionLinkId = descriptionText ? descriptionId : undefined;
+  const descriptionItems = resolveDescriptionItems(texts.descriptions);
+  const descriptionLinkId = descriptionItems.length > 0 ? descriptionId : undefined;
   const imageStyle = position !== undefined ? { objectPosition: `${position}% center` } : undefined;
 
   return (
@@ -74,10 +75,17 @@ export function PageHero({ texts, lang, position }: PageHeroProps) {
       </div>
 
       <article className={styles.heroCopy}>
-        {descriptionText ? (
-          <p id={descriptionId} className={`${styles.heroDescription} type-body-lg`}>
-            {descriptionText}
-          </p>
+        {descriptionItems.length > 0 ? (
+          <div id={descriptionId} className={styles.heroDescriptions}>
+            {descriptionItems.map((description, index) => (
+              <p
+                key={`${description}-${index}`}
+                className={`${styles.heroDescription} type-body-lg`}
+              >
+                {description}
+              </p>
+            ))}
+          </div>
         ) : null}
 
         {ctas.length > 0 && (
@@ -88,7 +96,7 @@ export function PageHero({ texts, lang, position }: PageHeroProps) {
               return (
                 <Link
                   key={`${cta.href}-${cta.label}`}
-                  className={`v2-button ${isPrimary ? 'v2-button--primary' : 'v2-button--secondary'} ${styles.cta}`}
+                  className={`button ${isPrimary ? 'button--primary' : 'button--secondary'} ${styles.cta}`}
                   href={href(lang, cta.href)}
                   aria-label={cta.ariaLabel}
                 >

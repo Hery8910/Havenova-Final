@@ -24,8 +24,18 @@ The form currently works in five sequential steps:
 Current behavior:
 
 - request step state is orchestrated by `CleaningRequestForm`
+- feature state, text contracts, draft payload typing, and frequency ordering now live in
+  `cleaningRequest.types.ts` instead of being redefined inside the main component
 - `ServiceProfileStep` decides whether the user must complete profile data before selecting
   the work address
+- customer type and frequency choice states now converge on shared request primitives instead
+  of maintaining duplicated local button-state rules
+- property-details field framing and inline validation feedback now converge on shared request
+  field primitives instead of keeping local step-only markup
+- review and profile steps were normalized locally to reduce repeated structure, but they still
+  remain feature-owned because there is not yet a second real consumer for those surfaces
+- embedded profile completion orchestration now lives in the profile domain controller layer;
+  `ServiceProfileStep` remains only as the cleaning-flow composition wrapper around that logic
 - `WorkAddressSelector` handles address selection and manual address entry without absorbing
   higher-level profile orchestration
 - the parent page handles final request submission
@@ -36,7 +46,7 @@ Current behavior:
 Main limitation:
 
 - the main migration is already implemented; remaining work is centered on automated test
-  coverage and later reuse by `home-service`
+  coverage and further internal cleanup of feature-specific steps
 
 ## Problem Statement
 
@@ -265,7 +275,8 @@ Preferred direction:
 Relevant current files:
 
 - [CleaningRequestForm.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningRequestForm/CleaningRequestForm.tsx:1)
-- [WorkAddressSelector.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningRequestForm/WorkAddressSelector/WorkAddressSelector.tsx:1)
+- [WorkAddressSelector.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/WorkAddressSelector/WorkAddressSelector.tsx:1)
+- [AvailabilityCalendar.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/AvailabilityCalendar/AvailabilityCalendar.tsx:1)
 - [AddressFormFields.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/shared/addressFormFields/AddressFormFields.tsx:1)
 - [UserProfileDetailsForm.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileSettings/details/form/UserProfileDetailsForm.tsx:1)
 - [useUserProfileDetailsController.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileSettings/details/controller/useUserProfileDetailsController.ts:1)
@@ -275,15 +286,15 @@ Relevant current files:
 
 ## Implementation Notes
 
-The first migration target is `cleaning-service`.
+The first migration target was `cleaning-service`.
 
-`home-service` will adopt the same shared architecture later, but its page integration will
-be handled in a separate pass.
+`home-service` now consumes the same shared request primitives, while page-specific cleanup
+continues independently.
 
 This means:
 
-- shared primitives must be designed from the start for both services
-- page-specific migration can remain incremental
+- shared primitives must remain service-agnostic
+- page-specific cleanup can remain incremental
 
 ## Migration Checklist
 
@@ -328,7 +339,7 @@ This means:
 - [x] Remove outdated assumptions from `WorkAddressSelector`
 - [x] Update parent-page orchestration to consume the new profile-aware flow
 - [x] Update internal docs after implementation details settle
-- [x] Verify that the resulting primitives are ready for later `home-service` adoption
+- [x] Verify that the resulting primitives are ready for `home-service` adoption
 
 ### Phase 7. Test coverage
 
@@ -344,6 +355,7 @@ These items are acknowledged but are not part of the first migration pass:
 - dedicated email change flow in `profile/settings`
 - dedicated password change flow in `profile/settings`
 - `home-service` page integration
+- deeper cleanup of feature-specific request steps after shared primitive ownership is closed
 
 ## Success Criteria
 

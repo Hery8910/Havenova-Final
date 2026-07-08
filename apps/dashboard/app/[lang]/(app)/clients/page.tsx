@@ -1,19 +1,16 @@
-'use client';
+import { DashboardRoutePlaceholder } from '../components/placeholders';
 
-import styles from './page.module.css';
-import { useRequireRole } from '../../../../../../packages/contexts';
-
-const Clients = () => {
-  const isAllowed = useRequireRole('admin');
-
-  if (!isAllowed) return null;
-
+export default function ClientsPage() {
   return (
-    <main className={styles.main}>
-      <h1>Clients</h1>
-
-    </main>
+    <DashboardRoutePlaceholder
+      eyebrow="People"
+      title="Clientes"
+      description="Superficie para la gestion de clientes finales y su relacion con el tenant y las operaciones activas."
+      routePath="/clients"
+      domain="People"
+      purpose="Gestionar clientes finales como actor del negocio."
+      nextStep="Definir lista, detalles y relaciones con propiedades y solicitudes."
+      bullets={['Listado de clientes', 'Relacion con propiedades', 'Historial operativo']}
+    />
   );
-};
-
-export default Clients
+}

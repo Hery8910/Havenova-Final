@@ -2,6 +2,7 @@ import { useId } from 'react';
 import styles from './PropertyDetailsStep.module.css';
 import { PropertySizeRange } from '../../../../../../types/services';
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
+import { RequestField, RequestQuantityStepper } from '../../../shared';
 
 type Props = {
   showTitle?: boolean;
@@ -17,10 +18,6 @@ type Props = {
     hasPetsLabel: string;
     detailsLabel: string;
     detailsPlaceholder: string;
-  };
-  common: {
-    yes: string;
-    no: string;
   };
   requiredText: string;
   values: {
@@ -50,7 +47,6 @@ type Props = {
 export default function PropertyDetailsStep({
   showTitle = true,
   property,
-  common,
   requiredText,
   values,
   errors,
@@ -68,7 +64,6 @@ export default function PropertyDetailsStep({
   const sizeRangeErrorId = useId();
   const roomsErrorId = useId();
   const detailsErrorId = useId();
-  const roomsGroupLabelId = useId();
   const balconyCheckboxId = useId();
   const indoorStairsCheckboxId = useId();
   const petsCheckboxId = useId();
@@ -81,8 +76,15 @@ export default function PropertyDetailsStep({
         </h3>
       ) : null}
 
-      <label className={`label ${styles.field} ${styles.column}`} htmlFor="cleaning-size-range">
-        <span className={styles.label}>{property.sizeRangeLabel}</span>
+      <RequestField
+        htmlFor="cleaning-size-range"
+        label={property.sizeRangeLabel}
+        errorText={errors.sizeRange}
+        errorId={sizeRangeErrorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        errorClassName={styles.errorText}
+      >
         <select
           id="cleaning-size-range"
           className={`input ${errors.sizeRange ? styles.fieldControlError : ''}`}
@@ -90,7 +92,7 @@ export default function PropertyDetailsStep({
           onChange={(e) => onSizeRangeChange(e.target.value as PropertySizeRange | '')}
           onBlur={onSizeRangeBlur}
           aria-invalid={Boolean(errors.sizeRange)}
-          aria-describedby={errors.sizeRange ? sizeRangeErrorId : undefined}
+          aria-describedby={sizeRangeErrorId}
           required
         >
           <option value="">{requiredText}</option>
@@ -100,38 +102,27 @@ export default function PropertyDetailsStep({
             </option>
           ))}
         </select>
-      </label>
+      </RequestField>
 
-      <div className={`label ${styles.field}`}>
-        <span className={styles.label} id={roomsGroupLabelId}>
+      <div className={styles.field}>
+        <span className={styles.label}>
           {property.roomsCountLabel}
         </span>
-        <div
-          className={`${styles.counter} ${errors.roomsCount ? styles.fieldControlError : ''}`}
-          role="group"
-          aria-labelledby={roomsGroupLabelId}
-          aria-describedby={errors.roomsCount ? roomsErrorId : undefined}
-        >
-          <button
-            type="button"
-            className={`button button--outline ${styles.counterButton}`}
-            onClick={onRoomsDecrement}
-            aria-label={property.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
-          >
-            <CgMathMinus />
-          </button>
-          <output className={styles.counterValue} aria-live="polite">
-            {values.roomsCount || '1'}
-          </output>
-          <button
-            type="button"
-            className={`button button--outline ${styles.counterButton}`}
-            onClick={onRoomsIncrement}
-            aria-label={property.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
-          >
-            <CgMathPlus />
-          </button>
-        </div>
+        <RequestQuantityStepper
+          value={values.roomsCount || '1'}
+          label={property.roomsCountLabel}
+          describedBy={errors.roomsCount ? roomsErrorId : undefined}
+          error={Boolean(errors.roomsCount)}
+          decrementLabel={property.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
+          incrementLabel={property.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
+          onDecrement={onRoomsDecrement}
+          onIncrement={onRoomsIncrement}
+          decrementIcon={<CgMathMinus />}
+          incrementIcon={<CgMathPlus />}
+        />
+        <span id={roomsErrorId} className={styles.errorText} aria-live="polite">
+          {errors.roomsCount || ''}
+        </span>
       </div>
 
       <fieldset className={styles.flagsGroup}>
@@ -176,24 +167,28 @@ export default function PropertyDetailsStep({
         </label>
       </fieldset>
 
-      <label
-        className={` label ${styles.field} ${styles.column}`}
+      <RequestField
         htmlFor="cleaning-property-details"
+        label={property.detailsLabel}
+        errorText={errors.details}
+        errorId={detailsErrorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        errorClassName={styles.errorText}
       >
-        <span className={styles.label}>{property.detailsLabel}</span>
         <textarea
           id="cleaning-property-details"
-          className={`input ${errors.details ? styles.fieldControlError : ''}`}
+          className={`input ${styles.textarea} ${errors.details ? styles.fieldControlError : ''}`}
           maxLength={1500}
           value={values.details}
           placeholder={property.detailsPlaceholder}
           onChange={(e) => onDetailsChange(e.target.value)}
           onBlur={onDetailsBlur}
           aria-invalid={Boolean(errors.details)}
-          aria-describedby={errors.details ? detailsErrorId : undefined}
+          aria-describedby={detailsErrorId}
           rows={5}
         />
-      </label>
+      </RequestField>
     </section>
   );
 }

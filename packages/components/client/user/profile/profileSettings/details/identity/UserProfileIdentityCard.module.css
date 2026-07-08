@@ -32,7 +32,7 @@
 .image {
   padding: 3px;
   border-radius: 50%;
-  border: 3px solid var(--page-text-secondary);
+  border: 3px solid var(--text-secondary);
   box-shadow: var(--shadow-md);
 }
 .name {

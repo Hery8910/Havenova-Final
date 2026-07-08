@@ -1,74 +1,16 @@
-'use client';
+import { DashboardRoutePlaceholder } from '../components/placeholders';
 
-import { useState } from 'react';
-import styles from './page.module.css';
-import { FaFolder } from 'react-icons/fa';
-import { useClient, useRequireRole } from '../../../../../../packages/contexts';
-interface RequestFilters {
-  status: string;
-  date: string;
-  search: string;
-}
-
-interface WorkRequestSummary {
-  _id: string;
-  status: string;
-  createdAt: string;
-  services?: string[];
-  user?: {
-    name?: string;
-  };
-}
-import {
-  RequestList,
-  RequestsToolbar,
-  WorkRequestDetail,
-} from '../../../../../../packages/components/dashboard/pages';
-
-export default function Requests() {
-  const isAllowed = useRequireRole('admin');
-  const { client } = useClient();
-
-  const [requests, setRequests] = useState<WorkRequestSummary[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState<RequestFilters>({
-    status: '',
-    date: '',
-    search: '',
-  });
-  const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
-
-  const handleSelectRequest = (id: string) => {
-    const selected = requests.find((request) => request._id === id);
-    if (selected) {
-      setSelectedRequest(selected);
-    }
-  };
-
-  const handleFilterChange = (key: keyof RequestFilters, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-  };
-
-  if (!isAllowed) return null;
-
+export default function RequestsPage() {
   return (
-    <section className={styles.section}>
-      {!selectedRequest ? (
-        <div className={styles.wrapper}>
-          <header className={styles.header}>
-            <FaFolder />
-            <h3>Work Requests</h3>
-          </header>
-
-          <RequestList data={requests} loading={loading} onSelect={handleSelectRequest} />
-        </div>
-      ) : (
-        <WorkRequestDetail
-          request={selectedRequest}
-          onClose={() => setSelectedRequest(null)}
-          onUpdated={() => undefined}
-        />
-      )}
-    </section>
+    <DashboardRoutePlaceholder
+      eyebrow="Workspace"
+      title="Solicitudes"
+      description="Superficie principal para la gestion de solicitudes, su estado, prioridad, responsables y seguimiento operativo."
+      routePath="/requests"
+      domain="Workspace"
+      purpose="Centralizar la lista principal de solicitudes."
+      nextStep="Definir filtros, columnas, estados y acciones disponibles."
+      bullets={['Lista principal', 'Filtros', 'Estados', 'Acciones de seguimiento']}
+    />
   );
 }

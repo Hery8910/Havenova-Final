@@ -8,6 +8,10 @@ It exists to stop page work from being closed on visual or feature criteria alon
 
 This standard is meant to be reused across the whole frontend workspace.
 
+Companion reference:
+
+- [PAGE_CONSTRUCTION_PATTERN.md](/home/heriberto/Escritorio/Havenova/havenova/docs/PAGE_CONSTRUCTION_PATTERN.md:1)
+
 ## Closure Rule
 
 A page is not complete when:
@@ -22,6 +26,19 @@ A page is complete only when:
 - its render strategy is justified
 - its contracts, helpers, and styles have clear ownership
 - its fallbacks, metadata, accessibility, and legacy cleanup are documented
+
+## Manual Evidence Timing Rule
+
+Manual evidence remains a required closure gate, but it does not need to be repeated after every
+intermediate refactor while the same shared surfaces are still being reorganized.
+
+Current working rule:
+
+- architecture, ownership, render strategy, style dependency mapping, and technical accessibility
+  review may be closed progressively first
+- manual keyboard and behavioral evidence should be treated as a final project-wide validation
+  pass once the main structural refactors stop moving the same surfaces repeatedly
+- until that final pass happens, pages may be considered technically advanced but not fully closed
 
 ## Required Page Architecture
 
@@ -224,6 +241,12 @@ Every page must be reviewed for:
 Every `aria-label`, `aria-describedby`, `aria-labelledby`, button label, and navigation label must be treated as translatable UI.
 
 This is also a closure gate: a page is not complete until this review is documented against the real rendered structure.
+
+Interpretation:
+
+- code review can close the expected semantic baseline
+- manual verification remains the final authority for real focus order, keyboard behavior, and
+  dynamic interaction flow
 
 ## Style And Token Rule
 

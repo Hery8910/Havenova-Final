@@ -124,9 +124,10 @@ export function NavbarTabletView({
                   ref={accountTriggerRef}
                   type="button"
                   className={`button button--ghost ${sharedStyles.iconButton} ${sharedStyles.profileButton}`}
-                  aria-label={a11y.profileToggle}
+                  aria-label={accountOpen ? a11y.closeMenu : a11y.profileToggle}
                   aria-expanded={accountOpen}
                   aria-controls={accountPanelId}
+                  aria-haspopup="dialog"
                   onClick={() => togglePanel('account')}
                 >
                   <NavbarProfileTrigger
@@ -147,6 +148,7 @@ export function NavbarTabletView({
               aria-label={menuOpen ? a11y.closeMenu : a11y.openMenu}
               aria-expanded={menuOpen}
               aria-controls={menuPanelId}
+              aria-haspopup="dialog"
               onClick={() => togglePanel('menu')}
             >
               <span className={styles.menuLine} aria-hidden="true" />
@@ -163,6 +165,7 @@ export function NavbarTabletView({
                   ? styles.tabletPanelOpen
                   : ''
               }`}
+              role="dialog"
               tabIndex={-1}
               id={activePanel ? (activePanel === 'menu' ? menuPanelId : accountPanelId) : undefined}
               aria-labelledby={

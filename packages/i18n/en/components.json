@@ -792,26 +792,6 @@
           "notifications": "Notifications"
         }
       }
-    },
-    "sidebar": {
-      "pages": [
-        { "label": "Dashboard", "href": "/" },
-        { "label": "Requests", "href": "/requests" },
-        { "label": "Clients", "href": "/clients" },
-        { "label": "Property Manager", "href": "/property-manager" },
-        { "label": "Objects", "href": "/objects" },
-        { "label": "Task catalog", "href": "/global-task-catalog" },
-        { "label": "Employees", "href": "/employees" },
-        { "label": "Messages", "href": "/messages" },
-        { "label": "Notifications", "href": "/notifications" }
-      ],
-      "settings": [
-        { "label": "Support", "href": "/support" },
-        { "label": "Profile", "href": "/profile" }
-      ],
-      "logout": "Logout",
-      "closeMenu": "Close menu",
-      "openMenu": "Open menu"
     }
   }
 }

@@ -13,7 +13,7 @@ import {
   useI18n,
 } from '../../../../../../../packages/contexts';
 import { getPopup } from '../../../../../../../packages/utils/alertType';
-import { getAuthUser, loginUser } from '../../../../../../../packages/services';
+import { loginUser } from '../../../../../../../packages/services';
 import { useLang } from '../../../../../../../packages/hooks';
 import {
   createLoggedOutAuthSeed,
@@ -40,13 +40,14 @@ export interface LoginData {
 
 const Login = () => {
   const { client } = useClient();
-  const { auth, setAuth } = useAuth();
+  const { auth, loading: authLoading, setAuth, source, refreshAuth } = useAuth();
   const { texts, language, setLanguage } = useI18n();
   const router = useRouter();
   const lang = useLang();
-  const isLoggedIn = auth?.isLogged && auth.role !== 'guest';
   const hasDashboardAccess =
     auth?.isLogged && (auth.role === 'admin' || auth.role === 'super_admin');
+  const canAutoRedirectToDashboard =
+    !authLoading && source === 'server' && hasDashboardAccess;
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
@@ -58,9 +59,9 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (!hasDashboardAccess) return;
+    if (!canAutoRedirectToDashboard) return;
     router.replace(href(lang, '/'));
-  }, [hasDashboardAccess, lang, router]);
+  }, [canAutoRedirectToDashboard, lang, router]);
 
   useEffect(() => {
     if (language !== lang) {
@@ -91,7 +92,10 @@ const Login = () => {
       }
 
       try {
-        return await getAuthUser();
+        const refreshed = await refreshAuth();
+        if (refreshed.syncedFromServer) {
+          return refreshed.auth;
+        }
       } catch {}
     }
 
@@ -197,6 +201,9 @@ const Login = () => {
 
       const syncedUser = await syncSessionFromServer();
       setAuth(syncedUser ?? user);
+      const finalUser = syncedUser ?? user;
+      const canEnterDashboard =
+        finalUser.isLogged && (finalUser.role === 'admin' || finalUser.role === 'super_admin');
 
       const popupData = getPopup(popups, response.code, 'USER_LOGIN_SUCCESS', fallbackLoginSuccess);
 
@@ -211,8 +218,13 @@ const Login = () => {
       });
 
       setTimeout(() => {
-        router.push(href(lang, '/'));
         closeAlert();
+        if (canEnterDashboard) {
+          router.replace(href(lang, '/'));
+          return;
+        }
+
+        router.replace(href(lang, userAuthRoutes.login));
       }, 3000);
       return true;
     } catch (err: any) {

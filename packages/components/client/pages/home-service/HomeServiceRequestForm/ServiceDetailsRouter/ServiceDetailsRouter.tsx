@@ -1,16 +1,9 @@
-import type { PropertySizeRange } from '../../../../../../types/services';
 import type { HomeServiceKind } from '../homeServiceTypes';
 import PaintingDetailsStep, {
   type PaintingPaintScope,
 } from '../PaintingDetailsStep/PaintingDetailsStep';
 import ServiceDetailsStep from '../ServiceDetailsStep/ServiceDetailsStep';
-
-type PaintingDetails = {
-  paintScope: PaintingPaintScope | '';
-  roomsCount: number;
-  sizeRange: PropertySizeRange | '';
-  description: string;
-};
+import type { HomeServicePaintingDetails } from '../homeServiceRequest.types';
 
 type Props = {
   showHeader?: boolean;
@@ -43,7 +36,7 @@ type Props = {
   requiredText: string;
   serviceDetails: string;
   serviceDetailsError?: string;
-  paintingDetails: PaintingDetails;
+  paintingDetails: HomeServicePaintingDetails;
   paintingErrors: {
     paintScope?: string;
     sizeRange?: string;

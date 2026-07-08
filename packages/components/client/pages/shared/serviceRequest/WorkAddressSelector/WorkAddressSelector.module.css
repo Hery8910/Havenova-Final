@@ -1,0 +1,148 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.description,
+.helper,
+.manualHint {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.optionsGroup {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legend {
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.optionCard {
+  padding: 14px 16px;
+  border: 1px solid var(--card-neutral-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.optionSelected {
+  border-color: var(--card-primary-border);
+  background: var(--card-primary-bg);
+}
+
+.optionInput {
+  margin: 0 0 6px;
+}
+.optionContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.optionLabel {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.optionHint {
+  color: var(--text-secondary);
+}
+
+.differentAddressPrompt {
+  padding: 8px 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.differentAddressPromptBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.differentAddressPromptText {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.manualSection {
+  padding-top: 8px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.manualSectionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.manualTitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+}
+
+.labelField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.textInput {
+  min-height: 46px;
+  padding: 10px 12px;
+  color: var(--text-primary);
+}
+
+@media (max-width: 767px) {
+  .optionCard,
+  .differentAddressPrompt {
+    align-items: stretch;
+  }
+
+  .manualSectionCard {
+    padding: 16px;
+  }
+}

@@ -39,19 +39,11 @@ Current global layers used by Home:
 - `motion.css`
 - `helpers.css`
 
-Parallel migration infrastructure prepared for Home:
-
-- [docs/STYLE_MIGRATION_STRATEGY.md](/home/heriberto/Escritorio/Havenova/havenova/docs/STYLE_MIGRATION_STRATEGY.md:1)
-- [apps/client/app/migration-styles/index.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/migration-styles/index.css:1)
-
 Current status:
 
-- this migration layer exists as a controlled staging area
-- it now contains owned `v2` values in `tokens.v2.css`
-- it now includes `base.v2.css` and `motion.v2.css` as the first owned global layers
-- Home now imports `migration-styles/index.css` at route level
-- Home now actively consumes `v2` page, typography, button, and card primitives
-- `v2` now declares the required light and dark values for the Home tokens already under migration
+- the temporary migration layer used during the audit was removed
+- Home now consumes the canonical shared system directly through `apps/client/app/global.css`
+- the active visual contracts are now `button`, `card`, semantic page tokens, and CSS-module-owned page decoration
 
 ## Global Base Rules Affecting Home
 
@@ -71,7 +63,7 @@ Confirmed global base dependencies:
 
 Source:
 
-- [apps/client/app/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/styles/base.css:1)
+- [packages/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/base.css:1)
 
 Classification:
 
@@ -107,7 +99,7 @@ Confirmed responsive dependencies:
 - `ServicesSection` grid collapse at `max-width: 800px`
 - `AppInstallSection` grid and CTA restructuring below `768px`
 - global `.section-padding` adjustment at `max-width: 1024px`
-- Home now uses a shared `v2` page max width and shared `5dvw` inline padding rule across the main sections
+- Home now uses shared layout tokens from `packages/styles`, including page inline padding and content width
 
 Classification:
 
@@ -141,7 +133,7 @@ Current update:
 Classification:
 
 - improved in this pass
-- still requires future consolidation once `motion.v2.css` is actively adopted
+- now owned by the shared base/motion system instead of a parallel `v2` layer
 
 ## Typography Classes Used By Home
 
@@ -168,18 +160,17 @@ Migration note:
 
 Current update:
 
-- Home now combines the existing type-size utilities with `v2-page-heading` and `v2-page-copy`
-- typography migration currently covers semantic heading/body color ownership, not utility-size replacement
+- Home now relies on the shared semantic text tokens directly
+- typography utility sizing remains on the canonical shared system
 
 ## Button Classes Used By Home
 
 Confirmed usage:
 
-- `v2-button`
-- `v2-button--primary`
-- `v2-button--secondary`
-- `v2-button--accent`
-- `v2-button--outline`
+- `button`
+- `button--primary`
+- `button--secondary`
+- `button--accent`
 
 Removed from Home:
 
@@ -187,22 +178,22 @@ Removed from Home:
 
 Current classification:
 
-- current active button system for Home is now the `v2` button layer
+- current active button system for Home now reuses the canonical shared `button` primitives
 - `button_invert` was legacy and is now removed from this page
 
 Migration note:
 
-- `buttons.v2.css` should stay minimal until more pages require a refined button surface
-- Home is the first real consumer validating the `v2-button` contract
+- the temporary migration button layer was removed after converging back to the shared button contract
+- Home remains one of the reference routes validating the shared button surface
 
 ## Card And Surface Classes Used By Home
 
 Confirmed usage:
 
-- `v2-card`
-- `v2-card--primary`
-- `v2-card--secondary`
-- `v2-card--neutral`
+- `card`
+- `card--primary`
+- `card--secondary`
+- `card--neutral`
 
 Current use cases:
 
@@ -218,61 +209,42 @@ Classification:
 Migration note:
 
 - `glass-panel--base` was replaced in the Home support bar
-- `card--neutral` semantics were intentionally preserved through `v2-card--neutral`, including the service icon surface
+- `card--neutral` semantics were intentionally preserved on the shared card contract, including the service icon surface
 
 ## Radius Tokens Used By Home
 
-Current `v2` radius convention:
+Current shared radius convention:
 
-- `--v2-radius-sm`
-- `--v2-radius-md`
-- `--v2-radius-lg`
+- scale-based radius tokens from `packages/styles`
 
 Decision:
 
 - radii are now named by scale, not by component name
-- avoid declarations such as `--v2-card-radius` or `--v2-button-radius`
+- avoid declarations such as component-owned radius aliases
 
 ## Token Families Used By Home
 
 Confirmed current page text tokens:
 
-- `--v2-page-text-primary`
-- `--v2-page-text-secondary`
+- semantic `--page-text-*` tokens from the shared system
 
 Other confirmed tokens:
 
-- `--space-2`
-- `--space-4`
-- `--space-8`
-- `--space-10`
-- `--v2-card-shadow`
-- `--v2-radius-md`
-- `--v2-radius-lg`
-- `--v2-navbar-height`
-- `--v2-page-max-width`
-- `--v2-content-max-width`
-- `--v2-page-inline-padding`
-- `--v2-section-space-y`
-- `--v2-hero-mobile-min-block-offset`
-- `--v2-card-primary-bg1`
-- `--v2-card-secondary-bg2`
-- `--v2-card-neutral-bg1`
-- `--v2-card-neutral-bg2`
-- `--v2-card-neutral-bg3`
-- `--v2-card-neutral-border`
-- `--v2-feedback-info-bg-image`
-- `--v2-list-marker-accent`
+- shared spacing tokens
+- shared page layout tokens
+- shared card surface tokens
+- shared radius and shadow tokens
+- shared accent/background tokens used by Home modules
 
 Resolved issue:
 
-- `ServicesSection` and `BenefitsSection` no longer rely on `--text-primary` / `--text-secondary`
+- `ServicesSection` and `BenefitsSection` no longer rely on the older generic text aliases
 - Home is now more consistently aligned to the page text token family
 
 Migration note:
 
-- `tokens.v2.css` now owns the first Home baseline values
-- no new semantic color family should be added there before a second audited page confirms the same need
+- this section is now historical context only
+- the temporary `v2` baseline was removed after its values converged into `packages/styles`
 
 Current update:
 
@@ -285,44 +257,16 @@ Current update:
 
 ## Consolidation Status
 
-### Reusable `v2` primitives already validated in Home
-
-- `tokens.v2.css`
-  - page background and page text tokens
-  - light/dark ownership for the migrated token subset
-  - radius scale tokens
-  - first button token family
-  - first card token family
-- `base.v2.css`
-  - route-level reset and page-surface baseline
-- `motion.v2.css`
-  - reduced-motion guardrails
-- `typography.v2.css`
-  - `v2-page-heading`
-  - `v2-page-copy`
-- `buttons.v2.css`
-  - `v2-button`
-  - `v2-button--primary`
-  - `v2-button--secondary`
-  - `v2-button--accent`
-  - `v2-button--outline`
-- `cards.v2.css`
-  - `v2-card`
-  - `v2-card--primary`
-  - `v2-card--secondary`
-  - `v2-card--neutral`
-  - alert surface variants already ported, pending a second real consumer
+The temporary `v2` primitives described during the migration are no longer active.
 
 Current interpretation:
 
-- these primitives are technically reusable now
-- they are still only validated against `Home`
-- promotion to a truly shared frontend standard should happen only after a second page consumes them without exceptions
+- the surviving shared primitives now live in `packages/styles`
+- what remained page-specific stayed in CSS Modules
+- this document should be read as migration history, not as the current runtime dependency tree
 
 ### Home-specific or still transitional pieces
 
-- `page-home.css`
-- `v2-home-page`
 - `PageHero` image mask and opacity treatment
 - `ServicesSection::before` background image
 - `BenefitsSection::after` decorative gradient composition
@@ -386,13 +330,11 @@ Reason:
 
 - whether the neutral icon surface remains best expressed as a small card primitive after a second page validates it
 
-## Suggested Migration Layer Candidates From Home
+## Suggested Shared-System Candidates From Home
 
 Not to implement broadly yet, but good candidates to monitor:
 
-- page-text aliases already captured in `tokens.v2.css`
 - decorative neutral surface primitive if reused beyond Home
-- page-scoped shared helper in `page-home.css` if several Home sections converge on the same pattern
 
 Explicit non-candidate for now:
 
@@ -409,8 +351,8 @@ For Home right now:
 
 ## Next Style Tasks For Home
 
-1. Compare Home against the next audited page to find genuine duplicate style needs before growing `migration-styles/*`.
+1. Compare Home against the next audited page to find genuine duplicate style needs before growing the shared system.
 2. Decide whether the service icon surface should stay card-based or become a narrower primitive.
-3. Extract the first real Home-shared page helper into `page-home.css` only if more than one Home section needs the same rule.
+3. Extract a new shared helper only if more than one page needs the same rule and it belongs in `packages/styles`.
 4. Review Home-local transitions and skeleton animation against a project-wide reduced-motion standard.
 5. Confirm that the `v2` button/card contracts survive a second page without local exceptions.

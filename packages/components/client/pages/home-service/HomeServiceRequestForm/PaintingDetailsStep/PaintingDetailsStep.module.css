@@ -4,25 +4,6 @@
   gap: 16px;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.title {
-  margin: 0;
-  color: var(--page-text-primary);
-  font-size: var(--type-title-sm-size);
-  line-height: var(--leading-heading);
-}
-
-.description {
-  margin: 0;
-  color: var(--page-text-secondary);
-  line-height: 1.55;
-}
-
 .field {
   display: flex;
   flex-direction: column;
@@ -30,7 +11,7 @@
 }
 
 .label {
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .input,
@@ -39,7 +20,7 @@
   padding: 10px 12px;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-sm);
-  color: var(--page-text-primary);
+  color: var(--text-primary);
   background: rgba(255, 255, 255, 0.08);
   font: inherit;
 }
@@ -54,48 +35,9 @@
   resize: vertical;
 }
 
-.counter {
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: var(--radius-sm);
-  padding: 6px;
-}
-
-.counterButton {
-  width: auto;
-  height: auto;
-  padding: 10px 10px;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.counterButton:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-.counterValue {
-  min-width: 72px;
-  padding: 6px 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-sm);
-  color: var(--page-text-primary);
-  background: rgba(255, 255, 255, 0.08);
-  font-weight: 700;
-  font-size: var(--type-body-md-size);
-}
-
 .hint,
 .photosDescription {
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -112,7 +54,7 @@
 
 .photosTitle {
   margin: 0 0 6px;
-  color: var(--page-text-primary);
+  color: var(--text-primary);
   font-size: 1rem;
 }
 
@@ -122,7 +64,6 @@
   font-size: var(--type-body-sm-size);
 }
 
-.counterButton:focus-visible,
 .input:focus-visible,
 .textarea:focus-visible {
   outline: 2px solid var(--brand-primary);

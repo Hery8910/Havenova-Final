@@ -1,5 +1,7 @@
 import type { PropertySizeRange } from '../../../../../../types/services';
 import styles from './PaintingDetailsStep.module.css';
+import { useId } from 'react';
+import { RequestField, RequestQuantityStepper, RequestStepIntro } from '../../../shared';
 
 export type PaintingPaintScope =
   | 'one_wall'
@@ -62,19 +64,30 @@ export default function PaintingDetailsStep({
   onDescriptionChange,
   onDescriptionBlur,
 }: Props) {
+  const paintScopeErrorId = useId();
+  const sizeRangeErrorId = useId();
+  const descriptionHelperId = useId();
+  const descriptionErrorId = useId();
+
   return (
     <section className={styles.container} aria-labelledby="home-service-painting-details-title">
       {showHeader ? (
-        <header className={styles.header}>
-          <h3 id="home-service-painting-details-title" className={styles.title}>
-            {texts.title}
-          </h3>
-          <p className={styles.description}>{texts.description}</p>
-        </header>
+        <RequestStepIntro
+          title={texts.title}
+          titleId="home-service-painting-details-title"
+          description={texts.description}
+        />
       ) : null}
 
-      <label className={styles.field} htmlFor="painting-scope">
-        <span className={styles.label}>{texts.paintScopeLabel}</span>
+      <RequestField
+        htmlFor="painting-scope"
+        label={texts.paintScopeLabel}
+        errorText={errors.paintScope}
+        errorId={paintScopeErrorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        errorClassName={styles.error}
+      >
         <select
           id="painting-scope"
           className={styles.input}
@@ -82,7 +95,7 @@ export default function PaintingDetailsStep({
           onChange={(event) => onPaintScopeChange(event.target.value as PaintingPaintScope | '')}
           onBlur={onPaintScopeBlur}
           aria-invalid={Boolean(errors.paintScope)}
-          aria-describedby="painting-scope-error"
+          aria-describedby={paintScopeErrorId}
           required
         >
           <option value="">{requiredText}</option>
@@ -92,43 +105,29 @@ export default function PaintingDetailsStep({
             </option>
           ))}
         </select>
-        <span id="painting-scope-error" className={styles.error} aria-live="polite">
-          {errors.paintScope || ''}
-        </span>
-      </label>
+      </RequestField>
 
       <label className={styles.field} htmlFor="painting-rooms-count">
         <span className={styles.label}>{texts.roomsCountLabel}</span>
-        <section
-          id="painting-rooms-count"
-          className={styles.counter}
-          role="group"
-          aria-label={texts.roomsCountLabel}
-        >
-          <button
-            type="button"
-            className={styles.counterButton}
-            onClick={onRoomsDecrement}
-            aria-label={texts.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
-          >
-            -
-          </button>
-          <output className={styles.counterValue} aria-live="polite">
-            {values.roomsCount}
-          </output>
-          <button
-            type="button"
-            className={styles.counterButton}
-            onClick={onRoomsIncrement}
-            aria-label={texts.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
-          >
-            +
-          </button>
-        </section>
+        <RequestQuantityStepper
+          value={values.roomsCount}
+          label={texts.roomsCountLabel}
+          decrementLabel={texts.roomsCountDecrementAriaLabel ?? 'Decrease rooms count'}
+          incrementLabel={texts.roomsCountIncrementAriaLabel ?? 'Increase rooms count'}
+          onDecrement={onRoomsDecrement}
+          onIncrement={onRoomsIncrement}
+        />
       </label>
 
-      <label className={styles.field} htmlFor="painting-size-range">
-        <span className={styles.label}>{texts.sizeRangeLabel}</span>
+      <RequestField
+        htmlFor="painting-size-range"
+        label={texts.sizeRangeLabel}
+        errorText={errors.sizeRange}
+        errorId={sizeRangeErrorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        errorClassName={styles.error}
+      >
         <select
           id="painting-size-range"
           className={styles.input}
@@ -136,7 +135,7 @@ export default function PaintingDetailsStep({
           onChange={(event) => onSizeRangeChange(event.target.value as PropertySizeRange | '')}
           onBlur={onSizeRangeBlur}
           aria-invalid={Boolean(errors.sizeRange)}
-          aria-describedby="painting-size-range-error"
+          aria-describedby={sizeRangeErrorId}
           required
         >
           <option value="">{requiredText}</option>
@@ -146,13 +145,20 @@ export default function PaintingDetailsStep({
             </option>
           ))}
         </select>
-        <span id="painting-size-range-error" className={styles.error} aria-live="polite">
-          {errors.sizeRange || ''}
-        </span>
-      </label>
+      </RequestField>
 
-      <label className={styles.field} htmlFor="painting-description">
-        <span className={styles.label}>{texts.descriptionLabel}</span>
+      <RequestField
+        htmlFor="painting-description"
+        label={texts.descriptionLabel}
+        helperText={texts.descriptionHelper}
+        helperId={descriptionHelperId}
+        errorText={errors.description}
+        errorId={descriptionErrorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        helperClassName={styles.hint}
+        errorClassName={styles.error}
+      >
         <textarea
           id="painting-description"
           className={styles.textarea}
@@ -163,15 +169,9 @@ export default function PaintingDetailsStep({
           maxLength={1500}
           rows={6}
           aria-invalid={Boolean(errors.description)}
-          aria-describedby="painting-description-helper painting-description-error"
+          aria-describedby={`${descriptionHelperId} ${descriptionErrorId}`}
         />
-        <span id="painting-description-helper" className={styles.hint}>
-          {texts.descriptionHelper}
-        </span>
-        <span id="painting-description-error" className={styles.error} aria-live="polite">
-          {errors.description || ''}
-        </span>
-      </label>
+      </RequestField>
 
       <section className={styles.photosPlaceholder} aria-labelledby="painting-photos-title">
         <div>

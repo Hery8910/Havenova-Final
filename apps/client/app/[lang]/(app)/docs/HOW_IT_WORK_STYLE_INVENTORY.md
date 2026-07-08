@@ -7,7 +7,7 @@ This document records the real style dependencies of the `how-it-work` page.
 It exists to decide:
 
 - what should remain in CSS Modules
-- what can reuse the `v2` migration layer already activated by `Home`
+- what already reuses the canonical shared system
 - what remains legacy and should not be promoted blindly
 
 ## Scope
@@ -39,16 +39,11 @@ Current global layers affecting the page:
 - `motion.css`
 - `helpers.css`
 
-Migration layer also active on this route:
-
-- [apps/client/app/migration-styles/index.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/migration-styles/index.css:1)
-
 Current interpretation:
 
-- `how-it-work` is now an active mixed-consumer route
-- it reuses the migration layer because `PageHero` already depends on `v2`
-- the page now reuses `v2` in hero, workflow cards, and benefits CTAs
-- the route is still not a fully clean `v2` consumer because typography sizing and some layout composition details remain legacy-adjacent
+- `how-it-work` no longer depends on a parallel migration layer
+- the page now reuses shared page semantics, canonical cards, and canonical buttons directly
+- the remaining debt is local module ownership and documentation drift, not an active `v2` runtime layer
 
 ## Global Base Rules Affecting The Page
 
@@ -63,7 +58,7 @@ Confirmed dependencies:
 
 Source:
 
-- [apps/client/app/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/styles/base.css:1)
+- [packages/styles/base.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/base.css:1)
 
 Classification:
 
@@ -132,22 +127,22 @@ Confirmed usage:
 
 Mixed ownership:
 
-- hero combines type-size utilities with `v2-page-heading` and `v2-page-copy`
-- workflow and benefits sections now also use `v2-page-heading` and `v2-page-copy`
+- hero combines type-size utilities with shared semantic page text helpers
+- workflow and benefits sections now also use shared semantic page text helpers
 - the remaining legacy dependency here is primarily utility sizing, not text-color ownership
 
 ## Button Classes Used By The Page
 
 Confirmed usage:
 
-- `v2-button`
-- `v2-button--primary`
-- `v2-button--secondary`
+- `button`
+- `button--primary`
+- `button--secondary`
 
 Interpretation:
 
 - the route button layer is now aligned between hero and benefits
-- `how-it-work` is the second audited route consuming `v2-button`
+- `how-it-work` is another audited route consuming the shared button contract
 
 Migration note:
 
@@ -157,9 +152,9 @@ Migration note:
 
 Confirmed usage:
 
-- `v2-card`
-- `v2-card--neutral`
-- `v2-card--accent`
+- `card`
+- `card--neutral`
+- `card--accent`
 
 Current use cases:
 
@@ -169,7 +164,7 @@ Current use cases:
 
 Interpretation:
 
-- workflow now validates a first `v2-card` migration path beyond `Home`
+- workflow now validates the shared card path beyond `Home`
 - the badge still acts as a decorative/utility consumer of the same surface system and should remain under review
 
 ## Token Families Used By The Page
@@ -178,23 +173,13 @@ Confirmed legacy tokens:
 
 - `--type-body-md-size`
 
-Confirmed migrated page tokens through route and sections:
+Confirmed shared tokens through route and sections:
 
-- `--v2-page-text-primary`
-- `--v2-page-text-secondary`
-- `--v2-hero-mobile-min-block-offset`
-- `--v2-page-inline-padding`
-- `--v2-content-max-width`
-- `--v2-radius-sm`
-- `--v2-radius-md`
-- `--v2-radius-lg`
-- `--v2-card-shadow`
-- `--v2-card-neutral-bg2`
-- `--v2-card-neutral-border`
-- `--v2-card-primary-bg1`
-- `--v2-card-secondary-bg1`
-- `--v2-motion-base`
-- `--v2-ease-standard`
+- semantic page text tokens
+- shared layout tokens
+- shared radius and shadow tokens
+- shared card surface tokens
+- shared motion timing tokens
 
 Interpretation:
 
@@ -233,9 +218,9 @@ Decision:
 
 - the benefits band should be the first target of final visual verification on desktop and mobile
 
-### 4. The page already justifies a second audited consumer for the migration layer
+### 4. The page already justifies a second audited consumer for the shared system cleanup
 
 Interpretation:
 
-- `migration-styles` is no longer Home-only in either theory or implementation
-- the next pass should document exactly which `v2` primitives are now safe to call shared candidates
+- the route is no longer dependent on a parallel migration layer
+- the next pass should document exactly which shared primitives are stable enough to reuse without aliases

@@ -32,7 +32,7 @@ export function NavbarLinkList({
     : `button button--ghost ${styles.panelButton}`;
 
   return (
-    <ul className={listClassName}>
+    <ul className={listClassName} role={isInline ? 'list' : undefined}>
       {items.map((item) => {
         const Icon = item.icon;
         const imageSrc = item.image ?? item.img;
@@ -41,9 +41,16 @@ export function NavbarLinkList({
           <li key={item.href} className={itemClassName}>
             <button type="button" className={buttonClassName} onClick={() => onItemClick(item.href)}>
               {imageSrc ? (
-                <Image className={styles.panelImage} src={imageSrc} alt="" width={24} height={24} />
+                <Image
+                  className={styles.panelImage}
+                  src={imageSrc}
+                  alt=""
+                  width={24}
+                  height={24}
+                  aria-hidden="true"
+                />
               ) : Icon && !hideIcons ? (
-                <span className={styles.panelIcon}>
+                <span className={styles.panelIcon} aria-hidden="true">
                   <Icon aria-hidden />
                 </span>
               ) : null}

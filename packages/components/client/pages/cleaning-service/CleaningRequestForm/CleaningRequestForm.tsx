@@ -1,261 +1,40 @@
 'use client';
 
 import { useEffect, useId, useMemo, useState } from 'react';
-import styles from './CleaningRequestForm.module.css';
 import CustomerFrequencyStep from './CustomerFrequencyStep/CustomerFrequencyStep';
 import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
-import ProcessStepsHeader from './ProcessStepsHeader/ProcessStepsHeader';
-import AvailabilityCalendar from './AvailabilityCalendar/AvailabilityCalendar';
 import ServiceProfileStep from './ServiceProfileStep/ServiceProfileStep';
 import ReviewStep from './ReviewStep/ReviewStep';
+import {
+  AvailabilityCalendar,
+  ProcessStepsHeader,
+  ServiceRequestShell,
+  serviceRequestShellStyles as shellStyles,
+} from '../../shared';
 import { useClientCalendarSettings, usePersistentDraft } from '../../../../../hooks';
 import {
-  CleaningFrequency,
   CleaningRequestDetails,
-  PropertySizeRange,
 } from '../../../../../types/services';
-import type { SelectedCalendarSlot } from '../../../../../types/calendar';
+import { CLEANING_FREQUENCY_ORDER } from './cleaningRequest.types';
 import type {
-  CleaningRequestCustomerType,
+  CleaningRequestDraftPayload,
+  CleaningRequestDraftStep,
+  CleaningRequestFieldErrors,
+  CleaningRequestFormState,
   CleaningRequestFormSubmission,
-  CleaningWorkAddressSelection,
+  CleaningRequestFormTexts,
 } from './cleaningRequest.types';
 export type { CleaningRequestFormSubmission } from './cleaningRequest.types';
 
-type FieldErrors = Partial<
-  Record<
-    | 'customerType'
-    | 'frequency'
-    | 'sizeRange'
-    | 'roomsCount'
-    | 'details'
-    | 'preferredVisitSlot'
-    | 'workAddress',
-    string
-  >
->;
-
-type FormState = {
-  customerType: CleaningRequestCustomerType | '';
-  frequency: CleaningFrequency | '';
-  sizeRange: PropertySizeRange | '';
-  roomsCount: string;
-  hasBalcony: boolean;
-  hasIndoorStairs: boolean;
-  hasPets: boolean;
-  details: string;
-  preferredVisitSlot: SelectedCalendarSlot | null;
-  workAddress: CleaningWorkAddressSelection | null;
-};
-
-type DraftStep = 1 | 2 | 3 | 4 | 5;
-
-interface CleaningRequestDraftPayload {
-  step: DraftStep;
-  values: {
-    customerType: CleaningRequestCustomerType | '';
-    frequency: CleaningFrequency | '';
-    sizeRange: PropertySizeRange | '';
-    roomsCount: string;
-    hasBalcony: boolean;
-    hasIndoorStairs: boolean;
-    hasPets: boolean;
-    details: string;
-    preferredVisitSlot: {
-      start: string;
-      end: string;
-    } | null;
-    workAddress: CleaningWorkAddressSelection | null;
-  };
-}
-
-export interface CleaningRequestFormTexts {
-  process: {
-    title: string;
-    description: string;
-    stepLabel: string;
-    steps: {
-      customerFrequency: {
-        heading: string;
-        ariaLabel?: string;
-      };
-      propertyDetails: {
-        heading: string;
-        ariaLabel?: string;
-      };
-      scheduling: {
-        heading: string;
-        ariaLabel?: string;
-      };
-      serviceAddress: {
-        heading: string;
-        ariaLabel?: string;
-      };
-      review?: {
-        heading: string;
-        ariaLabel?: string;
-      };
-    };
-  };
-    customerType: {
-      label: string;
-      options: Record<CleaningRequestCustomerType, string>;
-    };
-  frequency: {
-    label: string;
-    options: Record<CleaningFrequency, string>;
-    discounts: Record<CleaningFrequency, string>;
-    recommendedLabel: string;
-  };
-  property: {
-    title: string;
-    sizeRangeLabel: string;
-    sizeRangeOptions: Record<PropertySizeRange, string>;
-    roomsCountLabel: string;
-    roomsCountDecrementAriaLabel?: string;
-    roomsCountIncrementAriaLabel?: string;
-    hasBalconyLabel: string;
-    hasIndoorStairsLabel: string;
-    hasPetsLabel: string;
-    detailsLabel: string;
-    detailsPlaceholder: string;
-  };
-  scheduling?: {
-    title?: string;
-    description?: string;
-    slotsTitle?: string;
-    noDateSelected?: string;
-    noAvailability?: string;
-    blockedBadge?: string;
-    selectedBadge?: string;
-    availableBadge?: string;
-    closeSlotsLabel?: string;
-    loading?: string;
-    errorPrefix?: string;
-    previousMonth?: string;
-    nextMonth?: string;
-    monthNavigationAriaLabel?: string;
-    weekdayLabels?: string[];
-    nonWorkday?: string;
-    blockedDay?: string;
-    availableDay?: string;
-    required?: string;
-    missingClientConfig?: string;
-  };
-  serviceAddress?: {
-    title?: string;
-    description?: string;
-    loading?: string;
-    optionsLegend?: string;
-    useDifferentAddressLabel?: string;
-    useDifferentAddressHint?: string;
-    emptyState?: string;
-    manualHint?: string;
-    saveToProfileLabel?: string;
-    savedAddressLabel?: string;
-    savedAddressPlaceholder?: string;
-    manualSectionTitle?: string;
-    differentAddressPromptTitle?: string;
-    differentAddressPromptDescription?: string;
-    differentAddressPromptButton?: string;
-    differentAddressPromptButtonAriaLabel?: string;
-    addressDetailsAriaLabel?: string;
-    sourceLabels?: {
-      primary?: string;
-      saved?: string;
-    };
-    fields?: {
-      street?: string;
-      streetNumber?: string;
-      postalCode?: string;
-      district?: string;
-      floor?: string;
-    };
-    profileStep?: {
-      title?: string;
-      description?: string;
-      missingFieldsLabel?: string;
-      summaryTitle?: string;
-      summaryDescription?: string;
-      summaryAriaLabel?: string;
-      saveButton?: string;
-      saving?: string;
-      labels?: {
-        name?: string;
-        email?: string;
-        phone?: string;
-        primaryAddress?: string;
-      };
-      errors?: {
-        required?: string;
-        invalidName?: string;
-        invalidPhone?: string;
-      };
-    };
-    stepAriaLabel?: string;
-    required?: string;
-  };
-  review: {
-    title: string;
-    description: string;
-    sections: {
-      customer: string;
-      property: string;
-      scheduling: string;
-      address: string;
-    };
-    labels: {
-      customerType: string;
-      frequency: string;
-      sizeRange: string;
-      roomsCount: string;
-      hasBalcony: string;
-      hasIndoorStairs: string;
-      hasPets: string;
-      details: string;
-      visitDate: string;
-      visitTime: string;
-      addressSource: string;
-      addressLabel: string;
-      address: string;
-      saveToProfile: string;
-    };
-    sourceOptions: {
-      primary: string;
-      saved: string;
-      new: string;
-    };
-    emptyDetails: string;
-    finalNote: string;
-  };
-  common: {
-    yes: string;
-    no: string;
-    submit: string;
-    next: string;
-    review: string;
-    back: string;
-  };
-  errors: {
-    required: string;
-    invalid: string;
-    roomsRange: string;
-    detailsTooLong: string;
-    unsafeInput: string;
-  };
-}
-
 const INJECTION_PATTERN =
   /(<\s*script|<\/\s*script|javascript:|onerror\s*=|onload\s*=|union\s+select|drop\s+table|insert\s+into|delete\s+from|--|\/\*|\*\/)/i;
-
-const FREQUENCY_ORDER: CleaningFrequency[] = ['once', 'two_per_month', 'three_per_month', 'weekly'];
 
 const sanitizeText = (value: string) =>
   value.normalize('NFKC').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
 
 const CLEANING_REQUEST_DRAFT_VERSION = 1;
 
-const createInitialFormState = (): FormState => ({
+const createInitialFormState = (): CleaningRequestFormState => ({
   customerType: 'private',
   frequency: '',
   sizeRange: '',
@@ -268,10 +47,13 @@ const createInitialFormState = (): FormState => ({
   workAddress: null,
 });
 
-const isDraftStep = (value: unknown): value is DraftStep =>
+const isDraftStep = (value: unknown): value is CleaningRequestDraftStep =>
   value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
 
-const serializeDraft = (values: FormState, step: DraftStep): CleaningRequestDraftPayload => ({
+const serializeDraft = (
+  values: CleaningRequestFormState,
+  step: CleaningRequestDraftStep
+): CleaningRequestDraftPayload => ({
   step,
   values: {
     ...values,
@@ -286,7 +68,7 @@ const serializeDraft = (values: FormState, step: DraftStep): CleaningRequestDraf
 
 const parseDraft = (
   parsed: CleaningRequestDraftPayload | null
-): { step: DraftStep; values: FormState } | null => {
+): { step: CleaningRequestDraftStep; values: CleaningRequestFormState } | null => {
   if (!parsed || !isDraftStep(parsed.step)) return null;
 
   return {
@@ -330,8 +112,8 @@ export default function CleaningRequestForm({
     storageKey: draftStorageKey,
     version: CLEANING_REQUEST_DRAFT_VERSION,
   });
-  const [values, setValues] = useState<FormState>(createInitialFormState);
-  const [touched, setTouched] = useState<Record<keyof FormState, boolean>>({
+  const [values, setValues] = useState<CleaningRequestFormState>(createInitialFormState);
+  const [touched, setTouched] = useState<Record<keyof CleaningRequestFormState, boolean>>({
     customerType: false,
     frequency: false,
     sizeRange: false,
@@ -344,7 +126,7 @@ export default function CleaningRequestForm({
     workAddress: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [step, setStep] = useState<DraftStep>(1);
+  const [step, setStep] = useState<CleaningRequestDraftStep>(1);
 
   useEffect(() => {
     const parsedDraft = parseDraft(storedDraft);
@@ -373,8 +155,8 @@ export default function CleaningRequestForm({
     [texts.process, texts.review.title]
   );
 
-  const errors = useMemo<FieldErrors>(() => {
-    const next: FieldErrors = {};
+  const errors = useMemo<CleaningRequestFieldErrors>(() => {
+    const next: CleaningRequestFieldErrors = {};
     const detailsRaw = values.details || '';
     const details = sanitizeText(detailsRaw);
     const roomsNumber = Number(values.roomsCount);
@@ -412,7 +194,7 @@ export default function CleaningRequestForm({
   }, [texts.errors, texts.scheduling, texts.serviceAddress, values]);
 
   const hasErrors = Object.keys(errors).length > 0;
-  const showError = (field: keyof FieldErrors) =>
+  const showError = (field: keyof CleaningRequestFieldErrors) =>
     Boolean((submitted || touched[field]) && errors[field]);
   const stepOneError = (() => {
     if (showError('customerType') && errors.customerType) {
@@ -583,227 +365,193 @@ export default function CleaningRequestForm({
   };
 
   return (
-    <section className={styles.section} aria-labelledby={sectionTitleId}>
-      <ProcessStepsHeader currentStep={step} texts={processTexts} titleId={sectionTitleId} />
-
-      <form
-        className={`${styles.form} card card--primary`}
-        onSubmit={handleSubmit}
-        noValidate
-        aria-labelledby={stepTitleId}
-        aria-describedby={footerValidationMessage ? validationMessageId : undefined}
-      >
-        <header className={styles.stepHeader}>
-          <h3 className={`${styles.stepTitle} type-title-sm`} id={stepTitleId}>
-            {currentStepHeading}
-          </h3>
-          <span
-            className={`${styles.stepNumber} card card--neutral type-body-sm`}
-          >{`${step}/5`}</span>
-        </header>
-        <div className={styles.wrapper}>
-          <article className={styles.stepContent}>
-            {step === 1 ? (
-              <CustomerFrequencyStep
-                customerType={texts.customerType}
-                frequency={texts.frequency}
-                values={{ customerType: values.customerType, frequency: values.frequency }}
-                errors={{
-                  customerType: showError('customerType') ? errors.customerType : '',
-                  frequency: showError('frequency') ? errors.frequency : '',
-                }}
-                frequencyOrder={FREQUENCY_ORDER}
-                onCustomerTypeChange={(customerType) => {
-                  setValues((prev) => ({ ...prev, customerType }));
-                  setTouched((prev) => ({ ...prev, customerType: true }));
-                }}
-                onFrequencyChange={(frequency) => {
-                  setValues((prev) => ({ ...prev, frequency }));
-                  setTouched((prev) => ({ ...prev, frequency: true }));
-                }}
-              />
-            ) : step === 2 ? (
-              <PropertyDetailsStep
-                showTitle={false}
-                property={texts.property}
-                common={texts.common}
-                requiredText={texts.errors.required}
-                values={{
-                  sizeRange: values.sizeRange,
-                  roomsCount: values.roomsCount,
-                  hasBalcony: values.hasBalcony,
-                  hasIndoorStairs: values.hasIndoorStairs,
-                  hasPets: values.hasPets,
-                  details: values.details,
-                }}
-                errors={{
-                  sizeRange: showError('sizeRange') ? errors.sizeRange : '',
-                  roomsCount: showError('roomsCount') ? errors.roomsCount : '',
-                  details: showError('details') ? errors.details : '',
-                }}
-                onSizeRangeChange={(sizeRange) => setValues((prev) => ({ ...prev, sizeRange }))}
-                onSizeRangeBlur={() => setTouched((prev) => ({ ...prev, sizeRange: true }))}
-                onRoomsDecrement={() => {
-                  const current = Number(values.roomsCount || '1');
-                  const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current - 1));
-                  setValues((prev) => ({ ...prev, roomsCount: String(next) }));
-                  setTouched((prev) => ({ ...prev, roomsCount: true }));
-                }}
-                onRoomsIncrement={() => {
-                  const current = Number(values.roomsCount || '1');
-                  const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current + 1));
-                  setValues((prev) => ({ ...prev, roomsCount: String(next) }));
-                  setTouched((prev) => ({ ...prev, roomsCount: true }));
-                }}
-                onBalconyToggle={() =>
-                  setValues((prev) => ({ ...prev, hasBalcony: !prev.hasBalcony }))
-                }
-                onIndoorStairsToggle={() =>
-                  setValues((prev) => ({ ...prev, hasIndoorStairs: !prev.hasIndoorStairs }))
-                }
-                onPetsToggle={() => setValues((prev) => ({ ...prev, hasPets: !prev.hasPets }))}
-                onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
-                onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
-              />
-            ) : step === 3 && clientCalendarSettings ? (
-              <section
-                className={styles.stepPane}
-                aria-label={
-                  texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
-                }
-              >
-                <AvailabilityCalendar
-                  showHeader={false}
-                  clientId={clientCalendarSettings.clientId}
-                  schedule={clientCalendarSettings.schedule}
-                  slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
-                  value={values.preferredVisitSlot}
-                  onChange={(preferredVisitSlot) => {
-                    setValues((prev) => ({ ...prev, preferredVisitSlot }));
-                    setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
-                  }}
-                  texts={{
-                    title: texts.scheduling?.title,
-                    description: texts.scheduling?.description,
-                    slotsTitle: texts.scheduling?.slotsTitle,
-                    noDateSelected: texts.scheduling?.noDateSelected,
-                    noAvailability: texts.scheduling?.noAvailability,
-                    blockedBadge: texts.scheduling?.blockedBadge,
-                    selectedBadge: texts.scheduling?.selectedBadge,
-                    availableBadge: texts.scheduling?.availableBadge,
-                    closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
-                    loading: texts.scheduling?.loading,
-                    errorPrefix: texts.scheduling?.errorPrefix,
-                    previousMonth: texts.scheduling?.previousMonth,
-                    nextMonth: texts.scheduling?.nextMonth,
-                    monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
-                    weekdayLabels: texts.scheduling?.weekdayLabels,
-                    nonWorkday: texts.scheduling?.nonWorkday,
-                    blockedDay: texts.scheduling?.blockedDay,
-                    availableDay: texts.scheduling?.availableDay,
-                  }}
-                />
-              </section>
-            ) : step === 4 ? (
-              <section
-                className={styles.stepPane}
-                aria-label={
-                  texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
-                }
-              >
-                <ServiceProfileStep
-                  texts={texts.serviceAddress}
-                  value={values.workAddress}
-                  onChange={(workAddress) => {
-                    setValues((prev) => ({ ...prev, workAddress }));
-                    setTouched((prev) => ({ ...prev, workAddress: true }));
-                  }}
-                />
-              </section>
-            ) : step === 5 &&
-              values.customerType &&
-              values.frequency &&
-              values.sizeRange &&
-              values.preferredVisitSlot &&
-              values.workAddress ? (
-              <ReviewStep
-                showHeader={false}
-                texts={texts.review}
-                customerType={{
-                  selected: values.customerType,
-                  options: texts.customerType.options,
-                }}
-                frequency={{
-                  selected: values.frequency,
-                  options: texts.frequency.options,
-                }}
-                property={{
-                  sizeRange: values.sizeRange,
-                  sizeRangeOptions: texts.property.sizeRangeOptions,
-                  roomsCount: Number(values.roomsCount),
-                  hasBalcony: values.hasBalcony,
-                  hasIndoorStairs: values.hasIndoorStairs,
-                  hasPets: values.hasPets,
-                  details: sanitizeText(values.details) || undefined,
-                }}
-                scheduling={values.preferredVisitSlot}
-                workAddress={values.workAddress}
-                common={texts.common}
-              />
-            ) : (
-              <section className={styles.missingConfig} aria-live="polite">
-                <p className={styles.errorText}>
-                  {texts.scheduling?.missingClientConfig ??
-                    'Client calendar configuration is unavailable right now.'}
-                </p>
-              </section>
-            )}
-          </article>
-
-          <aside
-            className={styles.stepValidationSlot}
-            aria-live="polite"
-            role={footerValidationMessage ? 'alert' : undefined}
-          >
-            {footerValidationMessage ? (
-              <p className={styles.stepValidationMessage} id={validationMessageId}>
-                {footerValidationMessage}
-              </p>
-            ) : null}
-          </aside>
-        </div>
-        <footer className={styles.actions}>
-          {step > 1 ? (
-            <button
-              type="button"
-              className={`button button--outline ${styles.backButton}`}
-              onClick={() =>
-                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1))
-              }
-            >
-              {texts.common.back}
-            </button>
-          ) : (
-            <span className={styles.actionsSpacer} aria-hidden="true" />
-          )}
-
-          <button
-            className={`button button--primary ${!canSubmit ? styles.submitDisabled : ''}`}
-            type={step === 5 && !canSubmit ? 'button' : 'submit'}
-            aria-disabled={step === 5 && !canSubmit}
-            disabled={loading}
-            onClick={() => {
-              if (step === 5 && !canSubmit) onRequireAuth?.();
+    <ServiceRequestShell
+      sectionTitleId={sectionTitleId}
+      stepTitleId={stepTitleId}
+      validationMessageId={validationMessageId}
+      processHeader={
+        <ProcessStepsHeader currentStep={step} texts={processTexts} titleId={sectionTitleId} />
+      }
+      currentStepHeading={currentStepHeading}
+      currentStepValue={step}
+      totalSteps={5}
+      validationMessage={footerValidationMessage}
+      onSubmit={handleSubmit}
+      backAction={
+        step > 1
+          ? {
+              label: texts.common.back,
+              onClick: () =>
+                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1)),
+            }
+          : undefined
+      }
+      primaryAction={{
+        label:
+          step === 5 ? texts.common.submit : step === 4 ? texts.common.review : texts.common.next,
+        type: step === 5 && !canSubmit ? 'button' : 'submit',
+        ariaDisabled: step === 5 && !canSubmit,
+        disabled: loading,
+        className: !canSubmit ? shellStyles.submitDisabled : undefined,
+        onClick: () => {
+          if (step === 5 && !canSubmit) onRequireAuth?.();
+        },
+      }}
+    >
+      {step === 1 ? (
+        <CustomerFrequencyStep
+          customerType={texts.customerType}
+          frequency={texts.frequency}
+          values={{ customerType: values.customerType, frequency: values.frequency }}
+          errors={{
+            customerType: showError('customerType') ? errors.customerType : '',
+            frequency: showError('frequency') ? errors.frequency : '',
+          }}
+          frequencyOrder={CLEANING_FREQUENCY_ORDER}
+          onCustomerTypeChange={(customerType) => {
+            setValues((prev) => ({ ...prev, customerType }));
+            setTouched((prev) => ({ ...prev, customerType: true }));
+          }}
+          onFrequencyChange={(frequency) => {
+            setValues((prev) => ({ ...prev, frequency }));
+            setTouched((prev) => ({ ...prev, frequency: true }));
+          }}
+        />
+      ) : step === 2 ? (
+        <PropertyDetailsStep
+          showTitle={false}
+          property={texts.property}
+          requiredText={texts.errors.required}
+          values={{
+            sizeRange: values.sizeRange,
+            roomsCount: values.roomsCount,
+            hasBalcony: values.hasBalcony,
+            hasIndoorStairs: values.hasIndoorStairs,
+            hasPets: values.hasPets,
+            details: values.details,
+          }}
+          errors={{
+            sizeRange: showError('sizeRange') ? errors.sizeRange : '',
+            roomsCount: showError('roomsCount') ? errors.roomsCount : '',
+            details: showError('details') ? errors.details : '',
+          }}
+          onSizeRangeChange={(sizeRange) => setValues((prev) => ({ ...prev, sizeRange }))}
+          onSizeRangeBlur={() => setTouched((prev) => ({ ...prev, sizeRange: true }))}
+          onRoomsDecrement={() => {
+            const current = Number(values.roomsCount || '1');
+            const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current - 1));
+            setValues((prev) => ({ ...prev, roomsCount: String(next) }));
+            setTouched((prev) => ({ ...prev, roomsCount: true }));
+          }}
+          onRoomsIncrement={() => {
+            const current = Number(values.roomsCount || '1');
+            const next = Math.max(1, Math.min(50, Number.isNaN(current) ? 1 : current + 1));
+            setValues((prev) => ({ ...prev, roomsCount: String(next) }));
+            setTouched((prev) => ({ ...prev, roomsCount: true }));
+          }}
+          onBalconyToggle={() =>
+            setValues((prev) => ({ ...prev, hasBalcony: !prev.hasBalcony }))
+          }
+          onIndoorStairsToggle={() =>
+            setValues((prev) => ({ ...prev, hasIndoorStairs: !prev.hasIndoorStairs }))
+          }
+          onPetsToggle={() => setValues((prev) => ({ ...prev, hasPets: !prev.hasPets }))}
+          onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
+          onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
+        />
+      ) : step === 3 && clientCalendarSettings ? (
+        <section
+          className={shellStyles.stepPane}
+          aria-label={
+            texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
+          }
+        >
+          <AvailabilityCalendar
+            showHeader={false}
+            clientId={clientCalendarSettings.clientId}
+            schedule={clientCalendarSettings.schedule}
+            slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
+            value={values.preferredVisitSlot}
+            onChange={(preferredVisitSlot) => {
+              setValues((prev) => ({ ...prev, preferredVisitSlot }));
+              setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
             }}
-          >
-            {step === 5
-              ? texts.common.submit
-              : step === 4
-                ? texts.common.review
-                : texts.common.next}
-          </button>
-        </footer>
-      </form>
-    </section>
+            texts={{
+              title: texts.scheduling?.title,
+              description: texts.scheduling?.description,
+              slotsTitle: texts.scheduling?.slotsTitle,
+              noDateSelected: texts.scheduling?.noDateSelected,
+              noAvailability: texts.scheduling?.noAvailability,
+              blockedBadge: texts.scheduling?.blockedBadge,
+              selectedBadge: texts.scheduling?.selectedBadge,
+              availableBadge: texts.scheduling?.availableBadge,
+              closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
+              loading: texts.scheduling?.loading,
+              errorPrefix: texts.scheduling?.errorPrefix,
+              previousMonth: texts.scheduling?.previousMonth,
+              nextMonth: texts.scheduling?.nextMonth,
+              monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
+              weekdayLabels: texts.scheduling?.weekdayLabels,
+              nonWorkday: texts.scheduling?.nonWorkday,
+              blockedDay: texts.scheduling?.blockedDay,
+              availableDay: texts.scheduling?.availableDay,
+            }}
+          />
+        </section>
+      ) : step === 4 ? (
+        <section
+          className={shellStyles.stepPane}
+          aria-label={
+            texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
+          }
+        >
+          <ServiceProfileStep
+            texts={texts.serviceAddress}
+            value={values.workAddress}
+            onChange={(workAddress) => {
+              setValues((prev) => ({ ...prev, workAddress }));
+              setTouched((prev) => ({ ...prev, workAddress: true }));
+            }}
+          />
+        </section>
+      ) : step === 5 &&
+        values.customerType &&
+        values.frequency &&
+        values.sizeRange &&
+        values.preferredVisitSlot &&
+        values.workAddress ? (
+        <ReviewStep
+          showHeader={false}
+          texts={texts.review}
+          customerType={{
+            selected: values.customerType,
+            options: texts.customerType.options,
+          }}
+          frequency={{
+            selected: values.frequency,
+            options: texts.frequency.options,
+          }}
+          property={{
+            sizeRange: values.sizeRange,
+            sizeRangeOptions: texts.property.sizeRangeOptions,
+            roomsCount: Number(values.roomsCount),
+            hasBalcony: values.hasBalcony,
+            hasIndoorStairs: values.hasIndoorStairs,
+            hasPets: values.hasPets,
+            details: sanitizeText(values.details) || undefined,
+          }}
+          scheduling={values.preferredVisitSlot}
+          workAddress={values.workAddress}
+          common={texts.common}
+        />
+      ) : (
+        <section className={shellStyles.missingConfig} aria-live="polite">
+          <p className={shellStyles.errorText}>
+            {texts.scheduling?.missingClientConfig ??
+              'Client calendar configuration is unavailable right now.'}
+          </p>
+        </section>
+      )}
+    </ServiceRequestShell>
   );
 }

@@ -21,7 +21,7 @@ No cubre:
 
 - cambios derivados del backend
 - revisión específica del `Footer`
-- screenshots reales y evidencia final de cierre de fase 2
+- screenshots reales y evidencia final de la pasada manual transversal final
 
 ## Resultado esperado
 
@@ -65,6 +65,7 @@ Estado actual:
 - la ruta ya delega en `HowItWorksPageClient`
 - la vista ya vive en `HowItWorksPageView`
 - los contratos ya fueron extraídos a `howItWorks.types.ts`
+- la justificación SSR/CSR de la ruta ya quedó documentada en el audit
 
 ### Fase 3. i18n y fallbacks
 
@@ -86,7 +87,7 @@ Estado actual:
 - los fallbacks visibles ya viven en `howItWorks.fallbacks.ts`
 - el scope renderizado ya fue auditado en `de`, `en` y `es`
 - el `aria-label` activo de la página ya fue revisado y alineado entre idiomas
-- metadata `es` ya fue completada; los screenshots reales siguen diferidos a fase 2
+- metadata `es` ya fue completada; los screenshots reales siguen diferidos a la pasada manual transversal final
 
 ### Fase 4. Render, accesibilidad y testing
 
@@ -95,11 +96,19 @@ Tareas:
 - crear documento de render tree de la página
 - registrar landmarks, headings y flujo de foco esperado
 - ampliar la guía/testing manual para la secuencia propia de `how-it-work`
-- dejar explícitos los pendientes que pertenecen a fase 2
+- dejar explícitos los pendientes que pertenecen a la pasada manual transversal final
 
 Criterio de cierre:
 
 - la página tiene cierre semántico y plan de validación manual documentado
+
+Estado actual:
+
+- fase resuelta en su baseline técnico
+- el render tree ya existe
+- `TESTING.md` ya incluye el caso `K-07`
+- la revisión semántica por código ya quedó asentada en el audit
+- la evidencia manual real queda diferida a la pasada transversal final
 
 ### Fase 5. Estilos y migración visual
 
@@ -107,17 +116,17 @@ Tareas:
 
 - crear inventario de dependencias de estilo
 - clasificar botones, cards, tokens y helpers actuales
-- decidir si la página reutiliza los primitivos `v2` ya activados por `Home`
+- decidir si la página reutiliza los primitivos compartidos ya activados por `Home`
 - mantener en CSS Modules lo que siga siendo page-local
 
 Criterio de cierre:
 
-- cualquier activación de `migration-styles` queda justificada por auditoría real
+- cualquier promoción al sistema compartido queda justificada por auditoría real
 
 Estado actual:
 
 - fase claramente iniciada
-- la ruta ya reutiliza `v2` en hero, workflow y CTAs de benefits
+- la ruta ya reutiliza primitivos compartidos en hero, workflow y CTAs de benefits
 - `BenefitsSplitSection` ya fue estabilizada estructuralmente para eliminar la composición basada en posicionamiento absoluto y márgenes de compensación
 - falta validación visual real y decisión final sobre qué primitives pasan a considerarse compartidas
 
@@ -126,9 +135,9 @@ Estado actual:
 Tareas:
 
 - actualizar checklist viva de la auditoría
-- dejar claro qué queda completado ahora y qué se difiere a fase 2
+- dejar claro qué queda completado ahora y qué se difiere a la pasada manual transversal final
 
-Pendientes explícitos de fase 2:
+Pendientes explícitos de la pasada manual transversal final:
 
 - screenshots reales
 - verificación final manual de teclado registrada como evidencia de cierre

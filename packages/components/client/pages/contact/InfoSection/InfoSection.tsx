@@ -6,6 +6,15 @@ import { useClient } from '../../../../../contexts';
 import { CompanyContact } from '../../../companyContact';
 import type { ContactInfoTexts } from '../contact.types';
 
+interface QuickActionItem {
+  key: 'call' | 'email' | 'whatsapp';
+  href: string;
+  ariaLabel: string;
+  srLabel: string;
+  imageSrc: string;
+  external?: boolean;
+}
+
 export default function InfoSection({
   texts,
   locale,
@@ -32,8 +41,36 @@ export default function InfoSection({
   })();
 
   const mailHref = texts?.contact?.email ? `mailto:${texts.contact.email}` : '';
-
-  const hasQuickActions = Boolean(mailHref || telHref || whatsappHref);
+  const quickActions: QuickActionItem[] = [
+    telHref
+      ? {
+          key: 'call',
+          href: telHref,
+          ariaLabel: ariaTexts?.call || 'Call phone number',
+          srLabel: quickTexts?.call || 'Call',
+          imageSrc: '/images/phone.png',
+        }
+      : null,
+    mailHref
+      ? {
+          key: 'email',
+          href: mailHref,
+          ariaLabel: ariaTexts?.email || 'Send email',
+          srLabel: quickTexts?.email || 'Email',
+          imageSrc: '/images/mail.png',
+        }
+      : null,
+    whatsappHref
+      ? {
+          key: 'whatsapp',
+          href: whatsappHref,
+          ariaLabel: ariaTexts?.whatsapp || 'Open WhatsApp chat',
+          srLabel: quickTexts?.whatsapp || 'WhatsApp',
+          imageSrc: '/images/whatsapp.png',
+          external: true,
+        }
+      : null,
+  ].filter(Boolean) as QuickActionItem[];
 
   return (
     <section className={styles.contactSection}>
@@ -50,65 +87,32 @@ export default function InfoSection({
           className={styles.contact}
         />
       </div>
-      {hasQuickActions && (
+      {quickActions.length > 0 && (
         <nav
           className={styles.quickActions}
           aria-label={ariaTexts?.quickActions || 'Quick contact actions'}
         >
           <div className={styles.actionList}>
-            {telHref && (
+            {quickActions.map((action) => (
               <a
+                key={action.key}
                 className={`${styles.actionLink} button button--ghost`}
-                href={telHref}
-                aria-label={ariaTexts?.call || 'Call phone number'}
+                href={action.href}
+                aria-label={action.ariaLabel}
+                target={action.external ? '_blank' : undefined}
+                rel={action.external ? 'noreferrer' : undefined}
               >
                 <Image
-                  src="/images/phone.png"
+                  src={action.imageSrc}
                   alt=""
                   width={92}
                   height={92}
                   className={styles.actionImage}
                   aria-hidden="true"
                 />
-                <span className={styles.srOnly}>{quickTexts?.call || 'Call'}</span>
+                <span className={styles.srOnly}>{action.srLabel}</span>
               </a>
-            )}
-            {mailHref && (
-              <a
-                className={`${styles.actionLink} button button--ghost`}
-                href={mailHref}
-                aria-label={ariaTexts?.email || 'Send email'}
-              >
-                <Image
-                  src="/images/mail.png"
-                  alt=""
-                  width={92}
-                  height={92}
-                  className={styles.actionImage}
-                  aria-hidden="true"
-                />
-                <span className={styles.srOnly}>{quickTexts?.email || 'Email'}</span>
-              </a>
-            )}
-            {whatsappHref && (
-              <a
-                className={`${styles.actionLink} button button--ghost`}
-                href={whatsappHref}
-                aria-label={ariaTexts?.whatsapp || 'Open WhatsApp chat'}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Image
-                  src="/images/whatsapp.png"
-                  alt=""
-                  width={92}
-                  height={92}
-                  className={styles.actionImage}
-                  aria-hidden="true"
-                />
-                <span className={styles.srOnly}>{quickTexts?.whatsapp || 'WhatsApp'}</span>
-              </a>
-            )}
+            ))}
           </div>
         </nav>
       )}

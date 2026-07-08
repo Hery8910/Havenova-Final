@@ -46,7 +46,7 @@ export default function ServicesSection({
                     ))}
                   </ul>
                   <Link
-                    className={`${styles.cardLink} v2-button v2-button--${serviceCardClass}`}
+                    className={`${styles.cardLink} button button--${serviceCardClass}`}
                     href={href(lang, item.href)}
                   >
                     {item.ctaLabel}

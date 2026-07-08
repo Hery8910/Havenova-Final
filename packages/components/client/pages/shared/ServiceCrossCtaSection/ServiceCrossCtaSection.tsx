@@ -2,12 +2,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useId } from 'react';
 import styles from './ServiceCrossCtaSection.module.css';
+import { href } from '../../../../utils';
+
+type ServiceCrossCtaButtonVariant = 'primary' | 'secondary' | 'accent' | 'outline';
+type ServiceCrossCtaSurface = 'about' | 'cleaning-service' | 'home-service';
 
 export interface ServiceCrossCtaAction {
   label: string;
   href: string;
   ariaLabel?: string;
-  variant?: string;
+  variant?: ServiceCrossCtaButtonVariant;
 }
 
 export interface ServiceCrossCtaSectionTexts {
@@ -24,10 +28,16 @@ export interface ServiceCrossCtaSectionTexts {
 interface ServiceCrossCtaSectionProps {
   texts: ServiceCrossCtaSectionTexts;
   lang: string;
-  surface: 'about' | 'cleaning-service' | 'home-service';
+  surface: ServiceCrossCtaSurface;
 }
 
-const SURFACE_CONFIG = {
+const SURFACE_CONFIG: Record<
+  ServiceCrossCtaSurface,
+  {
+    cardClass: 'card--accent' | 'card--primary' | 'card--secondary';
+    imageSrc: string;
+  }
+> = {
   about: {
     cardClass: 'card--accent',
     imageSrc: '/images/cleaning.png',
@@ -40,14 +50,13 @@ const SURFACE_CONFIG = {
     cardClass: 'card--secondary',
     imageSrc: '/images/home-service.png',
   },
-} as const;
+};
 
-const getLocalizedHref = (href: string, lang: string) => {
-  if (!href.startsWith('/') || href.startsWith(`/${lang}/`) || href === `/${lang}`) {
-    return href;
-  }
-
-  return `/${lang}${href}`;
+const BUTTON_VARIANT_CLASS: Record<ServiceCrossCtaButtonVariant, string> = {
+  primary: 'button--primary',
+  secondary: 'button--secondary',
+  accent: 'button--accent',
+  outline: 'button--outline',
 };
 
 export default function ServiceCrossCtaSection({
@@ -81,20 +90,13 @@ export default function ServiceCrossCtaSection({
           <nav className={styles.actions} aria-label={texts.a11y?.actionsLabel}>
             <ul className={styles.actionList}>
               {texts.actions.map((action) => {
-                const variantClass =
-                  action.variant === 'secondary'
-                    ? 'button--secondary'
-                    : action.variant === 'accent'
-                      ? 'button--accent'
-                      : action.variant === 'outline'
-                        ? 'button--outline'
-                        : 'button--primary';
+                const variantClass = BUTTON_VARIANT_CLASS[action.variant ?? 'primary'];
 
                 return (
                   <li key={`${action.href}-${action.label}`} className={styles.actionItem}>
                     <Link
                       className={`button ${variantClass} ${styles.button}`}
-                      href={getLocalizedHref(action.href, lang)}
+                      href={href(lang, action.href)}
                       aria-label={action.ariaLabel}
                     >
                       {action.label}

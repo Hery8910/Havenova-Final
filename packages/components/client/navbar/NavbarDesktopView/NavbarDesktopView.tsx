@@ -46,8 +46,7 @@ export function NavbarDesktopView({
   const accountTitleId = useId();
   const { branding, primaryLinks, userLinks, labels, preferences, session, a11y } = content;
   const BellSlot = bellSlot;
-  const { activePanel, visiblePanel, closePanel, togglePanel, isPanelOpen } =
-    useNavbarPanelState<'account'>();
+  const { visiblePanel, closePanel, togglePanel, isPanelOpen } = useNavbarPanelState<'account'>();
   const userMenuOpen = isPanelOpen('account');
 
   useEffect(() => {
@@ -127,9 +126,10 @@ export function NavbarDesktopView({
                   ref={triggerRef}
                   type="button"
                   className={`button button--ghost ${sharedStyles.iconButton}`}
-                  aria-label={a11y.profileToggle}
+                  aria-label={userMenuOpen ? a11y.closeMenu : a11y.profileToggle}
                   aria-expanded={userMenuOpen}
                   aria-controls={accountPanelId}
+                  aria-haspopup="dialog"
                   onClick={() => togglePanel('account')}
                 >
                   <NavbarProfileTrigger
@@ -161,6 +161,7 @@ export function NavbarDesktopView({
                 className={`card card--neutral ${styles.accountNavigation} ${
                   userMenuOpen ? styles.accountNavigationOpen : ''
                 }`}
+                role="dialog"
                 tabIndex={-1}
                 aria-labelledby={userMenuOpen ? accountTitleId : undefined}
                 aria-hidden={!userMenuOpen}

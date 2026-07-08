@@ -2,6 +2,7 @@ import { useId } from 'react';
 import styles from './CustomerFrequencyStep.module.css';
 import { CleaningFrequency } from '../../../../../../types/services';
 import CustomerTypeSelector from '../../../shared/CustomerTypeSelector/CustomerTypeSelector';
+import { ChoiceButtonField } from '../../../shared';
 import type { CleaningRequestCustomerType } from '../cleaningRequest.types';
 
 type Props = {
@@ -38,7 +39,22 @@ export default function CustomerFrequencyStep({
   onFrequencyChange,
 }: Props) {
   const sectionLabelId = useId();
-  const frequencyErrorId = useId();
+  const frequencyOptions = frequencyOrder.map((freq) => ({
+    value: freq,
+    label: (
+      <>
+        <span className={styles.frequencyContent}>
+          <span className={styles.frequencyText}>{frequency.options[freq]}</span>
+          {freq === 'three_per_month' ? (
+            <span className={`${styles.badge} card card--accent`}>{frequency.recommendedLabel}</span>
+          ) : null}
+        </span>
+        <span className={`${styles.frequencyDiscount} card card--neutral`}>
+          {frequency.discounts[freq]}
+        </span>
+      </>
+    ),
+  }));
 
   return (
     <section className={styles.container} aria-labelledby={sectionLabelId}>
@@ -53,40 +69,22 @@ export default function CustomerFrequencyStep({
         onChange={onCustomerTypeChange}
       />
 
-      <fieldset className={styles.group}>
-        <legend className={`${styles.legend} type-body-md`}>{frequency.label}</legend>
-        <ul className={styles.frequencyList}>
-          {frequencyOrder.map((freq) => (
-            <li key={freq}>
-              <button
-                type="button"
-                className={`button button--outline ${styles.frequencyButton} ${values.frequency === freq ? styles.active : ''} ${freq === 'three_per_month' ? styles.recommended : ''} ${errors.frequency ? styles.fieldControlError : ''}`}
-                aria-pressed={values.frequency === freq}
-                aria-invalid={Boolean(errors.frequency)}
-                aria-describedby={errors.frequency ? frequencyErrorId : undefined}
-                onClick={() => onFrequencyChange(freq)}
-              >
-                <span className={styles.frequencyContent}>
-                  <span className={styles.frequencyText}>{frequency.options[freq]}</span>
-                  {freq === 'three_per_month' && (
-                    <span className={`${styles.badge} card card--accent`}>
-                      {frequency.recommendedLabel}
-                    </span>
-                  )}
-                </span>
-                <span className={`${styles.frequencyDiscount} card card--neutral`}>
-                  {frequency.discounts[freq]}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-        {errors.frequency ? (
-          <p className={styles.errorText} id={frequencyErrorId}>
-            {errors.frequency}
-          </p>
-        ) : null}
-      </fieldset>
+      <ChoiceButtonField
+        legend={frequency.label}
+        options={frequencyOptions}
+        value={values.frequency}
+        error={errors.frequency}
+        onChange={onFrequencyChange}
+        fieldClassName={styles.group}
+        legendClassName={`${styles.legend} type-body-md`}
+        listClassName={styles.frequencyList}
+        buttonClassName={({ option }) =>
+          `${styles.frequencyButton} ${
+            option.value === 'three_per_month' ? styles.recommended : ''
+          }`.trim()
+        }
+        errorClassName={styles.errorText}
+      />
     </section>
   );
 }

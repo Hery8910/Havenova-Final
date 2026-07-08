@@ -1,4 +1,3 @@
-import '../../migration-styles/index.css';
 import React from 'react';
 import { AppLayoutShell } from './AppLayoutShell';
 

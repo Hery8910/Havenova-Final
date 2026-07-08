@@ -21,7 +21,7 @@ import {
 import { AlertViewport } from '../../../../../packages/components/alert';
 import Loading from '../../../../../packages/components/loading/Loading';
 import { href, userAuthRoutes } from '../../../../../packages/utils';
-import { DashboardHeader, Sidebar } from '../../../../../packages/components';
+import { DashboardWorkspaceShell } from './components/shell';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }, { lang: 'es' }];
@@ -69,7 +69,24 @@ export default async function LangLayout({
   }
 
   return (
-    <html lang={params.lang} data-theme="light">
+    <html lang={params.lang} suppressHydrationWarning>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function () {
+              try {
+                var storedTheme = localStorage.getItem('theme');
+                var theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
+                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
+                document.documentElement.setAttribute('data-theme', theme);
+              } catch (error) {
+                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
+                document.documentElement.setAttribute('data-theme', 'light');
+              }
+            })();
+          `,
+        }}
+      />
       <body className={styles.body}>
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>
@@ -80,25 +97,9 @@ export default async function LangLayout({
               tenantKey={tenantKey}
               loadingFallback={<Loading theme="light" />}
             >
-              <AuthProvider>
+              <AuthProvider initialAuth={auth} disableUnauthenticatedBootstrap>
                 <AdminProvider>
-                  <main className={styles.page}>
-                    <section
-                      className={`${styles.workspace} card card--primary`}
-                      aria-label="Dashboard workspace"
-                    >
-                      <aside className={styles.navColumn} aria-label="Dashboard navigation">
-                        <Sidebar />
-                      </aside>
-
-                      <section className={styles.contentColumn}>
-                        <header className={styles.header}>
-                          <DashboardHeader />
-                        </header>
-                        <section className={styles.main}>{children}</section>
-                      </section>
-                    </section>
-                  </main>
+                  <DashboardWorkspaceShell>{children}</DashboardWorkspaceShell>
                 </AdminProvider>
               </AuthProvider>
             </ClientProvider>

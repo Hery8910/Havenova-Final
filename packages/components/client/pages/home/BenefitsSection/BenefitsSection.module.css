@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: var(--v2-content-max-width);
+  max-width: var(--content-max-width-page);
   padding: var(--space-section) 5dvw;
   margin: 0 auto;
   display: flex;
@@ -12,11 +12,11 @@
   gap: clamp(32px, 6vw, 64px);
 }
 .sectionTitle {
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
   margin: 0;
 }
 .sectionSubtitle {
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -37,9 +37,9 @@
   transform: translateX(-50%);
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 100%, var(--v2-card-primary-bg1) 0%, transparent 58%),
-    radial-gradient(circle at 30% 100%, var(--v2-card-secondary-bg2) 0%, transparent 52%),
-    radial-gradient(circle at 70% 100%, var(--v2-feedback-info-bg-image) 0%, transparent 46%);
+    radial-gradient(circle at 50% 100%, var(--card-primary-bg1) 0%, transparent 58%),
+    radial-gradient(circle at 30% 100%, var(--card-secondary-bg2) 0%, transparent 52%),
+    radial-gradient(circle at 70% 100%, var(--feedback-info-bg-image) 0%, transparent 46%);
   opacity: 0.7;
   filter: blur(36px);
   pointer-events: none;
@@ -87,18 +87,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--v2-page-text-primary);
-  font-size: var(--v2-benefit-icon-size);
+  color: var(--text-primary);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   flex: 0 0 auto;
 }
 
 .benefitTitle {
   margin: 0;
-  color: var(--v2-page-text-primary);
+  color: var(--text-primary);
 }
 .benefitText {
   margin: 0;
-  color: var(--v2-page-text-secondary);
+  color: var(--text-secondary);
 }
 
 @media (max-width: 767px) {

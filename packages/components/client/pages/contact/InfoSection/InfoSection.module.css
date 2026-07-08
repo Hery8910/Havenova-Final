@@ -20,13 +20,13 @@
   height: 400px;
   background: radial-gradient(
     circle at 70% 110%,
-    var(--v2-card-secondary-bg1),
-    var(--v2-card-primary-bg1),
+    var(--card-secondary-bg1),
+    var(--card-primary-bg1),
     transparent 72%
   );
-  border-radius: var(--v2-radius-lg);
+  border-radius: var(--radius-card);
   transform: rotate(45deg);
-  box-shadow: var(--v2-card-shadow);
+  box-shadow: var(--shadow-card);
 }
 
 .contactCard {
@@ -69,13 +69,13 @@
 
 .actionLink:focus-visible {
   outline: none;
-  border-color: var(--v2-button-focus-border);
-  box-shadow: 0 0 0 3px var(--v2-button-shadow-focus);
+  border-color: var(--button-focus-border);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.18);
 }
 
 .actionLink:hover {
   transform: translateY(-2px);
-  box-shadow: var(--v2-button-shadow-hover);
+  box-shadow: var(--button-shadow-hover);
 }
 
 .actionImage {

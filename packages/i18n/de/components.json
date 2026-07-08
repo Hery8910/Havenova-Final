@@ -792,26 +792,6 @@
           "notifications": "Benachrichtigungen"
         }
       }
-    },
-    "sidebar": {
-      "pages": [
-        { "label": "Dashboard", "href": "/" },
-        { "label": "Anfragen", "href": "/requests" },
-        { "label": "Kunden", "href": "/clients" },
-        { "label": "Immobilienverwalter", "href": "/property-manager" },
-        { "label": "Objekte", "href": "/objects" },
-        { "label": "Aufgabenkatalog", "href": "/global-task-catalog" },
-        { "label": "Mitarbeiter", "href": "/employees" },
-        { "label": "Nachrichten", "href": "/messages" },
-        { "label": "Benachrichtigungen", "href": "/notifications" }
-      ],
-      "settings": [
-        { "label": "Unterstützung", "href": "/support" },
-        { "label": "Profil", "href": "/profile" }
-      ],
-      "logout": "Abmelden",
-      "closeMenu": "Menü schließen",
-      "openMenu": "Menü öffnen"
     }
   }
 }

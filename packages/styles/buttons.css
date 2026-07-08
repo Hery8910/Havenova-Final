@@ -134,7 +134,7 @@
 }
 
 .button--outline {
-  --button-text: var(--page-text-secondary);
+  --button-text: var(--text-secondary);
   --button-border: var(--button-outline-border);
   --button-shadow: none;
   --button-text-hover: var(--button-outline-text);
@@ -217,8 +217,7 @@
 }
 
 .button--active,
-.button[aria-pressed='true'],
-.button[aria-expanded='true'] {
+.button[aria-current='page'] {
   color: var(--button-active-text);
   background-color: var(--button-active-bg);
   background-image: var(--button-active-bg-image);

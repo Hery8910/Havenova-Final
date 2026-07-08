@@ -1,5 +1,7 @@
 import styles from './ServiceDetailsStep.module.css';
 import type { HomeServiceKind } from '../homeServiceTypes';
+import { useId } from 'react';
+import { RequestField, RequestStepIntro } from '../../../shared';
 
 type Props = {
   showHeader?: boolean;
@@ -29,16 +31,17 @@ export default function ServiceDetailsStep({
   onDetailsBlur,
 }: Props) {
   const selectedService = texts.services[selectedServiceType];
+  const helperId = useId();
+  const errorId = useId();
 
   return (
     <section className={styles.container} aria-labelledby="home-service-details-title">
       {showHeader ? (
-        <header className={styles.header}>
-          <h3 id="home-service-details-title" className={styles.title}>
-            {texts.title}
-          </h3>
-          <p className={styles.description}>{texts.description}</p>
-        </header>
+        <RequestStepIntro
+          title={texts.title}
+          titleId="home-service-details-title"
+          description={texts.description}
+        />
       ) : null}
 
       <article className={styles.serviceCard}>
@@ -48,8 +51,18 @@ export default function ServiceDetailsStep({
         <p className={styles.hint}>{selectedService.detailsHint}</p>
       </article>
 
-      <label className={styles.field} htmlFor="home-service-details">
-        <span className={styles.label}>{texts.detailsLabel}</span>
+      <RequestField
+        htmlFor="home-service-details"
+        label={texts.detailsLabel}
+        helperText={texts.helper}
+        helperId={helperId}
+        errorText={error}
+        errorId={errorId}
+        fieldClassName={styles.field}
+        labelClassName={styles.label}
+        helperClassName={styles.hint}
+        errorClassName={styles.error}
+      >
         <textarea
           id="home-service-details"
           className={styles.textarea}
@@ -59,12 +72,10 @@ export default function ServiceDetailsStep({
           onBlur={onDetailsBlur}
           maxLength={1500}
           rows={6}
+          aria-invalid={Boolean(error)}
+          aria-describedby={`${helperId} ${errorId}`}
         />
-        <span className={styles.hint}>{texts.helper}</span>
-        <span className={styles.error} aria-live="polite">
-          {error || ''}
-        </span>
-      </label>
+      </RequestField>
     </section>
   );
 }

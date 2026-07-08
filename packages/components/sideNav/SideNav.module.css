@@ -5,45 +5,218 @@
   justify-content: space-between;
   width: 100%;
   min-block-size: 100%;
-  gap: var(--space-4, 16px);
-  min-inline-size: 248px;
-  padding: 8px 0;
-  border-radius: calc(var(--radius-card) - 6px);
-  box-shadow: none;
-  color: var(--text-secondary-fixed);
+  block-size: 100%;
+  gap: 10px;
+  min-inline-size: 0;
+  padding: 0;
+  border-radius: calc(var(--radius-card) - 8px);
+  color: var(--text-secondary);
+  overflow: visible;
+}
+
+.drawer {
+  justify-content: flex-start;
+  min-block-size: 100%;
+  block-size: auto;
+  gap: 14px;
 }
 
 .mainSection,
 .footerSection {
-  padding: 12px 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  min-height: 0;
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: calc(var(--radius-md) + 2px);
+  padding: 2px;
+  background-color: color-mix(in srgb, var(--surface-panel) 72%, transparent);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 78%, transparent);
+  box-shadow: 0 16px 30px -30px color-mix(in srgb, var(--border-strong) 44%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.sectionHeading {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1;
 }
 
 .footerSection {
   margin-top: auto;
-  gap: 10px;
+  gap: 8px;
+  padding-top: 2px;
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 42%, transparent);
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.mainSection {
+  flex: 1 1 auto;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.drawer .mainSection {
+  flex: 0 1 auto;
+  overflow: visible;
+}
+
+.mainSection::-webkit-scrollbar {
+  display: none;
+}
+
+.footerContent {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  scrollbar-width: none;
+  max-block-size: min(34dvh, 320px);
+  min-height: 0;
+}
+
+.drawer .footerContent {
+  max-block-size: none;
+  overflow: visible;
+}
+
+.footerContent::-webkit-scrollbar {
+  display: none;
+}
+
+.footerControls {
+  overflow: visible;
+  padding-top: 2px;
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 34%, transparent);
+}
+
+.drawer .footerSection {
+  margin-top: 0;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin: 0;
-  padding: 0;
+  padding: 0 0 4px;
   list-style: none;
 }
 
 .sectionLabel {
   margin: 0;
-  padding-inline: 14px;
-  color: var(--text-muted);
-  font-size: var(--type-label-size);
+  padding-inline: 12px;
+  color: color-mix(in srgb, var(--text-secondary) 88%, white 12%);
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.88;
+}
+
+.sectionToggle {
+  inline-size: 100%;
+  min-block-size: 40px;
+  justify-content: space-between;
+  gap: 12px;
+  padding-inline: 12px;
+  color: var(--text-primary);
+  border-color: transparent;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  box-shadow: none;
+}
+
+.headerButton {
+  --button-text: var(--text-primary);
+  --button-bg: transparent;
+  --button-bg-image: none;
+  --button-border: transparent;
+  --button-shadow: none;
+  --button-text-hover: var(--text-primary);
+  --button-bg-hover: color-mix(in srgb, var(--surface-panel) 82%, transparent);
+  --button-bg-image-hover: none;
+  --button-border-hover: color-mix(in srgb, var(--border-subtle) 44%, transparent);
+  --button-shadow-hover-current: 0 10px 20px -20px color-mix(in srgb, var(--border-strong) 44%, transparent);
+  --button-text-active: var(--text-primary);
+  --button-bg-active: transparent;
+  --button-bg-image-active: none;
+  --button-border-active: transparent;
+  --button-shadow-active-current: none;
+}
+
+.headerButton[aria-expanded='true'],
+.headerButton[aria-expanded='true']:hover,
+.headerButton[aria-expanded='true']:focus-visible {
+  color: var(--text-primary);
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.sectionToggleCollapsed {
+  justify-content: center;
+  padding-inline: 8px;
+}
+
+.sectionToggleLead {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-inline-size: 0;
+}
+
+.sectionToggleSectionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.sectionToggleLabel {
+  min-inline-size: 0;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-secondary) 88%, white 12%);
+}
+
+.sectionToggleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--text-secondary) 88%, white 12%);
+  font-size: 0.95rem;
+}
+
+.sectionToggleCollapsed .sectionToggleIcon {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 6px;
+  font-size: 0.72rem;
+}
+
+.sectionExpanded {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, white 14%, transparent),
+    color-mix(in srgb, var(--surface-panel) 58%, transparent)
+  );
 }
 
 .item {
@@ -53,14 +226,14 @@
 .action {
   inline-size: 100%;
   justify-content: flex-start;
-  gap: 12px;
-  min-block-size: 44px;
-  padding-inline: 14px;
-  padding-block: 10px;
+  gap: 11px;
+  min-block-size: 40px;
+  padding-inline: 12px;
+  padding-block: 8px;
   text-decoration: none;
-  color: var(--text-secondary-fixed);
+  color: var(--text-secondary);
   border-color: transparent;
-  border-radius: var(--radius-md);
+  border-radius: calc(var(--radius-md) - 2px);
   transition:
     color 0.2s ease,
     background-color 0.2s ease,
@@ -72,30 +245,7 @@
 .actionCollapsed {
   justify-content: center;
   gap: 0;
-  padding: 0 16px;
-}
-
-.action:hover {
-  text-decoration: none;
-  color: var(--text-main);
-  background: color-mix(in srgb, var(--surface-1) 76%, transparent);
-  border-color: color-mix(in srgb, var(--brand-primary) 16%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-primary) 10%, transparent);
-  transform: translateX(1px);
-}
-
-.action:global(.button--active) {
-  color: var(--text-main);
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--brand-primary) 14%, white),
-      color-mix(in srgb, var(--brand-primary) 8%, transparent)
-    );
-  border-color: color-mix(in srgb, var(--brand-primary) 22%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 8px 18px -14px rgba(7, 104, 197, 0.55);
+  padding: 0 8px;
 }
 
 .icon {
@@ -103,11 +253,15 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .label {
   min-inline-size: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: currentColor;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -115,33 +269,49 @@
 
 .toggleButton {
   margin-top: 0;
+  min-block-size: 40px;
+  backdrop-filter: blur(14px);
 }
 
-.toggleButton,
-.toggleButton[aria-expanded='true'],
-.toggleButton[aria-expanded='true']:hover {
-  color: var(--text-muted);
+.collapseButton {
+  --button-text: var(--text-primary);
+  --button-bg: color-mix(in srgb, var(--button-outline-bg) 88%, transparent);
+  --button-bg-image: var(--button-outline-bg-image);
+  --button-border: color-mix(in srgb, var(--button-outline-border) 72%, transparent);
+  --button-shadow: var(--button-shadow-rest);
+  --button-text-hover: var(--text-primary);
+  --button-bg-hover: color-mix(in srgb, var(--button-outline-bg-hover) 96%, transparent);
+  --button-bg-image-hover: var(--button-outline-bg-image-hover);
+  --button-border-hover: color-mix(in srgb, var(--button-outline-border) 82%, transparent);
+  --button-shadow-hover-current: var(--button-shadow-hover);
+  --button-text-active: var(--text-primary);
+  --button-bg-active: transparent;
+  --button-bg-image-active: none;
+  --button-border-active: transparent;
+  --button-shadow-active-current: none;
+}
+
+.collapseButton[aria-pressed='true'],
+.collapseButton[aria-pressed='true']:hover,
+.collapseButton[aria-pressed='true']:focus-visible {
+  color: var(--text-primary);
   background-color: transparent;
   background-image: none;
   border-color: transparent;
   box-shadow: none;
-}
-
-.toggleButton:hover,
-.toggleButton:focus-visible {
-  color: var(--text-main);
+  transform: none;
 }
 
 @media (max-width: 1024px) {
   .root {
-    min-inline-size: 88px;
-    padding: 12px 8px;
-    gap: 12px;
+    min-inline-size: 100%;
+    padding: 0;
+    gap: 10px;
   }
 
   .mainSection,
   .footerSection,
   .list {
-    gap: 8px;
+    gap: 6px;
   }
 }

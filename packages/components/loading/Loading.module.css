@@ -1,4 +1,9 @@
 .loadingContainer {
+  --loading-accent-primary: rgba(7, 104, 201, 0.12);
+  --loading-accent-secondary: rgba(94, 18, 224, 0.08);
+  --loading-surface-top: #f7f9fc;
+  --loading-surface-mid: #eef2f7;
+  --loading-surface-bottom: #e7ecf3;
   padding: 0 5dvw;
   width: 100%;
   height: 100%;
@@ -14,19 +19,19 @@
   background:
     radial-gradient(
       800px circle at 20% 15%,
-      var(--page-accent-1, rgba(7, 104, 201, 0.12)) 0%,
+      var(--loading-accent-primary) 0%,
       transparent 60%
     ),
     radial-gradient(
       700px circle at 85% 10%,
-      var(--page-accent-2, rgba(94, 18, 224, 0.08)) 0%,
+      var(--loading-accent-secondary) 0%,
       transparent 55%
     ),
     linear-gradient(
       180deg,
-      var(--page-bg-1, #f7f9fc) 0%,
-      var(--page-bg-2, #eef2f7) 55%,
-      var(--page-bg-3, #e7ecf3) 100%
+      var(--loading-surface-top) 0%,
+      var(--loading-surface-mid) 55%,
+      var(--loading-surface-bottom) 100%
     );
 }
 

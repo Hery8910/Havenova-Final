@@ -19,7 +19,7 @@
 .title {
   margin: 0;
   align-self: flex-start;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 .wrapper {
   border: 1px solid var(--card-neutral-border);

@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useId, useRef } from 'react';
+import { useId, useRef } from 'react';
 import ThemeToggler from '../../../themeToggler/ThemeToggler';
 import LanguageSwitcher from '../../../languageSwitcher/LanguageSwitcher';
 import styles from './NavbarMobileView.module.css';
@@ -60,6 +60,7 @@ export function NavbarMobileView({
   } = useNavbarPanelState<Exclude<NavSection, null>>({
     persistOnClose: true,
   });
+  const isSectionOpen = (section: Exclude<NavSection, null>) => activeSection === section;
 
   const handleNavClick = (href: string) => {
     onNavigate(href);
@@ -124,7 +125,9 @@ export function NavbarMobileView({
         className={`${styles.mobilePanel} card card--neutral ${
           isPanelOpen ? styles.mobilePanelOpen : ''
         }`}
+        role="dialog"
         tabIndex={-1}
+        aria-modal="true"
         aria-label={activePanelTitleId ? undefined : activePanelLabel}
         aria-labelledby={activePanelTitleId}
         aria-hidden={!visibleSection}
@@ -230,9 +233,10 @@ export function NavbarMobileView({
               ref={menuTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
-              aria-label={a11y.menuToggle}
-              aria-expanded={activeSection === 'menu'}
+              aria-label={isSectionOpen('menu') ? a11y.closeMenu : a11y.menuToggle}
+              aria-expanded={isSectionOpen('menu')}
               aria-controls={panelId}
+              aria-haspopup="dialog"
               onClick={() => toggleSection('menu')}
             >
               <Image
@@ -252,9 +256,10 @@ export function NavbarMobileView({
               ref={servicesTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
-              aria-label={a11y.servicesToggle}
-              aria-expanded={activeSection === 'services'}
+              aria-label={isSectionOpen('services') ? a11y.closeMenu : a11y.servicesToggle}
+              aria-expanded={isSectionOpen('services')}
               aria-controls={panelId}
+              aria-haspopup="dialog"
               onClick={() => toggleSection('services')}
             >
               <FiTool />
@@ -267,9 +272,10 @@ export function NavbarMobileView({
               ref={authTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
-              aria-label={a11y.profileToggle}
-              aria-expanded={activeSection === 'auth'}
+              aria-label={isSectionOpen('auth') ? a11y.closeMenu : a11y.profileToggle}
+              aria-expanded={isSectionOpen('auth')}
               aria-controls={panelId}
+              aria-haspopup="dialog"
               onClick={() => toggleSection('auth')}
             >
               <NavbarProfileTrigger
@@ -286,9 +292,10 @@ export function NavbarMobileView({
               ref={preferencesTriggerRef}
               type="button"
               className={`button button--ghost ${sharedStyles.iconButton} ${styles.mobileNavButton}`}
-              aria-label={a11y.preferencesToggle}
-              aria-expanded={activeSection === 'preferences'}
+              aria-label={isSectionOpen('preferences') ? a11y.closeMenu : a11y.preferencesToggle}
+              aria-expanded={isSectionOpen('preferences')}
               aria-controls={panelId}
+              aria-haspopup="dialog"
               onClick={() => toggleSection('preferences')}
             >
               <IoIosSettings />

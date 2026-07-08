@@ -24,7 +24,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
   text-align: left;
   cursor: pointer;
 }
@@ -34,7 +34,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .leadingIcon svg,
@@ -76,12 +76,12 @@
 }
 
 .separator {
-  color: var(--page-text-secondary);
+  color: var(--text-secondary);
 }
 
 .detail {
   font-weight: 600;
-  color: var(--color-page-heading);
+  color: var(--text-primary);
   font-size: var(--type-body-sm-size);
   line-height: 1.35;
 }
@@ -108,11 +108,11 @@
   align-items: start;
   gap: var(--space-4);
   padding: var(--space-1) 0;
-  color: var(--color-page-body);
+  color: var(--text-secondary);
 }
 
 .today {
-  color: var(--color-page-heading);
+  color: var(--text-primary);
 }
 
 .today .dayLabel {

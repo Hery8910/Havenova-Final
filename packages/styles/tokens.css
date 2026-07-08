@@ -14,22 +14,28 @@
   --brand-accent-dark: #d59610;
 
   /* ==========================================
-     1. PAGE TEXT COLORS
+     1. SEMANTIC PAGE TOKENS
      ========================================== */
-  --page-text-primary: #4a4a4a;
-  --page-text-secondary: #585858;
+  --text-primary: #4a4a4a;
+  --text-secondary: #585858;
+  --text-muted: #707070;
+  --text-inverse-primary: #f8fafc;
 
-  /* ==========================================
-     2. PAGE BACKGROUNDS
-     ========================================== */
-  --page-bg: #f8fafc;
-  --page-bg-image:
+  --surface-page: #f8fafc;
+  --surface-page-image:
     radial-gradient(circle at top left, rgba(10, 132, 255, 0.14), transparent 32%),
     radial-gradient(circle at 85% 18%, rgba(111, 66, 193, 0.1), transparent 28%),
     linear-gradient(180deg, #f8fafc 0%, #eef5ff 52%, #fdf8ff 100%);
+  --surface-panel: rgba(255, 255, 255, 0.72);
+  --surface-panel-subtle: rgba(255, 255, 255, 0.54);
+  --surface-panel-muted: rgba(241, 245, 249, 0.84);
+  --border-subtle: rgba(77, 99, 120, 0.14);
+  --border-strong: rgba(77, 99, 120, 0.22);
+  --border-focus: rgba(10, 132, 255, 0.42);
+  --shadow-page-color: #081226;
 
   /* ==========================================
-     3. FEEDBACK COLORS
+     2. FEEDBACK COLORS
      ========================================== */
   --feedback-info-bg: rgba(10, 132, 255, 0.12);
   --feedback-info-bg-strong: rgba(10, 132, 255, 0.18);
@@ -56,7 +62,7 @@
   --feedback-warning-text: #7e6035;
 
   /* ==========================================
-     4. CARD VARIANTS
+     3. CARD VARIANTS
      Every card variant defines its own background,
      border, primary text and secondary text.
      ========================================== */
@@ -119,7 +125,7 @@
   --card-accent-text-secondary: #7e6035;
 
   /* ==========================================
-     5. BUTTON VARIANTS
+     4. BUTTON VARIANTS
      Button colors grouped by variant and state.
      ========================================== */
   --button-text-disabled: rgba(22, 33, 45, 0.48);
@@ -139,7 +145,7 @@
   );
   --button-active-border: rgba(10, 132, 255, 0.2);
   --button-active-text: #16212d;
-  --button-active-shadow: 0 6px 14px rgba(10, 132, 255, 0.12);
+  --button-active-shadow: 0 3px 9px rgba(3, 31, 58, 0.12);
 
   --button-primary-bg: #0a84ff;
   --button-primary-bg-image: linear-gradient(
@@ -257,7 +263,7 @@
     rgba(0, 0, 0, 0.03)
   );
   --button-close-border: transparent;
-  --button-close-text: var(--color-page-body);
+  --button-close-text: var(--text-secondary);
   --button-close-text-hover: #a62b2b;
   --button-close-focus-border: rgba(220, 38, 38, 0.36);
   --button-close-shadow: none;
@@ -351,8 +357,10 @@
   --space-10: 64px;
   --space-section: clamp(250px, 10vw, 300px);
   --navbar-height: 55px;
+  --page-inline-padding: 5dvw;
   --container-max-width: 1400px;
   --content-max-width: 1000px;
+  --content-max-width-page: 1200px;
 
   /* ==========================================
      10. SHADOWS AND MOTION
@@ -368,24 +376,7 @@
   --ease-standard: ease;
   --ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  /* ==========================================
-     11. CONSUMER TOKENS
-     Current component API mapped to the grouped
-     semantic tokens above.
-     ========================================== */
-  --color-page-bg: var(--page-bg);
-  --gradient-page: var(--page-bg-image);
-  --color-page-surface: var(--page-surface);
-  --color-page-surface-subtle: var(--page-surface-subtle);
-  --color-page-surface-muted: var(--page-surface-muted);
-  --color-page-border: var(--page-border);
-  --color-page-border-strong: var(--page-border-strong);
-  --color-page-border-focus: var(--page-border-focus);
-  --color-page-heading: var(--page-text-primary);
-  --color-page-body: var(--page-text-secondary);
-  --color-page-muted: var(--page-text-secondary);
-  --color-page-soft: var(--page-text-muted);
-  --color-page-inverse: var(--page-text-inverse-primary);
+  --gradient-page: var(--surface-page-image);
 
   --color-feedback-info-surface: var(--feedback-info-bg);
   --color-feedback-info-surface-strong: var(--feedback-info-bg-strong);
@@ -463,20 +454,23 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --page-text-primary: #f8fafc;
-  --page-text-secondary: #b8b8b8;
+  --text-primary: #f8fafc;
+  --text-secondary: #b8b8b8;
+  --text-muted: #9aa6b6;
+  --text-inverse-primary: #0f172a;
 
-  --page-bg: #0f172a;
-  --page-bg-image:
+  --surface-page: #0f172a;
+  --surface-page-image:
     radial-gradient(circle at top left, rgba(87, 134, 180, 0.2), transparent 34%),
     radial-gradient(circle at 82% 18%, rgba(82, 61, 122, 0.2), transparent 30%),
     linear-gradient(180deg, #0f172a 0%, #111c32 54%, #18152d 100%);
-  --page-surface: #1e293b;
-  --page-surface-subtle: #243447;
-  --page-surface-muted: #334155;
-  --page-border: rgba(148, 163, 184, 0.22);
-  --page-border-strong: rgba(148, 163, 184, 0.32);
-  --page-border-focus: rgba(96, 165, 250, 0.5);
+  --surface-panel: #1e293b;
+  --surface-panel-subtle: #243447;
+  --surface-panel-muted: #334155;
+  --border-subtle: rgba(148, 163, 184, 0.22);
+  --border-strong: rgba(148, 163, 184, 0.32);
+  --border-focus: rgba(96, 165, 250, 0.5);
+  --shadow-page-color: #020617;
 
   --feedback-info-text: #7ec2ff;
   --feedback-info-border: rgba(126, 194, 255, 0.32);
@@ -665,7 +659,7 @@
     rgba(255, 255, 255, 0)
   );
   --button-close-border: transparent;
-  --button-close-text: var(--color-page-body);
+  --button-close-text: var(--text-secondary);
   --button-close-text-hover: #fecaca;
   --button-close-focus-border: rgba(248, 113, 113, 0.44);
   --button-close-shadow: none;

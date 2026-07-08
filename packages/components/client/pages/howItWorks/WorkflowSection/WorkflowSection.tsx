@@ -9,14 +9,14 @@ export default function WorkflowSection({ texts }: { texts: HowItWorksWorkflowTe
           <h2 id="how-it-works-workflow-title" className={`${styles.title} type-display-md`}>
             {texts.title}
           </h2>
-          <p className={`${styles.subtitle} type-body-lg v2-page-copy`}>{texts.subtitle}</p>
+          <p className={`${styles.subtitle} type-body-lg`}>{texts.subtitle}</p>
         </header>
         <ol className={styles.stepsGrid}>
           {texts.steps.map((step, index) => (
             <li className={styles.stepItem} key={step.title}>
-              <article className={`${styles.stepCard} v2-card v2-card--neutral`}>
+              <article className={`${styles.stepCard} card card--neutral`}>
                 <aside className={styles.stepAside}>
-                  <span className={`${styles.badge} type-label v2-card v2-card--accent`}>
+                  <span className={`${styles.badge} type-label card card--accent`}>
                     {index + 1}
                   </span>
                   <h3 className={`${styles.stepTitle} type-title-md`}>{step.title}</h3>
@@ -26,7 +26,7 @@ export default function WorkflowSection({ texts }: { texts: HowItWorksWorkflowTe
             </li>
           ))}
         </ol>
-        <aside className={`${styles.note} v2-card v2-card--accent`}>
+        <aside className={`${styles.note} card card--accent`}>
           <h3 className={`${styles.noteTitle} type-title-md`}>{texts.note.title}</h3>
           <p className={`${styles.noteDescription} type-body-sm`}>{texts.note.description}</p>
         </aside>

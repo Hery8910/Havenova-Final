@@ -1,14 +1,11 @@
-export { default as AuthRequiredAlert } from './AuthRequiredAlert/AuthRequiredAlert';
 export { default as CleaningRequestForm } from './CleaningRequestForm/CleaningRequestForm';
-export { default as AvailabilityCalendar } from './CleaningRequestForm/AvailabilityCalendar/AvailabilityCalendar';
-export { default as CalendarDaySlots } from './CleaningRequestForm/AvailabilityCalendar/CalendarDaySlots';
-export { default as WorkAddressSelector } from './CleaningRequestForm/WorkAddressSelector/WorkAddressSelector';
+export { CleaningServicePageClient } from './CleaningServicePage.client';
+export { CleaningServicePageView } from './CleaningServicePage.view';
 export type {
   CleaningRequestFormSubmission,
   CleaningRequestFormTexts,
 } from './CleaningRequestForm/CleaningRequestForm';
-export type { AvailabilityCalendarProps } from './CleaningRequestForm/AvailabilityCalendar/AvailabilityCalendar';
-export type { WorkAddressSelectorProps } from './CleaningRequestForm/WorkAddressSelector/WorkAddressSelector';
+export type { CleaningServiceAuthAlertTexts, CleaningServicePageTexts } from './cleaningService.types';
 export type {
   CleaningRequestCustomerType,
   CleaningWorkAddressSelection,

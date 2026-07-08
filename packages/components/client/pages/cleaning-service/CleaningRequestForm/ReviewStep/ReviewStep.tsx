@@ -13,6 +13,13 @@ import type {
   CleaningWorkAddressSelection,
 } from '../cleaningRequest.types';
 import styles from './ReviewStep.module.css';
+import { RequestStepIntro } from '../../../shared';
+
+type ReviewRow = {
+  label: string;
+  value: string | number;
+  details?: boolean;
+};
 
 type ReviewTexts = {
   title: string;
@@ -95,43 +102,75 @@ export default function ReviewStep({
     hour: '2-digit',
     minute: '2-digit',
   });
+  const customerRows: ReviewRow[] = [
+    {
+      label: texts.labels.customerType,
+      value: customerType.options[customerType.selected],
+    },
+    {
+      label: texts.labels.frequency,
+      value: frequency.options[frequency.selected],
+    },
+    {
+      label: texts.labels.visitDate,
+      value: dateFormatter.format(scheduling.start),
+    },
+    {
+      label: texts.labels.visitTime,
+      value: `${timeFormatter.format(scheduling.start)} - ${timeFormatter.format(scheduling.end)}`,
+    },
+  ];
+  const propertyRows: ReviewRow[] = [
+    {
+      label: texts.labels.sizeRange,
+      value: property.sizeRangeOptions[property.sizeRange],
+    },
+    {
+      label: texts.labels.roomsCount,
+      value: property.roomsCount,
+    },
+    {
+      label: texts.labels.hasBalcony,
+      value: property.hasBalcony ? common.yes : common.no,
+    },
+    {
+      label: texts.labels.hasIndoorStairs,
+      value: property.hasIndoorStairs ? common.yes : common.no,
+    },
+    {
+      label: texts.labels.hasPets,
+      value: property.hasPets ? common.yes : common.no,
+    },
+    {
+      label: texts.labels.details,
+      value: property.details || texts.emptyDetails,
+      details: true,
+    },
+  ];
+  const addressLabel =
+    workAddress.source === 'primary'
+      ? texts.sourceOptions.primary
+      : workAddress.label || (workAddress.source === 'saved' ? texts.sourceOptions.saved : '');
 
   return (
     <section className={styles.container} aria-labelledby={titleId}>
       {showHeader ? (
-        <header className={styles.header}>
-          <h3 id={titleId} className={styles.title}>
-            {texts.title}
-          </h3>
-          <p className={styles.description}>{texts.description}</p>
-        </header>
+        <RequestStepIntro title={texts.title} titleId={titleId} description={texts.description} />
       ) : null}
 
       <section className={styles.grid}>
-        <h4 className={`${styles.cardTitle} type-body-lg`}>
-          <span className={styles.title}>{texts.sections.customer}</span>
-          <span className={styles.titleLine}>{''}</span>
-        </h4>
         <article className={styles.card}>
+          <h4 className={`${styles.cardTitle} type-body-lg`}>
+            <span className={styles.title}>{texts.sections.customer}</span>
+            <span className={styles.titleLine}>{''}</span>
+          </h4>
           <ul className={styles.list}>
-            <li key={texts.labels.customerType} className={styles.item}>
-              <span className={styles.label}>{texts.labels.customerType}:</span>
-              <span className={styles.value}>{customerType.options[customerType.selected]}</span>
-            </li>
-            <li key={texts.labels.frequency} className={styles.item}>
-              <span className={styles.label}>{texts.labels.frequency}:</span>
-              <span className={styles.value}>{frequency.options[frequency.selected]}</span>
-            </li>
-            <li key={texts.labels.visitDate} className={styles.item}>
-              <span className={styles.label}>{texts.labels.visitDate}:</span>
-              <span className={styles.value}>{dateFormatter.format(scheduling.start)}</span>
-            </li>
-            <li key={texts.labels.visitTime} className={styles.item}>
-              <span className={styles.label}>{texts.labels.visitTime}:</span>
-              <span className={styles.value}>
-                {timeFormatter.format(scheduling.start)} - {timeFormatter.format(scheduling.end)}
-              </span>
-            </li>
+            {customerRows.map((row) => (
+              <li key={row.label} className={row.details ? styles.itemDetails : styles.item}>
+                <span className={styles.label}>{row.label}</span>
+                <span className={styles.value}>{row.value}</span>
+              </li>
+            ))}
           </ul>
         </article>
 
@@ -141,51 +180,22 @@ export default function ReviewStep({
             <span className={styles.titleLine}>{''}</span>
           </h4>
           <ul className={styles.list}>
-            <li key={texts.labels.sizeRange} className={styles.item}>
-              <span className={styles.label}>{texts.labels.sizeRange}</span>
-              <span className={styles.value}>{property.sizeRangeOptions[property.sizeRange]}</span>
-            </li>
-            <li key={texts.labels.roomsCount} className={styles.item}>
-              <span className={styles.label}>{texts.labels.roomsCount}</span>
-              <span className={styles.value}>{property.roomsCount}</span>
-            </li>
-            <li key={texts.labels.hasBalcony} className={styles.item}>
-              <span className={styles.label}>{texts.labels.hasBalcony}</span>
-              <span className={styles.value}>{property.hasBalcony ? common.yes : common.no}</span>
-            </li>
-            <li key={texts.labels.hasIndoorStairs} className={styles.item}>
-              <span className={styles.label}>{texts.labels.hasIndoorStairs}</span>
-              <span className={styles.value}>
-                {property.hasIndoorStairs ? common.yes : common.no}
-              </span>
-            </li>
-            <li key={texts.labels.hasPets} className={styles.item}>
-              <span className={styles.label}>{texts.labels.hasPets}</span>
-              <span className={styles.value}>{property.hasPets ? common.yes : common.no}</span>
-            </li>
-            <li key={texts.labels.details} className={styles.itemDetails}>
-              <span className={styles.label}>{texts.labels.details}</span>
-              <span className={styles.value}>{property.details || texts.emptyDetails}</span>
-            </li>
+            {propertyRows.map((row) => (
+              <li key={row.label} className={row.details ? styles.itemDetails : styles.item}>
+                <span className={styles.label}>{row.label}</span>
+                <span className={styles.value}>{row.value}</span>
+              </li>
+            ))}
           </ul>
         </article>
 
-        <article className={`${styles.card} ${styles.cardFull}`}>
+        <article className={styles.card}>
           <h4 className={`${styles.cardTitle} type-body-lg`}>
             <span className={styles.title}>{texts.sections.address}</span>
             <span className={styles.titleLine}>{''}</span>
           </h4>
-          <p key={texts.labels.address} className={styles.adress}>
-            {workAddress.source === 'primary' ? (
-              <span className={styles.label}>{texts.sourceOptions.primary}</span>
-            ) : null}
-            {workAddress.source === 'saved' && workAddress.label ? (
-              <span className={styles.label}>{workAddress.label}</span>
-            ) : null}
-            {workAddress.source === 'new' && workAddress.label ? (
-              <span className={styles.label}>{workAddress.label}</span>
-            ) : null}
-
+          <p className={styles.address}>
+            {addressLabel ? <span className={styles.label}>{addressLabel}</span> : null}
             <span className={styles.value}>{formatUserAddress(workAddress.address)}</span>
           </p>
         </article>

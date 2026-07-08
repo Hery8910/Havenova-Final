@@ -22,7 +22,7 @@ Features consumidas:
 - [packages/components/client/pages/about/index.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/index.ts:1)
 - [packages/components/client/pages/about/AboutPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/AboutPage.client.tsx:1)
 - [packages/components/client/pages/about/AboutPage.view.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/AboutPage.view.tsx:1)
-- [packages/components/client/pages/about/AboutPageView.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/AboutPageView.module.css:1)
+- [packages/styles/helpers.css](/home/heriberto/Escritorio/Havenova/havenova/packages/styles/helpers.css:1)
 - [packages/components/client/pages/about/about.types.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/about.types.ts:1)
 - [packages/components/client/pages/about/about.fallbacks.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/about.fallbacks.ts:1)
 - [packages/components/client/pages/about/storySection/StorySection.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/storySection/StorySection.tsx:1)
@@ -60,7 +60,6 @@ Lo que ya está bien:
 Lo que todavía no cumple el estándar:
 
 - el feature consume una mezcla clara de estilos legacy y shared surfaces que todavía no tiene una decisión de ownership cerrada
-- la estrategia SSR/CSR todavía debe quedar justificada de forma explícita
 - no existe todavía evidencia manual propia ejecutada para esta ruta
 - la migración visual ya fue iniciada en `StorySection` y `ClientsSection`, pero no está cerrada
 
@@ -71,7 +70,7 @@ Conclusión:
 
 ## Hallazgos
 
-### 1. La ruta ya fue reducida, pero la estrategia de render sigue sin cierre documental
+### 1. La ruta ya fue reducida y la estrategia de render ya tiene baseline documental
 
 Estado actual:
 
@@ -79,15 +78,16 @@ Estado actual:
 - la orquestación cliente vive en [AboutPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/AboutPage.client.tsx:1)
 - la composición visual vive en [AboutPage.view.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/about/AboutPage.view.tsx:1)
 
-Problema:
+Lectura actual:
 
-- la separación base ya existe, pero la justificación SSR/CSR aún no está registrada
-- todavía falta revisar si el scope cliente actual es el mínimo necesario
+- la separación base ya existe
+- `AboutPage.client.tsx` permanece por dependencia real de contexto cliente para `useI18n()` y `useLang()`
+- la reducción razonable del route shell ya quedó hecha: la ruta compone en servidor y el scope cliente queda encapsulado en el feature
 
-Objetivo:
+Conclusión:
 
-- reducir la ruta a entrypoint
-- mover la orquestación cliente y la composición a una superficie feature-owned
+- la justificación SSR/CSR de `about` queda cerrada para esta fase
+- una reducción adicional del scope cliente no ofrece hoy una ganancia estructural clara frente al costo de duplicar resolución de copy o wrappers
 
 ### 2. La ownership base ya fue extraida, pero todavía falta completar el baseline documental
 
@@ -120,7 +120,7 @@ Estado actual:
 Deuda restante:
 
 - metadata `es` estaba incompleta y ya fue corregida en [packages/i18n/metadata.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/i18n/metadata.ts:83)
-- sigue pendiente la validación final de screenshots reales en fase 2
+- sigue pendiente la validación final de screenshots reales en la pasada manual transversal de cierre
 - los fallbacks siguen siendo una red de seguridad interna y no sustituyen la validación editorial final
 
 Objetivo:
@@ -182,7 +182,7 @@ Surface revisada:
 
 ### Riesgos residuales
 
-- la validación editorial final del tono puede ajustarse en fase 2 si cambia el posicionamiento comercial de la página
+- la validación editorial final del tono puede ajustarse en la pasada manual transversal final si cambia el posicionamiento comercial de la página
 - los screenshots y sus textos alternativos siguen sujetos al cierre visual real
 
 ### 5. Ya existe baseline de render, estilos y testing, pero falta evidencia real
@@ -195,14 +195,14 @@ Estado actual:
 
 Objetivo:
 
-- ejecutar la validación manual real y dejar evidencia propia de la ruta
+- dejar preparada la ruta para la validación manual transversal final y registrar ahí la evidencia real
 
 ### 6. Los estilos muestran dos zonas distintas de riesgo
 
 Estado actual:
 
-- `StorySection` ya fue alineada a `v2-page-*` y tokens de página migrados
-- `ClientsSection` ya usa `v2-card` y `v2-page-*`, pero mantiene su propia composición de carrusel horizontal, imagen full-bleed y overlay blur
+- `StorySection` ya fue alineada a los helpers semánticos de texto y tokens de página compartidos
+- `ClientsSection` ya usa `card` y tokens de página compartidos, pero mantiene su propia composición de carrusel horizontal, imagen full-bleed y overlay blur
 - el CTA final depende de un componente compartido que probablemente ya tenga otro contrato visual
 
 Problema:
@@ -212,7 +212,7 @@ Problema:
 
 Objetivo:
 
-- documentar dependencias reales antes de migrar a `v2`
+- documentar dependencias reales antes de promover más reglas al sistema compartido
 - revisar especialmente `ClientsSection` como foco de deuda visual
 
 ## Riesgos
@@ -237,15 +237,14 @@ Lo completado hoy:
 - el audit de i18n y `aria-*` del surface actualmente renderizado ya quedó resuelto para esta fase
 - metadata `es` ya fue completada
 - `ABOUT_RENDER_TREE.md`, `ABOUT_STYLE_INVENTORY.md` y el caso `K-08` en `TESTING.md` ya existen
-- `StorySection` ya recibió una primera pasada visual con tokens y copy helpers `v2`
-- `ClientsSection` ya recibió una primera pasada visual con `v2-card` y tokens de página migrados
+- `StorySection` ya recibió una primera pasada visual con tokens y helpers semánticos compartidos
+- `ClientsSection` ya recibió una primera pasada visual con `card` y tokens de página compartidos
 
 Lo que sigue abierto:
 
-- justificar explícitamente la estrategia SSR/CSR de la ruta
 - decidir el ownership visual de `ServiceCrossCtaSection`
 - validar visualmente la nueva composición de `ClientsSection`
-- ejecutar la validación manual real de `K-08`
+- ejecutar la validación manual real de `K-08` en la pasada transversal final
 
 Punto exacto de reanudación:
 

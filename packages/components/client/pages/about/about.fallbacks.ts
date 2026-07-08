@@ -38,7 +38,10 @@ const ABOUT_CLIENTS_ITEMS_FALLBACK: AboutClientsItemTexts[] = [
 export function resolveAboutHeroContent(texts: AboutPageTexts['hero'] | undefined): PageHeroContent {
   return {
     title: texts?.title ?? 'Warum Hausservice einfacher wirken kann',
-    descriptions: texts?.descriptions?.[0] ?? ABOUT_HERO_DESCRIPTION_FALLBACK,
+    descriptions:
+      Array.isArray(texts?.descriptions) && texts.descriptions.length > 0
+        ? texts.descriptions
+        : texts?.descriptions ?? ABOUT_HERO_DESCRIPTION_FALLBACK,
     image: {
       src: texts?.image?.src ?? '/images/about.png',
       alt: texts?.image?.alt ?? 'Havenova Hausservice-Fachkraft in Berlin',
