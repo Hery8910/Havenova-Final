@@ -37,10 +37,6 @@ const dashboardShellSource = fs.readFileSync(
   'apps/dashboard/app/[lang]/(app)/dashboardShell.ts',
   'utf8'
 );
-const dashboardHeaderSource = fs.readFileSync(
-  'apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellHeader.tsx',
-  'utf8'
-);
 const dashboardAppTreeRoot = 'apps/dashboard/app/[lang]/(app)';
 
 const collectDashboardRuntimeSources = (rootDir) => {
@@ -75,7 +71,10 @@ const dashboardAppRuntimeSource = collectDashboardRuntimeSources(dashboardAppTre
 test('admin services now use the same-origin client instead of the browser-direct API client', () => {
   assert.match(adminServiceSource, /import sameOriginApi from '\.\/api\/sameOriginApi';/);
   assert.doesNotMatch(adminServiceSource, /import api from '\.\/api\/api';/);
-  assert.match(adminServiceSource, /sameOriginApi\.get<ApiResponse<AdminRecord>>\(ADMIN_PROFILE_BASE_PATH/);
+  assert.match(
+    adminServiceSource,
+    /sameOriginApi\.get<ApiResponse<AdminRecord>>\(ADMIN_PROFILE_BASE_PATH/
+  );
   assert.match(sameOriginApiSource, /withCredentials: true/);
 });
 
@@ -118,6 +117,5 @@ test('dashboard admin complement uses /account as the canonical protected namesp
   assert.match(dashboardAccountProfilePageSource, /routePath="\/account\/profile"/);
   assert.match(dashboardShellSource, /href: '\/account'/);
   assert.match(dashboardShellSource, /href: '\/account\/profile'/);
-  assert.match(dashboardHeaderSource, /\/account\/profile/);
   assert.doesNotMatch(dashboardShellSource, /href: '\/profile/);
 });

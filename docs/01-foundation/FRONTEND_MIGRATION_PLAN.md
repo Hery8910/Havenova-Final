@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 3)
+- Última revisión: `2026-07-16` (Fase 1, tarea 4)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -26,16 +26,16 @@
 
 ## Estado global
 
-| Fase | Estado |
-| --- | --- |
-| 0. Fundación documental | `COMPLETED` |
-| 1. Baseline reproducible | `IN_PROGRESS` |
-| 2. Convergencia de producto | `PENDING` |
-| 3. Límites estructurales | `PENDING` |
-| 4. Assets, branding y correo | `PENDING` |
-| 5. Implementación por slices | `PENDING` |
-| 6. Release Havenova | `PENDING` |
-| 7. Prueba Perfect Service | `PENDING` |
+| Fase                         | Estado        |
+| ---------------------------- | ------------- |
+| 0. Fundación documental      | `COMPLETED`   |
+| 1. Baseline reproducible     | `IN_PROGRESS` |
+| 2. Convergencia de producto  | `PENDING`     |
+| 3. Límites estructurales     | `PENDING`     |
+| 4. Assets, branding y correo | `PENDING`     |
+| 5. Implementación por slices | `PENDING`     |
+| 6. Release Havenova          | `PENDING`     |
+| 7. Prueba Perfect Service    | `PENDING`     |
 
 ## Fase 0 — Fundación documental
 
@@ -113,7 +113,13 @@ Transformar el verde observado en un contrato verificable por CI.
    tests Jest, y los tres typechecks verdes; `pnpm-lock.yaml` no cambia. La apertura del
    primer pull request aportará la evidencia real de GitHub Actions: el workflow no se
    considera confirmado remotamente hasta que esa ejecución pase.
-4. reparar las dos pruebas contractuales después de validar comportamiento — `PENDING`;
+4. reparar las dos pruebas contractuales después de validar comportamiento — `COMPLETED`:
+   93/93 pruebas declaradas pasan. La ruta `/account/profile` continúa declarada y navegable
+   desde el catálogo y el shell canónicos; se retira sólo la expectativa de que el resumen del
+   header sea un enlace. La recuperación CSRF protege `me → csrf reissue → refresh-token → me`,
+   con token sólo en memoria y sin dependencia de cookie `csrfToken`.
+   El gate contractual se añade al workflow después de Jest; la confirmación remota depende del
+   pull request.
 5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
    `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
 6. eliminar warnings de lint/build;
