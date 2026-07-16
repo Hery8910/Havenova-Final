@@ -3,13 +3,16 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 1)
+- Última revisión: `2026-07-16` (Fase 1, tarea 2)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
 - Objetivo: base reutilizable para Havenova, Perfect Service y futuros tenants.
 - Estrategia: migración incremental; no reescritura total.
 - Evidencia de la Fase 0: [PR #2](https://github.com/Hery8910/Havenova-Final/pull/2)
+- Evidencia de la Fase 1:
+  - [PR #3](https://github.com/Hery8910/Havenova-Final/pull/3) — higiene del repositorio.
+  - [PR #4](https://github.com/Hery8910/Havenova-Final/pull/4) — recuperación de Jest.
 
 ## Principios
 
@@ -84,10 +87,28 @@ Transformar el verde observado en un contrato verificable por CI.
    vacío sin propósito identificado. Ninguno se eliminará ni incorporará al índice sin
    verificación; no ejecutar `git clean` sobre este worktree.
 2. recuperar y validar estas fuentes ocultas antes de decidir si se incorporan, difieren o
-   retiran;
+   retiran — `COMPLETED`.
+   Después de sincronizar la limpieza, ejecutar `pnpm install --frozen-lockfile` para
+   regenerar los enlaces workspace; con ellos regenerados, los typechecks de client,
+   dashboard y worker vuelven a verde.
+   El resultado inicial de Jest fue 11/19 suites y 44/45 tests. Se recuperan setup, mocks,
+   test-providers y las suites restantes; se reparan el soporte local de `Request`/`Response`
+   para Jest/JSDOM, los imports de WorkAddressSelector hacia `pages/shared/serviceRequest`,
+   el mock de CSRF de auth y el harness de navbar, sin cambiar código productivo.
+   `service-profile-step.test.jsx` protegía la edición de perfil incompleto (nombre,
+   teléfono y dirección, con reload/alertas) y el resumen de perfil completo. El componente
+   probado ya no existe; se retira este test local y no se recreará el componente sin Product
+   Design. `apps/client/not-found.js` está sustituido por `app/not-found.tsx` y no se migra
+   su diseño; los dos `css.d.ts` son redundantes y no resuelven diagnósticos; y
+   `docs/frontend-foundation` está vacío. Esos cuatro archivos locales se retiran.
+   Resultado final: Jest 18/18 suites y 71/71 tests verdes. Se preparan para versionado
+   `tests/jest.setup.js`, los mocks, `test-providers` y las 18 suites restantes; se retiran
+   `service-profile-step.test.jsx`, los dos `css.d.ts`, `not-found.js` y el archivo vacío.
+   La recreación de ServiceProfileStep permanece bloqueada hasta decisión de Product Design.
 3. añadir CI Node 22/pnpm 10;
 4. reparar las dos pruebas contractuales después de validar comportamiento;
-5. restaurar una suite real de interacción o retirar la configuración Jest falsa;
+5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
+   `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
 6. eliminar warnings de lint/build;
 7. añadir `.env.example` sin secretos y validación de entorno;
 8. añadir worker al gate de build/deploy;
