@@ -7,7 +7,7 @@ aplican en proporción al alcance, pero ningún PR puede omitir un fallo conocid
 documentarlo.
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 8)
+- Última revisión: `2026-07-16` (Fase 1, tarea 9)
 - Estado del documento: `ACTIVE`
 
 ## Toolchain canónica
@@ -130,6 +130,18 @@ válida:
 - cero vulnerabilidades altas nuevas;
 - dependencias directas afectadas requieren actualización o excepción documentada;
 - no se introducen secretos o tokens en cliente, logs o fixtures.
+
+### Evidencia de seguridad de la Tarea 9
+
+`pnpm audit` y `pnpm audit --prod` se ejecutaron, pero npm retiró el endpoint que consulta esa
+versión de pnpm y ambos responden HTTP 410. Hasta que el toolchain adopte el endpoint compatible,
+la evidencia de advisories se obtiene en modo lectura del endpoint bulk oficial de npm, usando las
+versiones resueltas en `pnpm-lock.yaml`; no sustituye el gate futuro ni autoriza excepciones.
+
+La actualización compatible de `axios`, `js-cookie` y `uuid` redujo el inventario de 82 a 54
+advisories (high 44→30, moderate 32→19 y low 6→5). Los restantes son transitivos, salvo
+`next@14.2.35`, cuya versión corregida requiere una migración mayor fuera de esta tarea. No hay
+excepciones aprobadas: su clasificación y aceptación o remediación corresponde a la Tarea 10.
 
 ### Release gate
 
