@@ -7,7 +7,7 @@ aplican en proporción al alcance, pero ningún PR puede omitir un fallo conocid
 documentarlo.
 
 - Propietario: frontend
-- Última revisión: `2026-07-16`
+- Última revisión: `2026-07-16` (Fase 1, tarea 8)
 - Estado del documento: `ACTIVE`
 
 ## Toolchain canónica
@@ -88,6 +88,17 @@ CI debe ejecutar:
 10. comprobación de assets generados/no versionados.
 
 Objetivo: un solo check agregado no debe ocultar qué app falló.
+
+### Gate canónico de builds reproducibles
+
+`Phase 1 CI` es el gate canónico para builds reproducibles. Conserva el job `verify` y, tras él,
+ejecuta una matriz independiente para client, dashboard y worker. Cada resultado se identifica por
+app, usa instalación congelada y valores ficticios `.invalid`, y comprueba que `BACKEND_API_URL`
+no aparece en `.next/static` ni se modifican archivos versionados durante el build.
+
+Los checks Vercel de client y dashboard aportan evidencia adicional de deployment, pero no
+sustituyen los tres builds de GitHub Actions. Worker no tiene deployment check todavía; su futuro
+deployment pertenece al gate de release y no bloquea el gate de PR de la Fase 1.
 
 ## Reglas de tests
 

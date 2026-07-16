@@ -7,7 +7,7 @@ apps sin depender de configuración implícita.
 
 - Propietario: frontend
 - Aprobación compartida: backend/operations cuando cambie transporte, secretos o deploy
-- Última revisión: `2026-07-16` (Fase 1, tarea 7)
+- Última revisión: `2026-07-16` (Fase 1, tarea 8)
 - Estado del documento: `ACTIVE`
 
 No incluir valores secretos reales en este repositorio.
@@ -185,6 +185,16 @@ server, donde la URL puede existir legítimamente.
   hasta esa interrupción; no prueba un bundle final completado;
 - la validación autoritativa de los tres builds y su incorporación al gate remoto corresponde a la
   Tarea 8 / CI.
+
+### Evidencia remota de la Tarea 8
+
+`Phase 1 CI` ejecuta builds completos y separados de client, dashboard y worker con
+`BACKEND_API_URL=https://api.phase-1-ci.invalid`, `NEXT_PUBLIC_TENANT_KEY=tnk_phase_1_ci`, un host
+permitido `.invalid` específico por app y telemetría de Next deshabilitada. Los tres jobs verdes
+comprueban que el sentinel `api.phase-1-ci.invalid` no aparece en sus respectivos
+`.next/static`; no se usa ni se accede a un backend real durante la validación. La comprobación se
+limita a los bundles de navegador: `BACKEND_API_URL` continúa siendo server-only y puede existir
+legítimamente en artefactos server que no se inspeccionan.
 
 ## Entornos
 
