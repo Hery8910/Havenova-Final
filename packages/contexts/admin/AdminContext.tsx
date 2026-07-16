@@ -112,6 +112,8 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
           {
             userClientId: previous?.userClientId ?? auth.userClientId ?? '',
             clientId: previous?.clientId ?? clientId ?? '',
+            // Session email is only a continuity fallback until the admin complement
+            // loads or persists its own visible email.
             email: resolvePreferredContactEmail(previous?.email, auth.email),
             name: previous?.name ?? '',
             phone: previous?.phone,

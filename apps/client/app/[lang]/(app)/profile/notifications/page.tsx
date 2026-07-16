@@ -1,10 +1,17 @@
-'use client';
-// import styles from "./page.module.css";
+import { ProfileSubroutePlaceholder } from '../ProfileSubroutePlaceholder';
+import { getProfileSubroutePlaceholder } from '../profileSubroutePlaceholders';
 
-export default function Notifications() {
+export default function NotificationsPage({
+  params,
+}: {
+  params: { lang: 'de' | 'en' | 'es' };
+}) {
+  const copy = getProfileSubroutePlaceholder('notifications', params.lang);
+
   return (
-    <section>
-      <h2>Notifications</h2>
-    </section>
+    <ProfileSubroutePlaceholder
+      {...copy}
+      routePath={`/${params.lang}/profile/notifications`}
+    />
   );
 }

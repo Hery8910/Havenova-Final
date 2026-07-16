@@ -26,6 +26,8 @@ Relevant surfaces:
 - [packages/components/client/pages/shared/serviceRequest/AuthRequiredAlert/AuthRequiredAlert.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/AuthRequiredAlert/AuthRequiredAlert.tsx:1)
 - [packages/components/client/pages/shared/serviceRequest/RequestQuantityStepper/RequestQuantityStepper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/RequestQuantityStepper/RequestQuantityStepper.tsx:1)
 - [packages/components/client/pages/shared/serviceRequest/RequestStepIntro/RequestStepIntro.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/RequestStepIntro/RequestStepIntro.tsx:1)
+- [packages/components/client/pages/shared/serviceRequest/ServiceRequestAddressStep/ServiceRequestAddressStep.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/ServiceRequestAddressStep/ServiceRequestAddressStep.tsx:1)
+- [packages/components/client/pages/shared/serviceRequest/ServiceRequestReviewStep/ServiceRequestReviewStep.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/ServiceRequestReviewStep/ServiceRequestReviewStep.tsx:1)
 - [packages/components/client/pages/shared/serviceRequest/ServiceRequestShell/ServiceRequestShell.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/ServiceRequestShell/ServiceRequestShell.tsx:1)
 - [packages/components/client/pages/shared/serviceRequest/ServiceRequestShell/ServiceRequestShell.module.css](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/ServiceRequestShell/ServiceRequestShell.module.css:1)
 - [packages/components/client/pages/shared/serviceRequest/AvailabilityCalendar/AvailabilityCalendar.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/AvailabilityCalendar/AvailabilityCalendar.tsx:1)
@@ -102,7 +104,8 @@ Confirmed responsive dependencies:
 - `ServiceRequestPageLayout.formSurface` reduces padding and radius below `768px`
 - `HomeServiceRequestForm.section` remains centered and single-column within the surface
 - `HomeServiceRequestForm.form` keeps a viewport-aware minimum height
-- shared `AvailabilityCalendar` and `WorkAddressSelector` own their own internal responsive behavior
+- shared `AvailabilityCalendar`, `ServiceRequestAddressStep`, `ServiceRequestReviewStep`, and
+  `WorkAddressSelector` own their own internal responsive behavior
 
 Interpretation:
 
@@ -198,15 +201,21 @@ Confirmed local/module consumption hotspots:
 - `ServiceRequestPageLayout.module.css` owns the repeated page shell for both service routes
 - `ServiceRequestShell.module.css` owns the repeated shell tokens for both service forms
 - `AvailabilityCalendar` and `WorkAddressSelector` are shared request primitives instead of home-specific modules
+- `ServiceRequestAddressStep` and `ServiceRequestReviewStep` now own the shared address/review
+  step framing for both service flows
 - `AuthRequiredAlert` is now a shared request primitive instead of a cleaning-owned dependency
 - saved-address merge behavior is now shared through `serviceRequestProfile.helpers.ts`
 - quantity-stepper UI is now shared through `RequestQuantityStepper`
 - step intro header is now shared through `RequestStepIntro`
+- scheduling step framing and missing-config fallback are now shared through `ServiceRequestSchedulingStep`
 
 Interpretation:
 
 - the route is no longer suffering from token alias chains at page level
-- the remaining density is inside the form module, which is the correct place to simplify next
+- the remaining density is inside the first two feature-specific steps, which is the correct
+  place to simplify next
+- inside that area, only the `painting` branch should currently be treated as a fully defined
+  nested-service surface; the other service-detail variants remain placeholder consumers
 
 ## Current Findings
 

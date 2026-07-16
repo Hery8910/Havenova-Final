@@ -16,6 +16,7 @@ It should describe:
 
 Related documents:
 
+- [AUTH_IMPLEMENTATION_OVERVIEW.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_IMPLEMENTATION_OVERVIEW.md:1)
 - [AUTH_FLOW_VARIANTS_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_FLOW_VARIANTS_CONTRACT.md:1)
 - [README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/README.md:1)
 
@@ -70,6 +71,24 @@ This means:
 - `login` must communicate access recovery, not profile setup
 - recovery flows must be safe and non-enumerating where required
 - each page must give the user a clear next step on both success and failure
+
+## Visible Intent Contract
+
+Every visible auth state in `apps/client` should declare:
+
+- what triggered it
+- what the user should understand from it
+- what the primary CTA should encourage
+- what `cancel` should do
+- whether the route stays in place or exits to another safe path
+
+Expected intent by route:
+
+- `register`: success means "your account exists, but access is not finished"; the next step is `verify-email`
+- `login`: success means "you now have access"; errors should either keep a safe retry state or move the user to `verify-email` or `register`
+- `verify-email`: success means "activation is complete"; intermediate technical steps must stay hidden behind one continuous loading state
+- `forgot-password`: success means "if the account can recover, the email is on its way"; it must not confirm account existence
+- `set-password`: success means "the credential was replaced"; the next safe step is always `login`
 
 ## Route Contracts
 

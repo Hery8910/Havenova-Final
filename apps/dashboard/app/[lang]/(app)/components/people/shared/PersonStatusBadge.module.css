@@ -1,39 +1,52 @@
-.group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .badge {
   display: inline-flex;
   align-items: center;
   min-height: 28px;
   padding: 0 10px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 0;
   font-size: 0.78rem;
   font-weight: 700;
   white-space: nowrap;
+  background: color-mix(in srgb, var(--surface-panel-subtle) 84%, transparent);
 }
 
-.status-active,
-.verified,
-.hasProfile {
-  background: var(--color-feedback-success-surface);
-  border-color: var(--color-feedback-success-border);
+.status-active {
+  background: color-mix(in srgb, var(--color-feedback-success-surface) 62%, var(--surface-panel-subtle) 38%);
   color: var(--color-feedback-success-text);
 }
 
 .status-invited {
-  background: var(--color-feedback-info-surface);
-  border-color: var(--color-feedback-info-border);
+  background: color-mix(in srgb, var(--color-feedback-info-surface) 58%, var(--surface-panel-subtle) 42%);
   color: var(--color-feedback-info-text);
 }
 
-.status-blocked,
-.unverified,
-.noProfile {
-  background: var(--color-feedback-warning-surface);
-  border-color: var(--color-feedback-warning-border);
-  color: var(--color-feedback-warning-text);
+.status-locked,
+.status-expired,
+.status-attention {
+  background: color-mix(in srgb, var(--color-feedback-error-surface) 56%, var(--surface-panel-subtle) 44%);
+  color: var(--color-feedback-error-text);
+}
+
+.status-inactive {
+  background: color-mix(in srgb, var(--badge-neutral-bg) 88%, var(--surface-panel-subtle) 12%);
+  color: var(--badge-neutral-text);
+}
+
+[data-theme='dark'] .status-active {
+  background: color-mix(in srgb, var(--color-feedback-success-surface) 42%, var(--surface-panel-subtle) 58%);
+}
+
+[data-theme='dark'] .status-invited {
+  background: color-mix(in srgb, var(--color-feedback-info-surface) 40%, var(--surface-panel-subtle) 60%);
+}
+
+[data-theme='dark'] .status-locked,
+[data-theme='dark'] .status-expired,
+[data-theme='dark'] .status-attention {
+  background: color-mix(in srgb, var(--color-feedback-error-surface) 38%, var(--surface-panel-subtle) 62%);
+}
+
+[data-theme='dark'] .status-inactive {
+  background: color-mix(in srgb, var(--badge-neutral-bg) 68%, var(--surface-panel-subtle) 32%);
 }

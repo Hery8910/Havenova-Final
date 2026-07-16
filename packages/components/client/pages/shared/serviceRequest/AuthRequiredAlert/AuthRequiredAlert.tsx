@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styles from './AuthRequiredAlert.module.css';
-import { href } from '../../../../../utils/navigation';
+import { href } from '../../../../../../utils/navigation';
 import { IoClose } from 'react-icons/io5';
 
 interface AuthRequiredAlertTexts {

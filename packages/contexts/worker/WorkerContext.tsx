@@ -79,30 +79,6 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   );
   const workerLoadFailedFallback =
     fallbackPopups.WORKER_LOAD_FAILED ?? fallbackPopups.GLOBAL_INTERNAL_ERROR;
-  const createLocalDefault = useMemo(
-    () =>
-      (previous?: WorkerRecord | null): WorkerRecord => ({
-        userClientId: previous?.userClientId ?? auth.userClientId ?? '',
-        clientId: previous?.clientId ?? clientId ?? '',
-        email: resolvePreferredContactEmail(previous?.email, auth.email),
-        name: previous?.name ?? '',
-        phone: previous?.phone,
-        address: previous?.address,
-        profileImage: previous?.profileImage ?? DEFAULT_WORKER_AVATAR,
-        language: previous?.language ?? 'de',
-        theme: previous?.theme ?? 'light',
-        extra: previous?.extra,
-        roles: previous?.roles,
-        jobTitle: previous?.jobTitle,
-        status: previous?.status,
-        isVerified: previous?.isVerified,
-        authCreated: previous?.authCreated,
-        userClientCreated: previous?.userClientCreated,
-        createdAt: previous?.createdAt,
-        updatedAt: previous?.updatedAt,
-      }),
-    [auth.email, auth.userClientId, clientId]
-  );
 
   const getStoredTheme = (): ThemeMode | null => {
     if (typeof window === 'undefined') return null;
@@ -115,6 +91,33 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     const stored = Cookies.get('lang');
     return stored === 'de' || stored === 'en' || stored === 'es' ? stored : null;
   };
+
+  const createLocalDefault = useMemo(
+    () =>
+      (previous?: WorkerRecord | null): WorkerRecord => ({
+        userClientId: previous?.userClientId ?? auth.userClientId ?? '',
+        clientId: previous?.clientId ?? clientId ?? '',
+        // Session email is only a continuity fallback until the worker complement
+        // loads or persists its own visible email.
+        email: resolvePreferredContactEmail(previous?.email, auth.email),
+        name: previous?.name ?? '',
+        phone: previous?.phone,
+        address: previous?.address,
+        profileImage: previous?.profileImage ?? DEFAULT_WORKER_AVATAR,
+        language: previous?.language ?? getStoredLanguage() ?? 'de',
+        theme: previous?.theme ?? getStoredTheme() ?? 'light',
+        extra: previous?.extra,
+        roles: previous?.roles,
+        jobTitle: previous?.jobTitle,
+        status: previous?.status,
+        isVerified: previous?.isVerified,
+        authCreated: previous?.authCreated,
+        userClientCreated: previous?.userClientCreated,
+        createdAt: previous?.createdAt,
+        updatedAt: previous?.updatedAt,
+      }),
+    [auth.email, auth.userClientId, clientId]
+  );
   const alertApi = useMemo(
     () => ({
       showError,
@@ -173,12 +176,12 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
     alert: alertApi,
   });
 
-  if (loading || !worker) return null;
+  const resolvedWorker = worker ?? createLocalDefault(null);
 
   return (
     <WorkerContext.Provider
       value={{
-        worker,
+        worker: resolvedWorker,
         isOffline,
         lastSyncAt,
         loading,

@@ -79,7 +79,7 @@ export default async function LangLayout({
               tenantKey={tenantKey}
               loadingFallback={<Loading theme="light" />}
             >
-              <AuthProvider>
+              <AuthProvider initialAuth={auth} disableUnauthenticatedBootstrap>
                 <WorkerProvider>
                   <main className={styles.page}>
                     <section

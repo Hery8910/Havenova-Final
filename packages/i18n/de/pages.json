@@ -569,8 +569,8 @@
       },
       "form": {
         "process": {
-          "title": "Schließen Sie Ihre Hausservice-Anfrage in 4 Schritten ab",
-          "description": "Wählen Sie zuerst den Kundentyp und die Art des Einsatzes. Danach erfassen wir die servicespezifischen Hinweise, Ihren Wunschtermin und die Einsatzadresse.",
+          "title": "Schließen Sie Ihre Hausservice-Anfrage in 5 Schritten ab",
+          "description": "Wählen Sie zuerst den Kundentyp und die Art des Einsatzes. Danach erfassen wir die servicespezifischen Hinweise, Ihren Wunschtermin, die Einsatzadresse und eine abschließende Prüfung.",
           "stepLabel": "Schritt",
           "steps": {
             "customerService": {
@@ -584,6 +584,9 @@
             },
             "serviceAddress": {
               "heading": "Einsatzadresse"
+            },
+            "review": {
+              "heading": "Anfrage prüfen"
             }
           }
         },
@@ -656,28 +659,33 @@
             "repairs-installations": {
               "title": "Reparaturen & Installationen",
               "description": "Für praktische Reparaturen, Austauscharbeiten, Befestigungen oder Installationen vor Ort.",
-              "detailsHint": "Beschreiben Sie, was repariert oder installiert werden soll, wo es sich befindet und ob Material oder Bauteile bereits vorhanden sind."
+              "detailsHint": "Beschreiben Sie, was repariert oder installiert werden soll, wo es sich befindet und ob Material oder Bauteile bereits vorhanden sind.",
+              "statusNote": "Für diese Leistungsart gibt es aktuell noch einen vorläufigen Platzhalter im Detailschritt. Nur der Ablauf für Malerarbeiten ist bisher vollständig ausgearbeitet."
             },
             "furniture-assembly": {
               "title": "Möbelmontage",
               "description": "Für den Aufbau, die Platzierung oder Sicherung von Möbeln und ähnlicher Einrichtung.",
-              "detailsHint": "Listen Sie die Möbelstücke, Mengen, Marke oder Modell auf und ob eine Montageanleitung vorliegt."
+              "detailsHint": "Listen Sie die Möbelstücke, Mengen, Marke oder Modell auf und ob eine Montageanleitung vorliegt.",
+              "statusNote": "Für diese Leistungsart gibt es aktuell noch einen vorläufigen Platzhalter im Detailschritt. Nur der Ablauf für Malerarbeiten ist bisher vollständig ausgearbeitet."
             },
             "kitchen-assembly": {
               "title": "Küchenmontage",
               "description": "Für den Aufbau von Küchenschränken, das Setzen von Elementen und die Vorbereitung zugehöriger Montageschritte.",
-              "detailsHint": "Teilen Sie die Küchenform, die zu montierenden Elemente und mit, ob Geräte, Pläne oder Maße bereits vorliegen."
+              "detailsHint": "Teilen Sie die Küchenform, die zu montierenden Elemente und mit, ob Geräte, Pläne oder Maße bereits vorliegen.",
+              "statusNote": "Für diese Leistungsart gibt es aktuell noch einen vorläufigen Platzhalter im Detailschritt. Nur der Ablauf für Malerarbeiten ist bisher vollständig ausgearbeitet."
             },
             "moving-help": {
               "title": "Umzugshilfe",
               "description": "Für Unterstützung am Umzugstag, beim Tragen von Gegenständen, beim Be- und Entladen oder beim Umstellen.",
-              "detailsHint": "Beschreiben Sie, was bewegt werden soll, wie die Zugangssituation ist, welche Etagen betroffen sind und ob schwere oder sperrige Gegenstände dazugehören."
+              "detailsHint": "Beschreiben Sie, was bewegt werden soll, wie die Zugangssituation ist, welche Etagen betroffen sind und ob schwere oder sperrige Gegenstände dazugehören.",
+              "statusNote": "Für diese Leistungsart gibt es aktuell noch einen vorläufigen Platzhalter im Detailschritt. Nur der Ablauf für Malerarbeiten ist bisher vollständig ausgearbeitet."
             }
           }
         },
         "common": {
           "next": "Weiter",
           "back": "Zurück",
+          "review": "Anfrage prüfen",
           "submit": "Anfrage fortsetzen"
         },
         "errors": {
@@ -753,6 +761,28 @@
           },
           "stepAriaLabel": "Auswahl der Einsatzadresse",
           "required": "Bitte wählen Sie eine Einsatzadresse aus oder geben Sie eine neue ein."
+        },
+        "review": {
+          "title": "Letzter Check vor dem Absenden",
+          "description": "Sie haben die 5 Schritte abgeschlossen. Kontrollieren Sie jetzt alle Angaben und setzen Sie die Anfrage fort, wenn alles korrekt ist.",
+          "sections": {
+            "customer": "Kunde und Leistung",
+            "details": "Leistungsdetails",
+            "scheduling": "Wunschtermin",
+            "address": "Einsatzadresse"
+          },
+          "labels": {
+            "customerType": "Kundentyp",
+            "serviceType": "Leistungsart",
+            "serviceDetails": "Beschreibung",
+            "paintScope": "Malbereich",
+            "roomsCount": "Raumanzahl",
+            "sizeRange": "Ungefähre Größe",
+            "visitDate": "Datum",
+            "visitTime": "Zeitfenster",
+            "address": "Adresse"
+          },
+          "emptyDetails": "Keine zusätzlichen Details angegeben."
         }
       }
     },
@@ -848,7 +878,7 @@
         "autoRedirectDescription": "Sie werden in wenigen Sekunden zur Startseite weitergeleitet.",
         "cta": {
           "title": "Sie haben noch kein Konto?",
-          "label": "Zu Anmeldung",
+          "label": "Konto erstellen",
           "url": "/user/register"
         }
       },
@@ -860,8 +890,8 @@
         "password": "Passwort"
       },
       "forgotPasswordText": {
-        "title": "Setze dein Passwort zurück",
-        "info": "Gib deine E-Mail-Adresse ein und wir senden dir einen Link.",
+        "title": "Passwort zurücksetzen",
+        "info": "Geben Sie Ihre E-Mail-Adresse ein und, wenn das Konto wiederhergestellt werden kann, senden wir Ihnen einen Link zum Zurücksetzen.",
         "button": "Link zum Zurücksetzen senden"
       },
       "resetPasswordText": {
@@ -874,8 +904,8 @@
           "resolvedDescription": "Diese Einladung ist mit {email} verknüpft."
         },
         "linkErrors": {
-          "invalidOrExpired": "Dieser Link ist nicht mehr gültig oder bereits abgelaufen.",
-          "missingToken": "Dieser Link zum Zurücksetzen des Passworts ist unvollständig oder ungültig."
+          "invalidOrExpired": "Dieser Link ist nicht mehr gültig oder bereits abgelaufen. Fordern Sie einen neuen an, um fortzufahren.",
+          "missingToken": "Dieser Link zum Zurücksetzen des Passworts ist unvollständig oder ungültig. Fordern Sie einen neuen an, um fortzufahren."
         }
       },
       "profileNav": {
@@ -888,14 +918,18 @@
         "title": "E-Mail bestätigen",
         "info": "Prüfen Sie Ihren Posteingang oder fordern Sie eine neue E-Mail an.",
         "autoRedirectDescription": "Sie werden in wenigen Sekunden zur Startseite weitergeleitet.",
+        "manualLoginFallback": {
+          "title": "E-Mail bestätigt",
+          "description": "Ihre E-Mail ist bestätigt, aber die Anmeldung konnte nicht abgeschlossen werden. Bitte melden Sie sich manuell an."
+        },
         "sessionSyncError": {
           "title": "Ihre Sitzung konnte nicht bestätigt werden",
-          "description": "Ihre E-Mail wurde bereits bestätigt, aber Ihre Sitzung konnte nicht vollständig bestätigt werden. Laden Sie die Seite neu oder melden Sie sich erneut an."
+          "description": "Ihre E-Mail ist bestätigt, aber die Anmeldung konnte nicht abgeschlossen werden. Laden Sie die Seite neu oder melden Sie sich erneut an."
         },
         "input": {
           "placeholder": "E-Mail-Adresse",
           "button": "E-Mail erneut senden.",
-          "info": "Bitte verwenden Sie dieselbe E-Mail-Adresse, die Sie zum Erstellen Ihres Profils verwendet haben."
+          "info": "Bitte verwenden Sie dieselbe E-Mail-Adresse, die Sie zum Erstellen Ihres Kontos verwendet haben."
         }
       },
       "profile": {
@@ -1624,6 +1658,30 @@
   },
 
   "dashboard": {
+    "usersDirectory": {
+      "summary": {
+        "totalUsers": "Nutzer insgesamt",
+        "pendingInvites": "Offene Einladungen",
+        "needsAttention": "Benötigt Aufmerksamkeit",
+        "loading": "Kundenübersicht wird geladen...",
+        "error": "Die Kundenübersicht konnte nicht geladen werden.",
+        "retry": "Erneut versuchen"
+      },
+      "copy": {
+        "intro": { "primaryActionLabel": "Kunden einladen" },
+        "filters": { "ariaLabel": "Filter des Kundenverzeichnisses", "searchLabel": "Kunden suchen", "searchPlaceholder": "Name, E-Mail oder Telefon", "selectLabel": "Status" },
+        "list": { "sectionLabel": "Verzeichnis", "title": "Kunden", "hint": "Wählen Sie einen Kunden oder eine Einladung, um Details zu prüfen.", "emptyTitle": "Noch keine Kunden.", "emptyDescription": "Laden Sie einen Kunden ein, um das Verzeichnis aufzubauen.", "noResultsTitle": "Keine Kunden entsprechen dieser Ansicht.", "noResultsDescription": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter." },
+        "feedback": { "loadingLabel": "Kundenverzeichnis wird geladen...", "refreshingLabel": "Verzeichnis wird aktualisiert...", "loadingMoreLabel": "Weitere Kunden werden geladen...", "loadMoreFallbackLabel": "Weitere Kunden laden", "endOfResultsLabel": "Ende der Ergebnisse", "errorTitle": "Das Kundenverzeichnis konnte nicht geladen werden.", "retryLabel": "Erneut versuchen" },
+        "detail": { "navigationLabel": "Kundenverzeichnis", "detailLabel": "Kundendetails" },
+        "panels": {
+          "empty": { "eyebrow": "Bereich", "title": "Wählen Sie einen Kunden aus", "description": "Kundendetails und Einladungsaktionen werden in diesem Bereich verwaltet.", "noteLabel": "Aktuelle Nutzung", "noteText": "Wählen Sie einen Eintrag im Verzeichnis oder öffnen Sie den Einladungsablauf in der linken Spalte." },
+          "invite": { "eyebrow": "Einladen", "title": "Kunden einladen", "description": "Erstellen Sie eine sichere Einladung, ohne das Verzeichnis zu verlassen.", "emailLabel": "E-Mail", "nameLabel": "Name", "phoneLabel": "Telefon", "languageLabel": "Sprache", "languageOptions": { "de": "Deutsch", "en": "Englisch", "es": "Spanisch" }, "submitLabel": "Einladung senden", "submittingLabel": "Wird gesendet...", "returnActionLabel": "Zurück zum Verzeichnis", "invitedSuccessTitle": "Einladung gesendet.", "renewedSuccessTitle": "Abgelaufene Einladung erneuert.", "alreadyExistsError": "Dieser Kunde hat bereits ein Konto. Suchen Sie nach der E-Mail, um es zu öffnen.", "alreadyPendingError": "Es gibt bereits eine aktive Einladung. Öffnen Sie Einladungen, um sie erneut zu senden.", "deliveryFailedError": "Die Einladung wurde gespeichert, aber nicht zugestellt. Aktualisieren Sie Einladungen und senden Sie sie im Detailbereich erneut.", "errorTitle": "Diese Einladung konnte nicht gesendet werden." },
+          "detail": { "emptyEyebrow": "Details", "emptyTitle": "Wählen Sie einen Kunden", "emptyDescription": "Identität, Zugang, Einladungen und Aktivitätsdaten werden hier angezeigt.", "loadingLabel": "Kundendetails werden geladen...", "errorEyebrow": "Details", "errorTitle": "Dieser Eintrag konnte nicht geladen werden.", "emailLabel": "E-Mail", "phoneLabel": "Telefon", "createdLabel": "Erstellt", "statusLabel": "Status", "profileLabel": "Profil", "languageLabel": "Sprache", "addressLabel": "Hauptadresse", "relationshipLabel": "Beziehung", "requestsLabel": "Anfragen", "workOrdersUnavailableLabel": "Arbeitsaufträge sind noch nicht verfügbar.", "nextAppointmentLabel": "Nächster Termin", "lastCompletedServiceLabel": "Letzter abgeschlossener Service", "invitationLabel": "Einladung", "invitationExpiresLabel": "Läuft ab", "invitationLastSentLabel": "Zuletzt gesendet", "invitationSendCountLabel": "Anzahl Sendungen", "pendingProfileFallback": "Profil ausstehend", "missingValueFallback": "Nicht angegeben", "resendInvitationLabel": "Einladung erneut senden", "resendingInvitationLabel": "Einladung wird erneut gesendet...", "revokeInvitationLabel": "Einladung widerrufen", "revokingInvitationLabel": "Einladung wird widerrufen...", "revokeConfirmationTitle": "Diese Einladung widerrufen?", "revokeConfirmationDescription": "Der Einladungslink funktioniert sofort nicht mehr. Bei Bedarf können Sie später eine neue Einladung erstellen.", "revokeConfirmationConfirmLabel": "Einladung widerrufen", "revokeConfirmationCancelLabel": "Einladung behalten", "actionSuccessTitle": "Einladungsaktion abgeschlossen.", "actionErrorTitle": "Diese Einladungsaktion konnte nicht abgeschlossen werden.", "returnToDirectoryLabel": "Zurück zum Verzeichnis", "retryLabel": "Erneut versuchen", "availableLabel": "Verfügbar", "workOrdersLabel": "Arbeitsaufträge", "requestsSummaryTemplate": "{active} aktiv von insgesamt {total}", "statusLabels": { "active": "Aktiv", "inactive": "Inaktiv", "locked": "Gesperrt", "invited": "Eingeladen", "expired": "Abgelaufen" }, "invitationStatusLabels": { "pending": "Ausstehend", "expired": "Abgelaufen" }, "attentionReasons": { "INVITATION_EXPIRED": "Einladung abgelaufen", "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig", "ACCOUNT_LOCKED": "Konto gesperrt" } }
+        },
+        "directoryItem": { "pendingProfileFallback": "Profil ausstehend", "noRequestsFallback": "Noch keine Anfragen", "nextAppointmentTemplate": "Nächster Termin: {date}", "activeRequestsTemplate": "{count} aktive Anfrage", "totalRequestsTemplate": "{count} Anfragen insgesamt", "lastServiceTemplate": "Letzter Service: {date}", "statuses": { "active": "Aktiv", "inactive": "Inaktiv", "locked": "Gesperrt", "invited": "Eingeladen", "expired": "Abgelaufen" }, "attentionReasons": { "INVITATION_EXPIRED": "Einladung abgelaufen", "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig", "ACCOUNT_LOCKED": "Konto gesperrt" } },
+        "statusOptions": [ { "value": "all", "label": "Alle Status" }, { "value": "active", "label": "Aktiv" }, { "value": "inactive", "label": "Inaktiv" }, { "value": "invitations", "label": "Einladungen" }, { "value": "attention", "label": "Benötigt Aufmerksamkeit" } ]
+      }
+    },
     "requests": {
       "requestsList": {
         "title": "Anfragen",

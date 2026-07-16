@@ -146,9 +146,9 @@ export function useEmbeddedProfileCompletionController({
 
       const successPopup = getPopup(
         popups,
-        'AUTH_GET_SUCCESS',
-        'AUTH_GET_SUCCESS',
-        fallbackPopups.AUTH_GET_SUCCESS
+        'USER_CLIENT_PROFILE_UPDATED',
+        'USER_CLIENT_PROFILE_UPDATED',
+        fallbackPopups.USER_CLIENT_PROFILE_UPDATED
       );
 
       showSuccess({

@@ -165,9 +165,9 @@ Cookies issued by login-style flows:
   - `sameSite: lax`
   - `maxAge: 30d` for `user`
   - `maxAge: 16h` for `worker` and `admin`
-- `csrfToken`
+- `x-csrf-token`
+  - emitted as response header
   - readable by frontend
-  - `sameSite: lax`
   - required in `x-csrf-token` header for protected state-changing routes
 
 CSRF-protected routes in this domain:
@@ -178,13 +178,28 @@ CSRF-protected routes in this domain:
 - `POST /logout-all-sessions`
 - `POST /change-email`
 
-## Pending Improvement
+## Closed Frontend Decision Pending Backend Implementation
 
-Recommended backend follow-up:
+The frontend-side decision is now closed:
 
-- add a dedicated CSRF bootstrap/reissue endpoint for authenticated cookie sessions
-- expected purpose: allow the frontend to recover a fresh readable CSRF token after mobile tab suspension or memory loss, before attempting `POST /refresh-token`
-- this endpoint should not replace session auth; it should only re-establish the CSRF part of the cookie + header contract
+- losing the in-memory `x-csrf-token` must not be treated as terminal session expiry by default
+- the auth contract needs a dedicated CSRF bootstrap/reissue endpoint before `POST /refresh-token`
+
+Expected backend contract:
+
+- expose a dedicated CSRF reissue route such as `GET /api/auth/csrf` or `POST /api/auth/csrf/reissue`
+- validate that the session is still recoverable through the refresh-token path
+- emit a fresh `x-csrf-token` response header
+- do not replace `POST /api/auth/refresh-token` as the actual session renewal step
+
+Expected purpose:
+
+- allow the frontend to recover a fresh readable CSRF token after full reload, mobile tab suspension, or runtime memory loss
+- let the frontend/BFF execute the recovery sequence `GET /me -> csrf reissue -> POST /refresh-token -> GET /me`
+
+Reference:
+
+- [AUTH_CSRF_SESSION_RECOVERY_DECISION.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_CSRF_SESSION_RECOVERY_DECISION.md:1)
 
 ## Authenticated User Shapes
 
@@ -332,7 +347,7 @@ Documented business/validation errors:
 
 Notes for frontend:
 
-- successful login sets `accessToken`, `refreshToken`, and `csrfToken`
+- successful login sets `accessToken` and `refreshToken`, and emits `x-csrf-token`
 - unverified login does not establish a session
 
 ### `POST /api/auth/verify-email`
@@ -526,7 +541,7 @@ Documented business/validation errors:
 
 Notes for frontend:
 
-- successful magic login sets `accessToken`, `refreshToken`, and `csrfToken`
+- successful magic login sets `accessToken` and `refreshToken`, and emits `x-csrf-token`
 
 ### `POST /api/auth/refresh-token`
 
@@ -558,8 +573,8 @@ Documented business/validation errors:
 Notes for frontend:
 
 - requires `refreshToken` cookie
-- also requires matching `csrfToken` cookie and `x-csrf-token` header
-- success rotates the `accessToken` cookie and reissues the CSRF token
+- also requires a valid `x-csrf-token` header
+- success rotates the `accessToken` cookie, rotates `refreshToken`, and reissues `x-csrf-token`
 
 ### `GET /api/auth/me`
 
@@ -745,7 +760,7 @@ Documented business/validation errors:
 
 Notes for frontend:
 
-- clears `accessToken`, `refreshToken`, and `csrfToken`
+- clears `accessToken` and `refreshToken`
 - no authenticated context is required
 
 ### `POST /api/auth/logout-all-sessions`
@@ -785,7 +800,7 @@ Documented business/auth errors:
 Notes for frontend:
 
 - increments `UserClient.tokenVersion`
-- clears `accessToken`, `refreshToken`, and `csrfToken`
+- clears `accessToken` and `refreshToken`
 
 ## Error Codes In Active Use
 
@@ -859,7 +874,7 @@ Success codes:
 - Treat `/resend-verification` and `/forgot-password` as ambiguity-by-design flows.
 - Treat `/verify-email` as a token exchange step, not as a session-establishing step.
 - Treat `/magic-login` and `/login` as the flows that actually establish cookies.
-- Always mirror `csrfToken` cookie into `x-csrf-token` on CSRF-protected routes.
+- Always capture `x-csrf-token` from authenticated responses and replay it on CSRF-protected routes.
 - `GET /me` is the canonical route for restoring current session identity from cookies.
 - `status` in frontend session data comes from `UserClient.status`, not `Auth.status`.
 

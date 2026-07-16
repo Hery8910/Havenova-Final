@@ -1,12 +1,12 @@
-import type { ElementType, ReactNode } from 'react';
+import React from 'react';
 import styles from './RequestStepIntro.module.css';
 
 interface RequestStepIntroProps {
-  title: ReactNode;
+  title: React.ReactNode;
   titleId?: string;
-  description?: ReactNode;
-  descriptionSecondary?: ReactNode;
-  titleAs?: ElementType;
+  description?: React.ReactNode;
+  descriptionSecondary?: React.ReactNode;
+  titleAs?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
 export default function RequestStepIntro({

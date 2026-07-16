@@ -24,10 +24,10 @@ test('root and app scripts sync shared assets before dev/build', () => {
   assert.match(workerPackage.scripts.dev, /sync-shared-assets/);
 });
 
-test('all apps import their shared base styles from @havenova/styles', () => {
+test('all apps import their shared base styles from the canonical packages/styles entrypoint', () => {
   for (const cssSource of [clientGlobalCss, dashboardGlobalCss, workerGlobalCss]) {
-    assert.match(cssSource, /@import '@havenova\/styles\/tokens\.css';/);
-    assert.match(cssSource, /@import '@havenova\/styles\/helpers\.css';/);
+    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/tokens\.css';/);
+    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/helpers\.css';/);
   }
 });
 

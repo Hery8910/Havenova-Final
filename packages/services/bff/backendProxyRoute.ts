@@ -16,8 +16,6 @@ const DEFAULT_FORWARDED_REQUEST_HEADERS = [
   'accept-language',
 ];
 const DEFAULT_FORWARDED_RESPONSE_HEADERS = ['content-type', 'x-csrf-token', 'x-request-id'];
-const CSRF_HEADER = 'x-csrf-token';
-const CSRF_COOKIE = 'csrfToken';
 
 export const jsonProxyError = (status: number, code: string, message: string) =>
   NextResponse.json(
@@ -51,13 +49,6 @@ export const buildProxyHeaders = (
     const value = request.headers.get(headerName);
     if (value) {
       headers.set(headerName, value);
-    }
-  }
-
-  if (!headers.get(CSRF_HEADER)) {
-    const csrfCookie = request.cookies.get(CSRF_COOKIE)?.value?.trim();
-    if (csrfCookie) {
-      headers.set(CSRF_HEADER, csrfCookie);
     }
   }
 

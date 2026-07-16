@@ -173,7 +173,8 @@ export default function AvatarSelector() {
       setOpen(false);
 
       const successPopup =
-        (texts.popups as any)?.AUTH_GET_SUCCESS ?? (fallbackPopups as any).AUTH_GET_SUCCESS;
+        (texts.popups as any)?.USER_CLIENT_PROFILE_UPDATED ??
+        (fallbackPopups as any).USER_CLIENT_PROFILE_UPDATED;
 
       showSuccess({
         response: {

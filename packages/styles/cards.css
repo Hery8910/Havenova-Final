@@ -8,13 +8,13 @@
   --card-text-current: inherit;
   border-radius: var(--radius-card);
   border: 1px solid transparent;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--card-shadow);
   color: var(--card-text-current);
   background: var(--card-surface-current);
   background-image: var(--card-surface-image-current);
-  border-color: var(--card-border-current);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border-color: transparent;
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
 }
 
 .card--neutral {

@@ -3,11 +3,11 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import CustomerFrequencyStep from './CustomerFrequencyStep/CustomerFrequencyStep';
 import PropertyDetailsStep from './PropertyDetailsStep/PropertyDetailsStep';
-import ServiceProfileStep from './ServiceProfileStep/ServiceProfileStep';
 import ReviewStep from './ReviewStep/ReviewStep';
 import {
-  AvailabilityCalendar,
   ProcessStepsHeader,
+  ServiceRequestAddressStep,
+  ServiceRequestSchedulingStep,
   ServiceRequestShell,
   serviceRequestShellStyles as shellStyles,
 } from '../../shared';
@@ -23,68 +23,22 @@ import type {
   CleaningRequestFormState,
   CleaningRequestFormSubmission,
   CleaningRequestFormTexts,
+  CleaningRequestStep,
 } from './cleaningRequest.types';
+import {
+  buildCleaningRequestDetails,
+  CLEANING_REQUEST_DRAFT_VERSION,
+  createInitialCleaningRequestState,
+  getCleaningFooterValidationMessage,
+  getCleaningRequestErrors,
+  getCleaningStepHeading,
+  markCleaningStepOneTouched,
+  markCleaningStepTwoTouched,
+  parseCleaningRequestDraft,
+  serializeCleaningRequestDraft,
+  sanitizeCleaningRequestText,
+} from './cleaningRequest.helpers';
 export type { CleaningRequestFormSubmission } from './cleaningRequest.types';
-
-const INJECTION_PATTERN =
-  /(<\s*script|<\/\s*script|javascript:|onerror\s*=|onload\s*=|union\s+select|drop\s+table|insert\s+into|delete\s+from|--|\/\*|\*\/)/i;
-
-const sanitizeText = (value: string) =>
-  value.normalize('NFKC').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
-
-const CLEANING_REQUEST_DRAFT_VERSION = 1;
-
-const createInitialFormState = (): CleaningRequestFormState => ({
-  customerType: 'private',
-  frequency: '',
-  sizeRange: '',
-  roomsCount: '1',
-  hasBalcony: false,
-  hasIndoorStairs: false,
-  hasPets: false,
-  details: '',
-  preferredVisitSlot: null,
-  workAddress: null,
-});
-
-const isDraftStep = (value: unknown): value is CleaningRequestDraftStep =>
-  value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
-
-const serializeDraft = (
-  values: CleaningRequestFormState,
-  step: CleaningRequestDraftStep
-): CleaningRequestDraftPayload => ({
-  step,
-  values: {
-    ...values,
-    preferredVisitSlot: values.preferredVisitSlot
-      ? {
-          start: values.preferredVisitSlot.start.toISOString(),
-          end: values.preferredVisitSlot.end.toISOString(),
-        }
-      : null,
-  },
-});
-
-const parseDraft = (
-  parsed: CleaningRequestDraftPayload | null
-): { step: CleaningRequestDraftStep; values: CleaningRequestFormState } | null => {
-  if (!parsed || !isDraftStep(parsed.step)) return null;
-
-  return {
-    step: parsed.step,
-    values: {
-      ...createInitialFormState(),
-      ...parsed.values,
-      preferredVisitSlot: parsed.values?.preferredVisitSlot
-        ? {
-            start: new Date(parsed.values.preferredVisitSlot.start),
-            end: new Date(parsed.values.preferredVisitSlot.end),
-          }
-        : null,
-    },
-  };
-};
 
 export default function CleaningRequestForm({
   texts,
@@ -112,7 +66,7 @@ export default function CleaningRequestForm({
     storageKey: draftStorageKey,
     version: CLEANING_REQUEST_DRAFT_VERSION,
   });
-  const [values, setValues] = useState<CleaningRequestFormState>(createInitialFormState);
+  const [values, setValues] = useState<CleaningRequestFormState>(createInitialCleaningRequestState);
   const [touched, setTouched] = useState<Record<keyof CleaningRequestFormState, boolean>>({
     customerType: false,
     frequency: false,
@@ -126,10 +80,10 @@ export default function CleaningRequestForm({
     workAddress: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [step, setStep] = useState<CleaningRequestDraftStep>(1);
+  const [step, setStep] = useState<CleaningRequestStep>(1);
 
   useEffect(() => {
-    const parsedDraft = parseDraft(storedDraft);
+    const parsedDraft = parseCleaningRequestDraft(storedDraft);
     if (!parsedDraft) return;
 
     setValues(parsedDraft.values);
@@ -139,7 +93,7 @@ export default function CleaningRequestForm({
   useEffect(() => {
     if (!draftStorageKey) return;
 
-    persistDraft(serializeDraft(values, step));
+    persistDraft(serializeCleaningRequestDraft(values, step));
   }, [draftStorageKey, persistDraft, step, values]);
   const processTexts = useMemo(
     () => ({
@@ -155,97 +109,28 @@ export default function CleaningRequestForm({
     [texts.process, texts.review.title]
   );
 
-  const errors = useMemo<CleaningRequestFieldErrors>(() => {
-    const next: CleaningRequestFieldErrors = {};
-    const detailsRaw = values.details || '';
-    const details = sanitizeText(detailsRaw);
-    const roomsNumber = Number(values.roomsCount);
+  const errors = useMemo<CleaningRequestFieldErrors>(
+    () =>
+      getCleaningRequestErrors({
+        texts,
+        values,
+      }),
+    [texts, values]
+  );
 
-    if (!values.customerType) next.customerType = texts.errors.required;
-    if (!values.frequency) next.frequency = texts.errors.required;
-    if (!values.sizeRange) next.sizeRange = texts.errors.required;
-
-    if (values.roomsCount.trim() === '') {
-      next.roomsCount = texts.errors.required;
-    } else if (!Number.isInteger(roomsNumber)) {
-      next.roomsCount = texts.errors.invalid;
-    } else if (roomsNumber < 1 || roomsNumber > 50) {
-      next.roomsCount = texts.errors.roomsRange;
-    }
-
-    if (detailsRaw.trim()) {
-      if (INJECTION_PATTERN.test(detailsRaw)) {
-        next.details = texts.errors.unsafeInput;
-      } else if (details.length > 1500) {
-        next.details = texts.errors.detailsTooLong;
-      }
-    }
-
-    if (!values.preferredVisitSlot) {
-      next.preferredVisitSlot =
-        texts.scheduling?.required ?? 'Please select a preferred date and time.';
-    }
-
-    if (!values.workAddress) {
-      next.workAddress = texts.serviceAddress?.required ?? 'Please select or enter a work address.';
-    }
-
-    return next;
-  }, [texts.errors, texts.scheduling, texts.serviceAddress, values]);
-
-  const hasErrors = Object.keys(errors).length > 0;
   const showError = (field: keyof CleaningRequestFieldErrors) =>
     Boolean((submitted || touched[field]) && errors[field]);
-  const stepOneError = (() => {
-    if (showError('customerType') && errors.customerType) {
-      return `${texts.customerType.label}: ${errors.customerType}`;
-    }
-
-    if (showError('frequency') && errors.frequency) {
-      return `${texts.frequency.label}: ${errors.frequency}`;
-    }
-
-    return '';
-  })();
-  const stepTwoError = (() => {
-    if (showError('sizeRange') && errors.sizeRange) {
-      return `${texts.property.sizeRangeLabel}: ${errors.sizeRange}`;
-    }
-
-    if (showError('roomsCount') && errors.roomsCount) {
-      return `${texts.property.roomsCountLabel}: ${errors.roomsCount}`;
-    }
-
-    if (showError('details') && errors.details) {
-      return `${texts.property.detailsLabel}: ${errors.details}`;
-    }
-
-    return '';
-  })();
-  const stepThreeError =
-    showError('preferredVisitSlot') && errors.preferredVisitSlot
-      ? `${texts.scheduling?.title ?? texts.process.steps.scheduling.heading}: ${errors.preferredVisitSlot}`
-      : '';
-  const stepFourError =
-    showError('workAddress') && errors.workAddress
-      ? `${texts.serviceAddress?.title ?? texts.process.steps.serviceAddress.heading}: ${errors.workAddress}`
-      : '';
-  const footerValidationMessage =
-    (step === 1 && stepOneError) ||
-    (step === 2 && stepTwoError) ||
-    (step === 3 && stepThreeError) ||
-    (step === 4 && stepFourError) ||
-    '';
-  const currentStepHeading =
-    step === 1
-      ? processTexts.steps.customerFrequency.heading
-      : step === 2
-        ? processTexts.steps.propertyDetails.heading
-        : step === 3
-          ? processTexts.steps.scheduling.heading
-          : step === 4
-            ? processTexts.steps.serviceAddress.heading
-            : (processTexts.steps.review?.heading ?? texts.review.title);
+  const footerValidationMessage = getCleaningFooterValidationMessage({
+    step,
+    texts,
+    errors,
+    touched,
+    submitted,
+  });
+  const currentStepHeading = getCleaningStepHeading({
+    step,
+    texts,
+  });
 
   const isStepOneValid = Boolean(
     values.customerType && values.frequency && !errors.customerType && !errors.frequency
@@ -254,42 +139,7 @@ export default function CleaningRequestForm({
     values.sizeRange && !errors.sizeRange && !errors.roomsCount && !errors.details
   );
   const isStepThreeValid = Boolean(values.preferredVisitSlot && !errors.preferredVisitSlot);
-
-  const goToStepTwo = () => {
-    setTouched((prev) => ({ ...prev, customerType: true, frequency: true }));
-    if (isStepOneValid) {
-      setStep(2);
-    }
-  };
-
-  const goToStepThree = () => {
-    setTouched((prev) => ({
-      ...prev,
-      sizeRange: true,
-      roomsCount: true,
-      details: true,
-    }));
-
-    if (isStepTwoValid) {
-      setStep(3);
-    }
-  };
-
-  const goToStepFour = () => {
-    setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
-
-    if (isStepThreeValid) {
-      setStep(4);
-    }
-  };
-
-  const goToStepFive = () => {
-    setTouched((prev) => ({ ...prev, workAddress: true }));
-
-    if (!errors.workAddress && values.workAddress) {
-      setStep(5);
-    }
-  };
+  const requestDetails = buildCleaningRequestDetails(values);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -300,58 +150,53 @@ export default function CleaningRequestForm({
     }
 
     if (step === 1) {
-      goToStepTwo();
+      setTouched((prev) => markCleaningStepOneTouched(prev));
+      if (isStepOneValid) {
+        setStep(2);
+      }
       return;
     }
 
     if (step === 2) {
-      goToStepThree();
+      setTouched((prev) => markCleaningStepTwoTouched(prev));
+      if (isStepTwoValid) {
+        setStep(3);
+      }
       return;
     }
 
     if (step === 3) {
-      goToStepFour();
+      setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+      if (isStepThreeValid) {
+        setStep(4);
+      }
       return;
     }
 
     if (step === 4) {
-      goToStepFive();
+      setTouched((prev) => ({ ...prev, workAddress: true }));
+      if (!errors.workAddress && values.workAddress) {
+        setStep(5);
+      }
       return;
     }
 
     setSubmitted(true);
     setTouched((prev) => ({ ...prev, preferredVisitSlot: true, workAddress: true }));
 
-    if (hasErrors) return;
     if (
       !values.customerType ||
-      !values.frequency ||
-      !values.sizeRange ||
       !values.preferredVisitSlot ||
-      !values.workAddress
+      !values.workAddress ||
+      !requestDetails
     ) {
       return;
     }
 
-    const roomsCount = Number(values.roomsCount);
-    if (!Number.isInteger(roomsCount)) return;
-
-    const details: CleaningRequestDetails = {
-      frequency: values.frequency,
-      property: {
-        sizeRange: values.sizeRange,
-        roomsCount,
-        hasBalcony: values.hasBalcony,
-        hasIndoorStairs: values.hasIndoorStairs,
-        hasPets: values.hasPets,
-        details: sanitizeText(values.details) || undefined,
-      },
-    };
-
     const success = await onSubmit({
       serviceType: 'cleaning',
       customerType: values.customerType,
-      details,
+      details: requestDetails,
       preferredVisitSlot: {
         start: values.preferredVisitSlot.start.toISOString(),
         end: values.preferredVisitSlot.end.toISOString(),
@@ -459,45 +304,17 @@ export default function CleaningRequestForm({
           onDetailsChange={(details) => setValues((prev) => ({ ...prev, details }))}
           onDetailsBlur={() => setTouched((prev) => ({ ...prev, details: true }))}
         />
-      ) : step === 3 && clientCalendarSettings ? (
-        <section
-          className={shellStyles.stepPane}
-          aria-label={
-            texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
-          }
-        >
-          <AvailabilityCalendar
-            showHeader={false}
-            clientId={clientCalendarSettings.clientId}
-            schedule={clientCalendarSettings.schedule}
-            slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
-            value={values.preferredVisitSlot}
-            onChange={(preferredVisitSlot) => {
-              setValues((prev) => ({ ...prev, preferredVisitSlot }));
-              setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
-            }}
-            texts={{
-              title: texts.scheduling?.title,
-              description: texts.scheduling?.description,
-              slotsTitle: texts.scheduling?.slotsTitle,
-              noDateSelected: texts.scheduling?.noDateSelected,
-              noAvailability: texts.scheduling?.noAvailability,
-              blockedBadge: texts.scheduling?.blockedBadge,
-              selectedBadge: texts.scheduling?.selectedBadge,
-              availableBadge: texts.scheduling?.availableBadge,
-              closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
-              loading: texts.scheduling?.loading,
-              errorPrefix: texts.scheduling?.errorPrefix,
-              previousMonth: texts.scheduling?.previousMonth,
-              nextMonth: texts.scheduling?.nextMonth,
-              monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
-              weekdayLabels: texts.scheduling?.weekdayLabels,
-              nonWorkday: texts.scheduling?.nonWorkday,
-              blockedDay: texts.scheduling?.blockedDay,
-              availableDay: texts.scheduling?.availableDay,
-            }}
-          />
-        </section>
+      ) : step === 3 ? (
+        <ServiceRequestSchedulingStep
+          clientCalendarSettings={clientCalendarSettings}
+          fallbackHeading={texts.process.steps.scheduling.heading}
+          texts={texts.scheduling}
+          value={values.preferredVisitSlot}
+          onChange={(preferredVisitSlot) => {
+            setValues((prev) => ({ ...prev, preferredVisitSlot }));
+            setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+          }}
+        />
       ) : step === 4 ? (
         <section
           className={shellStyles.stepPane}
@@ -505,7 +322,7 @@ export default function CleaningRequestForm({
             texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
           }
         >
-          <ServiceProfileStep
+          <ServiceRequestAddressStep
             texts={texts.serviceAddress}
             value={values.workAddress}
             onChange={(workAddress) => {
@@ -538,20 +355,13 @@ export default function CleaningRequestForm({
             hasBalcony: values.hasBalcony,
             hasIndoorStairs: values.hasIndoorStairs,
             hasPets: values.hasPets,
-            details: sanitizeText(values.details) || undefined,
+            details: sanitizeCleaningRequestText(values.details) || undefined,
           }}
           scheduling={values.preferredVisitSlot}
           workAddress={values.workAddress}
           common={texts.common}
         />
-      ) : (
-        <section className={shellStyles.missingConfig} aria-live="polite">
-          <p className={shellStyles.errorText}>
-            {texts.scheduling?.missingClientConfig ??
-              'Client calendar configuration is unavailable right now.'}
-          </p>
-        </section>
-      )}
+      ) : null}
     </ServiceRequestShell>
   );
 }

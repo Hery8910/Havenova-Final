@@ -12,6 +12,9 @@ const SUPPORTED = ['de', 'en', 'es'] as const;
 const DEFAULT_LANG = 'de';
 const AUTH_FORWARD_HEADERS = ['cookie', 'accept-language', 'x-request-id'] as const;
 const SESSION_GUARD_TIMEOUT_MS = 8000;
+const CSRF_HEADER = 'x-csrf-token';
+
+const getHeaderValue = (headers: Headers, name: string): string => headers.get(name)?.trim() || '';
 
 const isLocalizedPath = (pathname: string) =>
   SUPPORTED.some((lang) => pathname === `/${lang}` || pathname.startsWith(`/${lang}/`));
@@ -75,11 +78,6 @@ const buildServerAuthHeaders = (request: NextRequest, cookieHeader?: string): He
     }
   }
 
-  const csrfToken = request.cookies.get('csrfToken')?.value?.trim();
-  if (csrfToken) {
-    headers.set('x-csrf-token', csrfToken);
-  }
-
   return headers;
 };
 
@@ -129,14 +127,36 @@ const performSessionGuard = async (request: NextRequest) => {
   }
 
   const refreshToken = request.cookies.get('refreshToken')?.value?.trim();
-  const csrfToken = request.cookies.get('csrfToken')?.value?.trim();
-  if (!refreshToken || !csrfToken) {
+  if (!refreshToken) {
     return null;
   }
 
+  const csrfResponse = await fetch(buildBackendUrl('/api/auth/csrf'), {
+    method: 'GET',
+    headers: buildServerAuthHeaders(request),
+    cache: 'no-store',
+    redirect: 'manual',
+    signal: AbortSignal.timeout(SESSION_GUARD_TIMEOUT_MS),
+  });
+
+  if (!csrfResponse.ok) {
+    return null;
+  }
+
+  const csrfHeader = getHeaderValue(csrfResponse.headers, CSRF_HEADER);
+  if (!csrfHeader) {
+    return null;
+  }
+
+  const csrfCookies = readAuthCookiesFromBackendResponse(csrfResponse);
+  const csrfCookieHeader =
+    csrfCookies.length > 0 ? mergeCookieHeader(request, csrfCookies) : undefined;
+  const refreshHeaders = buildServerAuthHeaders(request, csrfCookieHeader);
+  refreshHeaders.set(CSRF_HEADER, csrfHeader);
+
   const refreshResponse = await fetch(buildBackendUrl('/api/auth/refresh-token'), {
     method: 'POST',
-    headers: buildServerAuthHeaders(request),
+    headers: refreshHeaders,
     body: '{}',
     cache: 'no-store',
     redirect: 'manual',
@@ -148,12 +168,8 @@ const performSessionGuard = async (request: NextRequest) => {
   }
 
   const authCookies = readAuthCookiesFromBackendResponse(refreshResponse);
-  if (authCookies.length === 0) {
-    return NextResponse.next();
-  }
-
-  const cookieHeader = mergeCookieHeader(request, authCookies);
   const forwardedHeaders = new Headers(request.headers);
+  const cookieHeader = authCookies.length > 0 ? mergeCookieHeader(request, authCookies) : '';
 
   if (cookieHeader) {
     forwardedHeaders.set('cookie', cookieHeader);
@@ -161,9 +177,9 @@ const performSessionGuard = async (request: NextRequest) => {
     forwardedHeaders.delete('cookie');
   }
 
-  const updatedCsrfToken = authCookies.find((cookie) => cookie.name === 'csrfToken')?.value?.trim();
+  const updatedCsrfToken = getHeaderValue(refreshResponse.headers, CSRF_HEADER);
   if (updatedCsrfToken) {
-    forwardedHeaders.set('x-csrf-token', updatedCsrfToken);
+    forwardedHeaders.set(CSRF_HEADER, updatedCsrfToken);
   }
 
   const response = NextResponse.next({

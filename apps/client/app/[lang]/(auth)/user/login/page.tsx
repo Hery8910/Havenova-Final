@@ -3,11 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
+  getI18nFallbacks,
   PopupCode,
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackLoadingMessages,
-  fallbackLoginSuccess,
   useAuth,
   useClient,
   useGlobalAlert,
@@ -46,6 +43,12 @@ const Login = () => {
   const { texts } = useI18n();
   const router = useRouter();
   const lang = useLang();
+  const {
+    fallbackButtons,
+    fallbackGlobalError,
+    fallbackLoadingMessages,
+    fallbackLoginSuccess,
+  } = getI18nFallbacks(lang);
   const homeHref = href(lang, '/');
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');

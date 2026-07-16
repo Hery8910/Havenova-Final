@@ -71,6 +71,12 @@ User experience rule:
 - the primary message is account activation, not account creation
 - the frontend should make clear that the invitation link is a one-time onboarding step
 - after password creation, the user should understand that the next normal entry point is `login`
+- `login` and `forgot-password` for this variant should stay shared between `dashboard` and `worker` unless the product contract actually diverges
+- when `dashboard` and `worker` keep the same onboarding behavior, they should reuse the same shared invitation `set-password` implementation instead of drifting into parallel copies
+
+Shared page-flow contract:
+
+- [INVITATION_AUTH_SHARED_PAGE_FLOWS.md](/home/heriberto/Escritorio/Havenova/havenova/docs/INVITATION_AUTH_SHARED_PAGE_FLOWS.md:1)
 
 ## Shared Rules Across Variants
 

@@ -569,115 +569,123 @@
       },
       "form": {
         "process": {
-          "title": "Complete your home service request in 4 steps",
-          "description": "Start by selecting the customer type and the kind of service. Then capture the service-specific notes, preferred date, and work address.",
-          "stepLabel": "Step",
+          "title": "Completa tu solicitud de servicio al hogar en 5 pasos",
+          "description": "Empieza eligiendo el tipo de cliente y el tipo de servicio. Después añade los detalles del servicio, la fecha preferida, la dirección y una revisión final.",
+          "stepLabel": "Paso",
           "steps": {
             "customerService": {
-              "heading": "Customer and service"
+              "heading": "Cliente y servicio"
             },
             "details": {
-              "heading": "Service details"
+              "heading": "Detalles del servicio"
             },
             "scheduling": {
-              "heading": "Preferred date"
+              "heading": "Fecha preferida"
             },
             "serviceAddress": {
-              "heading": "Service address"
+              "heading": "Dirección del servicio"
+            },
+            "review": {
+              "heading": "Revisar solicitud"
             }
           }
         },
         "customerType": {
-          "label": "Customer type",
+          "label": "Tipo de cliente",
           "options": {
-            "private": "Private",
-            "business": "Business"
+            "private": "Particular",
+            "business": "Empresa"
           }
         },
         "serviceType": {
-          "label": "Home service type",
+          "label": "Tipo de servicio al hogar",
           "options": {
             "painting": {
-              "title": "Painting"
+              "title": "Pintura"
             },
             "repairs-installations": {
-              "title": "Repairs & Installations"
+              "title": "Reparaciones e instalaciones"
             },
             "furniture-assembly": {
-              "title": "Furniture Assembly"
+              "title": "Montaje de muebles"
             },
             "kitchen-assembly": {
-              "title": "Kitchen Assembly"
+              "title": "Montaje de cocina"
             },
             "moving-help": {
-              "title": "Moving Help"
+              "title": "Ayuda con mudanzas"
             }
           }
         },
         "serviceDetails": {
-          "title": "Describe the service",
-          "description": "This step adapts to the selected service and captures the key information for the next phase.",
-          "selectedServiceLabel": "Selected service",
-          "detailsLabel": "Service details",
-          "detailsPlaceholder": "Briefly describe the need, the current condition, relevant access details, or anything that should be known before the visit.",
-          "helper": "These notes create the base for the more detailed service flow that will follow.",
+          "title": "Describe el servicio",
+          "description": "Este paso se adapta al servicio elegido y recoge la información clave para la siguiente fase.",
+          "selectedServiceLabel": "Servicio seleccionado",
+          "detailsLabel": "Detalles del servicio",
+          "detailsPlaceholder": "Describe brevemente la necesidad, el estado actual, los accesos relevantes o cualquier dato que deba conocerse antes de la visita.",
+          "helper": "Estas notas crean la base para el flujo de servicio más detallado que vendrá después.",
           "painting": {
-            "title": "Painting details",
-            "description": "Tell us what should be painted and the approximate scope so we can prepare the next steps.",
-            "paintScopeLabel": "What needs to be painted?",
+            "title": "Detalles de pintura",
+            "description": "Cuéntanos qué debe pintarse y el alcance aproximado para preparar los siguientes pasos.",
+            "paintScopeLabel": "¿Qué hay que pintar?",
             "paintScopeOptions": {
-              "one_wall": "One wall",
-              "one_room": "One room",
-              "multiple_rooms": "Multiple rooms",
-              "entire_apartment": "Entire apartment"
+              "one_wall": "Una pared",
+              "one_room": "Una habitación",
+              "multiple_rooms": "Varias habitaciones",
+              "entire_apartment": "Todo el apartamento"
             },
-            "roomsCountLabel": "Number of rooms",
-            "roomsCountDecrementAriaLabel": "Decrease room count",
-            "roomsCountIncrementAriaLabel": "Increase room count",
-            "sizeRangeLabel": "Approximate size",
+            "roomsCountLabel": "Cantidad de habitaciones",
+            "roomsCountDecrementAriaLabel": "Reducir cantidad de habitaciones",
+            "roomsCountIncrementAriaLabel": "Aumentar cantidad de habitaciones",
+            "sizeRangeLabel": "Tamaño aproximado",
             "sizeRangeOptions": {
-              "under_50": "Under 50 m2",
-              "50_80": "50 to 80 m2",
-              "80_120": "80 to 120 m2",
-              "over_120": "Over 120 m2"
+              "under_50": "Menos de 50 m2",
+              "50_80": "De 50 a 80 m2",
+              "80_120": "De 80 a 120 m2",
+              "over_120": "Más de 120 m2"
             },
-            "descriptionLabel": "Description",
-            "descriptionPlaceholder": "Describe the surfaces, current paint condition, desired finish, access details, or any preparation work that may be needed.",
-            "descriptionHelper": "Include any relevant context that helps estimate effort before the visit.",
-            "photosLabel": "Photos upload",
-            "photosDescription": "A shared photo upload component will be added here for painting and the other home services."
+            "descriptionLabel": "Descripción",
+            "descriptionPlaceholder": "Describe las superficies, el estado actual de la pintura, el acabado deseado, los accesos o cualquier preparación que pueda hacer falta.",
+            "descriptionHelper": "Incluye cualquier contexto útil para estimar mejor el esfuerzo antes de la visita.",
+            "photosLabel": "Subida de fotos",
+            "photosDescription": "Aquí se añadirá más adelante un componente compartido de subida de fotos para pintura y los demás servicios al hogar."
           },
           "services": {
             "painting": {
-              "title": "Painting",
-              "description": "For painting work on walls, ceilings, trims, doors, or other defined surfaces.",
-              "detailsHint": "Mention the area to be painted, approximate size, current condition, and whether colors or materials are already defined."
+              "title": "Pintura",
+              "description": "Para trabajos de pintura en paredes, techos, molduras, puertas u otras superficies definidas.",
+              "detailsHint": "Indica la zona que debe pintarse, el tamaño aproximado, el estado actual y si los colores o materiales ya están definidos."
             },
             "repairs-installations": {
-              "title": "Repairs & Installations",
-              "description": "For practical repair tasks, replacements, fittings, or installation work on site.",
-              "detailsHint": "Describe what needs to be repaired or installed, where it is located, and whether any materials or fixtures are already available."
+              "title": "Reparaciones e instalaciones",
+              "description": "Para reparaciones prácticas, sustituciones, fijaciones o trabajos de instalación en el lugar.",
+              "detailsHint": "Describe qué debe repararse o instalarse, dónde se encuentra y si ya hay materiales o piezas disponibles.",
+              "statusNote": "Este servicio sigue usando un flujo provisional de detalles. Por ahora, solo pintura tiene un paso anidado completamente definido."
             },
             "furniture-assembly": {
-              "title": "Furniture Assembly",
-              "description": "For assembling, positioning, or securing furniture and similar household items.",
-              "detailsHint": "List the furniture pieces, quantities, brand or model if known, and whether assembly instructions are available."
+              "title": "Montaje de muebles",
+              "description": "Para montar, colocar o asegurar muebles y otros elementos similares del hogar.",
+              "detailsHint": "Enumera los muebles, las cantidades, la marca o modelo si se conoce y si hay instrucciones de montaje disponibles.",
+              "statusNote": "Este servicio sigue usando un flujo provisional de detalles. Por ahora, solo pintura tiene un paso anidado completamente definido."
             },
             "kitchen-assembly": {
-              "title": "Kitchen Assembly",
-              "description": "For kitchen cabinet assembly, unit placement, and related installation preparation.",
-              "detailsHint": "Share the kitchen layout, what should be assembled or mounted, and whether appliances, plans, or measurements are already available."
+              "title": "Montaje de cocina",
+              "description": "Para el montaje de muebles de cocina, colocación de módulos y preparación de la instalación relacionada.",
+              "detailsHint": "Comparte la distribución de la cocina, qué debe montarse o fijarse y si ya existen electrodomésticos, planos o medidas.",
+              "statusNote": "Este servicio sigue usando un flujo provisional de detalles. Por ahora, solo pintura tiene un paso anidado completamente definido."
             },
             "moving-help": {
-              "title": "Moving Help",
-              "description": "For moving-day support, carrying items, loading vehicles, or internal relocations.",
-              "detailsHint": "Describe what needs to be moved, the access situation, floors involved, and whether heavy or bulky items are part of the request."
+              "title": "Ayuda con mudanzas",
+              "description": "Para apoyo el día de la mudanza, traslado de objetos, carga de vehículos o reubicaciones internas.",
+              "detailsHint": "Describe qué debe moverse, cómo es el acceso, qué plantas están implicadas y si hay objetos pesados o voluminosos.",
+              "statusNote": "Este servicio sigue usando un flujo provisional de detalles. Por ahora, solo pintura tiene un paso anidado completamente definido."
             }
           }
         },
         "common": {
           "next": "Continuar",
           "back": "Volver",
+          "review": "Revisar solicitud",
           "submit": "Continuar solicitud"
         },
         "errors": {
@@ -753,6 +761,28 @@
           },
           "stepAriaLabel": "Selección de dirección del servicio",
           "required": "Selecciona o introduce una dirección de trabajo."
+        },
+        "review": {
+          "title": "Revisión final antes de continuar",
+          "description": "Has completado los 5 pasos. Revisa los detalles a continuación y continúa con la solicitud si todo es correcto.",
+          "sections": {
+            "customer": "Cliente y servicio",
+            "details": "Detalles del servicio",
+            "scheduling": "Visita preferida",
+            "address": "Dirección del servicio"
+          },
+          "labels": {
+            "customerType": "Tipo de cliente",
+            "serviceType": "Tipo de servicio",
+            "serviceDetails": "Descripción",
+            "paintScope": "Alcance de pintura",
+            "roomsCount": "Cantidad de habitaciones",
+            "sizeRange": "Tamaño aproximado",
+            "visitDate": "Fecha",
+            "visitTime": "Franja horaria",
+            "address": "Dirección"
+          },
+          "emptyDetails": "No se añadieron detalles adicionales."
         }
       }
     },
@@ -861,7 +891,7 @@
       },
       "forgotPasswordText": {
         "title": "Restablece tu contraseña",
-        "info": "Introduce tu correo electrónico y te enviaremos un enlace de restablecimiento.",
+        "info": "Introduce tu correo electrónico y, si la cuenta puede recuperarse, te enviaremos un enlace de restablecimiento.",
         "button": "Enviar enlace de restablecimiento"
       },
       "resetPasswordText": {
@@ -874,8 +904,8 @@
           "resolvedDescription": "Esta invitación está vinculada a {email}."
         },
         "linkErrors": {
-          "invalidOrExpired": "Este enlace ya no es válido o ha caducado.",
-          "missingToken": "Este enlace para restablecer la contraseña está incompleto o no es válido."
+          "invalidOrExpired": "Este enlace ya no es válido o ha caducado. Solicita uno nuevo para continuar.",
+          "missingToken": "Este enlace para restablecer la contraseña está incompleto o no es válido. Solicita uno nuevo para continuar."
         }
       },
       "profileNav": {
@@ -888,14 +918,18 @@
         "title": "Verifica tu correo electrónico",
         "info": "Revisa tu bandeja de entrada o solicita un nuevo correo de verificación.",
         "autoRedirectDescription": "Serás redirigido a la página de inicio en unos segundos.",
+        "manualLoginFallback": {
+          "title": "Correo verificado",
+          "description": "Tu correo ya está confirmado, pero no pudimos completar el acceso automático. Inicia sesión manualmente para continuar."
+        },
         "sessionSyncError": {
           "title": "No se pudo confirmar tu sesión",
-          "description": "Tu correo ya fue verificado, pero no pudimos confirmar completamente tu sesión. Recarga la página o inicia sesión de nuevo."
+          "description": "Tu correo ya está confirmado, pero no pudimos completar el acceso automático. Recarga la página o inicia sesión de nuevo."
         },
         "input": {
           "placeholder": "Dirección de correo electrónico",
           "button": "Reenviar correo de verificación.",
-          "info": "Utiliza la misma dirección de correo con la que creaste tu perfil."
+          "info": "Utiliza la misma dirección de correo con la que creaste tu cuenta."
         }
       },
       "profile": {
@@ -1624,6 +1658,30 @@
   },
 
   "dashboard": {
+    "usersDirectory": {
+      "summary": {
+        "totalUsers": "Total de usuarios",
+        "pendingInvites": "Invitaciones pendientes",
+        "needsAttention": "Requieren atención",
+        "loading": "Cargando el resumen de clientes...",
+        "error": "No se pudo cargar el resumen de clientes.",
+        "retry": "Intentar de nuevo"
+      },
+      "copy": {
+        "intro": { "primaryActionLabel": "Invitar cliente" },
+        "filters": { "ariaLabel": "Filtros del directorio de clientes", "searchLabel": "Buscar clientes", "searchPlaceholder": "Nombre, correo o teléfono", "selectLabel": "Estado" },
+        "list": { "sectionLabel": "Directorio", "title": "Clientes", "hint": "Selecciona un cliente o una invitación para revisar los detalles.", "emptyTitle": "Aún no hay clientes.", "emptyDescription": "Invita a un cliente para empezar a crear el directorio.", "noResultsTitle": "Ningún cliente coincide con esta vista.", "noResultsDescription": "Prueba otra búsqueda o filtro de estado." },
+        "feedback": { "loadingLabel": "Cargando el directorio de clientes...", "refreshingLabel": "Actualizando el directorio...", "loadingMoreLabel": "Cargando más clientes...", "loadMoreFallbackLabel": "Cargar más clientes", "endOfResultsLabel": "Fin de los resultados", "errorTitle": "No se pudo cargar el directorio de clientes.", "retryLabel": "Intentar de nuevo" },
+        "detail": { "navigationLabel": "Directorio de clientes", "detailLabel": "Detalle del cliente" },
+        "panels": {
+          "empty": { "eyebrow": "Panel", "title": "Selecciona un cliente para continuar", "description": "Los detalles del cliente y las acciones de invitación se gestionan en este panel.", "noteLabel": "Uso actual", "noteText": "Selecciona un registro del directorio o abre el flujo de invitación desde la columna izquierda." },
+          "invite": { "eyebrow": "Invitar", "title": "Invitar a un cliente", "description": "Crea una invitación segura para un cliente sin salir del directorio.", "emailLabel": "Correo electrónico", "nameLabel": "Nombre", "phoneLabel": "Teléfono", "languageLabel": "Idioma", "languageOptions": { "de": "Alemán", "en": "Inglés", "es": "Español" }, "submitLabel": "Enviar invitación", "submittingLabel": "Enviando...", "returnActionLabel": "Volver al directorio", "invitedSuccessTitle": "Invitación enviada.", "renewedSuccessTitle": "Invitación vencida renovada.", "alreadyExistsError": "Este cliente ya tiene una cuenta. Busca el correo para abrirla.", "alreadyPendingError": "Ya existe una invitación activa. Abre Invitaciones para reenviarla.", "deliveryFailedError": "La invitación se guardó, pero la entrega falló. Actualiza Invitaciones y reenvíala desde el panel de detalle.", "errorTitle": "No se pudo enviar esta invitación." },
+          "detail": { "emptyEyebrow": "Detalle", "emptyTitle": "Elige un cliente", "emptyDescription": "Aquí aparecerán los datos de identidad, acceso, invitaciones y actividad.", "loadingLabel": "Cargando el detalle del cliente...", "errorEyebrow": "Detalle", "errorTitle": "No se pudo cargar esta entrada.", "emailLabel": "Correo electrónico", "phoneLabel": "Teléfono", "createdLabel": "Creado", "statusLabel": "Estado", "profileLabel": "Perfil", "languageLabel": "Idioma", "addressLabel": "Dirección principal", "relationshipLabel": "Relación", "requestsLabel": "Solicitudes", "workOrdersUnavailableLabel": "Las órdenes de trabajo aún no están disponibles.", "nextAppointmentLabel": "Próxima cita", "lastCompletedServiceLabel": "Último servicio completado", "invitationLabel": "Invitación", "invitationExpiresLabel": "Vence", "invitationLastSentLabel": "Último envío", "invitationSendCountLabel": "Número de envíos", "pendingProfileFallback": "Perfil pendiente", "missingValueFallback": "No proporcionado", "resendInvitationLabel": "Reenviar invitación", "resendingInvitationLabel": "Reenviando invitación...", "revokeInvitationLabel": "Revocar invitación", "revokingInvitationLabel": "Revocando invitación...", "revokeConfirmationTitle": "¿Revocar esta invitación?", "revokeConfirmationDescription": "El enlace de invitación dejará de funcionar inmediatamente. Podrás crear una nueva invitación más tarde si es necesario.", "revokeConfirmationConfirmLabel": "Revocar invitación", "revokeConfirmationCancelLabel": "Conservar invitación", "actionSuccessTitle": "La acción de invitación se completó.", "actionErrorTitle": "No se pudo completar esta acción de invitación.", "returnToDirectoryLabel": "Volver al directorio", "retryLabel": "Intentar de nuevo", "availableLabel": "Disponible", "workOrdersLabel": "Órdenes de trabajo", "requestsSummaryTemplate": "{active} activas de {total} en total", "statusLabels": { "active": "Activo", "inactive": "Inactivo", "locked": "Bloqueado", "invited": "Invitado", "expired": "Vencido" }, "invitationStatusLabels": { "pending": "Pendiente", "expired": "Vencida" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitación vencida", "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente", "ACCOUNT_LOCKED": "Cuenta bloqueada" } }
+        },
+        "directoryItem": { "pendingProfileFallback": "Perfil pendiente", "noRequestsFallback": "Aún no hay solicitudes", "nextAppointmentTemplate": "Próxima: {date}", "activeRequestsTemplate": "{count} solicitud activa", "totalRequestsTemplate": "{count} solicitudes en total", "lastServiceTemplate": "Último servicio: {date}", "statuses": { "active": "Activo", "inactive": "Inactivo", "locked": "Bloqueado", "invited": "Invitado", "expired": "Vencido" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitación vencida", "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente", "ACCOUNT_LOCKED": "Cuenta bloqueada" } },
+        "statusOptions": [ { "value": "all", "label": "Todos los estados" }, { "value": "active", "label": "Activo" }, { "value": "inactive", "label": "Inactivo" }, { "value": "invitations", "label": "Invitaciones" }, { "value": "attention", "label": "Requieren atención" } ]
+      }
+    },
     "requests": {
       "requestsList": {
         "title": "Requests",

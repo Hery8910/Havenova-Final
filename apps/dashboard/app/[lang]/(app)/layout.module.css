@@ -28,7 +28,7 @@
   max-width: 1720px;
   height: 100dvh;
   box-sizing: border-box;
-  padding: clamp(20px, 2.6vw, 34px);
+  padding: clamp(18px, 2.2vw, 28px);
   overflow: visible;
 }
 
@@ -38,13 +38,13 @@
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(238px, 278px) minmax(0, 1fr);
-  gap: clamp(8px, 1.8vw, 16px);
+  gap: 16px;
   align-items: stretch;
   overflow: visible;
 }
 
 .workspaceNavCollapsed {
-  grid-template-columns: 92px minmax(0, 1fr);
+  grid-template-columns: 84px minmax(0, 1fr);
 }
 
 .navColumn,
@@ -59,11 +59,11 @@
 .navColumn {
   display: flex;
   min-height: 0;
-  padding: 32px 16px;
+  padding: 24px 12px;
   border: none;
   box-shadow:
-    0 18px 36px -34px color-mix(in srgb, var(--border-strong) 24%, transparent),
-    0 4px 14px -12px color-mix(in srgb, var(--shadow-page-color) 10%, transparent);
+    0 18px 32px -30px color-mix(in srgb, var(--shadow-page-color) 22%, transparent),
+    0 8px 16px -16px color-mix(in srgb, var(--shadow-page-color) 14%, transparent);
 }
 
 .sideNav {
@@ -74,7 +74,7 @@
 .contentColumn {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: clamp(16px, 1.8vw, 22px);
+  gap: 16px;
   padding: 0;
 }
 
@@ -122,27 +122,27 @@
 .header {
   min-width: 0;
   border: none;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .main {
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .mainSurface {
   height: 100%;
   min-width: 0;
-  padding: clamp(20px, 2.5vw, 32px);
+  padding: clamp(18px, 2vw, 26px);
   border-radius: calc(var(--radius-card) + 8px);
-  background-color: color-mix(in srgb, var(--color-card-surface) 100%, transparent);
-  background-image: var(--gradient-card-primary);
-  border: 1px solid color-mix(in srgb, var(--color-card-border) 76%, transparent);
+  background-color: color-mix(in srgb, var(--surface-panel) 96%, transparent);
+  background-image: var(--gradient-card-neutral);
+  border: none;
   box-shadow:
     var(--shadow-card),
-    0 18px 40px -30px color-mix(in srgb, var(--border-strong) 48%, transparent);
-  backdrop-filter: blur(18px) saturate(1.02);
+    0 12px 24px -24px color-mix(in srgb, var(--shadow-page-color) 12%, transparent);
+  backdrop-filter: blur(16px) saturate(1.01);
   overflow: auto;
   scrollbar-width: none;
 }
@@ -224,7 +224,7 @@
 
   .page {
     height: auto;
-    padding: 22px;
+    padding: 18px;
     overflow: visible;
   }
 
@@ -232,7 +232,7 @@
     height: auto;
     min-height: auto;
     display: block;
-    gap: 14px;
+    gap: 16px;
     overflow: visible;
   }
 
@@ -242,14 +242,14 @@
 
   .contentColumn {
     display: grid;
-    gap: 12px;
+    gap: 16px;
     padding: 0;
   }
 
   .mobileTopbar {
     display: block;
     border: none;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
   }
 
   .header {
@@ -269,7 +269,7 @@
 
 @media (min-width: 768px) and (max-width: 1100px) {
   .mobileNavOverlay {
-    padding: 22px;
+    padding: 18px;
     align-items: flex-start;
     justify-content: flex-start;
   }
@@ -280,7 +280,7 @@
     border-radius: calc(var(--radius-card) + 6px);
     box-shadow:
       var(--shadow-card),
-      0 18px 40px -30px color-mix(in srgb, var(--border-strong) 48%, transparent);
+      0 18px 32px -28px color-mix(in srgb, var(--shadow-page-color) 18%, transparent);
   }
 }
 

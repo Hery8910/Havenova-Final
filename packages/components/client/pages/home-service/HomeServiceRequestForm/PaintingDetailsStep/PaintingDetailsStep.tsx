@@ -2,6 +2,7 @@ import type { PropertySizeRange } from '../../../../../../types/services';
 import styles from './PaintingDetailsStep.module.css';
 import { useId } from 'react';
 import { RequestField, RequestQuantityStepper, RequestStepIntro } from '../../../shared';
+import type { HomeServicePaintingDetails, HomeServiceRequestFormTexts } from '../homeServiceRequest.types';
 
 export type PaintingPaintScope =
   | 'one_wall'
@@ -11,29 +12,9 @@ export type PaintingPaintScope =
 
 type Props = {
   showHeader?: boolean;
-  texts: {
-    title: string;
-    description: string;
-    paintScopeLabel: string;
-    paintScopeOptions: Record<PaintingPaintScope, string>;
-    roomsCountLabel: string;
-    roomsCountDecrementAriaLabel?: string;
-    roomsCountIncrementAriaLabel?: string;
-    sizeRangeLabel: string;
-    sizeRangeOptions: Record<PropertySizeRange, string>;
-    descriptionLabel: string;
-    descriptionPlaceholder: string;
-    descriptionHelper: string;
-    photosLabel: string;
-    photosDescription: string;
-  };
+  texts: HomeServiceRequestFormTexts['serviceDetails']['painting'];
   requiredText: string;
-  values: {
-    paintScope: PaintingPaintScope | '';
-    roomsCount: number;
-    sizeRange: PropertySizeRange | '';
-    description: string;
-  };
+  values: HomeServicePaintingDetails;
   errors: {
     paintScope?: string;
     sizeRange?: string;
@@ -43,7 +24,7 @@ type Props = {
   onPaintScopeBlur: () => void;
   onRoomsDecrement: () => void;
   onRoomsIncrement: () => void;
-  onSizeRangeChange: (value: PropertySizeRange | '') => void;
+  onSizeRangeChange: (value: HomeServicePaintingDetails['sizeRange']) => void;
   onSizeRangeBlur: () => void;
   onDescriptionChange: (value: string) => void;
   onDescriptionBlur: () => void;

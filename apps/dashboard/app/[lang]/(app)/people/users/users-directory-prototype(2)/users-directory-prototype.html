@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users Directory Prototype</title>
+  <link rel="stylesheet" href="users-directory-prototype.css" />
+</head>
+<body>
+  <main class="prototype-shell">
+    <section class="users-panel" aria-label="Users directory prototype">
+      <header class="summary-card">
+        <div class="metrics" aria-label="User metrics">
+          <button class="metric" type="button" data-summary-filter="all" aria-label="Show all users">
+            <span class="metric__label">Total users</span>
+            <strong class="metric__value">128</strong>
+          </button>
+          <button class="metric" type="button" data-summary-filter="invitations" aria-label="Show invitations">
+            <span class="metric__label">Pending invites</span>
+            <strong class="metric__value">6</strong>
+          </button>
+          <button class="metric metric--attention" type="button" data-summary-filter="attention" aria-label="Show entries that need attention">
+            <span class="metric__label">Needs attention</span>
+            <strong class="metric__value">9</strong>
+          </button>
+        </div>
+
+        <div class="cta-area" aria-label="User actions">
+          <button class="primary-action" id="inviteButton" type="button">
+            <span aria-hidden="true">＋</span>
+            Invite customer
+          </button>
+          <p class="cta-area__hint">Action area reserved for one or more contextual actions.</p>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="User filters">
+        <label class="field field--grow">
+          <span class="field__label">Search users</span>
+          <span class="input-shell">
+            <span class="input-icon" aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Name, email, or phone" autocomplete="off" />
+          </span>
+        </label>
+
+        <label class="field field--status">
+          <span class="field__label">Status</span>
+          <select id="statusFilter">
+            <option value="all">All statuses</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="invitations">Invitations</option>
+            <option value="attention">Needs attention</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="directory-card">
+        <header class="directory-header">
+          <div>
+            <span class="eyebrow">Directory</span>
+            <h1>Users list</h1>
+          </div>
+          <p>Recent business activity first</p>
+        </header>
+
+        <div class="directory-scroll" id="directoryScroll">
+          <div class="user-list" id="userList">
+            <button class="user-row is-selected" id="user-pending" type="button" data-user-id="user-pending" data-name="Pending profile" data-email="herysantana89@gmail.com" data-status="active" aria-pressed="true">
+              <span class="avatar" aria-hidden="true">P</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Pending profile</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">herysantana89@gmail.com</span>
+                <span class="user-row__meta">
+                  <span>No requests yet</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-anna" type="button" data-user-id="user-anna" data-name="Anna Müller" data-email="anna.mueller@example.de" data-status="active" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">AM</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Anna Müller</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">anna.mueller@example.de</span>
+                <span class="user-row__meta">
+                  <span>3 requests</span>
+                  <span class="meta-separator">•</span>
+                  <span>1 active</span>
+                  <span class="meta-separator">•</span>
+                  <span>Last service 8d ago</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-jonas" type="button" data-user-id="user-jonas" data-name="Jonas Weber" data-email="jonas.weber@example.de" data-status="active" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">JW</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Jonas Weber</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">jonas.weber@example.de</span>
+                <span class="user-row__meta">
+                  <span>7 requests</span>
+                  <span class="meta-separator">•</span>
+                  <span>2 active</span>
+                  <span class="meta-separator">•</span>
+                  <span>Customer since 2025</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-samira" type="button" data-user-id="user-samira" data-name="Samira Khan" data-email="samira.khan@example.de" data-status="inactive" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">SK</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Samira Khan</strong>
+                  <span class="status-dot status-dot--inactive">Inactive</span>
+                </span>
+                <span class="user-row__email">samira.khan@example.de</span>
+                <span class="user-row__meta">
+                  <span>2 requests</span>
+                  <span class="meta-separator">•</span>
+                  <span>Last service 4mo ago</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-luis" type="button" data-user-id="user-luis" data-name="Luis Romero" data-email="luis.romero@example.de" data-status="active" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">LR</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Luis Romero</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">luis.romero@example.de</span>
+                <span class="user-row__meta">
+                  <span>1 request</span>
+                  <span class="meta-separator">•</span>
+                  <span>Last service 3w ago</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-mia" type="button" data-user-id="user-mia" data-name="Mia Schneider" data-email="mia.schneider@example.de" data-status="active" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">MS</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Mia Schneider</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">mia.schneider@example.de</span>
+                <span class="user-row__meta">
+                  <span>11 requests</span>
+                  <span class="meta-separator">•</span>
+                  <span>Next service Jul 18</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="invite-nora" type="button" data-user-id="invite-nora" data-name="Nora Fischer" data-email="nora.fischer@example.de" data-status="invitations" aria-pressed="false">
+              <span class="avatar avatar--invited" aria-hidden="true">NF</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Nora Fischer</strong>
+                  <span class="status-dot status-dot--invited">Invited</span>
+                </span>
+                <span class="user-row__email">nora.fischer@example.de</span>
+                <span class="user-row__meta">
+                  <span>No account access yet</span>
+                  <span class="meta-separator">•</span>
+                  <span>Invite expires in 2d</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="user-row" id="user-emre" type="button" data-user-id="user-emre" data-name="Emre Yilmaz" data-email="emre.yilmaz@example.de" data-status="active" aria-pressed="false">
+              <span class="avatar" aria-hidden="true">EY</span>
+              <span class="user-row__main">
+                <span class="user-row__topline">
+                  <strong>Emre Yilmaz</strong>
+                  <span class="status-dot status-dot--active">Active</span>
+                </span>
+                <span class="user-row__email">emre.yilmaz@example.de</span>
+                <span class="user-row__meta">
+                  <span>5 requests</span>
+                  <span class="meta-separator">•</span>
+                  <span>Last service 2w ago</span>
+                </span>
+              </span>
+              <span class="row-chevron" aria-hidden="true">›</span>
+            </button>
+          </div>
+
+          <div class="empty-state" id="emptyState" hidden>
+            <strong>No users found</strong>
+            <span>Try another search term or status filter.</span>
+          </div>
+
+          <div class="load-more" id="loadMore" aria-live="polite">
+            <div class="skeleton-row" aria-hidden="true">
+              <span class="skeleton skeleton--avatar"></span>
+              <span class="skeleton-lines">
+                <span class="skeleton skeleton--line-lg"></span>
+                <span class="skeleton skeleton--line-md"></span>
+                <span class="skeleton skeleton--line-sm"></span>
+              </span>
+            </div>
+            <span class="load-more__label">Loading more users…</span>
+          </div>
+
+          <div class="end-state" id="endState" hidden>
+            All loaded users are shown.
+          </div>
+
+          <div class="scroll-sentinel" id="scrollSentinel" aria-hidden="true"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog class="invite-dialog" id="inviteDialog">
+    <form method="dialog" class="invite-dialog__content">
+      <div>
+        <span class="eyebrow">Prototype interaction</span>
+        <h2>Invite customer</h2>
+        <p>The company can invite a customer after an offline interaction. The customer receives a secure invitation, sets a password, and gains direct access to the platform.</p>
+      </div>
+      <label class="field">
+        <span class="field__label">Email address</span>
+        <input type="email" placeholder="client@example.com" />
+      </label>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary-action">Cancel</button>
+        <button value="invite" class="primary-action">Send invite</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const userList = document.getElementById('userList');
+    const emptyState = document.getElementById('emptyState');
+    const loadMore = document.getElementById('loadMore');
+    const endState = document.getElementById('endState');
+    const scrollSentinel = document.getElementById('scrollSentinel');
+    const directoryScroll = document.getElementById('directoryScroll');
+    const inviteDialog = document.getElementById('inviteDialog');
+
+    const stateKey = 'users-directory-prototype-state';
+    let simulatedBatch = 0;
+    let isLoading = false;
+
+    const extraUsers = [
+      ["user-sofia", "Sofia Becker", "sofia.becker@example.de", "active", "SB", "6 requests", "1 active", "Next service Jul 24"],
+      ["user-david", "David Klein", "david.klein@example.de", "active attention", "DK", "2 requests", "", "Email not verified"],
+      ["user-leila", "Leila Haddad", "leila.haddad@example.de", "inactive", "LH", "1 request", "", "Last service 7mo ago"],
+      ["user-paul", "Paul Neumann", "paul.neumann@example.de", "active", "PN", "9 requests", "", "Last service 3d ago"],
+      ["user-ines", "Ines Costa", "ines.costa@example.de", "active", "IC", "4 requests", "1 active", "Customer since 2025"],
+      ["invite-martin", "Martin Vogel", "martin.vogel@example.de", "invitations attention", "MV", "No account access yet", "", "Invitation expired"]
+    ];
+
+    function getRows() {
+      return [...document.querySelectorAll('.user-row')];
+    }
+
+    function saveViewState() {
+      const selected = document.querySelector('.user-row.is-selected');
+      sessionStorage.setItem(stateKey, JSON.stringify({
+        selectedUserId: selected?.dataset.userId || null,
+        search: searchInput.value,
+        status: statusFilter.value,
+        scrollTop: directoryScroll.scrollTop,
+        simulatedBatch
+      }));
+    }
+
+    function restoreViewState() {
+      const saved = sessionStorage.getItem(stateKey);
+      if (!saved) return;
+
+      try {
+        const state = JSON.parse(saved);
+        searchInput.value = state.search || '';
+        statusFilter.value = state.status || 'all';
+        simulatedBatch = Number(state.simulatedBatch || 0);
+
+        if (simulatedBatch > 0) appendExtraUsers(false);
+        updateList();
+
+        const selected = state.selectedUserId && document.querySelector(`[data-user-id="${state.selectedUserId}"]`);
+        if (selected) selectRow(selected, false);
+
+        requestAnimationFrame(() => {
+          directoryScroll.scrollTop = Number(state.scrollTop || 0);
+        });
+      } catch {
+        sessionStorage.removeItem(stateKey);
+      }
+    }
+
+    function selectRow(row, shouldSave = true) {
+      getRows().forEach((item) => {
+        item.classList.remove('is-selected');
+        item.setAttribute('aria-pressed', 'false');
+      });
+      row.classList.add('is-selected');
+      row.setAttribute('aria-pressed', 'true');
+      if (shouldSave) saveViewState();
+    }
+
+    function attachRowEvents() {
+      getRows().forEach((row) => {
+        if (row.dataset.bound === 'true') return;
+        row.dataset.bound = 'true';
+        row.addEventListener('click', () => selectRow(row));
+      });
+    }
+
+    function updateList() {
+      const query = searchInput.value.trim().toLowerCase();
+      const selectedStatus = statusFilter.value;
+      let count = 0;
+
+      getRows().forEach((row) => {
+        const searchable = `${row.dataset.name} ${row.dataset.email}`.toLowerCase();
+        const statuses = row.dataset.status.split(' ');
+        const matchesQuery = searchable.includes(query);
+        const matchesStatus = selectedStatus === 'all' || statuses.includes(selectedStatus);
+        const visible = matchesQuery && matchesStatus;
+
+        row.hidden = !visible;
+        if (visible) count += 1;
+      });
+
+      emptyState.hidden = count !== 0;
+      saveViewState();
+    }
+
+    function createExtraUserRow(user) {
+      const [id, name, email, statuses, initials, metaOne, metaTwo, metaThree] = user;
+      const isInactive = statuses.includes('inactive');
+      const isInvited = statuses.includes('invitations');
+      const hasAttention = statuses.includes('attention');
+      const statusLabel = isInvited ? 'Invited' : isInactive ? 'Inactive' : 'Active';
+      const statusClass = isInvited ? 'status-dot--invited' : isInactive ? 'status-dot--inactive' : 'status-dot--active';
+      const avatarClass = isInvited ? 'avatar--invited' : hasAttention ? 'avatar--warning' : '';
+      const metaParts = [metaOne, metaTwo, metaThree].filter(Boolean);
+
+      const row = document.createElement('button');
+      row.className = 'user-row';
+      row.id = id;
+      row.type = 'button';
+      row.dataset.userId = id;
+      row.dataset.name = name;
+      row.dataset.email = email;
+      row.dataset.status = statuses;
+      row.setAttribute('aria-pressed', 'false');
+      row.innerHTML = `
+        <span class="avatar ${avatarClass}" aria-hidden="true">${initials}</span>
+        <span class="user-row__main">
+          <span class="user-row__topline">
+            <strong>${name}</strong>
+            <span class="status-dot ${statusClass}">${statusLabel}</span>
+          </span>
+          <span class="user-row__email">${email}</span>
+          <span class="user-row__meta">
+            ${metaParts.map((part, index) => `${index ? '<span class="meta-separator">•</span>' : ''}<span class="${hasAttention && index === metaParts.length - 1 ? 'warning-text' : ''}">${part}</span>`).join('')}
+          </span>
+        </span>
+        <span class="row-chevron" aria-hidden="true">›</span>
+      `;
+      return row;
+    }
+
+    function appendExtraUsers(updateBatch = true) {
+      extraUsers.forEach((user) => {
+        if (!document.getElementById(user[0])) userList.appendChild(createExtraUserRow(user));
+      });
+      if (updateBatch) simulatedBatch = 1;
+      attachRowEvents();
+      updateList();
+    }
+
+    async function simulateInfiniteLoad() {
+      if (isLoading || simulatedBatch >= 1 || searchInput.value || statusFilter.value !== 'all') return;
+      isLoading = true;
+      loadMore.hidden = false;
+      await new Promise((resolve) => setTimeout(resolve, 700));
+      appendExtraUsers(true);
+      loadMore.hidden = true;
+      endState.hidden = false;
+      isLoading = false;
+      saveViewState();
+    }
+
+    searchInput.addEventListener('input', updateList);
+    statusFilter.addEventListener('change', updateList);
+    directoryScroll.addEventListener('scroll', () => {
+      window.clearTimeout(directoryScroll._saveTimer);
+      directoryScroll._saveTimer = window.setTimeout(saveViewState, 100);
+    });
+
+    document.querySelectorAll('[data-summary-filter]').forEach((metric) => {
+      metric.addEventListener('click', () => {
+        statusFilter.value = metric.dataset.summaryFilter;
+        updateList();
+      });
+    });
+
+    document.getElementById('inviteButton').addEventListener('click', () => {
+      inviteDialog.showModal();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) simulateInfiniteLoad();
+    }, { root: directoryScroll, rootMargin: '180px 0px' });
+
+    attachRowEvents();
+    restoreViewState();
+    observer.observe(scrollSentinel);
+  </script>
+</body>
+</html>

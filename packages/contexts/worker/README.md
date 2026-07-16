@@ -92,6 +92,7 @@ Gap todavía abierto:
 - `WorkerContext` ya usa la sesión `auth` como bootstrap de identidad mínima
 - `WorkerContext` ya comparte con `AdminContext` la base reusable [useSessionComplement.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/sessionComplement/useSessionComplement.ts:1)
 - el contexto ya persiste estado local para continuidad de UX
+- el complemento ya expone un estado local controlado mientras resuelve o reintenta el remoto, en lugar de colapsar el árbol protegido
 
 ### Pendiente
 
@@ -100,6 +101,37 @@ Gap todavía abierto:
 - documentar `set-password` como activación por invitación además de reset
 - revisar qué defaults de `worker` hoy siguen heredando demasiado desde `auth`
 - mantener la misma forma pública que `admin` salvo diferencias reales de dominio
+
+Hecho relevante ya alineado:
+
+- la variante `set-password` con `inviteToken` ya comparte implementación base con `apps/dashboard`
+- eso fija el onboarding por invitación como parte de la capa reusable de `auth`, no como dos páginas paralelas por app
+
+## Flujo Operativo Del Contexto
+
+### Primer acceso útil
+
+1. El usuario entra a `apps/worker` por invitación o login ya activado.
+2. `AuthProvider` resuelve sesión.
+3. El árbol protegido monta `WorkerProvider`.
+4. `WorkerContext` usa `auth.userClientId + clientId` para recuperar el complemento operativo.
+5. Si existe dato remoto, lo persiste y lo expone a la UI.
+
+### Recuperación y continuidad
+
+1. Si la sesión sigue viva pero el complemento worker falla por red o `5xx`, el contexto puede mantener continuidad local.
+2. Si la sesión cae, `WorkerContext` no debe fingir identidad operativa válida.
+3. Idioma, tema y avatar se gestionan aquí, no en `auth`.
+4. El árbol protegido no debería quedar vacío solo porque el complemento todavía esté resolviendo su copia remota si ya existe estado local controlado.
+
+### Mensajes, errores y salidas
+
+`WorkerContext` no es una página pública, pero condiciona la UX posterior al login:
+
+- define qué identidad visible se muestra al worker
+- usa alerts para errores de carga o actualización del complemento
+- debe mantener separada la noción de error de sesión vs error de perfil operativo
+- cuando una vista worker necesita fallback de popup o loading, debe resolverlo con `getI18nFallbacks(language)` para mantener paridad de copy entre `en`, `es` y `de`
 
 ## Regla de reproducción
 

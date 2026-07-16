@@ -1,5 +1,16 @@
 # Dashboard App Docs
 
+## Estado documental
+
+Para `people/users`, la fuente local de estado es
+`people/users/USERS_DIRECTORY_GAP_ANALYSIS.md`. Los prototipos y planes antiguos
+no deben usarse para inferir qué está implementado.
+
+La especificación completa de backend `tenant-users` vive en el repositorio
+hermano `/home/heriberto/Escritorio/Backend/backend` y no está incluida en este
+repo. `people/users/USERS_DIRECTORY_BACKEND_DECISIONS.md` conserva un resumen,
+pero cualquier cambio contractual exige consultar el paquete backend canónico.
+
 Esta carpeta concentra la documentacion funcional y estructural del `dashboard`.
 
 Objetivo:
@@ -36,9 +47,14 @@ Documentos iniciales:
   - define el dominio `people` como base reusable para `user/admin/worker/manager`
   - deja constancia de la migracion conceptual desde `clients/team/network`
 
+- [DASHBOARD_PEOPLE_DIRECTORY_BACKEND_STANDARD.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/docs/DASHBOARD_PEOPLE_DIRECTORY_BACKEND_STANDARD.md:1)
+  - fija el contrato backend reusable para superficies `people`
+  - estandariza `summary`, `directory`, `detail`, `entryId` y `cursor`
+  - separa lo reusable del patron de lo especifico de cada actor
+
 - [TENANT_USERS_PAGE.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/docs/TENANT_USERS_PAGE.md:1)
   - documenta la primera superficie real de `people`
-  - resume contrato backend, composicion por pagina, componentes locales y siguientes pasos
+  - resume contrato V2, composición, estado implementado y deuda actual
 
 - [DASHBOARD_DIRECTORY_PAGE_STANDARD.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/docs/DASHBOARD_DIRECTORY_PAGE_STANDARD.md:1)
   - fija el patron reusable `directory + panel`

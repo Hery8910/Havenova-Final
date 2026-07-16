@@ -2,18 +2,11 @@ import styles from './ServiceDetailsStep.module.css';
 import type { HomeServiceKind } from '../homeServiceTypes';
 import { useId } from 'react';
 import { RequestField, RequestStepIntro } from '../../../shared';
+import type { HomeServiceRequestFormTexts } from '../homeServiceRequest.types';
 
 type Props = {
   showHeader?: boolean;
-  texts: {
-    title: string;
-    description: string;
-    selectedServiceLabel: string;
-    detailsLabel: string;
-    detailsPlaceholder: string;
-    helper: string;
-    services: Record<HomeServiceKind, { title: string; description: string; detailsHint: string }>;
-  };
+  texts: Omit<HomeServiceRequestFormTexts['serviceDetails'], 'painting'>;
   selectedServiceType: HomeServiceKind;
   details: string;
   error?: string;
@@ -49,6 +42,9 @@ export default function ServiceDetailsStep({
         <h4 className={styles.serviceTitle}>{selectedService.title}</h4>
         <p className={styles.serviceDescription}>{selectedService.description}</p>
         <p className={styles.hint}>{selectedService.detailsHint}</p>
+        {selectedService.statusNote ? (
+          <p className={styles.hint}>{selectedService.statusNote}</p>
+        ) : null}
       </article>
 
       <RequestField

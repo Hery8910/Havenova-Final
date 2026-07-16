@@ -1,4 +1,3 @@
-import styles from './layout.module.css';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 

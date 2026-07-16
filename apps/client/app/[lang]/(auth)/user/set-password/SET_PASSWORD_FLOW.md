@@ -137,3 +137,11 @@ Fuente:
 - Esta página tiene entradas de error antes de cualquier submit real.
 - A diferencia de `register` o `login`, aquí el token de URL condiciona completamente el flujo.
 - la navegación de CTAs (`requestNewLink`, `goToHome`, `goToLogin`, `reload`) ya quedó alineada con la utilidad shared de acciones auth, sin cambiar el comportamiento visible del flujo
+
+## Intención visible de las salidas
+
+- error de enlace (`sin token`, `status=error`, `invalid token`, `expired token`): explicar que el enlace ya no sirve y empujar a pedir uno nuevo o salir a ruta segura
+- `loading`: comunicar actualización de credencial, no creación de sesión
+- `USER_RESET_PASSWORD_SUCCESS`: confirmar cambio de contraseña y enviar a `login` como siguiente paso único
+- `blocked`, `not found` y `validation`: frenar el flujo sin prometer recuperación automática
+- error técnico: permitir retry sin exponer detalle de backend

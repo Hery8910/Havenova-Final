@@ -10,6 +10,10 @@
       "title": "Verifying your email…",
       "description": "Please wait while we confirm your verification link."
     },
+    "resendVerification": {
+      "title": "Preparing a new verification email…",
+      "description": "Please wait a moment."
+    },
     "login": {
       "title": "Logging you in…",
       "description": "We are preparing your session. This may take a moment."
@@ -17,6 +21,14 @@
     "dashboardLogin": {
       "title": "Accessing your profile…",
       "description": "We are preparing your workspace. This may take a moment."
+    },
+    "forgotPassword": {
+      "title": "Preparing password reset…",
+      "description": "Please wait a moment."
+    },
+    "resetPassword": {
+      "title": "Updating your password…",
+      "description": "Please wait a moment."
     },
     "createUser": {
       "title": "Loading your account…",

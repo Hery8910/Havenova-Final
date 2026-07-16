@@ -1,12 +1,7 @@
 import type {
   CreateServiceRequestInput,
   CustomerType,
-  FurnitureAssemblyRequestDetails,
-  KitchenAssemblyRequestDetails,
-  MovingHelpRequestDetails,
-  PaintingRequestDetails,
   PropertySizeRange,
-  RepairsInstallationsRequestDetails,
 } from '../../../../../types/services';
 import type { SelectedCalendarSlot } from '../../../../../types/calendar';
 import type { ServiceRequestWorkAddressSelection } from '../../shared/serviceRequest/serviceRequestUi.types';
@@ -30,6 +25,7 @@ export type HomeServiceRequestFieldKey =
 
 export type HomeServiceRequestFieldErrors = Partial<Record<HomeServiceRequestFieldKey, string>>;
 export type HomeServiceRequestTouchedFields = Record<HomeServiceRequestFieldKey, boolean>;
+export type HomeServiceRequestStep = 1 | 2 | 3 | 4 | 5;
 
 export type HomeServicePaintingDetails = {
   paintScope: PaintingFormPaintScope | '';
@@ -68,6 +64,7 @@ export interface HomeServiceRequestFormTexts {
       details: { heading: string; ariaLabel?: string };
       scheduling: { heading: string; ariaLabel?: string };
       serviceAddress: { heading: string; ariaLabel?: string };
+      review?: { heading: string; ariaLabel?: string };
     };
   };
   customerType: {
@@ -85,7 +82,15 @@ export interface HomeServiceRequestFormTexts {
     detailsLabel: string;
     detailsPlaceholder: string;
     helper: string;
-    services: Record<HomeServiceKind, { title: string; description: string; detailsHint: string }>;
+    services: Record<
+      HomeServiceKind,
+      {
+        title: string;
+        description: string;
+        detailsHint: string;
+        statusNote?: string;
+      }
+    >;
     painting: {
       title: string;
       description: string;
@@ -105,9 +110,32 @@ export interface HomeServiceRequestFormTexts {
   };
   scheduling?: ServiceRequestSchedulingTexts;
   serviceAddress?: ServiceRequestAddressTexts;
+  review: {
+    title: string;
+    description: string;
+    sections: {
+      customer: string;
+      details: string;
+      scheduling: string;
+      address: string;
+    };
+    labels: {
+      customerType: string;
+      serviceType: string;
+      serviceDetails: string;
+      paintScope: string;
+      roomsCount: string;
+      sizeRange: string;
+      visitDate: string;
+      visitTime: string;
+      address: string;
+    };
+    emptyDetails: string;
+  };
   common: {
     next: string;
     back: string;
+    review: string;
     submit: string;
   };
   errors: {
@@ -115,83 +143,3 @@ export interface HomeServiceRequestFormTexts {
     detailsTooLong: string;
   };
 }
-
-export const HOME_SERVICE_TYPE_ORDER: HomeServiceKind[] = [
-  'painting',
-  'repairs-installations',
-  'furniture-assembly',
-  'kitchen-assembly',
-  'moving-help',
-];
-
-export const mapHomeServiceKindToCanonicalType = (
-  serviceType: HomeServiceKind
-): HomeServiceCanonicalType => {
-  switch (serviceType) {
-    case 'painting':
-      return 'painting';
-    case 'repairs-installations':
-      return 'repairs_installations';
-    case 'furniture-assembly':
-      return 'furniture_assembly';
-    case 'kitchen-assembly':
-      return 'kitchen_assembly';
-    case 'moving-help':
-      return 'moving_help';
-  }
-};
-
-export const mapPaintingScopeToRequestScope = (
-  paintScope: PaintingFormPaintScope
-): PaintingRequestDetails['paintScope'] => {
-  switch (paintScope) {
-    case 'one_wall':
-    case 'one_room':
-      return 'single_room';
-    case 'multiple_rooms':
-      return 'multiple_rooms';
-    case 'entire_apartment':
-      return 'full_property';
-  }
-};
-
-export const buildHomeServiceDetails = (
-  serviceType: HomeServiceKind,
-  input: {
-    serviceDetails: string;
-    paintingDetails: HomeServicePaintingDetails;
-  }
-):
-  | PaintingRequestDetails
-  | RepairsInstallationsRequestDetails
-  | FurnitureAssemblyRequestDetails
-  | KitchenAssemblyRequestDetails
-  | MovingHelpRequestDetails => {
-  const description = input.serviceDetails.trim();
-
-  switch (serviceType) {
-    case 'painting':
-      return {
-        paintScope: mapPaintingScopeToRequestScope(input.paintingDetails.paintScope || 'one_room'),
-        roomsCount: input.paintingDetails.roomsCount,
-        sizeRange: input.paintingDetails.sizeRange || undefined,
-        description: input.paintingDetails.description.trim(),
-      };
-    case 'repairs-installations':
-      return {
-        description,
-      };
-    case 'furniture-assembly':
-      return {
-        description,
-      };
-    case 'kitchen-assembly':
-      return {
-        description,
-      };
-    case 'moving-help':
-      return {
-        description,
-      };
-  }
-};

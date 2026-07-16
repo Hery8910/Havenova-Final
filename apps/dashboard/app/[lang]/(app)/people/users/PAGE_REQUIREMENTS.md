@@ -1,207 +1,229 @@
-# People Users Page Requirements
+# People Users Directory — requisitos
+
+## Autoridad
+
+Este documento define el comportamiento esperado de `/people/users` en
+frontend. El contrato de negocio/HTTP pertenece al backend V2 y se resume en
+`USERS_DIRECTORY_BACKEND_DECISIONS.md`.
+
+El cumplimiento actual no se infiere de este archivo. Consultar
+`USERS_DIRECTORY_GAP_ANALYSIS.md`.
 
 ## Objetivo
 
-Aterrizar los requisitos tecnicos y funcionales de `/people/users` como primera pagina real del patron de directorio del dashboard.
+Permitir que un admin del tenant encuentre, entienda y gestione cuentas de
+cliente e invitaciones abiertas sin abandonar la superficie principal.
 
-## Requisitos Funcionales
+## Alcance
 
-La pagina debe permitir:
+Incluye:
 
-- ver el listado de usuarios del tenant
-- buscar por identidad util
-- filtrar por estado principal
-- seleccionar un usuario sin navegar a otra pagina operativa
-- ver el detalle del usuario seleccionado
-- iniciar el flujo de invitacion desde el header
+- cuentas `user` activas, inactivas, bloqueadas o no verificadas;
+- invitaciones pending vigentes o expiradas;
+- summary global;
+- búsqueda y filtro server-side;
+- detail discriminado por entry;
+- invite, resend y revoke.
 
-No debe requerir:
+No incluye:
 
-- navegar a `/people/users/[userClientId]` para trabajar el detalle
-- recargar toda la pagina para cambiar de seleccion
+- admins, workers o managers;
+- invitaciones accepted/revoked como rows;
+- historial de auditoría;
+- gestión operativa completa de service requests;
+- orden manual o filtros avanzados.
 
-## Requisitos Del Header
+## Contrato de datos obligatorio
 
-Debe incluir:
+Frontend debe consumir exclusivamente:
 
-- titulo del dominio
-- descripcion corta
-- CTA principal `Invitar usuario`
+```text
+GET  /api/home-services/dashboard/users/summary
+GET  /api/home-services/dashboard/users/directory
+GET  /api/home-services/dashboard/users/entries/:entryId
+POST /api/home-services/dashboard/users/invite
+POST /api/home-services/dashboard/users/invitations/:invitationId/resend
+POST /api/home-services/dashboard/users/invitations/:invitationId/revoke
+```
 
-Puede admitir un segundo CTA mas adelante si aparece una necesidad real.
-No debe empezar con multiples acciones de baja relevancia.
+No debe consumir ni mantener fallback para:
 
-## Requisitos Del Overview
+```text
+GET  /api/home-services/dashboard/users
+GET  /api/home-services/dashboard/users/:userClientId
+POST /api/home-services/dashboard/users/resend-invite
+```
 
-Debe mostrar maximo 3 indicadores.
+## Summary
 
-Candidatos esperados:
+Máximo tres KPIs globales:
 
-- total de usuarios
-- invitados pendientes
-- usuarios activos
+- `Total users` → filtro `all`;
+- `Pending invites` → filtro `invitations`;
+- `Needs attention` → filtro `attention`.
 
-El contrato backend ideal debe enviar estos agregados ya preparados.
-`page`, `limit` y similares no cuentan como overview final.
+Reglas:
 
-## Requisitos De Filtros
+- no calcular desde rows;
+- conservar búsqueda al activar un KPI;
+- no presentar un fallo/loading como valor real `0`;
+- cada KPI interactivo es un botón con estado activo accesible.
 
-Base obligatoria:
+## Búsqueda y filtros
 
-- search
-- status
+- búsqueda por nombre, email o teléfono;
+- debounce aproximado de 300 ms;
+- no enviar `q` de un carácter;
+- cancelar la primera request incompatible anterior;
+- filtro único: `all | active | inactive | invitations | attention`;
+- un cambio de búsqueda/filtro descarta cursor y páginas incompatibles;
+- summary no cambia con búsqueda o filtro.
 
-La prioridad del buscador debe ser:
+## Directorio
 
-- nombre
-- email
-- telefono si existe
+Cada row debe comunicar:
 
-El select primario debe responder al estado operativo mas util para el admin.
+1. identidad o fallback `Pending profile`;
+2. email;
+3. un estado principal;
+4. contexto operativo corto;
+5. atención sólo cuando exista una razón backend.
 
-## Requisitos De La Lista
+Estado principal:
 
-Cada item debe comunicar:
+- user: `active | inactive | locked`;
+- invitation: `pending | expired`.
 
-- identidad principal
-- email
-- estado
-- una senal temporal o de completitud
+No mostrar `unverified` como badge permanente salvo que produzca
+`EMAIL_UNVERIFIED_STALE`. No generar atención por perfil, teléfono o requests
+ausentes.
 
-Cada item debe tener una unica accion primaria:
+La única acción primaria de la row es seleccionar por `entryId`.
 
-- seleccionar
+## Carga incremental
 
-La lista no debe intentar resolver:
+- bloques de 25 por defecto;
+- cursor opaco;
+- deduplicación por `entryId`;
+- no pedir otra página durante una carga activa;
+- distinguir initial loading, refreshing y loading more;
+- mantener rows previas durante refresh válido;
+- mostrar empty, no results, error/retry y end of results.
 
-- acciones destructivas inline
-- formularios inline
-- informacion de detalle completa
+La carga principal usa infinite scroll con `IntersectionObserver`. El botón
+`Load more` se conserva sólo como fallback accesible si el observer no está
+disponible o no se activa por el contexto de navegación.
 
-## Requisitos Del Panel Derecho
+## Panel derecho
+
+Modos explícitos:
 
 ### Modo `empty`
 
-Debe:
-
-- explicar para que sirve el panel
-- orientar hacia seleccionar o invitar
+- orienta a seleccionar o invitar;
+- no simula datos.
 
 ### Modo `detail`
 
-Debe:
-
-- mostrar identidad principal
-- mostrar estado
-- mostrar metadata esencial
-- mostrar complemento `profile` sin asumir que siempre existe
+- carga siempre `/entries/:entryId`;
+- renderiza por `kind`;
+- muestra identidad, acceso/invitación y relación comercial;
+- `profile` puede ser `null`;
+- `workOrders=null` significa dominio no integrado;
+- sólo ofrece acciones presentes en `availableActions`.
 
 ### Modo `invite`
 
-Debe:
+- formulario real dentro del panel;
+- body `{ email, name, phone?, language }`;
+- nunca envía `clientId`;
+- permite volver sin perder lista, búsqueda o filtro;
+- distingue invitación creada y renovada;
+- decide conflictos por `code`, no por `message`.
 
-- mantener la misma estructura base del panel
-- alojar el formulario de invitacion
-- permitir volver al estado anterior sin perder el contexto de la lista
+## Mutaciones
 
-## Requisitos De Datos
+Después de éxito:
 
-### List endpoint
+- invalidar/actualizar summary y directory;
+- refrescar detail cuando corresponda;
+- seleccionar el `entryId` devuelto si el flujo lo requiere.
 
-Debe cubrir:
+Casos obligatorios:
 
-- items de directorio
-- overview
-- filtros compatibles
-- paginacion si sigue siendo necesaria
+- `TENANT_USER_ALREADY_EXISTS`;
+- `TENANT_USER_INVITATION_ALREADY_PENDING`;
+- `TENANT_USER_INVITATION_DELIVERY_FAILED`;
+- `TENANT_USER_INVITATION_ACCEPTED`;
+- `TENANT_USER_INVITATION_REVOKED`.
 
-### Detail endpoint
+Delivery failure no reintenta invite automáticamente. Resend y revoke necesitan
+estado pending, bloqueo de duplicados y feedback de éxito/error.
 
-Debe cubrir:
+## URL y restore
 
-- `auth`
-- `userClient`
-- `profile` opcional
-- metadata de estado
+Estado mínimo:
 
-### Invite endpoint
+```text
+selected=<entryId>
+mode=detail|invite
+search=<term>
+status=<filter>
+```
 
-Debe existir como flujo propio del dominio.
-El frontend no debe improvisar el payload final sin documentarlo.
+La implementación final debe:
 
-## Requisitos Arquitectonicos
+- cachear páginas por búsqueda/filtro;
+- restaurar por `selectedEntryId`;
+- ubicar la row con `scrollIntoView`;
+- devolver foco lógico;
+- cargar páginas adicionales con límite defensivo si la entry no está cacheada;
+- usar `scrollTop` sólo como apoyo.
 
-La carpeta de la pagina debe concentrar:
-
-- docs
-- copy
-- tipos locales
-- controlador local
-- componentes propios de la ruta
-
-Solo deben vivir fuera:
-
-- primitives realmente shared
-- servicios compartidos
-- tipos canonicos del backend/frontend
-
-## Requisitos De Estado
-
-El estado minimo de la pagina debe cubrir:
-
-- `mode`
-- `selectedUserClientId`
-- `search`
-- `status`
-- `list loading/error`
-- `detail loading/error`
-
-`mode` debe ser explicito.
-No debe inferirse de forma fragil solo por presencia o ausencia de `detail`.
-
-## Requisitos De URL
-
-Se recomienda soportar:
-
-- `selected`
-- `mode`
-- `search`
-- `status`
-
-La URL debe poder restaurar el contexto principal tras reload.
-
-## Requisitos De Accesibilidad
-
-La pagina debe cumplir como minimo:
-
-- un `h1`
-- labels visibles en filtros
-- seleccion visible y accesible en lista
-- estados vacios con heading y descripcion
-- errores comprensibles
-- foco claro para teclado
-
-## Requisitos Responsive
+## Responsive
 
 Desktop:
 
-- dos columnas
-- lista y panel visibles a la vez
+- directorio y panel simultáneos;
+- scroll independiente;
+- selección estable.
 
 Mobile:
 
-- lista primero
-- panel despues
-- densidad reducida
-- jerarquia intacta
+- lista y detail se comportan como vistas distinguibles;
+- abrir detail no pierde query state;
+- volver restaura la row seleccionada, carga acumulada y foco.
 
-## Criterios De Aprobacion
+Apilar ambos paneles verticalmente no cumple por sí solo el cierre mobile.
 
-La pagina puede considerarse base reusable cuando:
+## Accesibilidad e i18n
 
-1. el overview ya no dependa de metadata tecnica
-2. el panel derecho soporte al menos `empty`, `detail` e `invite`
-3. la seleccion viva dentro de la misma pagina
-4. la capa visual no haga fetch
-5. la carpeta local concentre la mayoria del codigo especifico
-6. la misma estructura pueda repetirse en `admins`, `workers` y `managers`
+- un solo `h1` provisto por el shell;
+- labels visibles en filtros;
+- navegación completa por teclado;
+- foco visible;
+- estado seleccionado semántico;
+- loading/error/resultado de acciones anunciado sin ruido;
+- estado nunca comunicado sólo por color;
+- todo el copy visible, los estados y las razones de atención se resuelven por locale mediante `pages.dashboard.usersDirectory`; los componentes sólo reciben copy tipado.
+
+## Separación técnica
+
+- `page.tsx`: entrada server-first y parseo inicial;
+- controlador local: fetch, cache, URL y acciones;
+- vistas: presentacionales, sin fetch;
+- servicios: transporte y preservación de códigos;
+- tipos compartidos: contrato canónico;
+- lógica de dominio: backend, nunca duplicada en UI.
+
+## Criterios de aprobación
+
+1. sólo existe integración V2;
+2. summary, filtros y rows son coherentes con backend;
+3. user e invitation funcionan de extremo a extremo;
+4. errores de invitación se resuelven por código;
+5. lista larga y retorno mobile preservan contexto;
+6. todos los estados visuales tienen feedback accesible;
+7. copy está internacionalizado;
+8. TypeScript, contract tests y tests de interacción pasan;
+9. el flujo se valida manualmente contra backend V2 desplegado.

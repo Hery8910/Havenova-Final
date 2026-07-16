@@ -1,0 +1,76 @@
+.page {
+  display: grid;
+  gap: 18px;
+  padding: 4px;
+}
+
+.hero,
+.routeCard {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 24px;
+  border-radius: var(--radius-card);
+  background-color: color-mix(in srgb, var(--color-card-surface) 96%, transparent);
+  background-image: var(--gradient-card-neutral);
+  border: 1px solid color-mix(in srgb, var(--color-card-border) 76%, transparent);
+  box-shadow:
+    var(--shadow-card),
+    0 12px 26px -22px color-mix(in srgb, var(--border-strong) 44%, transparent);
+}
+
+.hero {
+  display: grid;
+  gap: 12px;
+}
+
+.eyebrow,
+.routeLabel {
+  margin: 0;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+  line-height: 1.08;
+}
+
+.description,
+.nextStep,
+.routeValue,
+.bulletList {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.nextStep {
+  color: var(--text-primary);
+}
+
+.routeCard {
+  display: grid;
+  gap: 10px;
+}
+
+.routeValue {
+  font-family: var(--font-family-mono, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace);
+  font-size: 0.95rem;
+}
+
+.bulletList {
+  padding-left: 1.15rem;
+}
+
+@media (max-width: 767px) {
+  .hero,
+  .routeCard {
+    padding: 18px 16px;
+  }
+}

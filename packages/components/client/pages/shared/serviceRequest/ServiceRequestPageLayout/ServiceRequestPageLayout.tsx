@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react';
+import React from 'react';
 import styles from './ServiceRequestPageLayout.module.css';
 
 interface ServiceRequestPageLayoutProps {
   dataPage: string;
-  hero: ReactNode;
-  alert?: ReactNode;
-  form: ReactNode;
-  faq: ReactNode;
-  related: ReactNode;
+  hero: React.ReactNode;
+  alert?: React.ReactNode;
+  form: React.ReactNode;
+  faq: React.ReactNode;
+  related: React.ReactNode;
 }
 
 export default function ServiceRequestPageLayout({

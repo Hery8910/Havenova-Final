@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useId } from 'react';
 import styles from './ServiceCrossCtaSection.module.css';
-import { href } from '../../../../utils';
+import { href } from '../../../../../utils/navigation';
 
 type ServiceCrossCtaButtonVariant = 'primary' | 'secondary' | 'accent' | 'outline';
 type ServiceCrossCtaSurface = 'about' | 'cleaning-service' | 'home-service';

@@ -146,5 +146,3 @@ export function ProfileOverviewPageView({ viewModel }: ProfileOverviewPageViewPr
     </section>
   );
 }
-
-export const ProfileOverviewView = ProfileOverviewPageView;

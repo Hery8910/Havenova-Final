@@ -1,14 +1,12 @@
-'use client';
+import { ProfileSubroutePlaceholder } from '../ProfileSubroutePlaceholder';
+import { getProfileSubroutePlaceholder } from '../profileSubroutePlaceholders';
 
-import { useI18n } from '@/packages/contexts';
+export default function OrdersPage({
+  params,
+}: {
+  params: { lang: 'de' | 'en' | 'es' };
+}) {
+  const copy = getProfileSubroutePlaceholder('orders', params.lang);
 
-export default function OrdersPage() {
-  const { texts } = useI18n();
-  const title = texts.components?.dashboard?.sideNav?.user?.pages?.workOrders ?? 'Work orders';
-
-  return (
-    <section aria-labelledby="profile-orders-title">
-      <h2 id="profile-orders-title">{title}</h2>
-    </section>
-  );
+  return <ProfileSubroutePlaceholder {...copy} routePath={`/${params.lang}/profile/orders`} />;
 }

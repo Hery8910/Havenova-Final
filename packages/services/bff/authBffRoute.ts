@@ -8,6 +8,10 @@ const AUTH_ROUTE_CONFIG: Record<string, ProxyRouteConfig> = {
     allowFrontendOrigin: true,
     upstreamPath: '/api/auth/change-email',
   },
+  csrf: {
+    methods: ['GET'],
+    upstreamPath: '/api/auth/csrf',
+  },
   'change-email/confirm': {
     methods: ['POST'],
     upstreamPath: '/api/auth/change-email/confirm',

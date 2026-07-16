@@ -7,10 +7,7 @@ import styles from './page.module.css';
 import { getPopup } from '@/packages/utils/alertType';
 import type { UpdateWorkerProfilePayload } from '@/packages/types';
 import {
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackLoadingMessages,
-  fallbackPopups,
+  getI18nFallbacks,
   useGlobalAlert,
   useI18n,
   useWorker,
@@ -37,7 +34,9 @@ type WorkerProfileTexts = {
 };
 
 export default function WorkerProfilePage() {
-  const { texts } = useI18n();
+  const { texts, language } = useI18n();
+  const { fallbackButtons, fallbackGlobalError, fallbackLoadingMessages, fallbackPopups } =
+    getI18nFallbacks(language);
   const popups = texts.popups;
   const formText = texts.components.client.form;
   const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
@@ -91,7 +90,7 @@ export default function WorkerProfilePage() {
         popups,
         'WORKER_UPDATED',
         'WORKER_UPDATED',
-        fallbackPopups.AUTH_GET_SUCCESS
+        fallbackPopups.WORKER_UPDATED
       );
 
       showSuccess({

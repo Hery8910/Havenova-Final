@@ -28,38 +28,38 @@
     "description": "We could not find a valid access token. Please log in again."
   },
   "AUTH_NOT_LOGGED_IN": {
-    "title": "Login required",
-    "description": "You need to be logged in to perform this action."
+    "title": "Sign in to continue",
+    "description": "Sign in to continue with this action."
   },
   "AUTH_REQUIRED": {
-    "title": "Login required",
-    "description": "You must be logged in to perform this action."
+    "title": "Sign in to continue",
+    "description": "Sign in to continue with this action."
   },
   "AUTH_FORBIDDEN": {
-    "title": "Access forbidden",
-    "description": "You do not have permission to perform this action.",
+    "title": "Access unavailable",
+    "description": "This action isn't available for this account.",
     "confirm": "Go to login",
     "close": "Close"
   },
   "USER_NEED_TO_LOGIN": {
-    "title": "Login required to continue",
-    "description": "You need to log in to access this page or send a request. You can keep browsing or go to the login now.",
+    "title": "Sign in to continue",
+    "description": "Sign in to open this page or complete this action. You can also keep browsing.",
     "confirm": "Go to login",
     "close": "Continue browsing"
   },
   "USER_SESSION_EXPIRED": {
     "title": "Session expired",
-    "description": "Your session has expired. You can keep browsing or go to login.",
+    "description": "Your session expired. Sign in again to continue, or keep browsing.",
     "confirm": "Go to login",
     "close": "Continue browsing"
   },
   "AUTH_BLOCKED": {
     "title": "Account blocked",
-    "description": "Your access is blocked. Please contact support."
+    "description": "This account can't continue. Please contact support."
   },
   "AUTH_USER_NOT_FOUND": {
-    "title": "User not found",
-    "description": "We couldn't find a matching user for this request."
+    "title": "Account not found",
+    "description": "We couldn't find an account for this request."
   },
   "GLOBAL_INTERNAL_ERROR": {
     "title": "Unexpected error",
@@ -84,78 +84,78 @@
     "description": "The global task catalog was loaded successfully."
   },
   "CLIENT_CREATE_SUCCESS": {
-    "title": "Client created successfully",
-    "description": "The client has been successfully added to the system."
+    "title": "Workspace created",
+    "description": "The workspace is ready."
   },
   "CLIENT_CREATE_DOMAIN_EXISTS": {
     "title": "Domain already in use",
     "description": "A client with this domain already exists."
   },
   "CLIENT_CREATE_FAILED": {
-    "title": "Client creation failed",
-    "description": "An unexpected error occurred while creating the client."
+    "title": "We couldn't create the workspace",
+    "description": "Try again to finish setting up this workspace."
   },
   "CLIENT_CREATED": {
-    "title": "Client created successfully",
-    "description": "The client has been successfully added to the system."
+    "title": "Workspace created",
+    "description": "The workspace is ready."
   },
   "CLIENT_FETCH_SUCCESS": {
-    "title": "Client loaded successfully",
-    "description": "The client data was retrieved successfully."
+    "title": "Workspace loaded",
+    "description": "The workspace details are available."
   },
   "CLIENT_FETCH_NOT_FOUND": {
     "title": "Client not found",
     "description": "The requested client could not be found."
   },
   "CLIENT_FETCH_FAILED": {
-    "title": "Client fetch failed",
-    "description": "An unexpected error occurred while retrieving the client."
+    "title": "We couldn't load the workspace",
+    "description": "Try again to load this workspace."
   },
   "CLIENT_FETCH_DASHBOARD_SUCCESS": {
-    "title": "Client dashboard loaded successfully",
-    "description": "The client dashboard data was retrieved successfully."
+    "title": "Dashboard loaded",
+    "description": "The dashboard details are available."
   },
   "CLIENT_PUBLIC_FETCH_SUCCESS": {
-    "title": "Client loaded",
-    "description": "Public client data was retrieved successfully."
+    "title": "Workspace loaded",
+    "description": "The public workspace details are available."
   },
   "CLIENT_UPDATE_SUCCESS": {
-    "title": "Client updated successfully",
-    "description": "The client data was updated successfully."
+    "title": "Workspace updated",
+    "description": "Your changes have been saved."
   },
   "CLIENT_UPDATED": {
-    "title": "Client updated successfully",
-    "description": "The client data was updated successfully."
+    "title": "Workspace updated",
+    "description": "Your changes have been saved."
   },
   "CLIENT_UPDATE_FAILED": {
-    "title": "Client update failed",
-    "description": "An unexpected error occurred while updating the client."
+    "title": "We couldn't save your changes",
+    "description": "Try again to update this workspace."
   },
   "CLIENT_MISSING_CLIENT_ID": {
-    "title": "Missing client ID",
-    "description": "A valid client ID is required for registration."
+    "title": "Workspace ID missing",
+    "description": "A valid workspace ID is required to continue."
   },
   "CLIENT_ID_MISMATCH": {
-    "title": "Client mismatch",
-    "description": "The provided client does not match your session."
+    "title": "Workspace mismatch",
+    "description": "This workspace does not match your current session."
   },
   "CLIENT_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "The specified client does not exist.",
+    "title": "Workspace not found",
+    "description": "We couldn't find this workspace.",
     "confirm": "Go to home",
     "close": "Close"
   },
   "USER_REGISTER_SUCCESS": {
-    "title": "Registration successful",
-    "description": "Your account was created. Check your inbox and verify your email before signing in."
+    "title": "Check your email",
+    "description": "Your account has been created. Verify your email before signing in."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
-    "title": "Account already active",
-    "description": "You already have access to this workspace. Continue to login."
+    "title": "Account already set up",
+    "description": "An account with this email is already set up. Sign in to continue."
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
-    "title": "Password required",
-    "description": "We couldn't complete registration with the provided details. Use the correct password or reset it to continue."
+    "title": "Use your current password",
+    "description": "This account already exists. Sign in with your current password or reset it to continue."
   },
   "USER_BLOCKED": {
     "title": "Access denied",
@@ -174,8 +174,8 @@
     "description": "Please provide your password to continue."
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
-    "title": "Email verified successfully",
-    "description": "Your email has been verified. You can continue to login now."
+    "title": "Email verified",
+    "description": "Your email is confirmed. You can sign in now."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "Email already verified",
@@ -190,20 +190,20 @@
     "description": "This reset link has expired. Request a new one to continue."
   },
   "VALIDATION_ERROR": {
-    "title": "Validation error",
-    "description": "Please review the entered data and try again."
+    "title": "Check your details",
+    "description": "Review the information and try again."
   },
   "USER_NOT_FOUND": {
-    "title": "User not found",
-    "description": "The user associated with this token could not be found."
+    "title": "Account not found",
+    "description": "We couldn't match this link to an account."
   },
   "LOGOUT_SUCCESS": {
-    "title": "Logged out successfully",
-    "description": "You have been logged out successfully."
+    "title": "Signed out",
+    "description": "Your session has ended."
   },
   "LOGOUT_FAILED": {
-    "title": "Logout failed",
-    "description": "We were unable to log you out. Please try again."
+    "title": "Couldn't sign you out",
+    "description": "We couldn't finish signing you out. Try again."
   },
   "LOGOUT_CONFIRM": {
     "title": "Log out?",
@@ -212,16 +212,16 @@
     "close": "Cancel"
   },
   "USER_LOGOUT_SUCCESS": {
-    "title": "Logged out successfully",
-    "description": "You have been logged out successfully."
+    "title": "Signed out",
+    "description": "Your session has ended."
   },
   "USER_LOGOUT_ALL_SUCCESS": {
-    "title": "Logged out of all sessions",
-    "description": "You have been logged out from all devices."
+    "title": "Signed out everywhere",
+    "description": "Your session has been closed on all devices."
   },
   "AUTH_GET_SUCCESS": {
-    "title": "Session loaded",
-    "description": "Your session information has been loaded."
+    "title": "Session ready",
+    "description": "Your session is ready."
   },
   "PROFILE_ADDRESS_DELETE_CONFIRM": {
     "title": "Delete address?",
@@ -230,64 +230,64 @@
     "close": "Cancel"
   },
   "USER_CLIENT_NOT_FOUND": {
-    "title": "Access not available yet",
-    "description": "This account cannot access this workspace yet. Continue to registration to complete access."
+    "title": "Access not ready yet",
+    "description": "This account can't enter this workspace yet. Finish setup to continue."
   },
   "USER_CLIENT_BLOCKED": {
     "title": "Access blocked",
-    "description": "Your account is blocked for this client."
+    "description": "This account can't access this workspace."
   },
   "USER_CLIENT_COOKIES_UPDATE_SUCCESS": {
-    "title": "Cookie settings updated",
-    "description": "Your cookie preferences have been saved successfully."
+    "title": "Preferences saved",
+    "description": "Your cookie preferences were saved."
   },
   "REFRESH_TOKEN_MISSING": {
-    "title": "Reauthentication required",
-    "description": "Your session is no longer valid. Please log in again."
+    "title": "Please sign in again",
+    "description": "Your session is no longer valid. Sign in again to continue."
   },
   "REFRESH_TOKEN_INVALIDATED": {
-    "title": "Session invalidated",
-    "description": "Your session has been invalidated. Please log in again."
+    "title": "Please sign in again",
+    "description": "Your session was closed. Sign in again to continue."
   },
   "REFRESH_TOKEN_EXPIRED": {
     "title": "Session expired",
-    "description": "Your session has expired. Please log in again."
+    "description": "Your session expired. Sign in again to continue."
   },
   "ACCESS_TOKEN_REFRESHED": {
-    "title": "Session renewed",
-    "description": "Your access token has been successfully refreshed."
+    "title": "Session updated",
+    "description": "Your session is active again."
   },
   "CSRF_TOKEN_INVALID": {
-    "title": "Security validation failed",
-    "description": "Your session security token is invalid. Please reload and try again."
+    "title": "Reload the page",
+    "description": "We couldn't verify your session. Reload the page and try again."
   },
   "MAGIC_TOKEN_EXPIRED": {
-    "title": "Login link expired",
-    "description": "The magic login link has expired. Please request a new one."
+    "title": "Sign-in link expired",
+    "description": "This sign-in link has expired. Request a new one to continue."
   },
   "MAGIC_TOKEN_INVALID": {
-    "title": "Invalid login link",
-    "description": "The magic login token is invalid or corrupted."
+    "title": "Invalid sign-in link",
+    "description": "This sign-in link isn't valid. Request a new one to continue."
   },
   "MAGIC_LOGIN_SUCCESS": {
-    "title": "Login successful",
-    "description": "You have been logged in successfully."
+    "title": "You're signed in",
+    "description": "Your session is ready."
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
-    "title": "Reset link sent",
-    "description": "We emailed you a reset link. Check your inbox to continue."
+    "title": "Check your email",
+    "description": "If an account matches this email, we'll send a reset link."
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
-    "title": "Email not verified",
-    "description": "Verify your email before signing in. You can open the verification page if needed."
+    "title": "Confirm your email first",
+    "description": "Verify your email before signing in. You can continue to verification if needed."
   },
   "USER_LOGIN_SUCCESS": {
-    "title": "Login successful",
-    "description": "You have been logged in successfully."
+    "title": "You're signed in",
+    "description": "Your session is ready."
   },
   "USER_RESET_PASSWORD_SUCCESS": {
-    "title": "Password reset successful",
-    "description": "Your password has been updated. Go to login with your new password."
+    "title": "Password updated",
+    "description": "Your password was updated. Sign in with the new one."
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Password updated",
@@ -307,7 +307,7 @@
   },
   "USER_EMAIL_ALREADY_IN_USE": {
     "title": "Email already in use",
-    "description": "This email address is already being used by another account."
+    "description": "Use a different email or sign in with this one."
   },
   "USER_CHANGE_EMAIL_MISSING_TOKEN": {
     "title": "Confirmation failed",
@@ -326,8 +326,8 @@
     "description": "The email change state is no longer valid. Please restart the process."
   },
   "USER_VERIFY_EMAIL_RESENT": {
-    "title": "Verification email resent",
-    "description": "We sent you a new verification email. Check your inbox to continue.",
+    "title": "Check your email",
+    "description": "If this account can be verified, we'll send a new verification email.",
     "confirm": "Continue",
     "close": "Close"
   },
@@ -340,8 +340,8 @@
     "description": "An object with this number already exists."
   },
   "OBJECT_NOT_FOUND": {
-    "title": "Object not found",
-    "description": "The requested object could not be found."
+    "title": "Property not found",
+    "description": "We couldn't find this property."
   },
   "PROPERTY_MANAGER_EMAIL_EXISTS": {
     "title": "Email already in use",
@@ -353,7 +353,7 @@
   },
   "PROPERTY_MANAGER_NOT_FOUND": {
     "title": "Manager not found",
-    "description": "The requested property manager could not be found."
+    "description": "We couldn't find this manager."
   },
   "WORKER_ALREADY_EXISTS": {
     "title": "Worker already exists",
@@ -361,52 +361,52 @@
   },
   "WORKER_NOT_FOUND": {
     "title": "Worker not found",
-    "description": "The requested worker could not be found."
+    "description": "We couldn't find this worker."
   },
   "WORKER_LOAD_FAILED": {
-    "title": "Failed to load data",
-    "description": "Worker data could not be loaded. Please reload the page."
+    "title": "We couldn't load the details",
+    "description": "Reload the page and try again."
   },
   "PERMISSION_DENIED": {
-    "title": "Access denied",
-    "description": "You do not have the required permissions to access this page.",
+    "title": "Access unavailable",
+    "description": "This page isn't available for this account.",
     "close": "Go to login"
   },
   "OBJECT_CREATED": {
-    "title": "Object created",
-    "description": "The object has been created successfully."
+    "title": "Property created",
+    "description": "The property is ready."
   },
   "OBJECT_FOUND": {
-    "title": "Object loaded",
-    "description": "The object details were retrieved successfully."
+    "title": "Property loaded",
+    "description": "The property details are available."
   },
   "OBJECT_LIST": {
-    "title": "Objects loaded",
-    "description": "The objects list was retrieved successfully."
+    "title": "Properties loaded",
+    "description": "The property list is available."
   },
   "OBJECT_UPDATED": {
-    "title": "Object updated",
-    "description": "The object has been updated successfully."
+    "title": "Property updated",
+    "description": "Your changes have been saved."
   },
   "PROPERTY_MANAGER_CREATED": {
     "title": "Manager created",
-    "description": "The property manager has been created successfully."
+    "description": "The manager is ready."
   },
   "PROPERTY_MANAGER_FOUND": {
     "title": "Manager loaded",
-    "description": "The property manager details were retrieved successfully."
+    "description": "The manager details are available."
   },
   "PROPERTY_MANAGER_LIST": {
     "title": "Managers loaded",
-    "description": "The property manager list was retrieved successfully."
+    "description": "The manager list is available."
   },
   "PROPERTY_MANAGER_UPDATED": {
     "title": "Manager updated",
-    "description": "The property manager has been updated successfully."
+    "description": "Your changes have been saved."
   },
   "WORKER_CREATED": {
     "title": "Worker created",
-    "description": "The worker has been created successfully."
+    "description": "The worker is ready."
   },
   "WORKER_DELETED": {
     "title": "Worker deleted",
@@ -414,19 +414,19 @@
   },
   "WORKER_FOUND": {
     "title": "Worker loaded",
-    "description": "The worker details were retrieved successfully."
+    "description": "The worker details are available."
   },
   "WORKER_INVITE_RESENT": {
     "title": "Invite resent",
-    "description": "The worker invitation has been sent again."
+    "description": "A new invite has been sent to the worker."
   },
   "WORKER_LIST": {
     "title": "Workers loaded",
-    "description": "The workers list was retrieved successfully."
+    "description": "The worker list is available."
   },
   "WORKER_UPDATED": {
-    "title": "Worker updated",
-    "description": "The worker has been updated successfully."
+    "title": "Details saved",
+    "description": "Your worker details have been updated."
   },
   "AUTH_ACCESS_TOKEN_EXPIRED": {
     "title": "Session expired",
@@ -441,12 +441,12 @@
     "description": "Your access token is missing. Please log in again."
   },
   "AUTH_CLIENT_ADMIN_REQUIRED": {
-    "title": "Client admin required",
-    "description": "You need client admin permissions to perform this action."
+    "title": "Admin access required",
+    "description": "Only an admin account can do this."
   },
   "AUTH_SUPERADMIN_REQUIRED": {
-    "title": "Superadmin required",
-    "description": "You need superadmin permissions to perform this action."
+    "title": "Higher access required",
+    "description": "Only an account with higher access can do this."
   },
   "AUTH_CURRENT_PASSWORD_INVALID": {
     "title": "Invalid current password",
@@ -457,20 +457,20 @@
     "description": "The provided credentials are invalid."
   },
   "CLIENT_CLIENT_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "The requested client could not be found."
+    "title": "Workspace not found",
+    "description": "We couldn't find this workspace."
   },
   "CLIENT_DOMAIN_EXISTS": {
     "title": "Domain already in use",
     "description": "A client with this domain already exists."
   },
   "CLIENT_ID_REQUIRED": {
-    "title": "Client ID required",
-    "description": "A valid client ID is required."
+    "title": "Workspace ID required",
+    "description": "A valid workspace ID is required."
   },
   "CLIENT_UPDATE_FIELD_NOT_ALLOWED": {
-    "title": "Field update not allowed",
-    "description": "One or more fields cannot be updated."
+    "title": "Some fields can't be changed",
+    "description": "One or more fields aren't available for this update."
   },
   "COMPANY_EMAIL_EXISTS": {
     "title": "Email already in use",
@@ -542,55 +542,55 @@
   },
   "CONTACT_MESSAGE_CREATED": {
     "title": "Message sent",
-    "description": "The contact message has been created successfully."
+    "description": "Your message has been sent."
   },
   "CONTACT_MESSAGE_DELETED": {
     "title": "Message deleted",
-    "description": "The contact message has been deleted."
+    "description": "The message has been removed."
   },
   "CONTACT_MESSAGE_RESPONDED": {
     "title": "Response sent",
-    "description": "The response to the contact message was sent successfully."
+    "description": "The reply has been sent."
   },
   "CONTACT_MESSAGES_DELETED": {
     "title": "Messages deleted",
-    "description": "The selected contact messages were deleted."
+    "description": "The selected messages have been removed."
   },
   "NOTIFICATION_ADMIN_LIST": {
     "title": "Notifications loaded",
-    "description": "Admin notifications were retrieved successfully."
+    "description": "Admin notifications are available."
   },
   "NOTIFICATION_CREATED": {
     "title": "Notification created",
-    "description": "The notification has been created successfully."
+    "description": "The notification is ready."
   },
   "NOTIFICATION_DELETED": {
     "title": "Notification deleted",
-    "description": "The notification has been deleted."
+    "description": "The notification has been removed."
   },
   "NOTIFICATION_LIST": {
     "title": "Notifications loaded",
-    "description": "Notifications were retrieved successfully."
+    "description": "Your notifications are available."
   },
   "NOTIFICATION_MARKED_ALL_READ": {
     "title": "All notifications marked as read",
-    "description": "All notifications were marked as read."
+    "description": "All notifications are now marked as read."
   },
   "NOTIFICATION_MARKED_READ": {
     "title": "Notification marked as read",
-    "description": "The notification was marked as read."
+    "description": "The notification is now marked as read."
   },
   "NOTIFICATION_MARKED_SEEN": {
     "title": "Notification marked as seen",
-    "description": "The notification was marked as seen."
+    "description": "The notification is now marked as seen."
   },
   "NOTIFICATION_UNREAD_COUNT": {
-    "title": "Unread count loaded",
-    "description": "The unread notification count was retrieved successfully."
+    "title": "Unread count ready",
+    "description": "Your unread notification count is available."
   },
   "USER_CLIENT_PROFILE_CREATED": {
-    "title": "Profile created",
-    "description": "The client profile has been created successfully."
+    "title": "Profile ready",
+    "description": "Your profile is ready."
   },
   "USER_CLIENT_PROFILE_DELETED": {
     "title": "Profile deleted",
@@ -598,10 +598,10 @@
   },
   "USER_CLIENT_PROFILE_FOUND": {
     "title": "Profile loaded",
-    "description": "The client profile was retrieved successfully."
+    "description": "Your profile details are available."
   },
   "USER_CLIENT_PROFILE_UPDATED": {
     "title": "Profile updated",
-    "description": "The client profile has been updated successfully."
+    "description": "Your details have been saved."
   }
 }

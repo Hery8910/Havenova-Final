@@ -22,8 +22,8 @@ const dashboardAuthRouteSource = fs.readFileSync(
   'utf8'
 );
 const dashboardMiddlewareSource = fs.readFileSync('apps/dashboard/middleware.ts', 'utf8');
-const dashboardLoginPageSource = fs.readFileSync(
-  'apps/dashboard/app/[lang]/(auth)/user/login/page.tsx',
+const sharedInvitationLoginSource = fs.readFileSync(
+  'packages/components/client/user/auth/invitationLogin/InvitationLoginPage.tsx',
   'utf8'
 );
 const adminContextSource = fs.readFileSync('packages/contexts/admin/AdminContext.tsx', 'utf8');
@@ -65,7 +65,9 @@ test('auth refresh still attempts refresh-token when in-memory CSRF is missing b
 });
 
 test('disableUnauthenticatedBootstrap now keeps stored auth without forcing immediate server revalidation on mount', () => {
-  assert.match(authContextSource, /if \(disableUnauthenticatedBootstrap\) \{\s*setLoading\(false\);\s*return;\s*\}/s);
+  assert.match(authContextSource, /if \(disableUnauthenticatedBootstrap\) \{/);
+  assert.match(authContextSource, /setLoading\(false\);/);
+  assert.match(authContextSource, /void refreshAuth\(\)\.finally/);
 });
 
 test('dashboard middleware restores protected sessions before SSR redirects', () => {
@@ -77,9 +79,15 @@ test('dashboard middleware restores protected sessions before SSR redirects', ()
 });
 
 test('dashboard login auto-redirect requires server-confirmed auth rather than storage-only auth', () => {
-  assert.match(dashboardLoginPageSource, /const \{ auth, loading: authLoading, setAuth, source \} = useAuth\(\);/);
-  assert.match(dashboardLoginPageSource, /const canAutoRedirectToDashboard =\s*!authLoading && source === 'server' && hasDashboardAccess/s);
-  assert.match(dashboardLoginPageSource, /if \(!canAutoRedirectToDashboard\) return;/);
+  assert.match(
+    sharedInvitationLoginSource,
+    /const \{ auth, loading: authLoading, setAuth, source, refreshAuth \} = useAuth\(\);/
+  );
+  assert.match(
+    sharedInvitationLoginSource,
+    /const canAutoRedirectToDashboard = !authLoading && source === 'server' && hasAppAccess;/
+  );
+  assert.match(sharedInvitationLoginSource, /if \(!canAutoRedirect\) return;/);
 });
 
 test('admin local defaults reuse stored theme and language to avoid hydration flash after reload', () => {

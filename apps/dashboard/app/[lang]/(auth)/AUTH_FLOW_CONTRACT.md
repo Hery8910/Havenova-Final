@@ -15,8 +15,12 @@ It should describe:
 
 Related documents:
 
+- [AUTH_IMPLEMENTATION_OVERVIEW.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_IMPLEMENTATION_OVERVIEW.md:1)
 - [AUTH_FLOW_VARIANTS_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_FLOW_VARIANTS_CONTRACT.md:1)
+- [INVITATION_AUTH_SHARED_PAGE_FLOWS.md](/home/heriberto/Escritorio/Havenova/havenova/docs/INVITATION_AUTH_SHARED_PAGE_FLOWS.md:1)
+- [AUTH_POPUP_COPY_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_POPUP_COPY_CONTRACT.md:1)
 - [SESSION_ROUTE_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/docs/SESSION_ROUTE_CONTRACT.md:1)
+- [README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/README.md:1)
 
 ## User Model
 
@@ -72,9 +76,18 @@ This means:
 
 ## Route Contracts
 
+- [INVITATION_AUTH_SHARED_PAGE_FLOWS.md](/home/heriberto/Escritorio/Havenova/havenova/docs/INVITATION_AUTH_SHARED_PAGE_FLOWS.md:1)
 - [user/login/LOGIN_FLOW.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/login/LOGIN_FLOW.md:1)
 - [user/forgot-password/FORGOT_PASSWORD_FLOW.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/forgot-password/FORGOT_PASSWORD_FLOW.md:1)
 - [user/set-password/SET_PASSWORD_FLOW.md](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/set-password/SET_PASSWORD_FLOW.md:1)
+
+Implementation rule:
+
+- `login` and `forgot-password` for the invitation-only variant are shared with `apps/worker`
+- `set-password` for the invitation/reset variant is shared with `apps/worker`
+- the route files in `apps/dashboard` should stay as thin wrappers over the shared implementation
+- styling for those public pages belongs to the shared auth shell, not to dashboard-local page CSS
+- differences between both apps should stay in copy or downstream complement behavior, not in duplicated auth flow logic
 
 ## Completion Rule
 

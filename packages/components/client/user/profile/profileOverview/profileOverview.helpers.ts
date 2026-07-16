@@ -1,4 +1,3 @@
-import { resolvePreferredContactEmail } from '../../../../../utils';
 import {
   getProfileCompletionPercentage,
   getProfileCompletionState,
@@ -66,10 +65,7 @@ export function buildProfileOverviewViewModel({
     loadingAriaLabel: fallbacks.loadingAriaLabel,
     identityCardProps: {
       profile,
-      name:
-        profile.name?.trim() ||
-        resolvePreferredContactEmail(profile.contactEmail, auth.email) ||
-        fallbacks.profileUser,
+      name: profile.name?.trim() || profile.contactEmail?.trim() || fallbacks.profileUser,
       avatarAlt: profile.name?.trim() ? `${profile.name} avatar` : fallbacks.profileAvatar,
       isVerified: Boolean(auth.isVerified),
       verifiedLabel: fallbacks.verifiedLabel,

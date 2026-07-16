@@ -8,11 +8,7 @@ import {
   useI18n,
   useProfile,
 } from '../../../../contexts';
-import {
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackPopups,
-} from '../../../../contexts/i18n';
+import { getI18nFallbacks } from '../../../../contexts/i18n';
 import { createServiceRequest } from '../../../../services';
 import { type UpdateUserClientProfileInput } from '../../../../types';
 import { getPopup } from '../../../../utils';
@@ -43,6 +39,7 @@ export function HomeServicePageClient({
   lang,
 }: HomeServicePageClientProps) {
   const { texts } = useI18n();
+  const { fallbackButtons, fallbackGlobalError, fallbackPopups } = getI18nFallbacks(lang);
   const { auth } = useAuth();
   const { profile, updateProfile } = useProfile();
   const { showError, showLoading, showSuccess, closeAlert } = useGlobalAlert();

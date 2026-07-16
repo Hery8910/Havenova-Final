@@ -547,7 +547,7 @@ export function resolveDashboardHeaderMeta(pathname: string, lang: DashboardShel
   const copy = getDashboardShellCopy(lang);
   const normalizedPath = normalizeDashboardPathname(pathname);
   const matchedRoute = buildRouteMeta(copy).find((route) => route.matcher.test(normalizedPath));
-  const routeLabel =
+  const rawRouteLabel =
     normalizedPath === '/'
       ? lang === 'es'
         ? 'workspace/overview'
@@ -555,6 +555,7 @@ export function resolveDashboardHeaderMeta(pathname: string, lang: DashboardShel
           ? 'workspace/uberblick'
           : 'workspace/overview'
       : normalizedPath.replace(/^\//, '');
+  const routeLabel = rawRouteLabel.split('/').filter(Boolean).join(' / ');
 
   if (!matchedRoute) {
     return {

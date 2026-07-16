@@ -10,6 +10,10 @@
       "title": "E-Mail wird bestätigt…",
       "description": "Bitte warten Sie, während wir Ihren Bestätigungslink prüfen."
     },
+    "resendVerification": {
+      "title": "Neue Bestätigungs-E-Mail wird vorbereitet…",
+      "description": "Bitte warten Sie einen Moment."
+    },
     "login": {
       "title": "Sie werden angemeldet…",
       "description": "Wir bereiten Ihre Sitzung vor. Einen Moment bitte."
@@ -17,6 +21,14 @@
     "dashboardLogin": {
       "title": "Ihr Profil wird geöffnet…",
       "description": "Wir bereiten Ihren Workspace vor. Einen Moment bitte."
+    },
+    "forgotPassword": {
+      "title": "Passwort-Reset wird vorbereitet…",
+      "description": "Bitte warten Sie einen Moment."
+    },
+    "resetPassword": {
+      "title": "Passwort wird aktualisiert…",
+      "description": "Bitte warten Sie einen Moment."
     },
     "createUser": {
       "title": "Konto wird geladen…",

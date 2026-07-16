@@ -1,33 +1,93 @@
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 .card {
-  display: grid;
-  gap: 6px;
-  padding: 12px 14px;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 24px;
   border-radius: calc(var(--radius-card) - 8px);
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 58%, transparent);
-  background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--surface-panel-subtle) 78%, transparent);
+  box-shadow: 0 8px 14px -18px color-mix(in srgb, var(--shadow-page-color) 10%, transparent);
+  color: inherit;
+  cursor: default;
+  font: inherit;
+  text-align: left;
+}
+
+button.card {
+  cursor: pointer;
+}
+
+button.card:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.active {
+  border-color: color-mix(in srgb, var(--brand-accent) 64%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-accent) 34%, transparent);
+}
+
+.tone-neutral {
+  border-color: color-mix(in srgb, var(--border-subtle) 52%, transparent);
+  background: color-mix(in srgb, var(--surface-panel-subtle) 82%, transparent);
+}
+
+.tone-primary {
+  border-color: color-mix(in srgb, var(--color-feedback-info-border) 46%, transparent);
+  background: color-mix(in srgb, var(--card-primary-bg1) 62%, var(--surface-panel-subtle) 38%);
+}
+
+.tone-secondary {
+  border-color: color-mix(in srgb, var(--card-secondary-bg1) 52%, transparent);
+  background: color-mix(in srgb, var(--card-secondary-bg1) 58%, var(--surface-panel-subtle) 42%);
+}
+
+.tone-accent {
+  border-color: color-mix(in srgb, var(--color-feedback-warning-border) 44%, transparent);
+  background: color-mix(in srgb, var(--card-accent-bg1) 60%, var(--surface-panel-subtle) 40%);
 }
 
 .label {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  flex: 1 1 auto;
 }
 
 .value {
   margin: 0;
   color: var(--text-primary);
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  font-weight: 800;
+  flex: 0 0 auto;
+  text-align: right;
 }
 
-@media (max-width: 767px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+[data-theme='dark'] .tone-primary {
+  border-color: color-mix(in srgb, var(--color-feedback-info-border) 26%, transparent);
+  background: color-mix(in srgb, var(--card-primary-bg1) 78%, var(--surface-panel-subtle) 22%);
+}
+
+[data-theme='dark'] .tone-secondary {
+  border-color: color-mix(in srgb, var(--card-secondary-bg1) 30%, transparent);
+  background: color-mix(in srgb, var(--card-secondary-bg1) 72%, var(--surface-panel-subtle) 28%);
+}
+
+[data-theme='dark'] .tone-accent {
+  border-color: color-mix(in srgb, var(--color-feedback-warning-border) 24%, transparent);
+  background: color-mix(in srgb, var(--card-accent-bg1) 68%, var(--surface-panel-subtle) 32%);
 }

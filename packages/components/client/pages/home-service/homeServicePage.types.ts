@@ -1,7 +1,7 @@
 import type { FAQSectionTexts } from '../../faqSection/FAQSection';
 import type { PageHeroContent } from '../hero';
 import type { ServiceCrossCtaSectionTexts } from '../shared';
-import type { HomeServiceRequestFormTexts } from './HomeServiceRequestForm/HomeServiceRequestForm';
+import type { HomeServiceRequestFormTexts } from './HomeServiceRequestForm/homeServiceRequest.types';
 
 export interface HomeServiceAuthAlertTexts {
   title: string;

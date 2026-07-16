@@ -26,18 +26,21 @@ Current behavior:
 - request step state is orchestrated by `CleaningRequestForm`
 - feature state, text contracts, draft payload typing, and frequency ordering now live in
   `cleaningRequest.types.ts` instead of being redefined inside the main component
-- `ServiceProfileStep` decides whether the user must complete profile data before selecting
-  the work address
+- validation, draft serialization, request-detail building, step headings, and footer validation
+  messaging now live in `cleaningRequest.helpers.ts` instead of remaining inline in the form body
 - customer type and frequency choice states now converge on shared request primitives instead
   of maintaining duplicated local button-state rules
 - property-details field framing and inline validation feedback now converge on shared request
   field primitives instead of keeping local step-only markup
-- review and profile steps were normalized locally to reduce repeated structure, but they still
-  remain feature-owned because there is not yet a second real consumer for those surfaces
 - embedded profile completion orchestration now lives in the profile domain controller layer;
-  `ServiceProfileStep` remains only as the cleaning-flow composition wrapper around that logic
+- `ServiceRequestAddressStep` now owns the shared profile-completion gate and address-step
+  composition used by both service flows
 - `WorkAddressSelector` handles address selection and manual address entry without absorbing
   higher-level profile orchestration
+- scheduling step rendering now converges on the shared `ServiceRequestSchedulingStep`
+- review-step card framing now converges on the shared `ServiceRequestReviewStep`
+- step-transition touch state and request-detail assembly now converge on helper-owned feature
+  logic instead of staying embedded in the main form component
 - the parent page handles final request submission
 - if the user enters a new work address and marks it to be saved, the flow persists it into
   the profile before continuing
@@ -46,7 +49,7 @@ Current behavior:
 Main limitation:
 
 - the main migration is already implemented; remaining work is centered on automated test
-  coverage and further internal cleanup of feature-specific steps
+  coverage and further cleanup of feature-specific validation and payload mapping
 
 ## Problem Statement
 

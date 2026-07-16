@@ -28,32 +28,32 @@
     "description": "No pudimos encontrar un token de acceso válido. Inicia sesión de nuevo."
   },
   "AUTH_NOT_LOGGED_IN": {
-    "title": "Inicio de sesión obligatorio",
-    "description": "Debes iniciar sesión para realizar esta acción."
+    "title": "Inicia sesión para continuar",
+    "description": "Inicia sesión para continuar con esta acción."
   },
   "AUTH_REQUIRED": {
-    "title": "Inicio de sesión obligatorio",
-    "description": "Debes iniciar sesión para realizar esta acción."
+    "title": "Inicia sesión para continuar",
+    "description": "Inicia sesión para continuar con esta acción."
   },
   "AUTH_FORBIDDEN": {
-    "title": "Acceso prohibido",
-    "description": "No tienes permiso para realizar esta acción."
+    "title": "Acceso no disponible",
+    "description": "Esta acción no está disponible para esta cuenta."
   },
   "USER_NEED_TO_LOGIN": {
-    "title": "Debes iniciar sesión para continuar",
-    "description": "Debes iniciar sesión para acceder a esta página o enviar una solicitud. Puedes seguir navegando o ir ahora al inicio de sesión."
+    "title": "Inicia sesión para continuar",
+    "description": "Inicia sesión para abrir esta página o completar esta acción. También puedes seguir navegando."
   },
   "USER_SESSION_EXPIRED": {
     "title": "Sesión expirada",
-    "description": "Tu sesión ha expirado. Puedes seguir navegando o ir al inicio de sesión."
+    "description": "Tu sesión ha caducado. Inicia sesión de nuevo para continuar o sigue navegando."
   },
   "AUTH_BLOCKED": {
     "title": "Cuenta bloqueada",
-    "description": "Tu acceso está bloqueado. Ponte en contacto con soporte."
+    "description": "Esta cuenta no puede continuar. Ponte en contacto con soporte."
   },
   "AUTH_USER_NOT_FOUND": {
-    "title": "Usuario no encontrado",
-    "description": "No pudimos encontrar un usuario que coincida con esta solicitud."
+    "title": "Cuenta no encontrada",
+    "description": "No pudimos encontrar una cuenta para esta solicitud."
   },
   "GLOBAL_INTERNAL_ERROR": {
     "title": "Error inesperado",
@@ -78,76 +78,76 @@
     "description": "El catálogo global de tareas se cargó correctamente."
   },
   "CLIENT_CREATE_SUCCESS": {
-    "title": "Client created successfully",
-    "description": "The client has been successfully added to the system."
+    "title": "Espacio creado",
+    "description": "El espacio ya fue creado correctamente."
   },
   "CLIENT_CREATE_DOMAIN_EXISTS": {
-    "title": "Domain already in use",
-    "description": "A client with this domain already exists."
+    "title": "Dominio ya en uso",
+    "description": "Ya existe un espacio con ese dominio."
   },
   "CLIENT_CREATE_FAILED": {
-    "title": "Client creation failed",
-    "description": "An unexpected error occurred while creating the client."
+    "title": "No pudimos crear el espacio",
+    "description": "No pudimos completar la creación del espacio. Inténtalo de nuevo."
   },
   "CLIENT_CREATED": {
-    "title": "Client created successfully",
-    "description": "The client has been successfully added to the system."
+    "title": "Espacio creado",
+    "description": "El espacio ya fue creado correctamente."
   },
   "CLIENT_FETCH_SUCCESS": {
-    "title": "Client loaded successfully",
-    "description": "The client data was retrieved successfully."
+    "title": "Espacio cargado",
+    "description": "Los datos del espacio ya están disponibles."
   },
   "CLIENT_FETCH_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "The requested client could not be found."
+    "title": "Espacio no encontrado",
+    "description": "No encontramos el espacio solicitado."
   },
   "CLIENT_FETCH_FAILED": {
-    "title": "Client fetch failed",
-    "description": "An unexpected error occurred while retrieving the client."
+    "title": "No pudimos cargar el espacio",
+    "description": "No pudimos cargar la información del espacio. Inténtalo de nuevo."
   },
   "CLIENT_FETCH_DASHBOARD_SUCCESS": {
-    "title": "Client dashboard loaded successfully",
-    "description": "The client dashboard data was retrieved successfully."
+    "title": "Panel cargado",
+    "description": "La información del panel ya está disponible."
   },
   "CLIENT_PUBLIC_FETCH_SUCCESS": {
-    "title": "Client loaded",
-    "description": "Public client data was retrieved successfully."
+    "title": "Espacio cargado",
+    "description": "La información pública del espacio ya está disponible."
   },
   "CLIENT_UPDATE_SUCCESS": {
-    "title": "Client updated successfully",
-    "description": "The client data was updated successfully."
+    "title": "Espacio actualizado",
+    "description": "Los datos del espacio ya fueron actualizados."
   },
   "CLIENT_UPDATED": {
-    "title": "Client updated successfully",
-    "description": "The client data was updated successfully."
+    "title": "Espacio actualizado",
+    "description": "Los datos del espacio ya fueron actualizados."
   },
   "CLIENT_UPDATE_FAILED": {
-    "title": "Client update failed",
-    "description": "An unexpected error occurred while updating the client."
+    "title": "No pudimos guardar los cambios",
+    "description": "No pudimos actualizar el espacio. Inténtalo de nuevo."
   },
   "CLIENT_MISSING_CLIENT_ID": {
-    "title": "Missing client ID",
-    "description": "A valid client ID is required for registration."
+    "title": "Falta el identificador del espacio",
+    "description": "Necesitamos un identificador válido del espacio para continuar."
   },
   "CLIENT_ID_MISMATCH": {
-    "title": "Client mismatch",
-    "description": "The provided client does not match your session."
+    "title": "El espacio no coincide",
+    "description": "El espacio indicado no coincide con tu sesión actual."
   },
   "CLIENT_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "The specified client does not exist."
+    "title": "Espacio no encontrado",
+    "description": "El espacio indicado no existe."
   },
   "USER_REGISTER_SUCCESS": {
-    "title": "Registro completado",
-    "description": "Tu cuenta fue creada. Revisa tu bandeja de entrada y verifica tu correo antes de iniciar sesión."
+    "title": "Revisa tu correo",
+    "description": "Ya creamos tu cuenta. Confirma tu correo antes de iniciar sesión."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
-    "title": "Account already active",
-    "description": "Ya tienes acceso a este espacio de trabajo. Continúa al inicio de sesión."
+    "title": "Tu cuenta ya está lista",
+    "description": "Ya existe una cuenta con ese correo. Inicia sesión para continuar."
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
-    "title": "Password required",
-    "description": "No pudimos completar el registro con los datos proporcionados. Usa la contraseña correcta o restablécela para continuar."
+    "title": "Usa tu contraseña actual",
+    "description": "Esta cuenta ya existe. Inicia sesión con tu contraseña actual o restablécela para continuar."
   },
   "USER_BLOCKED": {
     "title": "Acceso denegado",
@@ -166,8 +166,8 @@
     "description": "Introduce tu contraseña para continuar."
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
-    "title": "Correo verificado correctamente",
-    "description": "Tu correo electrónico ha sido verificado. Ya puedes continuar al inicio de sesión."
+    "title": "Correo verificado",
+    "description": "Tu correo ya está confirmado. Ya puedes iniciar sesión."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "Correo ya verificado",
@@ -182,20 +182,20 @@
     "description": "Este enlace de restablecimiento ha expirado. Solicita uno nuevo para continuar."
   },
   "VALIDATION_ERROR": {
-    "title": "Error de validación",
-    "description": "Revisa los datos introducidos e inténtalo de nuevo."
+    "title": "Revisa tus datos",
+    "description": "Revisa la información e inténtalo de nuevo."
   },
   "USER_NOT_FOUND": {
-    "title": "Usuario no encontrado",
-    "description": "No se pudo encontrar el usuario asociado a este token."
+    "title": "Cuenta no encontrada",
+    "description": "No pudimos relacionar este enlace con una cuenta."
   },
   "LOGOUT_SUCCESS": {
-    "title": "Sesión cerrada correctamente",
-    "description": "Has cerrado sesión correctamente."
+    "title": "Sesión cerrada",
+    "description": "Tu sesión terminó correctamente."
   },
   "LOGOUT_FAILED": {
-    "title": "No se pudo cerrar la sesión",
-    "description": "No pudimos cerrar tu sesión. Inténtalo de nuevo."
+    "title": "No pudimos cerrar la sesión",
+    "description": "No pudimos completar el cierre de sesión. Inténtalo de nuevo."
   },
   "LOGOUT_CONFIRM": {
     "title": "¿Cerrar sesión?",
@@ -204,16 +204,16 @@
     "close": "Cancelar"
   },
   "USER_LOGOUT_SUCCESS": {
-    "title": "Sesión cerrada correctamente",
-    "description": "Has cerrado sesión correctamente."
+    "title": "Sesión cerrada",
+    "description": "Tu sesión terminó correctamente."
   },
   "USER_LOGOUT_ALL_SUCCESS": {
-    "title": "Sesión cerrada en todas las sesiones",
-    "description": "Has cerrado sesión en todos los dispositivos."
+    "title": "Sesión cerrada en todos tus dispositivos",
+    "description": "Tu sesión se cerró en todos tus dispositivos."
   },
   "AUTH_GET_SUCCESS": {
-    "title": "Sesión cargada",
-    "description": "La información de tu sesión se ha cargado."
+    "title": "Sesión lista",
+    "description": "Tu sesión ya está lista."
   },
   "PROFILE_ADDRESS_DELETE_CONFIRM": {
     "title": "¿Eliminar dirección?",
@@ -223,254 +223,254 @@
   },
   "USER_CLIENT_NOT_FOUND": {
     "title": "Acceso aún no disponible",
-    "description": "Esta cuenta todavía no puede acceder a este espacio de trabajo. Continúa con el registro para completar el acceso."
+    "description": "Esta cuenta todavía no puede entrar en este espacio. Termina la activación para continuar."
   },
   "USER_CLIENT_BLOCKED": {
-    "title": "Access blocked",
-    "description": "Your account is blocked for this client."
+    "title": "Acceso bloqueado",
+    "description": "Esta cuenta no puede acceder a este espacio."
   },
   "USER_CLIENT_COOKIES_UPDATE_SUCCESS": {
-    "title": "Cookie settings updated",
-    "description": "Your cookie preferences have been saved successfully."
+    "title": "Preferencias guardadas",
+    "description": "Tus preferencias de cookies se guardaron."
   },
   "REFRESH_TOKEN_MISSING": {
-    "title": "Reauthentication required",
-    "description": "Your session is no longer valid. Please log in again."
+    "title": "Vuelve a iniciar sesión",
+    "description": "Tu sesión ya no es válida. Inicia sesión de nuevo para continuar."
   },
   "REFRESH_TOKEN_INVALIDATED": {
-    "title": "Session invalidated",
-    "description": "Your session has been invalidated. Please log in again."
+    "title": "Vuelve a iniciar sesión",
+    "description": "Tu sesión se cerró. Inicia sesión de nuevo para continuar."
   },
   "REFRESH_TOKEN_EXPIRED": {
-    "title": "Session expired",
-    "description": "Your session has expired. Please log in again."
+    "title": "Sesión caducada",
+    "description": "Tu sesión ha caducado. Inicia sesión de nuevo para continuar."
   },
   "ACCESS_TOKEN_REFRESHED": {
-    "title": "Session renewed",
-    "description": "Your access token has been successfully refreshed."
+    "title": "Sesión renovada",
+    "description": "Tu sesión vuelve a estar activa."
   },
   "CSRF_TOKEN_INVALID": {
-    "title": "Security validation failed",
-    "description": "Your session security token is invalid. Please reload and try again."
+    "title": "Recarga la página",
+    "description": "No pudimos validar tu sesión. Recarga la página e inténtalo de nuevo."
   },
   "MAGIC_TOKEN_EXPIRED": {
-    "title": "Login link expired",
-    "description": "The magic login link has expired. Please request a new one."
+    "title": "Enlace de acceso caducado",
+    "description": "Este enlace de acceso ya ha caducado. Solicita uno nuevo para continuar."
   },
   "MAGIC_TOKEN_INVALID": {
-    "title": "Invalid login link",
-    "description": "The magic login token is invalid or corrupted."
+    "title": "Enlace de acceso no válido",
+    "description": "Este enlace de acceso no es válido. Solicita uno nuevo para continuar."
   },
   "MAGIC_LOGIN_SUCCESS": {
-    "title": "Login successful",
-    "description": "You have been logged in successfully."
+    "title": "Ya has iniciado sesión",
+    "description": "Tu sesión ya está lista."
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
-    "title": "Reset link sent",
-    "description": "We emailed you a reset link. Check your inbox to continue."
+    "title": "Revisa tu correo",
+    "description": "Si existe una cuenta con ese correo, te enviaremos un enlace para restablecer la contraseña."
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
-    "title": "Email not verified",
-    "description": "Verify your email before signing in. You can open the verification page if needed."
+    "title": "Primero confirma tu correo",
+    "description": "Confirma tu correo antes de iniciar sesión. Si lo necesitas, puedes continuar a la verificación."
   },
   "USER_LOGIN_SUCCESS": {
-    "title": "Login successful",
-    "description": "You have been logged in successfully."
+    "title": "Ya has iniciado sesión",
+    "description": "Tu sesión ya está lista."
   },
   "USER_RESET_PASSWORD_SUCCESS": {
-    "title": "Password reset successful",
-    "description": "Your password has been updated. Go to login with your new password."
+    "title": "Contraseña actualizada",
+    "description": "Tu contraseña ya fue actualizada. Inicia sesión con la nueva."
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
-    "title": "Password updated",
-    "description": "Your password has been updated successfully."
+    "title": "Contraseña actualizada",
+    "description": "Tu contraseña ya quedó actualizada."
   },
   "USER_CHANGE_EMAIL_REQUESTED": {
-    "title": "Email change requested",
-    "description": "We sent a confirmation email to your new address."
+    "title": "Cambio de correo solicitado",
+    "description": "Te enviamos un correo de confirmación a tu nueva dirección."
   },
   "USER_CHANGE_EMAIL_CONFIRMED": {
-    "title": "Email changed",
-    "description": "Your email address has been updated successfully."
+    "title": "Correo actualizado",
+    "description": "Tu dirección de correo ya fue actualizada."
   },
   "USER_CHANGE_EMAIL_SAME_EMAIL": {
-    "title": "No changes detected",
-    "description": "The new email address is the same as your current one."
+    "title": "No hay cambios",
+    "description": "El nuevo correo es el mismo que ya estás usando."
   },
   "USER_EMAIL_ALREADY_IN_USE": {
-    "title": "Email already in use",
-    "description": "This email address is already being used by another account."
+    "title": "Correo ya en uso",
+    "description": "Usa otro correo o inicia sesión con este."
   },
   "USER_CHANGE_EMAIL_MISSING_TOKEN": {
-    "title": "Confirmation failed",
-    "description": "The email change token is missing."
+    "title": "No pudimos confirmar el cambio",
+    "description": "Falta el enlace de confirmación. Vuelve a intentarlo desde tu cuenta."
   },
   "USER_CHANGE_EMAIL_INVALID_TOKEN": {
-    "title": "Invalid confirmation link",
-    "description": "The email change link is invalid or corrupted."
+    "title": "Enlace de confirmación no válido",
+    "description": "Este enlace ya no sirve. Solicita el cambio otra vez para continuar."
   },
   "USER_CHANGE_EMAIL_TOKEN_EXPIRED": {
-    "title": "Confirmation link expired",
-    "description": "The email change link has expired. Please request a new one."
+    "title": "Enlace de confirmación caducado",
+    "description": "Este enlace ya caducó. Solicita el cambio otra vez para continuar."
   },
   "USER_CHANGE_EMAIL_STATE_MISMATCH": {
-    "title": "State mismatch",
-    "description": "The email change state is no longer valid. Please restart the process."
+    "title": "El cambio ya no está disponible",
+    "description": "Este intento ya no es válido. Inicia el cambio de correo otra vez."
   },
   "USER_VERIFY_EMAIL_RESENT": {
-    "title": "Verification email resent",
-    "description": "We sent you a new verification email. Check your inbox to continue.",
-    "confirm": "Continue",
-    "close": "Close"
+    "title": "Revisa tu correo",
+    "description": "Si esta cuenta puede verificarse, te enviaremos un nuevo correo de verificación.",
+    "confirm": "Continuar",
+    "close": "Cerrar"
   },
   "OBJECT_ADDRESS_EXISTS": {
-    "title": "Address already in use",
-    "description": "An object already exists with this address."
+    "title": "Dirección ya en uso",
+    "description": "Ya existe un inmueble con esa dirección."
   },
   "OBJECT_NUMBER_EXISTS": {
-    "title": "Object number already exists",
-    "description": "An object with this number already exists."
+    "title": "Número ya en uso",
+    "description": "Ya existe un inmueble con ese número."
   },
   "OBJECT_NOT_FOUND": {
-    "title": "Object not found",
-    "description": "The requested object could not be found."
+    "title": "Inmueble no encontrado",
+    "description": "No encontramos el inmueble solicitado."
   },
   "PROPERTY_MANAGER_EMAIL_EXISTS": {
-    "title": "Email already in use",
-    "description": "A manager already exists with this email address."
+    "title": "Correo ya en uso",
+    "description": "Ya existe un gestor con ese correo."
   },
   "PROPERTY_MANAGER_EXISTS": {
-    "title": "Manager already exists",
-    "description": "A property manager with these details already exists."
+    "title": "Gestor ya existente",
+    "description": "Ya existe un gestor con esos datos."
   },
   "PROPERTY_MANAGER_NOT_FOUND": {
-    "title": "Manager not found",
-    "description": "The requested property manager could not be found."
+    "title": "Gestor no encontrado",
+    "description": "No encontramos el gestor solicitado."
   },
   "WORKER_ALREADY_EXISTS": {
-    "title": "Worker already exists",
-    "description": "A worker with these details already exists."
+    "title": "Trabajador ya existente",
+    "description": "Ya existe un trabajador con esos datos."
   },
   "WORKER_NOT_FOUND": {
-    "title": "Worker not found",
-    "description": "The requested worker could not be found."
+    "title": "Trabajador no encontrado",
+    "description": "No encontramos el trabajador solicitado."
   },
   "WORKER_LOAD_FAILED": {
-    "title": "Failed to load data",
-    "description": "Worker data could not be loaded. Please reload the page."
+    "title": "No pudimos cargar los datos",
+    "description": "No pudimos cargar la información del worker. Recarga la página e inténtalo de nuevo."
   },
   "PERMISSION_DENIED": {
-    "title": "Access denied",
-    "description": "You do not have the required permissions to access this page.",
-    "close": "Go to login"
+    "title": "Acceso no disponible",
+    "description": "Esta página no está disponible para esta cuenta.",
+    "close": "Ir al acceso"
   },
   "OBJECT_CREATED": {
-    "title": "Object created",
-    "description": "The object has been created successfully."
+    "title": "Inmueble creado",
+    "description": "El inmueble ya fue creado."
   },
   "OBJECT_FOUND": {
-    "title": "Object loaded",
-    "description": "The object details were retrieved successfully."
+    "title": "Inmueble cargado",
+    "description": "Los datos del inmueble ya están disponibles."
   },
   "OBJECT_LIST": {
-    "title": "Objects loaded",
-    "description": "The objects list was retrieved successfully."
+    "title": "Inmuebles cargados",
+    "description": "La lista de inmuebles ya está disponible."
   },
   "OBJECT_UPDATED": {
-    "title": "Object updated",
-    "description": "The object has been updated successfully."
+    "title": "Inmueble actualizado",
+    "description": "Los datos del inmueble ya fueron actualizados."
   },
   "PROPERTY_MANAGER_CREATED": {
-    "title": "Manager created",
-    "description": "The property manager has been created successfully."
+    "title": "Gestor creado",
+    "description": "El gestor ya fue creado."
   },
   "PROPERTY_MANAGER_FOUND": {
-    "title": "Manager loaded",
-    "description": "The property manager details were retrieved successfully."
+    "title": "Gestor cargado",
+    "description": "Los datos del gestor ya están disponibles."
   },
   "PROPERTY_MANAGER_LIST": {
-    "title": "Managers loaded",
-    "description": "The property manager list was retrieved successfully."
+    "title": "Gestores cargados",
+    "description": "La lista de gestores ya está disponible."
   },
   "PROPERTY_MANAGER_UPDATED": {
-    "title": "Manager updated",
-    "description": "The property manager has been updated successfully."
+    "title": "Gestor actualizado",
+    "description": "Los datos del gestor ya fueron actualizados."
   },
   "WORKER_CREATED": {
-    "title": "Worker created",
-    "description": "The worker has been created successfully."
+    "title": "Trabajador creado",
+    "description": "El trabajador ya fue creado."
   },
   "WORKER_DELETED": {
-    "title": "Worker deleted",
-    "description": "The worker has been removed."
+    "title": "Trabajador eliminado",
+    "description": "El trabajador fue eliminado."
   },
   "WORKER_FOUND": {
-    "title": "Worker loaded",
-    "description": "The worker details were retrieved successfully."
+    "title": "Trabajador cargado",
+    "description": "Los datos del trabajador ya están disponibles."
   },
   "WORKER_INVITE_RESENT": {
-    "title": "Invitacion reenviada",
-    "description": "La invitacion del trabajador se envio nuevamente."
+    "title": "Invitación reenviada",
+    "description": "La invitación del trabajador se volvió a enviar."
   },
   "WORKER_LIST": {
-    "title": "Workers loaded",
-    "description": "The workers list was retrieved successfully."
+    "title": "Trabajadores cargados",
+    "description": "La lista de trabajadores ya está disponible."
   },
   "WORKER_UPDATED": {
-    "title": "Worker updated",
-    "description": "The worker has been updated successfully."
+    "title": "Datos guardados",
+    "description": "Los datos del trabajador ya fueron actualizados."
   },
   "AUTH_ACCESS_TOKEN_EXPIRED": {
-    "title": "Session expired",
-    "description": "Your access token has expired. Please log in again."
+    "title": "Sesión caducada",
+    "description": "Tu sesión ya caducó. Inicia sesión de nuevo para continuar."
   },
   "AUTH_ACCESS_TOKEN_INVALID": {
-    "title": "Invalid access token",
-    "description": "Your access token is invalid. Please log in again."
+    "title": "Sesión no válida",
+    "description": "No pudimos validar tu sesión. Inicia sesión de nuevo para continuar."
   },
   "AUTH_ACCESS_TOKEN_MISSING": {
-    "title": "Missing access token",
-    "description": "Your access token is missing. Please log in again."
+    "title": "Falta la sesión",
+    "description": "No encontramos una sesión válida. Inicia sesión de nuevo para continuar."
   },
   "AUTH_CLIENT_ADMIN_REQUIRED": {
-    "title": "Client admin required",
-    "description": "You need client admin permissions to perform this action."
+    "title": "Necesitas acceso de administración",
+    "description": "Solo una cuenta con permisos de administración puede hacer esto."
   },
   "AUTH_SUPERADMIN_REQUIRED": {
-    "title": "Superadmin required",
-    "description": "You need superadmin permissions to perform this action."
+    "title": "Necesitas acceso avanzado",
+    "description": "Solo una cuenta con permisos avanzados puede hacer esto."
   },
   "AUTH_CURRENT_PASSWORD_INVALID": {
-    "title": "Invalid current password",
-    "description": "The current password is incorrect. Please try again."
+    "title": "La contraseña actual no coincide",
+    "description": "Revisa tu contraseña actual e inténtalo de nuevo."
   },
   "AUTH_INVALID_CREDENTIALS": {
-    "title": "Invalid credentials",
-    "description": "The provided credentials are invalid."
+    "title": "Datos de acceso no válidos",
+    "description": "El correo o la contraseña no coinciden. Inténtalo de nuevo."
   },
   "CLIENT_CLIENT_NOT_FOUND": {
-    "title": "Client not found",
-    "description": "The requested client could not be found."
+    "title": "Espacio no encontrado",
+    "description": "No encontramos el espacio solicitado."
   },
   "CLIENT_DOMAIN_EXISTS": {
-    "title": "Domain already in use",
-    "description": "A client with this domain already exists."
+    "title": "Dominio ya en uso",
+    "description": "Ya existe un espacio con ese dominio."
   },
   "CLIENT_ID_REQUIRED": {
-    "title": "Client ID required",
-    "description": "A valid client ID is required."
+    "title": "Identificador obligatorio",
+    "description": "Necesitamos un identificador válido del espacio."
   },
   "CLIENT_UPDATE_FIELD_NOT_ALLOWED": {
-    "title": "Field update not allowed",
-    "description": "One or more fields cannot be updated."
+    "title": "Hay campos que no se pueden cambiar",
+    "description": "Uno o varios campos no admiten cambios en esta acción."
   },
   "COMPANY_EMAIL_EXISTS": {
-    "title": "Email already in use",
-    "description": "A company with this email already exists."
+    "title": "Correo ya en uso",
+    "description": "Ya existe una empresa con ese correo."
   },
   "COMPANY_NAME_EXISTS": {
-    "title": "Company name already in use",
-    "description": "A company with this name already exists."
+    "title": "Nombre ya en uso",
+    "description": "Ya existe una empresa con ese nombre."
   },
   "CONTACT_CREATE_FAILED": {
     "title": "Message not sent",
@@ -497,103 +497,103 @@
     "description": "We could not send the response to this contact message."
   },
   "EMAIL_DELIVERY_FAILED": {
-    "title": "Email delivery failed",
-    "description": "We could not deliver the email. Please try again later."
+    "title": "No pudimos entregar el correo",
+    "description": "No pudimos enviar el correo. Inténtalo de nuevo más tarde."
   },
   "NO_AUTH_USER": {
-    "title": "User session missing",
-    "description": "No authenticated user was found for this session."
+    "title": "No encontramos una sesión activa",
+    "description": "No hay una sesión válida para continuar con esta acción."
   },
   "NOTIFICATION_FORBIDDEN_TARGET": {
-    "title": "Invalid notification target",
-    "description": "You do not have permission to target this user."
+    "title": "Destino no permitido",
+    "description": "No tienes permisos para enviar una notificación a ese usuario."
   },
   "NOTIFICATION_NOT_FOUND": {
-    "title": "Notification not found",
-    "description": "The requested notification could not be found."
+    "title": "Notificación no encontrada",
+    "description": "No encontramos la notificación solicitada."
   },
   "USER_CLIENT_PROFILE_EXISTS": {
-    "title": "Profile already exists",
-    "description": "A client profile already exists for this user."
+    "title": "El perfil ya existe",
+    "description": "Este usuario ya tiene un perfil creado en este espacio."
   },
   "USER_CLIENT_PROFILE_NOT_FOUND": {
-    "title": "Profile not found",
-    "description": "The requested client profile could not be found."
+    "title": "Perfil no encontrado",
+    "description": "No encontramos el perfil solicitado."
   },
   "AUTH_VERIFY_EMAIL_TOKEN_EXPIRED": {
-    "title": "Verification link expired",
-    "description": "The email verification token has expired. Please request a new one."
+    "title": "Enlace de verificación caducado",
+    "description": "Este enlace de verificación ya caducó. Solicita uno nuevo para continuar."
   },
   "AUTH_VERIFY_EMAIL_TOKEN_INVALID": {
-    "title": "Invalid verification link",
-    "description": "The email verification token is invalid or corrupted."
+    "title": "Enlace de verificación no válido",
+    "description": "Este enlace de verificación no es válido o ya no sirve."
   },
   "COMPANY_CREATED": {
-    "title": "Company created",
-    "description": "The company has been created successfully."
+    "title": "Empresa creada",
+    "description": "La empresa ya fue creada."
   },
   "CONTACT_MESSAGE_CREATED": {
-    "title": "Message sent",
-    "description": "The contact message has been created successfully."
+    "title": "Mensaje enviado",
+    "description": "El mensaje de contacto ya fue enviado."
   },
   "CONTACT_MESSAGE_DELETED": {
-    "title": "Message deleted",
-    "description": "The contact message has been deleted."
+    "title": "Mensaje eliminado",
+    "description": "El mensaje de contacto fue eliminado."
   },
   "CONTACT_MESSAGE_RESPONDED": {
-    "title": "Response sent",
-    "description": "The response to the contact message was sent successfully."
+    "title": "Respuesta enviada",
+    "description": "La respuesta al mensaje de contacto ya fue enviada."
   },
   "CONTACT_MESSAGES_DELETED": {
-    "title": "Messages deleted",
-    "description": "The selected contact messages were deleted."
+    "title": "Mensajes eliminados",
+    "description": "Los mensajes seleccionados fueron eliminados."
   },
   "NOTIFICATION_ADMIN_LIST": {
-    "title": "Notifications loaded",
-    "description": "Admin notifications were retrieved successfully."
+    "title": "Notificaciones cargadas",
+    "description": "Las notificaciones de administración ya están disponibles."
   },
   "NOTIFICATION_CREATED": {
-    "title": "Notification created",
-    "description": "The notification has been created successfully."
+    "title": "Notificación creada",
+    "description": "La notificación ya fue creada."
   },
   "NOTIFICATION_DELETED": {
-    "title": "Notification deleted",
-    "description": "The notification has been deleted."
+    "title": "Notificación eliminada",
+    "description": "La notificación fue eliminada."
   },
   "NOTIFICATION_LIST": {
-    "title": "Notifications loaded",
-    "description": "Notifications were retrieved successfully."
+    "title": "Notificaciones cargadas",
+    "description": "Tus notificaciones ya están disponibles."
   },
   "NOTIFICATION_MARKED_ALL_READ": {
-    "title": "All notifications marked as read",
-    "description": "All notifications were marked as read."
+    "title": "Todo quedó como leído",
+    "description": "Todas las notificaciones fueron marcadas como leídas."
   },
   "NOTIFICATION_MARKED_READ": {
-    "title": "Notification marked as read",
-    "description": "The notification was marked as read."
+    "title": "Notificación marcada como leída",
+    "description": "La notificación fue marcada como leída."
   },
   "NOTIFICATION_MARKED_SEEN": {
-    "title": "Notification marked as seen",
-    "description": "The notification was marked as seen."
+    "title": "Notificación marcada como vista",
+    "description": "La notificación fue marcada como vista."
   },
   "NOTIFICATION_UNREAD_COUNT": {
-    "title": "Unread count loaded",
-    "description": "The unread notification count was retrieved successfully."
+    "title": "Recuento actualizado",
+    "description": "El número de notificaciones sin leer ya está disponible."
   },
   "USER_CLIENT_PROFILE_CREATED": {
-    "title": "Profile created",
-    "description": "The client profile has been created successfully."
+    "title": "Perfil listo",
+    "description": "Tu perfil ya está listo."
   },
   "USER_CLIENT_PROFILE_DELETED": {
-    "title": "Profile deleted",
-    "description": "The client profile has been deleted."
+    "title": "Perfil eliminado",
+    "description": "El perfil fue eliminado."
   },
   "USER_CLIENT_PROFILE_FOUND": {
-    "title": "Profile loaded",
-    "description": "The client profile was retrieved successfully."
+    "title": "Perfil cargado",
+    "description": "Los datos de tu perfil ya están disponibles."
   },
   "USER_CLIENT_PROFILE_UPDATED": {
-    "title": "Profile updated",
-    "description": "The client profile has been updated successfully."
+    "title": "Perfil actualizado",
+    "description": "Tus datos ya están guardados."
   }
 }

@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
-import { fallbackButtons } from '../contexts';
+import { getI18nFallbacks } from '../contexts';
 import type { PopupsTexts } from '../contexts/alert/alert.types';
 import { href } from '../utils';
 import { useLang } from './useLang';
 
-type AuthAlertButtons = typeof fallbackButtons;
+type AuthAlertButtons = ReturnType<typeof getI18nFallbacks>['fallbackButtons'];
 type AuthConfirmActionKind =
   | 'reload'
   | 'goToHome'
@@ -28,6 +28,7 @@ interface UseAuthAlertActionsOptions {
 export function useAuthAlertActions({ buttons, closeAlert }: UseAuthAlertActionsOptions) {
   const router = useRouter();
   const lang = useLang();
+  const { fallbackButtons } = getI18nFallbacks(lang);
   const resolvedButtons: AuthAlertButtons = {
     ...fallbackButtons,
     ...buttons,

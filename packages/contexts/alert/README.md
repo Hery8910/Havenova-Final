@@ -239,6 +239,8 @@ Para labels:
 Esto permite que la página haga:
 
 ```ts
+const { fallbackRegisterSuccess } = getI18nFallbacks(language);
+
 const popupData = getPopup(
   popups,
   response.code,

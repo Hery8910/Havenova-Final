@@ -23,6 +23,7 @@ import {
   getCsrfDebugState,
   getCsrfToken,
   logoutUser,
+  reissueCsrfToken,
   refreshToken,
 } from '@havenova/services';
 
@@ -573,9 +574,16 @@ export const AuthProvider = ({
             debugAuthTrace('refreshAuth.try-refresh-token', {
               status,
               code,
-              csrfTokenSource: csrfToken ? 'memory' : 'bff-cookie-fallback',
+              csrfTokenSource: csrfToken ? 'memory' : 'csrf-reissue-required',
               ...getBrowserCookiePresence(),
             });
+            if (!csrfToken) {
+              await withTimeout(
+                reissueCsrfToken(),
+                AUTH_REQUEST_TIMEOUT_MS,
+                'Auth CSRF reissue request timed out.'
+              );
+            }
             await withTimeout(
               refreshToken(),
               AUTH_REQUEST_TIMEOUT_MS,

@@ -77,3 +77,10 @@ Fuente:
 - El backend mantiene respuesta ambigua por diseño.
 - En success no se informa si el email existe; sólo se ofrece continuidad hacia login.
 - la navegación de CTAs (`goToLogin`, `reload`, `close`) ya quedó alineada con la utilidad shared de acciones auth, sin cambiar el comportamiento visible del flujo
+
+## Intención visible de las salidas
+
+- `loading`: comunicar envío de ayuda de acceso, no validación de identidad
+- `USER_FORGOT_PASSWORD_EMAIL_SENT`: confirmar de forma neutra que el siguiente paso ocurre en email, sin revelar existencia de cuenta
+- `CLIENT_MISSING_CLIENT_ID`, `CLIENT_NOT_FOUND` y `VALIDATION_ERROR`: cortar el intento por contexto incompleto o inválido y dejar retry seguro
+- error técnico: dejar claro que el envío no pudo completarse ahora y permitir reintento

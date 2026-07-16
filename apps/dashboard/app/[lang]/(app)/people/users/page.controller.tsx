@@ -1,65 +1,253 @@
 'use client';
 
-import { useDeferredValue, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useLang } from '@/packages/hooks';
-import { getTenantUserDetail, getTenantUsers } from '@/packages/services';
-import type { TenantUserDetail, TenantUserListItem, TenantUserStatus } from '@/packages/types';
+import { useI18n } from '@/packages/contexts';
+import {
+  getTenantUserDirectoryDetail,
+  getTenantUserDirectoryErrorCode,
+  getTenantUsersDirectoryPage,
+  getTenantUsersDirectorySummary,
+  inviteTenantUser,
+  resendTenantUserInvitation,
+  revokeTenantUserInvitation,
+} from '@/packages/services';
+import type {
+  AppLanguage,
+  InviteTenantUserPayload,
+  TenantUserDirectoryDetail,
+  TenantUserDirectoryEntry,
+  TenantUsersDirectoryPage,
+  TenantUsersDirectorySummary,
+} from '@/packages/types';
 import {
   buildUsersSummary,
+  createUsersPageCopy,
+  parseUsersSearchState,
+  parseUsersStatus,
   resolveUsersPageMode,
   USERS_PAGE_QUERY_KEYS,
-  usersPageCopy,
-  usersStatusOptions,
 } from './page.copy';
 import { UsersPageDetailRouter } from './components/UsersPageDetailRouter';
 import { UsersPageView } from './components/UsersPageView';
-import type { UsersPageControllerProps, UsersPageMode } from './page.types';
+import type {
+  UsersInviteSubmitResult,
+  UsersPageControllerProps,
+  UsersPageMode,
+  UsersPageSearchState,
+  UsersPageStatusFilter,
+} from './page.types';
+
+const DIRECTORY_LIMIT = 25;
+const SEARCH_DEBOUNCE_MS = 300;
+const MAX_RESTORE_PAGES = 8;
 
 const normalizeSelected = (value?: string | null): string | undefined => {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
 };
 
+const normalizeSearch = (value?: string | null): string => value?.trim() ?? '';
+
+const dedupeDirectoryItems = (pages: TenantUsersDirectoryPage[]): TenantUserDirectoryEntry[] => {
+  const seen = new Set<string>();
+  const items: TenantUserDirectoryEntry[] = [];
+
+  for (const page of pages) {
+    for (const item of page.items) {
+      if (seen.has(item.entryId)) {
+        continue;
+      }
+
+      seen.add(item.entryId);
+      items.push(item);
+    }
+  }
+
+  return items;
+};
+
+type DirectoryCacheEntry = {
+  pages: TenantUsersDirectoryPage[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+};
+
+const getErrorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
 export default function PeopleUsersPageController({
   initialMode,
-  initialSelectedUserClientId,
+  initialSelectedEntryId,
+  initialSearchState,
 }: UsersPageControllerProps) {
-  const lang = useLang();
+  const lang = useLang() as AppLanguage;
+  const { texts } = useI18n();
+  const usersPageCopy = useMemo(
+    () => createUsersPageCopy(texts.pages.dashboard.usersDirectory.copy),
+    [texts.pages.dashboard.usersDirectory.copy]
+  );
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [search, setSearch] = useState('');
-  const [status, setStatus] = useState<'all' | TenantUserStatus>('all');
-  const [reloadToken, setReloadToken] = useState(0);
-  const [items, setItems] = useState<TenantUserListItem[]>([]);
-  const [meta, setMeta] = useState({ total: 0, page: 1, limit: 20 });
-  const [isListLoading, setIsListLoading] = useState(true);
-  const [listError, setListError] = useState<string | null>(null);
-  const [detail, setDetail] = useState<TenantUserDetail | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
-  const [detailError, setDetailError] = useState<string | null>(null);
-  const deferredSearch = useDeferredValue(search);
-
-  const selectedUserClientId = useMemo(() => {
-    const nextSelected = normalizeSelected(
+  const routeSelectedEntryId = useMemo(() => {
+    return normalizeSelected(
       searchParams.get(USERS_PAGE_QUERY_KEYS.selected) ??
         searchParams.get(USERS_PAGE_QUERY_KEYS.legacySelected) ??
-        initialSelectedUserClientId
+        initialSelectedEntryId
     );
+  }, [initialSelectedEntryId, searchParams]);
 
-    return nextSelected;
-  }, [initialSelectedUserClientId, searchParams]);
-
-  const mode = useMemo<UsersPageMode>(() => {
+  const routeMode = useMemo<UsersPageMode>(() => {
     return resolveUsersPageMode(
       searchParams.get(USERS_PAGE_QUERY_KEYS.mode),
-      selectedUserClientId,
+      routeSelectedEntryId,
       initialMode
     );
-  }, [initialMode, searchParams, selectedUserClientId]);
+  }, [initialMode, routeSelectedEntryId, searchParams]);
+
+  const routeSearchState = useMemo<UsersPageSearchState>(() => {
+    if (!searchParams.toString()) {
+      return initialSearchState;
+    }
+
+    return parseUsersSearchState({
+      search: searchParams.get(USERS_PAGE_QUERY_KEYS.search),
+      status: searchParams.get(USERS_PAGE_QUERY_KEYS.status),
+    });
+  }, [initialSearchState, searchParams]);
+
+  const [search, setSearch] = useState(initialSearchState.search);
+  const [debouncedSearch, setDebouncedSearch] = useState(initialSearchState.search);
+  const [status, setStatus] = useState<UsersPageStatusFilter>(initialSearchState.status);
+  const [summary, setSummary] = useState<TenantUsersDirectorySummary | null>(null);
+  const [summaryReloadToken, setSummaryReloadToken] = useState(0);
+  const [isSummaryLoading, setIsSummaryLoading] = useState(true);
+  const [summaryError, setSummaryError] = useState(false);
+  const [directoryReloadToken, setDirectoryReloadToken] = useState(0);
+  const [pages, setPages] = useState<TenantUsersDirectoryPage[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [isDirectoryInitialLoading, setIsDirectoryInitialLoading] = useState(true);
+  const [isDirectoryRefreshing, setIsDirectoryRefreshing] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [directoryError, setDirectoryError] = useState<string | null>(null);
+  const [detail, setDetail] = useState<TenantUserDirectoryDetail | null>(null);
+  const [detailReloadToken, setDetailReloadToken] = useState(0);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState<string | null>(null);
+  const [isInviteSubmitting, setIsInviteSubmitting] = useState(false);
+  const [inviteResult, setInviteResult] = useState<UsersInviteSubmitResult | null>(null);
+  const [detailFeedback, setDetailFeedback] = useState<string | null>(null);
+  const [invitationAction, setInvitationAction] = useState<'resend' | 'revoke' | null>(null);
+
+  const directoryItems = useMemo(() => dedupeDirectoryItems(pages), [pages]);
+  const directoryItemsCountRef = useRef(0);
+  const normalizedDebouncedSearch = normalizeSearch(debouncedSearch);
+  const shouldFetchSearch =
+    normalizedDebouncedSearch.length === 0 || normalizedDebouncedSearch.length >= 2;
+  const remoteSearch = normalizedDebouncedSearch.length >= 2 ? normalizedDebouncedSearch : undefined;
+  const directoryQueryKey = `${remoteSearch ?? ''}\u0000${status}`;
+  const directoryQueryKeyRef = useRef(directoryQueryKey);
+  const directoryCacheRef = useRef(new Map<string, DirectoryCacheEntry>());
+  const directoryEntryRefs = useRef(new Map<string, HTMLButtonElement>());
+  const pendingEntryRestoreRef = useRef<string | undefined>(routeSelectedEntryId);
+  const previousSelectedEntryRef = useRef<string | undefined>(routeSelectedEntryId);
+  const restorePageAttemptsRef = useRef(0);
+  const isLoadingMoreRef = useRef(false);
+  const loadNextDirectoryPageRef = useRef<() => void>(() => undefined);
+
+  directoryQueryKeyRef.current = directoryQueryKey;
+  const summaryCopy = texts.pages.dashboard.usersDirectory.summary;
+
+  const cacheDirectoryPages = useCallback(
+    (
+      queryKey: string,
+      cachedPages: TenantUsersDirectoryPage[],
+      cachedNextCursor: string | null,
+      cachedHasNextPage: boolean
+    ) => {
+      directoryCacheRef.current.set(queryKey, {
+        pages: cachedPages,
+        nextCursor: cachedNextCursor,
+        hasNextPage: cachedHasNextPage,
+      });
+    },
+    []
+  );
+
+  const clearDirectoryCache = useCallback(() => {
+    directoryCacheRef.current.clear();
+  }, []);
+
+  const registerDirectoryEntryElement = useCallback(
+    (entryId: string, element: HTMLButtonElement | null) => {
+      if (element) {
+        directoryEntryRefs.current.set(entryId, element);
+        return;
+      }
+
+      directoryEntryRefs.current.delete(entryId);
+    },
+    []
+  );
+
+  useEffect(() => {
+    directoryItemsCountRef.current = directoryItems.length;
+  }, [directoryItems.length]);
+
+  useEffect(() => {
+    if (!routeSelectedEntryId || routeMode === 'invite') {
+      pendingEntryRestoreRef.current = undefined;
+      previousSelectedEntryRef.current = undefined;
+      restorePageAttemptsRef.current = 0;
+      return;
+    }
+
+    if (previousSelectedEntryRef.current !== routeSelectedEntryId) {
+      pendingEntryRestoreRef.current = routeSelectedEntryId;
+      previousSelectedEntryRef.current = routeSelectedEntryId;
+      restorePageAttemptsRef.current = 0;
+    }
+  }, [routeMode, routeSelectedEntryId]);
+
+  useEffect(() => {
+    const entryId = pendingEntryRestoreRef.current;
+    if (!entryId || entryId !== routeSelectedEntryId) {
+      return;
+    }
+
+    const entryElement = directoryEntryRefs.current.get(entryId);
+    if (!entryElement) {
+      if (
+        hasNextPage &&
+        !isDirectoryRefreshing &&
+        !isLoadingMoreRef.current &&
+        restorePageAttemptsRef.current < MAX_RESTORE_PAGES
+      ) {
+        restorePageAttemptsRef.current += 1;
+        loadNextDirectoryPageRef.current();
+      }
+
+      return;
+    }
+
+    entryElement.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    entryElement.focus({ preventScroll: true });
+    pendingEntryRestoreRef.current = undefined;
+    restorePageAttemptsRef.current = 0;
+  }, [directoryItems, hasNextPage, isDirectoryRefreshing, routeMode, routeSelectedEntryId]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setDebouncedSearch(normalizeSearch(search));
+    }, SEARCH_DEBOUNCE_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [search]);
 
   useEffect(() => {
     const legacySelected = normalizeSelected(searchParams.get(USERS_PAGE_QUERY_KEYS.legacySelected));
@@ -71,7 +259,7 @@ export default function PeopleUsersPageController({
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete(USERS_PAGE_QUERY_KEYS.legacySelected);
-    params.set(USERS_PAGE_QUERY_KEYS.selected, legacySelected);
+    params.set(USERS_PAGE_QUERY_KEYS.selected, `user:${legacySelected}`);
 
     if (!params.get(USERS_PAGE_QUERY_KEYS.mode)) {
       params.set(USERS_PAGE_QUERY_KEYS.mode, 'detail');
@@ -81,78 +269,183 @@ export default function PeopleUsersPageController({
   }, [pathname, router, searchParams]);
 
   useEffect(() => {
+    const nextSearch = normalizeSearch(routeSearchState.search);
+    if (search !== nextSearch) {
+      setSearch(nextSearch);
+    }
+
+    if (status !== routeSearchState.status) {
+      setStatus(routeSearchState.status);
+    }
+  }, [routeSearchState, search, status]);
+
+  useEffect(() => {
+    const nextSearch = normalizeSearch(debouncedSearch);
+    const currentSearch = normalizeSearch(searchParams.get(USERS_PAGE_QUERY_KEYS.search));
+    const currentStatus = parseUsersStatus(searchParams.get(USERS_PAGE_QUERY_KEYS.status));
+
+    if (currentSearch === nextSearch && currentStatus === status) {
+      return;
+    }
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(USERS_PAGE_QUERY_KEYS.legacySelected);
+
+    if (nextSearch) {
+      params.set(USERS_PAGE_QUERY_KEYS.search, nextSearch);
+    } else {
+      params.delete(USERS_PAGE_QUERY_KEYS.search);
+    }
+
+    if (status === 'all') {
+      params.delete(USERS_PAGE_QUERY_KEYS.status);
+    } else {
+      params.set(USERS_PAGE_QUERY_KEYS.status, status);
+    }
+
+    const nextQuery = params.toString();
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+  }, [debouncedSearch, pathname, router, searchParams, status]);
+
+  useEffect(() => {
     let cancelled = false;
 
-    const loadUsers = async () => {
-      setIsListLoading(true);
-      setListError(null);
+    const loadSummary = async () => {
+      setIsSummaryLoading(true);
+      setSummaryError(false);
 
       try {
-        const response = await getTenantUsers({
-          page: 1,
-          limit: 20,
-          search: deferredSearch,
-          status: status === 'all' ? undefined : status,
-        });
+        const nextSummary = await getTenantUsersDirectorySummary();
 
-        if (cancelled) {
-          return;
+        if (!cancelled) {
+          setSummary(nextSummary);
         }
-
-        setItems(response.data);
-        setMeta(response.meta);
-      } catch (error) {
-        if (cancelled) {
-          return;
+      } catch {
+        if (!cancelled) {
+          setSummary(null);
+          setSummaryError(true);
         }
-
-        setItems([]);
-        setListError(error instanceof Error ? error.message : 'Could not load tenant users.');
       } finally {
         if (!cancelled) {
-          setIsListLoading(false);
+          setIsSummaryLoading(false);
         }
       }
     };
 
-    void loadUsers();
+    void loadSummary();
 
     return () => {
       cancelled = true;
     };
-  }, [deferredSearch, reloadToken, status]);
+  }, [summaryReloadToken]);
 
   useEffect(() => {
-    if (mode !== 'detail' || !selectedUserClientId) {
+    if (!shouldFetchSearch) {
+      setPages([]);
+      setNextCursor(null);
+      setHasNextPage(false);
+      isLoadingMoreRef.current = false;
+      setIsLoadingMore(false);
+      setIsDirectoryInitialLoading(false);
+      setIsDirectoryRefreshing(false);
+      setDirectoryError(null);
+      return;
+    }
+
+    const abortController = new AbortController();
+
+    const loadDirectory = async () => {
+      const cachedDirectory = directoryCacheRef.current.get(directoryQueryKey);
+      const hasExistingItems = cachedDirectory
+        ? dedupeDirectoryItems(cachedDirectory.pages).length > 0
+        : directoryItemsCountRef.current > 0;
+
+      if (cachedDirectory) {
+        setPages(cachedDirectory.pages);
+        setNextCursor(cachedDirectory.nextCursor);
+        setHasNextPage(cachedDirectory.hasNextPage);
+      }
+
+      setDirectoryError(null);
+      isLoadingMoreRef.current = false;
+      setIsLoadingMore(false);
+      setIsDirectoryInitialLoading(!hasExistingItems);
+      setIsDirectoryRefreshing(hasExistingItems);
+
+      try {
+        const page = await getTenantUsersDirectoryPage({
+          q: remoteSearch,
+          status,
+          limit: DIRECTORY_LIMIT,
+          signal: abortController.signal,
+        });
+
+        cacheDirectoryPages(directoryQueryKey, [page], page.nextCursor, page.hasNextPage);
+        setPages([page]);
+        setNextCursor(page.nextCursor);
+        setHasNextPage(page.hasNextPage);
+      } catch (error) {
+        if (abortController.signal.aborted) {
+          return;
+        }
+
+        setPages([]);
+        setNextCursor(null);
+        setHasNextPage(false);
+        setDirectoryError(getErrorMessage(error, usersPageCopy.feedback.errorTitle));
+      } finally {
+        if (!abortController.signal.aborted) {
+          setIsDirectoryInitialLoading(false);
+          setIsDirectoryRefreshing(false);
+        }
+      }
+    };
+
+    void loadDirectory();
+
+    return () => {
+      abortController.abort();
+    };
+  }, [
+    directoryReloadToken,
+    directoryQueryKey,
+    cacheDirectoryPages,
+    normalizedDebouncedSearch,
+    remoteSearch,
+    shouldFetchSearch,
+    status,
+  ]);
+
+  useEffect(() => {
+    if (routeMode !== 'detail' || !routeSelectedEntryId) {
       setDetail(null);
       setDetailError(null);
       setIsDetailLoading(false);
       return;
     }
 
-    let cancelled = false;
+    const abortController = new AbortController();
 
     const loadDetail = async () => {
       setIsDetailLoading(true);
       setDetailError(null);
 
       try {
-        const nextDetail = await getTenantUserDetail(selectedUserClientId);
-
-        if (cancelled) {
-          return;
-        }
+        const nextDetail = await getTenantUserDirectoryDetail(
+          routeSelectedEntryId,
+          abortController.signal
+        );
 
         setDetail(nextDetail);
       } catch (error) {
-        if (cancelled) {
+        if (abortController.signal.aborted) {
           return;
         }
 
         setDetail(null);
-        setDetailError(error instanceof Error ? error.message : 'Could not load tenant user.');
+        setDetailError(getErrorMessage(error, usersPageCopy.panels.detail.errorTitle));
       } finally {
-        if (!cancelled) {
+        if (!abortController.signal.aborted) {
           setIsDetailLoading(false);
         }
       }
@@ -161,103 +454,305 @@ export default function PeopleUsersPageController({
     void loadDetail();
 
     return () => {
-      cancelled = true;
+      abortController.abort();
     };
-  }, [mode, selectedUserClientId]);
+  }, [detailReloadToken, routeMode, routeSelectedEntryId]);
 
-  const updateRouteState = (nextMode: UsersPageMode, nextSelectedUserClientId?: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateRouteState = useCallback(
+    (nextMode: UsersPageMode, nextSelectedEntryId?: string) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    params.delete(USERS_PAGE_QUERY_KEYS.legacySelected);
+      params.delete(USERS_PAGE_QUERY_KEYS.legacySelected);
 
-    if (nextMode === 'empty') {
-      params.delete(USERS_PAGE_QUERY_KEYS.mode);
-      params.delete(USERS_PAGE_QUERY_KEYS.selected);
-    } else {
-      params.set(USERS_PAGE_QUERY_KEYS.mode, nextMode);
-
-      if (nextSelectedUserClientId) {
-        params.set(USERS_PAGE_QUERY_KEYS.selected, nextSelectedUserClientId);
-      } else {
+      if (nextMode === 'empty') {
+        params.delete(USERS_PAGE_QUERY_KEYS.mode);
         params.delete(USERS_PAGE_QUERY_KEYS.selected);
+      } else {
+        params.set(USERS_PAGE_QUERY_KEYS.mode, nextMode);
+
+        if (nextSelectedEntryId) {
+          params.set(USERS_PAGE_QUERY_KEYS.selected, nextSelectedEntryId);
+        } else {
+          params.delete(USERS_PAGE_QUERY_KEYS.selected);
+        }
       }
+
+      const nextQuery = params.toString();
+      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams]
+  );
+
+  const refreshDirectory = useCallback(() => {
+    setDirectoryReloadToken((current) => current + 1);
+  }, []);
+
+  const refreshSummary = useCallback(() => {
+    setSummaryReloadToken((current) => current + 1);
+  }, []);
+
+  const handleLoadMore = useCallback(async () => {
+    if (
+      !hasNextPage ||
+      !nextCursor ||
+      isLoadingMore ||
+      isLoadingMoreRef.current ||
+      isDirectoryRefreshing
+    ) {
+      return;
     }
 
-    const nextQuery = params.toString();
-    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+    const requestedDirectoryQueryKey = directoryQueryKey;
+    isLoadingMoreRef.current = true;
+    setIsLoadingMore(true);
+
+    try {
+      const page = await getTenantUsersDirectoryPage({
+        q: remoteSearch,
+        status,
+        cursor: nextCursor,
+        limit: DIRECTORY_LIMIT,
+      });
+
+      if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
+        const nextPages = [...pages, page];
+        cacheDirectoryPages(requestedDirectoryQueryKey, nextPages, page.nextCursor, page.hasNextPage);
+        setPages(nextPages);
+        setNextCursor(page.nextCursor);
+        setHasNextPage(page.hasNextPage);
+      }
+    } catch (error) {
+      if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
+        setDirectoryError(getErrorMessage(error, usersPageCopy.feedback.errorTitle));
+      }
+    } finally {
+      if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
+        isLoadingMoreRef.current = false;
+        setIsLoadingMore(false);
+      }
+    }
+  }, [
+    cacheDirectoryPages,
+    directoryQueryKey,
+    hasNextPage,
+    isDirectoryRefreshing,
+    isLoadingMore,
+    nextCursor,
+    pages,
+    remoteSearch,
+    status,
+  ]);
+
+  loadNextDirectoryPageRef.current = () => {
+    void handleLoadMore();
   };
 
-  const handleSelectUser = (userClientId: string) => {
-    updateRouteState('detail', userClientId);
+  const handleSelectEntry = (entryId: string) => {
+    setDetailFeedback(null);
+    updateRouteState('detail', entryId);
   };
 
   const handleOpenInvite = () => {
+    setInviteResult(null);
+    setDetailFeedback(null);
     updateRouteState('invite');
   };
 
   const handleReturnToDirectory = () => {
+    setDetailFeedback(null);
     updateRouteState('empty');
   };
 
+  const handleReturnFromDetail = useCallback(() => {
+    pendingEntryRestoreRef.current = routeSelectedEntryId;
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.delete(USERS_PAGE_QUERY_KEYS.legacySelected);
+    params.set(USERS_PAGE_QUERY_KEYS.mode, 'empty');
+
+    const nextQuery = params.toString();
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+  }, [pathname, router, routeSelectedEntryId, searchParams]);
+
   const handleRetryList = () => {
-    setListError(null);
-    setReloadToken((current) => current + 1);
+    setDirectoryError(null);
+    refreshDirectory();
+  };
+
+  const handleSummarySelect = (nextStatus: UsersPageStatusFilter) => {
+    setStatus(nextStatus);
+  };
+
+  const handleInviteSubmit = async (payload: InviteTenantUserPayload) => {
+    setIsInviteSubmitting(true);
+    setInviteResult(null);
+
+    try {
+      const result = await inviteTenantUser(payload);
+      const message =
+        result.code === 'TENANT_USER_INVITATION_RENEWED'
+          ? usersPageCopy.panels.invite.renewedSuccessTitle
+          : usersPageCopy.panels.invite.invitedSuccessTitle;
+
+      setInviteResult({
+        ok: true,
+        code: result.code,
+        message: `${message} ${result.data.email}`,
+      });
+      setDetailFeedback(`${message} ${result.data.email}`);
+      clearDirectoryCache();
+      refreshSummary();
+      refreshDirectory();
+      updateRouteState('detail', result.data.entryId);
+    } catch (error) {
+      const code = getTenantUserDirectoryErrorCode(error);
+      const message =
+        code === 'TENANT_USER_ALREADY_EXISTS'
+          ? usersPageCopy.panels.invite.alreadyExistsError
+          : code === 'TENANT_USER_INVITATION_ALREADY_PENDING'
+            ? usersPageCopy.panels.invite.alreadyPendingError
+            : code === 'TENANT_USER_INVITATION_DELIVERY_FAILED'
+              ? usersPageCopy.panels.invite.deliveryFailedError
+              : getErrorMessage(error, usersPageCopy.panels.invite.errorTitle);
+
+      if (code === 'TENANT_USER_INVITATION_DELIVERY_FAILED') {
+        clearDirectoryCache();
+        refreshSummary();
+        refreshDirectory();
+      }
+
+      setInviteResult({
+        ok: false,
+        code,
+        message,
+      });
+    } finally {
+      setIsInviteSubmitting(false);
+    }
+  };
+
+  const handleResendInvitation = async (invitationId: string) => {
+    if (invitationAction) {
+      return;
+    }
+
+    setInvitationAction('resend');
+
+    try {
+      const result = await resendTenantUserInvitation(invitationId);
+      clearDirectoryCache();
+      refreshSummary();
+      refreshDirectory();
+      setDetailFeedback(`${usersPageCopy.panels.detail.actionSuccessTitle} ${result.data.email}`);
+      setDetailReloadToken((current) => current + 1);
+    } catch {
+      setDetailFeedback(usersPageCopy.panels.detail.actionErrorTitle);
+    } finally {
+      setInvitationAction(null);
+    }
+  };
+
+  const handleRevokeInvitation = async (invitationId: string) => {
+    if (invitationAction) {
+      return;
+    }
+
+    setInvitationAction('revoke');
+
+    try {
+      await revokeTenantUserInvitation(invitationId);
+      clearDirectoryCache();
+      refreshSummary();
+      refreshDirectory();
+      setDetailFeedback(null);
+      updateRouteState('empty');
+    } catch {
+      setDetailFeedback(usersPageCopy.panels.detail.actionErrorTitle);
+    } finally {
+      setInvitationAction(null);
+    }
   };
 
   const summaryItems = useMemo(
-    () =>
-      buildUsersSummary({
-        total: meta.total,
-        items,
-      }),
-    [items, meta.total]
+    () => buildUsersSummary(summary, summaryCopy),
+    [summary, summaryCopy]
   );
 
   return (
     <UsersPageView
       detail={
         <UsersPageDetailRouter
+          copy={usersPageCopy.panels}
           locale={lang}
-          mode={mode}
-          selectedUserClientId={selectedUserClientId}
+          mode={routeMode}
+          selectedEntryId={routeSelectedEntryId}
           detail={detail}
           isLoading={isDetailLoading}
           error={detailError}
+          feedback={detailFeedback}
+          invitationAction={invitationAction}
+          invite={{
+            defaultLanguage: lang,
+            isSubmitting: isInviteSubmitting,
+            result: inviteResult,
+            onSubmit: handleInviteSubmit,
+          }}
+          onDetailRefresh={() => setDetailReloadToken((current) => current + 1)}
+          onReturnFromDetail={handleReturnFromDetail}
+          onResendInvitation={handleResendInvitation}
           onReturnToDirectory={handleReturnToDirectory}
+          onRevokeInvitation={handleRevokeInvitation}
         />
       }
       detailLabel={usersPageCopy.detail.detailLabel}
-      directoryItems={items}
-      directoryError={listError}
+      directoryFeedback={usersPageCopy.feedback}
+      directoryItemCopy={usersPageCopy.directoryItem}
+      directoryItems={directoryItems}
+      directoryError={directoryError}
       directoryHint={usersPageCopy.list.hint}
       directorySectionLabel={usersPageCopy.list.sectionLabel}
       directoryTitle={usersPageCopy.list.title}
       emptyTitle={usersPageCopy.list.emptyTitle}
       emptyDescription={usersPageCopy.list.emptyDescription}
+      noResultsTitle={usersPageCopy.list.noResultsTitle}
+      noResultsDescription={usersPageCopy.list.noResultsDescription}
       filters={{
+        ariaLabel: usersPageCopy.filters.ariaLabel,
         searchLabel: usersPageCopy.filters.searchLabel,
         searchPlaceholder: usersPageCopy.filters.searchPlaceholder,
         searchValue: search,
         selectLabel: usersPageCopy.filters.selectLabel,
-        selectOptions: usersStatusOptions,
+        selectOptions: usersPageCopy.statusOptions,
         selectValue: status,
       }}
       header={{
-        eyebrow: usersPageCopy.intro.eyebrow,
-        title: usersPageCopy.intro.title,
-        description: usersPageCopy.intro.description,
         primaryActionLabel: usersPageCopy.intro.primaryActionLabel,
       }}
-      isDirectoryLoading={isListLoading}
-      mode={mode}
+      hasNextPage={hasNextPage}
+      isDirectoryLoading={isDirectoryInitialLoading}
+      isDirectoryRefreshing={isDirectoryRefreshing}
+      isLoadingMore={isLoadingMore}
+      isSummaryLoading={isSummaryLoading}
+      mode={routeMode}
       navigationLabel={usersPageCopy.detail.navigationLabel}
+      onLoadMore={handleLoadMore}
       onOpenInvite={handleOpenInvite}
+      onRegisterEntryElement={registerDirectoryEntryElement}
       onRetryDirectory={handleRetryList}
+      onRetrySummary={refreshSummary}
       onSearchChange={setSearch}
-      onSelectChange={(value) => setStatus(value as 'all' | TenantUserStatus)}
-      onSelectUser={handleSelectUser}
-      selectedUserClientId={selectedUserClientId}
+      onSelectChange={(value) => setStatus(parseUsersStatus(value))}
+      onSelectEntry={handleSelectEntry}
+      onSummarySelect={handleSummarySelect}
+      selectedEntryId={routeSelectedEntryId}
       summaryItems={summaryItems}
+      summaryError={summaryError}
+      summaryFeedback={{
+        loadingLabel: summaryCopy.loading,
+        errorLabel: summaryCopy.error,
+        retryLabel: summaryCopy.retry,
+      }}
       tenantUserLocale={lang}
     />
   );

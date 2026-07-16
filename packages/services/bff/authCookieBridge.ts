@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 
-const AUTH_COOKIE_NAMES = new Set(['accessToken', 'refreshToken', 'csrfToken']);
+const AUTH_COOKIE_NAMES = new Set(['accessToken', 'refreshToken']);
 
 export type ParsedAuthCookie = {
   httpOnly?: boolean;

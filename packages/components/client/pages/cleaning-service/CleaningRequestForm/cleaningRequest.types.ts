@@ -28,6 +28,7 @@ export type CleaningRequestFieldKey =
 export type CleaningRequestFieldErrors = Partial<Record<CleaningRequestFieldKey, string>>;
 
 export type CleaningRequestDraftStep = 1 | 2 | 3 | 4 | 5;
+export type CleaningRequestStep = 1 | 2 | 3 | 4 | 5;
 
 export type CleaningRequestFormState = {
   customerType: CleaningRequestCustomerType | '';

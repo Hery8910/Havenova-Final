@@ -34,6 +34,7 @@ Documentación derivada:
 
 - [PROFILE_RENDER_TREE.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/PROFILE_RENDER_TREE.md:1)
 - [PROFILE_STYLE_INVENTORY.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/PROFILE_STYLE_INVENTORY.md:1)
+- [PROFILE_SUBROUTES.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/PROFILE_SUBROUTES.md:1)
 
 ## Diagnostico ejecutivo
 
@@ -94,16 +95,18 @@ Estado actual:
 
 - [page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(app)/profile/page.tsx:1) ya renderiza `ProfileOverviewPageClient`
 - [ProfileOverviewPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx:1) mantiene:
+  - loading shell de la ruta
+- [useProfileOverviewController.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/useProfileOverviewController.ts:1) concentra ahora:
   - `useAuth()`
   - `useProfile()`
   - `useI18n()`
   - `useRequireLogin()`
-  - resolución principal de dependencias cliente
+  - hrefs y resolución principal de dependencias cliente
 - `ProfileOverviewPage.view.tsx`, `profileOverview.helpers.ts`, `profileOverview.types.ts` y `profileOverview.fallbacks.ts` ya separan composición, contratos, view model y copy fallback
 
 Problema:
 
-- el overview ya recibió una primera extracción a `view + helpers + fallbacks + types`, pero el wrapper principal todavía concentra demasiado contexto cliente
+- el overview ya recibió una primera extracción a `view + helpers + fallbacks + types`, y ahora también a un controller dedicado, pero la ruta sigue siendo completamente cliente
 - la ruta principal del área privada sigue cargando auth, profile, i18n y guardia de sesión en un único surface
 
 Impacto:
@@ -115,14 +118,16 @@ Avance ya aplicado:
 
 - `page.tsx -> ProfileOverviewPageClient -> ProfileOverviewPageView` ya existe como baseline inicial
 - la composición visual principal y la copy fallback ya salieron del componente monolítico original
+- la orquestación cliente ya no vive mezclada con el render principal
+- el alias temporal `ProfileOverviewClient` fue retirado
 
 ### 4. `orders`, `requests` y `notifications` no están al mismo nivel de madurez
 
 Estado actual:
 
-- `orders/page.tsx` es una isla cliente pequeña, pero todavía muy mínima
-- `notifications/page.tsx` es un placeholder explícito
-- `requests/page.tsx` conserva mock comments y estructura casi vacía
+- `orders/page.tsx`, `requests/page.tsx` y `notifications/page.tsx` convergen ahora en un mismo placeholder explícito
+- las tres rutas ya no cargan client wrappers triviales ni comments mock
+- `PROFILE_SUBROUTES.md` documenta su estado y la siguiente fuente válida de trabajo
 
 Lectura actual:
 
@@ -135,12 +140,14 @@ Estado actual:
 
 - el `layout` es server
 - `settings/page.tsx` ya es server wrapper
-- `profile/page.tsx`, `orders`, `requests` y `notifications` siguen dependiendo de componentes cliente directos
+- `profile/page.tsx` ya es también server wrapper simple
+- `orders`, `requests` y `notifications` ya son wrappers server con placeholders explícitos
 
 Conclusión provisional:
 
-- el problema no es que toda la familia sea CSR
-- el problema es que todavía no hay una regla uniforme de composición por ruta dentro del mismo namespace
+- el problema ya no es el archivo de ruta en `profile/page.tsx`
+- el límite actual está en que overview sigue dependiendo de `auth`, `profile`, i18n y guardia de login desde contexto cliente
+- la siguiente mejora server-first real requiere cambiar esa base, no seguir moviendo código entre wrapper y page
 
 ### 6. La navegación privada ya es una primitive real, pero todavía necesita su propio audit lane
 
@@ -176,20 +183,22 @@ Lectura actual:
 ### `profile/orders`
 
 - ruta existente
-- surface mínimo
-- todavía sin baseline documental de página
+- placeholder documentado
+- sin dominio funcional cerrado
 
 ### `profile/requests`
 
 - ruta existente
-- placeholder técnico con mock comments
-- requiere rediseño antes de cualquier cierre documental serio
+- placeholder documentado
+- sin mocks ni scaffold comentado
+- requiere baseline de dominio antes de cualquier UI real
 
 ### `profile/notifications`
 
 - ruta existente
 - placeholder explícito
 - depende de un plan separado ya abierto en `docs/notification-client-plan.md`
+- ya no mezcla este estado con markup mínimo sin contexto
 
 ## Riesgos
 

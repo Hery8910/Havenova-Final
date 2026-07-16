@@ -72,6 +72,7 @@ This shared base gives both contexts the same lifecycle shape:
 - dashboard complement for admin identity and preferences
 - now follows the same base lifecycle shape as `worker`
 - mounted only inside the authenticated dashboard app tree
+- uses `/account/*` as the canonical protected namespace for admin-facing account surfaces
 
 ### `WorkerProvider`
 

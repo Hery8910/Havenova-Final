@@ -3,27 +3,37 @@
 import { useId, useMemo, useState } from 'react';
 import { useClientCalendarSettings } from '../../../../../hooks';
 import {
-  AvailabilityCalendar,
-  ChoiceButtonField,
-  CustomerTypeSelector,
   ProcessStepsHeader,
+  ServiceRequestAddressStep,
+  ServiceRequestSchedulingStep,
   ServiceRequestShell,
-  WorkAddressSelector,
   serviceRequestShellStyles as shellStyles,
 } from '../../shared';
-import serviceTypeSelectorStyles from './ServiceTypeSelector/ServiceTypeSelector.module.css';
+import CustomerServiceTypeStep from './CustomerServiceTypeStep/CustomerServiceTypeStep';
+import ReviewStep from './ReviewStep/ReviewStep';
 import type {
   HomeServiceRequestFieldErrors,
   HomeServiceRequestFormState,
   HomeServiceRequestFormSubmission,
   HomeServiceRequestFormTexts,
+  HomeServiceRequestStep,
   HomeServiceRequestTouchedFields,
-  HOME_SERVICE_TYPE_ORDER,
 } from './homeServiceRequest.types';
 import {
+  applyHomeServiceDetailsChange,
+  applyHomeServiceTypeSelection,
+  applyPaintingRoomsDelta,
+  applyPaintingScopeChange,
+  applyPaintingSizeRangeChange,
+  createInitialHomeServiceRequestState,
+  getHomeServiceRequestErrors,
+  getHomeServiceFooterValidationMessage,
+  getHomeServiceStepHeading,
+  markHomeServiceStepOneTouched,
+  markHomeServiceStepTwoTouched,
   buildHomeServiceDetails,
   mapHomeServiceKindToCanonicalType,
-} from './homeServiceRequest.types';
+} from './homeServiceRequest.helpers';
 import ServiceDetailsRouter from './ServiceDetailsRouter/ServiceDetailsRouter';
 
 export default function HomeServiceRequestForm({
@@ -43,19 +53,7 @@ export default function HomeServiceRequestForm({
   const stepTitleId = useId();
   const validationMessageId = useId();
   const clientCalendarSettings = useClientCalendarSettings();
-  const [values, setValues] = useState<HomeServiceRequestFormState>({
-    customerType: 'private',
-    serviceType: '',
-    serviceDetails: '',
-    paintingDetails: {
-      paintScope: '',
-      roomsCount: 1,
-      sizeRange: '',
-      description: '',
-    },
-    preferredVisitSlot: null,
-    workAddress: null,
-  });
+  const [values, setValues] = useState<HomeServiceRequestFormState>(createInitialHomeServiceRequestState);
   const [touched, setTouched] = useState<HomeServiceRequestTouchedFields>({
     customerType: false,
     serviceType: false,
@@ -65,7 +63,7 @@ export default function HomeServiceRequestForm({
     preferredVisitSlot: false,
     workAddress: false,
   });
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState<HomeServiceRequestStep>(1);
   const [submitted, setSubmitted] = useState(false);
 
   const processTexts = useMemo(
@@ -78,105 +76,39 @@ export default function HomeServiceRequestForm({
         propertyDetails: texts.process.steps.details,
         scheduling: texts.process.steps.scheduling,
         serviceAddress: texts.process.steps.serviceAddress,
+        review: texts.process.steps.review ?? {
+          heading: texts.review.title,
+          ariaLabel: texts.review.title,
+        },
       },
     }),
-    [texts.process]
+    [texts.process, texts.review.title]
   );
 
-  const errors = useMemo<HomeServiceRequestFieldErrors>(() => {
-    const next: HomeServiceRequestFieldErrors = {};
-
-    if (!values.customerType) next.customerType = texts.errors.required;
-    if (!values.serviceType) next.serviceType = texts.errors.required;
-
-    if (values.serviceType === 'painting') {
-      if (!values.paintingDetails.paintScope) {
-        next.paintingPaintScope = texts.errors.required;
-      }
-
-      if (!values.paintingDetails.sizeRange) {
-        next.paintingSizeRange = texts.errors.required;
-      }
-
-      if (!values.paintingDetails.description.trim()) {
-        next.serviceDetails = texts.errors.required;
-      } else if (values.paintingDetails.description.trim().length > 1500) {
-        next.serviceDetails = texts.errors.detailsTooLong;
-      }
-    } else if (!values.serviceDetails.trim()) {
-      next.serviceDetails = texts.errors.required;
-    } else if (values.serviceDetails.trim().length > 1500) {
-      next.serviceDetails = texts.errors.detailsTooLong;
-    }
-
-    if (!values.preferredVisitSlot) {
-      next.preferredVisitSlot =
-        texts.scheduling?.required ?? 'Please select a preferred date and time.';
-    }
-
-    if (!values.workAddress) {
-      next.workAddress = texts.serviceAddress?.required ?? 'Please select or enter a work address.';
-    }
-
-    return next;
-  }, [texts.errors, texts.scheduling, texts.serviceAddress, values]);
+  const errors = useMemo<HomeServiceRequestFieldErrors>(
+    () =>
+      getHomeServiceRequestErrors({
+        texts,
+        values,
+      }),
+    [texts, values]
+  );
 
   const showError = (field: keyof HomeServiceRequestFieldErrors) =>
     Boolean((submitted || touched[field]) && errors[field]);
-  const stepOneError = (() => {
-    if (showError('customerType') && errors.customerType) {
-      return `${texts.customerType.label}: ${errors.customerType}`;
-    }
-
-    if (showError('serviceType') && errors.serviceType) {
-      return `${texts.serviceType.label}: ${errors.serviceType}`;
-    }
-
-    return '';
-  })();
-  const stepTwoError = (() => {
-    if (showError('paintingPaintScope') && errors.paintingPaintScope) {
-      return `${texts.serviceDetails.painting.paintScopeLabel}: ${errors.paintingPaintScope}`;
-    }
-
-    if (showError('paintingSizeRange') && errors.paintingSizeRange) {
-      return `${texts.serviceDetails.painting.sizeRangeLabel}: ${errors.paintingSizeRange}`;
-    }
-
-    if (showError('serviceDetails') && errors.serviceDetails) {
-      const detailsLabel =
-        values.serviceType === 'painting'
-          ? texts.serviceDetails.painting.descriptionLabel
-          : texts.serviceDetails.detailsLabel;
-      return `${detailsLabel}: ${errors.serviceDetails}`;
-    }
-
-    return '';
-  })();
-  const stepThreeError =
-    showError('preferredVisitSlot') && errors.preferredVisitSlot
-      ? `${texts.scheduling?.title ?? texts.process.steps.scheduling.heading}: ${errors.preferredVisitSlot}`
-      : '';
-  const stepFourError =
-    showError('workAddress') && errors.workAddress
-      ? `${texts.serviceAddress?.title ?? texts.process.steps.serviceAddress.heading}: ${errors.workAddress}`
-      : '';
-  const footerValidationMessage =
-    (step === 1 && stepOneError) ||
-    (step === 2 && stepTwoError) ||
-    (step === 3 && stepThreeError) ||
-    (step === 4 && stepFourError) ||
-    '';
-  const currentStepHeading =
-    step === 1
-      ? texts.process.steps.customerService.heading
-      : step === 2
-        ? values.serviceType === 'painting'
-          ? texts.serviceDetails.painting.title
-          : texts.serviceDetails.title
-        : step === 3
-          ? (texts.scheduling?.title ?? texts.process.steps.scheduling.heading)
-          : (texts.serviceAddress?.title ?? texts.process.steps.serviceAddress.heading);
+  const footerValidationMessage = getHomeServiceFooterValidationMessage({
+    step,
+    texts,
+    values,
+    errors,
+    touched,
+    submitted,
+  });
+  const currentStepHeading = getHomeServiceStepHeading({
+    step,
+    texts,
+    values,
+  });
   const isStepOneValid = Boolean(
     values.customerType && values.serviceType && !errors.customerType && !errors.serviceType
   );
@@ -187,6 +119,15 @@ export default function HomeServiceRequestForm({
     !errors.paintingSizeRange
   );
   const isStepThreeValid = Boolean(values.preferredVisitSlot && !errors.preferredVisitSlot);
+  const canonicalServiceType = values.serviceType
+    ? mapHomeServiceKindToCanonicalType(values.serviceType)
+    : null;
+  const requestDetails = values.serviceType
+    ? buildHomeServiceDetails(values.serviceType, {
+        serviceDetails: values.serviceDetails,
+        paintingDetails: values.paintingDetails,
+      })
+    : null;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -197,18 +138,13 @@ export default function HomeServiceRequestForm({
     }
 
     if (step === 1) {
-      setTouched((prev) => ({ ...prev, customerType: true, serviceType: true }));
+      setTouched((prev) => markHomeServiceStepOneTouched(prev));
       if (isStepOneValid) setStep(2);
       return;
     }
 
     if (step === 2) {
-      setTouched((prev) => ({
-        ...prev,
-        serviceDetails: true,
-        paintingPaintScope: values.serviceType === 'painting' ? true : prev.paintingPaintScope,
-        paintingSizeRange: values.serviceType === 'painting' ? true : prev.paintingSizeRange,
-      }));
+      setTouched((prev) => markHomeServiceStepTwoTouched({ current: prev, serviceType: values.serviceType }));
       if (isStepTwoValid) setStep(3);
       return;
     }
@@ -219,24 +155,29 @@ export default function HomeServiceRequestForm({
       return;
     }
 
-    setSubmitted(true);
-    setTouched((prev) => ({ ...prev, workAddress: true }));
-    if (errors.workAddress || !values.workAddress) return;
+    if (step === 4) {
+      setTouched((prev) => ({ ...prev, workAddress: true }));
+      if (!errors.workAddress && values.workAddress) setStep(5);
+      return;
+    }
 
-    if (!values.customerType || !values.serviceType || !values.preferredVisitSlot) return;
+    setSubmitted(true);
+    setTouched((prev) => ({ ...prev, preferredVisitSlot: true, workAddress: true }));
+    if (errors.workAddress || !values.workAddress || errors.preferredVisitSlot) return;
+
+    if (!values.customerType || !canonicalServiceType || !values.preferredVisitSlot || !requestDetails) {
+      return;
+    }
 
     const success = await onSubmit({
-      serviceType: mapHomeServiceKindToCanonicalType(values.serviceType),
+      serviceType: canonicalServiceType,
       customerType: values.customerType,
       preferredVisitSlot: {
         start: values.preferredVisitSlot.start.toISOString(),
         end: values.preferredVisitSlot.end.toISOString(),
       },
       workAddress: values.workAddress,
-      details: buildHomeServiceDetails(values.serviceType, {
-        serviceDetails: values.serviceDetails,
-        paintingDetails: values.paintingDetails,
-      }),
+      details: requestDetails,
     });
 
     if (!success) return;
@@ -252,71 +193,50 @@ export default function HomeServiceRequestForm({
       }
       currentStepHeading={currentStepHeading}
       currentStepValue={step}
-      totalSteps={4}
+      totalSteps={5}
       validationMessage={footerValidationMessage}
       onSubmit={handleSubmit}
       backAction={
         step > 1
           ? {
               label: texts.common.back,
-              onClick: () => setStep((prev) => (prev === 4 ? 3 : prev === 3 ? 2 : 1)),
+              onClick: () =>
+                setStep((prev) => (prev === 5 ? 4 : prev === 4 ? 3 : prev === 3 ? 2 : 1)),
             }
           : undefined
       }
       primaryAction={{
-        label: step === 4 ? texts.common.submit : texts.common.next,
-        type: step === 4 && !canSubmit ? 'button' : 'submit',
-        ariaDisabled: step === 4 && !canSubmit,
+        label:
+          step === 5 ? texts.common.submit : step === 4 ? texts.common.review : texts.common.next,
+        type: step === 5 && !canSubmit ? 'button' : 'submit',
+        ariaDisabled: step === 5 && !canSubmit,
         disabled: loading,
         className: !canSubmit ? shellStyles.submitDisabled : undefined,
         onClick: () => {
-          if (step === 4 && !canSubmit) onRequireAuth?.();
+          if (step === 5 && !canSubmit) onRequireAuth?.();
         },
       }}
     >
       {step === 1 ? (
-        <section
-          className={shellStyles.stepStack}
-          aria-label={
-            texts.process.steps.customerService.ariaLabel ??
-            texts.process.steps.customerService.heading
-          }
-        >
-          <CustomerTypeSelector
-            label={texts.customerType.label}
-            options={texts.customerType.options}
-            value={values.customerType}
-            error={showError('customerType') ? errors.customerType : ''}
-            onChange={(customerType) => {
-              setValues((prev) => ({ ...prev, customerType }));
-              setTouched((prev) => ({ ...prev, customerType: true }));
-            }}
-          />
-          <ChoiceButtonField
-            legend={texts.serviceType.label}
-            options={HOME_SERVICE_TYPE_ORDER.map((type) => ({
-              value: type,
-              label: texts.serviceType.options[type].title,
-            }))}
-            value={values.serviceType}
-            error={showError('serviceType') ? errors.serviceType : ''}
-            listClassName={serviceTypeSelectorStyles.serviceGrid}
-            itemClassName={serviceTypeSelectorStyles.serviceItem}
-            buttonClassName={serviceTypeSelectorStyles.serviceButton}
-            labelClassName={serviceTypeSelectorStyles.serviceTitle}
-            onChange={(serviceType) => {
-              setValues((prev) => ({
-                ...prev,
-                serviceType,
-                serviceDetails:
-                  serviceType === 'painting'
-                    ? prev.paintingDetails.description
-                    : prev.serviceDetails,
-              }));
-              setTouched((prev) => ({ ...prev, serviceType: true }));
-            }}
-          />
-        </section>
+        <CustomerServiceTypeStep
+          texts={texts}
+          values={{
+            customerType: values.customerType,
+            serviceType: values.serviceType,
+          }}
+          errors={{
+            customerType: showError('customerType') ? errors.customerType : '',
+            serviceType: showError('serviceType') ? errors.serviceType : '',
+          }}
+          onCustomerTypeChange={(customerType) => {
+            setValues((prev) => ({ ...prev, customerType }));
+            setTouched((prev) => ({ ...prev, customerType: true }));
+          }}
+          onServiceTypeChange={(serviceType) => {
+            setValues((prev) => applyHomeServiceTypeSelection({ current: prev, serviceType }));
+            setTouched((prev) => ({ ...prev, serviceType: true }));
+          }}
+        />
       ) : step === 2 && values.serviceType ? (
         <ServiceDetailsRouter
           showHeader={false}
@@ -331,21 +251,11 @@ export default function HomeServiceRequestForm({
             sizeRange: showError('paintingSizeRange') ? errors.paintingSizeRange : '',
           }}
           onServiceDetailsChange={(description) =>
-            setValues((prev) => ({
-              ...prev,
-              serviceDetails: description,
-              paintingDetails:
-                values.serviceType === 'painting'
-                  ? { ...prev.paintingDetails, description }
-                  : prev.paintingDetails,
-            }))
+            setValues((prev) => applyHomeServiceDetailsChange({ current: prev, description }))
           }
           onServiceDetailsBlur={() => setTouched((prev) => ({ ...prev, serviceDetails: true }))}
           onPaintingPaintScopeChange={(paintScope) => {
-            setValues((prev) => ({
-              ...prev,
-              paintingDetails: { ...prev.paintingDetails, paintScope },
-            }));
+            setValues((prev) => applyPaintingScopeChange({ current: prev, paintScope }));
           }}
           onPaintingPaintScopeBlur={() =>
             setTouched((prev) => ({
@@ -354,28 +264,13 @@ export default function HomeServiceRequestForm({
             }))
           }
           onPaintingRoomsDecrement={() => {
-            setValues((prev) => ({
-              ...prev,
-              paintingDetails: {
-                ...prev.paintingDetails,
-                roomsCount: Math.max(1, prev.paintingDetails.roomsCount - 1),
-              },
-            }));
+            setValues((prev) => applyPaintingRoomsDelta({ current: prev, delta: -1 }));
           }}
           onPaintingRoomsIncrement={() => {
-            setValues((prev) => ({
-              ...prev,
-              paintingDetails: {
-                ...prev.paintingDetails,
-                roomsCount: prev.paintingDetails.roomsCount + 1,
-              },
-            }));
+            setValues((prev) => applyPaintingRoomsDelta({ current: prev, delta: 1 }));
           }}
           onPaintingSizeRangeChange={(sizeRange) => {
-            setValues((prev) => ({
-              ...prev,
-              paintingDetails: { ...prev.paintingDetails, sizeRange },
-            }));
+            setValues((prev) => applyPaintingSizeRangeChange({ current: prev, sizeRange }));
           }}
           onPaintingSizeRangeBlur={() =>
             setTouched((prev) => ({
@@ -384,45 +279,17 @@ export default function HomeServiceRequestForm({
             }))
           }
         />
-      ) : step === 3 && clientCalendarSettings ? (
-        <section
-          className={shellStyles.stepPane}
-          aria-label={
-            texts.process.steps.scheduling.ariaLabel ?? texts.process.steps.scheduling.heading
-          }
-        >
-          <AvailabilityCalendar
-            showHeader={false}
-            clientId={clientCalendarSettings.clientId}
-            schedule={clientCalendarSettings.schedule}
-            slotDurationMinutes={clientCalendarSettings.slotDurationMinutes}
-            value={values.preferredVisitSlot}
-            onChange={(preferredVisitSlot) => {
-              setValues((prev) => ({ ...prev, preferredVisitSlot }));
-              setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
-            }}
-            texts={{
-              title: texts.scheduling?.title,
-              description: texts.scheduling?.description,
-              slotsTitle: texts.scheduling?.slotsTitle,
-              noDateSelected: texts.scheduling?.noDateSelected,
-              noAvailability: texts.scheduling?.noAvailability,
-              blockedBadge: texts.scheduling?.blockedBadge,
-              selectedBadge: texts.scheduling?.selectedBadge,
-              availableBadge: texts.scheduling?.availableBadge,
-              closeSlotsLabel: texts.scheduling?.closeSlotsLabel,
-              loading: texts.scheduling?.loading,
-              errorPrefix: texts.scheduling?.errorPrefix,
-              previousMonth: texts.scheduling?.previousMonth,
-              nextMonth: texts.scheduling?.nextMonth,
-              monthNavigationAriaLabel: texts.scheduling?.monthNavigationAriaLabel,
-              weekdayLabels: texts.scheduling?.weekdayLabels,
-              nonWorkday: texts.scheduling?.nonWorkday,
-              blockedDay: texts.scheduling?.blockedDay,
-              availableDay: texts.scheduling?.availableDay,
-            }}
-          />
-        </section>
+      ) : step === 3 ? (
+        <ServiceRequestSchedulingStep
+          clientCalendarSettings={clientCalendarSettings}
+          fallbackHeading={texts.process.steps.scheduling.heading}
+          texts={texts.scheduling}
+          value={values.preferredVisitSlot}
+          onChange={(preferredVisitSlot) => {
+            setValues((prev) => ({ ...prev, preferredVisitSlot }));
+            setTouched((prev) => ({ ...prev, preferredVisitSlot: true }));
+          }}
+        />
       ) : step === 4 ? (
         <section
           className={shellStyles.stepPane}
@@ -430,8 +297,7 @@ export default function HomeServiceRequestForm({
             texts.serviceAddress?.stepAriaLabel ?? texts.process.steps.serviceAddress.heading
           }
         >
-          <WorkAddressSelector
-            showHeader={false}
+          <ServiceRequestAddressStep
             texts={texts.serviceAddress}
             value={values.workAddress}
             onChange={(workAddress) => {
@@ -440,14 +306,36 @@ export default function HomeServiceRequestForm({
             }}
           />
         </section>
-      ) : (
-        <section className={shellStyles.missingConfig} aria-live="polite">
-          <p className={shellStyles.errorText}>
-            {texts.scheduling?.missingClientConfig ??
-              'Client calendar configuration is unavailable right now.'}
-          </p>
-        </section>
-      )}
+      ) : step === 5 &&
+        values.customerType &&
+        values.serviceType &&
+        values.preferredVisitSlot &&
+        values.workAddress &&
+        canonicalServiceType &&
+        requestDetails ? (
+        <ReviewStep
+          showHeader={false}
+          texts={texts.review}
+          customerType={{
+            selected: values.customerType,
+            options: texts.customerType.options,
+          }}
+          serviceType={{
+            selected: canonicalServiceType,
+            label: texts.serviceType.options[values.serviceType].title,
+          }}
+          serviceDetails={requestDetails.description}
+          paintingDetails={{
+            ...values.paintingDetails,
+            paintScopeLabel: values.paintingDetails.paintScope
+              ? texts.serviceDetails.painting.paintScopeOptions[values.paintingDetails.paintScope]
+              : texts.review.emptyDetails,
+          }}
+          sizeRangeOptions={texts.serviceDetails.painting.sizeRangeOptions}
+          scheduling={values.preferredVisitSlot}
+          workAddress={values.workAddress}
+        />
+      ) : null}
     </ServiceRequestShell>
   );
 }

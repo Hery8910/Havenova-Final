@@ -136,7 +136,7 @@
 .button--outline {
   --button-text: var(--text-secondary);
   --button-border: var(--button-outline-border);
-  --button-shadow: none;
+  --button-shadow: var(--button-shadow-rest);
   --button-text-hover: var(--button-outline-text);
   --button-bg-hover: var(--button-outline-bg-hover);
   --button-bg-image-hover: var(--button-outline-bg-image-hover);
@@ -153,17 +153,17 @@
   --button-text: var(--button-ghost-text);
   --button-bg: var(--button-ghost-bg);
   --button-bg-image: var(--button-ghost-bg-image);
-  --button-border: var(--button-ghost-border);
+  --button-border: transparent;
   --button-shadow: none;
   --button-text-hover: var(--button-ghost-text);
   --button-bg-hover: var(--button-ghost-bg-hover);
   --button-bg-image-hover: var(--button-ghost-bg-image-hover);
-  --button-border-hover: var(--button-ghost-border);
-  --button-shadow-hover-current: none;
+  --button-border-hover: transparent;
+  --button-shadow-hover-current: var(--button-shadow-rest);
   --button-text-active: var(--button-ghost-text);
   --button-bg-active: var(--button-ghost-bg-active);
   --button-bg-image-active: var(--button-ghost-bg-image-active);
-  --button-border-active: var(--button-ghost-border);
+  --button-border-active: transparent;
   --button-shadow-active-current: none;
 }
 

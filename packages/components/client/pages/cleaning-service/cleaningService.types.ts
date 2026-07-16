@@ -1,7 +1,7 @@
 import type { FAQSectionTexts } from '../../faqSection/FAQSection';
 import type { PageHeroContent } from '../hero';
 import type { ServiceCrossCtaSectionTexts } from '../shared';
-import type { CleaningRequestFormTexts } from './CleaningRequestForm/CleaningRequestForm';
+import type { CleaningRequestFormTexts } from './CleaningRequestForm/cleaningRequest.types';
 
 export interface CleaningServiceAuthAlertTexts {
   title: string;

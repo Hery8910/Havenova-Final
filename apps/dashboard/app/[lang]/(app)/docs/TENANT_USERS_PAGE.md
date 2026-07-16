@@ -1,64 +1,75 @@
 # Tenant Users Page
 
-Nota:
+## Estado
 
-- este documento queda como resumen corto del estado de la primera implementacion
-- la referencia viva de la pagina ahora debe leerse en `people/users/README.md` y `people/users/PAGE_REQUIREMENTS.md`
-- el patron global que rige esta pantalla vive en `DASHBOARD_DIRECTORY_PAGE_STANDARD.md`
+Resumen de la primera superficie real de `people`. La documentación viva está en
+`people/users/README.md`, `PAGE_REQUIREMENTS.md` y
+`USERS_DIRECTORY_GAP_ANALYSIS.md`.
 
-## Objetivo
+Auditoría: `2026-07-10`.
 
-Abrir la primera superficie real del dominio `people` sobre el contrato estable de backend.
+## Ruta y dominio
 
-Ruta actual:
+```text
+/people/users
+```
 
-- `/people/users`
+Representa clientes del tenant:
 
-## Contrato Base
+```text
+Auth + UserClient(role=user) + optional UserClientProfile + relationship data
+```
 
-Se apoya en:
+Cuenta e invitación abierta son entradas distintas del producto, normalizadas en
+un mismo directorio.
 
-- `GET /api/home-services/dashboard/users`
-- `GET /api/home-services/dashboard/users/:userClientId`
+## Contrato activo
 
-Las acciones de invitacion y reenvio ya tienen contrato, pero quedan para la siguiente pasada visual.
+```text
+GET  /api/home-services/dashboard/users/summary
+GET  /api/home-services/dashboard/users/directory
+GET  /api/home-services/dashboard/users/entries/:entryId
+POST /api/home-services/dashboard/users/invite
+POST /api/home-services/dashboard/users/invitations/:invitationId/resend
+POST /api/home-services/dashboard/users/invitations/:invitationId/revoke
+```
 
-## Alcance De Esta Primera Implementación
+Los endpoints V1 por list/page, detail por `userClientId` y resend por email ya
+no forman parte del backend.
 
-Incluye:
+## Implementado
 
-- layout master-detail declarado en cada pagina
-- filtros base
-- lista compartida con item renderer por dominio
-- badges de estado
-- detalle estable en el panel derecho
-- seleccion local sin navegacion obligatoria entre lista y detalle
+- master-detail desktop;
+- summary remoto y accesos rápidos;
+- búsqueda server-side y filtros canónicos;
+- directorio `user | invitation`;
+- cursor y deduplicación por `entryId`;
+- modos `empty | detail | invite`;
+- detail por entry;
+- invite, resend y revoke;
+- URL state `selected`, `mode`, `search`, `status`;
+- onboarding público `tui_` en la app cliente.
 
-No bloquea la salida de esta base:
+## Pendiente
 
-- contadores cross-domain
-- timeline
-- ultima actividad
-- agregados operativos
+- i18n y feedback accesible;
+- validación manual end-to-end.
 
-## Reglas De Datos
+## Componentes principales
 
-- `profile` sigue siendo opcional
-- un usuario puede existir sin `UserClientProfile`
-- `hasProfile` y `profileCompleteness` deben tratarse como metadata de UI, no como requisito de acceso
+- `components/masterDetail/*`;
+- `components/directory/*`;
+- `components/people/shared/*`;
+- `components/people/users/TenantUserDirectoryItem`;
+- `components/people/users/detail/TenantUserDetailPanel`;
+- `people/users/page.tsx`;
+- `people/users/page.controller.tsx`;
+- `people/users/components/*`;
+- `packages/types/tenantUsers.ts`;
+- `packages/services/tenantUsers.ts`.
 
-## Componentes Locales
+## Regla
 
-- `components/masterDetail/MasterDetailPage`
-- `components/directory/*`
-- `components/people/shared/PersonStatusBadge`
-- `components/people/users/TenantUserDirectoryItem`
-- `components/people/users/detail/TenantUserDetailPanel`
-- `people/users/page.tsx`
-- `people/users/page.copy.ts`
-
-## Siguientes Pasos
-
-1. enriquecer el detalle real en el panel derecho
-2. crear `InvitePersonDialog` y `ResendInviteDialog`
-3. extraer config compartida para `admin`, `worker` y `manager`
+No copiar payloads específicos de users a admins/workers/managers. Reutilizar la
+forma `summary / directory / detail`, cursor, `entryId` y orquestación; cada actor
+conserva sus políticas y agregados propios.

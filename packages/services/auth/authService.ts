@@ -21,10 +21,14 @@ import {
   ResendVerificationEmailResponse,
   ResolveInvitePayload,
   ResolveInviteResponse,
+  ResolveTenantUserInvitationPayload,
+  ResolveTenantUserInvitationResponse,
   ChangeEmailPayload,
   ChangeEmailResponse,
   ChangeEmailConfirmPayload,
   ChangeEmailConfirmResponse,
+  AcceptTenantUserInvitationPayload,
+  AcceptTenantUserInvitationResponse,
 } from '@/packages/types';
 import { normalizeAuthSession } from '@/packages/utils';
 
@@ -58,6 +62,10 @@ const requireAuthUser = (
 
 export const refreshToken = async (): Promise<void> => {
   await authApi.post('/api/auth/refresh-token', {}, { withCredentials: true });
+};
+
+export const reissueCsrfToken = async (): Promise<void> => {
+  await authApi.get('/api/auth/csrf', { withCredentials: true });
 };
 
 // ---------------------------
@@ -134,6 +142,26 @@ export const resolveInvite = async (
   payload: ResolveInvitePayload
 ): Promise<ResolveInviteResponse> => {
   const { data } = await authApi.post<ResolveInviteResponse>('/api/auth/invite/resolve', payload);
+  return data;
+};
+
+export const resolveTenantUserInvitation = async (
+  payload: ResolveTenantUserInvitationPayload
+): Promise<ResolveTenantUserInvitationResponse> => {
+  const { data } = await authApi.post<ResolveTenantUserInvitationResponse>(
+    '/api/home-services/user-invitations/resolve',
+    payload
+  );
+  return data;
+};
+
+export const acceptTenantUserInvitation = async (
+  payload: AcceptTenantUserInvitationPayload
+): Promise<AcceptTenantUserInvitationResponse> => {
+  const { data } = await authApi.post<AcceptTenantUserInvitationResponse>(
+    '/api/home-services/user-invitations/accept',
+    payload
+  );
   return data;
 };
 

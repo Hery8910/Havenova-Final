@@ -24,6 +24,7 @@ Contrato backend actual:
 Consecuencia:
 
 - cuando Fast Refresh hace full reload o el browser recarga por completo, el token en memoria puede perderse
+- si además `GET /api/auth/me` ya no puede validar el `accessToken`, el refresh puede quedar bloqueado por falta de header
 
 ### 2. El dashboard estaba abortando refresh demasiado pronto
 
@@ -31,16 +32,19 @@ Error anterior:
 
 - `AuthContext` cancelaba `refresh-token` si `getCsrfToken()` en memoria venia vacio
 
-Por que era incorrecto en esta app:
+Por que era incorrecto como solucion final:
 
 - el dashboard ya opera sobre un BFF same-origin
-- el BFF puede reconstruir `x-csrf-token` desde la cookie `csrfToken` del request
+- el contrato real de backend ya no entrega `csrfToken` como cookie de frontend
 - por tanto, perder memoria del browser no siempre implica que la sesion sea irrecuperable
+- la via correcta es reemitir `x-csrf-token` desde backend y luego refrescar
 
 Decision:
 
 - `AuthContext` debe seguir intentando `refresh-token` aun sin CSRF en memoria
-- el fallo terminal solo ocurre si `refresh-token` realmente falla
+- el fallo terminal solo ocurre si la secuencia completa de recuperacion realmente falla
+- la politica final ya no debe depender de reconstruir CSRF desde cookies
+- la recuperacion correcta pasa por `GET /api/auth/csrf` antes de `refresh-token`
 
 ### 3. El guard SSR del layout no podia rescatar la sesion
 
@@ -75,9 +79,10 @@ Responsabilidad:
 - resolver idioma cuando falta el prefijo locale
 - detectar rutas protegidas del dashboard
 - consultar `GET /api/auth/me` antes de entrar al arbol SSR protegido
-- si `me` responde `401/403` y existen `refreshToken + csrfToken`, intentar `POST /api/auth/refresh-token`
+- si `me` responde `401/403` y existe `refreshToken`, pedir `GET /api/auth/csrf`
+- con ese header, intentar `POST /api/auth/refresh-token`
 - aplicar los `Set-Cookie` de backend a la respuesta del navegador
-- reenviar el request interno con cookies actualizadas para que el layout SSR vea la sesion ya restaurada
+- reenviar el request interno con cookies actualizadas y `x-csrf-token` vigente para que el layout SSR vea la sesion ya restaurada
 
 Regla:
 
@@ -115,7 +120,7 @@ Responsabilidad:
 
 Decisiones fijadas:
 
-- si falta CSRF en memoria, igual se intenta refresh porque el BFF puede puentear la cookie `csrfToken`
+- si falta CSRF en memoria, primero debe intentarse `GET /api/auth/csrf`
 - cuando `disableUnauthenticatedBootstrap` esta activo, no se debe revalidar agresivamente una sesion solo desde storage en cada remount
 - se usan cooldowns para evitar tormentas de bootstrap despues de fallos `401` consecutivos
 
@@ -132,7 +137,7 @@ Decisiones fijadas:
 - se pierde CSRF en memoria
 - el middleware intenta `GET /api/auth/me`
 - si `accessToken` sigue valido, el request entra normal
-- si `accessToken` expiro pero `refreshToken + csrfToken` siguen validos, el middleware refresca y reemite cookies
+- si `accessToken` expiro y `refreshToken` sigue valido, el middleware pide `GET /api/auth/csrf`, refresca y reemite cookies
 - el layout SSR ya no debe redirigir por ese motivo
 
 ### Caso C. Sesion realmente expirada
@@ -192,10 +197,17 @@ Resultado verificado:
 Causa principal:
 
 - `AuthContext` asumia que sin CSRF en memoria no existia forma valida de refrescar
+- el contrato global tampoco tenia una reemision dedicada de CSRF para cubrir ese hueco
 
 Correccion:
 
-- se permite el refresh apoyandose en el fallback same-origin del BFF
+- se permite el refresh apoyandose en la reemision dedicada `GET /api/auth/csrf` antes de `refresh-token`
+
+Estado final de esta linea:
+
+- el ajuste frontend evita abortar demasiado pronto
+- cierra la politica de recuperacion sobre el contrato real de header
+- la referencia contractual esta en [AUTH_CSRF_SESSION_RECOVERY_DECISION.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_CSRF_SESSION_RECOVERY_DECISION.md:1)
 
 ### Ping-pong `/en/user/login <-> /en`
 
@@ -236,14 +248,15 @@ Si vuelve a aparecer un problema de auth, revisar en este orden:
 1. `POST /api/auth/login`
    - debe devolver `200`
    - debe emitir `x-csrf-token`
-   - debe setear `accessToken`, `refreshToken` y `csrfToken`
+   - debe setear `accessToken` y `refreshToken`
 
 2. `GET /api/auth/me`
    - debe devolver `200` cuando la sesion esta viva
    - debe volver a emitir `x-csrf-token`
 
 3. Middleware en ruta protegida
-   - si `me` falla con `401/403`, debe intentar `refresh-token`
+   - si `me` falla con `401/403`, debe pedir `GET /api/auth/csrf`
+   - luego debe intentar `refresh-token`
    - debe propagar cookies al browser
 
 4. `POST /api/auth/refresh-token`

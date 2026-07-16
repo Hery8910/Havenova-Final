@@ -569,8 +569,8 @@
       },
       "form": {
         "process": {
-          "title": "Complete your home service request in 4 steps",
-          "description": "Start by selecting the customer type and the kind of service. Then capture the service-specific notes, preferred date, and work address.",
+          "title": "Complete your home service request in 5 steps",
+          "description": "Start by selecting the customer type and the kind of service. Then capture the service-specific notes, preferred date, work address, and final review.",
           "stepLabel": "Step",
           "steps": {
             "customerService": {
@@ -584,6 +584,9 @@
             },
             "serviceAddress": {
               "heading": "Service address"
+            },
+            "review": {
+              "heading": "Review request"
             }
           }
         },
@@ -656,28 +659,33 @@
             "repairs-installations": {
               "title": "Repairs & Installations",
               "description": "For practical repair tasks, replacements, fittings, or installation work on site.",
-              "detailsHint": "Describe what needs to be repaired or installed, where it is located, and whether any materials or fixtures are already available."
+              "detailsHint": "Describe what needs to be repaired or installed, where it is located, and whether any materials or fixtures are already available.",
+              "statusNote": "This service still uses a temporary placeholder detail flow. Only the painting flow has a fully defined nested step at the moment."
             },
             "furniture-assembly": {
               "title": "Furniture Assembly",
               "description": "For assembling, positioning, or securing furniture and similar household items.",
-              "detailsHint": "List the furniture pieces, quantities, brand or model if known, and whether assembly instructions are available."
+              "detailsHint": "List the furniture pieces, quantities, brand or model if known, and whether assembly instructions are available.",
+              "statusNote": "This service still uses a temporary placeholder detail flow. Only the painting flow has a fully defined nested step at the moment."
             },
             "kitchen-assembly": {
               "title": "Kitchen Assembly",
               "description": "For kitchen cabinet assembly, unit placement, and related installation preparation.",
-              "detailsHint": "Share the kitchen layout, what should be assembled or mounted, and whether appliances, plans, or measurements are already available."
+              "detailsHint": "Share the kitchen layout, what should be assembled or mounted, and whether appliances, plans, or measurements are already available.",
+              "statusNote": "This service still uses a temporary placeholder detail flow. Only the painting flow has a fully defined nested step at the moment."
             },
             "moving-help": {
               "title": "Moving Help",
               "description": "For moving-day support, carrying items, loading vehicles, or internal relocations.",
-              "detailsHint": "Describe what needs to be moved, the access situation, floors involved, and whether heavy or bulky items are part of the request."
+              "detailsHint": "Describe what needs to be moved, the access situation, floors involved, and whether heavy or bulky items are part of the request.",
+              "statusNote": "This service still uses a temporary placeholder detail flow. Only the painting flow has a fully defined nested step at the moment."
             }
           }
         },
         "common": {
           "next": "Continue",
           "back": "Back",
+          "review": "Review request",
           "submit": "Continue request"
         },
         "errors": {
@@ -753,6 +761,28 @@
           },
           "stepAriaLabel": "Service address selection",
           "required": "Please select or enter a work address."
+        },
+        "review": {
+          "title": "Final check before sending",
+          "description": "You have completed the 5 steps. Review the details below and continue the request if everything is correct.",
+          "sections": {
+            "customer": "Customer and service",
+            "details": "Service details",
+            "scheduling": "Preferred visit",
+            "address": "Service address"
+          },
+          "labels": {
+            "customerType": "Customer type",
+            "serviceType": "Service type",
+            "serviceDetails": "Description",
+            "paintScope": "Paint scope",
+            "roomsCount": "Rooms count",
+            "sizeRange": "Approximate size",
+            "visitDate": "Date",
+            "visitTime": "Time slot",
+            "address": "Address"
+          },
+          "emptyDetails": "No additional details provided."
         }
       }
     },
@@ -861,7 +891,7 @@
       },
       "forgotPasswordText": {
         "title": "Reset your password",
-        "info": "Enter your email and we will send you a reset link.",
+        "info": "Enter your email and, if the account can be recovered, we'll send a reset link.",
         "button": "Send reset link"
       },
       "resetPasswordText": {
@@ -874,8 +904,8 @@
           "resolvedDescription": "This invitation is linked to {email}."
         },
         "linkErrors": {
-          "invalidOrExpired": "This link is no longer valid or has expired.",
-          "missingToken": "This password reset link is incomplete or invalid."
+          "invalidOrExpired": "This link is no longer valid or has expired. Request a new one to continue.",
+          "missingToken": "This password reset link is incomplete or invalid. Request a new one to continue."
         }
       },
       "profileNav": {
@@ -888,14 +918,18 @@
         "title": "Verify your email",
         "info": "Check your inbox or request a new verification email.",
         "autoRedirectDescription": "You will be redirected to the homepage in a few seconds.",
+        "manualLoginFallback": {
+          "title": "Email verified",
+          "description": "Your email is confirmed, but we couldn't finish signing you in. Sign in manually to continue."
+        },
         "sessionSyncError": {
           "title": "We could not confirm the session",
-          "description": "Your email was verified, but your session could not be fully confirmed. Reload the page or sign in again."
+          "description": "Your email is confirmed, but we couldn't finish signing you in. Reload the page or sign in again."
         },
         "input": {
           "placeholder": "Email address",
           "button": "Resend verification email.",
-          "info": "Please use the same email address you used to create your profile."
+          "info": "Please use the same email address you used to create your account."
         }
       },
       "profile": {
@@ -1624,6 +1658,30 @@
   },
 
   "dashboard": {
+    "usersDirectory": {
+      "summary": {
+        "totalUsers": "Total users",
+        "pendingInvites": "Pending invites",
+        "needsAttention": "Needs attention",
+        "loading": "Loading customer summary...",
+        "error": "We could not load the customer summary.",
+        "retry": "Try again"
+      },
+      "copy": {
+        "intro": { "primaryActionLabel": "Invite customer" },
+        "filters": { "ariaLabel": "Customer directory filters", "searchLabel": "Search customers", "searchPlaceholder": "Name, email, or phone", "selectLabel": "Status" },
+        "list": { "sectionLabel": "Directory", "title": "Customers", "hint": "Select a customer or invitation to review details.", "emptyTitle": "No customers yet.", "emptyDescription": "Invite a customer to start building the directory.", "noResultsTitle": "No customers match this view.", "noResultsDescription": "Try a different search or status filter." },
+        "feedback": { "loadingLabel": "Loading customer directory...", "refreshingLabel": "Updating directory...", "loadingMoreLabel": "Loading more customers...", "loadMoreFallbackLabel": "Load more customers", "endOfResultsLabel": "End of results", "errorTitle": "We could not load the customer directory.", "retryLabel": "Try again" },
+        "detail": { "navigationLabel": "Customers directory", "detailLabel": "Customer detail" },
+        "panels": {
+          "empty": { "eyebrow": "Panel", "title": "Select a customer to continue", "description": "Customer details and invitation actions are handled in this panel.", "noteLabel": "Current use", "noteText": "Select a record from the directory or open the invite flow from the left column." },
+          "invite": { "eyebrow": "Invite", "title": "Invite a customer", "description": "Create a secure invitation for a customer without leaving the directory.", "emailLabel": "Email", "nameLabel": "Name", "phoneLabel": "Phone", "languageLabel": "Language", "languageOptions": { "de": "German", "en": "English", "es": "Spanish" }, "submitLabel": "Send invitation", "submittingLabel": "Sending...", "returnActionLabel": "Back to directory", "invitedSuccessTitle": "Invitation sent.", "renewedSuccessTitle": "Expired invitation renewed.", "alreadyExistsError": "This customer already has an account. Search for the email to open it.", "alreadyPendingError": "An active invitation already exists. Open Invitations to resend it.", "deliveryFailedError": "The invitation was saved, but delivery failed. Refresh Invitations and resend it from the detail panel.", "errorTitle": "We could not send this invitation." },
+          "detail": { "emptyEyebrow": "Detail", "emptyTitle": "Choose a customer", "emptyDescription": "Identity, access, invitations, and activity data will appear here.", "loadingLabel": "Loading customer detail...", "errorEyebrow": "Detail", "errorTitle": "We could not load this entry.", "emailLabel": "Email", "phoneLabel": "Phone", "createdLabel": "Created", "statusLabel": "Status", "profileLabel": "Profile", "languageLabel": "Language", "addressLabel": "Primary address", "relationshipLabel": "Relationship", "requestsLabel": "Requests", "workOrdersUnavailableLabel": "Work orders are not available yet.", "nextAppointmentLabel": "Next appointment", "lastCompletedServiceLabel": "Last completed service", "invitationLabel": "Invitation", "invitationExpiresLabel": "Expires", "invitationLastSentLabel": "Last sent", "invitationSendCountLabel": "Send count", "pendingProfileFallback": "Pending profile", "missingValueFallback": "Not provided", "resendInvitationLabel": "Resend invitation", "resendingInvitationLabel": "Resending invitation...", "revokeInvitationLabel": "Revoke invitation", "revokingInvitationLabel": "Revoking invitation...", "revokeConfirmationTitle": "Revoke this invitation?", "revokeConfirmationDescription": "The invitation link will stop working immediately. You can create a new invitation later if needed.", "revokeConfirmationConfirmLabel": "Revoke invitation", "revokeConfirmationCancelLabel": "Keep invitation", "actionSuccessTitle": "Invitation action completed.", "actionErrorTitle": "We could not complete this invitation action.", "returnToDirectoryLabel": "Back to directory", "retryLabel": "Try again", "availableLabel": "Available", "workOrdersLabel": "Work orders", "requestsSummaryTemplate": "{active} active of {total} total", "statusLabels": { "active": "Active", "inactive": "Inactive", "locked": "Locked", "invited": "Invited", "expired": "Expired" }, "invitationStatusLabels": { "pending": "Pending", "expired": "Expired" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitation expired", "EMAIL_UNVERIFIED_STALE": "Email verification is overdue", "ACCOUNT_LOCKED": "Account locked" } }
+        },
+        "directoryItem": { "pendingProfileFallback": "Pending profile", "noRequestsFallback": "No requests yet", "nextAppointmentTemplate": "Next: {date}", "activeRequestsTemplate": "{count} active request", "totalRequestsTemplate": "{count} total requests", "lastServiceTemplate": "Last service: {date}", "statuses": { "active": "Active", "inactive": "Inactive", "locked": "Locked", "invited": "Invited", "expired": "Expired" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitation expired", "EMAIL_UNVERIFIED_STALE": "Email verification is overdue", "ACCOUNT_LOCKED": "Account locked" } },
+        "statusOptions": [ { "value": "all", "label": "All statuses" }, { "value": "active", "label": "Active" }, { "value": "inactive", "label": "Inactive" }, { "value": "invitations", "label": "Invitations" }, { "value": "attention", "label": "Needs attention" } ]
+      }
+    },
     "requests": {
       "requestsList": {
         "title": "Requests",

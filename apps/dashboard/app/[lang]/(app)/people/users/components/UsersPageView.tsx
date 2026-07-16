@@ -1,5 +1,6 @@
-import { DirectoryFilters, DirectoryIntro, DirectoryList, DirectorySummary } from '../../../components/directory';
+import { DirectoryFilters, DirectoryList, DirectorySummary } from '../../../components/directory';
 import { MasterDetailPage } from '../../../components/masterDetail';
+import { PeopleOverviewBar } from '../../../components/people/shared';
 import { TenantUserDirectoryItem } from '../../../components/people/users';
 import type { UsersPageViewProps } from '../page.types';
 import styles from './UsersPageView.module.css';
@@ -7,39 +8,56 @@ import styles from './UsersPageView.module.css';
 export function UsersPageView({
   detail,
   detailLabel,
+  directoryFeedback,
   directoryItems,
   directoryError = null,
   directoryHint,
+  directoryItemCopy,
   directorySectionLabel,
   directoryTitle,
   emptyDescription,
   emptyTitle,
   filters,
+  hasNextPage = false,
   header,
   isDirectoryLoading = false,
+  isDirectoryRefreshing = false,
+  isLoadingMore = false,
+  isSummaryLoading = false,
   mode,
   navigationLabel,
+  noResultsDescription,
+  noResultsTitle,
+  onLoadMore,
   onOpenInvite,
+  onRegisterEntryElement,
   onRetryDirectory,
+  onRetrySummary,
   onSearchChange,
   onSelectChange,
-  onSelectUser,
-  selectedUserClientId,
+  onSelectEntry,
+  onSummarySelect,
+  selectedEntryId,
   summaryItems,
+  summaryError = false,
+  summaryFeedback,
   tenantUserLocale,
 }: UsersPageViewProps) {
+  const renderedSummaryItems = summaryItems.map((item) => ({
+    ...item,
+    isActive: filters.selectValue === item.status,
+    onSelect: () => onSummarySelect(item.status),
+  }));
+
   return (
     <MasterDetailPage
+      mobileView={mode === 'empty' ? 'navigation' : 'detail'}
       navigation={
         <div className={styles.navigation}>
-          <section className={styles.header}>
-            <div className={styles.headerTop}>
-              <DirectoryIntro
-                eyebrow={header.eyebrow}
-                title={header.title}
-                description={header.description}
-              />
-              <div className={styles.headerActions}>
+          <section className={`card card--neutral ${styles.overview}`}>
+            <PeopleOverviewBar
+              summary={<DirectorySummary items={renderedSummaryItems} />}
+              actions={
                 <button
                   type="button"
                   className={`button button--primary ${styles.headerButton}`}
@@ -47,48 +65,78 @@ export function UsersPageView({
                 >
                   {header.primaryActionLabel}
                 </button>
+              }
+            />
+            {isSummaryLoading ? (
+              <p className={styles.summaryFeedback} aria-live="polite">
+                {summaryFeedback.loadingLabel}
+              </p>
+            ) : null}
+            {summaryError ? (
+              <div className={styles.summaryFeedback} role="status">
+                <span>{summaryFeedback.errorLabel}</span>
+                {onRetrySummary ? (
+                  <button type="button" className="button button--outline" onClick={onRetrySummary}>
+                    {summaryFeedback.retryLabel}
+                  </button>
+                ) : null}
               </div>
-            </div>
-            <p className={styles.modeHint}>
-              {mode === 'invite'
-                ? 'The right panel is currently showing the invite flow.'
-                : 'Select a record from the directory to keep the detail panel in sync.'}
-            </p>
+            ) : null}
           </section>
 
-          <DirectorySummary items={summaryItems} />
+          <section className={styles.filtersSection}>
+            <DirectoryFilters
+              ariaLabel={filters.ariaLabel}
+              searchLabel={filters.searchLabel}
+              searchPlaceholder={filters.searchPlaceholder}
+              searchValue={filters.searchValue}
+              onSearchChange={onSearchChange}
+              selectLabel={filters.selectLabel}
+              selectValue={filters.selectValue}
+              selectOptions={filters.selectOptions}
+              onSelectChange={onSelectChange}
+            />
+          </section>
 
-          <DirectoryFilters
-            searchLabel={filters.searchLabel}
-            searchPlaceholder={filters.searchPlaceholder}
-            searchValue={filters.searchValue}
-            onSearchChange={onSearchChange}
-            selectLabel={filters.selectLabel}
-            selectValue={filters.selectValue}
-            selectOptions={filters.selectOptions}
-            onSelectChange={onSelectChange}
-          />
-
-          <DirectoryList
-            sectionLabel={directorySectionLabel}
-            title={directoryTitle}
-            hint={directoryHint}
-            items={directoryItems}
-            isLoading={isDirectoryLoading}
-            error={directoryError}
-            emptyTitle={emptyTitle}
-            emptyDescription={emptyDescription}
-            onRetry={onRetryDirectory}
-            renderItem={(item) => (
-              <TenantUserDirectoryItem
-                key={item.userClientId}
-                item={item}
-                locale={tenantUserLocale}
-                isActive={selectedUserClientId === item.userClientId}
-                onSelect={onSelectUser}
-              />
-            )}
-          />
+          <section className={styles.directorySection}>
+            <DirectoryList
+              variant="primary"
+              sectionLabel={directorySectionLabel}
+              title={directoryTitle}
+              hint={directoryHint}
+              items={directoryItems}
+              isLoading={isDirectoryLoading}
+              error={directoryError}
+              loadingLabel={directoryFeedback.loadingLabel}
+              errorTitle={directoryFeedback.errorTitle}
+              retryLabel={directoryFeedback.retryLabel}
+              emptyTitle={emptyTitle}
+              emptyDescription={emptyDescription}
+              noResultsTitle={filters.searchValue || filters.selectValue !== 'all' ? noResultsTitle : undefined}
+              noResultsDescription={
+                filters.searchValue || filters.selectValue !== 'all' ? noResultsDescription : undefined
+              }
+              endOfResultsLabel={directoryFeedback.endOfResultsLabel}
+              onRetry={onRetryDirectory}
+              onLoadMore={onLoadMore}
+              hasNextPage={hasNextPage}
+              isLoadingMore={isLoadingMore}
+              isRefreshing={isDirectoryRefreshing}
+              loadingMoreLabel={directoryFeedback.loadingMoreLabel}
+              loadMoreFallbackLabel={directoryFeedback.loadMoreFallbackLabel}
+              renderItem={(item) => (
+                <TenantUserDirectoryItem
+                  key={item.entryId}
+                  ref={(element) => onRegisterEntryElement(item.entryId, element)}
+                  item={item}
+                  copy={directoryItemCopy}
+                  locale={tenantUserLocale}
+                  isActive={selectedEntryId === item.entryId}
+                  onSelect={onSelectEntry}
+                />
+              )}
+            />
+          </section>
         </div>
       }
       detail={detail}

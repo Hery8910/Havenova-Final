@@ -1,17 +1,20 @@
 .root {
   display: grid;
-  gap: 18px;
+  gap: 14px;
+  align-content: start;
 }
 
 .emptyState,
-.hero,
-.section {
+.identity {
   display: grid;
-  gap: 12px;
+  gap: 10px;
+}
+
+.identity {
+  gap: 14px;
 }
 
 .eyebrow,
-.sectionLabel,
 .fieldLabel {
   margin: 0;
   color: var(--text-muted);
@@ -22,7 +25,6 @@
 }
 
 .title,
-.sectionTitle,
 .fieldValue,
 .emptyTitle,
 .errorTitle {
@@ -35,31 +37,59 @@
   line-height: 1.08;
 }
 
-.description,
-.fieldHint,
+.identityMain {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.avatarImage,
+.avatarFallback {
+  width: 68px;
+  height: 68px;
+  border-radius: 22px;
+  flex: 0 0 auto;
+}
+
+.avatarImage {
+  display: block;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--surface-panel-subtle) 84%, transparent);
+  box-shadow: 0 10px 22px -22px color-mix(in srgb, var(--shadow-page-color) 28%, transparent);
+}
+
+.avatarFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--brand-accent) 18%, transparent), transparent 72%),
+    color-mix(in srgb, var(--surface-panel-subtle) 88%, transparent);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-base) 20%, transparent);
+}
+
+.identityCopy,
+.titleBlock {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.email,
 .emptyDescription,
 .errorText {
   margin: 0;
   color: var(--text-secondary);
 }
 
-.metaGrid,
-.detailsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.metaCard,
-.fieldCard,
-.emptyCard,
-.errorCard {
-  display: grid;
-  gap: 8px;
-  padding: 16px;
-  border-radius: calc(var(--radius-card) - 8px);
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 58%, transparent);
-  background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
+.email {
+  font-size: 1rem;
+  line-height: 1.45;
 }
 
 .fieldValue {
@@ -68,25 +98,90 @@
   word-break: break-word;
 }
 
-.fieldHint {
-  font-size: 0.92rem;
+.metaValue {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .statusRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
 }
 
+.identityMeta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 10%, transparent);
+}
+
+.metaItem {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  min-width: 0;
+}
+
+.dataList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: grid;
+  gap: 8px;
+  align-items: start;
+  min-width: 0;
+}
+
 .errorCard {
-  border-color: color-mix(in srgb, var(--color-feedback-danger-border, var(--border-subtle)) 42%, transparent);
-  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel)) 26%, transparent);
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: calc(var(--radius-card) - 8px);
+  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 24%, transparent);
+}
+
+.confirmation {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--color-feedback-danger-border, var(--border-subtle)) 28%, transparent);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 20%, transparent);
+}
+
+.mobileBackAction {
+  display: none;
+  justify-self: start;
 }
 
 @media (max-width: 900px) {
-  .metaGrid,
-  .detailsGrid {
+  .identityMain {
     grid-template-columns: 1fr;
+  }
+
+  .identityMeta,
+  .dataList {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobileBackAction {
+    display: inline-flex;
   }
 }

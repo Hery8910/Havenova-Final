@@ -2,12 +2,11 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { PopupCode, useI18n } from '@/packages/contexts';
 import {
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackGlobalLoading,
+  getI18nFallbacks,
+  PopupCode,
   useGlobalAlert,
+  useI18n,
 } from '@/packages/contexts';
 import {
   AuthPageShell,
@@ -42,6 +41,7 @@ interface ResetPasswordFormData {
 const ResetPasswordContent = () => {
   const { showError, showSuccess, showLoading, closeAlert } = useGlobalAlert();
   const lang = useLang();
+  const { fallbackButtons, fallbackGlobalError, fallbackLoadingMessages } = getI18nFallbacks(lang);
   const searchParams = useSearchParams();
   const homeHref = href(lang, '/');
 
@@ -50,6 +50,7 @@ const ResetPasswordContent = () => {
   const navText = texts.components.client.navbar.accessibility;
   const popups = texts.popups;
   const alertButtons = { ...fallbackButtons, ...popups.button };
+  const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const resetPasswordText: ResetPasswordData = texts.pages.client.user.resetPasswordText;
   const invalidOrExpiredLinkCopy = resetPasswordText.linkErrors?.invalidOrExpired;
   const missingTokenCopy = resetPasswordText.linkErrors?.missingToken;
@@ -201,12 +202,7 @@ const ResetPasswordContent = () => {
         newPassword: data.password,
       };
 
-      const loadingData = getPopup(
-        popups,
-        'GLOBAL_LOADING',
-        'GLOBAL_LOADING',
-        fallbackGlobalLoading
-      );
+      const loadingData = loadingText.resetPassword ?? fallbackLoadingMessages.resetPassword;
 
       showLoading({
         response: {

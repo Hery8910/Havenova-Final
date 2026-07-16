@@ -1,6 +1,5 @@
 'use client';
 
-import { useId } from 'react';
 import { useLang } from '../../../../../../hooks';
 import { formatUserAddress } from '../../../../../../types';
 import type {
@@ -8,18 +7,11 @@ import type {
   PropertySizeRange,
 } from '../../../../../../types/services';
 import type { SelectedCalendarSlot } from '../../../../../../types/calendar';
+import { ServiceRequestReviewStep } from '../../../shared';
 import type {
   CleaningRequestCustomerType,
   CleaningWorkAddressSelection,
 } from '../cleaningRequest.types';
-import styles from './ReviewStep.module.css';
-import { RequestStepIntro } from '../../../shared';
-
-type ReviewRow = {
-  label: string;
-  value: string | number;
-  details?: boolean;
-};
 
 type ReviewTexts = {
   title: string;
@@ -91,7 +83,6 @@ export default function ReviewStep({
     no: string;
   };
 }) {
-  const titleId = useId();
   const lang = useLang();
   const dateFormatter = new Intl.DateTimeFormat(lang, {
     day: '2-digit',
@@ -102,7 +93,7 @@ export default function ReviewStep({
     hour: '2-digit',
     minute: '2-digit',
   });
-  const customerRows: ReviewRow[] = [
+  const customerRows = [
     {
       label: texts.labels.customerType,
       value: customerType.options[customerType.selected],
@@ -111,16 +102,8 @@ export default function ReviewStep({
       label: texts.labels.frequency,
       value: frequency.options[frequency.selected],
     },
-    {
-      label: texts.labels.visitDate,
-      value: dateFormatter.format(scheduling.start),
-    },
-    {
-      label: texts.labels.visitTime,
-      value: `${timeFormatter.format(scheduling.start)} - ${timeFormatter.format(scheduling.end)}`,
-    },
   ];
-  const propertyRows: ReviewRow[] = [
+  const propertyRows = [
     {
       label: texts.labels.sizeRange,
       value: property.sizeRangeOptions[property.sizeRange],
@@ -147,59 +130,50 @@ export default function ReviewStep({
       details: true,
     },
   ];
+  const schedulingRows = [
+    {
+      label: texts.labels.visitDate,
+      value: dateFormatter.format(scheduling.start),
+    },
+    {
+      label: texts.labels.visitTime,
+      value: `${timeFormatter.format(scheduling.start)} - ${timeFormatter.format(scheduling.end)}`,
+    },
+  ];
   const addressLabel =
     workAddress.source === 'primary'
       ? texts.sourceOptions.primary
       : workAddress.label || (workAddress.source === 'saved' ? texts.sourceOptions.saved : '');
 
   return (
-    <section className={styles.container} aria-labelledby={titleId}>
-      {showHeader ? (
-        <RequestStepIntro title={texts.title} titleId={titleId} description={texts.description} />
-      ) : null}
-
-      <section className={styles.grid}>
-        <article className={styles.card}>
-          <h4 className={`${styles.cardTitle} type-body-lg`}>
-            <span className={styles.title}>{texts.sections.customer}</span>
-            <span className={styles.titleLine}>{''}</span>
-          </h4>
-          <ul className={styles.list}>
-            {customerRows.map((row) => (
-              <li key={row.label} className={row.details ? styles.itemDetails : styles.item}>
-                <span className={styles.label}>{row.label}</span>
-                <span className={styles.value}>{row.value}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className={styles.card}>
-          <h4 className={`${styles.cardTitle} type-body-lg`}>
-            <span className={styles.title}>{texts.sections.property}</span>
-            <span className={styles.titleLine}>{''}</span>
-          </h4>
-          <ul className={styles.list}>
-            {propertyRows.map((row) => (
-              <li key={row.label} className={row.details ? styles.itemDetails : styles.item}>
-                <span className={styles.label}>{row.label}</span>
-                <span className={styles.value}>{row.value}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className={styles.card}>
-          <h4 className={`${styles.cardTitle} type-body-lg`}>
-            <span className={styles.title}>{texts.sections.address}</span>
-            <span className={styles.titleLine}>{''}</span>
-          </h4>
-          <p className={styles.address}>
-            {addressLabel ? <span className={styles.label}>{addressLabel}</span> : null}
-            <span className={styles.value}>{formatUserAddress(workAddress.address)}</span>
-          </p>
-        </article>
-      </section>
-    </section>
+    <ServiceRequestReviewStep
+      showHeader={showHeader}
+      title={texts.title}
+      description={texts.description}
+      sections={[
+        {
+          title: texts.sections.customer,
+          rows: customerRows,
+        },
+        {
+          title: texts.sections.property,
+          rows: propertyRows,
+        },
+        {
+          title: texts.sections.scheduling,
+          rows: schedulingRows,
+        },
+        {
+          title: texts.sections.address,
+          rows: [
+            {
+              label: addressLabel || texts.labels.address,
+              value: formatUserAddress(workAddress.address),
+              details: true,
+            },
+          ],
+        },
+      ]}
+    />
   );
 }

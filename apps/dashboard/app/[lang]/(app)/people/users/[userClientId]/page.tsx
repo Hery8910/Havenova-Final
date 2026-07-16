@@ -8,7 +8,9 @@ type TenantUserDetailPageProps = {
 };
 
 export default function TenantUserDetailPage({ params }: TenantUserDetailPageProps) {
+  const entryId = `user:${params.userClientId}`;
+
   redirect(
-    `/${params.lang}/people/users?selected=${encodeURIComponent(params.userClientId)}&mode=detail`
+    `/${params.lang}/people/users?selected=${encodeURIComponent(entryId)}&mode=detail`
   );
 }

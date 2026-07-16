@@ -88,6 +88,41 @@ Restricción importante:
 - este comportamiento es temporal y solo existe para desarrollo local
 - antes del despliegue final debe revertirse o quedar desactivado fuera de desarrollo
 
+## Flujo Operativo Del Contexto
+
+### Primer acceso útil
+
+1. `AuthProvider` resuelve sesión.
+2. La app `client` monta `ProfileProvider`.
+3. El contexto resuelve perfil por `userClientId + clientId`.
+4. Si existe perfil remoto, lo normaliza y persiste.
+5. Si el usuario acaba de crear sesión como `isNewUser`, el contexto puede bootstrappear continuidad de perfil.
+
+### Recuperación y continuidad
+
+1. Si backend responde correctamente, el perfil se sincroniza desde servidor.
+2. Si backend falla por red o `5xx`, el contexto puede seguir usando storage local para continuidad en desarrollo.
+3. Si no existe perfil persistido y el backend está caído en `development`, puede crear un `dev-fallback`.
+4. Si la sesión cambia o se cierra, el contexto deja de representar el perfil autenticado anterior.
+
+### Datos visibles, mensajes y salidas
+
+El contexto debe ser la fuente de:
+
+- `contactEmail`
+- nombre
+- teléfono
+- direcciones
+- idioma
+- tema
+
+No debe empujar a la UI a usar `auth.email` como dato de presentación.
+
+Cuando hay errores:
+
+- la recuperación de perfil no debería confundirse con expiración de sesión
+- la UI debe conservar claro si falló `auth` o falló solo el complemento `profile`
+
 ### Inconsistencias detectadas
 
 1. El tipo frontend ya incluye `contactEmail`, pero faltaba cerrar su uso

@@ -149,6 +149,41 @@ export interface ResolveInviteResponse {
   };
 }
 
+export interface ResolveTenantUserInvitationPayload {
+  inviteToken: string;
+}
+
+export interface ResolveTenantUserInvitationResponse {
+  success: boolean;
+  code: 'TENANT_USER_INVITATION_RESOLVED';
+  message?: string;
+  data: {
+    emailMasked: string;
+    clientDisplayName: string;
+    displayName: string;
+    language: 'de' | 'en' | 'es';
+    expiresAt: string;
+  };
+}
+
+export interface AcceptTenantUserInvitationPayload {
+  inviteToken: string;
+  newPassword: string;
+}
+
+export interface AcceptTenantUserInvitationResponse {
+  success: boolean;
+  code: 'TENANT_USER_INVITATION_ACCEPTED';
+  message?: string;
+  data: {
+    email: string;
+    clientId: string;
+    userClientId: string;
+    role: 'user';
+    status: 'active';
+  };
+}
+
 // ---------------------------
 // VERIFY EMAIL
 // ---------------------------
@@ -171,6 +206,7 @@ export type VerifyEmailResult =
       language: string;
       code?: string;
       magicToken?: string;
+      requiresManualLogin?: boolean;
     }
   | {
       ok: false;

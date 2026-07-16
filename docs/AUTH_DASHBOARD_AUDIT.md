@@ -98,8 +98,8 @@ already come from the shared auth domain.
 
 Dashboard account surfaces already moved to the intended complement domain:
 
-- [apps/dashboard/app/[lang]/(app)/profile/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:1)
-- [apps/dashboard/app/[lang]/(app)/profile/edit/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/edit/page.tsx:1)
+- [apps/dashboard/app/[lang]/(app)/account/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/account/page.tsx:1)
+- [apps/dashboard/app/[lang]/(app)/account/profile/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/account/profile/page.tsx:1)
 - context: [packages/contexts/admin/AdminContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/admin/AdminContext.tsx:1)
 
 Meaning:
@@ -145,7 +145,7 @@ Evidence:
 
 - dashboard app layout mounts `AuthProvider` and `AdminProvider`, but not `ProfileProvider`:
   - [apps/dashboard/app/[lang]/(app)/layout.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/layout.tsx:1)
-- dashboard still preserves `profile` naming on some routes such as `/profile`, even though the underlying runtime complement is now `admin`
+- dashboard no longer uses `/profile/*` as the canonical admin route namespace; the live surface is `/account/*`
 - shared UI pieces such as the profile-form wrapper still come from the proven profile pattern:
   - [packages/components/client/user/profile/profileForm/formWrapper/FormWrapper.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileForm/formWrapper/FormWrapper.tsx:1)
 
@@ -155,72 +155,41 @@ Interpretation:
 - the remaining work is to keep replacing residual structure and naming assumptions with an explicit admin-first model
 - this is now a cleanup and consolidation task, not the original blocking miscomposition
 
-### 2. Guard behavior is fragmented across shared hooks and page-local redirects
+### 2. Historical guard fragmentation is now largely closed at the protected-shell level
 
 Severity:
 
-- high
-
-Evidence:
-
-- shared role guard exists:
-  - [packages/contexts/auth/authContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/authContext.tsx:808)
-- shared login guard exists:
-  - [packages/hooks/useRequireLogin.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/hooks/useRequireLogin.ts:1)
-- dashboard pages also perform their own redirects:
-  - [apps/dashboard/app/[lang]/(app)/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/page.tsx:15)
-  - [apps/dashboard/app/[lang]/(app)/objects/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/objects/page.tsx:110)
-  - [apps/dashboard/app/[lang]/(app)/property-manager/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/property-manager/page.tsx:218)
-  - [apps/dashboard/app/[lang]/(app)/messages/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/messages/page.tsx:342)
+- resolved
 
 Interpretation:
 
-- dashboard does reuse the shared auth guard base
-- but it still layers app-specific redirect logic on top in an inconsistent way
-- auth access is not yet a closed shell policy
+- the old page-local login redirects that motivated this finding are no longer present in the protected dashboard tree
+- protected access now closes at the SSR layout with `hasDashboardAccess(auth)` plus the shared `AuthProvider` lifecycle
+- the remaining auth work in dashboard is no longer "remove scattered login redirects", but keep the current shell policy from drifting again
 
-### 3. Redirect targets are inconsistent inside dashboard
+### 3. Historical redirect-target inconsistency is now closed on `/user/login`
 
 Severity:
 
-- high
-
-Evidence:
-
-- canonical auth route in dashboard exists under `/user/login`:
-  - [apps/dashboard/app/[lang]/(auth)/user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/login/page.tsx:1)
-- some surfaces redirect correctly to `/user/login`:
-  - [apps/dashboard/app/[lang]/(app)/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/page.tsx:16)
-  - [packages/contexts/auth/authContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/authContext.tsx:842)
-- other surfaces redirect to `/login` instead:
-  - [apps/dashboard/app/[lang]/(app)/objects/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/objects/page.tsx:111)
-  - [apps/dashboard/app/[lang]/(app)/property-manager/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/property-manager/page.tsx:219)
-  - [apps/dashboard/app/[lang]/(app)/messages/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/messages/page.tsx:342)
+- resolved
 
 Interpretation:
 
-- dashboard still has multiple assumptions about the auth entry route
-- this is a direct violation of auth-domain independence
-- route ownership is not yet centralized
+- the canonical dashboard auth entry route is now `/user/login`
+- current runtime redirects in the protected dashboard tree no longer point to `/login`
+- route ownership is effectively centralized through `userAuthRoutes.login` and shared auth navigation helpers
 
-### 4. Dashboard login flow duplicates the client login page instead of reusing the same feature shell
+### 4. Historical dashboard login duplication is now closed through the shared invitation auth page
 
 Severity:
 
-- medium
-
-Evidence:
-
-- dashboard login page is largely a fork of client login:
-  - [apps/dashboard/app/[lang]/(auth)/user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/login/page.tsx:1)
-  - [apps/client/app/[lang]/(auth)/user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/login/page.tsx:1)
-- the dashboard version reuses shared services and `FormWrapper`, but not the client auth shell/adapters
+- resolved
 
 Interpretation:
 
-- service reuse is good
-- feature composition reuse is partial
-- auth behavior can drift between apps because the page contract is duplicated
+- `dashboard` login is now a thin wrapper over the shared [InvitationLoginPage.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/auth/invitationLogin/InvitationLoginPage.tsx:1)
+- drift risk between `dashboard` and `worker` on invitation-only login has been reduced to the wrapper contract and downstream access checks
+- the relevant open distinction is now between the public `client` login variant and the invitation-only shared variant, not between duplicated dashboard pages
 
 ### 4.1 The first dashboard access still depends on backend bootstrap, not on the dashboard UI flow
 
@@ -276,14 +245,14 @@ Evidence:
 
 - header uses `admin`
 - sidebar uses `logout()` from `auth`
-- profile pages use `admin`
+- account pages use `admin`
 - role checks use `auth`
 
 Primary references:
 
 - [packages/components/dashboard/dashboardHeader/DashboardHeader.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/dashboard/dashboardHeader/DashboardHeader.tsx:1)
 - [packages/components/dashboard/sidebar/Sidebar.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/dashboard/sidebar/Sidebar.tsx:1)
-- [apps/dashboard/app/[lang]/(app)/profile/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/profile/page.tsx:1)
+- [apps/dashboard/app/[lang]/(app)/account/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(app)/account/page.tsx:1)
 - [packages/contexts/auth/authContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/authContext.tsx:1)
 
 Interpretation:
@@ -293,49 +262,27 @@ Interpretation:
 - under the new architecture, the target split should be `auth + admin`, not `auth + profile`
 - until that boundary is frozen, dashboard remains a partial consumer rather than a clean reuse target
 
-### 8. Dashboard access mode is not yet documented as invitation-only
+### 8. Dashboard access mode is now documented as invitation-only
 
 Severity:
 
-- medium
-
-Evidence:
-
-- dashboard exposes `login` and `set-password` pages:
-  - [apps/dashboard/app/[lang]/(auth)/user/login/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/login/page.tsx:1)
-  - [apps/dashboard/app/[lang]/(auth)/user/set-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/set-password/page.tsx:1)
-- there is no dashboard `register` page, which matches the intended product rule
-- backend auth contract already supports invitation semantics through `inviteToken` and `status: invited`:
-  - [packages/types/auth/authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts:1)
-  - [packages/contexts/auth/BACKEND.md](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/auth/BACKEND.md:442)
+- resolved
 
 Interpretation:
 
-- the product rule exists implicitly in code and backend contract
-- it is not yet frozen as a frontend auth rule for dashboard
-- this must be documented before refactoring `set-password`
+- the invitation-only rule is now frozen in the dashboard auth contracts and shared invitation-flow docs
+- the remaining work is not to declare the mode, but to preserve it while dashboard grows new protected surfaces
 
-### 9. `set-password` must become a shared auth activation surface with dashboard-specific invitation handling
+### 9. `set-password` is now a shared auth activation surface with invitation handling
 
 Severity:
 
-- medium
-
-Evidence:
-
-- dashboard `set-password` already reads either `token` or `inviteToken` from the URL:
-  - [apps/dashboard/app/[lang]/(auth)/user/set-password/page.tsx](/home/heriberto/Escritorio/Havenova/havenova/apps/dashboard/app/[lang]/(auth)/user/set-password/page.tsx:49)
-- dashboard now sends either `token` or `inviteToken` to the shared reset-password contract instead of collapsing both modes into one value
-- shared auth types already tolerate `inviteToken`:
-  - [packages/types/auth/authTypes.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/types/auth/authTypes.ts:123)
-- current client documentation explicitly says `inviteToken` should not apply to the public client route:
-  - [apps/client/app/[lang]/(auth)/README.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/README.md:481)
+- resolved
 
 Interpretation:
 
-- the reusable auth base should own the `set-password` contract
-- `client` and `dashboard` should diverge by access mode, not by inventing separate auth semantics
-- dashboard must extend the shared flow to support invitation activation cleanly
+- the shared invitation-only `set-password` base now covers both dashboard and worker
+- divergence from `client` is now correctly expressed as access mode and route subset, not as a separate auth contract
 
 ## Conclusion
 
@@ -353,20 +300,14 @@ What is still missing is not “auth from zero”.
 
 What is missing is the closure of dashboard as a disciplined consumer of that shared base.
 
-The main blockers are:
+The main remaining blockers are narrower than in the original audit:
 
-1. residual dashboard dependence on `profile` instead of closing on `admin`
-2. fragmented guard policy
-3. inconsistent redirect targets
-4. duplicated login feature composition
-5. missing documented invitation-only access model
-6. unfinished `set-password` invitation handling as part of shared auth
+1. residual dashboard dependence on `profile` naming and structure instead of closing cleanly on `admin`
+2. finishing the explicit session-vs-admin ownership rule across visible account surfaces
+3. preserving the closed guard shell and canonical auth-entry policy as dashboard grows
 
 ## Recommended Next Work Order
 
 1. Remove dashboard reliance on `profile` as the account complement and close the `auth -> admin` handoff.
-2. Centralize dashboard protected-route behavior and remove page-local login redirects.
-3. Normalize the canonical dashboard auth route targets to `/user/login`.
-4. Freeze the invitation-only dashboard access model in frontend docs and route rules.
-5. Adapt `set-password` as a shared auth surface with dashboard invitation activation support.
-6. Refactor dashboard auth pages to reuse the shared auth feature composition where possible instead of maintaining a forked login flow.
+2. Keep the current protected-shell guard policy under test so page-local redirects do not return.
+3. Continue replacing residual `profile` assumptions in route naming, account surfaces, and docs with the explicit `admin` complement model.

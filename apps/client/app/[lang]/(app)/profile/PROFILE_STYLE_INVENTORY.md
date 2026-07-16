@@ -114,7 +114,8 @@ Señales actuales:
 
 - `userNav.module.css` sigue existiendo como capa separada del histórico del usuario
 - `ProfileNav` ya usa `SideNav`, por lo que `userNav` no debe seguir considerándose referencia canónica del carril
-- `requests/page.tsx` conserva `page.module.css` para una subruta que aún no tiene baseline real
+- las subrutas secundarias ya convergen en `ProfileSubroutePlaceholder.module.css`
+- el antiguo `requests/page.module.css` dejó de ser parte del baseline activo
 
 ## Conclusiones operativas
 

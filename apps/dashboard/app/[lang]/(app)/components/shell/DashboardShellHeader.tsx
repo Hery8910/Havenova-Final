@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import LanguageSwitcher from '../../../../../../../packages/components/languageSwitcher/LanguageSwitcher';
 import ThemeToggler from '../../../../../../../packages/components/themeToggler/ThemeToggler';
@@ -16,15 +16,11 @@ export function DashboardShellHeader() {
   const { admin } = useAdmin();
   const { auth } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
   const [hasAvatarError, setHasAvatarError] = useState(false);
   const lang = useLang() as DashboardShellLang;
   const meta = resolveDashboardHeaderMeta(pathname, lang);
   const profileName = admin?.name?.trim();
   const displayName = profileName || (lang === 'es' ? 'Admin' : 'Admin');
-  const profileButtonLabel = profileName
-    ? `${meta.profileButton}: ${profileName}`
-    : meta.profileButton;
   const languageLabels =
     lang === 'es'
       ? {
@@ -109,12 +105,12 @@ export function DashboardShellHeader() {
             buttonLabel: 'Thema',
             darkMode: 'Dunkelmodus',
             lightMode: 'Hellmodus',
-          }
-        : {
-            buttonLabel: 'Theme',
-            darkMode: 'Dark mode',
-            lightMode: 'Light mode',
-          };
+        }
+      : {
+          buttonLabel: 'Theme',
+          darkMode: 'Dark mode',
+          lightMode: 'Light mode',
+        };
   const normalizedAvatarSrc = useMemo(
     () => normalizeNavbarAvatar(admin?.profileImage),
     [admin?.profileImage]
@@ -128,15 +124,10 @@ export function DashboardShellHeader() {
   return (
     <section className={styles.section} aria-labelledby="dashboard-shell-header-title">
       <div className={styles.titleBlock}>
-        <div className={styles.routeLine}>
-          <p className={styles.routeLabel}>{meta.routeLabel}</p>
-          <span className={styles.routeDivider} aria-hidden="true">
-            /
-          </span>
-          <h1 id="dashboard-shell-header-title" className={styles.title}>
-            {meta.title}
-          </h1>
-        </div>
+        <p className={styles.routeLabel}>{meta.routeLabel}</p>
+        <h1 id="dashboard-shell-header-title" className={styles.title}>
+          {meta.title}
+        </h1>
       </div>
 
       <div className={styles.actions}>
@@ -153,19 +144,14 @@ export function DashboardShellHeader() {
           ariaLabel={themeLabels.buttonLabel}
         />
 
-        <button
-          type="button"
-          onClick={() => router.push(`/${lang}/account/profile`)}
-          className={`button button--ghost ${styles.button}`}
-          aria-label={profileButtonLabel}
-        >
+        <div className={styles.profileSummary} aria-label={meta.profileButton}>
           {shouldUseAvatarImage ? (
             <Image
               className={styles.image}
               src={normalizedAvatarSrc}
               alt={profileName ? `${profileName} profile picture` : meta.profileButton}
-              width={45}
-              height={45}
+              width={40}
+              height={40}
               onError={() => setHasAvatarError(true)}
             />
           ) : (
@@ -178,7 +164,7 @@ export function DashboardShellHeader() {
             <p className={styles.name}>{displayName}</p>
             <p className={styles.role}>{auth.role ?? 'admin'}</p>
           </div>
-        </button>
+        </div>
       </div>
     </section>
   );

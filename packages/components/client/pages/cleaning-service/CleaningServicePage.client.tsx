@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { fallbackButtons, fallbackGlobalError, fallbackPopups } from '../../../../contexts/i18n';
 import {
   type PopupsTexts,
   useAuth,
@@ -9,6 +8,7 @@ import {
   useI18n,
   useProfile,
 } from '../../../../contexts';
+import { getI18nFallbacks } from '../../../../contexts/i18n';
 import { createCleaningRequest } from '../../../../services';
 import type { UpdateUserClientProfileInput } from '../../../../types';
 import { getPopup } from '../../../../utils';
@@ -38,6 +38,7 @@ export function CleaningServicePageClient({
   cleaning,
   lang,
 }: CleaningServicePageClientProps) {
+  const { fallbackButtons, fallbackGlobalError, fallbackPopups } = getI18nFallbacks(lang);
   const { auth } = useAuth();
   const { profile, updateProfile } = useProfile();
   const { texts } = useI18n();

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth, useGlobalAlert, useI18n, useProfile } from '../../../../../contexts';
+import { useGlobalAlert, useI18n, useProfile } from '../../../../../contexts';
 import { getI18nFallbacks } from '../../../../../contexts/i18n';
 import { useContactFormSubmission } from './useContactFormSubmission';
 import {
@@ -12,12 +12,10 @@ import {
 import { useContactFormValidation } from './useContactFormValidation';
 import { resolveContactFormTexts } from './contactForm.fallbacks';
 import { ContactFormView } from './ContactForm.view';
-import { resolvePreferredContactEmail } from '../../../../../utils';
 
 export function ContactFormSection() {
   const { texts, language } = useI18n();
   const { fallbackButtons, fallbackGlobalError, fallbackPopups } = getI18nFallbacks(language);
-  const { auth } = useAuth();
   const { profile } = useProfile();
   const { showError, closeAlert } = useGlobalAlert();
   const { submit } = useContactFormSubmission();
@@ -29,11 +27,10 @@ export function ContactFormSection() {
   const successDescription = resolvedTexts.successDescription;
   const sendingLabel = `${submitLabel}...`;
   const profileEmail = profile?.contactEmail;
-  const sessionEmail = auth?.email;
 
   const [values, setValues] = useState<ContactFormState>({
     name: profile?.name ?? '',
-    email: resolvePreferredContactEmail(profileEmail, sessionEmail),
+    email: profileEmail || '',
     subject: '',
     message: '',
   });
@@ -50,9 +47,9 @@ export function ContactFormSection() {
     setValues((prev) => ({
       ...prev,
       name: prev.name || profile?.name || '',
-      email: prev.email || resolvePreferredContactEmail(profileEmail, sessionEmail),
+      email: prev.email || profileEmail || '',
     }));
-  }, [profile?.name, profileEmail, sessionEmail]);
+  }, [profile?.name, profileEmail]);
 
   const { errors, hasErrors } = useContactFormValidation(values, errorTexts);
 

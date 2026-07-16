@@ -52,6 +52,7 @@ Esto implica:
 - minimizar dependencias a dominios de negocio de este proyecto
 - dejar el contrato de sesion cerrado y portable
 - documentar flujos y estados visibles de forma reproducible
+- documentar tambien el contrato de mensajes visibles y popups auth
 
 Modelo reusable cerrado por app:
 
@@ -130,14 +131,71 @@ Motivo:
 
 Límite actual:
 
-- si el CSRF ya no es válido, el frontend todavía no tiene una vía dedicada para pedir uno nuevo sin relogin
-- eso requiere soporte backend explícito
+- si el CSRF ya no está disponible en memoria, el frontend todavía no tiene una vía dedicada implementada para reemitirlo antes de `refresh-token`
+- el fallback same-origin del BFF puede ayudar en algunos requests, pero no debe tratarse como garantía universal de recuperación
+- la decisión cerrada es incorporar soporte backend explícito para reemisión de CSRF
+- ver [AUTH_CSRF_SESSION_RECOVERY_DECISION.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_CSRF_SESSION_RECOVERY_DECISION.md:1)
 
 Interpretación nueva:
 
 - esta lógica sigue siendo útil como referencia de comportamiento
 - hoy ya vive detrás de una integración same-origin servida por el BFF en los flujos de `auth`
 - la arquitectura objetivo ya no es endurecer indefinidamente el flujo browser-direct cross-origin
+
+## Flujo Operativo Del Contexto
+
+### Primer acceso y bootstrap
+
+1. La app monta `AuthProvider`.
+2. El contexto intenta partir de sesión de servidor o sesión persistida según la superficie.
+3. `GET /api/auth/me` es la fuente de verdad posterior al login.
+4. Si hace falta, `refreshAuth()` intenta recuperar sesión usando cookies y `x-csrf-token`.
+5. Si la sesión queda confirmada, `auth` expone identidad y permisos básicos al resto del árbol.
+
+### Recuperación de sesión
+
+1. Ante `401/403`, el contexto puede intentar `refresh-token`.
+2. Si falta CSRF utilizable para ese intento, el contrato objetivo pasa primero por una reemisión dedicada de CSRF y luego por `refresh-token`.
+3. Si el refresh funciona, vuelve a confirmar con `GET /me`.
+4. Si backend falla por timeout/red/`5xx`, el contexto puede conservar sesión local en desarrollo.
+5. Si la sesión realmente expira, el contexto degrada a estado no autenticado y la UI vuelve a login.
+
+### Persistencia y salida
+
+Persistencia mínima local:
+
+- `hv-auth`
+- `hv-auth-recent-login-at`
+
+El contexto persiste:
+
+- identidad de sesión
+- rol
+- flags de verificación y login
+
+No debe persistir ni poseer:
+
+- perfil visible del usuario final
+- cuenta operativa de admin
+- cuenta operativa de worker
+
+### Mensajes, errores y salidas que habilita
+
+`AuthContext` no es una página, pero condiciona la experiencia visible:
+
+- permite redirects a login cuando la sesión deja de ser válida
+- permite refresh transparente cuando la sesión aún es recuperable
+- expone el estado necesario para que las páginas distingan success final de sesión confirmada vs fallback o recuperación incompleta
+- no debería forzar mensajes de perfil; solo mensajes de sesión, expiración, refresh y continuidad auth
+
+Contrato de intención visible del contexto:
+
+- `bootstrap/loading`: debe comunicar que la app está confirmando sesión, no que el usuario ya entró
+- `refresh recoverable`: debe ser silencioso siempre que no cambie la decisión visible del flujo
+- `refresh no recuperable`: debe empujar a `login` o a una ruta pública segura sin mezclar copy de perfil
+- `session expired`: debe explicar pérdida de acceso de forma breve y accionable, sin detalle técnico de tokens o cookies
+- `logout success`: debe comunicar cierre de sesión y salida segura, no borrado de cuenta ni cambios de permisos
+- `permission denied`: debe describir falta de acceso a la superficie actual, no invalidar toda la identidad auth
 
 ### Inconsistencias detectadas
 

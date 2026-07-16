@@ -28,38 +28,38 @@
     "description": "Es wurde kein gültiges Zugriffstoken gefunden. Bitte melden Sie sich erneut an."
   },
   "AUTH_NOT_LOGGED_IN": {
-    "title": "Anmeldung erforderlich",
-    "description": "Sie müssen angemeldet sein, um diese Aktion durchzuführen."
+    "title": "Bitte anmelden",
+    "description": "Melden Sie sich an, um mit dieser Aktion fortzufahren."
   },
   "AUTH_REQUIRED": {
-    "title": "Anmeldung erforderlich",
-    "description": "Sie müssen angemeldet sein, um diese Aktion auszuführen."
+    "title": "Bitte anmelden",
+    "description": "Melden Sie sich an, um mit dieser Aktion fortzufahren."
   },
   "AUTH_FORBIDDEN": {
-    "title": "Zugriff verboten",
-    "description": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
+    "title": "Zugriff nicht verfügbar",
+    "description": "Diese Aktion ist für dieses Konto nicht verfügbar.",
     "confirm": "Zum Login",
     "close": "Schließen"
   },
   "USER_NEED_TO_LOGIN": {
     "title": "Anmeldung erforderlich",
-    "description": "Bitte melde dich an, um diese Seite aufzurufen oder Anfragen zu senden. Du kannst weiterstöbern oder direkt zum Login gehen.",
+    "description": "Melden Sie sich an, um diese Seite zu öffnen oder diese Aktion abzuschließen. Sie können auch weiterstöbern.",
     "confirm": "Zum Login",
     "close": "Weiter stöbern"
   },
   "USER_SESSION_EXPIRED": {
     "title": "Sitzung abgelaufen",
-    "description": "Ihre Sitzung ist abgelaufen. Sie können weiterstöbern oder sich erneut anmelden.",
+    "description": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an oder stöbern Sie weiter.",
     "confirm": "Zum Login",
     "close": "Weiter stöbern"
   },
   "AUTH_BLOCKED": {
     "title": "Konto gesperrt",
-    "description": "Ihr Zugriff ist gesperrt. Bitte wenden Sie sich an den Support."
+    "description": "Mit diesem Konto kann nicht fortgefahren werden. Bitte wenden Sie sich an den Support."
   },
   "AUTH_USER_NOT_FOUND": {
-    "title": "Benutzer nicht gefunden",
-    "description": "Es konnte kein passender Benutzer gefunden werden."
+    "title": "Konto nicht gefunden",
+    "description": "Für diese Anfrage konnte kein Konto gefunden werden."
   },
   "GLOBAL_INTERNAL_ERROR": {
     "title": "Unerwarteter Fehler",
@@ -84,78 +84,78 @@
     "description": "Der globale Aufgaben-Katalog wurde erfolgreich geladen."
   },
   "CLIENT_CREATE_SUCCESS": {
-    "title": "Kunde erfolgreich erstellt",
-    "description": "Der Kunde wurde erfolgreich im System angelegt."
+    "title": "Workspace erstellt",
+    "description": "Der Workspace ist bereit."
   },
   "CLIENT_CREATE_DOMAIN_EXISTS": {
     "title": "Domain bereits vergeben",
     "description": "Ein Kunde mit dieser Domain existiert bereits."
   },
   "CLIENT_CREATE_FAILED": {
-    "title": "Fehler beim Erstellen des Kunden",
-    "description": "Beim Erstellen des Kunden ist ein unerwarteter Fehler aufgetreten."
+    "title": "Workspace konnte nicht erstellt werden",
+    "description": "Bitte versuchen Sie es erneut, um diesen Workspace einzurichten."
   },
   "CLIENT_CREATED": {
-    "title": "Kunde erfolgreich erstellt",
-    "description": "Der Kunde wurde erfolgreich im System angelegt."
+    "title": "Workspace erstellt",
+    "description": "Der Workspace ist bereit."
   },
   "CLIENT_FETCH_SUCCESS": {
-    "title": "Client erfolgreich geladen",
-    "description": "Die Client-Daten wurden erfolgreich abgerufen."
+    "title": "Workspace geladen",
+    "description": "Die Workspace-Daten sind verfügbar."
   },
   "CLIENT_FETCH_NOT_FOUND": {
     "title": "Client nicht gefunden",
     "description": "Der angeforderte Client konnte nicht gefunden werden."
   },
   "CLIENT_FETCH_FAILED": {
-    "title": "Fehler beim Laden des Clients",
-    "description": "Beim Abrufen des Clients ist ein unerwarteter Fehler aufgetreten."
+    "title": "Workspace konnte nicht geladen werden",
+    "description": "Bitte versuchen Sie erneut, diesen Workspace zu laden."
   },
   "CLIENT_FETCH_DASHBOARD_SUCCESS": {
-    "title": "Client-Dashboard erfolgreich geladen",
-    "description": "Die Dashboard-Daten des Clients wurden erfolgreich abgerufen."
+    "title": "Dashboard geladen",
+    "description": "Die Dashboard-Daten sind verfügbar."
   },
   "CLIENT_PUBLIC_FETCH_SUCCESS": {
-    "title": "Client geladen",
-    "description": "Öffentliche Client-Daten wurden erfolgreich abgerufen."
+    "title": "Workspace geladen",
+    "description": "Die öffentlichen Workspace-Daten sind verfügbar."
   },
   "CLIENT_UPDATE_SUCCESS": {
-    "title": "Client erfolgreich aktualisiert",
-    "description": "Die Client-Daten wurden erfolgreich aktualisiert."
+    "title": "Workspace aktualisiert",
+    "description": "Ihre Änderungen wurden gespeichert."
   },
   "CLIENT_UPDATED": {
-    "title": "Client erfolgreich aktualisiert",
-    "description": "Die Client-Daten wurden erfolgreich aktualisiert."
+    "title": "Workspace aktualisiert",
+    "description": "Ihre Änderungen wurden gespeichert."
   },
   "CLIENT_UPDATE_FAILED": {
-    "title": "Fehler beim Aktualisieren des Clients",
-    "description": "Beim Aktualisieren des Clients ist ein unerwarteter Fehler aufgetreten."
+    "title": "Änderungen konnten nicht gespeichert werden",
+    "description": "Bitte versuchen Sie erneut, diesen Workspace zu aktualisieren."
   },
   "CLIENT_MISSING_CLIENT_ID": {
-    "title": "Client-ID fehlt",
-    "description": "Für diese Registrierung wird eine gültige Client-ID benötigt."
+    "title": "Workspace-ID fehlt",
+    "description": "Zum Fortfahren wird eine gültige Workspace-ID benötigt."
   },
   "CLIENT_ID_MISMATCH": {
-    "title": "Client stimmt nicht",
-    "description": "Der angegebene Client stimmt nicht mit Ihrer Sitzung überein."
+    "title": "Workspace stimmt nicht überein",
+    "description": "Dieser Workspace passt nicht zu Ihrer aktuellen Sitzung."
   },
   "CLIENT_NOT_FOUND": {
-    "title": "Client nicht gefunden",
-    "description": "Der angegebene Client existiert nicht.",
+    "title": "Workspace nicht gefunden",
+    "description": "Dieser Workspace konnte nicht gefunden werden.",
     "confirm": "Zur Startseite",
     "close": "Schließen"
   },
   "USER_REGISTER_SUCCESS": {
-    "title": "Registrierung erfolgreich",
-    "description": "Ihr Konto wurde erstellt. Bitte prüfen Sie Ihren Posteingang und bestätigen Sie Ihre E-Mail."
+    "title": "Bitte E-Mail prüfen",
+    "description": "Ihr Konto wurde erstellt. Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden."
   },
   "USER_REGISTER_ALREADY_REGISTERED": {
-    "title": "Account bereits aktiv",
-    "description": "Sie haben bereits Zugriff auf diesen Mandanten. Fahren Sie mit dem Login fort."
+    "title": "Konto bereits eingerichtet",
+    "description": "Für diese E-Mail ist bereits ein Konto eingerichtet. Melden Sie sich an, um fortzufahren."
   },
   "USER_REGISTER_NEEDS_CORRECT_PASSWORD": {
-    "title": "Passwort erforderlich",
-    "description": "Die Registrierung konnte mit den angegebenen Daten nicht abgeschlossen werden. Verwenden Sie das richtige Passwort oder setzen Sie es zurück, um fortzufahren."
+    "title": "Aktuelles Passwort verwenden",
+    "description": "Dieses Konto existiert bereits. Melden Sie sich mit Ihrem aktuellen Passwort an oder setzen Sie es zurück."
   },
   "USER_BLOCKED": {
     "title": "Zugriff verweigert",
@@ -174,8 +174,8 @@
     "description": "Bitte geben Sie Ihr Passwort ein, um fortzufahren."
   },
   "USER_VERIFY_EMAIL_SUCCESS": {
-    "title": "E-Mail erfolgreich bestätigt",
-    "description": "Ihre E-Mail wurde bestätigt. Sie können jetzt zum Login weitergehen."
+    "title": "E-Mail bestätigt",
+    "description": "Ihre E-Mail ist bestätigt. Sie können sich jetzt anmelden."
   },
   "USER_VERIFY_EMAIL_VERIFIED": {
     "title": "E-Mail bereits bestätigt",
@@ -190,20 +190,20 @@
     "description": "Dieser Reset-Link ist abgelaufen. Fordern Sie einen neuen an, um fortzufahren."
   },
   "VALIDATION_ERROR": {
-    "title": "Validierungsfehler",
-    "description": "Bitte prüfen Sie die eingegebenen Daten und versuchen Sie es erneut."
+    "title": "Eingaben prüfen",
+    "description": "Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut."
   },
   "USER_NOT_FOUND": {
-    "title": "Benutzer nicht gefunden",
-    "description": "Der zugehörige Benutzer konnte nicht gefunden werden."
+    "title": "Konto nicht gefunden",
+    "description": "Wir konnten diesem Link kein Konto zuordnen."
   },
   "LOGOUT_SUCCESS": {
-    "title": "Abmeldung erfolgreich",
-    "description": "Sie wurden erfolgreich abgemeldet."
+    "title": "Abgemeldet",
+    "description": "Ihre Sitzung wurde beendet."
   },
   "LOGOUT_FAILED": {
     "title": "Abmeldung fehlgeschlagen",
-    "description": "Die Abmeldung konnte nicht durchgeführt werden. Bitte versuchen Sie es erneut."
+    "description": "Die Abmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
   },
   "LOGOUT_CONFIRM": {
     "title": "Abmelden?",
@@ -212,16 +212,16 @@
     "close": "Abbrechen"
   },
   "USER_LOGOUT_SUCCESS": {
-    "title": "Abmeldung erfolgreich",
-    "description": "Sie wurden erfolgreich abgemeldet."
+    "title": "Abgemeldet",
+    "description": "Ihre Sitzung wurde beendet."
   },
   "USER_LOGOUT_ALL_SUCCESS": {
-    "title": "Abmeldung auf allen Geräten",
-    "description": "Sie wurden auf allen Geräten abgemeldet."
+    "title": "Überall abgemeldet",
+    "description": "Ihre Sitzung wurde auf allen Geräten beendet."
   },
   "AUTH_GET_SUCCESS": {
-    "title": "Sitzung geladen",
-    "description": "Ihre Sitzungsinformationen wurden geladen."
+    "title": "Sitzung bereit",
+    "description": "Ihre Sitzung ist bereit."
   },
   "PROFILE_ADDRESS_DELETE_CONFIRM": {
     "title": "Adresse löschen?",
@@ -231,23 +231,23 @@
   },
   "USER_CLIENT_NOT_FOUND": {
     "title": "Zugang noch nicht verfügbar",
-    "description": "Dieses Konto kann noch nicht auf diesen Mandanten zugreifen. Fahren Sie mit der Registrierung fort, um den Zugang zu vervollständigen."
+    "description": "Dieses Konto kann diesen Workspace noch nicht öffnen. Schließen Sie die Aktivierung ab, um fortzufahren."
   },
   "USER_CLIENT_BLOCKED": {
     "title": "Zugriff blockiert",
-    "description": "Ihr Konto ist für diesen Client gesperrt."
+    "description": "Dieses Konto kann auf diesen Workspace nicht zugreifen."
   },
   "USER_CLIENT_COOKIES_UPDATE_SUCCESS": {
-    "title": "Cookie-Einstellungen aktualisiert",
-    "description": "Ihre Cookie-Einstellungen wurden erfolgreich gespeichert."
+    "title": "Einstellungen gespeichert",
+    "description": "Ihre Cookie-Einstellungen wurden gespeichert."
   },
   "REFRESH_TOKEN_MISSING": {
-    "title": "Erneute Anmeldung erforderlich",
+    "title": "Bitte erneut anmelden",
     "description": "Ihre Sitzung ist nicht mehr gültig. Bitte melden Sie sich erneut an."
   },
   "REFRESH_TOKEN_INVALIDATED": {
-    "title": "Sitzung ungültig",
-    "description": "Ihre Sitzung wurde ungültig. Bitte melden Sie sich erneut an."
+    "title": "Bitte erneut anmelden",
+    "description": "Ihre Sitzung wurde beendet. Bitte melden Sie sich erneut an."
   },
   "REFRESH_TOKEN_EXPIRED": {
     "title": "Sitzung abgelaufen",
@@ -255,39 +255,39 @@
   },
   "ACCESS_TOKEN_REFRESHED": {
     "title": "Sitzung erneuert",
-    "description": "Ihr Zugriffstoken wurde erfolgreich erneuert."
+    "description": "Ihre Sitzung ist wieder aktiv."
   },
   "CSRF_TOKEN_INVALID": {
-    "title": "Sicherheitsprüfung fehlgeschlagen",
-    "description": "Ihr Sicherheits-Token ist ungültig. Bitte laden Sie die Seite neu und versuchen Sie es erneut."
+    "title": "Seite neu laden",
+    "description": "Ihre Sitzung konnte nicht bestätigt werden. Bitte laden Sie die Seite neu und versuchen Sie es erneut."
   },
   "MAGIC_TOKEN_EXPIRED": {
-    "title": "Login-Link abgelaufen",
-    "description": "Der Magic-Login-Link ist abgelaufen. Bitte fordern Sie einen neuen an."
+    "title": "Anmeldelink abgelaufen",
+    "description": "Dieser Anmeldelink ist abgelaufen. Bitte fordern Sie einen neuen an."
   },
   "MAGIC_TOKEN_INVALID": {
-    "title": "Ungültiger Login-Link",
-    "description": "Der Magic-Login-Token ist ungültig oder beschädigt."
+    "title": "Ungültiger Anmeldelink",
+    "description": "Dieser Anmeldelink ist nicht gültig. Bitte fordern Sie einen neuen an."
   },
   "MAGIC_LOGIN_SUCCESS": {
-    "title": "Login erfolgreich",
-    "description": "Sie wurden erfolgreich eingeloggt."
+    "title": "Sie sind angemeldet",
+    "description": "Ihre Sitzung ist bereit."
   },
   "USER_FORGOT_PASSWORD_EMAIL_SENT": {
-    "title": "Reset-Link gesendet",
-    "description": "Wir haben Ihnen einen Reset-Link per E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang."
+    "title": "Bitte E-Mail prüfen",
+    "description": "Wenn zu dieser E-Mail ein Konto gehört, senden wir Ihnen einen Link zum Zurücksetzen."
   },
   "USER_LOGIN_EMAIL_NOT_VERIFIED": {
-    "title": "E-Mail nicht bestätigt",
-    "description": "Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Bei Bedarf können Sie die Verifizierungsseite öffnen."
+    "title": "Bitte E-Mail bestätigen",
+    "description": "Bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Bei Bedarf können Sie zur Verifizierung weitergehen."
   },
   "USER_LOGIN_SUCCESS": {
-    "title": "Login erfolgreich",
-    "description": "Sie wurden erfolgreich angemeldet."
+    "title": "Sie sind angemeldet",
+    "description": "Ihre Sitzung ist bereit."
   },
   "USER_RESET_PASSWORD_SUCCESS": {
-    "title": "Passwort zurückgesetzt",
-    "description": "Ihr Passwort wurde aktualisiert. Gehen Sie jetzt zum Login."
+    "title": "Passwort aktualisiert",
+    "description": "Ihr Passwort wurde aktualisiert. Melden Sie sich jetzt mit dem neuen Passwort an."
   },
   "USER_UPDATE_PASSWORD_SUCCESS": {
     "title": "Passwort aktualisiert",
@@ -307,7 +307,7 @@
   },
   "USER_EMAIL_ALREADY_IN_USE": {
     "title": "E-Mail bereits vergeben",
-    "description": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet."
+    "description": "Verwenden Sie eine andere E-Mail-Adresse oder melden Sie sich mit dieser an."
   },
   "USER_CHANGE_EMAIL_MISSING_TOKEN": {
     "title": "Bestätigung fehlgeschlagen",
@@ -326,8 +326,8 @@
     "description": "Der Zustand der E-Mail-Änderung passt nicht mehr. Bitte starten Sie den Vorgang erneut."
   },
   "USER_VERIFY_EMAIL_RESENT": {
-    "title": "Bestätigungs-E-Mail erneut gesendet",
-    "description": "Wir haben Ihnen eine neue Bestätigungs-E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.",
+    "title": "Bitte E-Mail prüfen",
+    "description": "Wenn dieses Konto bestätigt werden kann, senden wir Ihnen eine neue Bestätigungs-E-Mail.",
     "confirm": "Weiter",
     "close": "Schließen"
   },
@@ -341,7 +341,7 @@
   },
   "OBJECT_NOT_FOUND": {
     "title": "Objekt nicht gefunden",
-    "description": "Das angeforderte Objekt konnte nicht gefunden werden."
+    "description": "Dieses Objekt konnte nicht gefunden werden."
   },
   "PROPERTY_MANAGER_EMAIL_EXISTS": {
     "title": "E-Mail bereits vergeben",
@@ -353,7 +353,7 @@
   },
   "PROPERTY_MANAGER_NOT_FOUND": {
     "title": "Manager nicht gefunden",
-    "description": "Der angeforderte Immobilienverwalter konnte nicht gefunden werden."
+    "description": "Dieser Manager konnte nicht gefunden werden."
   },
   "WORKER_ALREADY_EXISTS": {
     "title": "Mitarbeiter existiert bereits",
@@ -361,52 +361,52 @@
   },
   "WORKER_NOT_FOUND": {
     "title": "Mitarbeiter nicht gefunden",
-    "description": "Der angeforderte Mitarbeiter konnte nicht gefunden werden."
+    "description": "Dieser Mitarbeiter konnte nicht gefunden werden."
   },
   "WORKER_LOAD_FAILED": {
-    "title": "Fehler beim Laden der Daten",
-    "description": "Die Mitarbeiterdaten konnten nicht geladen werden. Bitte laden Sie die Seite neu."
+    "title": "Details konnten nicht geladen werden",
+    "description": "Bitte laden Sie die Seite neu und versuchen Sie es erneut."
   },
   "PERMISSION_DENIED": {
-    "title": "Zugriff verweigert",
-    "description": "Sie haben nicht die erforderlichen Berechtigungen, um diese Seite zu sehen.",
+    "title": "Zugriff nicht verfügbar",
+    "description": "Diese Seite ist für dieses Konto nicht verfügbar.",
     "close": "Zum Login"
   },
   "OBJECT_CREATED": {
     "title": "Objekt erstellt",
-    "description": "Das Objekt wurde erfolgreich erstellt."
+    "description": "Das Objekt ist bereit."
   },
   "OBJECT_FOUND": {
     "title": "Objekt geladen",
-    "description": "Die Objektdetails wurden erfolgreich geladen."
+    "description": "Die Objektdaten sind verfügbar."
   },
   "OBJECT_LIST": {
     "title": "Objekte geladen",
-    "description": "Die Objektliste wurde erfolgreich geladen."
+    "description": "Die Objektliste ist verfügbar."
   },
   "OBJECT_UPDATED": {
     "title": "Objekt aktualisiert",
-    "description": "Das Objekt wurde erfolgreich aktualisiert."
+    "description": "Ihre Änderungen wurden gespeichert."
   },
   "PROPERTY_MANAGER_CREATED": {
     "title": "Manager erstellt",
-    "description": "Der Immobilienverwalter wurde erfolgreich erstellt."
+    "description": "Der Manager ist bereit."
   },
   "PROPERTY_MANAGER_FOUND": {
     "title": "Manager geladen",
-    "description": "Die Managerdetails wurden erfolgreich geladen."
+    "description": "Die Managerdaten sind verfügbar."
   },
   "PROPERTY_MANAGER_LIST": {
     "title": "Manager geladen",
-    "description": "Die Managerliste wurde erfolgreich geladen."
+    "description": "Die Managerliste ist verfügbar."
   },
   "PROPERTY_MANAGER_UPDATED": {
     "title": "Manager aktualisiert",
-    "description": "Der Immobilienverwalter wurde erfolgreich aktualisiert."
+    "description": "Ihre Änderungen wurden gespeichert."
   },
   "WORKER_CREATED": {
     "title": "Mitarbeiter erstellt",
-    "description": "Der Mitarbeiter wurde erfolgreich erstellt."
+    "description": "Der Mitarbeiter ist bereit."
   },
   "WORKER_DELETED": {
     "title": "Mitarbeiter gelöscht",
@@ -414,19 +414,19 @@
   },
   "WORKER_FOUND": {
     "title": "Mitarbeiter geladen",
-    "description": "Die Mitarbeiterdetails wurden erfolgreich geladen."
+    "description": "Die Mitarbeiterdaten sind verfügbar."
   },
   "WORKER_INVITE_RESENT": {
     "title": "Einladung erneut gesendet",
-    "description": "Die Einladung fuer den Mitarbeiter wurde erneut versendet."
+    "description": "Eine neue Einladung wurde an den Mitarbeiter gesendet."
   },
   "WORKER_LIST": {
     "title": "Mitarbeiter geladen",
-    "description": "Die Mitarbeiterliste wurde erfolgreich geladen."
+    "description": "Die Mitarbeiterliste ist verfügbar."
   },
   "WORKER_UPDATED": {
-    "title": "Mitarbeiter aktualisiert",
-    "description": "Der Mitarbeiter wurde erfolgreich aktualisiert."
+    "title": "Angaben gespeichert",
+    "description": "Ihre Worker-Angaben wurden gespeichert."
   },
   "AUTH_ACCESS_TOKEN_EXPIRED": {
     "title": "Sitzung abgelaufen",
@@ -441,12 +441,12 @@
     "description": "Ihr Zugriffstoken fehlt. Bitte melden Sie sich erneut an."
   },
   "AUTH_CLIENT_ADMIN_REQUIRED": {
-    "title": "Client-Admin erforderlich",
-    "description": "Sie benötigen Client-Admin-Rechte, um diese Aktion auszuführen."
+    "title": "Admin-Zugriff erforderlich",
+    "description": "Nur ein Admin-Konto kann diese Aktion ausführen."
   },
   "AUTH_SUPERADMIN_REQUIRED": {
-    "title": "Superadmin erforderlich",
-    "description": "Sie benötigen Superadmin-Rechte, um diese Aktion auszuführen."
+    "title": "Erweiterter Zugriff erforderlich",
+    "description": "Nur ein Konto mit erweitertem Zugriff kann diese Aktion ausführen."
   },
   "AUTH_CURRENT_PASSWORD_INVALID": {
     "title": "Aktuelles Passwort ungültig",
@@ -457,20 +457,20 @@
     "description": "Die angegebenen Zugangsdaten sind ungültig."
   },
   "CLIENT_CLIENT_NOT_FOUND": {
-    "title": "Client nicht gefunden",
-    "description": "Der angeforderte Client konnte nicht gefunden werden."
+    "title": "Workspace nicht gefunden",
+    "description": "Dieser Workspace konnte nicht gefunden werden."
   },
   "CLIENT_DOMAIN_EXISTS": {
     "title": "Domain bereits vergeben",
     "description": "Ein Client mit dieser Domain existiert bereits."
   },
   "CLIENT_ID_REQUIRED": {
-    "title": "Client-ID erforderlich",
-    "description": "Eine gültige Client-ID ist erforderlich."
+    "title": "Workspace-ID erforderlich",
+    "description": "Eine gültige Workspace-ID ist erforderlich."
   },
   "CLIENT_UPDATE_FIELD_NOT_ALLOWED": {
-    "title": "Feld darf nicht geändert werden",
-    "description": "Ein oder mehrere Felder dürfen nicht aktualisiert werden."
+    "title": "Einige Felder können nicht geändert werden",
+    "description": "Ein oder mehrere Felder stehen für diese Änderung nicht zur Verfügung."
   },
   "COMPANY_EMAIL_EXISTS": {
     "title": "E-Mail bereits vergeben",
@@ -542,55 +542,55 @@
   },
   "CONTACT_MESSAGE_CREATED": {
     "title": "Nachricht gesendet",
-    "description": "Die Kontaktanfrage wurde erfolgreich erstellt."
+    "description": "Ihre Nachricht wurde gesendet."
   },
   "CONTACT_MESSAGE_DELETED": {
     "title": "Nachricht gelöscht",
-    "description": "Die Kontaktanfrage wurde gelöscht."
+    "description": "Die Nachricht wurde entfernt."
   },
   "CONTACT_MESSAGE_RESPONDED": {
     "title": "Antwort gesendet",
-    "description": "Die Antwort auf die Kontaktanfrage wurde erfolgreich gesendet."
+    "description": "Die Antwort wurde gesendet."
   },
   "CONTACT_MESSAGES_DELETED": {
     "title": "Nachrichten gelöscht",
-    "description": "Die ausgewählten Kontaktanfragen wurden gelöscht."
+    "description": "Die ausgewählten Nachrichten wurden entfernt."
   },
   "NOTIFICATION_ADMIN_LIST": {
     "title": "Benachrichtigungen geladen",
-    "description": "Admin-Benachrichtigungen wurden erfolgreich geladen."
+    "description": "Die Admin-Benachrichtigungen sind verfügbar."
   },
   "NOTIFICATION_CREATED": {
     "title": "Benachrichtigung erstellt",
-    "description": "Die Benachrichtigung wurde erfolgreich erstellt."
+    "description": "Die Benachrichtigung ist bereit."
   },
   "NOTIFICATION_DELETED": {
     "title": "Benachrichtigung gelöscht",
-    "description": "Die Benachrichtigung wurde gelöscht."
+    "description": "Die Benachrichtigung wurde entfernt."
   },
   "NOTIFICATION_LIST": {
     "title": "Benachrichtigungen geladen",
-    "description": "Benachrichtigungen wurden erfolgreich geladen."
+    "description": "Ihre Benachrichtigungen sind verfügbar."
   },
   "NOTIFICATION_MARKED_ALL_READ": {
     "title": "Alle Benachrichtigungen als gelesen markiert",
-    "description": "Alle Benachrichtigungen wurden als gelesen markiert."
+    "description": "Alle Benachrichtigungen sind jetzt als gelesen markiert."
   },
   "NOTIFICATION_MARKED_READ": {
     "title": "Benachrichtigung als gelesen markiert",
-    "description": "Die Benachrichtigung wurde als gelesen markiert."
+    "description": "Die Benachrichtigung ist jetzt als gelesen markiert."
   },
   "NOTIFICATION_MARKED_SEEN": {
     "title": "Benachrichtigung als gesehen markiert",
-    "description": "Die Benachrichtigung wurde als gesehen markiert."
+    "description": "Die Benachrichtigung ist jetzt als gesehen markiert."
   },
   "NOTIFICATION_UNREAD_COUNT": {
-    "title": "Anzahl ungelesener Benachrichtigungen geladen",
-    "description": "Die Anzahl ungelesener Benachrichtigungen wurde erfolgreich geladen."
+    "title": "Anzahl ungelesener Benachrichtigungen bereit",
+    "description": "Die Anzahl Ihrer ungelesenen Benachrichtigungen ist verfügbar."
   },
   "USER_CLIENT_PROFILE_CREATED": {
-    "title": "Profil erstellt",
-    "description": "Das Client-Profil wurde erfolgreich erstellt."
+    "title": "Profil bereit",
+    "description": "Ihr Profil ist bereit."
   },
   "USER_CLIENT_PROFILE_DELETED": {
     "title": "Profil gelöscht",
@@ -598,10 +598,10 @@
   },
   "USER_CLIENT_PROFILE_FOUND": {
     "title": "Profil geladen",
-    "description": "Das Client-Profil wurde erfolgreich geladen."
+    "description": "Ihre Profildaten sind verfügbar."
   },
   "USER_CLIENT_PROFILE_UPDATED": {
     "title": "Profil aktualisiert",
-    "description": "Das Client-Profil wurde erfolgreich aktualisiert."
+    "description": "Ihre Angaben wurden gespeichert."
   }
 }

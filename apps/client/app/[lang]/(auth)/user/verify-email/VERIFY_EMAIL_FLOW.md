@@ -25,9 +25,10 @@ El caso importante es el primero: debe mantenerse como una operación visual ún
 1. Si existe `token`, la página abre un único `showLoading`.
 2. Ejecuta `handleVerifyEmail(popups, token)`.
 3. Si hay `magicToken`, ejecuta `handleMagicLogin(popups, magicToken)`.
-4. Si `magic-login` responde `user`, se hace un `setAuth({...user, isNewUser: true})` transitorio.
-5. Después ejecuta `refreshAuth()`.
-6. Solo al final muestra el success definitivo de login.
+4. Si `magicToken` falta, la página trata el caso como fallback excepcional y deriva a `login` manual.
+5. Si existe `magicToken`, `magic-login` responde `user` y se hace un `setAuth({...user, isNewUser: true})` transitorio.
+6. Después ejecuta `refreshAuth()`.
+7. Solo al final muestra el success definitivo de login.
 
 Regla operativa:
 
@@ -73,16 +74,21 @@ Incluye también:
   - `cancel` cierra el alert
   - permanece en la página
 
-### Caso 4. Verify success sin `magicToken`
+### Caso 4. Verify success sin `magicToken` (fallback excepcional)
 
 - Alerta: `showSuccess`
 - Estado HTTP visible: `200`
+- Contexto:
+  - la verificación del email sí terminó bien
+  - el backend no devolvió el `magicToken` esperado para el camino normal
 - CTA:
   - `confirmLabel = goToLogin`
   - `cancelLabel = close`
 - Salida:
   - `confirm` navega a `/user/login`
   - `cancel` cierra el alert
+- Copy:
+  - usa `pages.client.user.verifyEmail.manualLoginFallback`
 
 ### Caso 5. `MAGIC_TOKEN_EXPIRED`
 
@@ -223,3 +229,14 @@ Incluye también:
   - no mostrar success intermedio
   - mantener `loading` hasta terminar `verify-email -> magic-login -> refreshAuth`
 - existe un fallback explícito cuando `verify-email` termina bien pero no devuelve `magicToken`: el usuario recibe success y salida manual a `/user/login`
+- ese fallback debe leerse como defensa excepcional del contrato, no como camino normal del happy path
+
+## Intención visible de las salidas
+
+- `loading` del flujo compuesto: comunicar activación en progreso sin ir revelando pasos internos
+- token inválido, expirado o usuario no resoluble: explicar que el enlace no sirve o no puede completarse y mantener salidas públicas seguras
+- `blocked`: explicar que el acceso no puede activarse ahora, no que el enlace esté roto
+- verify success sin `magicToken`: confirmar que el email sí quedó verificado, pero empujar a `login` manual porque la sesión automática no pudo cerrarse
+- success final del flujo compuesto: comunicar activación completada y acceso concedido; el redirect automático evita una pantalla final redundante
+- fallo de sincronización final: explicar que la activación avanzó pero la sesión no quedó confirmada y ofrecer retry o `login`
+- resend success: confirmar de forma neutra que el siguiente paso está en el email, sin revelar estado interno de la cuenta

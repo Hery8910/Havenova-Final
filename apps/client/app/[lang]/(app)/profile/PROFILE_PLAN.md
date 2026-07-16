@@ -70,7 +70,11 @@ Estado actual:
 
 - iniciada en su primera pasada
 - el overview sigue siendo el principal hotspot estructural de la familia
-- ya existe una extracción base a `view + helpers + types + fallbacks`, pero el wrapper cliente todavía concentra demasiadas dependencias
+- ya existe una extracción base a `view + helpers + types + fallbacks + controller`
+- el wrapper visual ya no concentra auth/profile/i18n, pero la ruta sigue siendo cliente completa
+- `profile/page.tsx` ya está en su frontera razonable como server wrapper; el siguiente salto depende de la base cliente de auth/profile
+- el barrel público de `profileOverview` ya quedó reducido a `ProfileOverviewPageClient` para no
+  seguir promocionando piezas internas como API del namespace
 
 ### Fase 3. Shell privado y navegación
 
@@ -106,7 +110,8 @@ Criterio de cierre:
 Estado actual:
 
 - iniciada solo a nivel de inventario
-- `requests` y `notifications` siguen claramente incompletas
+- `orders`, `requests` y `notifications` ya quedaron clasificados como placeholders explícitos y homogéneos
+- `requests` y `notifications` siguen incompletas a nivel funcional, pero ya no como deuda implícita
 
 ### Fase 5. Integración de `settings` en el carril privado
 

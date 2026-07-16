@@ -52,11 +52,10 @@ The current repo already proves that isolated progress on `client` is not enough
 
 But the domain is still not closed because:
 
-- `dashboard` uses session state without a finished auth architecture
-- dashboard header/sidebar/profile depend on auth indirectly and inconsistently
-- route guards are scattered across pages instead of being a closed access model
-- the visual and structural dashboard shell is not yet shaped around the real auth lifecycle
-- documentation still treats `(auth)` mainly as a `client` feature route
+- `dashboard` still has some residual naming and ownership cleanup between historical `profile` language and the current `admin` complement
+- some historical planning docs still lag behind the current guard and route contracts
+- the visual and structural dashboard shell still needs more real business pages before the account/complement model can be considered fully exercised
+- documentation and tests are now much closer, but secondary docs still need periodic pruning to avoid reporting already-closed debt
 
 Conclusion:
 
@@ -76,12 +75,9 @@ Conclusion:
 
 ### Not Closed Yet
 
-- dashboard auth UX is not modeled as a complete feature lifecycle
-- route protection is page-local in several areas
-- dashboard account surfaces still need a closed `auth -> admin` boundary
-- dashboard layout/shell does not yet express clear auth states
-- client auth documentation is richer than dashboard auth documentation
-- there is no single execution plan that treats auth as one domain across both apps
+- some secondary docs still describe already-closed dashboard auth debt and need continued pruning
+- dashboard account semantics are closed at contract level, but the `/account/*` domain is still mostly placeholder-based
+- the auth base is reusable, but its reproducibility should still be proven by building the next real protected domain pages on top of `admin` and `worker`
 
 ## Scope Of This Plan
 

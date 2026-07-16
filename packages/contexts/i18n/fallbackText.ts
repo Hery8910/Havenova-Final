@@ -42,7 +42,6 @@ type I18nFallbackBundle = {
   fallbackLogoutError: PopupFallback;
   fallbackLoadingSubmit: PopupFallback;
   fallbackGlobalLoading: PopupFallback;
-  fallbackForgotPasswordLoading: PopupFallback;
   fallbackForgotPasswordSuccess: PopupFallback;
 };
 
@@ -63,11 +62,6 @@ const localeDefaults = {
       continueBrowsing: 'Weiter stöbern',
       logOut: 'Abmelden',
     },
-    forgotPasswordLoading: {
-      title: 'Passwort-Reset wird vorbereitet…',
-      description: 'Bitte warten Sie einen Moment.',
-      close: 'Schließen',
-    },
   },
   en: {
     buttons: {
@@ -84,11 +78,6 @@ const localeDefaults = {
       tryAgain: 'Try again',
       continueBrowsing: 'Continue browsing',
       logOut: 'Log out',
-    },
-    forgotPasswordLoading: {
-      title: 'Preparing password reset…',
-      description: 'Please wait a moment.',
-      close: 'Close',
     },
   },
   es: {
@@ -107,17 +96,11 @@ const localeDefaults = {
       continueBrowsing: 'Seguir navegando',
       logOut: 'Cerrar sesión',
     },
-    forgotPasswordLoading: {
-      title: 'Preparando el restablecimiento de la contrasena…',
-      description: 'Espera un momento, por favor.',
-      close: 'Cerrar',
-    },
   },
 } satisfies Record<
   Locale,
   {
     buttons: I18nFallbackBundle['fallbackButtons'];
-    forgotPasswordLoading: PopupFallback;
   }
 >;
 
@@ -209,7 +192,6 @@ const buildFallbackBundle = (locale: Locale): I18nFallbackBundle => {
     fallbackLogoutError: popupByCode(popups, 'LOGOUT_FAILED', fallbackGlobalError),
     fallbackLoadingSubmit: popupByCode(popups, 'REGISTER_LOADING_SUBMIT', fallbackGlobalError),
     fallbackGlobalLoading: popupByCode(popups, 'GLOBAL_LOADING', fallbackGlobalError),
-    fallbackForgotPasswordLoading: localeDefaults[locale].forgotPasswordLoading,
     fallbackForgotPasswordSuccess: popupByCode(
       popups,
       'USER_FORGOT_PASSWORD_EMAIL_SENT',
@@ -226,25 +208,3 @@ const fallbackBundles = {
 
 export const getI18nFallbacks = (language?: string): I18nFallbackBundle =>
   fallbackBundles[resolveLocale(language)];
-
-// Legacy default exports remain DE-only for consumers that have not yet been migrated.
-export const fallbackButtons = fallbackBundles.de.fallbackButtons;
-export const fallbackPopups = fallbackBundles.de.fallbackPopups;
-export const fallbackLoadingMessages = fallbackBundles.de.fallbackLoadingMessages;
-export const fallbackGlobalError = fallbackBundles.de.fallbackGlobalError;
-export const fallbackRegisterSuccess = fallbackBundles.de.fallbackRegisterSuccess;
-export const fallbackTosNotAccepted = fallbackBundles.de.fallbackTosNotAccepted;
-export const fallbackEmailEmpty = fallbackBundles.de.fallbackEmailEmpty;
-export const fallbackPasswordEmpty = fallbackBundles.de.fallbackPasswordEmpty;
-export const fallbackVerifyEmailSuccess = fallbackBundles.de.fallbackVerifyEmailSuccess;
-export const fallbackVerifyEmailResent = fallbackBundles.de.fallbackVerifyEmailResent;
-export const fallbackExpiredToken = fallbackBundles.de.fallbackExpiredToken;
-export const fallbackInvalidToken = fallbackBundles.de.fallbackInvalidToken;
-export const fallbackLoginSuccess = fallbackBundles.de.fallbackLoginSuccess;
-export const fallbackLogoutSuccess = fallbackBundles.de.fallbackLogoutSuccess;
-export const fallbackLogoutConfirm = fallbackBundles.de.fallbackLogoutConfirm;
-export const fallbackLogoutError = fallbackBundles.de.fallbackLogoutError;
-export const fallbackLoadingSubmit = fallbackBundles.de.fallbackLoadingSubmit;
-export const fallbackGlobalLoading = fallbackBundles.de.fallbackGlobalLoading;
-export const fallbackForgotPasswordLoading = fallbackBundles.de.fallbackForgotPasswordLoading;
-export const fallbackForgotPasswordSuccess = fallbackBundles.de.fallbackForgotPasswordSuccess;

@@ -50,10 +50,11 @@ Rule:
 
 ### `dashboard` with `AdminProvider`
 
-- `overview` -> `/profile`
-- `edit` -> `/profile/edit`
-- `notifications` -> `/profile/notification`
-- `requests` -> `/profile/requests`
+- `overview` -> `/account`
+- `profile` -> `/account/profile`
+- `preferences` -> `/account/preferences`
+- `security` -> `/account/security`
+- `notifications` -> `/account/notifications`
 
 ### `worker` with `WorkerProvider`
 
@@ -65,7 +66,10 @@ Rule:
 ## Structure Rules
 
 - auth pages live under `app/[lang]/(auth)/user/*`
-- account/complement pages live under `app/[lang]/(app)/profile/*`
+- account/complement pages live under an app-specific protected namespace:
+  - `client` -> `app/[lang]/(app)/profile/*`
+  - `dashboard` -> `app/[lang]/(app)/account/*`
+  - `worker` -> `app/[lang]/(app)/profile/*`
 - auth routes mount `AuthProvider` only
 - protected app routes mount `AuthProvider + role complement`
 - route labels may differ by app copy, but route names and tree shape should stay predictable
@@ -75,7 +79,9 @@ Rule:
 The visual system may change per app, but the route shell pattern should remain consistent:
 
 - auth pages use `AuthPageShell`
-- profile/account routes group account pages under the `/profile` namespace
+- complement/account routes should keep one canonical namespace per app:
+  - `client` and `worker` currently use `/profile`
+  - `dashboard` uses `/account`
 - the route tree should make it obvious which pages belong to session bootstrap and which belong to the complement domain
 
 ## Maintenance Rule
@@ -84,6 +90,6 @@ When creating the next app:
 
 1. reuse the shared route constants
 2. mount only the auth subset needed by that app
-3. define the complement routes under `/profile`
+3. define the complement routes under the canonical namespace of that app
 4. keep `AuthProvider` and the role complement separated by route group
 5. add a contract test for the new app route tree

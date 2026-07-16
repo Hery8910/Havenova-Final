@@ -1,0 +1,81 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.summaryCard,
+.formCard {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.summaryCard {
+  padding: 16px 18px;
+}
+
+.summaryGrid {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.summaryItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.summaryLabel,
+.summaryValue {
+  margin: 0;
+}
+
+.summaryLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+.summaryValue {
+  color: var(--text-primary);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.formCard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.summaryHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 767px) {
+  .summaryCard,
+  .formCard {
+    padding: 16px;
+  }
+}

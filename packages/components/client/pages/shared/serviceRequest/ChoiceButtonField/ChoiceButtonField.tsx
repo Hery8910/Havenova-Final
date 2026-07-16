@@ -1,9 +1,9 @@
-import { useId, type ReactNode } from 'react';
+import React, { useId } from 'react';
 import styles from './ChoiceButtonField.module.css';
 
 type ChoiceButtonOption<T extends string> = {
   value: T;
-  label: ReactNode;
+  label: React.ReactNode;
 };
 
 type ChoiceButtonOptionState<T extends string> = {

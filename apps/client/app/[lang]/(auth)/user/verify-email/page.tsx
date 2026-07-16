@@ -4,12 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
+  getI18nFallbacks,
   PopupCode,
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackLoginSuccess,
-  fallbackLoadingMessages,
-  fallbackVerifyEmailSuccess,
   useAuth,
   useClient,
   useGlobalAlert,
@@ -39,6 +35,13 @@ const VerifyEmailPageContent = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const lang = useLang();
+  const {
+    fallbackButtons,
+    fallbackGlobalError,
+    fallbackLoginSuccess,
+    fallbackLoadingMessages,
+    fallbackVerifyEmailSuccess,
+  } = getI18nFallbacks(lang);
   const homeHref = href(lang, '/');
 
   const { texts } = useI18n();
@@ -99,6 +102,16 @@ const VerifyEmailPageContent = () => {
     };
   }, [verifyText.sessionSyncError?.description, verifyText.sessionSyncError?.title]);
 
+  const getManualLoginFallbackCopy = useCallback(() => {
+    return {
+      title: verifyText.manualLoginFallback?.title,
+      description: verifyText.manualLoginFallback?.description,
+    };
+  }, [
+    verifyText.manualLoginFallback?.description,
+    verifyText.manualLoginFallback?.title,
+  ]);
+
   const openVerifyFlowLoading = useCallback(() => {
     const verifyLoading = loadingMsg.verifyEmail ?? fallbackLoadingMessages.verifyEmail;
 
@@ -137,23 +150,23 @@ const VerifyEmailPageContent = () => {
         // Aquí controlamos ambos casos:
         // - usuario nuevo → validación normal
         // - usuario ya verificado → evitar flujos dobles
-        const magicToken = result.magicToken;
-
-        if (!magicToken) {
-          // El email se verificó, pero no hay token para auto-login.
-          // Mostramos éxito y redirigimos a login manualmente para evitar colgar la app.
+        if (result.requiresManualLogin || !result.magicToken) {
+          // Fallback defensivo: el backend debería devolver `magicToken` en el camino normal.
+          // Si no llega, cerramos la verificación con salida manual a login en vez de fingir
+          // que el flujo compuesto terminó como success estándar hacia home.
           const popupData = getPopup(
             popups,
             'USER_VERIFY_EMAIL_SUCCESS',
             'USER_VERIFY_EMAIL_SUCCESS',
             fallbackVerifyEmailSuccess
           );
+          const manualLoginFallbackCopy = getManualLoginFallbackCopy();
 
           showSuccess({
             response: {
               status: 200,
-              title: popupData.title,
-              description: popupData.description,
+              title: manualLoginFallbackCopy.title || popupData.title,
+              description: manualLoginFallbackCopy.description || popupData.description,
               confirmLabel: getConfirmActionLabel('goToLogin'),
               cancelLabel: getCancelActionLabel(),
             },
@@ -163,7 +176,7 @@ const VerifyEmailPageContent = () => {
           return;
         }
 
-        const login = await handleMagicLogin(popups, magicToken);
+        const login = await handleMagicLogin(popups, result.magicToken);
         if (!login.ok) return;
 
         const refreshResult = await refreshAuth();
@@ -247,6 +260,7 @@ const VerifyEmailPageContent = () => {
     getAutoRedirectDescription,
     getConfirmAction,
     getConfirmActionLabel,
+    getManualLoginFallbackCopy,
     getRefreshSyncErrorCopy,
     scheduleHomeRedirect,
   ]);

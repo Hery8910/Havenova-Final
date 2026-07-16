@@ -359,9 +359,12 @@ Cada pagina tipo directorio debe aspirar a un contrato que cubra:
 Debe devolver:
 
 - `items`
-- `overview`
+- cursor o paginacion apropiada al dominio
 - `filters` o metadata util si aplica
-- `pagination` cuando el dominio la necesite
+
+El overview puede venir en un endpoint `summary` independiente cuando deba ser
+global y no variar con búsqueda, filtro o páginas cargadas. `people/users` usa
+esta separación.
 
 No deberia obligar al frontend a inventar los overview cards desde datos tecnicos de paginacion.
 
@@ -408,7 +411,8 @@ Beneficios:
 
 Reglas minimas:
 
-- un solo `h1` por pagina, en el bloque izquierdo
+- un solo `h1` por pagina; si el shell ya lo provee, la superficie de directorio
+  no crea otro
 - el overview usa `section` y `article`
 - los filtros usan labels visibles
 - la lista usa estructura semantica de lista cuando represente una coleccion
@@ -453,9 +457,11 @@ Desktop:
 Mobile:
 
 - la columna izquierda aparece primero
-- el panel derecho cae debajo en el mismo flujo
+- el panel derecho puede caer debajo o convertirse en una vista distinguible,
+  según el contrato de la página
 - no duplicar informacion entre lista y panel
 - la fila debe seguir siendo compacta y legible
+- si lista y detail se separan, volver debe restaurar selección, scroll y foco
 
 Regla:
 
@@ -493,18 +499,21 @@ Antes de implementar una nueva ruta tipo directorio confirmar:
 
 ## Estado Actual Del Repo Frente A Este Estandar
 
-El repo ya tiene una buena base inicial:
+El repo ya implementa la base principal en `people/users`:
 
 - `components/masterDetail/*`
 - `components/directory/*`
-- `people/users/page.tsx` como primera orquestacion
+- `page.tsx` server-first con controlador cliente local
+- summary operativo remoto
+- modos `empty`, `detail` e `invite`
+- URL state por `entryId`
 
-Pero todavia no esta alineado del todo con este contrato:
+La deuda actual no está en la anatomía base, sino en el cierre de interacción:
 
-- `people/users/page.tsx` sigue siendo una pagina cliente grande
-- el overview actual usa metadata tecnica de paginacion, no KPIs operativos
-- el panel derecho solo contempla `empty` y `detail`
-- la arquitectura local de carpeta aun no agrupa suficientes archivos de pagina
+- cache y restore semántico de listas largas
+- navegación lista/detail en móvil
+- feedback robusto de mutaciones
+- i18n, accesibilidad y tests de interacción
 
-Eso no invalida la base actual.
-Solo fija la direccion de la siguiente iteracion.
+El estado exacto de esa página vive en
+`people/users/USERS_DIRECTORY_GAP_ANALYSIS.md`.

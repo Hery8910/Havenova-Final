@@ -16,9 +16,9 @@
   /* ==========================================
      1. SEMANTIC PAGE TOKENS
      ========================================== */
-  --text-primary: #4a4a4a;
-  --text-secondary: #585858;
-  --text-muted: #707070;
+  --text-primary: #5e6772;
+  --text-secondary: #74808f;
+  --text-muted: #8b96a4;
   --text-inverse-primary: #f8fafc;
 
   --surface-page: #f8fafc;
@@ -26,11 +26,11 @@
     radial-gradient(circle at top left, rgba(10, 132, 255, 0.14), transparent 32%),
     radial-gradient(circle at 85% 18%, rgba(111, 66, 193, 0.1), transparent 28%),
     linear-gradient(180deg, #f8fafc 0%, #eef5ff 52%, #fdf8ff 100%);
-  --surface-panel: rgba(255, 255, 255, 0.72);
-  --surface-panel-subtle: rgba(255, 255, 255, 0.54);
-  --surface-panel-muted: rgba(241, 245, 249, 0.84);
-  --border-subtle: rgba(77, 99, 120, 0.14);
-  --border-strong: rgba(77, 99, 120, 0.22);
+  --surface-panel: rgba(255, 255, 255, 0.84);
+  --surface-panel-subtle: rgba(255, 255, 255, 0.68);
+  --surface-panel-muted: rgba(246, 249, 252, 0.92);
+  --border-subtle: rgba(77, 99, 120, 0.08);
+  --border-strong: rgba(77, 99, 120, 0.14);
   --border-focus: rgba(10, 132, 255, 0.42);
   --shadow-page-color: #081226;
 
@@ -66,74 +66,63 @@
      Every card variant defines its own background,
      border, primary text and secondary text.
      ========================================== */
-  --card-neutral-bg1: hsla(210, 14%, 95%, 0.4);
-  --card-neutral-bg2: hsla(210, 14%, 85%, 0.25);
-  --card-neutral-bg3: hsla(210, 14%, 95%, 0.3);
+  --card-blur: 18px;
+  --card-shadow: 0 20px 42px -34px rgba(19, 31, 43, 0.14), 0 8px 18px -18px rgba(19, 31, 43, 0.06);
+
+  --card-neutral-bg1: rgba(255, 255, 255, 0.78);
+  --card-neutral-bg2: rgba(248, 251, 255, 0.72);
+  --card-neutral-bg3: rgba(234, 241, 249, 0.6);
   --card-neutral-bg: var(--card-neutral-bg2);
-  --card-neutral-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-neutral-bg1) 0%,
-    var(--card-neutral-bg2) 50%,
-    var(--card-neutral-bg3) 100%
-  );
-  --card-neutral-border: rgba(255, 255, 255, 0.3);
-  --card-neutral-text-primary: #595959;
-  --card-neutral-text-secondary: #666666;
+  --card-neutral-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.04)),
+    radial-gradient(circle at top left, var(--card-neutral-bg1) 0%, var(--card-neutral-bg2) 56%, var(--card-neutral-bg3) 100%);
+  --card-neutral-border: transparent;
+  --card-neutral-text-primary: var(--text-primary);
+  --card-neutral-text-secondary: var(--text-secondary);
 
-  --card-primary-bg1: hsla(210, 93%, 76%, 0.5);
-  --card-primary-bg2: hsla(210, 93%, 86%, 0.35);
-  --card-primary-bg3: hsla(210, 93%, 86%, 0.4);
+  --card-primary-bg1: rgba(229, 242, 255, 0.82);
+  --card-primary-bg2: rgba(241, 248, 255, 0.74);
+  --card-primary-bg3: rgba(214, 230, 248, 0.62);
   --card-primary-bg: var(--card-primary-bg2);
-  --card-primary-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-primary-bg1) 0%,
-    var(--card-primary-bg2) 50%,
-    var(--card-primary-bg3) 100%
-  );
-  --card-primary-border: hsla(210, 93%, 66%, 0.5);
-  --card-primary-text-primary: #234261;
-  --card-primary-text-secondary: #48627d;
+  --card-primary-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04)),
+    radial-gradient(circle at top left, var(--card-primary-bg1) 0%, var(--card-primary-bg2) 54%, var(--card-primary-bg3) 100%);
+  --card-primary-border: transparent;
+  --card-primary-text-primary: var(--text-primary);
+  --card-primary-text-secondary: var(--text-secondary);
 
-  --card-secondary-bg1: hsla(262, 85%, 82%, 0.5);
-  --card-secondary-bg2: hsla(262, 85%, 92%, 0.35);
-  --card-secondary-bg3: hsla(262, 85%, 92%, 0.4);
+  --card-secondary-bg1: rgba(242, 237, 255, 0.8);
+  --card-secondary-bg2: rgba(246, 242, 255, 0.72);
+  --card-secondary-bg3: rgba(229, 220, 248, 0.6);
   --card-secondary-bg: var(--card-secondary-bg2);
-  --card-secondary-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-secondary-bg1) 0%,
-    var(--card-secondary-bg2) 50%,
-    var(--card-secondary-bg3) 100%
-  );
-  --card-secondary-border: hsla(262, 85%, 82%, 0.5);
-  --card-secondary-text-primary: #443361;
-  --card-secondary-text-secondary: #66547f;
+  --card-secondary-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04)),
+    radial-gradient(circle at top left, var(--card-secondary-bg1) 0%, var(--card-secondary-bg2) 52%, var(--card-secondary-bg3) 100%);
+  --card-secondary-border: transparent;
+  --card-secondary-text-primary: var(--text-primary);
+  --card-secondary-text-secondary: var(--text-secondary);
 
-  --card-accent-bg1: hsl(42, 86%, 50%, 0.5);
-  --card-accent-bg2: hsla(42, 86%, 50%, 0.35);
-  --card-accent-bg3: hsla(42, 86%, 50%, 0.4);
+  --card-accent-bg1: rgba(255, 246, 222, 0.8);
+  --card-accent-bg2: rgba(255, 249, 232, 0.72);
+  --card-accent-bg3: rgba(247, 231, 196, 0.6);
   --card-accent-bg: var(--card-accent-bg2);
-  --card-accent-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-accent-bg1) 0%,
-    var(--card-accent-bg2) 50%,
-    var(--card-accent-bg3) 100%
-  );
-  --card-accent-bg: #fc872183;
-  --card-accent-bg-image: rgba(236, 171, 20, 0.22);
-  --card-accent-border: rgba(236, 171, 20, 0.28);
-  --card-accent-text-primary: #5a3a16;
-  --card-accent-text-secondary: #7e6035;
+  --card-accent-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04)),
+    radial-gradient(circle at top left, var(--card-accent-bg1) 0%, var(--card-accent-bg2) 52%, var(--card-accent-bg3) 100%);
+  --card-accent-border: transparent;
+  --card-accent-text-primary: var(--text-primary);
+  --card-accent-text-secondary: var(--text-secondary);
 
   /* ==========================================
      4. BUTTON VARIANTS
      Button colors grouped by variant and state.
      ========================================== */
   --button-text-disabled: rgba(22, 33, 45, 0.48);
-  --button-border-disabled: rgba(77, 99, 120, 0.14);
+  --button-border-disabled: rgba(77, 99, 120, 0.08);
   --button-bg-disabled: rgba(248, 250, 252, 0.72);
-  --button-shadow-rest: 0 1px 2px rgba(19, 31, 43, 0.08);
-  --button-shadow-hover: 0 8px 18px rgba(19, 31, 43, 0.12);
-  --button-shadow-active: 0 2px 6px rgba(19, 31, 43, 0.1);
+  --button-shadow-rest: 0 10px 20px -18px rgba(19, 31, 43, 0.18);
+  --button-shadow-hover: 0 14px 28px -22px rgba(19, 31, 43, 0.22);
+  --button-shadow-active: 0 8px 18px -18px rgba(19, 31, 43, 0.18);
   --button-shadow-focus: 0 0 0 3px rgba(10, 132, 255, 0.18);
   --button-focus-border: rgba(10, 132, 255, 0.42);
 
@@ -210,7 +199,7 @@
   --button-accent-border: #ecab14;
   --button-accent-text: #1d2128;
 
-  --button-outline-bg: rgba(255, 255, 255, 0.38);
+  --button-outline-bg: rgba(255, 255, 255, 0.56);
   --button-outline-bg-image: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.22),
@@ -228,7 +217,7 @@
     rgba(255, 255, 255, 0.12),
     rgba(255, 255, 255, 0.02)
   );
-  --button-outline-border: rgba(77, 99, 120, 0.26);
+  --button-outline-border: rgba(77, 99, 120, 0.12);
   --button-outline-text: #233241;
 
   --button-ghost-bg: transparent;
@@ -272,15 +261,15 @@
      6. INPUT VARIANTS
      Base input, placeholder, focus and error.
      ========================================== */
-  --input-bg: #f3f6f8;
+  --input-bg: rgba(255, 255, 255, 0.7);
   --input-bg-focus: #ffffff;
   --input-text: #16212d;
   --input-placeholder: #7a8898;
-  --input-border: rgba(77, 99, 120, 0.14);
-  --input-border-hover: rgba(77, 99, 120, 0.22);
+  --input-border: rgba(77, 99, 120, 0.08);
+  --input-border-hover: rgba(77, 99, 120, 0.14);
   --input-border-focus: rgba(10, 132, 255, 0.42);
-  --input-shadow-focus: 0 1px 2px rgba(19, 31, 43, 0.08);
-  --input-label: #5a6878;
+  --input-shadow-focus: 0 12px 24px -22px rgba(19, 31, 43, 0.22);
+  --input-label: var(--text-secondary);
   --input-error-text: #5a3295;
 
   /* ==========================================
@@ -288,7 +277,7 @@
      ========================================== */
   --badge-neutral-bg: rgba(77, 99, 120, 0.08);
   --badge-neutral-border: rgba(77, 99, 120, 0.14);
-  --badge-neutral-text: #233241;
+  --badge-neutral-text: var(--text-muted);
 
   --badge-primary-bg: var(--feedback-info-bg);
   --badge-primary-border: var(--feedback-info-border);
@@ -365,10 +354,10 @@
   /* ==========================================
      10. SHADOWS AND MOTION
      ========================================== */
-  --shadow-sm: 0 1px 2px rgba(19, 31, 43, 0.08);
-  --shadow-md: 0 10px 24px rgba(19, 31, 43, 0.12);
-  --shadow-lg: 0 20px 40px rgba(19, 31, 43, 0.16);
-  --shadow-card: 0 8px 24px rgba(19, 31, 43, 0.1), 0 0 0 1px rgba(77, 99, 120, 0.06);
+  --shadow-sm: 0 10px 20px -18px rgba(19, 31, 43, 0.18);
+  --shadow-md: 0 18px 34px -26px rgba(19, 31, 43, 0.22);
+  --shadow-lg: 0 28px 52px -36px rgba(19, 31, 43, 0.26);
+  --shadow-card: var(--card-shadow);
 
   --motion-fast: 160ms;
   --motion-base: 220ms;
@@ -454,9 +443,9 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #b8b8b8;
-  --text-muted: #9aa6b6;
+  --text-primary: #dfe7f2;
+  --text-secondary: #c0cad8;
+  --text-muted: #a9b5c5;
   --text-inverse-primary: #0f172a;
 
   --surface-page: #0f172a;
@@ -464,84 +453,101 @@
     radial-gradient(circle at top left, rgba(87, 134, 180, 0.2), transparent 34%),
     radial-gradient(circle at 82% 18%, rgba(82, 61, 122, 0.2), transparent 30%),
     linear-gradient(180deg, #0f172a 0%, #111c32 54%, #18152d 100%);
-  --surface-panel: #1e293b;
-  --surface-panel-subtle: #243447;
-  --surface-panel-muted: #334155;
-  --border-subtle: rgba(148, 163, 184, 0.22);
-  --border-strong: rgba(148, 163, 184, 0.32);
+  --surface-panel: rgba(30, 41, 59, 0.84);
+  --surface-panel-subtle: rgba(36, 52, 71, 0.72);
+  --surface-panel-muted: rgba(51, 65, 85, 0.88);
+  --border-subtle: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.22);
   --border-focus: rgba(96, 165, 250, 0.5);
   --shadow-page-color: #020617;
 
+  --feedback-info-bg: rgba(78, 146, 228, 0.14);
   --feedback-info-text: #7ec2ff;
-  --feedback-info-border: rgba(126, 194, 255, 0.32);
-  --feedback-info-bg-strong: rgba(10, 132, 255, 0.24);
+  --feedback-info-border: rgba(126, 194, 255, 0.26);
+  --feedback-info-bg-strong: rgba(78, 146, 228, 0.22);
+  --feedback-info-bg-image: rgba(78, 146, 228, 0.22);
+  --feedback-success-bg: rgba(75, 151, 112, 0.14);
   --feedback-success-text: #7ee2a8;
-  --feedback-success-border: rgba(126, 226, 168, 0.3);
-  --feedback-success-bg-strong: rgba(21, 128, 61, 0.24);
+  --feedback-success-border: rgba(126, 226, 168, 0.24);
+  --feedback-success-bg-strong: rgba(75, 151, 112, 0.22);
+  --feedback-success-bg-image: rgba(75, 151, 112, 0.22);
+  --feedback-error-bg: rgba(181, 107, 107, 0.14);
   --feedback-error-text: #ffb4b4;
-  --feedback-error-border: rgba(255, 180, 180, 0.3);
-  --feedback-error-bg-strong: rgba(220, 38, 38, 0.24);
+  --feedback-error-border: rgba(255, 180, 180, 0.24);
+  --feedback-error-bg-strong: rgba(181, 107, 107, 0.22);
+  --feedback-error-bg-image: rgba(181, 107, 107, 0.22);
+  --feedback-warning-bg: rgba(176, 128, 72, 0.14);
   --feedback-warning-text: #ffd978;
-  --feedback-warning-border: rgba(255, 217, 120, 0.32);
-  --feedback-warning-bg-strong: rgba(236, 171, 20, 0.28);
+  --feedback-warning-border: rgba(255, 217, 120, 0.26);
+  --feedback-warning-bg-strong: rgba(176, 128, 72, 0.22);
+  --feedback-warning-bg-image: rgba(176, 128, 72, 0.22);
 
-  --card-shadow: 0 18px 48px rgba(2, 8, 23, 0.34), 0 0 0 1px rgba(148, 163, 184, 0.08);
+  --card-blur: 18px;
+  --card-shadow: 0 14px 30px -28px rgba(2, 8, 23, 0.28), 0 6px 14px -18px rgba(2, 8, 23, 0.16);
 
-  --card-neutral-bg1: rgba(49, 58, 71, 0.2);
-  --card-neutral-bg2: rgba(30, 41, 59, 0.45);
-  --card-neutral-bg3: rgba(15, 23, 42, 0.45);
+  --card-neutral-bg1: rgba(91, 113, 150, 0.07);
+  --card-neutral-bg2: rgba(33, 43, 61, 0.55);
+  --card-neutral-bg3: rgba(24, 31, 46, 0.59);
   --card-neutral-bg: var(--card-neutral-bg2);
-  --card-neutral-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-neutral-bg1) 0%,
-    var(--card-neutral-bg2) 50%,
-    var(--card-neutral-bg3) 100%
-  );
-  --card-neutral-border: rgba(148, 163, 184, 0.3);
-  --card-neutral-text-primary: #f8fafc;
-  --card-neutral-text-secondary: #b6c2d1;
+  --card-neutral-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.005)),
+    radial-gradient(
+      farthest-corner at 40px 40px,
+      var(--card-neutral-bg1) 0%,
+      var(--card-neutral-bg2) 52%,
+      var(--card-neutral-bg3) 100%
+    );
+  --card-neutral-border: transparent;
+  --card-neutral-text-primary: var(--text-primary);
+  --card-neutral-text-secondary: var(--text-secondary);
 
-  --card-primary-bg1: rgba(43, 96, 182, 0.34);
-  --card-primary-bg2: rgba(20, 41, 75, 0.34);
-  --card-primary-bg3: rgba(28, 43, 80, 0.6);
+  --card-primary-bg1: rgba(96, 143, 212, 0.1);
+  --card-primary-bg2: rgba(31, 48, 72, 0.57);
+  --card-primary-bg3: rgba(22, 35, 53, 0.6);
   --card-primary-bg: var(--card-primary-bg2);
-  --card-primary-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-primary-bg1) 0%,
-    var(--card-primary-bg2) 50%,
-    var(--card-primary-bg3) 100%
-  );
-  --card-primary-border: rgba(96, 165, 250, 0.28);
-  --card-primary-text-primary: #f8fafc;
-  --card-primary-text-secondary: #c8def4;
+  --card-primary-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.005)),
+    radial-gradient(
+      farthest-corner at 40px 40px,
+      var(--card-primary-bg1) 0%,
+      var(--card-primary-bg2) 50%,
+      var(--card-primary-bg3) 100%
+    );
+  --card-primary-border: transparent;
+  --card-primary-text-primary: var(--text-primary);
+  --card-primary-text-secondary: var(--text-secondary);
 
-  --card-secondary-bg1: hsla(258, 46%, 41%, 0.32);
-  --card-secondary-bg2: rgba(30, 41, 59, 0.46);
-  --card-secondary-bg3: rgba(37, 32, 70, 0.62);
+  --card-secondary-bg1: hsla(258, 52%, 68%, 0.08);
+  --card-secondary-bg2: rgba(37, 43, 65, 0.56);
+  --card-secondary-bg3: rgba(25, 29, 46, 0.59);
   --card-secondary-bg: var(--card-secondary-bg2);
-  --card-secondary-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-secondary-bg1) 0%,
-    var(--card-secondary-bg2) 50%,
-    var(--card-secondary-bg3) 100%
-  );
-  --card-secondary-border: rgba(167, 139, 250, 0.3);
-  --card-secondary-text-primary: #f8fafc;
-  --card-secondary-text-secondary: #ddd1f4;
+  --card-secondary-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.005)),
+    radial-gradient(
+      farthest-corner at 40px 40px,
+      var(--card-secondary-bg1) 0%,
+      var(--card-secondary-bg2) 52%,
+      var(--card-secondary-bg3) 100%
+    );
+  --card-secondary-border: transparent;
+  --card-secondary-text-primary: var(--text-primary);
+  --card-secondary-text-secondary: var(--text-secondary);
 
-  --card-accent-bg1: hsl(42, 86%, 18%, 0.5);
-  --card-accent-bg2: hsla(42, 86%, 18%, 0.35);
-  --card-accent-bg3: hsla(42, 86%, 18%, 0.4);
-  --card-accent-bg: hsla(42, 91%, 20%, 0.6);
-  --card-accent-bg-image: radial-gradient(
-    farthest-corner at 40px 40px,
-    var(--card-accent-bg1) 0%,
-    var(--card-accent-bg2) 50%,
-    var(--card-accent-bg3) 100%
-  );
-  --card-accent-border: rgba(250, 204, 21, 0.3);
-  --card-accent-text-primary: #f8fafc;
-  --card-accent-text-secondary: #f6e5ad;
+  --card-accent-bg1: hsla(38, 78%, 68%, 0.085);
+  --card-accent-bg2: hsla(36, 29%, 26%, 0.46);
+  --card-accent-bg3: hsla(34, 31%, 19%, 0.56);
+  --card-accent-bg: var(--card-accent-bg2);
+  --card-accent-bg-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.005)),
+    radial-gradient(
+      farthest-corner at 40px 40px,
+      var(--card-accent-bg1) 0%,
+      var(--card-accent-bg2) 52%,
+      var(--card-accent-bg3) 100%
+    );
+  --card-accent-border: transparent;
+  --card-accent-text-primary: var(--text-primary);
+  --card-accent-text-secondary: var(--text-secondary);
 
   --button-primary-bg: #2190ff;
   --button-primary-bg-image: linear-gradient(
@@ -624,18 +630,18 @@
     rgba(255, 255, 255, 0.06),
     rgba(255, 255, 255, 0)
   );
-  --button-outline-border: rgba(148, 163, 184, 0.32);
+  --button-outline-border: rgba(148, 163, 184, 0.16);
   --button-outline-text: #e2e8f0;
 
   --button-ghost-bg: transparent;
   --button-ghost-bg-image: none;
-  --button-ghost-bg-hover: rgba(148, 163, 184, 0.12);
+  --button-ghost-bg-hover: rgba(148, 163, 184, 0.08);
   --button-ghost-bg-image-hover: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.12),
     rgba(255, 255, 255, 0)
   );
-  --button-ghost-bg-active: rgba(148, 163, 184, 0.2);
+  --button-ghost-bg-active: rgba(148, 163, 184, 0.12);
   --button-ghost-bg-image-active: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.05),
@@ -664,38 +670,38 @@
   --button-close-focus-border: rgba(248, 113, 113, 0.44);
   --button-close-shadow: none;
 
-  --button-border-disabled: rgba(148, 163, 184, 0.14);
+  --button-border-disabled: rgba(148, 163, 184, 0.08);
   --button-bg-disabled: rgba(30, 41, 59, 0.44);
-  --button-shadow-rest: 0 1px 2px rgba(2, 8, 23, 0.18);
-  --button-shadow-hover: 0 10px 22px rgba(2, 8, 23, 0.22);
-  --button-shadow-active: 0 3px 8px rgba(2, 8, 23, 0.2);
+  --button-shadow-rest: 0 12px 22px -20px rgba(2, 8, 23, 0.34);
+  --button-shadow-hover: 0 18px 30px -24px rgba(2, 8, 23, 0.4);
+  --button-shadow-active: 0 10px 20px -20px rgba(2, 8, 23, 0.34);
   --button-shadow-focus: 0 0 0 3px rgba(96, 165, 250, 0.22);
   --button-focus-border: rgba(96, 165, 250, 0.5);
 
-  --button-active-bg: rgba(96, 165, 250, 0.16);
+  --button-active-bg: rgba(96, 165, 250, 0.1);
   --button-active-bg-image: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.14),
     rgba(255, 255, 255, 0)
   );
-  --button-active-border: rgba(96, 165, 250, 0.24);
+  --button-active-border: rgba(96, 165, 250, 0.16);
   --button-active-text: #f8fafc;
-  --button-active-shadow: 0 8px 20px rgba(10, 132, 255, 0.16);
+  --button-active-shadow: 0 6px 14px rgba(10, 132, 255, 0.1);
 
   --input-bg: #243447;
   --input-bg-focus: #1e293b;
   --input-text: #f8fafc;
   --input-placeholder: #8ea0b4;
-  --input-border: rgba(148, 163, 184, 0.22);
-  --input-border-hover: rgba(148, 163, 184, 0.3);
+  --input-border: rgba(148, 163, 184, 0.12);
+  --input-border-hover: rgba(148, 163, 184, 0.18);
   --input-border-focus: rgba(96, 165, 250, 0.5);
   --input-shadow-focus: 0 1px 2px rgba(2, 8, 23, 0.28);
-  --input-label: #b6c2d1;
+  --input-label: var(--text-secondary);
   --input-error-text: #c6a0ff;
 
   --badge-neutral-bg: rgba(148, 163, 184, 0.12);
   --badge-neutral-border: rgba(148, 163, 184, 0.18);
-  --badge-neutral-text: #e2e8f0;
+  --badge-neutral-text: var(--text-muted);
   --badge-primary-bg: var(--feedback-info-bg);
   --badge-primary-border: var(--feedback-info-border);
   --badge-primary-text: var(--feedback-info-text);

@@ -24,7 +24,7 @@ export function useVerifyEmailActions() {
     fallbackExpiredToken,
     fallbackInvalidToken,
     fallbackVerifyEmailResent,
-    fallbackGlobalLoading,
+    fallbackLoadingMessages,
   } = getI18nFallbacks(lang);
 
   const getVerifyEmailErrorConfig = (code?: string) => {
@@ -106,6 +106,7 @@ export function useVerifyEmailActions() {
           ok: true,
           code,
           magicToken: magicToken || undefined,
+          requiresManualLogin: !magicToken,
           language: language || 'de',
         };
       }
@@ -354,7 +355,8 @@ export function useVerifyEmailActions() {
   //  handleResendEmail
   // -----------------------
   const handleResendEmail = async (popups: PopupsTexts, data: ResendVerificationEmailPayload) => {
-    const loadingData = getPopup(popups, 'GLOBAL_LOADING', 'GLOBAL_LOADING', fallbackGlobalLoading);
+    const loadingData =
+      fallbackLoadingMessages.resendVerification ?? fallbackLoadingMessages.verifyEmail;
 
     showLoading({
       response: {

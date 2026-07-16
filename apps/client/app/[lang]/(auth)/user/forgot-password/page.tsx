@@ -1,11 +1,8 @@
 'use client';
 import { useState } from 'react';
 import {
+  getI18nFallbacks,
   PopupCode,
-  fallbackButtons,
-  fallbackForgotPasswordLoading,
-  fallbackForgotPasswordSuccess,
-  fallbackGlobalError,
   useAuth,
   useClient,
   useGlobalAlert,
@@ -42,6 +39,12 @@ const ForgotPassword = () => {
   const { showError, showLoading, showSuccess, closeAlert } = useGlobalAlert();
   const [loading, setLoading] = useState(false);
   const lang = useLang();
+  const {
+    fallbackButtons,
+    fallbackForgotPasswordSuccess,
+    fallbackGlobalError,
+    fallbackLoadingMessages,
+  } = getI18nFallbacks(lang);
   const homeHref = href(lang, '/');
 
   const popups = texts.popups;
@@ -50,6 +53,7 @@ const ForgotPassword = () => {
   const navText = texts.components.client.navbar.accessibility;
   const forgotPasswordText: ForgotPasswordData = texts.pages.client.user.forgotPasswordText;
   const forgotButton = formText.button.forgotPassword;
+  const loadingText = texts.loadings?.message ?? fallbackLoadingMessages;
   const { getConfirmAction, getConfirmActionLabel, getCancelAction, getCancelActionLabel } =
     useAuthAlertActions({
       buttons: alertButtons,
@@ -129,12 +133,7 @@ const ForgotPassword = () => {
         return;
       }
 
-      const loadingData = getPopup(
-        popups,
-        'GLOBAL_LOADING',
-        'GLOBAL_LOADING',
-        fallbackForgotPasswordLoading
-      );
+      const loadingData = loadingText.forgotPassword ?? fallbackLoadingMessages.forgotPassword;
 
       showLoading({
         response: {

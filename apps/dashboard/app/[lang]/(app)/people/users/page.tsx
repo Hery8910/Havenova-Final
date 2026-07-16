@@ -1,5 +1,5 @@
 import PeopleUsersPageController from './page.controller';
-import { resolveUsersPageMode, USERS_PAGE_QUERY_KEYS } from './page.copy';
+import { parseUsersSearchState, resolveUsersPageMode, USERS_PAGE_QUERY_KEYS } from './page.copy';
 
 type PeopleUsersPageProps = {
   searchParams?: Record<string, string | string[] | undefined>;
@@ -14,20 +14,28 @@ const getSingleQueryValue = (value?: string | string[]) => {
 };
 
 export default function PeopleUsersPage({ searchParams = {} }: PeopleUsersPageProps) {
-  const initialSelectedUserClientId = getSingleQueryValue(
-    searchParams[USERS_PAGE_QUERY_KEYS.selected] ??
-      searchParams[USERS_PAGE_QUERY_KEYS.legacySelected]
+  const initialSearchState = parseUsersSearchState({
+    search: getSingleQueryValue(searchParams[USERS_PAGE_QUERY_KEYS.search]),
+    status: getSingleQueryValue(searchParams[USERS_PAGE_QUERY_KEYS.status]),
+  });
+
+  const initialSelectedValue = getSingleQueryValue(searchParams[USERS_PAGE_QUERY_KEYS.selected])?.trim();
+  const initialLegacyUserClientId = getSingleQueryValue(
+    searchParams[USERS_PAGE_QUERY_KEYS.legacySelected]
   )?.trim();
+  const initialSelectedEntryId =
+    initialSelectedValue || (initialLegacyUserClientId ? `user:${initialLegacyUserClientId}` : undefined);
 
   const initialMode = resolveUsersPageMode(
     getSingleQueryValue(searchParams[USERS_PAGE_QUERY_KEYS.mode]),
-    initialSelectedUserClientId
+    initialSelectedEntryId
   );
 
   return (
     <PeopleUsersPageController
       initialMode={initialMode}
-      initialSelectedUserClientId={initialSelectedUserClientId || undefined}
+      initialSearchState={initialSearchState}
+      initialSelectedEntryId={initialSelectedEntryId || undefined}
     />
   );
 }

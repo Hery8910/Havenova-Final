@@ -8,16 +8,12 @@ import {
 } from '../../../../../../../packages/components/client/user/auth';
 import styles from '../../../../../../../packages/components/client/user/auth/authShell/authShell.module.css';
 import {
+  getI18nFallbacks,
   PopupCode,
-  fallbackButtons,
-  fallbackGlobalError,
-  fallbackLoadingMessages,
-  fallbackRegisterSuccess,
   useAuth,
   useClient,
   useGlobalAlert,
   useI18n,
-  useProfile,
 } from '../../../../../../../packages/contexts';
 import {
   createLoggedOutAuthSeed,
@@ -47,11 +43,16 @@ export interface RegisterData {
 
 const Register = () => {
   const lang = useLang();
+  const {
+    fallbackButtons,
+    fallbackGlobalError,
+    fallbackLoadingMessages,
+    fallbackRegisterSuccess,
+  } = getI18nFallbacks(lang);
   const verifyEmailHref = href(lang, '/user/verify-email');
   const homeHref = href(lang, '/');
   const { client } = useClient();
   const { setAuth } = useAuth();
-  const { updateProfile } = useProfile();
 
   const { texts } = useI18n();
   const [loading, setLoading] = useState(false);
@@ -205,20 +206,6 @@ const Register = () => {
           onCancel: getCancelAction(),
         });
         return;
-      }
-
-      // Best-effort local continuity: a profile persistence failure must not turn a
-      // successful backend registration into a blocked flow.
-      const profileLanguage =
-        payload.language === 'en' || payload.language === 'es' ? payload.language : 'de';
-
-      try {
-        await updateProfile({
-          language: profileLanguage,
-        });
-      } catch {
-        // Registration already succeeded on the backend. Continue into verify-email
-        // instead of surfacing a false-negative error for a local persistence issue.
       }
 
       // 4) success popup -> continue into verify-email flow

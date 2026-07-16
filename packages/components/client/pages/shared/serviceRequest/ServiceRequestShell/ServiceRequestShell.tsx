@@ -1,17 +1,17 @@
-import type { FormEventHandler, ReactNode } from 'react';
+import React from 'react';
 import styles from './ServiceRequestShell.module.css';
 
 interface ServiceRequestShellProps {
   sectionTitleId: string;
   stepTitleId: string;
   validationMessageId: string;
-  processHeader: ReactNode;
+  processHeader: React.ReactNode;
   currentStepHeading: string;
   currentStepValue: number;
   totalSteps: number;
   validationMessage?: string;
-  onSubmit: FormEventHandler<HTMLFormElement>;
-  children: ReactNode;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  children: React.ReactNode;
   backAction?: {
     label: string;
     onClick: () => void;

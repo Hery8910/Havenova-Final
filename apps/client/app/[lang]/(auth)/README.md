@@ -3,6 +3,8 @@
 Contrato general del flujo de auth para esta app:
 
 - [AUTH_FLOW_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/AUTH_FLOW_CONTRACT.md:1)
+- [docs/AUTH_IMPLEMENTATION_OVERVIEW.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_IMPLEMENTATION_OVERVIEW.md:1)
+- [docs/AUTH_POPUP_COPY_CONTRACT.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_POPUP_COPY_CONTRACT.md:1)
 
 Este documento resume el estado actual de `apps/client/app/[lang]/(auth)` con foco en:
 
@@ -119,6 +121,7 @@ Notas:
 - no se debe asumir login automático
 - el objetivo del success es empujar al usuario al flujo de verificación
 - el flujo es simple, por lo que puede mostrar `loading -> success final`
+- la página ya no depende de `ProfileContext` antes de que exista sesión
 
 ### Login
 
@@ -311,15 +314,15 @@ Archivos:
 Estado actual:
 
 - `register` usa `texts.loadings?.loading?.REGISTER_LOADING_SUBMIT`
-- `login` y `verify-email` usan `texts.loadings?.message`
-- `forgot-password`, `set-password` y partes de `userHandler.ts` siguen resolviendo `GLOBAL_LOADING` vía `popups`
+- `login`, `verify-email`, `forgot-password`, `set-password` y `resend-verification` ya salen de `texts.loadings?.message`
+- `popups.json` queda para success/error/confirm y `pages.json` para excepciones de flujo como `manualLoginFallback` o `sessionSyncError`
+- cuando una clave visible no existe, estas rutas resuelven el fallback con `getI18nFallbacks(lang)` en vez de asumir copy fija en alemán
 
 Impacto:
 
-- no hay una convención única para estados intermedios
-- el mismo tipo de feedback visual se arma desde fuentes distintas
-- eso complica el pulido visual y la coherencia de copy
-- también dificulta extraer un patrón reusable para otros proyectos
+- la convención quedó más clara para estados intermedios
+- el mismo tipo de feedback visual ya no se reparte entre `popups` y `loadings` dentro del auth público
+- esto reduce deuda de copy y facilita extraer un patrón reusable para otros proyectos
 
 ### 6. `verify-email` sigue siendo el flujo visualmente más frágil
 
@@ -512,7 +515,7 @@ Lo mínimo razonable antes de marcarla como lista:
 ### Fase 2. Corrección funcional de flujos auth
 
 - [x] rehacer el post-success de `register` para que cierre en estado "revisa tu email" y no como navegación genérica a home
-- [ ] simplificar `verify-email` para que trate `magicToken` como camino normal del success y deje el fallback sin token sólo como defensa excepcional
+- [x] simplificar `verify-email` para que trate `magicToken` como camino normal del success y deje el fallback sin token sólo como defensa excepcional
 - [ ] diferenciar visual y funcionalmente:
   - verify success
   - magic login success

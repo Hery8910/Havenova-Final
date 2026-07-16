@@ -118,3 +118,12 @@ Códigos previstos:
 - No hay success intermedio.
 - El caso más sensible de continuidad es `USER_LOGIN_EMAIL_NOT_VERIFIED`, porque deriva a otro flujo público.
 - la navegación de CTAs (`openVerification`, `goToRegister`, `goToHome`, `reload`, `close`) ya quedó alineada con las utilidades shared de acciones auth y auto-redirect, sin mover el mapeo local de códigos que sigue ayudando a leer este flujo
+
+## Intención visible de las salidas
+
+- `loading`: comunicar validación de acceso, no bootstrap de perfil
+- `USER_LOGIN_SUCCESS`: confirmar entrada concedida y cerrar con redirect automático
+- `USER_LOGIN_EMAIL_NOT_VERIFIED`: explicar que la cuenta existe pero la activación no terminó; la CTA principal debe empujar a `verify-email`
+- `USER_CLIENT_NOT_FOUND`: explicar que no hay cuenta usable para este acceso y ofrecer `register`
+- `AUTH_INVALID_CREDENTIALS` y equivalentes: invitar a corregir datos sin dramatizar ni dar detalle técnico
+- error técnico: dejar claro que el problema es transitorio y que reintentar o volver a home es seguro

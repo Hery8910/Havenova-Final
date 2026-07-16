@@ -93,7 +93,7 @@ Implementacion frontend auditada:
 - [WorkerContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/worker/WorkerContext.tsx:1)
 - [ContactForm.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/contact/ContactForm/ContactForm.tsx:1)
 - [ProfileOverviewPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx:1)
-- [ServiceProfileStep.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/cleaning-service/CleaningRequestForm/ServiceProfileStep/ServiceProfileStep.tsx:1)
+- [ServiceRequestAddressStep.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/pages/shared/serviceRequest/ServiceRequestAddressStep/ServiceRequestAddressStep.tsx:1)
 
 ## Diagnostico Ejecutivo
 
@@ -105,12 +105,12 @@ Estado real:
 - el `AuthContext` ya fue movido hacia un modelo de sesion mas correcto
 - la identidad principal ya quedo cerrada en `userClientId`
 - la deuda activa ya no esta en compatibilidad legacy, sino en consumidores residuales, politicas de entorno y flujos compuestos
-- el repo sigue sin una capa BFF canonica y todavia integra `auth` desde navegador hacia backend directo
+- `auth` ya corre sobre rutas same-origin del frontend y la capa BFF canonica ya existe en el workspace
 
 Conclusion cerrada:
 
 - `auth` puede seguir usandose para desarrollo y para integracion incremental
-- `auth` no deberia considerarse listo para despliegue restringido hasta cerrar consumidores residuales, politicas de fallback por entorno, contratos visuales de flujo y la migracion a la capa BFF
+- `auth` no deberia considerarse listo para despliegue restringido hasta cerrar consumidores residuales, politicas de fallback por entorno y contratos visuales de flujo
 
 ## Decision Cerrada De Integracion
 
@@ -268,23 +268,29 @@ Flujos minimos obligatorios:
 
 ## Desalineaciones Reales Detectadas
 
-### 0. Falta la capa BFF canónica
+### 0. La capa BFF canónica ya quedó introducida
 
 Estado actual:
 
-- `packages/services/api/api.ts` sigue basando el acceso del navegador en `NEXT_PUBLIC_API_URL`
-- no existen rutas same-origin del frontend como límite canónico de integración auth
+- `auth` ya usa rutas same-origin `/api/auth/*` desde el navegador
+- la integración browser-direct quedó relegada a clientes transicionales o a documentación histórica
+- la capa server-side ya reenvía `x-csrf-token`, `cookie` y `x-frontend-origin` según el contrato del backend
 
 Impacto:
 
-- el dominio `auth` sigue dependiendo de un contrato browser-direct que no es la estrategia final del producto
-- la solución todavía no es portable como patrón de plataforma
+- la base reusable de `auth` ya no depende del contrato browser-direct para funcionar
+- la deuda real se desplaza desde infraestructura de transporte hacia consumidores, guards y flujos compuestos
 
-Cierre esperado:
+Pendiente real:
 
-- introducir primero la infraestructura BFF
-- migrar `auth` como primer dominio
-- re-clasificar la integración actual como histórica una vez completada la migración
+- recortar o reclasificar documentación que todavía describa el estado pre-BFF
+- seguir migrando otros dominios al mismo patrón reusable
+
+Pendiente adicional ya cerrado como decisión:
+
+- la recuperación no debe depender de una cookie `csrfToken`
+- el contrato correcto es reemitir CSRF por `GET /api/auth/csrf` antes de `refresh-token`
+- ver [AUTH_CSRF_SESSION_RECOVERY_DECISION.md](/home/heriberto/Escritorio/Havenova/havenova/docs/AUTH_CSRF_SESSION_RECOVERY_DECISION.md:1)
 
 ### 1. La persistencia post-login principal ya fue corregida
 
@@ -391,23 +397,20 @@ Decision:
 - los consumidores de presentacion deben leer perfil
 - `auth.email` debe quedar solo para autenticacion, continuidad de flujo y compatibilidad interna acotada
 
-### 5. `register` sigue acoplado a `ProfileContext` antes de existir sesion
+### 5. `register` ya no depende de `ProfileContext` antes de existir sesion
 
-La pagina de registro ejecuta `updateProfile({ language })` antes de que exista una sesion autenticada.
+La página de registro ya no ejecuta persistencia local de `profile` antes del alta backend.
 
-Comportamiento real:
+Estado actual:
 
-- hoy esto no rompe porque `ProfileContext` guarda localmente incluso sin login
-- pero conceptualmente mezcla onboarding auth con estado de profile
+- `register` construye solo el payload auth necesario
+- el success deja continuidad mediante un seed logged-out/pre-auth en `auth`
+- `ProfileContext` vuelve a entrar solo después de que exista sesión real y el árbol privado del usuario lo monte
 
-Referencia:
+Resultado:
 
-- [apps/client register](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/[lang]/(auth)/user/register/page.tsx:1)
-- [ProfileContext.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/contexts/profile/ProfileContext.tsx:1)
-
-Decision:
-
-- para despliegue restringido conviene desacoplar este paso o documentarlo formalmente como persistencia local intencional de onboarding
+- se elimina un acoplamiento conceptual innecesario entre onboarding auth y estado de profile
+- el flujo público de registro queda más consistente con la regla de que `profile` no debe actuar como dependencia previa a la sesión
 
 ### 6. El fallback offline/dev del contexto auth sigue siendo una decision de despliegue pendiente
 
@@ -542,7 +545,7 @@ Riesgos secundarios:
 
 1. superficies secundarias que todavia no contemplen `super_admin` de forma explicita
 2. documentacion operativa dispersa
-3. onboarding de `register` acoplado a persistencia local de profile
+3. algunos flujos publicos todavia conservan wrappers o contratos duplicados entre apps
 4. falta de contrato reusable de flujo y alertas
 
 ## Decisiones Cerradas Recomendadas

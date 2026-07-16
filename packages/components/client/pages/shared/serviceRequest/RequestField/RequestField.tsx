@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react';
+import React from 'react';
 
 type Props = {
   htmlFor: string;
   label: string;
-  children: ReactNode;
+  children: React.ReactNode;
   helperText?: string;
   helperId?: string;
   errorText?: string;

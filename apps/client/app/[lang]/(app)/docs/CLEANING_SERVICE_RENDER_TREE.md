@@ -73,9 +73,9 @@ The route is wrapped by:
                               - shared ProcessStepsHeader
                               - customer/frequency
                               - property details
-                              - shared AvailabilityCalendar
-                              - shared WorkAddressSelector / ServiceProfileStep
-                              - review
+                              - shared ServiceRequestSchedulingStep / AvailabilityCalendar
+                              - shared ServiceRequestAddressStep / WorkAddressSelector
+                              - shared ServiceRequestReviewStep
                               - shared ServiceRequestShell action row
                             }
                           </form>
@@ -135,4 +135,4 @@ Interpretation:
 
 - page-level validation must distinguish route structure from form-specific flow validation
 - most interactive density still lives in `CleaningRequestForm`
-- several request widgets now belong to `shared/serviceRequest`, not to the cleaning feature
+- steps 3, 4, and 5 now belong to the same shared request family used by `home-service`

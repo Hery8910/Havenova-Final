@@ -4,20 +4,20 @@ import fs from 'node:fs';
 
 const workerServiceSource = fs.readFileSync('packages/services/worker.ts', 'utf8');
 const sameOriginApiSource = fs.readFileSync('packages/services/api/sameOriginApi.ts', 'utf8');
-const dashboardWorkerRouteSource = fs.readFileSync(
-  'apps/dashboard/app/api/home-services/worker/route.ts',
+const dashboardWorkersPageSource = fs.readFileSync(
+  'apps/dashboard/app/[lang]/(app)/team/workers/page.tsx',
   'utf8'
 );
-const dashboardWorkerListRouteSource = fs.readFileSync(
-  'apps/dashboard/app/api/home-services/worker/list/route.ts',
-  'utf8'
-);
-const dashboardWorkerItemRouteSource = fs.readFileSync(
-  'apps/dashboard/app/api/home-services/worker/[workerId]/route.ts',
+const dashboardResetBaselineDocSource = fs.readFileSync(
+  'apps/dashboard/app/[lang]/(app)/docs/DASHBOARD_RESET_BASELINE_2026-07-04.md',
   'utf8'
 );
 const dashboardSetPasswordSource = fs.readFileSync(
   'apps/dashboard/app/[lang]/(auth)/user/set-password/page.tsx',
+  'utf8'
+);
+const sharedInvitationSetPasswordSource = fs.readFileSync(
+  'packages/components/client/user/auth/invitationSetPassword/InvitationSetPasswordPage.tsx',
   'utf8'
 );
 
@@ -32,21 +32,20 @@ test('worker services now use the same-origin client instead of the browser-dire
   assert.match(sameOriginApiSource, /withCredentials: true/);
 });
 
-test('dashboard mounts worker BFF routes for worker profile, list, and detail endpoints', () => {
-  assert.match(dashboardWorkerRouteSource, /proxyBackendRoute/);
-  assert.match(dashboardWorkerRouteSource, /upstreamPath: '\/api\/home-services\/worker'/);
-  assert.match(dashboardWorkerListRouteSource, /upstreamPath: '\/api\/home-services\/worker\/list'/);
-  assert.match(
-    dashboardWorkerItemRouteSource,
-    /upstreamPath: `\/api\/home-services\/worker\/\$\{encodeURIComponent\(workerId\)\}`/
-  );
+test('dashboard no longer mounts worker BFF routes after the admin-only reset', () => {
+  assert.equal(fs.existsSync('apps/dashboard/app/api/home-services/worker/route.ts'), false);
+  assert.equal(fs.existsSync('apps/dashboard/app/api/home-services/worker/list/route.ts'), false);
+  assert.equal(fs.existsSync('apps/dashboard/app/api/home-services/worker/[workerId]/route.ts'), false);
+  assert.match(dashboardWorkersPageSource, /DashboardRoutePlaceholder/);
+  assert.match(dashboardResetBaselineDocSource, /- `worker`/);
 });
 
-test('dashboard set-password distinguishes reset and invitation tokens', () => {
-  assert.match(dashboardSetPasswordSource, /const resetToken = searchParams\.get\('token'\);/);
-  assert.match(dashboardSetPasswordSource, /const inviteToken = searchParams\.get\('inviteToken'\);/);
+test('shared invitation set-password distinguishes reset and invitation tokens while dashboard stays a thin wrapper', () => {
+  assert.match(dashboardSetPasswordSource, /InvitationSetPasswordPage/);
+  assert.match(sharedInvitationSetPasswordSource, /const resetToken = searchParams\.get\('token'\);/);
+  assert.match(sharedInvitationSetPasswordSource, /const inviteToken = searchParams\.get\('inviteToken'\);/);
   assert.match(
-    dashboardSetPasswordSource,
+    sharedInvitationSetPasswordSource,
     /\.\.\.\(inviteToken \? \{ inviteToken \} : \{ token: resetToken as string \}\)/
   );
 });

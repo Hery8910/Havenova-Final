@@ -15,13 +15,12 @@ Fuente:
 3. Se construye `RegisterPayload` con `cookiePrefs`.
 4. El payload envía el valor real de `tosAccepted` validado por el formulario.
 5. Se ejecuta `registerUser(payload)`.
-6. Si hay success, se persiste `profile.language` y después se abre success final con redirect a verify-email.
+6. Si hay success, se abre success final con redirect a verify-email.
 
 Nota operativa:
 
-- la persistencia local de `profile.language` es best-effort
-- si esa persistencia local falla, el flujo igualmente debe continuar a `verify-email` porque la cuenta ya fue creada en backend
-- el success además deja un seed logged-out/pre-auth con `email`, `clientId` e `isVerified: false` para continuidad del siguiente paso
+- este flujo ya no depende de `ProfileContext` antes de existir sesión
+- el success deja un seed logged-out/pre-auth con `email`, `clientId` e `isVerified: false` para continuidad del siguiente paso
 
 ## Casos
 
@@ -31,7 +30,6 @@ Nota operativa:
 - Estado HTTP visible: `200`
 - Efecto previo:
   - persiste estado auth no autenticado con `email` y `clientId`
-  - persiste `profile.language` mediante `updateProfile`
 - CTA:
   - sin CTA explícito de confirmación
 - Salida:
@@ -121,3 +119,12 @@ Nota operativa:
 - El flujo es lineal: `loading -> success final` o `loading -> error final`.
 - No hay login automático tras registro.
 - La salida funcional esperada del success es siempre `/user/verify-email`.
+
+## Intención visible de las salidas
+
+- `loading`: decir "estamos creando tu acceso inicial", no "ya has entrado"
+- `USER_REGISTER_SUCCESS`: confirmar alta de cuenta y empujar explícitamente a revisar/verificar email
+- `already registered` o `email already in use`: cortar el alta duplicada y ofrecer continuidad a `login`
+- `needs correct password`: explicar que la cuenta ya existe y que la salida segura es recovery, no reintentar registro
+- `blocked` o `validation`: mantener al usuario en retry seguro dentro de la página
+- error técnico: explicar fallo transitorio y permitir reintento sin describir internals

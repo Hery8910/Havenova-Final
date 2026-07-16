@@ -10,6 +10,10 @@
       "title": "Verificando tu correo electrónico…",
       "description": "Espera mientras confirmamos tu enlace de verificación."
     },
+    "resendVerification": {
+      "title": "Preparando un nuevo correo de verificación…",
+      "description": "Espera un momento."
+    },
     "login": {
       "title": "Iniciando tu sesión…",
       "description": "Estamos preparando tu sesión. Esto puede tardar un momento."
@@ -17,6 +21,14 @@
     "dashboardLogin": {
       "title": "Accediendo a tu perfil…",
       "description": "Estamos preparando tu espacio de trabajo. Esto puede tardar un momento."
+    },
+    "forgotPassword": {
+      "title": "Preparando el restablecimiento de tu contraseña…",
+      "description": "Espera un momento."
+    },
+    "resetPassword": {
+      "title": "Actualizando tu contraseña…",
+      "description": "Espera un momento."
     },
     "createUser": {
       "title": "Cargando tu cuenta…",

@@ -39,12 +39,14 @@ Ruta:
 Feature surface:
 
 - [packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.client.tsx:1)
+- [packages/components/client/user/profile/profileOverview/useProfileOverviewController.ts](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/useProfileOverviewController.ts:1)
 - [packages/components/client/user/profile/profileOverview/ProfileOverviewPage.view.tsx](/home/heriberto/Escritorio/Havenova/havenova/packages/components/client/user/profile/profileOverview/ProfileOverviewPage.view.tsx:1)
 
 Render tree aproximado:
 
 ```text
 ProfileOverviewPageClient
+  useProfileOverviewController
   ProfileOverviewPageView
     section[aria-label="Profile overview"]
       div.topRow
@@ -65,8 +67,9 @@ ProfileOverviewPageClient
 
 Lectura:
 
-- el overview ya tiene `client + view`
-- el wrapper cliente todavía concentra auth, profile, i18n y guardia de sesión
+- el overview ya tiene `client + controller + view`
+- auth, profile, i18n y guardia de sesión ya no viven en el componente visual
+- la deuda restante es el SSR/CSR split, no la mezcla básica entre render y orquestación
 
 ## `profile/settings`
 
@@ -98,31 +101,45 @@ Lectura:
 ## `profile/orders`
 
 ```text
-section[aria-labelledby="profile-orders-title"]
-  h2#profile-orders-title
+ProfileSubroutePlaceholder
+  section[aria-labelledby="profile-subroute-title"]
+    article.hero
+      eyebrow
+      h1
+      description
+      next step
+    article.routeCard
+      route label
+      route path
+      bullet list
 ```
 
 Lectura:
 
-- subruta mínima, todavía sin estructura de página real
+- placeholder homogéneo del namespace
+- sin surface funcional real todavía
 
 ## `profile/requests`
 
 ```text
-div.wrapper
-  future request table / filters placeholder
+ProfileSubroutePlaceholder
+  section[aria-labelledby="profile-subroute-title"]
+    hero
+    route scaffold details
 ```
 
 Lectura:
 
-- subruta en estado técnico transicional
-- hoy no constituye una página auditada
+- subruta en estado transicional controlado
+- el viejo scaffold mock ya no forma parte de la superficie activa
 
 ## `profile/notifications`
 
 ```text
-section
-  h2 "Notifications"
+ProfileSubroutePlaceholder
+  section[aria-labelledby="profile-subroute-title"]
+    hero
+    route scaffold details
 ```
 
 Lectura:

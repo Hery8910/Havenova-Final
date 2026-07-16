@@ -6,7 +6,7 @@ Definir la regla compartida para las superficies de personas dentro del `dashboa
 
 Esta decision baja a frontend la familia que ya se esta cerrando en backend:
 
-- `auth + userClient + profile`
+- `auth + userClient + optional profile`
 - `auth + userClient + worker`
 - `auth + userClient + admin`
 - `auth + userClient + manager`
@@ -87,23 +87,33 @@ La primera pagina real del dominio es `tenant users`.
 
 Base backend asociada:
 
-- `GET /api/home-services/dashboard/users`
-- `GET /api/home-services/dashboard/users/:userClientId`
+- `GET /api/home-services/dashboard/users/summary`
+- `GET /api/home-services/dashboard/users/directory`
+- `GET /api/home-services/dashboard/users/entries/:entryId`
 - `POST /api/home-services/dashboard/users/invite`
-- `POST /api/home-services/dashboard/users/resend-invite`
+- `POST /api/home-services/dashboard/users/invitations/:invitationId/resend`
+- `POST /api/home-services/dashboard/users/invitations/:invitationId/revoke`
+
+Onboarding público asociado:
+
+- `POST /api/home-services/user-invitations/resolve`
+- `POST /api/home-services/user-invitations/accept`
 
 ## Estado Del Frontend
 
-Implementado en esta pasada:
+Implementado:
 
-- tipos compartidos `tenant users`
-- servicio frontend `tenant users`
-- BFF routes del dashboard para `tenant users`
+- tipos, servicios y BFF V2 de `tenant users`
+- summary remoto y directorio unificado `user | invitation`
+- cursor, filtros, búsqueda remota y detail por `entryId`
+- invite, resend, revoke y onboarding público `tui_`
 - base reusable `components/people/shared/*`
-- primera pagina `people/users`
+- primera página `people/users`
 
-Pendiente para siguientes pasadas:
+Pendiente para cierre de la primera superficie:
 
-- dialogos de invitacion y reenvio
-- detalle conectado al endpoint estable
-- adopcion del mismo patron en `admin`, `worker` y `manager`
+- cache y restauración semántica por `entryId`
+- experiencia móvil lista/detail
+- manejo de mutaciones por códigos estables
+- i18n, accesibilidad y tests actualizados
+- adopción del mismo patrón en `admin`, `worker` y `manager`

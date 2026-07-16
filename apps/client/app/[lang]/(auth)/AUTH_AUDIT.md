@@ -125,14 +125,14 @@ Estado:
 
 - flujo coherente hacia `verify-email`
 - ya ofrece salida correcta para `already registered`, `needs correct password` y `email already in use`
-- la persistencia local posterior al success backend ya no bloquea la continuación
+- el flujo ya no depende de `ProfileContext` antes de existir sesión
 - la descripción de redirección posterior al success ya salió del hardcode local y quedó en i18n
 - el fallback de loading ya dejó de depender de copy inline específico de esta página
 - las acciones secundarias ya separan mejor la salida principal (`login`) de la navegación auxiliar (`home`)
 
 Pendiente:
 
-- sigue dependiendo de persistencia local best-effort para continuidad de `language`, pero ya no afecta la salida principal del usuario
+- ninguna incoherencia crítica abierta en este flujo base
 
 ### `forgot-password`
 

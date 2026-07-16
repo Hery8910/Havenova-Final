@@ -38,7 +38,7 @@ export function buildProfileDetailsViewModel({
 
   const summaryRows: ProfileSummaryRow[] = buildProfileSummaryRows({
     profile,
-    email: auth?.email,
+    email: profile?.contactEmail,
     emptyValue,
     labels: detailTexts?.labels,
     secondaryAddressLabel,

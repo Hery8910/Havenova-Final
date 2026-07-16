@@ -220,7 +220,7 @@ export function SideNav({
     return (
       <section
         key={section.key}
-        className={[styles.sectionBlock, isExpanded ? styles.sectionExpanded : '']
+        className={['card', 'card--secondary', styles.sectionBlock, isExpanded ? styles.sectionExpanded : '']
           .filter(Boolean)
           .join(' ')}
         aria-labelledby={section.label ? sectionHeadingId : undefined}
@@ -336,7 +336,7 @@ export function SideNav({
               type="button"
               className={`${styles.action} ${styles.toggleButton} ${
                 isCollapsed ? styles.actionCollapsed : ''
-              } ${styles.collapseButton} button`}
+              } ${styles.collapseButton} button button--ghost`}
               aria-pressed={isCollapsed}
               aria-label={isCollapsed ? expandLabel : collapseLabel}
               title={isCollapsed ? expandLabel : collapseLabel}

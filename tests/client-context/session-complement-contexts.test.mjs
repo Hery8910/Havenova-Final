@@ -15,6 +15,14 @@ test('admin context memoizes session-complement callbacks before passing them to
   assert.match(adminContextSource, /const updateRemote = useCallback/);
   assert.match(adminContextSource, /const isNotFoundError = useCallback/);
   assert.match(adminContextSource, /missingEntityFallback: globalInternalErrorFallback,\s+popups,\s+alert: alertApi,/s);
+  assert.match(
+    adminContextSource,
+    /email: resolvePreferredContactEmail\(previous\?\.email, auth\.email\)/
+  );
+  assert.match(
+    adminContextSource,
+    /email: resolvePreferredContactEmail\(record\.email, fallback\?\.email\)/
+  );
 });
 
 test('worker context memoizes session-complement callbacks before passing them to the hook', () => {
@@ -23,6 +31,11 @@ test('worker context memoizes session-complement callbacks before passing them t
   assert.match(workerContextSource, /const updateRemote = useCallback/);
   assert.match(workerContextSource, /const isNotFoundError = useCallback/);
   assert.match(workerContextSource, /missingEntityFallback: workerLoadFailedFallback,\s+popups,\s+alert: alertApi,/s);
+  assert.match(
+    workerContextSource,
+    /email: resolvePreferredContactEmail\(previous\?\.email, auth\.email\)/
+  );
+  assert.doesNotMatch(workerContextSource, /email: auth\.email/);
 });
 
 test('session complement auto-reloads only once per effective session key', () => {

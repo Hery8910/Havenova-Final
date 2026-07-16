@@ -63,8 +63,9 @@ The route is wrapped by:
                               - shared ProcessStepsHeader
                               - customer/service type
                               - service detail branch
-                              - shared AvailabilityCalendar
-                              - shared WorkAddressSelector
+                              - shared ServiceRequestSchedulingStep / AvailabilityCalendar
+                              - shared ServiceRequestAddressStep / WorkAddressSelector
+                              - shared ServiceRequestReviewStep
                               - shared ServiceRequestShell action row
                             }
                           </form>
@@ -111,13 +112,16 @@ Interpretation:
 - hero, form flow, FAQ and CTA closure are now explicitly grouped
 - the page shell itself is now shared through `ServiceRequestPageLayout`
 
-### 2. The service-detail branch makes the form more unstable than `cleaning-service`
+### 2. The service-detail branch remains the only major divergence from `cleaning-service`
 
 Interpretation:
 
 - page-level documentation should not assume the branch logic is final
 - manual validation must explicitly record which service variant was tested
-- several widgets in the flow already belong to `shared/serviceRequest`
+- only the `painting` branch currently has a fully defined nested detail flow
+- the other service branches still render a placeholder detail capture surface, not a finished
+  service-specific subflow
+- steps 3, 4, and 5 now belong to the same shared request family used by `cleaning-service`
 
 ### 3. The auth alert still affects route-level focus behavior
 

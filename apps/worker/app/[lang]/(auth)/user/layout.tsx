@@ -1,4 +1,3 @@
-import styles from './layout.module.css';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 
@@ -14,6 +13,7 @@ import Loading from '../../../../../../packages/components/loading/Loading';
 import {
   assertAllowedAppHost,
   getClient,
+  getServerAuthUser,
   resolveRequestHost,
   resolveTenantKey,
 } from '../../../../../../packages/services';
@@ -39,8 +39,10 @@ export default async function LangLayout({
   children: React.ReactNode;
   params: { lang: 'de' | 'en' | 'es' };
 }) {
-  const requestHost = resolveRequestHost(headers());
+  const requestHeaders = headers();
+  const requestHost = resolveRequestHost(requestHeaders);
   assertAllowedAppHost(requestHost);
+  const auth = await getServerAuthUser(requestHeaders);
   const tenantKey = resolveTenantKey();
   let client: Awaited<ReturnType<typeof getClient>> | null = null;
   let clientError: { status: number; code?: string; message?: string } | null = null;
@@ -66,7 +68,12 @@ export default async function LangLayout({
           tenantKey={tenantKey}
           loadingFallback={<Loading theme="light" />}
         >
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider
+            initialAuth={auth}
+            disableUnauthenticatedBootstrap
+          >
+            {children}
+          </AuthProvider>
         </ClientProvider>
       </AlertProvider>
     </I18nProvider>

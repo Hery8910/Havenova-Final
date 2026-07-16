@@ -229,9 +229,9 @@ Rutas propuestas:
 
 Decision importante:
 
-- el arbol actual `/profile/*` mezcla cuenta personal con configuracion operativa del dashboard
-- para el producto final conviene mover el dominio personal a `/account/*`
-- `profile` puede mantenerse como alias transitorio durante la migracion, pero no deberia ser la forma final
+- el arbol historico `/profile/*` mezclaba cuenta personal con configuracion operativa del dashboard
+- el dominio personal del admin ya debe tratarse como `/account/*`
+- `profile` ya no debe considerarse alias vivo de la cuenta admin dentro del dashboard
 
 ## Navegacion Principal Propuesta
 

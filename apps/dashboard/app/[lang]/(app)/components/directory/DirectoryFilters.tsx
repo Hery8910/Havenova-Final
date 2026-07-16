@@ -6,6 +6,7 @@ export type DirectorySelectOption = {
 };
 
 type DirectoryFiltersProps = {
+  ariaLabel: string;
   searchLabel: string;
   searchPlaceholder: string;
   searchValue: string;
@@ -17,6 +18,7 @@ type DirectoryFiltersProps = {
 };
 
 export function DirectoryFilters({
+  ariaLabel,
   searchLabel,
   searchPlaceholder,
   searchValue,
@@ -27,7 +29,7 @@ export function DirectoryFilters({
   onSelectChange,
 }: DirectoryFiltersProps) {
   return (
-    <section className={styles.root} aria-label="Directory filters">
+    <section className={styles.root} aria-label={ariaLabel}>
       <label className={styles.field}>
         <span className={styles.label}>{searchLabel}</span>
         <div className={styles.inputWrap}>

@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react';
+import React from 'react';
 import styles from './RequestQuantityStepper.module.css';
 
 interface RequestQuantityStepperProps {
-  value: ReactNode;
+  value: React.ReactNode;
   label: string;
   decrementLabel: string;
   incrementLabel: string;
@@ -10,8 +10,8 @@ interface RequestQuantityStepperProps {
   onIncrement: () => void;
   error?: boolean;
   describedBy?: string;
-  decrementIcon?: ReactNode;
-  incrementIcon?: ReactNode;
+  decrementIcon?: React.ReactNode;
+  incrementIcon?: React.ReactNode;
 }
 
 export default function RequestQuantityStepper({
