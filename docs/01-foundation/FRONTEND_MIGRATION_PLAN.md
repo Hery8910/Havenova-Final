@@ -187,6 +187,12 @@ Clasificar el código existente respecto a Product Design y backend vigentes.
 
 ### Primer dominio: Users
 
+- 1. auditoría de convergencia Users v1 — `COMPLETED`:
+  [USERS_CONVERGENCE_AUDIT.md](../02-convergence/users/USERS_CONVERGENCE_AUDIT.md) clasifica
+  producto, backend, frontend y documentos sin convertir código en autoridad. Slice A queda
+  `PARTIALLY_ALIGNED` y sólo es candidato tras fijar revisiones y contrato; B y C están
+  `BACKEND_BLOCKED`, D es verificable de forma independiente y E está bloqueado por Service
+  Requests. La Fase 2 continúa `IN_PROGRESS` y `SEC-EXC-001` sigue bloqueando cualquier release.
 - verificar Slice A: list, cursor, search y tenant isolation;
 - decidir qué se conserva del responsive/restore;
 - diferir summary/filter/attention/relationships si Product Design no los autoriza;

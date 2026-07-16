@@ -1,0 +1,162 @@
+# Auditoría de convergencia — Users v1
+
+## Estado, propósito y alcance
+
+- Estado: `ACTIVE` — primera tarea de la Fase 2; no autoriza implementación.
+- Fecha: `2026-07-16`.
+- Base frontend: `05926152c19aa5585d98fcc91875d784b0c77e86`.
+- Backend verificado: `b25384eaadb55a5dfb5334babed97038247e5f10` (`2026-07-16`).
+- Product Design: contenido revisado el `2026-07-16`, sin commit/tag/branch registrado.
+
+Esta auditoría confronta Users v1 — Assisted Customer Onboarding — con el producto, backend
+y frontend observables. Es canónica para clasificar la evidencia de este repositorio, pero no
+sustituye Product Design ni el contrato backend. No modifica UI, BFF, servicios, tipos, rutas,
+tests, configuración ni dependencias.
+
+Los estados usados son `AUTHORITATIVE_ALIGNED`, `IMPLEMENTED_EVIDENCE`,
+`PARTIALLY_ALIGNED`, `STALE_OR_LEGACY`, `PRODUCT_BLOCKED`, `BACKEND_BLOCKED`,
+`SOURCE_MISSING`, `OUT_OF_SCOPE` y `REMOVE_CANDIDATE`. Ninguno equivale a implementación
+aprobada o a release-ready.
+
+## Fuentes y jerarquía de autoridad
+
+1. Product Design, repositorio lógico `Maped Operations Product Design`,
+   `docs/02-domains/users/{DOMAIN,FLOWS,STATES_AND_ACTIONS,PRODUCT_NOTES,INTEGRATION_CONTRACT,IMPLEMENTATION_PLAN,VALIDATION_CHECKLIST}.md`.
+   Define Users v1, pero no registra `sourceRevision`: es `SOURCE_MISSING` para cerrar un
+   contrato reproducible.
+2. Backend, repositorio lógico `Backend`, commit
+   `b25384eaadb55a5dfb5334babed97038247e5f10`,
+   `docs/product-context/users-v1-assisted-customer-onboarding.md` y
+   `src/modules/home-services/tenant-users/{README,FRONTEND_INTEGRATION}.md`.
+3. Normativa local: [matriz de autoridad](../../01-foundation/IMPLEMENTATION_AUTHORITY_MATRIX.md),
+   [integración Product/backend/frontend](../../02-contracts/PRODUCT_AUTHORITY_AND_INTEGRATION.md),
+   [arquitectura](../../../ARCHITECTURE.md) y
+   [plan de migración](../../01-foundation/FRONTEND_MIGRATION_PLAN.md).
+4. Código, tests y documentación histórica: sólo evidencia de implementación.
+
+La divergencia principal ya está declarada por el backend: `FRONTEND_INTEGRATION.md` es un
+handoff V2 `PENDING_RECTIFICATION`; Users v1 excluye estados genéricos, CRM y contenido de
+Requests. Los documentos locales de Users fechados el 10 de julio no pueden promocionarse a
+contrato vigente.
+
+## Inventario de implementación observado
+
+| Elemento | Archivos y consumidor | Comportamiento/estado/acción | Cobertura y dependencia | Estado |
+| --- | --- | --- | --- | --- |
+| Entrada y URL | dashboard `people/users/{page.tsx,page.copy.ts,[userClientId]/page.tsx}` | Lee `selected`, `mode`, `search`, `status`; migra deep link `userClientId` a `user:<id>`. | Contract test de fuente; adaptación legacy local. | `PARTIALLY_ALIGNED` |
+| Directorio | `page.controller.tsx`, `UsersPageView.tsx`, `TenantUserDirectoryItem.tsx` | GET same-origin directory, `q`, estado, cursor, límite 25, debounce, cache y dedupe por `entryId`. | `dashboard-directory-contracts.test.mjs`; sin prueba desplegada. | `PARTIALLY_ALIGNED` |
+| Summary | controlador y `packages/services/tenantUsers.ts` | GET summary; KPIs All, Invitations y Attention; loading/error separados. | Contract test estructural. | `PARTIALLY_ALIGNED` |
+| Detail/Overview | `UsersPageDetailRouter.tsx`, `TenantUserDetailPanel.tsx` | GET entry; identidad, perfil, relaciones, requests/work orders/citas y acciones. | Contract test estructural. | `PARTIALLY_ALIGNED` |
+| Invitación dashboard | `UsersInvitePanel.tsx`, controlador, service/BFF invite | POST email/name/phone/language; códigos V2 y refresh. | Contract test estructural. | `PARTIALLY_ALIGNED` |
+| Lifecycle dashboard | controlador y BFF resend/revoke | POST resend/revoke, bloquea duplicados y confirma revoke. | Contract test estructural. | `PARTIALLY_ALIGNED` |
+| Aceptación pública | client BFF `user-invitations/{resolve,accept}` y `InvitationSetPasswordPage.tsx` | Token `tui_`, resolve/accept junto con contraseña; no review/corrección/save de propuestas. | `worker-invite-contracts.test.mjs` y contratos auth de fuente. | `BACKEND_BLOCKED` |
+| Worker | worker auth y `resend-invite` | Invitación worker separada; no consume Users de clientes. | Contract tests worker. | `OUT_OF_SCOPE` |
+| Prototipo/notas V2 | `users-directory-prototype(2)/*`, README, planes y decisiones locales | HTML/CSS y textos declaran V2 cerrado; no los consume runtime. | Sin prueba de comportamiento. | `STALE_OR_LEGACY` |
+
+Los BFF son same-origin. El backend protege el dashboard con sesión, tenant `homeServices`,
+rol admin y CSRF en mutaciones. Es evidencia técnica de aislamiento, no una prueba desplegada
+de acceso cruzado rechazado.
+
+## Matriz de capacidades
+
+| Capacidad | Producto v1 / backend | Frontend observado | Clasificación y decisión |
+| --- | --- | --- | --- |
+| List tenant-scoped | Slice A; backend proyecta por tenant, cursor e IDs estables | Directory V2 vía BFF, sin `clientId` | `PARTIALLY_ALIGNED`: conservar para rectificación contractual y prueba de aislamiento. |
+| Cursor y búsqueda | Slice A; backend documenta cursor y `q` | Cursor opaco, debounce y cache | `PARTIALLY_ALIGNED`: preservable; confirmar semántica y revisión de fuente. |
+| All e Invitations | Únicos filtros autorizados | También active, inactive y attention | `PARTIALLY_ALIGNED`: futura superficie sólo All/Invitations. |
+| Summary | Total people y pending invitations | Tercer KPI Attention | `PARTIALLY_ALIGNED`: conservar dos KPIs; attention queda fuera. |
+| Selección/restore/responsive | Incluidos, con retorno y foco | URL, cache, foco y mobile focalizado | `IMPLEMENTED_EVIDENCE`: candidato a conservar tras validación UX. |
+| Overview mínimo | Identidad/contacto, kind, lifecycle y acción legítima | Añade perfil, requests, work orders, citas y actividad | `PARTIALLY_ALIGNED`: limitar campos a contrato. |
+| Active/inactive/locked | Exclusión explícita | Badges y filtro | `OUT_OF_SCOPE`: no ampliar; preparar retirada de UX. |
+| Attention | Exclusión explícita | KPI, filtro y badges | `OUT_OF_SCOPE`: no ampliar; candidato a retirar. |
+| Relaciones/Requests/activity | Exclusión explícita | Row y detail los renderizan | `OUT_OF_SCOPE`: no integrar más dominios. |
+| Crear invitación | Slice B planificado; faltan locale, address, delivery e identidad global | Name/email/phone/language V2 | `BACKEND_BLOCKED`: no implementar. |
+| Resend/renew/revoke | Slice D; faltan cooldown, delivery/audit e historia | Resend/revoke y confirmación local | `BACKEND_BLOCKED`: no ampliar; verificar aislado después. |
+| Aceptación/confirmación | Slice C; exige review/save/resume | Sólo set-password/accept | `BACKEND_BLOCKED`: no presentar como onboarding completo. |
+| Materialización Profile/UserClient | Sólo tras guardado explícito | Backend auto-crea Profile desde propuesta si falta | `BACKEND_BLOCKED`: contradicción crítica. |
+| Service-request readiness | Slice E; no existe contrato | Sin consumo Users | `BACKEND_BLOCKED`. |
+| Token/expiry/revoke | Mecánica D disponible, reglas pendientes | Sólo expone resend/revoke | `PARTIALLY_ALIGNED`: técnica verificable, no flujo listo. |
+
+## Análisis por slice
+
+### Slice A — Directorio y Overview
+
+`PARTIALLY_ALIGNED`. Son preservables list/cursor/search/All/Invitations, selección con URL y
+respuesta responsive. Falta prueba desplegada de aislamiento, cursor, permisos, error/stale
+selection y origen/frescura de cada campo. Attention, active/inactive/locked, relación comercial
+y datos de Requests contradicen la frontera v1. La ausencia de revisión Product Design registrada
+impide `AUTHORITATIVE_ALIGNED` o `IMPLEMENTATION_READY`.
+
+### Slice B — Invitación asistida
+
+`BACKEND_BLOCKED`. La UI actual no distingue propuesta de dato confirmado ni contiene address
+propuesta; el backend no cierra locale precedence, propuesta de address, delivery outcome
+persistido/identificable ni identidad global existente. No iniciar cambios de formulario ni BFF.
+
+### Slice C — Aceptación y onboarding
+
+`BACKEND_BLOCKED`. La página pública acepta `tui_`, pero no ofrece review, corrección, explicit
+save, elección para datos globales ni reanudación. El backend materializa Profile con datos de
+invitación si falta; Product Design exige confirmación explícita y prohíbe sobrescritura
+silenciosa. Tampoco existe readiness derivado ni contrato de Service Requests.
+
+### Slice D — Lifecycle técnico
+
+`PARTIALLY_ALIGNED`. Existen expiry, rotación/invalidez de token, lease de aceptación y revoke.
+Faltan cooldown/rate-limit observable, delivery persistido, auditoría, CSRF verificado en
+despliegue y regla de historial accepted/revoked. Puede verificarse por separado; no desbloquea
+B/C.
+
+## Contradicciones principales
+
+1. `README.md`, `PAGE_REQUIREMENTS.md`, `USERS_DIRECTORY_GAP_ANALYSIS.md`,
+   `USERS_DIRECTORY_FRONTEND_IMPLEMENTATION_PLAN.md`, `USERS_DIRECTORY_BACKEND_DECISIONS.md` y
+   `USERS_DIRECTORY_BACKEND_PACKAGE.md` describen V2 cerrado o normativo: son
+   `STALE_OR_LEGACY`/evidencia hasta tener referencias versionadas.
+2. Active/inactive/attention, relationship summary, Requests, work orders, citas y actividad
+   están expuestos en frontend/backend V2, pero excluidos de Users v1.
+3. V2 presenta onboarding terminado tras set-password; backend evidencia materialización
+   prematura de Profile y ausencia de confirmation/resume.
+4. Los tests Users inspeccionan fuentes/rutas; no validan aislamiento tenant, lifecycle real,
+   concurrencia, confirmación ni accesibilidad en backend desplegado.
+5. Referencias locales históricas incluyen rutas locales externas y no son reproducibles.
+
+## Código preservable, bloqueado y candidatos
+
+| Grupo | Decisión |
+| --- | --- |
+| Preservar como evidencia | BFF same-origin, tipos/service directory, cursor opaco, dedupe/cache, URL state, retorno mobile/foco, master-detail y confirmación local de revoke. |
+| Rectificar tras contrato | Copy, Overview y KPIs mínimos, All/Invitations, stale/error y pruebas de integración/aislamiento. |
+| Bloqueado | Assisted invite, address propuesta, locale, aceptación/review/save, mapping Profile/UserClient, resume y readiness. |
+| `REMOVE_CANDIDATE` futuro | Attention, active/inactive/locked como UX Users, Requests/work orders/citas/activity y prototipo HTML/CSS. No eliminar aquí. |
+
+## Riesgos y preguntas abiertas
+
+- `SOURCE_MISSING`: registrar repositorio, ruta, commit/tag y fecha de Product Design antes del
+  primer PR funcional.
+- Contratar refresco/reconciliación de la proyección eventualmente consistente después de mutar.
+- Probar autorización cruzada, CSRF y denegación sin datos parciales en despliegue.
+- Decidir identidad global existente, ownership propuesta/confirmado, conflictos y resume.
+- Service Requests debe poseer requisitos, readiness derivado y el único hard gate.
+- Definir historial accepted/revoked, audit y cooldown de lifecycle.
+
+## Primer slice implementable y criterios de entrada
+
+El primer candidato es **Slice A — rectificación mínima de Directory y Overview**, no una nueva
+feature: list/cursor/search/All/Invitations, selección, contexto responsive y Overview limitado.
+No incluye invitation ni mutaciones.
+
+No puede iniciarse hasta: (1) registrar revisión reproducible de Product Design y sus campos,
+estados y All/Invitations; (2) fijar la compatibilidad backend desde `b25384e`, permisos,
+summary/cursor y stale selection; (3) decidir qué UI V2 ocultar/retirar; (4) añadir pruebas de
+tenant correcto/rechazo cruzado, estados de lista y restore/foco; y (5) validar tres locales,
+teclado, temas y contenido largo contra backend desplegado.
+
+## Acciones que no deben iniciarse todavía
+
+- No implementar B, C, D o E ni modificar endpoints, BFF o DTOs.
+- No añadir address, perfil, readiness, CTA onboarding, notes, activity, CRM, Requests o permisos worker.
+- No reparar el formulario/filtros para hacerlos parecer aprobados ni eliminar candidatos/prototipo.
+- No actualizar dependencias, seguridad #11–#15, workflows ni entorno.
+- No declarar Users v1, Fase 2 o Havenova release-ready; `SEC-EXC-001` sigue bloqueando release.
+
