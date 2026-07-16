@@ -110,9 +110,9 @@ Transformar el verde observado en un contrato verificable por CI.
    pnpm 10.24.0, caché oficial de pnpm mediante `actions/setup-node`, instalación
    congelada, la suite Jest recuperada y typecheck explícito de client, dashboard y worker.
    La validación local confirma `pnpm install --frozen-lockfile`, 18/18 suites y 71/71
-   tests Jest, y los tres typechecks verdes; `pnpm-lock.yaml` no cambia. El primer push
-   aportará la evidencia real de GitHub Actions: el workflow no se considera confirmado
-   remotamente hasta que esa ejecución pase.
+   tests Jest, y los tres typechecks verdes; `pnpm-lock.yaml` no cambia. La apertura del
+   primer pull request aportará la evidencia real de GitHub Actions: el workflow no se
+   considera confirmado remotamente hasta que esa ejecución pase.
 4. reparar las dos pruebas contractuales después de validar comportamiento — `PENDING`;
 5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
    `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
