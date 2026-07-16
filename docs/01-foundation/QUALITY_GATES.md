@@ -7,7 +7,7 @@ aplican en proporción al alcance, pero ningún PR puede omitir un fallo conocid
 documentarlo.
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 9)
+- Última revisión: `2026-07-16` (Fase 1, tarea 10)
 - Estado del documento: `ACTIVE`
 
 ## Toolchain canónica
@@ -142,6 +142,17 @@ La actualización compatible de `axios`, `js-cookie` y `uuid` redujo el inventar
 advisories (high 44→30, moderate 32→19 y low 6→5). Los restantes son transitivos, salvo
 `next@14.2.35`, cuya versión corregida requiere una migración mayor fuera de esta tarea. No hay
 excepciones aprobadas: su clasificación y aceptación o remediación corresponde a la Tarea 10.
+
+### Registro de excepciones de seguridad
+
+El registro autoritativo es [`SECURITY_EXCEPTIONS.md`](SECURITY_EXCEPTIONS.md). Sólo admite los
+estados `REMEDIATED`, `NOT_APPLICABLE`, `TEMPORARY_EXCEPTION`, `RELEASE_BLOCKING` y
+`PENDING_ANALYSIS`; cada aceptación requiere owner, issue, fecha y condición de expiración.
+
+Una excepción vencida falla el gate hasta remediarse o renovarse con nueva evidencia.
+`RELEASE_BLOCKING` permite desarrollo y CI, pero prohíbe publicar. El HTTP 410 de `pnpm audit` no
+equivale a un audit verde: el inventario bulk es evidencia temporal hasta restaurar tooling
+compatible. Cualquier advisory critical nuevo obliga a revisión inmediata.
 
 ### Release gate
 

@@ -28,6 +28,7 @@ Los `AGENTS.md` locales añaden reglas para client, dashboard, worker y packages
 | [`FRONTEND_MIGRATION_PLAN.md`](01-foundation/FRONTEND_MIGRATION_PLAN.md) | Fases, estado y criterios de salida |
 | [`IMPLEMENTATION_AUTHORITY_MATRIX.md`](01-foundation/IMPLEMENTATION_AUTHORITY_MATRIX.md) | Qué está aprobado, implementado, bloqueado o diferido |
 | [`QUALITY_GATES.md`](01-foundation/QUALITY_GATES.md) | Gates locales, de PR y de release |
+| [`SECURITY_EXCEPTIONS.md`](01-foundation/SECURITY_EXCEPTIONS.md) | Excepciones temporales, riesgos release-blocking y seguimiento de advisories |
 | [`ENVIRONMENT_CONTRACT.md`](01-foundation/ENVIRONMENT_CONTRACT.md) | Runtime y variables de entorno |
 | [`ASSET_REGISTRY.md`](03-assets/ASSET_REGISTRY.md) | Inventario y decisiones de assets |
 | [`TENANT_ONBOARDING_RUNBOOK.md`](04-operations/TENANT_ONBOARDING_RUNBOOK.md) | Entradas y pasos para una empresa nueva |
