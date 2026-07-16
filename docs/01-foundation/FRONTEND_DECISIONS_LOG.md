@@ -125,3 +125,17 @@ Primero se recuperará CI reproducible y se parchearán dependencias directas co
 La migración mayor de Next/React tendrá plan y PR propios.
 
 Revisar cuando la Fase 1 esté cerrada y exista una suite de comportamiento confiable.
+
+## FE-011 — Los avatares externos conservan img nativo hasta definir su contrato de hosts
+
+- Status: `Provisional`
+- Documented: `2026-07-16`
+- Scope: dashboard avatars/assets
+
+El valor de avatar puede resolverse como ruta local o URL externa, y el dashboard todavía no
+tiene una política canónica de hosts externos. Se mantiene `<img>` con una excepción ESLint local
+y explícita; no se añadirá una allowlist amplia sólo para eliminar un warning.
+
+La consecuencia temporal es no utilizar la optimización de imágenes de Next.js en este punto.
+Revisar en la Fase 4, cuando se definan la fuente canónica, el almacenamiento y la allowlist de
+avatares. Esta no es una política final de assets.
