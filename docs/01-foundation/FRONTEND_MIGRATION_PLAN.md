@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 9)
+- Última revisión: `2026-07-16` (Fase 1, tarea 10)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -29,7 +29,7 @@
 | Fase                         | Estado        |
 | ---------------------------- | ------------- |
 | 0. Fundación documental      | `COMPLETED`   |
-| 1. Baseline reproducible     | `IN_PROGRESS` |
+| 1. Baseline reproducible     | `COMPLETED`   |
 | 2. Convergencia de producto  | `PENDING`     |
 | 3. Límites estructurales     | `PENDING`     |
 | 4. Assets, branding y correo | `PENDING`     |
@@ -154,9 +154,14 @@ Transformar el verde observado en un contrato verificable por CI.
    5 low). Los checks remotos de pruebas, lint, tipos y builds de las tres apps pasan. Siguen
    `next@14.2.35` y cadenas transitivas de Next/Workbox, ESLint y Jest; su corrección requiere
    actualizar padres o valorar excepciones, y no queda aprobada en esta tarea.
-10. registrar excepciones de seguridad temporales — `PENDING`: clasificar y decidir las
-    vulnerabilidades restantes, incluida la migración mayor necesaria para Next, sin usar la
-    reducción de la Tarea 9 como aprobación implícita.
+10. registrar excepciones de seguridad temporales — `COMPLETED`: el registro canónico
+    [SECURITY_EXCEPTIONS.md](SECURITY_EXCEPTIONS.md) clasifica las 54 entradas bulk restantes,
+    documenta owners, fechas de expiración, mitigaciones, condiciones de salida e issues de
+    seguimiento. `SEC-EXC-001` mantiene Next.js 14 como `RELEASE_BLOCKING`; las cadenas de
+    next-pwa/Workbox, ESLint y Jest/JSDOM son excepciones temporales, y el HTTP 410 de `pnpm
+    audit` queda como análisis pendiente de tooling. La instalación frozen y los checks remotos
+    de lint, tipos, contratos, Jest y builds de client, dashboard y worker pasan; esta evidencia
+    completa la baseline, sin aprobar una publicación mientras siga vigente `SEC-EXC-001`.
 
 ### Criterio de salida
 
@@ -168,6 +173,11 @@ Transformar el verde observado en un contrato verificable por CI.
 - tres builds verdes;
 - ninguna variable obligatoria silenciosamente ausente;
 - no hay `node_modules` versionado.
+
+La Fase 1 queda `COMPLETED` por cumplir estos criterios verificables. No equivale a
+release-ready: `SEC-EXC-001` bloquea publicar Havenova hasta migrar Next.js a una versión
+soportada y corregida. La siguiente etapa es la Fase 2; no habilita cambios de producto sin la
+autoridad de Product Design y los contratos aplicables.
 
 ## Fase 2 — Convergencia de producto
 
