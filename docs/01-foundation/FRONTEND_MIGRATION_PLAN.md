@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16`
+- Última revisión: `2026-07-16` (Fase 1, tarea 1)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -26,7 +26,7 @@
 | Fase | Estado |
 | --- | --- |
 | 0. Fundación documental | `COMPLETED` |
-| 1. Baseline reproducible | `PENDING` |
+| 1. Baseline reproducible | `IN_PROGRESS` |
 | 2. Convergencia de producto | `PENDING` |
 | 3. Límites estructurales | `PENDING` |
 | 4. Assets, branding y correo | `PENDING` |
@@ -69,8 +69,22 @@ Transformar el verde observado en un contrato verificable por CI.
 
 ### Trabajo
 
-1. corregir `.gitignore`;
-2. desversionar `node_modules` y outputs generados;
+1. corregir `.gitignore` y desversionar `node_modules` y outputs generados — `COMPLETED`.
+   Evidencia local: `node v22.22.2`, `pnpm 10.24.0` y
+   `pnpm install --frozen-lockfile` ejecutado en esta rama; se retiran del índice las
+   93 entradas heredadas bajo `node_modules` y los outputs PWA
+   `apps/dashboard/public/sw.js` y `workbox-4754cb34.js`, sin borrar sus archivos locales.
+   `.gitignore` preserva los fuentes JavaScript y las declaraciones TypeScript; no contiene
+   reglas globales para `*.js`, `*.jsx`, `*.d.ts` ni `*.map`.
+   No queda ningún artefacto versionado identificado que no se haya podido retirar; el
+   backup local `.next.bak-profile-settings/` se ignora como output no versionado.
+   La corrección reveló 27 archivos locales nunca versionados: 23 pertenecen a la suite
+   Jest referenciada por `jest.config.mjs` (setup, mocks y tests), 2 son declaraciones
+   `css.d.ts`, 1 es un `not-found.js` legacy aparentemente sustituido y 1 es un archivo
+   vacío sin propósito identificado. Ninguno se eliminará ni incorporará al índice sin
+   verificación; no ejecutar `git clean` sobre este worktree.
+2. recuperar y validar estas fuentes ocultas antes de decidir si se incorporan, difieren o
+   retiran;
 3. añadir CI Node 22/pnpm 10;
 4. reparar las dos pruebas contractuales después de validar comportamiento;
 5. restaurar una suite real de interacción o retirar la configuración Jest falsa;
