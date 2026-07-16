@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 4)
+- Última revisión: `2026-07-16` (Fase 1, tarea 6)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -122,7 +122,12 @@ Transformar el verde observado en un contrato verificable por CI.
    pull request.
 5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
    `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
-6. eliminar warnings de lint/build;
+6. eliminar warnings de lint/build — `COMPLETED`: se resuelven 7 warnings propios: 6 mediante
+   dependencias correctas de hooks y 1 con una excepción local y provisional para el avatar.
+   El lint raíz usa salida streaming y client, dashboard y worker terminan sin warnings. Los builds
+   de dashboard y worker pasan sin warnings; el build local de client fue inconcluso por una
+   interrupción externa del ejecutor, sin evidencia de OOM, dependencia del backend ni regresión.
+   La validación remota de los tres builds y del gate de lint corresponde a la Tarea 8 / CI.
 7. añadir `.env.example` sin secretos y validación de entorno;
 8. añadir worker al gate de build/deploy;
 9. parchear dependencias directas vulnerables compatibles;

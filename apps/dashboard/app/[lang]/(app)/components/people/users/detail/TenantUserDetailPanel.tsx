@@ -27,10 +27,7 @@ const formatCopy = (template: string, values: Record<string, string | number>) =
   template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? ''));
 
 function getAvatarInitials(value: string) {
-  const words = value
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const words = value.trim().split(/\s+/).filter(Boolean);
 
   if (words.length >= 2) {
     return `${words[0]?.[0] ?? ''}${words[1]?.[0] ?? ''}`.toUpperCase();
@@ -51,7 +48,10 @@ const formatDate = (value: string | null | undefined, locale: string, fallback: 
   }).format(new Date(value));
 };
 
-const resolveDetailStatus = (detail: TenantUserDirectoryDetail, copy: UsersDetailPanelCopy['detail']) => {
+const resolveDetailStatus = (
+  detail: TenantUserDirectoryDetail,
+  copy: UsersDetailPanelCopy['detail']
+) => {
   if (detail.kind === 'invitation') {
     return detail.invitation?.status === 'expired'
       ? { label: copy.statusLabels.expired, tone: 'expired' as const }
@@ -69,7 +69,10 @@ const resolveDetailStatus = (detail: TenantUserDirectoryDetail, copy: UsersDetai
   return { label: copy.statusLabels.active, tone: 'active' as const };
 };
 
-const getInvitationStatusLabel = (status: TenantUserInvitationStatus, copy: UsersDetailPanelCopy['detail']) =>
+const getInvitationStatusLabel = (
+  status: TenantUserInvitationStatus,
+  copy: UsersDetailPanelCopy['detail']
+) =>
   status === 'expired' ? copy.invitationStatusLabels.expired : copy.invitationStatusLabels.pending;
 
 export function TenantUserDetailPanel({
@@ -153,6 +156,8 @@ export function TenantUserDetailPanel({
       <header className={styles.identity}>
         <div className={styles.identityMain}>
           {avatarSrc ? (
+            // Avatar URLs can be external until Next image hosts have a canonical allowlist.
+            // eslint-disable-next-line @next/next/no-img-element
             <img src={avatarSrc} alt={avatarAlt} className={styles.avatarImage} />
           ) : (
             <div className={styles.avatarFallback} aria-hidden="true">
@@ -166,7 +171,9 @@ export function TenantUserDetailPanel({
                 {displayName}
               </h2>
               <p className={styles.email}>{detail.identity.email}</p>
-              {detail.identity.phone ? <p className={styles.email}>{detail.identity.phone}</p> : null}
+              {detail.identity.phone ? (
+                <p className={styles.email}>{detail.identity.phone}</p>
+              ) : null}
             </div>
 
             <div className={styles.statusRow}>
@@ -215,7 +222,9 @@ export function TenantUserDetailPanel({
         </div>
         <div className={styles.row}>
           <dt className={styles.fieldLabel}>{copy.languageLabel}</dt>
-          <dd className={styles.fieldValue}>{detail.profile?.language ?? copy.missingValueFallback}</dd>
+          <dd className={styles.fieldValue}>
+            {detail.profile?.language ?? copy.missingValueFallback}
+          </dd>
         </div>
         <div className={styles.row}>
           <dt className={styles.fieldLabel}>{copy.requestsLabel}</dt>
@@ -264,7 +273,9 @@ export function TenantUserDetailPanel({
           <dl className={styles.dataList}>
             <div className={styles.row}>
               <dt className={styles.fieldLabel}>{copy.statusLabel}</dt>
-              <dd className={styles.fieldValue}>{getInvitationStatusLabel(invitation.status, copy)}</dd>
+              <dd className={styles.fieldValue}>
+                {getInvitationStatusLabel(invitation.status, copy)}
+              </dd>
             </div>
             <div className={styles.row}>
               <dt className={styles.fieldLabel}>{copy.invitationExpiresLabel}</dt>

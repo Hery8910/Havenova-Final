@@ -2,16 +2,8 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import {
-  getI18nFallbacks,
-  PopupCode,
-  useGlobalAlert,
-  useI18n,
-} from '@/packages/contexts';
-import {
-  AuthPageShell,
-  FormWrapper,
-} from '@/packages/components/client/user/auth';
+import { getI18nFallbacks, PopupCode, useGlobalAlert, useI18n } from '@/packages/contexts';
+import { AuthPageShell, FormWrapper } from '@/packages/components/client/user/auth';
 import styles from '@/packages/components/client/user/auth/authShell/authShell.module.css';
 import { getPopup } from '@/packages/utils/alertType';
 import { resetPassword } from '@/packages/services';
@@ -165,6 +157,7 @@ const ResetPasswordContent = () => {
     http,
     invalidOrExpiredLinkCopy,
     invalidTokenPopupDescription,
+    fallbackGlobalError,
     popups,
     showError,
     status,

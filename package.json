@@ -19,7 +19,7 @@
     "dev:worker": "pnpm --filter @havenova/worker dev",
     "build": "pnpm sync:assets && pnpm --filter @havenova/client build && pnpm --filter @havenova/dashboard build && pnpm --filter @havenova/worker build",
     "build:worker": "pnpm --filter @havenova/worker build",
-    "lint": "pnpm --recursive lint",
+    "lint": "pnpm -r --stream lint",
     "check:types": "tsc --noEmit",
     "test:client-context": "node --test tests/client-context/*.test.mjs",
     "test:contexts:ui": "jest --config jest.config.mjs --runInBand"

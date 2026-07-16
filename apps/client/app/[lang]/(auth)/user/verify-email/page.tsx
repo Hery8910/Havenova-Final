@@ -107,10 +107,7 @@ const VerifyEmailPageContent = () => {
       title: verifyText.manualLoginFallback?.title,
       description: verifyText.manualLoginFallback?.description,
     };
-  }, [
-    verifyText.manualLoginFallback?.description,
-    verifyText.manualLoginFallback?.title,
-  ]);
+  }, [verifyText.manualLoginFallback?.description, verifyText.manualLoginFallback?.title]);
 
   const openVerifyFlowLoading = useCallback(() => {
     const verifyLoading = loadingMsg.verifyEmail ?? fallbackLoadingMessages.verifyEmail;
@@ -122,7 +119,7 @@ const VerifyEmailPageContent = () => {
         description: verifyLoading.description,
       },
     });
-  }, [loadingMsg.verifyEmail, showLoading]);
+  }, [fallbackLoadingMessages.verifyEmail, loadingMsg.verifyEmail, showLoading]);
 
   useEffect(() => {
     // Evita doble ejecución en Strict Mode
@@ -244,6 +241,9 @@ const VerifyEmailPageContent = () => {
     });
   }, [
     closeAlert,
+    fallbackGlobalError,
+    fallbackLoginSuccess,
+    fallbackVerifyEmailSuccess,
     handleMagicLogin,
     handleVerifyEmail,
     lang,
@@ -305,7 +305,10 @@ const VerifyEmailPageContent = () => {
             </Link>
           </div>
           <div className={`${styles.authFooterActions} ${styles.authFooterSecondary}`}>
-            <Link className={`${styles.link} ${styles.mutedLink}`} href={href(lang, '/user/register')}>
+            <Link
+              className={`${styles.link} ${styles.mutedLink}`}
+              href={href(lang, '/user/register')}
+            >
               {registerText.title}
             </Link>
             <Link className={`${styles.link} ${styles.mutedLink}`} href={homeHref}>

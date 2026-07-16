@@ -89,6 +89,8 @@ export default function PeopleUsersPageController({
     () => createUsersPageCopy(texts.pages.dashboard.usersDirectory.copy),
     [texts.pages.dashboard.usersDirectory.copy]
   );
+  const directoryErrorTitle = usersPageCopy.feedback.errorTitle;
+  const detailErrorTitle = usersPageCopy.panels.detail.errorTitle;
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -149,7 +151,8 @@ export default function PeopleUsersPageController({
   const normalizedDebouncedSearch = normalizeSearch(debouncedSearch);
   const shouldFetchSearch =
     normalizedDebouncedSearch.length === 0 || normalizedDebouncedSearch.length >= 2;
-  const remoteSearch = normalizedDebouncedSearch.length >= 2 ? normalizedDebouncedSearch : undefined;
+  const remoteSearch =
+    normalizedDebouncedSearch.length >= 2 ? normalizedDebouncedSearch : undefined;
   const directoryQueryKey = `${remoteSearch ?? ''}\u0000${status}`;
   const directoryQueryKeyRef = useRef(directoryQueryKey);
   const directoryCacheRef = useRef(new Map<string, DirectoryCacheEntry>());
@@ -250,7 +253,9 @@ export default function PeopleUsersPageController({
   }, [search]);
 
   useEffect(() => {
-    const legacySelected = normalizeSelected(searchParams.get(USERS_PAGE_QUERY_KEYS.legacySelected));
+    const legacySelected = normalizeSelected(
+      searchParams.get(USERS_PAGE_QUERY_KEYS.legacySelected)
+    );
     const nextSelected = normalizeSelected(searchParams.get(USERS_PAGE_QUERY_KEYS.selected));
 
     if (!legacySelected || nextSelected) {
@@ -392,7 +397,7 @@ export default function PeopleUsersPageController({
         setPages([]);
         setNextCursor(null);
         setHasNextPage(false);
-        setDirectoryError(getErrorMessage(error, usersPageCopy.feedback.errorTitle));
+        setDirectoryError(getErrorMessage(error, directoryErrorTitle));
       } finally {
         if (!abortController.signal.aborted) {
           setIsDirectoryInitialLoading(false);
@@ -410,6 +415,7 @@ export default function PeopleUsersPageController({
     directoryReloadToken,
     directoryQueryKey,
     cacheDirectoryPages,
+    directoryErrorTitle,
     normalizedDebouncedSearch,
     remoteSearch,
     shouldFetchSearch,
@@ -443,7 +449,7 @@ export default function PeopleUsersPageController({
         }
 
         setDetail(null);
-        setDetailError(getErrorMessage(error, usersPageCopy.panels.detail.errorTitle));
+        setDetailError(getErrorMessage(error, detailErrorTitle));
       } finally {
         if (!abortController.signal.aborted) {
           setIsDetailLoading(false);
@@ -456,7 +462,7 @@ export default function PeopleUsersPageController({
     return () => {
       abortController.abort();
     };
-  }, [detailReloadToken, routeMode, routeSelectedEntryId]);
+  }, [detailErrorTitle, detailReloadToken, routeMode, routeSelectedEntryId]);
 
   const updateRouteState = useCallback(
     (nextMode: UsersPageMode, nextSelectedEntryId?: string) => {
@@ -516,14 +522,19 @@ export default function PeopleUsersPageController({
 
       if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
         const nextPages = [...pages, page];
-        cacheDirectoryPages(requestedDirectoryQueryKey, nextPages, page.nextCursor, page.hasNextPage);
+        cacheDirectoryPages(
+          requestedDirectoryQueryKey,
+          nextPages,
+          page.nextCursor,
+          page.hasNextPage
+        );
         setPages(nextPages);
         setNextCursor(page.nextCursor);
         setHasNextPage(page.hasNextPage);
       }
     } catch (error) {
       if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
-        setDirectoryError(getErrorMessage(error, usersPageCopy.feedback.errorTitle));
+        setDirectoryError(getErrorMessage(error, directoryErrorTitle));
       }
     } finally {
       if (directoryQueryKeyRef.current === requestedDirectoryQueryKey) {
@@ -533,6 +544,7 @@ export default function PeopleUsersPageController({
     }
   }, [
     cacheDirectoryPages,
+    directoryErrorTitle,
     directoryQueryKey,
     hasNextPage,
     isDirectoryRefreshing,
