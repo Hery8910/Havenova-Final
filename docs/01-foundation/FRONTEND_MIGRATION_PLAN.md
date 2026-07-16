@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 8)
+- Última revisión: `2026-07-16` (Fase 1, tarea 9)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -144,8 +144,19 @@ Transformar el verde observado en un contrato verificable por CI.
    pertenece a un futuro gate de release y no bloquea la Fase 1. Vercel client/dashboard sigue
    siendo evidencia adicional de deployment, no un sustituto del gate de CI. La Fase 1 permanece
    `IN_PROGRESS` hasta completar las tareas 9 y 10.
-9. parchear dependencias directas vulnerables compatibles;
-10. registrar excepciones de seguridad temporales.
+9. parchear dependencias directas vulnerables compatibles — `COMPLETED`: se actualizan las
+   dependencias de producción directas `axios` (1.11.0 → 1.18.1, dentro del rango declarado
+   `^1.16.0`), `js-cookie` (3.0.5 → 3.0.8) y `uuid` (11.1.0 → 11.1.1) en raíz y las tres apps.
+   El cierre transitivo de axios actualiza `follow-redirects` y `form-data`; no se usan overrides.
+   El endpoint usado por `pnpm audit` fue retirado por npm y responde HTTP 410, por lo que la
+   evidencia se obtuvo del endpoint bulk oficial de advisories contra `pnpm-lock.yaml`: 82
+   advisories iniciales (44 high, 32 moderate, 6 low) se reducen a 54 (30 high, 19 moderate,
+   5 low). Los checks remotos de pruebas, lint, tipos y builds de las tres apps pasan. Siguen
+   `next@14.2.35` y cadenas transitivas de Next/Workbox, ESLint y Jest; su corrección requiere
+   actualizar padres o valorar excepciones, y no queda aprobada en esta tarea.
+10. registrar excepciones de seguridad temporales — `PENDING`: clasificar y decidir las
+    vulnerabilidades restantes, incluida la migración mayor necesaria para Next, sin usar la
+    reducción de la Tarea 9 como aprobación implícita.
 
 ### Criterio de salida
 
