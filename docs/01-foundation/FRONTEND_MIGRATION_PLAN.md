@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 7)
+- Última revisión: `2026-07-16` (Fase 1, tarea 8)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -135,7 +135,15 @@ Transformar el verde observado en un contrato verificable por CI.
    El build local de client fue inconcluso por interrupción externa, no fallido; el escaneo negativo
    de la URL sentinel cubre sólo artefactos estáticos parciales. La validación autoritativa de los
    tres builds y su gate remoto se incorporarán en la Tarea 8 / CI.
-8. añadir worker al gate de build/deploy;
+8. añadir worker al gate de build/deploy — `COMPLETED`: `Phase 1 CI` conserva `verify` y
+   ejecuta después una matriz independiente de builds para client, dashboard y worker, con
+   `fail-fast: false`, configuración ficticia explícita bajo `.invalid`, límite de 20 minutos y
+   resultados identificables por app. Los tres builds completan, verifican que el sentinel de
+   `BACKEND_API_URL` no está en `.next/static` y confirman que no modifican archivos versionados.
+   Worker tiene build reproducible en GitHub Actions, pero no deployment Vercel: ese deployment
+   pertenece a un futuro gate de release y no bloquea la Fase 1. Vercel client/dashboard sigue
+   siendo evidencia adicional de deployment, no un sustituto del gate de CI. La Fase 1 permanece
+   `IN_PROGRESS` hasta completar las tareas 9 y 10.
 9. parchear dependencias directas vulnerables compatibles;
 10. registrar excepciones de seguridad temporales.
 
