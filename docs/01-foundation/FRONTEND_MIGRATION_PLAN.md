@@ -2,10 +2,14 @@
 
 ## Estado
 
+- Propietario: frontend
+- Última revisión: `2026-07-16`
+- Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
 - Objetivo: base reutilizable para Havenova, Perfect Service y futuros tenants.
 - Estrategia: migración incremental; no reescritura total.
+- Evidencia de la Fase 0: [PR #2](https://github.com/Hery8910/Havenova-Final/pull/2)
 
 ## Principios
 
@@ -21,7 +25,7 @@
 
 | Fase | Estado |
 | --- | --- |
-| 0. Fundación documental | `IN_PROGRESS` |
+| 0. Fundación documental | `COMPLETED` |
 | 1. Baseline reproducible | `PENDING` |
 | 2. Convergencia de producto | `PENDING` |
 | 3. Límites estructurales | `PENDING` |
@@ -55,7 +59,7 @@ qué no deben continuar.
 - enlaces relativos válidos;
 - ninguna afirmación de producto derivada sólo del código;
 - baseline y limitaciones explícitas;
-- PR sólo documental revisada y mergeada.
+- PR sólo documental revisada, validada y lista para merge.
 
 ## Fase 1 — Baseline reproducible
 

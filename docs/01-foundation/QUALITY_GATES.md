@@ -6,6 +6,10 @@ Definir evidencia mínima para aceptar cambios y para declarar una release. Los 
 aplican en proporción al alcance, pero ningún PR puede omitir un fallo conocido sin
 documentarlo.
 
+- Propietario: frontend
+- Última revisión: `2026-07-16`
+- Estado del documento: `ACTIVE`
+
 ## Toolchain canónica
 
 - Node.js `22.x`

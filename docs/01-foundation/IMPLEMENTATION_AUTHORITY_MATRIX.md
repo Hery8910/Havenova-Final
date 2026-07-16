@@ -5,6 +5,9 @@
 Impedir que una funcionalidad existente se trate como producto aprobado únicamente porque
 compila o tiene documentación local.
 
+- Propietario documental: frontend
+- Autoridad de producto: Product Design
+- Última revisión: `2026-07-16`
 - Baseline frontend: `19bf648`, `2026-07-16`.
 - Rectificación Product Design considerada: `2026-07-12`.
 - Este documento no sustituye el repositorio Product Design.

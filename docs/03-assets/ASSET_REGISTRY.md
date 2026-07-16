@@ -2,6 +2,9 @@
 
 ## Estado
 
+- Propietario documental: frontend
+- Aprobación de uso: Product Design
+- Última revisión: `2026-07-16`
 - Baseline: `19bf648`
 - Inventario inicial: `2026-07-16`
 - Estado global: `INVENTORY_REQUIRED`

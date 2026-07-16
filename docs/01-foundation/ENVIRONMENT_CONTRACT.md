@@ -5,6 +5,11 @@
 Definir runtime, variables y validaciones necesarias para desarrollar y desplegar las tres
 apps sin depender de configuración implícita.
 
+- Propietario: frontend
+- Aprobación compartida: backend/operations cuando cambie transporte, secretos o deploy
+- Última revisión: `2026-07-16`
+- Estado del documento: `ACTIVE`
+
 No incluir valores secretos reales en este repositorio.
 
 ## Runtime

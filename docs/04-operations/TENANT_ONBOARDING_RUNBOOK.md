@@ -6,6 +6,11 @@ Documentar qué necesita una empresa nueva para utilizar el producto operativo c
 y publicar su client. Este runbook será la prueba de que la base puede reutilizarse sin
 rediseñar dashboard y worker.
 
+- Propietario documental: frontend
+- Responsables de ejecución: Product Design, backend, frontend y operations según cada sección
+- Última revisión: `2026-07-16`
+- Estado del documento: `ACTIVE`
+
 ## Modelo
 
 ```text
