@@ -1,3 +1,5 @@
+import { resolveAllowedHosts } from '../environment/publicEnvironment';
+
 const DEV_LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 
 const normalizeHost = (value?: string | null): string => {
@@ -14,12 +16,6 @@ const normalizeHost = (value?: string | null): string => {
   const [host] = raw.split(':');
   return host?.trim() ?? '';
 };
-
-const parseAllowedHosts = (value?: string): string[] =>
-  (value ?? '')
-    .split(',')
-    .map((item) => normalizeHost(item))
-    .filter(Boolean);
 
 const toHostValidationError = (message: string) => {
   const error: Error & { response?: { status: number; data: { code: string; message: string } } } =
@@ -39,8 +35,17 @@ export function resolveRequestHost(headersLike: { get(name: string): string | nu
 }
 
 export function assertAllowedAppHost(requestHost: string): void {
-  const allowedHosts = parseAllowedHosts(process.env.NEXT_PUBLIC_ALLOWED_HOSTS);
   const isProd = process.env.NODE_ENV === 'production';
+  let allowedHosts: string[];
+
+  try {
+    allowedHosts = resolveAllowedHosts({
+      nodeEnv: process.env.NODE_ENV,
+      publicAllowedHosts: process.env.NEXT_PUBLIC_ALLOWED_HOSTS,
+    });
+  } catch (error) {
+    throw toHostValidationError(error instanceof Error ? error.message : 'Invalid host allowlist.');
+  }
 
   if (!requestHost) {
     throw toHostValidationError('Missing request host.');
@@ -54,12 +59,5 @@ export function assertAllowedAppHost(requestHost: string): void {
     return;
   }
 
-  if (isProd && allowedHosts.length === 0) {
-    throw toHostValidationError(
-      'Host allowlist is empty in production. Configure NEXT_PUBLIC_ALLOWED_HOSTS.'
-    );
-  }
-
   throw toHostValidationError(`Host "${requestHost}" is not allowed for this app.`);
 }
-

@@ -1,3 +1,5 @@
+import { resolveBackendApiUrl } from '../environment/serverEnvironment';
+
 const DEFAULT_TIMEOUT_MS = 8000;
 
 export type BackendRequestOptions = {
@@ -10,13 +12,12 @@ export type BackendRequestOptions = {
 };
 
 const normalizeBackendBaseUrl = (): string => {
-  const raw =
-    process.env.BACKEND_API_URL ||
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    '';
-
-  const normalized = raw.trim().replace(/\/+$/, '');
+  const normalized = resolveBackendApiUrl({
+    backendApiUrl: process.env.BACKEND_API_URL,
+    legacyApiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    legacyApiUrl: process.env.NEXT_PUBLIC_API_URL,
+    nodeEnv: process.env.NODE_ENV,
+  });
 
   if (!normalized) {
     throw new Error('Backend API base URL is not configured.');
