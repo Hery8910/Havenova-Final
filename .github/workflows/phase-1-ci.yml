@@ -55,3 +55,63 @@ jobs:
 
       - name: Typecheck worker
         run: pnpm --filter @havenova/worker exec tsc --noEmit --pretty false
+
+  build:
+    name: Build ${{ matrix.app }} (CI validation)
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: client
+            package: '@havenova/client'
+            allowed_host: client.phase-1-ci.invalid
+          - app: dashboard
+            package: '@havenova/dashboard'
+            allowed_host: dashboard.phase-1-ci.invalid
+          - app: worker
+            package: '@havenova/worker'
+            allowed_host: worker.phase-1-ci.invalid
+    env:
+      BACKEND_API_URL: https://api.phase-1-ci.invalid
+      NEXT_PUBLIC_TENANT_KEY: tnk_phase_1_ci
+      NEXT_PUBLIC_ALLOWED_HOSTS: ${{ matrix.allowed_host }}
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build ${{ matrix.app }}
+        run: pnpm --filter "${{ matrix.package }}" build
+
+      - name: Verify server-only backend URL is absent from browser bundle
+        run: |
+          test -d "apps/${{ matrix.app }}/.next/static"
+          if grep --recursive --fixed-strings --line-number \
+            "api.phase-1-ci.invalid" \
+            "apps/${{ matrix.app }}/.next/static"
+          then
+            echo "::error::BACKEND_API_URL leaked into the browser bundle for ${{ matrix.app }}"
+            exit 1
+          fi
+
+      - name: Verify build output did not modify tracked files
+        run: git diff --exit-code
