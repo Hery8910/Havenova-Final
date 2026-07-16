@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 2)
+- Última revisión: `2026-07-16` (Fase 1, tarea 3)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -105,8 +105,15 @@ Transformar el verde observado en un contrato verificable por CI.
    `tests/jest.setup.js`, los mocks, `test-providers` y las 18 suites restantes; se retiran
    `service-profile-step.test.jsx`, los dos `css.d.ts`, `not-found.js` y el archivo vacío.
    La recreación de ServiceProfileStep permanece bloqueada hasta decisión de Product Design.
-3. añadir CI Node 22/pnpm 10;
-4. reparar las dos pruebas contractuales después de validar comportamiento;
+3. añadir CI Node 22/pnpm 10 — `COMPLETED`: se añade
+   `.github/workflows/phase-1-ci.yml` para pull requests y pushes a `main`, con Node 22,
+   pnpm 10.24.0, caché oficial de pnpm mediante `actions/setup-node`, instalación
+   congelada, la suite Jest recuperada y typecheck explícito de client, dashboard y worker.
+   La validación local confirma `pnpm install --frozen-lockfile`, 18/18 suites y 71/71
+   tests Jest, y los tres typechecks verdes; `pnpm-lock.yaml` no cambia. El primer push
+   aportará la evidencia real de GitHub Actions: el workflow no se considera confirmado
+   remotamente hasta que esa ejecución pase.
+4. reparar las dos pruebas contractuales después de validar comportamiento — `PENDING`;
 5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
    `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
 6. eliminar warnings de lint/build;
