@@ -10,7 +10,9 @@
 - Objetivo: base reutilizable para Havenova, Perfect Service y futuros tenants.
 - Estrategia: migración incremental; no reescritura total.
 - Evidencia de la Fase 0: [PR #2](https://github.com/Hery8910/Havenova-Final/pull/2)
-- Evidencia de la Fase 1: [PR #3](https://github.com/Hery8910/Havenova-Final/pull/3)
+- Evidencia de la Fase 1:
+  - [PR #3](https://github.com/Hery8910/Havenova-Final/pull/3) — higiene del repositorio.
+  - [PR #4](https://github.com/Hery8910/Havenova-Final/pull/4) — recuperación de Jest.
 
 ## Principios
 
@@ -105,7 +107,8 @@ Transformar el verde observado en un contrato verificable por CI.
    La recreación de ServiceProfileStep permanece bloqueada hasta decisión de Product Design.
 3. añadir CI Node 22/pnpm 10;
 4. reparar las dos pruebas contractuales después de validar comportamiento;
-5. restaurar una suite real de interacción o retirar la configuración Jest falsa;
+5. restaurar una suite real de interacción o retirar la configuración Jest falsa —
+   `COMPLETED`: resuelta mediante las 18 suites y 71 tests recuperados en PR #4;
 6. eliminar warnings de lint/build;
 7. añadir `.env.example` sin secretos y validación de entorno;
 8. añadir worker al gate de build/deploy;
