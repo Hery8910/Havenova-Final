@@ -1,5 +1,8 @@
 # Auditoría de producto del frontend de Havenova
 
+> [!IMPORTANT]
+> **Documento histórico de evidencia.** Esta auditoría refleja el estado observado el 10 de julio de 2026 y no incorpora la rectificación de Product Design del 12 de julio de 2026. No debe utilizarse como autoridad para alcance, aceptación o release. Para decisiones actuales, consultar la [matriz de autoridad](../01-foundation/IMPLEMENTATION_AUTHORITY_MATRIX.md), la [auditoría técnica vigente](../00-audit/FRONTEND_BASELINE_AUDIT_2026-07-16.md) y el [contrato con Product Design y backend](../02-contracts/PRODUCT_AUTHORITY_AND_INTEGRATION.md).
+
 > Estado observado: 10 de julio de 2026. Alcance: código frontend, rutas, textos, componentes, estilos y documentación existente. Este documento describe **lo que la interfaz implementa hoy**, no el producto deseado. Las conclusiones no demostrables se marcan como inferencias.
 
 ## 1. Resumen ejecutivo: el producto que existe hoy
