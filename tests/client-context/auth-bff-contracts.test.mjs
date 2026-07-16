@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const authServiceSource = fs.readFileSync('packages/services/auth/authService.ts', 'utf8');
 const authApiSource = fs.readFileSync('packages/services/api/authApi.ts', 'utf8');
+const csrfTokenStoreSource = fs.readFileSync('packages/services/api/csrfTokenStore.ts', 'utf8');
 const apiSource = fs.readFileSync('packages/services/api/api.ts', 'utf8');
 const sameOriginApiSource = fs.readFileSync('packages/services/api/sameOriginApi.ts', 'utf8');
 const authContextSource = fs.readFileSync('packages/contexts/auth/authContext.tsx', 'utf8');
@@ -33,7 +34,10 @@ test('auth services now use the same-origin authApi client', () => {
   assert.doesNotMatch(authServiceSource, /import api from '\.\.\/api\/api';/);
   assert.match(authApiSource, /import sameOriginApi from '\.\/sameOriginApi';/);
   assert.match(authApiSource, /const authApi = sameOriginApi;/);
-  assert.match(sameOriginApiSource, /const sameOriginApi = axios\.create\(\{\s*withCredentials: true,/s);
+  assert.match(
+    sameOriginApiSource,
+    /const sameOriginApi = axios\.create\(\{\s*withCredentials: true,/s
+  );
   assert.doesNotMatch(authApiSource, /NEXT_PUBLIC_API_URL/);
 });
 
@@ -56,12 +60,34 @@ test('shared auth BFF route exists and both apps mount it', () => {
   assert.match(dashboardAuthRouteSource, /handleAuthBffRoute/);
 });
 
-test('auth refresh still attempts refresh-token when in-memory CSRF is missing because the BFF can bridge csrfToken cookie state', () => {
+test('auth refresh reissues CSRF before refresh-token when in-memory CSRF is missing', () => {
   assert.match(authContextSource, /const csrfToken = getCsrfToken\(\);/);
-  assert.match(authContextSource, /csrfTokenSource: csrfToken \? 'memory' : 'bff-cookie-fallback'/);
-  assert.match(backendProxyRouteSource, /const CSRF_COOKIE = 'csrfToken';/);
-  assert.match(backendProxyRouteSource, /request\.cookies\.get\(CSRF_COOKIE\)\?\.value\?\.trim\(\)/);
-  assert.doesNotMatch(authContextSource, /refreshAuth\.skip-refresh-token-missing-csrf/);
+  assert.match(
+    authContextSource,
+    /csrfTokenSource: csrfToken \? 'memory' : 'csrf-reissue-required'/
+  );
+  assert.match(
+    authContextSource,
+    /if \(!csrfToken\) \{\s*await withTimeout\(\s*reissueCsrfToken\(\),/s
+  );
+  assert.match(
+    authServiceSource,
+    /reissueCsrfToken = async \(\): Promise<void> => \{\s*await authApi\.get\('\/api\/auth\/csrf'/s
+  );
+  assert.match(
+    authRouteSource,
+    /csrf: \{\s*methods: \['GET'\],\s*upstreamPath: '\/api\/auth\/csrf',/s
+  );
+  assert.match(csrfTokenStoreSource, /let csrfTokenMemory = ''/);
+  assert.doesNotMatch(csrfTokenStoreSource, /localStorage/);
+  assert.doesNotMatch(authContextSource, /bff-cookie-fallback/);
+  assert.doesNotMatch(backendProxyRouteSource, /CSRF_COOKIE|csrfToken/);
+
+  const reissueIndex = authContextSource.indexOf('reissueCsrfToken()');
+  const refreshIndex = authContextSource.indexOf('refreshToken()', reissueIndex);
+  const confirmIndex = authContextSource.indexOf('getAuthUser()', refreshIndex);
+
+  assert.ok(reissueIndex >= 0 && refreshIndex > reissueIndex && confirmIndex > refreshIndex);
 });
 
 test('disableUnauthenticatedBootstrap now keeps stored auth without forcing immediate server revalidation on mount', () => {
@@ -74,8 +100,14 @@ test('dashboard middleware restores protected sessions before SSR redirects', ()
   assert.match(dashboardMiddlewareSource, /const isProtectedDashboardPath =/);
   assert.match(dashboardMiddlewareSource, /fetch\(buildBackendUrl\('\/api\/auth\/me'\)/);
   assert.match(dashboardMiddlewareSource, /fetch\(buildBackendUrl\('\/api\/auth\/refresh-token'\)/);
-  assert.match(dashboardMiddlewareSource, /applyAuthCookiesFromBackend\(refreshResponse, response\)/);
-  assert.match(dashboardMiddlewareSource, /NextResponse\.next\(\{\s*request:\s*\{\s*headers: forwardedHeaders/s);
+  assert.match(
+    dashboardMiddlewareSource,
+    /applyAuthCookiesFromBackend\(refreshResponse, response\)/
+  );
+  assert.match(
+    dashboardMiddlewareSource,
+    /NextResponse\.next\(\{\s*request:\s*\{\s*headers: forwardedHeaders/s
+  );
 });
 
 test('dashboard login auto-redirect requires server-confirmed auth rather than storage-only auth', () => {
@@ -92,7 +124,13 @@ test('dashboard login auto-redirect requires server-confirmed auth rather than s
 
 test('admin local defaults reuse stored theme and language to avoid hydration flash after reload', () => {
   assert.match(adminContextSource, /const getStoredTheme = \(\): ThemeMode \| null =>/);
-  assert.match(adminContextSource, /const getStoredLanguage = \(\): 'de' \| 'en' \| 'es' \| null =>/);
-  assert.match(adminContextSource, /language: previous\?\.language \?\? getStoredLanguage\(\) \?\? 'de'/);
+  assert.match(
+    adminContextSource,
+    /const getStoredLanguage = \(\): 'de' \| 'en' \| 'es' \| null =>/
+  );
+  assert.match(
+    adminContextSource,
+    /language: previous\?\.language \?\? getStoredLanguage\(\) \?\? 'de'/
+  );
   assert.match(adminContextSource, /theme: previous\?\.theme \?\? getStoredTheme\(\) \?\? 'light'/);
 });
