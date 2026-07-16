@@ -3,42 +3,23 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const clientServicesSource = fs.readFileSync(
-  'packages/services/client/clientServices.ts',
+const clientServicesSource = fs.readFileSync('packages/services/client/clientServices.ts', 'utf8');
+const tenantResolverSource = fs.readFileSync('packages/services/client/tenantResolver.ts', 'utf8');
+const publicEnvironmentSource = fs.readFileSync(
+  'packages/services/environment/publicEnvironment.ts',
   'utf8'
 );
-const tenantResolverSource = fs.readFileSync(
-  'packages/services/client/tenantResolver.ts',
+const serverEnvironmentSource = fs.readFileSync(
+  'packages/services/environment/serverEnvironment.ts',
   'utf8'
 );
-const hostGuardSource = fs.readFileSync(
-  'packages/services/client/hostGuard.ts',
-  'utf8'
-);
-const i18nFallbackSource = fs.readFileSync(
-  'packages/contexts/i18n/fallbackText.ts',
-  'utf8'
-);
-const i18nIndexSource = fs.readFileSync(
-  'packages/contexts/i18n/index.ts',
-  'utf8'
-);
-const authServiceSource = fs.readFileSync(
-  'packages/services/auth/authService.ts',
-  'utf8'
-);
-const authTypesSource = fs.readFileSync(
-  'packages/types/auth/authTypes.ts',
-  'utf8'
-);
-const profileTypesSource = fs.readFileSync(
-  'packages/types/profile/profileTypes.ts',
-  'utf8'
-);
-const profileServiceSource = fs.readFileSync(
-  'packages/services/profile/profileService.ts',
-  'utf8'
-);
+const hostGuardSource = fs.readFileSync('packages/services/client/hostGuard.ts', 'utf8');
+const i18nFallbackSource = fs.readFileSync('packages/contexts/i18n/fallbackText.ts', 'utf8');
+const i18nIndexSource = fs.readFileSync('packages/contexts/i18n/index.ts', 'utf8');
+const authServiceSource = fs.readFileSync('packages/services/auth/authService.ts', 'utf8');
+const authTypesSource = fs.readFileSync('packages/types/auth/authTypes.ts', 'utf8');
+const profileTypesSource = fs.readFileSync('packages/types/profile/profileTypes.ts', 'utf8');
+const profileServiceSource = fs.readFileSync('packages/services/profile/profileService.ts', 'utf8');
 const profileOverviewHelperSource = fs.readFileSync(
   'packages/components/client/user/profile/profileOverview/profileOverview.helpers.ts',
   'utf8'
@@ -59,14 +40,8 @@ const verifyEmailPageSource = fs.readFileSync(
   'apps/client/app/[lang]/(auth)/user/verify-email/page.tsx',
   'utf8'
 );
-const authTypesVerifySource = fs.readFileSync(
-  'packages/types/auth/authTypes.ts',
-  'utf8'
-);
-const verifyEmailPageTextsSource = fs.readFileSync(
-  'packages/i18n/en/pages.json',
-  'utf8'
-);
+const authTypesVerifySource = fs.readFileSync('packages/types/auth/authTypes.ts', 'utf8');
+const verifyEmailPageTextsSource = fs.readFileSync('packages/i18n/en/pages.json', 'utf8');
 const registerPageSource = fs.readFileSync(
   'apps/client/app/[lang]/(auth)/user/register/page.tsx',
   'utf8'
@@ -91,10 +66,7 @@ const invitationLoginPageSource = fs.readFileSync(
   'packages/components/client/user/auth/invitationLogin/InvitationLoginPage.tsx',
   'utf8'
 );
-const authAlertActionsSource = fs.readFileSync(
-  'packages/hooks/useAuthAlertActions.ts',
-  'utf8'
-);
+const authAlertActionsSource = fs.readFileSync('packages/hooks/useAuthAlertActions.ts', 'utf8');
 const homeServicePageSource = fs.readFileSync(
   'packages/components/client/pages/home-service/HomeServicePage.client.tsx',
   'utf8'
@@ -135,10 +107,7 @@ const embeddedProfileControllerSource = fs.readFileSync(
   'packages/components/client/user/profile/profileSettings/details/controller/useEmbeddedProfileCompletionController.ts',
   'utf8'
 );
-const verifyEmailActionsSource = fs.readFileSync(
-  'packages/utils/user/userHandler.ts',
-  'utf8'
-);
+const verifyEmailActionsSource = fs.readFileSync('packages/utils/user/userHandler.ts', 'utf8');
 
 const runtimeSourceRoots = ['packages', 'apps'];
 const runtimeSourceIgnoreSegments = ['/i18n/', '/docs/', '/node_modules/', '/.next/'];
@@ -176,12 +145,15 @@ const runtimePopupUsageSource = runtimeSourceRoots.map(collectRuntimeSources).jo
 test('tenant resolver keeps the expected fallback chain', () => {
   assert.match(tenantResolverSource, /NEXT_PUBLIC_TENANT_KEY/);
   assert.match(tenantResolverSource, /NEXT_PUBLIC_TENANT_KEY_FALLBACK/);
-  assert.match(tenantResolverSource, /tnk_demo_havenova/);
-  assert.match(tenantResolverSource, /NODE_ENV !== 'production'/);
-  assert.match(
-    tenantResolverSource,
-    /Tenant key is missing in production/
-  );
+  assert.match(publicEnvironmentSource, /tnk_demo_havenova/);
+  assert.match(publicEnvironmentSource, /!== 'production'/);
+  assert.match(publicEnvironmentSource, /NEXT_PUBLIC_TENANT_KEY.*required in production/);
+});
+
+test('environment accessors keep backend configuration out of public consumers', () => {
+  assert.doesNotMatch(publicEnvironmentSource, /BACKEND_API_URL/);
+  assert.doesNotMatch(tenantResolverSource, /serverEnvironment/);
+  assert.match(serverEnvironmentSource, /BACKEND_API_URL/);
 });
 
 test('host guard restricts hosts and reports AUTH_FORBIDDEN on failure', () => {
@@ -306,7 +278,10 @@ test('profile contract keeps contactEmail explicit across types and service norm
 });
 
 test('profile presentation consumers prefer profile.contactEmail over auth session email', () => {
-  assert.match(profileOverviewHelperSource, /profile\.name\?\.trim\(\) \|\| profile\.contactEmail\?\.trim\(\) \|\| fallbacks\.profileUser/);
+  assert.match(
+    profileOverviewHelperSource,
+    /profile\.name\?\.trim\(\) \|\| profile\.contactEmail\?\.trim\(\) \|\| fallbacks\.profileUser/
+  );
   assert.doesNotMatch(profileOverviewHelperSource, /auth\.email/);
   assert.match(serviceRequestAddressStepSource, /profile\?\.contactEmail\?\.trim\(\) \|\| '-'/);
   assert.doesNotMatch(serviceRequestAddressStepSource, /auth\?\.email/);
@@ -318,7 +293,10 @@ test('profile presentation consumers prefer profile.contactEmail over auth sessi
 
 test('verify-email flow treats missing magicToken as explicit manual-login fallback', () => {
   assert.match(authTypesVerifySource, /requiresManualLogin\?: boolean/);
-  assert.match(verifyEmailPageSource, /if \(result\.requiresManualLogin \|\| !result\.magicToken\)/);
+  assert.match(
+    verifyEmailPageSource,
+    /if \(result\.requiresManualLogin \|\| !result\.magicToken\)/
+  );
   assert.match(verifyEmailPageSource, /manualLoginFallback/);
   assert.match(verifyEmailPageSource, /goToLogin/);
   assert.match(verifyEmailPageTextsSource, /"manualLoginFallback"/);

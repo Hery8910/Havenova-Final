@@ -3,7 +3,7 @@
 ## Estado
 
 - Propietario: frontend
-- Última revisión: `2026-07-16` (Fase 1, tarea 6)
+- Última revisión: `2026-07-16` (Fase 1, tarea 7)
 - Estado del documento: `ACTIVE`
 - Baseline: `19bf648`
 - Inicio: `2026-07-16`
@@ -128,7 +128,13 @@ Transformar el verde observado en un contrato verificable por CI.
    de dashboard y worker pasan sin warnings; el build local de client fue inconcluso por una
    interrupción externa del ejecutor, sin evidencia de OOM, dependencia del backend ni regresión.
    La validación remota de los tres builds y del gate de lint corresponde a la Tarea 8 / CI.
-7. añadir `.env.example` sin secretos y validación de entorno;
+7. añadir `.env.example` sin secretos y validación de entorno — `COMPLETED`: inventario y ejemplos
+   por app confirmados; `publicEnvironment.ts` y `serverEnvironment.ts` validan de forma lazy y
+   específica por consumidor, preservando sólo los fallbacks transicionales documentados. Se añaden
+   15 pruebas de entorno; lint, typecheck, contratos y Jest pasan, y dashboard/worker construyen.
+   El build local de client fue inconcluso por interrupción externa, no fallido; el escaneo negativo
+   de la URL sentinel cubre sólo artefactos estáticos parciales. La validación autoritativa de los
+   tres builds y su gate remoto se incorporarán en la Tarea 8 / CI.
 8. añadir worker al gate de build/deploy;
 9. parchear dependencias directas vulnerables compatibles;
 10. registrar excepciones de seguridad temporales.
