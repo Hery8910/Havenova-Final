@@ -176,3 +176,17 @@ idioma, selector de tema, alertas y loading se conservan sin cambios como compat
 Revisar cuando una migración validada de cada isla permita sustituir legacy sin forzar una
 abstracción compartida prematura. Worker no adopta la foundation hasta disponer de un slice de
 dominio real aprobado.
+
+## FE-014 — SideNav conserva una primitive neutral; la navegación operacional pertenece a Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: navigation ownership
+
+La auditoría de SideNav confirma dos consumidores runtime: el adapter Dashboard y `ProfileNav` del
+Client. El paquete conserva temporalmente markup estructural y contratos neutrales; Dashboard es
+owner de su modelo, rutas, copy, iconos, drawer y composición responsive. No se mueve SideNav al
+Dashboard ni se introduce una variante operacional compartida.
+
+Revisar sólo tras cubrir activo, expansión, colapso y accesibilidad en ambos consumidores. Una
+migración futura será Dashboard-local y no propagará `--op-*` hacia Client Profile.

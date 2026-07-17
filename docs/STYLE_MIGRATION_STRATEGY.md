@@ -67,9 +67,9 @@ en legacy hasta tener una compatibilidad validada.
 4. Validar apariencia, teclado, temas y contenido largo antes de ampliar consumidores.
 5. Retirar un bridge únicamente después de comprobar todos sus consumidores.
 
-La siguiente migración recomendada es un slice exclusivamente de **Dashboard shell**: inventariar
-`DashboardWorkspaceShell`, `DashboardShellHeader`, `SideNav`, alertas, loading y auth; definir los
-primeros tokens semánticos necesarios; y migrar un único conjunto de composición responsive. No
+La auditoría de [SideNav](02-convergence/dashboard/SIDENAV_COMPATIBILITY_ISLAND_AUDIT.md) confirma
+que no es un shell Dashboard: Client Profile también la consume. La siguiente frontera, si sus
+contratos se prueban, será una composición de navegación operacional app-owned en Dashboard. No
 incluye Users, rutas placeholder, Client ni Worker.
 
 ## No objetivos
