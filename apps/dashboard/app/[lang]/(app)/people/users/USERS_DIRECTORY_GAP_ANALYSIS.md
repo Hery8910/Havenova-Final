@@ -6,6 +6,12 @@
 > No usar este documento para reactivar filtros active/inactive/attention, relaciones, Invite,
 > resend o revoke: esas superficies no forman parte del corte read-only actual.
 
+> Actualización de evidencia (`2026-07-17`): el detalle read-only actual compone lista izquierda +
+> panel derecho con empty state, identidad y Profile mínimo. La causa del Profile aparentemente vacío
+> era que la implementación anterior no mapeaba `detail.profile`; no prueba ausencia de Profile del
+> registro autenticado. La clasificación vigente está en [`PAGE_REQUIREMENTS.md`](./PAGE_REQUIREMENTS.md)
+> y la auditoría de convergencia.
+
 ## Estado del documento
 
 Auditoría realizada el `2026-07-10` contra:

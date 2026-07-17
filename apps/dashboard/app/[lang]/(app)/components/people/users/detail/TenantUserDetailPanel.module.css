@@ -27,7 +27,8 @@
 .title,
 .fieldValue,
 .emptyTitle,
-.errorTitle {
+.errorTitle,
+.sectionTitle {
   margin: 0;
   color: var(--text-primary);
 }
@@ -82,13 +83,24 @@
 
 .email,
 .emptyDescription,
-.errorText {
+.errorText,
+.sectionDescription {
   margin: 0;
   color: var(--text-secondary);
 }
 
 .email {
   font-size: 1rem;
+  line-height: 1.45;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.sectionDescription {
+  margin: 6px 0 0;
   line-height: 1.45;
 }
 

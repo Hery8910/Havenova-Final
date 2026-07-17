@@ -393,6 +393,7 @@ export default function PeopleUsersPageController({
     }
 
     const abortController = new AbortController();
+    const requestedEntryId = routeSelectedEntryId;
 
     const loadDetail = async () => {
       setIsDetailLoading(true);
@@ -404,14 +405,18 @@ export default function PeopleUsersPageController({
           abortController.signal
         );
 
-        setDetail(nextDetail);
+        if (!abortController.signal.aborted && requestedEntryId === routeSelectedEntryId) {
+          setDetail(nextDetail);
+        }
       } catch (error) {
         if (abortController.signal.aborted) {
           return;
         }
 
-        setDetail(null);
-        setDetailError(getErrorMessage(error, detailErrorTitle));
+        if (requestedEntryId === routeSelectedEntryId) {
+          setDetail(null);
+          setDetailError(getErrorMessage(error, detailErrorTitle));
+        }
       } finally {
         if (!abortController.signal.aborted) {
           setIsDetailLoading(false);

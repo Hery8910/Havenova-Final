@@ -8,6 +8,7 @@ import {
   getTenantUsersDirectoryPage,
   getTenantUsersDirectorySummary,
 } from '@/packages/services';
+import { tenantUserDirectoryFixtures } from '../../fixtures/tenantUserDirectory';
 
 let queryString = '';
 const replace = jest.fn((href) => {
@@ -198,5 +199,47 @@ describe('PeopleUsersPageController query ownership', () => {
     await act(async () => resolveOld({ ...emptyPage, items: [entry('old', 'Old result')] }));
     expect(screen.getByText('Current result')).toBeInTheDocument();
     expect(screen.queryByText('Old result')).not.toBeInTheDocument();
+  });
+
+  it('does not render a stale detail response after the selected entry changes', async () => {
+    queryString = 'mode=detail&selected=user:old';
+    let resolveOld;
+    let resolveCurrent;
+    mockedDetail
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            resolveOld = resolve;
+          })
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            resolveCurrent = resolve;
+          })
+      );
+
+    const view = renderController();
+    await waitFor(() => expect(mockedDetail).toHaveBeenCalledWith('user:old', expect.anything()));
+
+    queryString = 'mode=detail&selected=user:current';
+    view.rerender(
+      <I18nProvider initialLanguage="en">
+        <PeopleUsersPageController
+          initialMode="empty"
+          initialSearchState={{ search: '', status: 'all' }}
+        />
+      </I18nProvider>
+    );
+    await waitFor(() => expect(mockedDetail).toHaveBeenCalledWith('user:current', expect.anything()));
+
+    await act(async () => resolveCurrent(tenantUserDirectoryFixtures.userWithCompleteProfile));
+    await waitFor(() => expect(screen.getByText('Ada Lovelace')).toBeInTheDocument());
+
+    await act(async () =>
+      resolveOld({ ...tenantUserDirectoryFixtures.userWithoutProfile, identity: { displayName: 'Old detail', email: 'old@example.com', phone: null, profileImage: null } })
+    );
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
+    expect(screen.queryByText('Old detail')).not.toBeInTheDocument();
   });
 });

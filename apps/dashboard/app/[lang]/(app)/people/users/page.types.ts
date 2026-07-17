@@ -91,6 +91,11 @@ export type UsersDetailPanelCopy = {
     loadingLabel: string;
     errorEyebrow: string;
     errorTitle: string;
+    personEyebrow: string;
+    invitationEyebrow: string;
+    identityLabel: string;
+    proposedIdentityLabel: string;
+    proposedIdentityDescription: string;
     emailLabel: string;
     phoneLabel: string;
     createdLabel: string;
@@ -109,6 +114,13 @@ export type UsersDetailPanelCopy = {
     invitationSendCountLabel: string;
     pendingProfileFallback: string;
     missingValueFallback: string;
+    profileNotCreatedDescription: string;
+    profileIncompleteDescription: string;
+    languageLabels: {
+      de: string;
+      en: string;
+      es: string;
+    };
     resendInvitationLabel: string;
     resendingInvitationLabel: string;
     revokeInvitationLabel: string;

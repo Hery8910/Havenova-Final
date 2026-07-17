@@ -2,6 +2,38 @@
 
 ## Estado, propósito y alcance
 
+### Composición read-only de detalle — 2026-07-17
+
+Se implementó el corte autorizado `Users Directory read-only detail and Product Design composition`.
+Product Design `DOMAIN`, `FLOWS`, `STATES_AND_ACTIONS`, `PRODUCT_NOTES` y `HANDOFF` (`CURRENT`)
+autorizan Directory/Overview mínimo y el patrón responsive; `INTEGRATION_CONTRACT`,
+`IMPLEMENTATION_PLAN` y `VALIDATION_CHECKLIST` siguen `PLANNED`. El prototipo se trató sólo como
+evidencia visual, no como requisito.
+
+El backend read-only confirma `GET /entries/:entryId` protegido por sesión, tenant `homeServices` y
+rol admin; resuelve `{ clientId, entryId }`, por lo que una entrada inexistente o ajena devuelve
+`TENANT_USER_DIRECTORY_ENTRY_NOT_FOUND`. El DTO discrimina `user | invitation`: identity contiene
+nombre/email/teléfono opcional; para user, `profile.exists` representa la existencia real de
+`UserClientProfile`, y locale/dirección principal pueden ser nulos; para invitation `profile=null`
+y su identidad es propuesta. Pending/expired y expiración se exponen; locale propuesto no se expone
+en el DTO actual y no se amplió backend.
+
+El panel anterior no renderizaba `detail.profile`; por eso el Profile aparentemente vacío era una
+omisión de presentación frontend, no prueba de ausencia real del registro autenticado. El nuevo panel
+distingue `exists=false`, Profile existente con campos nulos y valores disponibles sin inventar datos.
+La observación de ese registro concreto queda pendiente de respuesta autenticada representativa.
+
+La composición conserva directorio/scroll a la izquierda y detalle/scroll a la derecha, empty state
+sin selección y en mobile el destino detail con Back accesible y retorno de foco existente. Fixtures
+tipados cubren Profile completo, parcial y ausente, invitaciones pending/expired, opcionales y texto
+largo. Pruebas conductuales cubren empty, estados de Profile/invitation, error/retry, ausencia de
+secciones fuera de alcance y respuesta de detail obsoleta. No se introdujeron Account, Permissions,
+Activity, Requests, Notes, status de cuenta ni mutaciones.
+
+Clasificación: la infraestructura read-only de Slice A sigue `READY`; Users Directory completo queda
+`PARTIALLY_READY`. La composición no puede convertirse en `IMPLEMENTATION_READY` o producto completo
+mientras contrato y validación de Product Design sigan `PLANNED` y B–E sigan fuera del corte.
+
 ### Gate manual fallido y corrección pendiente de revalidación — 2026-07-17
 
 La revisión autenticada de Slice A encontró una regresión `BLOCKED`: el input revertía el texto y
