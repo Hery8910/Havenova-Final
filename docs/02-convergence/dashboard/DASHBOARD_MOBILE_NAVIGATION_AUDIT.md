@@ -2,7 +2,7 @@
 
 - Sidebar desktop: `READY`.
 - Sidebar desktop colapsado: `PARTIALLY_READY`.
-- Drawer móvil temporal: `READY`.
+- Drawer móvil: `READY`.
 
 `DashboardWorkspaceShell` es owner app-local de `isNavCollapsed` e `isMobileNavOpen`.
 `DashboardShellNav` y `dashboardShell.ts` son Dashboard-owned y se montan en sidebar y drawer con
@@ -42,3 +42,9 @@ móvil ni Client `SideNav`. La deuda es no bloqueante para el shell operacional 
 convergencia de Users Directory; deberá resolverse antes de promover desktop colapsado a `READY` o
 si un cambio de breakpoint, foco, labels o navegación altera esa columna. No recibe semántica modal,
 trap ni scroll lock en este corte.
+
+La revisión autenticada manual de Heriberto del `2026-07-17` aceptó el comportamiento funcional y
+visual de la navegación, incluido el drawer móvil. No sustituye la evidencia específica aún ausente
+para teclado, orden de tabulación, foco visible, etiquetas largas y el umbral exacto del desktop
+colapsado. Los ajustes estéticos menores se difieren a Users Directory y no cambian esta
+clasificación.

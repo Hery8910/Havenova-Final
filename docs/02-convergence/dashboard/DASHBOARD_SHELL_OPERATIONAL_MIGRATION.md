@@ -1,6 +1,6 @@
 # Migración del shell Dashboard a foundation operacional
 
-- Estado: `IMPLEMENTED_EVIDENCE` — CI remota verde; gate visual del workspace bloqueado por acceso.
+- Estado: `IMPLEMENTED_EVIDENCE` — CI remota verde y revisión manual autenticada del propietario.
 - Fecha: `2026-07-17`.
 - Product Design: `b9c5a6c27ca5824199faca41a96f01c7705a8caf`.
 - Alcance: sólo workspace Dashboard autenticado.
@@ -40,16 +40,17 @@ frontera elegible es otra isla compartida del shell auditada independientemente;
 
 ## Gate visual y estado de shell
 
-El gate visual de `LanguageSwitcher` se intentó con Chrome headless y Dashboard local el
-`2026-07-17`, pero el guard server-side redirigió `/en/people/users` a `/en/user/login` sin una
-sesión autorizada. No se registra una revisión visual del workspace que no ocurrió. Se requieren una
-sesión Dashboard de prueba o una fixture existente para completar desktop/mobile, `de/en/es`, ambos
-temas disponibles, foco, stacking, clipping, scroll y zoom.
+El intento técnico previo sin sesión fue bloqueado por el guard server-side, pero Heriberto realizó
+después una revisión autenticada real y aceptó navegación, drawer móvil, `LanguageSwitcher` y tema.
+No se atribuyen esos escenarios a Codex ni se inventan capturas o pruebas automatizadas. Los ajustes
+estéticos menores quedan diferidos al contexto definitivo de Users Directory.
 
-El shell queda técnicamente cerrado para esta frontera: drawer móvil `READY`, selector técnicamente
-`READY` con gate visual bloqueado por acceso, y desktop colapsado `PARTIALLY_READY` por deuda visual
-y de teclado no bloqueante. Esta deuda no bloquea la siguiente auditoría/convergencia de Users, pero
-sí impide clasificar desktop colapsado como `READY`.
+El shell queda cerrado para esta frontera: drawer móvil `READY`, `LanguageSwitcher` `READY`,
+composición Dashboard de tema `READY`, header operacional `READY` y desktop colapsado
+`PARTIALLY_READY` exclusivamente por deuda específica de teclado, foco, labels largos y breakpoint.
+Esa deuda no bloquea la siguiente auditoría/convergencia de Users, pero sí impide clasificar desktop
+colapsado como `READY`. No existe menú de cuenta Dashboard que migrar; el menú Client permanece
+aislado y bloqueado para Dashboard.
 
 ## Validación de formato conocida
 

@@ -2,7 +2,7 @@
 
 ## Alcance y estado
 
-- Estado: `DASHBOARD_CONSUMER_MIGRATED` — Dashboard usa una composición operational local; Client y Worker conservan la isla legacy.
+- Estado: Dashboard `READY` — Dashboard usa una composición operational local; Client y Worker conservan la isla legacy.
 - Fecha: `2026-07-17`.
 - Baseline de navegación Dashboard: `27f8d6e`.
 - Alcance: estado de tema compartido, renderizado de `ThemeToggler` y sus consumidores runtime.
@@ -146,15 +146,17 @@ primitive compartido permanece para Client y Worker hasta que sus consumidores s
 separado. Esta decisión mantiene una sola fuente de verdad funcional por app sin forzar una nueva
 abstracción compartida especulativa.
 
-## Migración Dashboard y validación pendiente
+## Migración Dashboard y validación
 
 Dashboard ya cumple el contrato binario accesible mediante `DashboardThemeControl`: botón nativo,
 estado `aria-pressed`, nombre y `title` que comunican tema actual y acción siguiente, icono
 decorativo, foco visible y callback del siguiente tema. Sus estilos sólo emplean `--op-*` dentro del
 workspace operational y no copian markup, clases, blur ni animación del primitive legacy.
 
-No se realizó revisión visual interactiva en este entorno ni se puede declarar ausencia total de
-FOUC. Permanecen pendientes de revisión humana: recarga con `localStorage.theme` claro/oscuro,
-convergencia bootstrap/Admin complement, cambio bidireccional, teclado, contraste, desktop, tablet,
-móvil, zoom 200 % y `de/en/es` con contenido largo. Se difieren selector `system`, cross-tab,
-migración Client/Worker, limpieza de legacy, `LanguageSwitcher`, alertas, loading, Auth y Users.
+Heriberto realizó una revisión autenticada manual del Dashboard el `2026-07-17` y confirmó que el
+control de tema se comporta como se espera junto con navegación y `LanguageSwitcher`. Codex no
+ejecutó esa sesión ni la convierte en prueba automatizada. La composición Dashboard queda `READY`;
+Client y Worker conservan la isla legacy. Se difieren los ajustes estéticos menores al contexto
+visual de Users Directory. Persisten como deuda de plataforma, no bloqueo de esta composición:
+ausencia total de FOUC bajo todas las condiciones, selector `system`, cross-tab, migración
+Client/Worker, limpieza legacy, alertas, loading y Auth.

@@ -65,3 +65,26 @@ El inventario de consumidores de overlay debe terminar antes de crear ese host.
 Readiness final: `BLOCKED`. No existe menú Dashboard que migrar. Antes de UI se requiere decisión de
 producto sobre cuenta Dashboard, inventario de overlays y, por separado, doble logout, loading y
 validación visual/E2E. No se autoriza copiar el menú Client al core Dashboard.
+
+## Header operacional Dashboard — cierre de auditoría, 2026-07-17
+
+El owner real es `DashboardShellHeader`, montado por `DashboardWorkspaceShell` dentro del boundary
+operational. Resuelve título y contexto desde `dashboardShell.ts`, identidad y tema desde
+`AdminContext`, rol desde `AuthContext`, y recibe el host local sólo para `LanguageSwitcher`.
+`DashboardThemeControl` es local al header; el avatar/nombre/rol es `profileSummary` no interactivo.
+No existen trigger de avatar, estado abierto/cerrado, popover, dropdown, drawer, portal, foco de
+retorno, click exterior, Escape, selección de opción ni navegación asociados a cuenta dentro de
+Dashboard. SSR conserva el layout server-first y la frontera cliente se hidrata en el header; no se
+manipulan cookies, sesión, CSRF, permisos ni logout desde esta pieza.
+
+Los únicos controles flotantes del header son `LanguageSwitcher`, con
+`#dashboard-language-switcher-overlay-host`, y el control de tema sin overlay. El drawer móvil es
+inline y no consume ese host. El menú Client continúa con portal global en desktop y variantes
+Client in-tree en tablet/móvil; no tiene consumidor Dashboard o Worker y no debe reutilizarse.
+
+Decisión: el header ya converge directamente como composición operacional Dashboard `READY`. El
+menú de cuenta Client permanece compatibility island `BLOCKED` para Dashboard porque no hay
+consumidor ni contrato de producto que migrar. La navegación de cuenta y logout Dashboard permanece
+en `DashboardShellNav`; crear un avatar-trigger o nuevas acciones incumpliría el alcance. La
+revisión autenticada manual de Heriberto aceptó el comportamiento del header/shell, sin afirmar que
+Codex ejecutara escenarios de sesión. Ajustes estéticos menores se difieren a Users Directory.
