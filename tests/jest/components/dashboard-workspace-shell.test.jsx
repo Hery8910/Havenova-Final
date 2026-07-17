@@ -5,11 +5,15 @@ import { DashboardWorkspaceShell } from '@/apps/dashboard/app/[lang]/(app)/compo
 
 let pathname = '/en/requests';
 const selected = jest.fn();
+let receivedLanguageSwitcherPortalContainer = null;
 
 jest.mock('next/navigation', () => ({ usePathname: () => pathname }));
 jest.mock('@/packages/hooks', () => ({ useLang: () => 'en' }));
 jest.mock('@/apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellHeader', () => ({
-  DashboardShellHeader: () => <div>Header</div>,
+  DashboardShellHeader: ({ languageSwitcherPortalContainer }) => {
+    receivedLanguageSwitcherPortalContainer = languageSwitcherPortalContainer;
+    return <div>Header</div>;
+  },
 }));
 jest.mock('@/apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellNav', () => ({
   DashboardShellNav: ({ presentation, onItemSelect, showCollapseControl = true }) => (
@@ -38,6 +42,7 @@ describe('DashboardWorkspaceShell mobile drawer', () => {
   beforeEach(() => {
     pathname = '/en/requests';
     selected.mockReset();
+    receivedLanguageSwitcherPortalContainer = null;
     document.body.style.overflow = '';
     installMedia();
     jest.spyOn(HTMLElement.prototype, 'getClientRects').mockReturnValue([{}]);
@@ -68,6 +73,24 @@ describe('DashboardWorkspaceShell mobile drawer', () => {
     fireEvent.click(trigger);
     fireEvent.click(trigger);
     await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
+  });
+
+  it('owns the LanguageSwitcher portal host inside the workspace and removes it on unmount', () => {
+    const { container, unmount } = render(
+      <DashboardWorkspaceShell>
+        <p>Workspace content</p>
+      </DashboardWorkspaceShell>
+    );
+    const host = container.querySelector('#dashboard-language-switcher-overlay-host');
+
+    expect(host).toBeInTheDocument();
+    expect(host.parentElement).toHaveAttribute('data-ui-foundation', 'operational');
+    expect(document.body.contains(host)).toBe(true);
+    expect(receivedLanguageSwitcherPortalContainer).toBe(host);
+    expect(document.body.lastElementChild).not.toBe(host);
+
+    unmount();
+    expect(document.querySelector('#dashboard-language-switcher-overlay-host')).toBeNull();
   });
 
   it('closes through close button, backdrop, route selection, pathname and desktop viewport', async () => {

@@ -26,6 +26,8 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
   const shouldRestoreMobileNavFocusRef = useRef(true);
   const [isNavCollapsed, setIsNavCollapsed] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [languageSwitcherPortalContainer, setLanguageSwitcherPortalContainer] =
+    useState<HTMLDivElement | null>(null);
   const workspaceLabel = 'Dashboard workspace';
   const mobileHeaderMeta = useMemo(
     () => resolveDashboardHeaderMeta(pathname, lang),
@@ -136,11 +138,19 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
             </button>
           </div>
           <header className={styles.header}>
-            <DashboardShellHeader />
+            <DashboardShellHeader
+              languageSwitcherPortalContainer={languageSwitcherPortalContainer}
+            />
           </header>
           <section className={styles.main}>{children}</section>
         </section>
       </section>
+
+      <div
+        ref={setLanguageSwitcherPortalContainer}
+        id="dashboard-language-switcher-overlay-host"
+        className={styles.languageSwitcherOverlayHost}
+      />
 
       {isMobileNavOpen ? (
         <div className={styles.mobileNavOverlay}>

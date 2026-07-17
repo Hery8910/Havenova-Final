@@ -261,3 +261,20 @@ Una futura composición Dashboard recibirá idioma, acción y labels ya resuelto
 un host de overlay local dentro de `[data-ui-foundation='operational']` para heredar tokens sin
 propagarlos a Client o Worker. Esta decisión no crea ese host, provider, hook ni router, ni autoriza
 migración visual antes de resolver fallos de persistencia y rutas/query/hash.
+
+## FE-019 — El portal de LanguageSwitcher pertenece localmente al workspace Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+`DashboardWorkspaceShell` crea el único host `#dashboard-language-switcher-overlay-host` dentro de
+su boundary operational y lo pasa como destino explícito al `LanguageSwitcher` del header. Así el
+panel conserva portal y posicionamiento sin salir de los tokens `--op-*`; el host se desmonta con el
+shell, no modifica `document.body` y queda por debajo del drawer móvil inline.
+
+El primitive conserva `document.body` sólo como fallback compatible cuando no recibe destino, por lo
+que Client y Worker no cambian. El segundo click y Escape restauran foco al trigger; exterior y
+backdrop conservan su cierre existente. No se crea provider, manager, stack, registro ni contrato
+público para overlays. `LanguageSwitcher` es el único consumidor: reutilizar el host exige una
+auditoría independiente.

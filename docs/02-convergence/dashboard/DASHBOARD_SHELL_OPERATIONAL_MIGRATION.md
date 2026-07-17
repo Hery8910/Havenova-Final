@@ -22,9 +22,12 @@ reglas de `DashboardShellNav` residen en `packages/styles/operational/shell.css`
 boundary; no usan clases legacy. `SideNav` permanece como primitive legacy sólo para `ProfileNav`
 del Client. Dashboard ya no consume `ThemeToggler`: su control de tema local no descubre contexts ni
 escribe DOM/storage. `ThemeToggler` continúa como compatibility island para Client y Worker.
-`LanguageSwitcher` permanece como isla auditada `PARTIALLY_READY`: Dashboard no puede sustituirla
-hasta separar la coordinación de idioma y resolver un host de portal operational. `AlertViewport`,
-`Loading`, Dashboard Auth y Users siguen pendientes. Client y Worker no importan CSS operacional.
+`LanguageSwitcher` es el único consumidor del host local
+`#dashboard-language-switcher-overlay-host`, propiedad de `DashboardWorkspaceShell`. Conserva su
+coordinación compartida y el fallback a `document.body` para Client y Worker; el drawer móvil queda
+inline y excluido. El host no es una plataforma general: otro consumidor requerirá auditoría propia.
+`AlertViewport`, `Loading`, Dashboard Auth y Users siguen pendientes. Client y Worker no importan
+CSS operacional.
 
 La composición Dashboard conserva el ownership vigente: bootstrap antes de hidratar y complemento
 Admin después; el control local sólo solicita el siguiente valor `light|dark`. No se promovió una

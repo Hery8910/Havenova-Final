@@ -12,7 +12,13 @@ import { useAdmin, useAuth } from '../../../../../../../packages/contexts';
 import { useLang } from '../../../../../../../packages/hooks';
 import { DashboardThemeControl } from './DashboardThemeControl';
 
-export function DashboardShellHeader() {
+type DashboardShellHeaderProps = {
+  languageSwitcherPortalContainer?: HTMLElement | null;
+};
+
+export function DashboardShellHeader({
+  languageSwitcherPortalContainer,
+}: DashboardShellHeaderProps) {
   const { admin, setTheme } = useAdmin();
   const { auth } = useAuth();
   const pathname = usePathname();
@@ -142,6 +148,7 @@ export function DashboardShellHeader() {
           triggerDisplay="icon"
           dropdownPlacement="bottom"
           labels={languageLabels}
+          portalContainer={languageSwitcherPortalContainer}
         />
 
         <DashboardThemeControl

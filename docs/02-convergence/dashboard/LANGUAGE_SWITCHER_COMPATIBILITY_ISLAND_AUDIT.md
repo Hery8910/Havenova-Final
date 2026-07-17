@@ -2,7 +2,7 @@
 
 ## Alcance y estado
 
-- Estado: `PARTIALLY_READY`.
+- Estado: `READY` para la composición Dashboard, con gate visual manual pendiente.
 - Fecha: `2026-07-17`.
 - Alcance: caracterización de `LanguageSwitcher`; no contiene migración visual ni cambios de producción.
 
@@ -73,52 +73,48 @@ la futura composición debe conservar botones, título, foco, Escape y retorno d
 
 ## Portal y boundary operacional
 
-El panel usa `createPortal(..., document.body)`. En Dashboard esto sale de
-`[data-ui-foundation='operational']`, por lo que un panel que dependa de `--op-*` no resolvería sus
-tokens en `body`. El portal actual evita clipping y conserva posicionamiento fixed respecto al
-trigger mediante listeners de resize/scroll, pero también crea un stacking context global y comparte
-el espacio de overlays con alertas. SSR evita portal hasta `isMounted`, a costa de que el panel no
-exista antes de hidratación.
+`DashboardWorkspaceShell` crea el host local estable
+`#dashboard-language-switcher-overlay-host` dentro de
+`[data-ui-foundation='operational']` y lo entrega explícitamente al header. El portal conserva
+posicionamiento fixed, evita clipping y hereda los tokens `--op-*` del workspace sin escribir ni
+buscar nodos en `document.body`. El host está por encima del contenido (`z-index:30`) y por debajo
+del drawer inline (`z-index:40`); no crea un manager, provider, registro ni API pública de overlays.
 
-Dirección recomendada para una futura migración Dashboard: un host de overlay **local al workspace**
-dentro del boundary operational, suministrado al control Dashboard-owned. Conserva portal, evita
-clipping y hereda tokens. Renderizar dentro del header arriesga clipping/stacking; un host global
-ampliaría arquitectura sin consumidores demostrados; un contrato opcional de container en el
-primitive propagaría complejidad a Client/Worker. No se implementa ninguno en este corte.
+`LanguageSwitcher` acepta `portalContainer?: HTMLElement | null`. Dashboard proporciona ese destino;
+si falta, Client y Worker conservan el fallback compatible a `document.body`. El host se desmonta con
+el shell, no lo usa el drawer móvil y `LanguageSwitcher` es su único consumidor actual. Cualquier
+nuevo consumidor requiere una auditoría propia antes de reutilizarlo.
 
 ## Dependencias legacy
 
 `LanguageSwitcher` depende de `button`, `button--ghost`, `card`, `card--neutral`, `type-label`,
 `type-body-sm`, `NavbarShared.module.css`, `NavbarLinkList.module.css`, tokens `--radius-*`,
-`--button-*`, `--navbar-*`, animaciones globales `navbarFadeIn*`, backdrop y portal a `body`. No
-contiene `--op-*`; Client y Worker no cargan estilos operational. Dashboard aún consume el
-primitive, por lo que una futura migración no debe modificar su CSS compartido.
+`--button-*`, `--navbar-*`, animaciones globales `navbarFadeIn*` y backdrop. No contiene estilos
+`--op-*`; Dashboard los pone a disposición mediante el host local, mientras Client y Worker no
+cargan estilos operational.
 
 ## Cobertura añadida
 
-La suite caracteriza dropdown, modal/backdrop, segundo click, exterior, Escape y retorno de foco,
+La suite caracteriza dropdown, modal/backdrop, segundo click con retorno explícito al trigger,
+exterior, Escape y retorno de foco,
 opción actual, cookie, Profile, prioridad Admin/Profile/Worker, rutas localizada/raíz/anidada y la
-ruta sin prefijo. Los guards fijan los consumidores, los tres contexts, cookie, pathname/router,
-portal a `document.body`, CSS legacy y ausencia de `--op-*`.
+ruta sin prefijo. También prueba el destino local explícito, el fallback y que el host pertenece al
+workspace, desaparece al desmontarlo y no participa en el drawer.
 
 ## Gaps y riesgos obligatorios
 
-1. Separar coordinación de cookie/complemento/navegación de la vista Dashboard sin crear provider
-   global ni cambiar Client/Worker.
-2. Definir host operational Dashboard para portal y convivencia con overlays.
-3. Decidir manejo de fallos de cookie y rechazo remoto; hoy pueden dejar preferencia/URL divergentes.
-4. Definir preservación de query/hash y ruta sin locale antes de reutilizar la operación.
-5. Validar visualmente foco, posicionamiento, scroll, resize, stacking, móvil y los tres idiomas.
-6. Confirmar si `I18nInitializer` y `havenova_lang` se retiran o integran en un corte separado.
-7. Definir retorno de foco coherente para cierre por trigger, exterior y backdrop.
+1. Decidir manejo de fallos de cookie y rechazo remoto; hoy pueden dejar preferencia/URL divergentes.
+2. Definir preservación de query/hash y ruta sin locale antes de reutilizar la operación.
+3. Validar visualmente foco, posicionamiento, scroll, resize, stacking, móvil y los tres idiomas.
+4. Confirmar si `I18nInitializer` y `havenova_lang` se retiran o integran en un corte separado.
 
 ## Decisión y readiness
 
 La evidencia respalda URL localizada como fuente del idioma renderizado, cookie como preferencia de
 entrada, complemento como preferencia persistida de identidad y middleware como resolver de rutas
-sin locale. La futura vista Dashboard debe recibir idioma, acción y labels resueltos; no debe elegir
-contexts ni portar CSS legacy. El control actual sigue siendo un bridge para Client y Worker.
+sin locale. Dashboard sólo cambia ownership del portal; no cambia la coordinación Admin → Profile →
+Worker, navegación, cookies ni `havenova_lang`.
 
-Readiness final: `PARTIALLY_READY`. Existe evidencia suficiente para diseñar la frontera, pero no
-para iniciar la composición Dashboard hasta resolver explícitamente los gaps de operación y host
-operational. No se modificó producción ni se migró visualmente ningún consumidor.
+Readiness final: `READY` para compatibilidad funcional y visual, ownership del portal, foco,
+navegación localizada, cookies/persistencia y compatibilidad Client/Worker. Permanece pendiente el
+gate visual manual; no bloquea la evidencia automatizada ni autoriza reutilizar el host.

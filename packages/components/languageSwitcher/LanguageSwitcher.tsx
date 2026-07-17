@@ -30,6 +30,7 @@ interface LanguageSwitcherProps {
   dropdownPlacement?: 'top' | 'bottom';
   panelVariant?: 'default' | 'navbar';
   labels?: ResolvedNavbarLanguageSwitcher;
+  portalContainer?: HTMLElement | null;
 }
 
 type DropdownPosition = {
@@ -43,6 +44,7 @@ export default function LanguageSwitcher({
   dropdownPlacement = 'bottom',
   panelVariant = 'default',
   labels,
+  portalContainer,
 }: LanguageSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -97,9 +99,12 @@ export default function LanguageSwitcher({
     ? (labels?.closeButtonLabel ?? 'Close language selector')
     : `${labels?.currentLanguageLabel ?? labels?.title ?? 'Language'}: ${currentLanguage.label}`;
 
-  const closeSwitcher = () => {
+  const closeSwitcher = ({ restoreFocus = true }: { restoreFocus?: boolean } = {}) => {
     setIsOpen(false);
-    triggerRef.current?.focus();
+
+    if (restoreFocus) {
+      triggerRef.current?.focus();
+    }
   };
 
   useFocusTrap({
@@ -107,7 +112,7 @@ export default function LanguageSwitcher({
     containerRef: panelRef,
     initialFocusRef: currentOptionRef,
     returnFocusRef: triggerRef,
-    onEscape: closeSwitcher,
+    onEscape: () => closeSwitcher({ restoreFocus: false }),
   });
 
   useEffect(() => {
@@ -208,7 +213,7 @@ export default function LanguageSwitcher({
           type="button"
           className={styles.modalBackdrop}
           aria-label={labels?.closeButtonLabel ?? 'Close language selector'}
-          onClick={closeSwitcher}
+          onClick={() => closeSwitcher()}
           tabIndex={isOpen ? 0 : -1}
         />
       ) : null}
@@ -294,7 +299,14 @@ export default function LanguageSwitcher({
         aria-label={triggerLabel}
         aria-expanded={isOpen}
         aria-controls={menuId}
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {
+          if (isOpen) {
+            closeSwitcher();
+            return;
+          }
+
+          setIsOpen(true);
+        }}
         title={triggerLabel}
       >
         <HiMiniLanguage aria-hidden />
@@ -303,7 +315,12 @@ export default function LanguageSwitcher({
         ) : null}
       </button>
 
-      {isMounted ? (createPortal(switcherContent, document.body) as unknown as JSX.Element) : null}
+      {isMounted
+        ? (createPortal(
+            switcherContent,
+            portalContainer ?? document.body
+          ) as unknown as JSX.Element)
+        : null}
     </div>
   );
 }

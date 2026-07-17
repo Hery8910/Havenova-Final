@@ -91,6 +91,22 @@ describe('LanguageSwitcher', () => {
     expect(screen.queryByRole('button', { name: 'Deutsch' })).not.toBeInTheDocument();
   });
 
+  it('uses an explicit local portal container when one is supplied', async () => {
+    const portalContainer = document.createElement('div');
+    portalContainer.id = 'dashboard-language-switcher-overlay-host';
+    document.body.append(portalContainer);
+    const { unmount } = setup({ portalContainer });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Current language: English' }));
+    const panel = await screen.findByLabelText('Language');
+
+    expect(portalContainer).toContainElement(panel.closest('div'));
+
+    unmount();
+    expect(portalContainer).toBeEmptyDOMElement();
+    portalContainer.remove();
+  });
+
   it('switches language and navigates to the same path with the new locale prefix', async () => {
     const setLanguage = jest.fn().mockResolvedValue(undefined);
     setup({ profileContext: { setLanguage } });
@@ -130,7 +146,7 @@ describe('LanguageSwitcher', () => {
 
     fireEvent.click(trigger);
     await waitFor(() => expect(panel).toHaveAttribute('aria-hidden', 'true'));
-    expect(trigger).not.toHaveFocus();
+    expect(trigger).toHaveFocus();
 
     fireEvent.click(trigger);
     fireEvent.keyDown(document, { key: 'Escape' });
@@ -138,6 +154,21 @@ describe('LanguageSwitcher', () => {
       expect(panel).toHaveAttribute('aria-hidden', 'true');
       expect(trigger).toHaveFocus();
     });
+  });
+
+  it('restores focus once when Escape closes the panel', async () => {
+    setup();
+
+    const trigger = screen.getByRole('button', { name: 'Current language: English' });
+    fireEvent.click(trigger);
+    await screen.findByLabelText('Language');
+    const focus = jest.spyOn(trigger, 'focus');
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    await waitFor(() => expect(trigger).toHaveFocus());
+    expect(focus).toHaveBeenCalledTimes(1);
+    focus.mockRestore();
   });
 
   it('closes without persistence or navigation when selecting the current language', async () => {
@@ -220,7 +251,7 @@ describe('LanguageSwitcher', () => {
 
     expect(source).toMatch(/AdminContext[\s\S]*ProfileContext[\s\S]*WorkerContext/);
     expect(source).toContain("Cookies.set('lang', nextLanguage");
-    expect(source).toContain('createPortal(switcherContent, document.body)');
+    expect(source).toContain('portalContainer ?? document.body');
     expect(source).toContain("router.push(segments.join('/'))");
     expect(`${source}\n${styles}`).not.toContain('--op-');
     expect(dashboardHeader).toContain('<LanguageSwitcher');

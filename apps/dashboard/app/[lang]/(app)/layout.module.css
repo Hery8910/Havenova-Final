@@ -60,6 +60,17 @@
   scrollbar-width: thin;
 }
 
+.languageSwitcherOverlayHost {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  pointer-events: none;
+}
+
+.languageSwitcherOverlayHost > * {
+  pointer-events: auto;
+}
+
 .mobileNavTrigger,
 .mobileNavClose {
   display: inline-flex;

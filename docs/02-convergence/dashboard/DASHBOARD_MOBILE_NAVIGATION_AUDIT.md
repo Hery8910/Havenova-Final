@@ -18,9 +18,9 @@ inicial va al cierre y `Tab` queda contenido; al cerrar localmente restaura el t
 El drawer cubre la ventana y no almacena tokens ni mezcla identidad Client/Worker. Rutas vienen de
 `getDashboardNavSections`; autorización sigue siendo server/BFF, no visibilidad UI.
 
-El patrón inline demuestra que un futuro host local podría heredar foundation sin el problema del
-portal global de LanguageSwitcher, pero no se crea ni diseña aquí. No debe confundirse con dropdown
-LanguageSwitcher ni account menu Client-owned.
+El drawer continúa inline y excluido del host local de `LanguageSwitcher`; no porta su contenido ni
+cambia su scroll lock. El host es propiedad del workspace sólo para ese selector y no debe
+confundirse con el drawer ni con un account menu Client-owned.
 
 Desktop colapsado conserva `PARTIALLY_READY` por revisión visual y foco pendientes; no recibe
 semántica modal, trap ni scroll lock en este corte.
