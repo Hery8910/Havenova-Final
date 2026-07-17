@@ -80,12 +80,18 @@ deudas a descomponer, no autorización para convertir el componente entero en sh
 - Secciones usan botón, `aria-expanded` y `aria-controls`; rutas usan enlaces; logout es botón.
 - El nav tiene nombre accesible, las secciones nombran sus listas y todos los iconos son decorativos.
 - La sección activa se abre al cargar/cambiar pathname; el estado de expansión conserva una sección
-  existente cuando cambian los datos.
+  existente cuando cambian los datos. En la implementación actual, intentar cerrar la sección que
+  contiene la ruta activa la reabre durante la sincronización; es un contrato observado que una
+  futura migración debe decidir explícitamente, no alterar de forma incidental.
 - Colapso controlado, breakpoint, navegación por teclado, foco visible, texto largo y ambos temas
   requieren pruebas de comportamiento y revisión visual humana antes de sustituir legacy.
 
-No existe test dedicado de SideNav. Los guards actuales sólo lo clasifican como compatibility
-island; esto es insuficiente como prueba de los contratos anteriores.
+La caracterización en `tests/jest/components/sidenav.test.jsx` cubre el activo y los nombres
+accesibles en modo icon-only, los controles nativos de sección (`type="button"`, `aria-expanded` y
+`aria-controls`), el colapso controlado y no controlado, la delegación de `onItemSelect`, los
+listeners de `matchMedia` y su cleanup, además de la ausencia segura de esa API. También preserva
+los modelos localizados de Dashboard y ProfileNav y verifica que la isla compartida no adopte tokens
+`--op-*`. Los guards estructurales siguen siendo complementarios, no sustitutos de estas pruebas.
 
 ## Accesibilidad y riesgos
 
@@ -100,6 +106,11 @@ La semántica base es adecuada (nav, links, botones, `aria-current`, labels). Ri
    responsive; debe cubrirse antes de cambiarlo.
 5. Cambiar los tokens/classes compartidos puede afectar Client Profile aunque sólo se pruebe
    Dashboard.
+6. La expansión de una sección activa no puede permanecer cerrada con el efecto actual; queda
+   caracterizada, pero no evaluada todavía como decisión de UX.
+7. Jest puede probar la semántica nativa de botón y la delegación de callbacks, pero la activación
+   real con teclado, foco visible de enlaces y transferencia de foco dentro del drawer requieren la
+   revisión manual/browser indicada antes de una migración visual.
 
 ## Decisión arquitectónica y frontera propuesta
 
@@ -126,8 +137,9 @@ Client Profile permanece en legacy y no debe recibir estilos operacionales.
    contrato.
 
 Criterio de aceptación: sin cambio de rutas, permisos, modelo ni Client Profile; navegación y
-logout conservan semántica; no hay `--op-*` fuera del boundary Dashboard; tests y revisión manual
-documentan foco, responsive y locales.
+logout conservan semántica; no hay `--op-*` fuera del boundary Dashboard; la caracterización de la
+primitive y los dos modelos consumidores está verde, y la revisión manual documenta foco,
+responsive y locales antes de cualquier migración.
 
 Diferido explícitamente: migración CSS/markup, SideNav de Client Profile, Worker, Auth, Users,
 ThemeToggler, LanguageSwitcher, alertas, loading, permisos/capabilities y limpieza de legacy.
