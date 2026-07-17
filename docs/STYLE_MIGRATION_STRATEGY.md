@@ -53,15 +53,17 @@ El frame, header, topbar móvil, overlay, drawer, controles propios del shell y 
 `DashboardShellNav` usan `--op-*`; ya no montan `card`, `card--*`, `button`, `button--*` ni
 helpers de animación legacy. La navegación Dashboard se implementa en su adapter app-owned y sus
 reglas viven en `operational/shell.css`, limitadas al workspace autenticado. `SideNav` sigue sin
-cambios como compatibility island para `ProfileNav` de Client. `ThemeToggler`,
-`LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading` también permanecen legacy.
+cambios como compatibility island para `ProfileNav` de Client. Dashboard sustituyó su consumo de
+`ThemeToggler` por `DashboardThemeControl`, una composición local del header que consume sólo tokens
+`--op-*` scoped y recibe estado/acción ya resueltos. El primitive compartido, `LanguageSwitcher`,
+`AlertViewport`/`AlertPopup` y `Loading` permanecen legacy donde todavía tienen consumidores.
 Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
 
 La auditoría de [ThemeToggler](02-convergence/dashboard/THEME_TOGGLER_COMPATIBILITY_ISLAND_AUDIT.md)
 confirma que su renderizado compartido depende de providers de sesión, clases y tokens legacy de
-Client. Antes de sustituirlo en Dashboard hay que caracterizar sus efectos de documento/storage y
-separar un contrato de estado resuelto de la futura composición visual Dashboard-local. No se añaden
-tokens operational al control compartido.
+Client. Dashboard lo sustituye sólo después de caracterizar sus efectos de documento/storage y de
+separar un contrato resuelto; no se añaden tokens operational al control compartido ni se crea un
+primitive nuevo sin otro consumidor demostrado.
 
 Estos contratos son puentes temporales. No se eliminan, renombran ni se trasladan a la foundation
 operacional durante una migración de shell. Cada consumidor debe migrarse explícitamente o seguir

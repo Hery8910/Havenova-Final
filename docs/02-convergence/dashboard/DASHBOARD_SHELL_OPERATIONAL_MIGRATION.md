@@ -8,7 +8,8 @@
 ## Componentes migrados
 
 - `DashboardWorkspaceShell`: frame, columnas, workspace continuo, topbar móvil, overlay y drawer.
-- `DashboardShellHeader`: contexto, identidad y superficies propias.
+- `DashboardShellHeader`: contexto, identidad, superficies propias y `DashboardThemeControl`, una
+  composición app-owned que recibe `theme`, acción y labels ya resueltos por Admin.
 - `DashboardShellNav`: composición de navegación Dashboard-owned para desktop y drawer, con un
   único modelo en `dashboardShell.ts`, estado activo, grupos expandibles, colapso controlado y
   labels accesibles icon-only.
@@ -19,13 +20,14 @@
 El boundary `data-ui-foundation="operational"` activa tokens `--op-*` sin redefinir legacy. Las
 reglas de `DashboardShellNav` residen en `packages/styles/operational/shell.css` y se limitan a ese
 boundary; no usan clases legacy. `SideNav` permanece como primitive legacy sólo para `ProfileNav`
-del Client. `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users
-siguen siendo compatibility islands. Client y Worker no importan CSS operacional.
+del Client. Dashboard ya no consume `ThemeToggler`: su control de tema local no descubre contexts ni
+escribe DOM/storage. `ThemeToggler` continúa como compatibility island para Client y Worker;
+`LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users siguen pendientes. Client y
+Worker no importan CSS operacional.
 
-La auditoría de `ThemeToggler` lo mantiene como compatibility island: Dashboard todavía usa su
-renderizado legacy dentro del header. Una futura composición local sólo será elegible tras
-caracterizar el estado de tema, sus escrituras de documento/storage y la accesibilidad del control;
-no cambia Client ni Worker.
+La composición Dashboard conserva el ownership vigente: bootstrap antes de hidratar y complemento
+Admin después; el control local sólo solicita el siguiente valor `light|dark`. No se promovió una
+abstracción compartida especulativa ni se cambió Client, Worker o `LanguageSwitcher`.
 
 La diferencia visual intencional es un plano de workspace continuo, sin el frame de tarjetas y
 gradientes anterior. La navegación Dashboard ya forma parte de esa composición. La siguiente
@@ -35,8 +37,7 @@ frontera elegible es otra isla compartida del shell auditada independientemente;
 
 No se realizó revisión visual interactiva en esta ejecución: el entorno de validación no dispone de
 un navegador fiable para comprobar el layout runtime. Antes del merge final de la fase, una revisión
-humana debe comprobar tema claro y oscuro; `de`, `en` y `es`; desktop expandido y colapsado;
-tablet; móvil con drawer abierto y cerrado; el label alemán largo; hover, foco y activo; zoom al
-200 %; ausencia de overflow; y la alineación con el workspace operational. También debe confirmar
-que el cierre desde un enlace del drawer conserva el scroll lock y el retorno de foco que posee
-`DashboardWorkspaceShell`.
+humana debe comprobar tema claro/oscuro y recargas con ambos valores de `localStorage.theme`,
+convergencia bootstrap/Admin, `de`, `en` y `es`, desktop, tablet, móvil, label alemán largo,
+hover, foco, pressed, zoom 200 %, ausencia de overflow y ausencia de cambio de tamaño durante
+hidratación. Por ello el gate visual y la confirmación total de FOUC siguen pendientes.

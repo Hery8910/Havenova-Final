@@ -2,7 +2,7 @@
 
 ## Alcance y estado
 
-- Estado: `READY_FOR_DASHBOARD_COMPOSITION` — el control visual aún no está migrado.
+- Estado: `DASHBOARD_CONSUMER_MIGRATED` — Dashboard usa una composición operational local; Client y Worker conservan la isla legacy.
 - Fecha: `2026-07-17`.
 - Baseline de navegación Dashboard: `27f8d6e`.
 - Alcance: estado de tema compartido, renderizado de `ThemeToggler` y sus consumidores runtime.
@@ -13,14 +13,14 @@ documento después de hidratar; ThemeToggler no produce efectos externos.
 
 ## Inventario y consumidores runtime
 
-| Pieza               | Ubicación                                                                   | Finalidad y variante                                               | Riesgo al modificarla                                         |
-| ------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------- |
-| Control compartido  | `packages/components/themeToggler/ThemeToggler.tsx`                         | Botón binario `icon` o `icon-with-value`; `ghost` o `surface`      | Afecta todas las superficies listadas                         |
-| Estilos del control | `packages/components/themeToggler/ThemeToggler.module.css`                  | Iconos animados, pressed, foco y valor                             | Depende de tokens/clases legacy                               |
-| Dashboard           | `apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellHeader.tsx` | Icon-only `surface`, labels resueltos por locale                   | Puede alterar header operational y el único control Dashboard |
-| Client navbar       | `NavbarDesktopView`, `NavbarTabletView`, `NavbarMobileView`                 | Icon-only en desktop/tablet; icono con valor en preferencias móvil | Puede afectar navegación pública/autenticada Client           |
-| Client Profile      | `SettingsThemeControl.tsx`                                                  | Icono con valor dentro de preferencias                             | Puede alterar perfil tenant-specific                          |
-| Worker              | `apps/worker/app/[lang]/(app)/profile/page.tsx`                             | Icono con valor `surface` en preferencias                          | Puede alterar la única superficie Worker que lo consume       |
+| Pieza               | Ubicación                                                   | Finalidad y variante                                               | Riesgo al modificarla                                   |
+| ------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------- |
+| Control compartido  | `packages/components/themeToggler/ThemeToggler.tsx`         | Botón binario `icon` o `icon-with-value`; `ghost` o `surface`      | Afecta todas las superficies listadas                   |
+| Estilos del control | `packages/components/themeToggler/ThemeToggler.module.css`  | Iconos animados, pressed, foco y valor                             | Depende de tokens/clases legacy                         |
+| Dashboard           | `DashboardShellHeader.tsx` → `DashboardThemeControl.tsx`    | Composición app-owned, contrato Admin y labels por locale          | No propaga operational al primitive ni a otras apps     |
+| Client navbar       | `NavbarDesktopView`, `NavbarTabletView`, `NavbarMobileView` | Icon-only en desktop/tablet; icono con valor en preferencias móvil | Puede afectar navegación pública/autenticada Client     |
+| Client Profile      | `SettingsThemeControl.tsx`                                  | Icono con valor dentro de preferencias                             | Puede alterar perfil tenant-specific                    |
+| Worker              | `apps/worker/app/[lang]/(app)/profile/page.tsx`             | Icono con valor `surface` en preferencias                          | Puede alterar la única superficie Worker que lo consume |
 
 No hay import runtime en Dashboard Auth, Client Auth, Worker Auth, Users, alertas, loading ni
 LanguageSwitcher. Las búsquedas completas no muestran consumidores adicionales fuera de los
@@ -39,12 +39,13 @@ un selector de tres opciones.
 | Mutación/persistencia de entidad    | `setTheme` → `updateEntity`/`updateProfile`, cache local y servicio BFF | Cada complemento de sesión           |
 | Atributo DOM y clave global `theme` | `synchronizeDocumentTheme` del complemento de sesión                    | Complemento de sesión por aplicación |
 | FOUC inicial Dashboard              | `createDashboardThemeBootstrapScript` antes de `<body>`                 | Bootstrap Dashboard                  |
-| Renderizado del control             | `ThemeToggler` compartido                                               | `packages/components`                |
+| Renderizado Dashboard               | `DashboardThemeControl` local                                           | Header Dashboard                     |
+| Renderizado Client y Worker         | `ThemeToggler` compartido                                               | `packages/components`                |
 
-El control consulta opcionalmente los tres contextos y prioriza implícitamente `Admin → Profile →
-Worker`; en los árboles runtime actuales sólo debe existir el contexto propio de cada aplicación.
-Su responsabilidad queda limitada a resolver contexto, representar estado y llamar a `setTheme`;
-no es owner de `document` ni de storage.
+`ThemeToggler` consulta opcionalmente los tres contextos y prioriza implícitamente `Admin → Profile
+→ Worker`; sólo permanece runtime en Client y Worker. Dashboard ya no lo consume: el header resuelve
+`admin.theme`, `setTheme` y labels completos, y entrega el contrato mínimo al botón local. El nuevo
+control no consulta contextos ni es owner de `document` o storage.
 
 ## Contrato funcional observado
 
@@ -145,20 +146,15 @@ primitive compartido permanece para Client y Worker hasta que sus consumidores s
 separado. Esta decisión mantiene una sola fuente de verdad funcional por app sin forzar una nueva
 abstracción compartida especulativa.
 
-## Frontera futura y aceptación
+## Migración Dashboard y validación pendiente
 
-Secuencia recomendada:
+Dashboard ya cumple el contrato binario accesible mediante `DashboardThemeControl`: botón nativo,
+estado `aria-pressed`, nombre y `title` que comunican tema actual y acción siguiente, icono
+decorativo, foco visible y callback del siguiente tema. Sus estilos sólo emplean `--op-*` dentro del
+workspace operational y no copian markup, clases, blur ni animación del primitive legacy.
 
-1. caracterizar el control y los efectos de provider con los gaps obligatorios;
-2. decidir y aislar un único owner de la escritura DOM/storage antes de duplicar el renderizado;
-3. crear el control visual Dashboard-local contra el contrato ya resuelto;
-4. revisar visualmente claro/oscuro, `de/en/es`, teclado, foco, zoom y header responsive;
-5. conservar Client y Worker legacy, y reevaluar el primitive sólo con un segundo consumidor
-   operational validado.
-
-Readiness: `READY_FOR_DASHBOARD_COMPOSITION`. El contrato visible, los tres contexts, bootstrap
-Dashboard, ownership posthidratación y fallos de storage están caracterizados. La futura migración
-será aceptable cuando Dashboard no renderice ThemeToggler legacy, mantenga el contrato funcional y
-accesible, no añada operational a Client/Worker y complete revisión visual/hidratación real; JSDOM
-no demuestra por sí solo ausencia total de FOUC. Se difieren selector `system`, cross-tab, migración
-Client/Worker, limpieza de legacy, LanguageSwitcher, alertas, loading, Auth y Users.
+No se realizó revisión visual interactiva en este entorno ni se puede declarar ausencia total de
+FOUC. Permanecen pendientes de revisión humana: recarga con `localStorage.theme` claro/oscuro,
+convergencia bootstrap/Admin complement, cambio bidireccional, teclado, contraste, desktop, tablet,
+móvil, zoom 200 % y `de/en/es` con contenido largo. Se difieren selector `system`, cross-tab,
+migración Client/Worker, limpieza de legacy, `LanguageSwitcher`, alertas, loading, Auth y Users.

@@ -228,3 +228,21 @@ No se crea un provider global, soporte de sistema ni sincronización entre pesta
 
 Revisar durante la composición Dashboard para validar visualmente FOUC, foco, contraste y el header
 responsive; esa revisión no se sustituye por la caracterización JSDOM.
+
+## FE-017 — El control de tema operacional pertenece al header Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+Dashboard sustituye únicamente su consumidor de `ThemeToggler` por `DashboardThemeControl`, una
+composición local que recibe `theme: light|dark`, una acción de cambio y labels completos ya
+resueltos por `DashboardShellHeader` desde Admin. El control no consulta contexts ni escribe
+`document` o storage; bootstrap y complemento Admin conservan sus ownerships de efectos.
+
+Sus estilos se limitan a tokens `--op-*` scoped del workspace. Client y Worker conservan el
+primitive legacy, y `LanguageSwitcher` no se migra en este corte. No se promueve una abstracción
+compartida hasta demostrar otro consumidor operational compatible.
+
+Revisar cuando exista una validación visual humana de temas, FOUC, foco, contraste, responsive,
+zoom y los tres idiomas; JSDOM no sustituye ese gate.

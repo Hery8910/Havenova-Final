@@ -106,6 +106,17 @@ describe('ThemeToggler public contract', () => {
       resolve(root, 'apps/dashboard/app/[lang]/(app)/dashboardThemeBootstrap.ts'),
       'utf8'
     );
+    const dashboardThemeControl = readFileSync(
+      resolve(root, 'apps/dashboard/app/[lang]/(app)/components/shell/DashboardThemeControl.tsx'),
+      'utf8'
+    );
+    const dashboardThemeControlStyles = readFileSync(
+      resolve(
+        root,
+        'apps/dashboard/app/[lang]/(app)/components/shell/DashboardThemeControl.module.css'
+      ),
+      'utf8'
+    );
     const profileSettings = readFileSync(
       resolve(
         root,
@@ -128,7 +139,12 @@ describe('ThemeToggler public contract', () => {
       'packages/contexts/worker/WorkerContext.tsx',
     ].map((path) => readFileSync(resolve(root, path), 'utf8'));
 
-    expect(dashboardHeader).toContain('<ThemeToggler');
+    expect(dashboardHeader).not.toContain('ThemeToggler');
+    expect(dashboardHeader).toContain('<DashboardThemeControl');
+    expect(dashboardThemeControl).not.toMatch(/data-theme|localStorage|document\.|ThemeProvider/);
+    expect(dashboardThemeControlStyles).toContain('--op-');
+    expect(clientNavbarViews.join('\n')).not.toContain('DashboardThemeControl');
+    expect(workerProfile).not.toContain('DashboardThemeControl');
     expect(profileSettings).toContain('<ThemeToggler');
     expect(clientNavbarViews.every((source) => source.includes('<ThemeToggler'))).toBe(true);
     expect(workerProfile).toContain('<ThemeToggler');
