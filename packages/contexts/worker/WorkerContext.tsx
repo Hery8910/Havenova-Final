@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useMemo,
-  ReactNode,
-} from 'react';
+import { createContext, useContext, useCallback, useMemo, ReactNode } from 'react';
 import Cookies from 'js-cookie';
 import { useGlobalAlert } from '../alert';
 import { useI18n, getI18nFallbacks } from '../i18n';
@@ -15,6 +9,7 @@ import {
   SessionComplementSource,
   useSessionComplement,
 } from '../sessionComplement/useSessionComplement';
+import { readStoredTheme } from '../sessionComplement/themeEffects';
 import { getWorkerProfile, updateWorkerProfile } from '@havenova/services';
 import { resolvePreferredContactEmail } from '@havenova/utils';
 import {
@@ -42,10 +37,8 @@ export const WorkerContext = createContext<WorkerContextProps | undefined>(undef
 export const useOptionalWorkerContext = () => useContext(WorkerContext);
 
 const DEFAULT_WORKER_AVATAR = '/shared/avatars/avatar-1.png';
-const getWorkerStorageKey = (
-  clientId?: string | null,
-  userClientId?: string | null
-) => `hv-worker:${clientId || 'guest'}:${userClientId || 'guest'}`;
+const getWorkerStorageKey = (clientId?: string | null, userClientId?: string | null) =>
+  `hv-worker:${clientId || 'guest'}:${userClientId || 'guest'}`;
 
 const isSameWorkerState = (left: WorkerRecord | null, right: WorkerRecord) => {
   if (!left) return false;
@@ -80,12 +73,6 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
   const workerLoadFailedFallback =
     fallbackPopups.WORKER_LOAD_FAILED ?? fallbackPopups.GLOBAL_INTERNAL_ERROR;
 
-  const getStoredTheme = (): ThemeMode | null => {
-    if (typeof window === 'undefined') return null;
-    const stored = localStorage.getItem('theme');
-    return stored === 'dark' || stored === 'light' ? stored : null;
-  };
-
   const getStoredLanguage = (): WorkerLanguage | null => {
     if (typeof window === 'undefined') return null;
     const stored = Cookies.get('lang');
@@ -105,7 +92,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
         address: previous?.address,
         profileImage: previous?.profileImage ?? DEFAULT_WORKER_AVATAR,
         language: previous?.language ?? getStoredLanguage() ?? 'de',
-        theme: previous?.theme ?? getStoredTheme() ?? 'light',
+        theme: previous?.theme ?? readStoredTheme() ?? 'light',
         extra: previous?.extra,
         roles: previous?.roles,
         jobTitle: previous?.jobTitle,
@@ -135,7 +122,7 @@ export const WorkerProvider = ({ children }: { children: ReactNode }) => {
       phone: '',
       address: '',
       language: previous?.language ?? getStoredLanguage() ?? 'de',
-      theme: previous?.theme ?? getStoredTheme() ?? 'light',
+      theme: previous?.theme ?? readStoredTheme() ?? 'light',
     }),
     [createLocalDefault]
   );

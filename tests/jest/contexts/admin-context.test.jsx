@@ -56,6 +56,7 @@ function AdminThemeConsumer() {
 
 describe('AdminProvider', () => {
   beforeEach(() => {
+    jest.restoreAllMocks();
     localStorage.clear();
     mockUseAuth.mockReset();
     mockedGetAdminProfile.mockReset();
@@ -225,6 +226,29 @@ describe('AdminProvider', () => {
       expect(screen.getByTestId('admin-theme')).toHaveTextContent('dark');
       expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
       expect(localStorage.getItem('theme')).toBe('dark');
+    });
+  });
+
+  it('keeps Dashboard theme state when local storage reads or writes fail', async () => {
+    jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('storage unavailable');
+    });
+    jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('storage unavailable');
+    });
+
+    renderWithAppProviders(
+      <AdminProvider>
+        <AdminThemeConsumer />
+      </AdminProvider>
+    );
+
+    expect(await screen.findByTestId('admin-theme')).toHaveTextContent('light');
+    fireEvent.click(screen.getByRole('button', { name: 'Set dashboard dark theme' }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('admin-theme')).toHaveTextContent('dark');
+      expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
     });
   });
 });

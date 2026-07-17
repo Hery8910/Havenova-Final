@@ -210,3 +210,21 @@ persistencia, accesibilidad y un único owner de los efectos de documento/storag
 
 Revisar cuando esas pruebas estén cubiertas y exista una decisión para eliminar la duplicación de
 efectos sin cambiar el contrato de las tres aplicaciones.
+
+## FE-016 — El bootstrap aplica tema antes de hidratar; el complemento lo sincroniza después
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: theme effects and Dashboard readiness
+
+El bootstrap inline Dashboard sólo aplica `lang` y el tema `light|dark` almacenado antes de que se
+hidrate el contenido. Tras hidratar, el complemento Admin/Profile/Worker de cada aplicación es el
+único owner de sincronizar `data-theme` y la clave transicional `localStorage.theme`. ThemeToggler
+queda limitado a representar el valor y llamar a `setTheme`.
+
+Las operaciones de storage son best-effort y server-safe: un fallo no invalida el estado React ni
+una mutación remota. La clave global continúa siendo continuidad de arranque, no fuente de verdad.
+No se crea un provider global, soporte de sistema ni sincronización entre pestañas.
+
+Revisar durante la composición Dashboard para validar visualmente FOUC, foco, contraste y el header
+responsive; esa revisión no se sustituye por la caracterización JSDOM.

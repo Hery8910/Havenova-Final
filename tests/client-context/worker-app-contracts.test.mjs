@@ -2,14 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const workerAppLayoutSource = fs.readFileSync(
-  'apps/worker/app/[lang]/(app)/layout.tsx',
-  'utf8'
-);
-const workerHomeSource = fs.readFileSync(
-  'apps/worker/app/[lang]/(app)/page.tsx',
-  'utf8'
-);
+const workerAppLayoutSource = fs.readFileSync('apps/worker/app/[lang]/(app)/layout.tsx', 'utf8');
+const workerHomeSource = fs.readFileSync('apps/worker/app/[lang]/(app)/page.tsx', 'utf8');
 const workerLoginSource = fs.readFileSync(
   'apps/worker/app/[lang]/(auth)/user/login/page.tsx',
   'utf8'
@@ -26,10 +20,7 @@ const workerAuthContractSource = fs.readFileSync(
   'apps/worker/app/[lang]/(auth)/AUTH_FLOW_CONTRACT.md',
   'utf8'
 );
-const workerContextSource = fs.readFileSync(
-  'packages/contexts/worker/WorkerContext.tsx',
-  'utf8'
-);
+const workerContextSource = fs.readFileSync('packages/contexts/worker/WorkerContext.tsx', 'utf8');
 const workerProfileSource = fs.readFileSync(
   'apps/worker/app/[lang]/(app)/profile/page.tsx',
   'utf8'
@@ -69,7 +60,7 @@ test('worker app exposes a protected profile surface on top of WorkerContext', (
 });
 
 test('worker context keeps the same local continuity model as admin for complement bootstrap', () => {
-  assert.match(workerContextSource, /getStoredTheme/);
+  assert.match(workerContextSource, /readStoredTheme/);
   assert.match(workerContextSource, /getStoredLanguage/);
   assert.match(workerContextSource, /worker \?\? createLocalDefault\(null\)/);
   assert.doesNotMatch(workerContextSource, /if \(loading \|\| !worker\) return null/);

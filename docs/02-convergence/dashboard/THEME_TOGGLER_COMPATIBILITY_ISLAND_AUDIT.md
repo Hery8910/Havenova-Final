@@ -2,14 +2,14 @@
 
 ## Alcance y estado
 
-- Estado: `ACTIVE` — análisis y decisión; no autoriza una migración.
+- Estado: `READY_FOR_DASHBOARD_COMPOSITION` — el control visual aún no está migrado.
 - Fecha: `2026-07-17`.
 - Baseline de navegación Dashboard: `27f8d6e`.
 - Alcance: estado de tema compartido, renderizado de `ThemeToggler` y sus consumidores runtime.
 
-Esta auditoría no modifica `ThemeToggler`, los providers, el documento raíz, persistencia, estilos ni
-tokens operational. El control no equivale al sistema de tema: es una vista cliente que consume un
-complemento de sesión y duplica parte de sus efectos de documento.
+El control no equivale al sistema de tema: es una vista cliente que consume un complemento de
+sesión. El bootstrap Dashboard aplica el tema antes de hidratar; los complements sincronizan el
+documento después de hidratar; ThemeToggler no produce efectos externos.
 
 ## Inventario y consumidores runtime
 
@@ -31,20 +31,20 @@ adapters anteriores y de los tests que lo mockean.
 No existe `ThemeProvider` global. `ThemeMode` sólo admite `light | dark`; no hay estado `system` ni
 un selector de tres opciones.
 
-| Responsabilidad                     | Implementación observada                                                | Owner actual                                 |
-| ----------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------- |
-| Estado Dashboard                    | `AdminContext` sobre `useSessionComplement`                             | Complemento Admin                            |
-| Estado Client                       | `ProfileContext`                                                        | Complemento Profile Client                   |
-| Estado Worker                       | `WorkerContext` sobre `useSessionComplement`                            | Complemento Worker                           |
-| Mutación/persistencia de entidad    | `setTheme` → `updateEntity`/`updateProfile`, cache local y servicio BFF | Cada complemento de sesión                   |
-| Atributo DOM y clave global `theme` | efecto del complemento; también efecto duplicado de `ThemeToggler`      | Responsabilidad duplicada, no un owner único |
-| FOUC inicial Dashboard/Client       | script inline de sus layouts `app/[lang]`                               | Cada layout de aplicación                    |
-| Renderizado del control             | `ThemeToggler` compartido                                               | `packages/components`                        |
+| Responsabilidad                     | Implementación observada                                                | Owner actual                         |
+| ----------------------------------- | ----------------------------------------------------------------------- | ------------------------------------ |
+| Estado Dashboard                    | `AdminContext` sobre `useSessionComplement`                             | Complemento Admin                    |
+| Estado Client                       | `ProfileContext`                                                        | Complemento Profile Client           |
+| Estado Worker                       | `WorkerContext` sobre `useSessionComplement`                            | Complemento Worker                   |
+| Mutación/persistencia de entidad    | `setTheme` → `updateEntity`/`updateProfile`, cache local y servicio BFF | Cada complemento de sesión           |
+| Atributo DOM y clave global `theme` | `synchronizeDocumentTheme` del complemento de sesión                    | Complemento de sesión por aplicación |
+| FOUC inicial Dashboard              | `createDashboardThemeBootstrapScript` antes de `<body>`                 | Bootstrap Dashboard                  |
+| Renderizado del control             | `ThemeToggler` compartido                                               | `packages/components`                |
 
 El control consulta opcionalmente los tres contextos y prioriza implícitamente `Admin → Profile →
 Worker`; en los árboles runtime actuales sólo debe existir el contexto propio de cada aplicación.
-No es una API de estado neutral: mezcla renderizado, selección de provider, actualización del
-documento y persistencia global.
+Su responsabilidad queda limitada a resolver contexto, representar estado y llamar a `setTheme`;
+no es owner de `document` ni de storage.
 
 ## Contrato funcional observado
 
@@ -61,15 +61,16 @@ documento y persistencia global.
 - La acción es binaria: desde `dark` cambia a `light`; cualquier otro valor observado se trata como
   `light` y propone `dark`.
 - El click llama al `setTheme` del contexto resuelto. La mutación actualiza la entidad/cache y puede
-  sincronizar contra su BFF; el efecto de provider y el efecto del control escriben
+  sincronizar contra su BFF; sólo el efecto posthidratación del complemento escribe
   `document.documentElement[data-theme]` y la clave global `localStorage.theme`.
 - Recargar puede recuperar el valor global para reducir el flash, incluso antes de que llegue la
   entidad remota. La entidad remota posterior puede reemplazarlo.
 - No hay `prefers-color-scheme`, listener de `matchMedia`, `storage` listener ni sincronización
   explícita entre pestañas. Por tanto no existe contrato de sistema ni actualización cross-tab.
-- `matchMedia` ausente no afecta directamente a ThemeToggler: no lo usa. `localStorage` sólo tiene
-  guards de entorno (`typeof window`) en providers; lecturas/escrituras no están protegidas contra
-  excepciones del storage. Los scripts inline capturan su lectura, pero los efectos cliente no.
+- `matchMedia` ausente no afecta directamente a ThemeToggler: no lo usa. Los helpers de sesión
+  protegen evaluación SSR (`window`/`document` ausentes), lecturas, escrituras y eliminación de
+  caches scoped. Un fallo de storage degrada a `light` cuando se resuelve el valor y no interrumpe
+  estado React, mutación remota ni muestra alertas de producto.
 
 ## Semántica y accesibilidad
 
@@ -99,37 +100,35 @@ limpieza incidental. No hay `--op-*` en el control ni CSS operational cargado po
 
 ## Cobertura existente y gaps
 
-La caracterización vive en `tests/jest/components/theme-toggler.test.jsx` y en las suites de
-`AdminProvider`, `ProfileProvider` y `WorkerProvider`. El control se prueba como botón binario
-nombrado, con estado `aria-pressed`, acción siguiente, foco nativo, callback, tolerancia sin provider
-y sus límites legacy. Los contexts prueban inicialización, cambio directo, `data-theme` y la clave
-global sin exigir número u orden de escrituras. En particular, Admin cambia y persiste el tema sin
-montar ThemeToggler. Los guards verifican consumidores Dashboard/Client/Worker, bootstrap Dashboard,
-ausencia de `ThemeProvider`, `system`, `matchMedia` y `--op-*` compartidos.
+La caracterización vive en `tests/jest/components/theme-toggler.test.jsx`,
+`dashboard-theme-bootstrap.test.jsx`, `theme-effects.test.jsx` y las suites de `AdminProvider`,
+`ProfileProvider` y `WorkerProvider`. El control se prueba como botón binario nombrado, con estado
+`aria-pressed`, acción siguiente, foco nativo, callback, tolerancia sin provider y límites legacy.
+Los contexts prueban inicialización, cambio directo, `data-theme` y clave global sin exigir número u
+orden de escrituras. Admin cambia y persiste el tema sin montar ThemeToggler; los helpers toleran
+fallos de lectura/escritura/eliminación de storage. El bootstrap Dashboard se ejecuta contra claro,
+oscuro, ausencia, valor inválido y excepción, sin afirmar que JSDOM pruebe ausencia visual total de
+FOUC. Los guards verifican consumidores Dashboard/Client/Worker, bootstrap Dashboard, ausencia de
+`ThemeProvider`, `system`, `matchMedia` y `--op-*` compartidos.
 
-| Prioridad   | Gap antes de migrar                                                                              |
-| ----------- | ------------------------------------------------------------------------------------------------ |
-| Obligatorio | Falla controlada de storage, SSR sin `window` y hydration/Fouc de Dashboard                      |
-| Obligatorio | Decidir un único owner de cada escritura de `data-theme`/`localStorage`                          |
-| Obligatorio | Client Navbar completo conserva sus variantes legacy al extraer Dashboard                        |
-| Deseable    | Persistencia tras reload y reconciliación cache/entidad remota                                   |
-| Deseable    | Definir el bootstrap guest de Profile: la cache scoped puede ser reescrita por el perfil vacío   |
-| Deseable    | Foco, contraste, reduced motion, zoom 200 % y tooltip en ambos temas                             |
-| Diferido    | Política explícita de cambio de sistema y sincronización cross-tab; no existen hoy como contrato |
+| Prioridad | Gap antes de migrar                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| Deseable  | Persistencia tras reload y reconciliación cache/entidad remota                                   |
+| Deseable  | Revisión visual de las variantes legacy del navbar Client durante la composición Dashboard       |
+| Deseable  | Definir el bootstrap guest de Profile: la cache scoped puede ser reescrita por el perfil vacío   |
+| Deseable  | Foco, contraste, reduced motion, zoom 200 % y tooltip en ambos temas                             |
+| Diferido  | Política explícita de cambio de sistema y sincronización cross-tab; no existen hoy como contrato |
 
 ## Riesgos
 
-1. El control y los providers escriben el mismo atributo y storage, creando dos fuentes de efecto.
-2. `ThemeToggler` accede a `document` y `localStorage` sin `try/catch`; storage bloqueado puede
-   convertir un ajuste visual en error de efecto.
-3. El script inicial, cache local y entidad remota pueden discrepar, produciendo flash o un cambio
+1. El script inicial, cache local y entidad remota pueden discrepar, produciendo flash o un cambio
    tardío de tema tras hidratar.
-4. Worker no tiene script anti-flash equivalente a Dashboard/Client.
-5. La prioridad Admin/Profile/Worker es implícita y sería ambigua si más de un provider llegara a
+2. Worker no tiene script anti-flash equivalente a Dashboard/Client.
+3. La prioridad Admin/Profile/Worker es implícita y sería ambigua si más de un provider llegara a
    montarse por error.
-6. Migrar las clases/tokens del control para Dashboard propagaría `--op-*` o un cambio visual a
+4. Migrar las clases/tokens del control para Dashboard propagaría `--op-*` o un cambio visual a
    Client y Worker.
-7. `aria-pressed` comunica estado binario, pero la apariencia dark usa el tratamiento pressed de
+5. `aria-pressed` comunica estado binario, pero la apariencia dark usa el tratamiento pressed de
    button legacy; una migración visual no debe romper la relación entre semántica, foco y contraste.
 
 ## Decisión arquitectónica
@@ -157,10 +156,9 @@ Secuencia recomendada:
 5. conservar Client y Worker legacy, y reevaluar el primitive sólo con un segundo consumidor
    operational validado.
 
-Readiness: `PARTIALLY_READY`. El contrato visible, los tres contexts y el bootstrap Dashboard están
-caracterizados, pero la composición Dashboard no debe implementarse hasta decidir el único owner de
-los efectos DOM/storage y cubrir storage fallido e hidratación. La futura migración será aceptable
-cuando Dashboard no renderice ThemeToggler legacy, mantenga el contrato funcional y accesible, no
-añada operational a Client/Worker y la revisión visual/hidratación esté comprobada. Se difieren el
-selector `system`, cross-tab, migración Client/Worker, limpieza de legacy, LanguageSwitcher, alertas,
-loading, Auth y Users.
+Readiness: `READY_FOR_DASHBOARD_COMPOSITION`. El contrato visible, los tres contexts, bootstrap
+Dashboard, ownership posthidratación y fallos de storage están caracterizados. La futura migración
+será aceptable cuando Dashboard no renderice ThemeToggler legacy, mantenga el contrato funcional y
+accesible, no añada operational a Client/Worker y complete revisión visual/hidratación real; JSDOM
+no demuestra por sí solo ausencia total de FOUC. Se difieren selector `system`, cross-tab, migración
+Client/Worker, limpieza de legacy, LanguageSwitcher, alertas, loading, Auth y Users.

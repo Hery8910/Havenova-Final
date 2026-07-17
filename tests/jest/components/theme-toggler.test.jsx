@@ -66,11 +66,13 @@ describe('ThemeToggler public contract', () => {
 
   it('renders safely without an application theme provider', () => {
     mockHasAdminContext = false;
+    document.documentElement.setAttribute('data-theme', 'dark');
     render(<ThemeToggler />);
 
     expect(
       screen.getByRole('button', { name: 'Theme: Light mode. Switch to Dark mode' })
     ).toBeEnabled();
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
   });
 
   it('remains a legacy binary control without system or matchMedia dependencies', () => {
@@ -84,6 +86,7 @@ describe('ThemeToggler public contract', () => {
     );
 
     expect(source).not.toMatch(/matchMedia|prefers-color-scheme|system/);
+    expect(source).not.toMatch(/document\.documentElement|localStorage\./);
     expect(source).toContain("'button--ghost'");
     expect(source).toContain('NavbarShared.module.css');
     expect(`${source}\n${styles}`).not.toContain('--op-');
@@ -99,6 +102,10 @@ describe('ThemeToggler public contract', () => {
       resolve(root, 'apps/dashboard/app/[lang]/(app)/layout.tsx'),
       'utf8'
     );
+    const dashboardBootstrap = readFileSync(
+      resolve(root, 'apps/dashboard/app/[lang]/(app)/dashboardThemeBootstrap.ts'),
+      'utf8'
+    );
     const profileSettings = readFileSync(
       resolve(
         root,
@@ -106,6 +113,11 @@ describe('ThemeToggler public contract', () => {
       ),
       'utf8'
     );
+    const clientNavbarViews = [
+      'packages/components/client/navbar/NavbarDesktopView/NavbarDesktopView.tsx',
+      'packages/components/client/navbar/NavbarTabletView/NavbarTabletView.tsx',
+      'packages/components/client/navbar/NavbarMobileView/NavbarMobileView.tsx',
+    ].map((path) => readFileSync(resolve(root, path), 'utf8'));
     const workerProfile = readFileSync(
       resolve(root, 'apps/worker/app/[lang]/(app)/profile/page.tsx'),
       'utf8'
@@ -118,10 +130,14 @@ describe('ThemeToggler public contract', () => {
 
     expect(dashboardHeader).toContain('<ThemeToggler');
     expect(profileSettings).toContain('<ThemeToggler');
+    expect(clientNavbarViews.every((source) => source.includes('<ThemeToggler'))).toBe(true);
     expect(workerProfile).toContain('<ThemeToggler');
-    expect(dashboardLayout).toContain("localStorage.getItem('theme')");
-    expect(dashboardLayout).toContain("document.documentElement.setAttribute('data-theme', theme)");
-    expect(dashboardLayout).not.toMatch(/matchMedia|prefers-color-scheme|system/);
+    expect(dashboardLayout).toContain('createDashboardThemeBootstrapScript(params.lang)');
+    expect(dashboardBootstrap).toContain("localStorage.getItem('theme')");
+    expect(dashboardBootstrap).toContain(
+      "document.documentElement.setAttribute('data-theme', theme)"
+    );
+    expect(dashboardBootstrap).not.toMatch(/matchMedia|prefers-color-scheme|system/);
     expect(contextSources.join('\n')).not.toContain('ThemeProvider');
   });
 });
