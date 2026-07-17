@@ -59,6 +59,11 @@ cambios como compatibility island para `ProfileNav` de Client. Dashboard sustitu
 `AlertViewport`/`AlertPopup` y `Loading` permanecen legacy donde todavía tienen consumidores.
 Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
 
+La auditoría de `LanguageSwitcher` confirma que Dashboard todavía depende de un primitive que mezcla
+vista, cookie, complemento opcional, pathname, router y portal a `body`. El siguiente corte no debe
+copiar su CSS ni llevar `--op-*` al primitive: primero debe establecer una composición Dashboard-local
+y un host de overlay dentro del boundary operational. Hasta entonces no se modifica ningún consumidor.
+
 La auditoría de [ThemeToggler](02-convergence/dashboard/THEME_TOGGLER_COMPATIBILITY_ISLAND_AUDIT.md)
 confirma que su renderizado compartido depende de providers de sesión, clases y tokens legacy de
 Client. Dashboard lo sustituye sólo después de caracterizar sus efectos de documento/storage y de

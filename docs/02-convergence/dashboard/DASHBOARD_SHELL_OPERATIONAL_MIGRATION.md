@@ -21,9 +21,10 @@ El boundary `data-ui-foundation="operational"` activa tokens `--op-*` sin redefi
 reglas de `DashboardShellNav` residen en `packages/styles/operational/shell.css` y se limitan a ese
 boundary; no usan clases legacy. `SideNav` permanece como primitive legacy sólo para `ProfileNav`
 del Client. Dashboard ya no consume `ThemeToggler`: su control de tema local no descubre contexts ni
-escribe DOM/storage. `ThemeToggler` continúa como compatibility island para Client y Worker;
-`LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users siguen pendientes. Client y
-Worker no importan CSS operacional.
+escribe DOM/storage. `ThemeToggler` continúa como compatibility island para Client y Worker.
+`LanguageSwitcher` permanece como isla auditada `PARTIALLY_READY`: Dashboard no puede sustituirla
+hasta separar la coordinación de idioma y resolver un host de portal operational. `AlertViewport`,
+`Loading`, Dashboard Auth y Users siguen pendientes. Client y Worker no importan CSS operacional.
 
 La composición Dashboard conserva el ownership vigente: bootstrap antes de hidratar y complemento
 Admin después; el control local sólo solicita el siguiente valor `light|dark`. No se promovió una

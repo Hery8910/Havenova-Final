@@ -246,3 +246,18 @@ compartida hasta demostrar otro consumidor operational compatible.
 
 Revisar cuando exista una validación visual humana de temas, FOUC, foco, contraste, responsive,
 zoom y los tres idiomas; JSDOM no sustituye ese gate.
+
+## FE-018 — El futuro selector de idioma Dashboard no heredará el portal global legacy
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+La auditoría de `LanguageSwitcher` confirma que la URL localizada es la fuente efectiva del idioma
+renderizado, la cookie resuelve entradas sin locale y el complemento persiste la preferencia de
+identidad. El primitive legacy coordina esos tres elementos y porta su panel a `document.body`.
+
+Una futura composición Dashboard recibirá idioma, acción y labels ya resueltos. Su panel deberá usar
+un host de overlay local dentro de `[data-ui-foundation='operational']` para heredar tokens sin
+propagarlos a Client o Worker. Esta decisión no crea ese host, provider, hook ni router, ni autoriza
+migración visual antes de resolver fallos de persistencia y rutas/query/hash.
