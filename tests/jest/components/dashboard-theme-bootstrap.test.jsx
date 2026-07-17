@@ -36,7 +36,7 @@ describe('Dashboard theme bootstrap', () => {
     expect(document.documentElement).toHaveAttribute('data-theme', 'light');
   });
 
-  it('keeps the bootstrap ahead of body content and free of system media behavior', () => {
+  it('keeps the bootstrap as valid body content ahead of the Dashboard tree', () => {
     const root = process.cwd();
     const layoutSource = readFileSync(
       resolve(root, 'apps/dashboard/app/[lang]/(app)/layout.tsx'),
@@ -47,7 +47,8 @@ describe('Dashboard theme bootstrap', () => {
       'utf8'
     );
 
-    expect(layoutSource.indexOf('<script')).toBeLessThan(layoutSource.indexOf('<body'));
+    expect(layoutSource.indexOf('<body')).toBeLessThan(layoutSource.indexOf('<script'));
+    expect(layoutSource.indexOf('<script')).toBeLessThan(layoutSource.indexOf('<I18nProvider'));
     expect(bootstrapSource).not.toMatch(/matchMedia|prefers-color-scheme|system/);
   });
 });

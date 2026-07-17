@@ -91,6 +91,11 @@ existentes ante un error de carga incremental. Los nuevos tests son conductuales
 Estado posterior: `PARTIALLY_READY`, a la espera de que el propietario confirme el flujo autenticado
 sin rollback ni alternancia de requests. No habilita Slice B-D.
 
+El propietario confirmó posteriormente la interacción autenticada tras reiniciar el servidor y
+hacer recarga dura: valor estable, requests esperados, reset de filtros, selección del único
+resultado y ausencia de loop. Por tanto, las primitives locales que soportan Slice A quedan
+`READY`; la composición read-only completa de detalle sigue como corte posterior `PARTIALLY_READY`.
+
 Se verificó el contrato backend real antes de rectificar la pantalla: `GET /summary`, `GET /directory`
 y `GET /entries/:entryId` están bajo `protect + protectClient('homeServices') + admin`; el tenant
 se deriva de la sesión. El directorio limita `q` a 2-100 caracteres, `limit` a 1-50 y liga el cursor

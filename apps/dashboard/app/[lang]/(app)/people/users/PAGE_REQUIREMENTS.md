@@ -2,7 +2,8 @@
 
 ## Estado y autoridad
 
-`PARTIALLY_READY` pendiente de repetición manual autenticada, no contrato de producto. La autoridad sigue siendo Product Design Users v1;
+La infraestructura read-only de Slice A está `READY`; Users Directory como experiencia completa sigue
+`PARTIALLY_READY`. Ninguno sustituye el contrato de producto: la autoridad sigue siendo Product Design Users v1;
 su contrato de integración está `PLANNED`. Este documento describe únicamente la superficie de
 lectura implementada y no habilita Invitation (B), Acceptance (C) ni Lifecycle (D).
 
@@ -59,5 +60,16 @@ o superada ya no pueden aplicar su página. Los tests de comportamiento montan e
 timers falsos y cubren: un carácter sin request, búsqueda de dos caracteres con una única consulta,
 All/Invitations desde select y summary, y respuesta tardía ignorada.
 
-La clasificación permanece `PARTIALLY_READY` hasta que el propietario confirme manualmente
-escritura estable, búsqueda desde dos caracteres y alternancia estable All/Invitations sin loop.
+La revisión autenticada posterior del propietario, tras reiniciar el servidor y hacer recarga dura,
+cerró esta regresión: reportó valor escrito estable, peticiones esperadas de filtros y búsquedas,
+reset correcto de filtros, selección correcta del único resultado disponible y ausencia del loop.
+No se aportaron capturas ni se atribuyen estas comprobaciones a Codex. La infraestructura Slice A
+queda `READY`; la página completa permanece `PARTIALLY_READY` por el alcance de detalle pendiente.
+
+## Próximo corte autorizado
+
+`Users Directory read-only detail and Product Design composition`: contrastar la composición actual
+con Product Design, verificar el DTO read-only de detail y distinguir perfil inexistente, incompleto
+o fallo de mapping. Debe implementar lista izquierda + detalle derecho, empty state, identidad y
+Profile aprobados, fixtures representativos y retorno móvil/foco. No incluye mutaciones, Requests,
+actividad, permisos, nuevos filtros ni cambios de backend/auth.

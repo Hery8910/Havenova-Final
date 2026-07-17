@@ -13,8 +13,35 @@ La rectificación elimina la sincronización inversa durante la sesión. `search
 autoridad local, inicializada desde la ruta, y la URL recibe sólo el valor local estabilizado. Se
 añadieron tests de comportamiento con router/servicios mockeados y timers falsos para carácter
 único, búsqueda de dos caracteres, All/Invitations, summary y respuestas tardías. La clasificación
-posterior a la corrección es `PARTIALLY_READY`, no `READY`: falta que el propietario repita la
-validación autenticada de escritura, búsqueda y filtro sin loop.
+posterior a la corrección fue `PARTIALLY_READY` hasta repetir la validación autenticada.
+
+### Cierre de gate manual — 2026-07-17
+
+Heriberto reinició el servidor y efectuó una recarga dura. Su resultado reportado es: valor escrito
+estable; búsquedas y filtros emiten las peticiones esperadas; reset de filtros correcto; selección
+correcta del único resultado disponible; y ausencia de alternancia o loop de requests. No hay
+capturas ni escenarios adicionales atribuidos a Codex. Esta evidencia cierra la regresión de
+sincronización circular.
+
+- Estabilidad del texto, ausencia de rollback y comportamiento ante escritura rápida: aceptados por
+  el propietario.
+- Umbral de un carácter, búsqueda desde dos caracteres y borrado: aceptados dentro de la revisión
+  de búsquedas.
+- Transición `All → Invitations`, `Invitations → All` y selección desde summary: aceptadas dentro
+  de la revisión de filtros.
+- Cursor, deduplicación, requests obsoletos, load more, estados inline, aislamiento tenant y foco
+  móvil conservan la evidencia automatizada previa; no se declara una nueva prueba manual de ellos.
+
+La infraestructura read-only de Slice A queda `READY`: All/Invitations, búsqueda mínima,
+sincronización local → URL, cursor, dedupe, cancelación, load more, estados inline y navegación
+móvil del corte actual. Users Directory completo sigue `PARTIALLY_READY`: faltan la composición
+definitiva lista+detalle de Product Design, detail read-only completo, Profile, datos representativos,
+jerarquía visual y refinamiento responsive. Slice B y mutaciones permanecen fuera de alcance.
+
+El siguiente corte, sin iniciarlo aquí, es `Users Directory read-only detail and Product Design
+composition`: auditar Product Design y el DTO de detail, distinguir perfil inexistente/incompleto/
+mapping, y componer lista izquierda + detalle derecho con empty state, identidad/Profile aprobados,
+fixtures y retorno móvil/foco; sin ampliar backend ni añadir mutaciones.
 
 - Estado: `ACTIVE` — primera tarea de la Fase 2; no autoriza implementación.
 - Fecha: `2026-07-16`.

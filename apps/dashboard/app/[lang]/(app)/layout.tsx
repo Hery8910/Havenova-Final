@@ -71,12 +71,12 @@ export default async function LangLayout({
 
   return (
     <html lang={params.lang} suppressHydrationWarning>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: createDashboardThemeBootstrapScript(params.lang),
-        }}
-      />
       <body className={styles.body}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: createDashboardThemeBootstrapScript(params.lang),
+          }}
+        />
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>
             <AlertViewport />
