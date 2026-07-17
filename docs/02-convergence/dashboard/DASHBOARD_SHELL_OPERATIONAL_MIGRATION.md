@@ -38,6 +38,11 @@ La diferencia visual intencional es un plano de workspace continuo, sin el frame
 gradientes anterior. La navegación Dashboard ya forma parte de esa composición. La siguiente
 frontera elegible es otra isla compartida del shell auditada independientemente; no incluye Users.
 
+La preparación de Users v1 no amplía el shell ni crea un design system: la auditoría
+[`USERS_V1_GLOBAL_UI_PRIMITIVES_AUDIT.md`](USERS_V1_GLOBAL_UI_PRIMITIVES_AUDIT.md) limita el futuro
+corte a primitives de directorio Dashboard-local, tras verificar Slice A. Alertas, loading, dialogs,
+formularios y botones compartidos no se promueven por anticipación.
+
 ## Gate visual y estado de shell
 
 El intento técnico previo sin sesión fue bloqueado por el guard server-side, pero Heriberto realizó
