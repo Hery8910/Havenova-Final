@@ -6,7 +6,8 @@
 - Fecha: `2026-07-16`.
 - Base frontend: `05926152c19aa5585d98fcc91875d784b0c77e86`.
 - Backend verificado: `b25384eaadb55a5dfb5334babed97038247e5f10` (`2026-07-16`).
-- Product Design: contenido revisado el `2026-07-16`, sin commit/tag/branch registrado.
+- Product Design: `main` en commit `b9c5a6c27ca5824199faca41a96f01c7705a8caf`
+  (`2026-07-17`); documentos Users revisados el `2026-07-12`.
 
 Esta auditoría confronta Users v1 — Assisted Customer Onboarding — con el producto, backend
 y frontend observables. Es canónica para clasificar la evidencia de este repositorio, pero no
@@ -20,10 +21,13 @@ aprobada o a release-ready.
 
 ## Fuentes y jerarquía de autoridad
 
-1. Product Design, repositorio lógico `Maped Operations Product Design`,
-   `docs/02-domains/users/{DOMAIN,FLOWS,STATES_AND_ACTIONS,PRODUCT_NOTES,INTEGRATION_CONTRACT,IMPLEMENTATION_PLAN,VALIDATION_CHECKLIST}.md`.
-   Define Users v1, pero no registra `sourceRevision`: es `SOURCE_MISSING` para cerrar un
-   contrato reproducible.
+1. Product Design, [Maped Operations Product Design](https://github.com/Hery8910/Maped-Operations-Product-Design/tree/b9c5a6c27ca5824199faca41a96f01c7705a8caf),
+   commit `b9c5a6c27ca5824199faca41a96f01c7705a8caf` (`main`, consultado el
+   `2026-07-17`),
+   `docs/02-domains/users/{DOMAIN,FLOWS,STATES_AND_ACTIONS,PRODUCT_NOTES,INTEGRATION_CONTRACT,IMPLEMENTATION_PLAN,VALIDATION_CHECKLIST,HANDOFF}.md`.
+   `DOMAIN`, `FLOWS`, `STATES_AND_ACTIONS`, `PRODUCT_NOTES` y `HANDOFF` están
+   `CURRENT`; el contrato, los slices y la validación están `PLANNED`. La fuente
+   ya es reproducible, pero no convierte los contratos pendientes en aprobados.
 2. Backend, repositorio lógico `Backend`, commit
    `b25384eaadb55a5dfb5334babed97038247e5f10`,
    `docs/product-context/users-v1-assisted-customer-onboarding.md` y
@@ -38,6 +42,22 @@ La divergencia principal ya está declarada por el backend: `FRONTEND_INTEGRATIO
 handoff V2 `PENDING_RECTIFICATION`; Users v1 excluye estados genéricos, CRM y contenido de
 Requests. Los documentos locales de Users fechados el 10 de julio no pueden promocionarse a
 contrato vigente.
+
+### Confirmación de Product Design versionado
+
+La revisión `b9c5a6c` confirma la frontera usada en esta auditoría: Users v1 es onboarding
+asistido, no CRM ni administración genérica; Directory sólo autoriza All/Invitations, búsqueda,
+cursor, total de personas e invitaciones pendientes; y Overview sólo identidad/contacto relevante,
+kind, lifecycle y acciones legítimas. También precisa que super admin comparte la capacidad como
+excepción de soporte, phone y proposed service address son prefills opcionales, y el lifecycle debe
+distinguir pending, delivery failed y expired (con renew-and-resend) de accepted/revoked, que no
+permanecen como filas operativas duplicadas. Active/inactive, attention, Requests, Activity,
+Communication, Notes, permisos worker, sorting y page-size quedan diferidos.
+
+Por tanto, esta fuente cierra `SOURCE_MISSING` exclusivamente para la definición de producto. No
+altera `PARTIALLY_ALIGNED` ni los bloqueos backend: `INTEGRATION_CONTRACT.md` sigue `PLANNED` y
+requiere verificar autorización, proyección, resultados de entrega, ownership de propuestas,
+confirmación explícita, cooldown/historial y readiness de Service Requests.
 
 ## Inventario de implementación observado
 
@@ -84,8 +104,9 @@ de acceso cruzado rechazado.
 `PARTIALLY_ALIGNED`. Son preservables list/cursor/search/All/Invitations, selección con URL y
 respuesta responsive. Falta prueba desplegada de aislamiento, cursor, permisos, error/stale
 selection y origen/frescura de cada campo. Attention, active/inactive/locked, relación comercial
-y datos de Requests contradicen la frontera v1. La ausencia de revisión Product Design registrada
-impide `AUTHORITATIVE_ALIGNED` o `IMPLEMENTATION_READY`.
+y datos de Requests contradicen la frontera v1. Product Design ya tiene revisión reproducible,
+pero el contrato de lectura sigue `PLANNED`; por eso no alcanza `AUTHORITATIVE_ALIGNED` ni
+`IMPLEMENTATION_READY`.
 
 ### Slice B — Invitación asistida
 
@@ -132,8 +153,6 @@ B/C.
 
 ## Riesgos y preguntas abiertas
 
-- `SOURCE_MISSING`: registrar repositorio, ruta, commit/tag y fecha de Product Design antes del
-  primer PR funcional.
 - Contratar refresco/reconciliación de la proyección eventualmente consistente después de mutar.
 - Probar autorización cruzada, CSRF y denegación sin datos parciales en despliegue.
 - Decidir identidad global existente, ownership propuesta/confirmado, conflictos y resume.
@@ -146,11 +165,11 @@ El primer candidato es **Slice A — rectificación mínima de Directory y Overv
 feature: list/cursor/search/All/Invitations, selección, contexto responsive y Overview limitado.
 No incluye invitation ni mutaciones.
 
-No puede iniciarse hasta: (1) registrar revisión reproducible de Product Design y sus campos,
-estados y All/Invitations; (2) fijar la compatibilidad backend desde `b25384e`, permisos,
-summary/cursor y stale selection; (3) decidir qué UI V2 ocultar/retirar; (4) añadir pruebas de
-tenant correcto/rechazo cruzado, estados de lista y restore/foco; y (5) validar tres locales,
-teclado, temas y contenido largo contra backend desplegado.
+No puede iniciarse hasta: (1) fijar la compatibilidad backend desde `b25384e`, permisos,
+summary/cursor y stale selection contra la definición Product Design versionada; (2) decidir qué
+UI V2 ocultar/retirar; (3) añadir pruebas de tenant correcto/rechazo cruzado, estados de lista y
+restore/foco; y (4) validar tres locales, teclado, temas y contenido largo contra backend
+desplegado.
 
 ## Acciones que no deben iniciarse todavía
 
@@ -159,4 +178,3 @@ teclado, temas y contenido largo contra backend desplegado.
 - No reparar el formulario/filtros para hacerlos parecer aprobados ni eliminar candidatos/prototipo.
 - No actualizar dependencias, seguridad #11–#15, workflows ni entorno.
 - No declarar Users v1, Fase 2 o Havenova release-ready; `SEC-EXC-001` sigue bloqueando release.
-
