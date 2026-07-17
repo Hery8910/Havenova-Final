@@ -9,6 +9,7 @@ import { DashboardShellHeader } from './DashboardShellHeader';
 import { DashboardShellNav } from './DashboardShellNav';
 import { resolveDashboardHeaderMeta, type DashboardShellLang } from '../../dashboardShell';
 import { useLang } from '../../../../../../../packages/hooks';
+import { useFocusTrap } from '../../../../../../../packages/utils/accessibility/useFocusTrap';
 
 type DashboardWorkspaceShellProps = {
   children: React.ReactNode;
@@ -19,7 +20,10 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
   const lang = useLang() as DashboardShellLang;
   const dialogId = useId();
   const mobileNavTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileNavDialogRef = useRef<HTMLElement>(null);
+  const mobileNavCloseRef = useRef<HTMLButtonElement>(null);
   const wasMobileNavOpenRef = useRef(false);
+  const shouldRestoreMobileNavFocusRef = useRef(true);
   const [isNavCollapsed, setIsNavCollapsed] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const workspaceLabel = 'Dashboard workspace';
@@ -57,16 +61,40 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
     };
   }, [isMobileNavOpen]);
 
+  useFocusTrap({
+    enabled: isMobileNavOpen,
+    containerRef: mobileNavDialogRef,
+    initialFocusRef: mobileNavCloseRef,
+    onEscape: () => {
+      shouldRestoreMobileNavFocusRef.current = true;
+      setIsMobileNavOpen(false);
+    },
+  });
+
   useEffect(() => {
-    if (!isMobileNavOpen && wasMobileNavOpenRef.current) {
+    if (!isMobileNavOpen && wasMobileNavOpenRef.current && shouldRestoreMobileNavFocusRef.current) {
       mobileNavTriggerRef.current?.focus();
     }
     wasMobileNavOpenRef.current = isMobileNavOpen;
   }, [isMobileNavOpen]);
 
   useEffect(() => {
+    shouldRestoreMobileNavFocusRef.current = false;
     setIsMobileNavOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 1100px)');
+    const closeWhenDesktop = (event: MediaQueryListEvent) => {
+      if (!event.matches) {
+        shouldRestoreMobileNavFocusRef.current = false;
+        setIsMobileNavOpen(false);
+      }
+    };
+
+    media.addEventListener('change', closeWhenDesktop);
+    return () => media.removeEventListener('change', closeWhenDesktop);
+  }, []);
 
   return (
     <main className={styles.page} data-ui-foundation="operational">
@@ -95,7 +123,8 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
               aria-controls={dialogId}
               aria-expanded={isMobileNavOpen}
               onClick={() => {
-                setIsMobileNavOpen(true);
+                shouldRestoreMobileNavFocusRef.current = true;
+                setIsMobileNavOpen((current) => !current);
               }}
             >
               <span className={styles.mobileNavTriggerIcon} aria-hidden="true">
@@ -114,14 +143,24 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
       </section>
 
       {isMobileNavOpen ? (
-        <div
-          className={styles.mobileNavOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={`${dialogId}-title`}
-          id={dialogId}
-        >
-          <div className={styles.mobileNavPanel}>
+        <div className={styles.mobileNavOverlay}>
+          <div
+            className={styles.mobileNavBackdrop}
+            aria-hidden="true"
+            onClick={() => {
+              shouldRestoreMobileNavFocusRef.current = true;
+              setIsMobileNavOpen(false);
+            }}
+          />
+          <section
+            ref={mobileNavDialogRef}
+            className={styles.mobileNavPanel}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`${dialogId}-title`}
+            id={dialogId}
+            tabIndex={-1}
+          >
             <div className={styles.mobileNavPanelHeader}>
               <div className={styles.mobileNavPanelCopy}>
                 <h2 id={`${dialogId}-title`} className={styles.mobileNavPanelTitle}>
@@ -130,10 +169,12 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
               </div>
 
               <button
+                ref={mobileNavCloseRef}
                 type="button"
                 className={styles.mobileNavClose}
                 aria-label={mobileNavLabels.close}
                 onClick={() => {
+                  shouldRestoreMobileNavFocusRef.current = true;
                   setIsMobileNavOpen(false);
                 }}
               >
@@ -149,11 +190,12 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
                 showCollapseControl={false}
                 presentation="drawer"
                 onItemSelect={() => {
+                  shouldRestoreMobileNavFocusRef.current = false;
                   setIsMobileNavOpen(false);
                 }}
               />
             </div>
-          </div>
+          </section>
         </div>
       ) : null}
     </main>

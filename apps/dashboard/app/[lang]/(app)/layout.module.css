@@ -122,7 +122,15 @@
   background: var(--op-overlay);
 }
 
+.mobileNavBackdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
 .mobileNavPanel {
+  position: relative;
+  z-index: 1;
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
