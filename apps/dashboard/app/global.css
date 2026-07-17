@@ -1,9 +1,1 @@
-@import '../../../packages/styles/tokens.css';
-@import '../../../packages/styles/base.css';
-@import '../../../packages/styles/typography.css';
-@import '../../../packages/styles/badges.css';
-@import '../../../packages/styles/buttons.css';
-@import '../../../packages/styles/forms.css';
-@import '../../../packages/styles/cards.css';
-@import '../../../packages/styles/motion.css';
-@import '../../../packages/styles/helpers.css';
+@import '../../../packages/styles/legacy.css';

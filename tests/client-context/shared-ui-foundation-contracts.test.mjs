@@ -9,6 +9,11 @@ const workerPackage = JSON.parse(fs.readFileSync('apps/worker/package.json', 'ut
 const clientGlobalCss = fs.readFileSync('apps/client/app/global.css', 'utf8');
 const dashboardGlobalCss = fs.readFileSync('apps/dashboard/app/global.css', 'utf8');
 const workerGlobalCss = fs.readFileSync('apps/worker/app/global.css', 'utf8');
+const legacyStyles = fs.readFileSync('packages/styles/legacy.css', 'utf8');
+const operationalFoundationReadme = fs.readFileSync(
+  'packages/styles/operational/README.md',
+  'utf8'
+);
 const authShellSource = fs.readFileSync(
   'packages/components/client/user/auth/authShell/AuthPageShell.tsx',
   'utf8'
@@ -24,11 +29,36 @@ test('root and app scripts sync shared assets before dev/build', () => {
   assert.match(workerPackage.scripts.dev, /sync-shared-assets/);
 });
 
-test('all apps import their shared base styles from the canonical packages/styles entrypoint', () => {
+test('all apps resolve the frozen legacy baseline through one explicit entrypoint', () => {
   for (const cssSource of [clientGlobalCss, dashboardGlobalCss, workerGlobalCss]) {
-    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/tokens\.css';/);
-    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/helpers\.css';/);
+    assert.equal(cssSource.trim(), "@import '../../../packages/styles/legacy.css';");
   }
+});
+
+test('legacy baseline retains each current stylesheet once and operational styles stay inactive', () => {
+  for (const stylesheet of [
+    'tokens',
+    'base',
+    'typography',
+    'badges',
+    'buttons',
+    'forms',
+    'cards',
+    'motion',
+    'helpers',
+  ]) {
+    assert.equal(
+      legacyStyles.split(`@import './${stylesheet}.css';`).length - 1,
+      1,
+      `${stylesheet}.css must be loaded once by the legacy baseline`
+    );
+  }
+
+  assert.match(
+    operationalFoundationReadme,
+    /intentionally not\nimported by any production application yet/i
+  );
+  assert.doesNotMatch(legacyStyles, /@import '\.\/operational\//);
 });
 
 test('shared auth shell and asset sync use the shared asset namespace', () => {

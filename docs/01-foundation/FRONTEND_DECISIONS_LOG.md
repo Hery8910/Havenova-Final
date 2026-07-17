@@ -139,3 +139,23 @@ y explícita; no se añadirá una allowlist amplia sólo para eliminar un warnin
 La consecuencia temporal es no utilizar la optimización de imágenes de Next.js en este punto.
 Revisar en la Fase 4, cuando se definan la fuente canónica, el almacenamiento y la allowlist de
 avatares. Esta no es una política final de assets.
+
+## FE-012 — La base visual legacy se congela antes de la migración operativa
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: global style ownership
+
+Las tres aplicaciones resuelven la base visual actual mediante
+`packages/styles/legacy.css`. Este entrypoint conserva el orden y las reglas existentes para no
+alterar apariencias durante la migración. La futura foundation operacional se reserva en
+`packages/styles/operational/`, sin carga de runtime ni dependencia de la base legacy.
+
+Dashboard y Worker podrán adoptar una foundation operacional compartida sólo tras un slice
+auditado. Sus shells siguen siendo responsabilidad de cada app y los estilos de dominio continúan
+en CSS Modules. Client conserva el baseline legacy hasta que su propia migración tenga autoridad y
+alcance aprobados.
+
+Revisar cuando un slice operacional aprobado necesite tokens semánticos, reglas base, tipografía,
+focus o primitivas validadas. No trasladar componentes ni copiar el prototipo de Product Design
+por anticipado.
