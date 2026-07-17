@@ -1,8 +1,8 @@
 # Operational style foundation
 
-This directory is reserved for the future shared visual foundation of the
-operational core (`apps/dashboard` and `apps/worker`). It is intentionally not
-imported by any production application yet.
+This directory is the scoped visual foundation of the operational core
+(`apps/dashboard` and `apps/worker`). Only the authenticated Dashboard workspace
+imports `shell.css`; Client, Worker and Dashboard Auth do not.
 
 It may contain, after an approved and audited operational slice, semantic
 operational tokens, base rules, typography, focus behavior and validated

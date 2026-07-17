@@ -23,12 +23,12 @@ La base legacy preserva las clases globales y los tokens actuales. No es una fue
 patrones ni una prueba de que cada regla sea apropiada para el producto futuro. Toda sustitución
 requiere un slice auditado y una migración acotada de consumidores.
 
-### Foundation operacional futura
+### Foundation operacional
 
-[`packages/styles/operational/`](../packages/styles/operational/) está reservada para la
-foundation visual compartida de Dashboard y Worker: tokens semánticos operativos, reglas base,
-tipografía, foco y primitivas ya validadas. Actualmente sólo contiene documentación y ninguna app
-la importa.
+[`packages/styles/operational/`](../packages/styles/operational/) contiene la primera foundation
+visual compartida de Dashboard y Worker. Dashboard importa `shell.css`, pero sus tokens `--op-*`
+sólo resuelven dentro de `[data-ui-foundation='operational']` en el workspace autenticado. Client,
+Worker y Dashboard Auth siguen cargando sólo legacy.
 
 No puede importar la foundation legacy ni duplicar su sistema completo. No es un bucket de
 utilidades genéricas, un lugar para CSS de página, ni un destino para el prototipo de Product
@@ -43,18 +43,17 @@ auditado.
 | Dashboard              | `apps/dashboard` (core operativo)               | `apps/dashboard/app/global.css` → legacy | El shell se migrará por slice; no adoptar operational aún.             |
 | Worker                 | `apps/worker` (core operativo)                  | `apps/worker/app/global.css` → legacy    | No migrar visualmente hasta existir un dominio worker real y aprobado. |
 | Shared legacy styles   | `packages/styles/legacy.css` y archivos vecinos | Legacy                                   | Congelados como bridge de compatibilidad.                              |
-| Operational foundation | `packages/styles/operational/`                  | Inactiva                                 | Sólo reglas operativas compartidas tras validación.                    |
+| Operational foundation | `packages/styles/operational/`                  | Dashboard autenticado, scoped            | Sólo tokens y reglas operativas validadas; Worker sigue inactivo.      |
 | App shell styles       | La app propietaria                              | CSS Modules del shell                    | Dashboard y Worker conservan composición, layout y responsive propios. |
 | Domain styles          | Feature propietaria                             | CSS Modules de dominio                   | No promover a global sin reutilización demostrada.                     |
 
 ## Puentes de compatibilidad conocidos
 
-Dashboard aún mezcla CSS Modules con clases y tokens legacy. El shell depende de `button`,
-`button--ghost`, `button--active`, `card`, `card--secondary` y de variables de superficie,
-tipografía, foco, sombra y botón. Los componentes shared montados por sus layouts —`SideNav`,
-`ThemeToggler`, `LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading`— comparten esa
-dependencia. Las superficies auth del dashboard también cargan el mismo `global.css` raíz y usan
-alertas, loading y el auth shell compartido.
+El frame, header, topbar móvil, overlay, drawer y controles propios del shell usan `--op-*` y CSS
+Modules; ya no montan `card`, `card--*`, `button`, `button--*` ni helpers de animación legacy.
+`SideNav`, `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading` se
+mantienen sin cambios como compatibility islands porque también tienen consumidores fuera del
+shell. Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
 
 Estos contratos son puentes temporales. No se eliminan, renombran ni se trasladan a la foundation
 operacional durante una migración de shell. Cada consumidor debe migrarse explícitamente o seguir

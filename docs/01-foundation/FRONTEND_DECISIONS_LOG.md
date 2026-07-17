@@ -159,3 +159,20 @@ alcance aprobados.
 Revisar cuando un slice operacional aprobado necesite tokens semánticos, reglas base, tipografía,
 focus o primitivas validadas. No trasladar componentes ni copiar el prototipo de Product Design
 por anticipado.
+
+## FE-013 — La foundation operacional se activa sólo dentro del workspace Dashboard autenticado
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard shell
+
+`packages/styles/operational/shell.css` declara exclusivamente tokens `--op-*` bajo
+`[data-ui-foundation='operational']` y su variante dark bajo el contrato document-level existente
+`[data-theme='dark']`. La frontera se monta en `DashboardWorkspaceShell`; no se aplica a Auth,
+Client, Worker ni al viewport global de alertas.
+
+El shell propio deja de usar las clases globales legacy de card/button. `SideNav`, selector de
+idioma, selector de tema, alertas y loading se conservan sin cambios como compatibility islands.
+Revisar cuando una migración validada de cada isla permita sustituir legacy sin forzar una
+abstracción compartida prematura. Worker no adopta la foundation hasta disponer de un slice de
+dominio real aprobado.

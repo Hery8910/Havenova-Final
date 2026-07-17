@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { LuMenu, LuX } from 'react-icons/lu';
 
@@ -18,6 +18,8 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
   const pathname = usePathname();
   const lang = useLang() as DashboardShellLang;
   const dialogId = useId();
+  const mobileNavTriggerRef = useRef<HTMLButtonElement>(null);
+  const wasMobileNavOpenRef = useRef(false);
   const [isNavCollapsed, setIsNavCollapsed] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const workspaceLabel = 'Dashboard workspace';
@@ -56,21 +58,25 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
   }, [isMobileNavOpen]);
 
   useEffect(() => {
+    if (!isMobileNavOpen && wasMobileNavOpenRef.current) {
+      mobileNavTriggerRef.current?.focus();
+    }
+    wasMobileNavOpenRef.current = isMobileNavOpen;
+  }, [isMobileNavOpen]);
+
+  useEffect(() => {
     setIsMobileNavOpen(false);
   }, [pathname]);
 
   return (
-    <main className={styles.page}>
+    <main className={styles.page} data-ui-foundation="operational">
       <section
         className={[styles.workspace, isNavCollapsed ? styles.workspaceNavCollapsed : '']
           .filter(Boolean)
           .join(' ')}
         aria-label={workspaceLabel}
       >
-        <aside
-          className={`card card--secondary ${styles.navColumn}`}
-          aria-label="Dashboard navigation"
-        >
+        <aside className={styles.navColumn} aria-label="Dashboard navigation">
           <DashboardShellNav
             className={styles.sideNav}
             isCollapsed={isNavCollapsed}
@@ -79,10 +85,11 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
         </aside>
 
         <section className={styles.contentColumn}>
-          <div className={`card card--neutral ${styles.mobileTopbar}`}>
+          <div className={styles.mobileTopbar}>
             <button
+              ref={mobileNavTriggerRef}
               type="button"
-              className={`button button--ghost ${styles.mobileNavTrigger}`}
+              className={styles.mobileNavTrigger}
               aria-label={mobileNavLabels.open}
               aria-haspopup="dialog"
               aria-controls={dialogId}
@@ -95,13 +102,11 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
                 <LuMenu />
               </span>
               <span className={styles.mobileNavTriggerCopy}>
-                <span className={styles.mobileNavTriggerTitle}>
-                  /{mobileHeaderMeta.routeLabel}
-                </span>
+                <span className={styles.mobileNavTriggerTitle}>/{mobileHeaderMeta.routeLabel}</span>
               </span>
             </button>
           </div>
-          <header className={`card card--neutral ${styles.header}`}>
+          <header className={styles.header}>
             <DashboardShellHeader />
           </header>
           <section className={styles.main}>{children}</section>
@@ -110,13 +115,13 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
 
       {isMobileNavOpen ? (
         <div
-          className={`${styles.mobileNavOverlay} app-anim-overlay-enter`}
+          className={styles.mobileNavOverlay}
           role="dialog"
           aria-modal="true"
           aria-labelledby={`${dialogId}-title`}
           id={dialogId}
         >
-          <div className={`card card--secondary ${styles.mobileNavPanel}`}>
+          <div className={styles.mobileNavPanel}>
             <div className={styles.mobileNavPanelHeader}>
               <div className={styles.mobileNavPanelCopy}>
                 <h2 id={`${dialogId}-title`} className={styles.mobileNavPanelTitle}>
@@ -126,7 +131,7 @@ export function DashboardWorkspaceShell({ children }: DashboardWorkspaceShellPro
 
               <button
                 type="button"
-                className={`button button--ghost ${styles.mobileNavClose}`}
+                className={styles.mobileNavClose}
                 aria-label={mobileNavLabels.close}
                 onClick={() => {
                   setIsMobileNavOpen(false);

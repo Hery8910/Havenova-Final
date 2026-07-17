@@ -3,8 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: var(--op-space-3);
+  padding: var(--op-space-3) var(--op-space-5);
 }
 
 .titleBlock {
@@ -18,7 +18,7 @@
 
 .routeLabel {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -32,14 +32,14 @@
   font-size: clamp(1.02rem, 1.55vw, 1.2rem);
   line-height: 1.14;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
 }
 
 .actions {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: var(--op-space-2);
   flex: 0 0 auto;
 }
 
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: var(--op-space-3);
   padding-inline-start: 6px;
 }
 
@@ -63,16 +63,16 @@
 
 .image {
   object-fit: cover;
-  background: var(--surface-panel-subtle);
+  background: var(--op-surface-secondary);
 }
 
 .avatarFallback {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--surface-panel-subtle) 80%, transparent);
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
-  color: var(--text-primary);
+  background: var(--op-surface-interactive);
+  border: 1px solid var(--op-border-subtle);
+  color: var(--op-text-primary);
   font-weight: 700;
 }
 
@@ -89,7 +89,7 @@
   font-weight: 650;
   font-size: 0.9rem;
   line-height: 1.15;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -101,7 +101,7 @@
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   opacity: 0.9;
 }
 
