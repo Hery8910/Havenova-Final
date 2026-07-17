@@ -128,12 +128,15 @@ export function DashboardShellNav({
   const lang = useLang() as DashboardShellLang;
   const pathname = normalizeDashboardPathname(usePathname() ?? `/${lang}`);
   const navigationId = useId().replace(/:/g, '');
-  const shell = getDashboardNavSections(lang);
+  const shell = useMemo(() => getDashboardNavSections(lang), [lang]);
   const sections = useMemo(
     () => [...shell.mainSections, ...shell.footerSections],
     [shell.footerSections, shell.mainSections]
   );
-  const activeSectionKey = getActiveSectionKey(pathname, sections);
+  const activeSectionKey = useMemo(
+    () => getActiveSectionKey(pathname, sections),
+    [pathname, sections]
+  );
   const [expandedSectionKey, setExpandedSectionKey] = useState<string | null>(
     () => activeSectionKey ?? shell.mainSections[0]?.key ?? null
   );

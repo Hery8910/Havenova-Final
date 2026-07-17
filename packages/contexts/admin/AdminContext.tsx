@@ -181,7 +181,22 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     alert: alertApi,
   });
 
-  const resolvedAdmin = admin ?? createLocalDefault(null);
+  // This fallback participates in hydration, so it must not read browser persistence.
+  // Stored complement data is applied by useSessionComplement after hydration.
+  const hydrationSafeAdmin = useMemo(
+    () =>
+      normalizeAdminRecord({
+        userClientId: auth.userClientId ?? '',
+        clientId: clientId ?? '',
+        email: resolvePreferredContactEmail(undefined, auth.email),
+        name: '',
+        profileImage: DEFAULT_ADMIN_AVATAR,
+        language: 'de',
+        theme: 'light',
+      }),
+    [auth.email, auth.userClientId, clientId]
+  );
+  const resolvedAdmin = admin ?? hydrationSafeAdmin;
 
   return (
     <AdminContext.Provider

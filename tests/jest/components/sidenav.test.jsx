@@ -195,6 +195,16 @@ describe('Dashboard-owned operational navigation', () => {
     );
   });
 
+  it('keeps a user-opened section expanded until the pathname selects a different section', () => {
+    renderDashboardNavigation();
+
+    const people = screen.getByRole('button', { name: 'People' });
+    fireEvent.click(people);
+
+    expect(people).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('link', { name: 'Users' })).toBeInTheDocument();
+  });
+
   it('keeps icon-only labels accessible and delegates controlled dashboard actions', () => {
     const onCollapsedChange = jest.fn();
     const onItemSelect = jest.fn();
