@@ -190,3 +190,23 @@ Dashboard ni se introduce una variante operacional compartida.
 
 Revisar sólo tras cubrir activo, expansión, colapso y accesibilidad en ambos consumidores. Una
 migración futura será Dashboard-local y no propagará `--op-*` hacia Client Profile.
+
+## FE-015 — El estado de tema permanece por aplicación; el control operational será Dashboard-local
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: theme ownership and Dashboard shell
+
+`ThemeToggler` confirma que no existe un provider global de tema: Admin, Profile y Worker poseen
+complementos de sesión separados, y el control actual resuelve uno por prioridad mientras duplica
+las escrituras de documento y storage. La fuente de verdad funcional permanece temporalmente en el
+complemento de cada aplicación; la clave global `theme` es continuidad de arranque y no una nueva
+autoridad.
+
+Una futura sustitución Dashboard recibirá un contrato de tema ya resuelto y será una composición
+visual local del shell operational. No se trasladan sus tokens o markup al primitive compartido, ni
+se cambia Client/Worker para justificar esa composición. Antes se deben caracterizar la hidratación,
+persistencia, accesibilidad y un único owner de los efectos de documento/storage.
+
+Revisar cuando esas pruebas estén cubiertas y exista una decisión para eliminar la duplicación de
+efectos sin cambiar el contrato de las tres aplicaciones.

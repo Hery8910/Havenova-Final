@@ -22,6 +22,11 @@ boundary; no usan clases legacy. `SideNav` permanece como primitive legacy sólo
 del Client. `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users
 siguen siendo compatibility islands. Client y Worker no importan CSS operacional.
 
+La auditoría de `ThemeToggler` lo mantiene como compatibility island: Dashboard todavía usa su
+renderizado legacy dentro del header. Una futura composición local sólo será elegible tras
+caracterizar el estado de tema, sus escrituras de documento/storage y la accesibilidad del control;
+no cambia Client ni Worker.
+
 La diferencia visual intencional es un plano de workspace continuo, sin el frame de tarjetas y
 gradientes anterior. La navegación Dashboard ya forma parte de esa composición. La siguiente
 frontera elegible es otra isla compartida del shell auditada independientemente; no incluye Users.

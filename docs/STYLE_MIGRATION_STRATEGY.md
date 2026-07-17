@@ -57,6 +57,12 @@ cambios como compatibility island para `ProfileNav` de Client. `ThemeToggler`,
 `LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading` también permanecen legacy.
 Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
 
+La auditoría de [ThemeToggler](02-convergence/dashboard/THEME_TOGGLER_COMPATIBILITY_ISLAND_AUDIT.md)
+confirma que su renderizado compartido depende de providers de sesión, clases y tokens legacy de
+Client. Antes de sustituirlo en Dashboard hay que caracterizar sus efectos de documento/storage y
+separar un contrato de estado resuelto de la futura composición visual Dashboard-local. No se añaden
+tokens operational al control compartido.
+
 Estos contratos son puentes temporales. No se eliminan, renombran ni se trasladan a la foundation
 operacional durante una migración de shell. Cada consumidor debe migrarse explícitamente o seguir
 en legacy hasta tener una compatibilidad validada.
