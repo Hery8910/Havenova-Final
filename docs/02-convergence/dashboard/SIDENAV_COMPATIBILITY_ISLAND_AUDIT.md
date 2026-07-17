@@ -7,25 +7,27 @@
 - Baseline frontend: `a7c610df86ccb56a149e3888aa8daec3ba5eff19`.
 - Product Design visual: `b9c5a6c27ca5824199faca41a96f01c7705a8caf`.
 
-Esta auditoría analiza la primitive `SideNav` y sus dos consumidores runtime. No modifica rutas,
-permisos, estilos ni markup de producción. El shell Dashboard ya está scoped a la foundation
-operacional; SideNav permanece intencionalmente en legacy hasta cerrar su propia frontera.
+Esta auditoría analizó la primitive `SideNav` y sus dos consumidores runtime. El Dashboard ya no
+consume su markup: `DashboardShellNav` es ahora una composición operational app-owned que conserva
+el modelo Dashboard y sus contratos. `SideNav` permanece intencionalmente en legacy para
+`ProfileNav` del Client; no se elimina ni se migra por esta frontera.
 
 ## Inventario y mapa de consumidores
 
-| Pieza                         | Ubicación                                                                | Owner observado        | Consumidor                          |
-| ----------------------------- | ------------------------------------------------------------------------ | ---------------------- | ----------------------------------- |
-| Primitive, estado y semántica | `packages/components/sideNav/SideNav.tsx`                                | `packages/components`  | Dashboard y Client Profile          |
-| Estilos legacy                | `packages/components/sideNav/SideNav.module.css`                         | Mismo paquete          | Dashboard y Client Profile          |
-| Export público                | `packages/components/{sideNav,index}.ts`                                 | Paquete                | Imports por subpath y barrel actual |
-| Adapter Dashboard             | `apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellNav.tsx` | Dashboard              | Desktop sidebar y drawer móvil      |
-| Modelo Dashboard              | `apps/dashboard/app/[lang]/(app)/dashboardShell.ts`                      | Dashboard              | Rutas, copy, secciones e icon keys  |
-| Adapter Client                | `packages/components/client/user/profile/profileNav/ProfileNav.tsx`      | Feature Profile Client | Carril `profile/*`                  |
-| Modelo Client Profile         | `profileNav.helpers.tsx`, fallbacks y tipos vecinos                      | Feature Profile Client | Rutas, copy e iconos de perfil      |
+| Pieza                         | Ubicación                                                                | Owner observado        | Consumidor                         |
+| ----------------------------- | ------------------------------------------------------------------------ | ---------------------- | ---------------------------------- |
+| Primitive, estado y semántica | `packages/components/sideNav/SideNav.tsx`                                | `packages/components`  | Client Profile                     |
+| Estilos legacy                | `packages/components/sideNav/SideNav.module.css`                         | Mismo paquete          | Client Profile                     |
+| Export público                | `packages/components/{sideNav,index}.ts`                                 | Paquete                | Import de `ProfileNav`             |
+| Composición Dashboard         | `apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellNav.tsx` | Dashboard              | Desktop sidebar y drawer móvil     |
+| Modelo Dashboard              | `apps/dashboard/app/[lang]/(app)/dashboardShell.ts`                      | Dashboard              | Rutas, copy, secciones e icon keys |
+| Adapter Client                | `packages/components/client/user/profile/profileNav/ProfileNav.tsx`      | Feature Profile Client | Carril `profile/*`                 |
+| Modelo Client Profile         | `profileNav.helpers.tsx`, fallbacks y tipos vecinos                      | Feature Profile Client | Rutas, copy e iconos de perfil     |
 
 No existen consumidores Worker, Dashboard Auth, Users, alertas, loading, ThemeToggler ni
 LanguageSwitcher. `ProfileNav` se consume desde `apps/client/app/[lang]/(app)/profile/layout.tsx`;
-esto prueba que mover la primitive al Dashboard rompería el límite entre apps.
+es el consumidor runtime restante y prueba que mover la primitive al Dashboard rompería el límite
+entre apps.
 
 ## Dependencias actuales
 
@@ -35,7 +37,9 @@ esto prueba que mover la primitive al Dashboard rompería el límite entre apps.
 - React state/effects: expansión de una sección, colapso controlado o no controlado y media query.
 - `react-icons`: chevrons y logout; los iconos de dominio llegan como `JSX.Element` desde cada
   adapter.
-- Dashboard: `useAuth().logout`, `useLang`, `getDashboardNavSections` y prefijo `/${lang}`.
+- Dashboard: `useAuth().logout`, `useLang`, `usePathname`, `getDashboardNavSections`,
+  `normalizeDashboardPathname` y prefijo `/${lang}`. Desktop y drawer montan la misma composición
+  app-owned y el mismo modelo.
 - Client Profile: auth, i18n, locale y sus propios items/footer.
 - Workspace Dashboard: estado `isNavCollapsed`, drawer, cierre al navegar, scroll lock y retorno de
   foco pertenecen a `DashboardWorkspaceShell`, no a SideNav.
@@ -49,21 +53,23 @@ debe inferirse desde SideNav.
 `SideNav.tsx` usa `button`, `button--ghost`, `button--active`, `card` y `card--secondary`.
 Su CSS Module depende de tokens legacy de radio, texto, superficies, bordes, sombra y de la familia
 `--button-*`; también usa `color-mix`, backdrop blur y la regla global de foco del botón. No carga
-CSS directamente: depende de que cada app cargue `legacy.css`.
+CSS directamente: Client lo resuelve mediante `legacy.css`.
 
-El componente no consume `--op-*`; añadirlos ahora acoplaría Client Profile a la foundation
-operacional y violaría el scope de la migración de shell.
+El primitive no consume `--op-*`; añadirlos acoplaría Client Profile a la foundation operational y
+violaría el scope de la migración. La composición Dashboard usa sólo clases `dashboard-navigation*`
+y reglas en `packages/styles/operational/shell.css`, todas limitadas al boundary
+`[data-ui-foundation='operational']`.
 
 ## Responsabilidades y problemas de ownership
 
 | Responsabilidad                                                 | Estado observado                                  | Owner decidido                                               |
 | --------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
-| Lista/nav/links, sección expandible, activo, icon-only y logout | Primitive genérica actual                         | `packages/components/sideNav` mientras haya dos consumidores |
+| Lista/nav/links, sección expandible, activo, icon-only y logout | Primitive legacy restante                         | `packages/components/sideNav` mientras ProfileNav la consuma |
 | Rutas, jerarquía, labels, iconos y match                        | Inyectados por adapters                           | Cada feature/app consumidora                                 |
 | Locale                                                          | Dashboard y Profile resuelven antes de renderizar | Cada adapter, no primitive                                   |
 | Drawer, overlay, scroll lock y foco de retorno                  | Dashboard workspace                               | `DashboardWorkspaceShell`                                    |
 | Autorización, tenant y capabilities                             | Ausente de primitive                              | Layout/server/backend y futuro modelo Dashboard aprobado     |
-| Estilos visuales de Dashboard                                   | Legacy compartido                                 | Compatibility bridge; futura variante Dashboard app-owned    |
+| Estilos visuales de Dashboard                                   | Composición operational localizada                | Dashboard y `shell.css`, scoped al workspace autenticado     |
 
 La primitive mezcla hoy tres significados visuales que no son equivalentes: enlace de ruta
 seleccionado, control de expansión y control persistente de colapso. También contiene el media
@@ -127,19 +133,19 @@ Client Profile permanece en legacy y no debe recibir estilos operacionales.
 
 ## Secuencia, aceptación y diferidos
 
-1. Añadir pruebas de comportamiento para activo, expansión, colapso controlado, drawer e
-   icon-only en ambos consumidores.
-2. Auditar por separado el comportamiento de foco del drawer Dashboard.
-3. Definir el mínimo adapter/markup Dashboard-local y validar visualmente desktop, tablet, móvil,
-   `de/en/es` y ambos temas.
-4. Migrar sólo Dashboard; conservar SideNav legacy para Client Profile.
-5. Revisar extracción posterior únicamente si un segundo consumidor operacional valida el mismo
-   contrato.
+1. Caracterizar activo, expansión, colapso controlado, drawer e icon-only en ambos consumidores —
+   `COMPLETED`.
+2. Sustituir el markup Dashboard por la composición local sin duplicar el modelo — `COMPLETED`.
+3. Auditar por separado el comportamiento de foco del drawer Dashboard y validar visualmente
+   desktop, tablet, móvil, `de/en/es` y ambos temas — `PENDING`.
+4. Conservar SideNav legacy para Client Profile — `ACTIVE`.
+5. Revisar extracción posterior únicamente si un segundo consumidor operational valida el mismo
+   contrato — `DEFERRED`.
 
 Criterio de aceptación: sin cambio de rutas, permisos, modelo ni Client Profile; navegación y
 logout conservan semántica; no hay `--op-*` fuera del boundary Dashboard; la caracterización de la
 primitive y los dos modelos consumidores está verde, y la revisión manual documenta foco,
 responsive y locales antes de cualquier migración.
 
-Diferido explícitamente: migración CSS/markup, SideNav de Client Profile, Worker, Auth, Users,
-ThemeToggler, LanguageSwitcher, alertas, loading, permisos/capabilities y limpieza de legacy.
+Diferido explícitamente: SideNav de Client Profile, Worker, Auth, Users, ThemeToggler,
+LanguageSwitcher, alertas, loading, permisos/capabilities y limpieza de legacy.

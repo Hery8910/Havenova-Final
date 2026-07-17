@@ -9,14 +9,29 @@
 
 - `DashboardWorkspaceShell`: frame, columnas, workspace continuo, topbar móvil, overlay y drawer.
 - `DashboardShellHeader`: contexto, identidad y superficies propias.
+- `DashboardShellNav`: composición de navegación Dashboard-owned para desktop y drawer, con un
+  único modelo en `dashboardShell.ts`, estado activo, grupos expandibles, colapso controlado y
+  labels accesibles icon-only.
 - Trigger y cierre de navegación móvil, con foco visible y retorno al trigger al cerrar.
 
 ## Coexistencia legacy y siguiente frontera
 
-El boundary `data-ui-foundation="operational"` activa tokens `--op-*` sin redefinir legacy.
-`SideNav`, `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users
-son compatibility islands. Client y Worker no importan CSS operacional.
+El boundary `data-ui-foundation="operational"` activa tokens `--op-*` sin redefinir legacy. Las
+reglas de `DashboardShellNav` residen en `packages/styles/operational/shell.css` y se limitan a ese
+boundary; no usan clases legacy. `SideNav` permanece como primitive legacy sólo para `ProfileNav`
+del Client. `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`, `Loading`, Dashboard Auth y Users
+siguen siendo compatibility islands. Client y Worker no importan CSS operacional.
 
 La diferencia visual intencional es un plano de workspace continuo, sin el frame de tarjetas y
-gradientes anterior. La siguiente frontera elegible es una isla compartida del shell, empezando por
-la navegación tras auditar sus consumidores; no incluye Users.
+gradientes anterior. La navegación Dashboard ya forma parte de esa composición. La siguiente
+frontera elegible es otra isla compartida del shell auditada independientemente; no incluye Users.
+
+## Gate visual pendiente
+
+No se realizó revisión visual interactiva en esta ejecución: el entorno de validación no dispone de
+un navegador fiable para comprobar el layout runtime. Antes del merge final de la fase, una revisión
+humana debe comprobar tema claro y oscuro; `de`, `en` y `es`; desktop expandido y colapsado;
+tablet; móvil con drawer abierto y cerrado; el label alemán largo; hover, foco y activo; zoom al
+200 %; ausencia de overflow; y la alineación con el workspace operational. También debe confirmar
+que el cierre desde un enlace del drawer conserva el scroll lock y el retorno de foco que posee
+`DashboardWorkspaceShell`.

@@ -49,11 +49,13 @@ auditado.
 
 ## Puentes de compatibilidad conocidos
 
-El frame, header, topbar móvil, overlay, drawer y controles propios del shell usan `--op-*` y CSS
-Modules; ya no montan `card`, `card--*`, `button`, `button--*` ni helpers de animación legacy.
-`SideNav`, `ThemeToggler`, `LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading` se
-mantienen sin cambios como compatibility islands porque también tienen consumidores fuera del
-shell. Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
+El frame, header, topbar móvil, overlay, drawer, controles propios del shell y la composición
+`DashboardShellNav` usan `--op-*`; ya no montan `card`, `card--*`, `button`, `button--*` ni
+helpers de animación legacy. La navegación Dashboard se implementa en su adapter app-owned y sus
+reglas viven en `operational/shell.css`, limitadas al workspace autenticado. `SideNav` sigue sin
+cambios como compatibility island para `ProfileNav` de Client. `ThemeToggler`,
+`LanguageSwitcher`, `AlertViewport`/`AlertPopup` y `Loading` también permanecen legacy.
+Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
 
 Estos contratos son puentes temporales. No se eliminan, renombran ni se trasladan a la foundation
 operacional durante una migración de shell. Cada consumidor debe migrarse explícitamente o seguir
@@ -67,10 +69,11 @@ en legacy hasta tener una compatibilidad validada.
 4. Validar apariencia, teclado, temas y contenido largo antes de ampliar consumidores.
 5. Retirar un bridge únicamente después de comprobar todos sus consumidores.
 
-La auditoría de [SideNav](02-convergence/dashboard/SIDENAV_COMPATIBILITY_ISLAND_AUDIT.md) confirma
-que no es un shell Dashboard: Client Profile también la consume. La siguiente frontera, si sus
-contratos se prueban, será una composición de navegación operacional app-owned en Dashboard. No
-incluye Users, rutas placeholder, Client ni Worker.
+La auditoría de [SideNav](02-convergence/dashboard/SIDENAV_COMPATIBILITY_ISLAND_AUDIT.md) confirmó
+que no es un shell Dashboard: Client Profile también la consume. Dashboard ya sustituyó sólo su
+consumo runtime por una composición de navegación operational app-owned, sin incluir Users, rutas
+placeholder, Client ni Worker. La siguiente frontera deberá ser otra compatibility island auditada,
+no una extensión del primitive compartido.
 
 ## No objetivos
 

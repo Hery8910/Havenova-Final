@@ -3,12 +3,15 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SideNav } from '@/packages/components/sideNav';
 import { getDashboardNavSections } from '@/apps/dashboard/app/[lang]/(app)/dashboardShell';
+import { DashboardShellNav } from '@/apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellNav';
 import {
   buildDefaultProfileNavMainItems,
   resolveProfileNavLabels,
 } from '@/packages/components/client/user/profile/profileNav/profileNav.helpers';
 
 let pathname = '/en/requests';
+let dashboardLang = 'en';
+const mockDashboardLogout = jest.fn();
 
 jest.mock('next/navigation', () => ({
   usePathname: () => pathname,
@@ -19,6 +22,14 @@ jest.mock('next/link', () => ({ children, href, ...props }) => (
     {children}
   </a>
 ));
+
+jest.mock('@/packages/contexts/auth/authContext', () => ({
+  useAuth: () => ({ logout: mockDashboardLogout }),
+}));
+
+jest.mock('@/packages/hooks/useLang', () => ({
+  useLang: () => dashboardLang,
+}));
 
 function createMatchMedia(matches = false) {
   const listeners = new Set();
@@ -57,6 +68,8 @@ function renderSideNav(props = {}) {
 describe('SideNav characterization', () => {
   beforeEach(() => {
     pathname = '/en/requests';
+    dashboardLang = 'en';
+    mockDashboardLogout.mockReset();
   });
 
   it('marks the active route and exposes names when collapsed', () => {
@@ -147,5 +160,122 @@ describe('consumer models remain isolated', () => {
     );
 
     expect(`${sideNavSource}\n${sideNavStyles}`).not.toContain('--op-');
+  });
+});
+
+describe('Dashboard-owned operational navigation', () => {
+  function renderDashboardNavigation(props = {}) {
+    return render(
+      <main data-ui-foundation="operational">
+        <DashboardShellNav isCollapsed={false} onCollapsedChange={jest.fn()} {...props} />
+      </main>
+    );
+  }
+
+  beforeEach(() => {
+    pathname = '/en/requests';
+    dashboardLang = 'en';
+  });
+
+  it('renders the Dashboard model with active links and no legacy classes', () => {
+    const { container } = renderDashboardNavigation();
+    expect(screen.getByRole('navigation', { name: 'Dashboard navigation' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Requests' })).toHaveAttribute('href', '/en/requests');
+    expect(screen.getByRole('link', { name: 'Requests' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('button', { name: 'Workspace' })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    );
+    expect(container.querySelector('.dashboard-navigation')).not.toHaveClass(
+      'card',
+      'button',
+      'button--ghost',
+      'button--active',
+      'card--secondary'
+    );
+  });
+
+  it('keeps icon-only labels accessible and delegates controlled dashboard actions', () => {
+    const onCollapsedChange = jest.fn();
+    const onItemSelect = jest.fn();
+    renderDashboardNavigation({
+      isCollapsed: true,
+      onCollapsedChange,
+      onItemSelect,
+    });
+
+    expect(screen.getByRole('link', { name: 'Requests' })).toHaveAttribute('title', 'Requests');
+    expect(screen.queryByText('Requests')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Expand navigation' }));
+    expect(onCollapsedChange).toHaveBeenCalledWith(false);
+    fireEvent.click(screen.getByRole('link', { name: 'Requests' }));
+    expect(onItemSelect).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses the same composition in the drawer without a second collapse control', () => {
+    const onItemSelect = jest.fn();
+    renderDashboardNavigation({
+      presentation: 'drawer',
+      showCollapseControl: false,
+      onItemSelect,
+    });
+
+    expect(document.querySelector('.dashboard-navigation--drawer')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Collapse navigation' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('link', { name: 'Requests' }));
+    expect(onItemSelect).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    ['de', 'Dashboard-Navigation', 'Anfragen'],
+    ['en', 'Dashboard navigation', 'Requests'],
+    ['es', 'Navegación del dashboard', 'Solicitudes'],
+  ])('preserves the localized model for %s', (lang, navigationLabel, requestLabel) => {
+    dashboardLang = lang;
+    pathname = `/${lang}/requests`;
+    renderDashboardNavigation();
+    expect(screen.getByRole('navigation', { name: navigationLabel })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: requestLabel })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+  });
+
+  it('keeps a long German nested label available on its active route', () => {
+    dashboardLang = 'de';
+    pathname = '/de/account/notifications';
+    renderDashboardNavigation();
+
+    expect(screen.getByRole('button', { name: 'Konto' })).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('link', { name: 'Benachrichtigungen' })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+  });
+
+  it('keeps the Dashboard composition operational and leaves ProfileNav on the shared primitive', () => {
+    const repositoryRoot = resolve(process.cwd());
+    const dashboardNavigationSource = readFileSync(
+      resolve(
+        repositoryRoot,
+        'apps/dashboard/app/[lang]/(app)/components/shell/DashboardShellNav.tsx'
+      ),
+      'utf8'
+    );
+    const operationalStyles = readFileSync(
+      resolve(repositoryRoot, 'packages/styles/operational/shell.css'),
+      'utf8'
+    );
+    const profileNavSource = readFileSync(
+      resolve(repositoryRoot, 'packages/components/client/user/profile/profileNav/ProfileNav.tsx'),
+      'utf8'
+    );
+
+    expect(dashboardNavigationSource).not.toMatch(/from ['\"].*sideNav/);
+    expect(dashboardNavigationSource).not.toContain('<SideNav');
+    expect(operationalStyles).toMatch(
+      /\[data-ui-foundation='operational'\] \.dashboard-navigation/
+    );
+    expect(profileNavSource).toContain('<SideNav');
   });
 });

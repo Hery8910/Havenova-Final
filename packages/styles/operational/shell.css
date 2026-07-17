@@ -53,3 +53,133 @@
   --op-overlay: rgba(0, 0, 0, 0.6);
   --op-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
+
+[data-ui-foundation='operational'] .dashboard-navigation {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: var(--op-space-4);
+  color: var(--op-text-primary);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__main,
+[data-ui-foundation='operational'] .dashboard-navigation__footer {
+  display: grid;
+  gap: var(--op-space-2);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__main {
+  min-height: 0;
+  overflow: auto;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__footer {
+  margin-top: auto;
+  padding-top: var(--op-space-3);
+  border-top: 1px solid var(--op-border-subtle);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group,
+[data-ui-foundation='operational'] .dashboard-navigation__heading,
+[data-ui-foundation='operational'] .dashboard-navigation__list,
+[data-ui-foundation='operational'] .dashboard-navigation__item {
+  margin: 0;
+  padding: 0;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__list {
+  display: grid;
+  gap: var(--op-space-2);
+  list-style: none;
+  padding-top: var(--op-space-2);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group-toggle,
+[data-ui-foundation='operational'] .dashboard-navigation__link,
+[data-ui-foundation='operational'] .dashboard-navigation__logout,
+[data-ui-foundation='operational'] .dashboard-navigation__collapse-control {
+  display: flex;
+  width: 100%;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: var(--op-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--op-radius-control);
+  color: var(--op-text-secondary);
+  background: transparent;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group-toggle,
+[data-ui-foundation='operational'] .dashboard-navigation__collapse-control {
+  padding: var(--op-space-2);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__link,
+[data-ui-foundation='operational'] .dashboard-navigation__logout {
+  padding: var(--op-space-2) var(--op-space-3);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group-toggle-main {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: var(--op-space-3);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__icon,
+[data-ui-foundation='operational'] .dashboard-navigation__disclosure {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__disclosure {
+  color: var(--op-text-muted);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__link[data-level='1'] {
+  padding-inline-start: calc(var(--op-space-3) + var(--op-space-5));
+  font-size: 0.92rem;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__link[data-active='true'] {
+  border-color: var(--op-border-interactive);
+  color: var(--op-text-primary);
+  background: var(--op-surface-selected);
+  font-weight: 700;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group-toggle:hover,
+[data-ui-foundation='operational'] .dashboard-navigation__link:hover,
+[data-ui-foundation='operational'] .dashboard-navigation__logout:hover,
+[data-ui-foundation='operational'] .dashboard-navigation__collapse-control:hover {
+  background: var(--op-surface-interactive);
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation__group-toggle:focus-visible,
+[data-ui-foundation='operational'] .dashboard-navigation__link:focus-visible,
+[data-ui-foundation='operational'] .dashboard-navigation__logout:focus-visible,
+[data-ui-foundation='operational'] .dashboard-navigation__collapse-control:focus-visible {
+  outline: 3px solid var(--op-focus);
+  outline-offset: 2px;
+}
+
+[data-ui-foundation='operational'] .dashboard-navigation--drawer {
+  min-height: 100%;
+}
