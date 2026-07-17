@@ -2,6 +2,20 @@
 
 ## Estado, propósito y alcance
 
+### Gate manual fallido y corrección pendiente de revalidación — 2026-07-17
+
+La revisión autenticada de Slice A encontró una regresión `BLOCKED`: el input revertía el texto y
+el filtro `Invitations` alternaba requests con `All`. El backend devolvía `200`; la causa fue un
+loop frontend entre el efecto URL → estado local y el efecto estado local → URL de
+`page.controller.tsx`. Por tanto, la evidencia visual anterior no es válida como cierre.
+
+La rectificación elimina la sincronización inversa durante la sesión. `search/status` son la
+autoridad local, inicializada desde la ruta, y la URL recibe sólo el valor local estabilizado. Se
+añadieron tests de comportamiento con router/servicios mockeados y timers falsos para carácter
+único, búsqueda de dos caracteres, All/Invitations, summary y respuestas tardías. La clasificación
+posterior a la corrección es `PARTIALLY_READY`, no `READY`: falta que el propietario repita la
+validación autenticada de escritura, búsqueda y filtro sin loop.
+
 - Estado: `ACTIVE` — primera tarea de la Fase 2; no autoriza implementación.
 - Fecha: `2026-07-16`.
 - Base frontend: `05926152c19aa5585d98fcc91875d784b0c77e86`.

@@ -80,6 +80,17 @@ teclado, foco y aislamiento. No iniciar invitation ni mutaciones.
 
 ## Rectificación Slice A — 2026-07-17
 
+### Incidente de interacción y estado actual
+
+El gate manual detectó un loop de ownership en el controlador: URL → estado local revertía una
+interacción antes de que el debounce escribiera estado local → URL. Eso bloqueó búsqueda y filtro;
+no fue un fallo de `DirectoryFilters`, backend ni cursor. La corrección conserva los primitives
+locales y convierte la sincronización en unidireccional. `DirectoryList` también preserva filas
+existentes ante un error de carga incremental. Los nuevos tests son conductuales, no sólo de fuente.
+
+Estado posterior: `PARTIALLY_READY`, a la espera de que el propietario confirme el flujo autenticado
+sin rollback ni alternancia de requests. No habilita Slice B-D.
+
 Se verificó el contrato backend real antes de rectificar la pantalla: `GET /summary`, `GET /directory`
 y `GET /entries/:entryId` están bajo `protect + protectClient('homeServices') + admin`; el tenant
 se deriva de la sesión. El directorio limita `q` a 2-100 caracteres, `limit` a 1-50 y liga el cursor

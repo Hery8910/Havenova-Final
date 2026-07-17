@@ -57,6 +57,7 @@ export function DirectoryList<TItem>({
 }: DirectoryListProps<TItem>) {
   const loadMoreSentinelRef = useRef<HTMLDivElement | null>(null);
   const showInitialLoading = isLoading && !items.length;
+  const showBlockingError = Boolean(error) && !items.length;
   const showEmpty = !showInitialLoading && !error && !items.length;
 
   useEffect(() => {
@@ -131,7 +132,7 @@ export function DirectoryList<TItem>({
         </div>
       ) : null}
 
-      {!showInitialLoading && !error && items.length ? (
+      {!showInitialLoading && !showBlockingError && items.length ? (
         <>
           <div className={styles.items}>{items.map(renderItem)}</div>
           <div className={styles.feedback}>

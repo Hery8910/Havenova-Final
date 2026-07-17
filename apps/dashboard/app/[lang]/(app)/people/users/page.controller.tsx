@@ -20,19 +20,13 @@ import type {
 import {
   buildUsersSummary,
   createUsersPageCopy,
-  parseUsersSearchState,
   parseUsersStatus,
   resolveUsersPageMode,
   USERS_PAGE_QUERY_KEYS,
 } from './page.copy';
 import { UsersPageDetailRouter } from './components/UsersPageDetailRouter';
 import { UsersPageView } from './components/UsersPageView';
-import type {
-  UsersPageControllerProps,
-  UsersPageMode,
-  UsersPageSearchState,
-  UsersPageStatusFilter,
-} from './page.types';
+import type { UsersPageControllerProps, UsersPageMode, UsersPageStatusFilter } from './page.types';
 
 const DIRECTORY_LIMIT = 25;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -104,17 +98,6 @@ export default function PeopleUsersPageController({
       initialMode
     );
   }, [initialMode, routeSelectedEntryId, searchParams]);
-
-  const routeSearchState = useMemo<UsersPageSearchState>(() => {
-    if (!searchParams.toString()) {
-      return initialSearchState;
-    }
-
-    return parseUsersSearchState({
-      search: searchParams.get(USERS_PAGE_QUERY_KEYS.search),
-      status: searchParams.get(USERS_PAGE_QUERY_KEYS.status),
-    });
-  }, [initialSearchState, searchParams]);
 
   const [search, setSearch] = useState(initialSearchState.search);
   const [debouncedSearch, setDebouncedSearch] = useState(initialSearchState.search);
@@ -260,17 +243,6 @@ export default function PeopleUsersPageController({
   }, [pathname, router, searchParams]);
 
   useEffect(() => {
-    const nextSearch = normalizeSearch(routeSearchState.search);
-    if (search !== nextSearch) {
-      setSearch(nextSearch);
-    }
-
-    if (status !== routeSearchState.status) {
-      setStatus(routeSearchState.status);
-    }
-  }, [routeSearchState, search, status]);
-
-  useEffect(() => {
     const nextSearch = normalizeSearch(debouncedSearch);
     const currentSearch = normalizeSearch(searchParams.get(USERS_PAGE_QUERY_KEYS.search));
     const currentStatus = parseUsersStatus(searchParams.get(USERS_PAGE_QUERY_KEYS.status));
@@ -370,6 +342,10 @@ export default function PeopleUsersPageController({
           limit: DIRECTORY_LIMIT,
           signal: abortController.signal,
         });
+
+        if (abortController.signal.aborted || directoryQueryKeyRef.current !== directoryQueryKey) {
+          return;
+        }
 
         cacheDirectoryPages(directoryQueryKey, [page], page.nextCursor, page.hasNextPage);
         setPages([page]);

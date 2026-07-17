@@ -2,7 +2,7 @@
 
 ## Estado y autoridad
 
-`IMPLEMENTED_EVIDENCE`, no contrato de producto. La autoridad sigue siendo Product Design Users v1;
+`PARTIALLY_READY` pendiente de repetición manual autenticada, no contrato de producto. La autoridad sigue siendo Product Design Users v1;
 su contrato de integración está `PLANNED`. Este documento describe únicamente la superficie de
 lectura implementada y no habilita Invitation (B), Acceptance (C) ni Lifecycle (D).
 
@@ -45,3 +45,19 @@ presenta como error, no como directorio vacío.
 `tests/client-context/dashboard-directory-contracts.test.mjs` protege alcance read-only, filtros,
 stale cursor, foco y estados inline. Quedan requeridos smoke manual contra backend y CI remota; el
 estado no se eleva a `IMPLEMENTATION_READY` hasta que Product Design cierre su contrato.
+
+## Incidente de ownership de query — 2026-07-17
+
+La primera revisión autenticada falló: el texto de búsqueda se borraba y `Invitations` alternaba
+requests con `All`. La causa no fue el backend: el controlador copiaba `routeSearchState` hacia
+`search/status` tras cada interacción, mientras otro efecto escribía esos mismos estados a la URL.
+Los tests de fuente anteriores no ejecutaban esa competencia.
+
+La corrección deja `search` y `status` como autoridad local de la sesión: se inicializan desde la
+ruta y sólo se sincronizan en dirección estado local → URL. Las respuestas de una consulta abortada
+o superada ya no pueden aplicar su página. Los tests de comportamiento montan el controlador con
+timers falsos y cubren: un carácter sin request, búsqueda de dos caracteres con una única consulta,
+All/Invitations desde select y summary, y respuesta tardía ignorada.
+
+La clasificación permanece `PARTIALLY_READY` hasta que el propietario confirme manualmente
+escritura estable, búsqueda desde dos caracteres y alternancia estable All/Invitations sin loop.
