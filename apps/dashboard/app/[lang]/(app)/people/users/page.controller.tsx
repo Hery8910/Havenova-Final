@@ -7,16 +7,11 @@ import { useLang } from '@/packages/hooks';
 import { useI18n } from '@/packages/contexts';
 import {
   getTenantUserDirectoryDetail,
-  getTenantUserDirectoryErrorCode,
   getTenantUsersDirectoryPage,
   getTenantUsersDirectorySummary,
-  inviteTenantUser,
-  resendTenantUserInvitation,
-  revokeTenantUserInvitation,
 } from '@/packages/services';
 import type {
   AppLanguage,
-  InviteTenantUserPayload,
   TenantUserDirectoryDetail,
   TenantUserDirectoryEntry,
   TenantUsersDirectoryPage,
@@ -33,7 +28,6 @@ import {
 import { UsersPageDetailRouter } from './components/UsersPageDetailRouter';
 import { UsersPageView } from './components/UsersPageView';
 import type {
-  UsersInviteSubmitResult,
   UsersPageControllerProps,
   UsersPageMode,
   UsersPageSearchState,
@@ -141,10 +135,6 @@ export default function PeopleUsersPageController({
   const [detailReloadToken, setDetailReloadToken] = useState(0);
   const [isDetailLoading, setIsDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState<string | null>(null);
-  const [isInviteSubmitting, setIsInviteSubmitting] = useState(false);
-  const [inviteResult, setInviteResult] = useState<UsersInviteSubmitResult | null>(null);
-  const [detailFeedback, setDetailFeedback] = useState<string | null>(null);
-  const [invitationAction, setInvitationAction] = useState<'resend' | 'revoke' | null>(null);
 
   const directoryItems = useMemo(() => dedupeDirectoryItems(pages), [pages]);
   const directoryItemsCountRef = useRef(0);
@@ -182,10 +172,6 @@ export default function PeopleUsersPageController({
     []
   );
 
-  const clearDirectoryCache = useCallback(() => {
-    directoryCacheRef.current.clear();
-  }, []);
-
   const registerDirectoryEntryElement = useCallback(
     (entryId: string, element: HTMLButtonElement | null) => {
       if (element) {
@@ -203,7 +189,7 @@ export default function PeopleUsersPageController({
   }, [directoryItems.length]);
 
   useEffect(() => {
-    if (!routeSelectedEntryId || routeMode === 'invite') {
+    if (!routeSelectedEntryId) {
       pendingEntryRestoreRef.current = undefined;
       previousSelectedEntryRef.current = undefined;
       restorePageAttemptsRef.current = 0;
@@ -559,21 +545,7 @@ export default function PeopleUsersPageController({
     void handleLoadMore();
   };
 
-  const handleSelectEntry = (entryId: string) => {
-    setDetailFeedback(null);
-    updateRouteState('detail', entryId);
-  };
-
-  const handleOpenInvite = () => {
-    setInviteResult(null);
-    setDetailFeedback(null);
-    updateRouteState('invite');
-  };
-
-  const handleReturnToDirectory = () => {
-    setDetailFeedback(null);
-    updateRouteState('empty');
-  };
+  const handleSelectEntry = (entryId: string) => updateRouteState('detail', entryId);
 
   const handleReturnFromDetail = useCallback(() => {
     pendingEntryRestoreRef.current = routeSelectedEntryId;
@@ -592,98 +564,20 @@ export default function PeopleUsersPageController({
     refreshDirectory();
   };
 
-  const handleSummarySelect = (nextStatus: UsersPageStatusFilter) => {
-    setStatus(nextStatus);
-  };
-
-  const handleInviteSubmit = async (payload: InviteTenantUserPayload) => {
-    setIsInviteSubmitting(true);
-    setInviteResult(null);
-
-    try {
-      const result = await inviteTenantUser(payload);
-      const message =
-        result.code === 'TENANT_USER_INVITATION_RENEWED'
-          ? usersPageCopy.panels.invite.renewedSuccessTitle
-          : usersPageCopy.panels.invite.invitedSuccessTitle;
-
-      setInviteResult({
-        ok: true,
-        code: result.code,
-        message: `${message} ${result.data.email}`,
-      });
-      setDetailFeedback(`${message} ${result.data.email}`);
-      clearDirectoryCache();
-      refreshSummary();
-      refreshDirectory();
-      updateRouteState('detail', result.data.entryId);
-    } catch (error) {
-      const code = getTenantUserDirectoryErrorCode(error);
-      const message =
-        code === 'TENANT_USER_ALREADY_EXISTS'
-          ? usersPageCopy.panels.invite.alreadyExistsError
-          : code === 'TENANT_USER_INVITATION_ALREADY_PENDING'
-            ? usersPageCopy.panels.invite.alreadyPendingError
-            : code === 'TENANT_USER_INVITATION_DELIVERY_FAILED'
-              ? usersPageCopy.panels.invite.deliveryFailedError
-              : getErrorMessage(error, usersPageCopy.panels.invite.errorTitle);
-
-      if (code === 'TENANT_USER_INVITATION_DELIVERY_FAILED') {
-        clearDirectoryCache();
-        refreshSummary();
-        refreshDirectory();
-      }
-
-      setInviteResult({
-        ok: false,
-        code,
-        message,
-      });
-    } finally {
-      setIsInviteSubmitting(false);
-    }
-  };
-
-  const handleResendInvitation = async (invitationId: string) => {
-    if (invitationAction) {
-      return;
-    }
-
-    setInvitationAction('resend');
-
-    try {
-      const result = await resendTenantUserInvitation(invitationId);
-      clearDirectoryCache();
-      refreshSummary();
-      refreshDirectory();
-      setDetailFeedback(`${usersPageCopy.panels.detail.actionSuccessTitle} ${result.data.email}`);
-      setDetailReloadToken((current) => current + 1);
-    } catch {
-      setDetailFeedback(usersPageCopy.panels.detail.actionErrorTitle);
-    } finally {
-      setInvitationAction(null);
-    }
-  };
-
-  const handleRevokeInvitation = async (invitationId: string) => {
-    if (invitationAction) {
-      return;
-    }
-
-    setInvitationAction('revoke');
-
-    try {
-      await revokeTenantUserInvitation(invitationId);
-      clearDirectoryCache();
-      refreshSummary();
-      refreshDirectory();
-      setDetailFeedback(null);
+  const resetSelectionForQuery = () => {
+    if (routeSelectedEntryId) {
       updateRouteState('empty');
-    } catch {
-      setDetailFeedback(usersPageCopy.panels.detail.actionErrorTitle);
-    } finally {
-      setInvitationAction(null);
     }
+  };
+
+  const handleSearchChange = (value: string) => {
+    resetSelectionForQuery();
+    setSearch(value);
+  };
+
+  const handleSummarySelect = (nextStatus: UsersPageStatusFilter) => {
+    resetSelectionForQuery();
+    setStatus(nextStatus);
   };
 
   const summaryItems = useMemo(
@@ -702,19 +596,8 @@ export default function PeopleUsersPageController({
           detail={detail}
           isLoading={isDetailLoading}
           error={detailError}
-          feedback={detailFeedback}
-          invitationAction={invitationAction}
-          invite={{
-            defaultLanguage: lang,
-            isSubmitting: isInviteSubmitting,
-            result: inviteResult,
-            onSubmit: handleInviteSubmit,
-          }}
           onDetailRefresh={() => setDetailReloadToken((current) => current + 1)}
           onReturnFromDetail={handleReturnFromDetail}
-          onResendInvitation={handleResendInvitation}
-          onReturnToDirectory={handleReturnToDirectory}
-          onRevokeInvitation={handleRevokeInvitation}
         />
       }
       detailLabel={usersPageCopy.detail.detailLabel}
@@ -722,7 +605,11 @@ export default function PeopleUsersPageController({
       directoryItemCopy={usersPageCopy.directoryItem}
       directoryItems={directoryItems}
       directoryError={directoryError}
-      directoryHint={usersPageCopy.list.hint}
+      directoryHint={
+        normalizeSearch(search).length === 1
+          ? usersPageCopy.feedback.searchMinimumLabel
+          : usersPageCopy.list.hint
+      }
       directorySectionLabel={usersPageCopy.list.sectionLabel}
       directoryTitle={usersPageCopy.list.title}
       emptyTitle={usersPageCopy.list.emptyTitle}
@@ -735,11 +622,10 @@ export default function PeopleUsersPageController({
         searchPlaceholder: usersPageCopy.filters.searchPlaceholder,
         searchValue: search,
         selectLabel: usersPageCopy.filters.selectLabel,
-        selectOptions: usersPageCopy.statusOptions,
+        selectOptions: usersPageCopy.statusOptions.filter(
+          (option) => option.value === 'all' || option.value === 'invitations'
+        ),
         selectValue: status,
-      }}
-      header={{
-        primaryActionLabel: usersPageCopy.intro.primaryActionLabel,
       }}
       hasNextPage={hasNextPage}
       isDirectoryLoading={isDirectoryInitialLoading}
@@ -749,12 +635,11 @@ export default function PeopleUsersPageController({
       mode={routeMode}
       navigationLabel={usersPageCopy.detail.navigationLabel}
       onLoadMore={handleLoadMore}
-      onOpenInvite={handleOpenInvite}
       onRegisterEntryElement={registerDirectoryEntryElement}
       onRetryDirectory={handleRetryList}
       onRetrySummary={refreshSummary}
-      onSearchChange={setSearch}
-      onSelectChange={(value) => setStatus(parseUsersStatus(value))}
+      onSearchChange={handleSearchChange}
+      onSelectChange={(value) => handleSummarySelect(parseUsersStatus(value))}
       onSelectEntry={handleSelectEntry}
       onSummarySelect={handleSummarySelect}
       selectedEntryId={routeSelectedEntryId}
@@ -765,7 +650,6 @@ export default function PeopleUsersPageController({
         errorLabel: summaryCopy.error,
         retryLabel: summaryCopy.retry,
       }}
-      tenantUserLocale={lang}
     />
   );
 }

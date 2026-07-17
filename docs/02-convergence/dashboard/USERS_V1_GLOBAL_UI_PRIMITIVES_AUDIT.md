@@ -1,6 +1,6 @@
 # Auditoría — primitivas globales necesarias para Users Directory v1
 
-- Estado: `ACTIVE` — inventario y decisión de preparación; no autoriza Users v1.
+- Estado: `IMPLEMENTED_EVIDENCE` — rectificación local de Slice A; no autoriza los slices B-D.
 - Fecha: `2026-07-17`.
 - Alcance: sólo primitives que el Slice A de Users v1 necesita realmente en Dashboard.
 - Autoridad de producto: Product Design Users v1, commit `b9c5a6c`.
@@ -78,9 +78,24 @@ Siguiente corte recomendado: con contrato Slice A verificado, rectificar exclusi
 primitives Dashboard-local y el copy `All|Invitations`/summary mínimo, añadiendo tests de estados,
 teclado, foco y aislamiento. No iniciar invitation ni mutaciones.
 
+## Rectificación Slice A — 2026-07-17
+
+Se verificó el contrato backend real antes de rectificar la pantalla: `GET /summary`, `GET /directory`
+y `GET /entries/:entryId` están bajo `protect + protectClient('homeServices') + admin`; el tenant
+se deriva de la sesión. El directorio limita `q` a 2-100 caracteres, `limit` a 1-50 y liga el cursor
+opaco al filtro `q/status`; los fallos de permisos y cursor son errores, no resultados vacíos.
+
+La página entrega ahora sólo `All` e `Invitations`, total people y pending invitations. Conserva
+cancelación, dedupe, cursor y retorno de foco del row en mobile. Row y overview muestran únicamente
+identidad, contacto y lifecycle de invitación. Se retiraron CTA/formulario invite y resend/revoke,
+así como account status, attention, Requests, actividad y relaciones. `DirectoryList` anuncia carga
+inicial y refresh, y expone el error inline como alerta; el input de un carácter no consulta backend.
+
+Esto es evidencia implementada de Slice A, no un cambio de autoridad: Product Design mantiene el
+contrato de integración `PLANNED` y Slice B-D siguen bloqueados.
+
 ## Cambios y validación de este corte
 
-No hay cambios de producción. Esta auditoría se valida con el contract test de Users, formato de los
-documentos modificados y `git diff --check`; la CI remota del commit documental es la evidencia de
-publicación. `prettier --check .` no se presenta como verde mientras existan los Markdown legacy
-documentados fuera de alcance.
+Hay cambios de producción exclusivamente en Slice A. Se validan con el contract test de Users,
+typecheck Dashboard, formato de los archivos modificados y `git diff --check`. `prettier --check .`
+no se presenta como verde mientras existan los Markdown legacy documentados fuera de alcance.

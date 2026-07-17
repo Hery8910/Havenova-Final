@@ -7,8 +7,8 @@ import type {
   TenantUsersDirectoryFilter,
 } from '@/packages/types';
 
-export type UsersPageMode = 'empty' | 'detail' | 'invite';
-export type UsersPageStatusFilter = TenantUsersDirectoryFilter;
+export type UsersPageMode = 'empty' | 'detail';
+export type UsersPageStatusFilter = Extract<TenantUsersDirectoryFilter, 'all' | 'invitations'>;
 
 export type UsersPageSearchState = {
   search: string;
@@ -23,6 +23,7 @@ export type UsersDirectoryFeedbackCopy = {
   endOfResultsLabel: string;
   errorTitle: string;
   retryLabel: string;
+  searchMinimumLabel: string;
 };
 
 export type UsersDirectoryItemCopy = {
@@ -167,9 +168,6 @@ export type UsersPageViewProps = {
     selectOptions: { value: string; label: string }[];
     selectValue: string;
   };
-  header: {
-    primaryActionLabel: string;
-  };
   hasNextPage?: boolean;
   isDirectoryLoading?: boolean;
   isDirectoryRefreshing?: boolean;
@@ -178,7 +176,6 @@ export type UsersPageViewProps = {
   mode: UsersPageMode;
   navigationLabel: string;
   onLoadMore?: () => void;
-  onOpenInvite: () => void;
   onRetryDirectory?: () => void;
   onRetrySummary?: () => void;
   onSearchChange: (value: string) => void;
@@ -195,28 +192,16 @@ export type UsersPageViewProps = {
   }[];
   summaryError?: boolean;
   summaryFeedback: UsersSummaryFeedbackCopy;
-  tenantUserLocale: string;
 };
 
 export type UsersPageDetailRouterProps = {
   copy: UsersDetailPanelCopy;
   detail: TenantUserDirectoryDetail | null;
   error?: string | null;
-  feedback?: string | null;
-  invitationAction?: 'resend' | 'revoke' | null;
-  invite: {
-    defaultLanguage: AppLanguage;
-    isSubmitting: boolean;
-    result: UsersInviteSubmitResult | null;
-    onSubmit: (payload: InviteTenantUserPayload) => Promise<void>;
-  };
   isLoading?: boolean;
   locale: string;
   mode: UsersPageMode;
   onDetailRefresh: () => void;
   onReturnFromDetail: () => void;
-  onResendInvitation: (invitationId: string) => Promise<void>;
-  onReturnToDirectory: () => void;
-  onRevokeInvitation: (invitationId: string) => Promise<void>;
   selectedEntryId?: string;
 };

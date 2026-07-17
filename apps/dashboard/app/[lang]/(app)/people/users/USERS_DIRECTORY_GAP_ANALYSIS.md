@@ -1,5 +1,11 @@
 # Users Directory — auditoría de dominio e implementación
 
+> Archivado como evidencia V2 (`2026-07-10`). La rectificación vigente de Slice A está en
+> [`PAGE_REQUIREMENTS.md`](./PAGE_REQUIREMENTS.md) y
+> [`USERS_CONVERGENCE_AUDIT.md`](../../../../../../docs/02-convergence/users/USERS_CONVERGENCE_AUDIT.md).
+> No usar este documento para reactivar filtros active/inactive/attention, relaciones, Invite,
+> resend o revoke: esas superficies no forman parte del corte read-only actual.
+
 ## Estado del documento
 
 Auditoría realizada el `2026-07-10` contra:
@@ -32,24 +38,24 @@ en el modelo de dominio.
 
 ## Matriz de cumplimiento
 
-| Área | Estado | Evidencia actual | Trabajo pendiente |
-|---|---|---|---|
-| Tipos V2 | Cumple | `packages/types/tenantUsers.ts` modela summary, entries, detail, acciones y códigos canónicos | Mantenerlos sincronizados con backend |
-| BFF dashboard | Cumple | Sólo existen routes para `/summary`, `/directory`, `/entries/:entryId`, invite, resend y revoke | Ninguna |
-| Summary | Cumple | Se consulta `/summary`; los KPIs no se calculan desde rows, son filtros clicables y distinguen loading/error de un valor real `0` | Validación manual contra backend desplegado |
-| Directorio unificado | Cumple | Rows discriminadas por `kind=user|invitation` | Ningún cambio de contrato |
-| Filtros | Cumple | `all|active|inactive|invitations|attention` | Validación visual/manual |
-| Búsqueda | Cumple parcialmente | Debounce de 300 ms, umbral de 2 caracteres, server-side y `AbortSignal` en primera página | Mostrar ayuda para 1 carácter; un error de refresh hoy vacía las rows previas |
-| Cursor y deduplicación | Cumple | Acumula páginas, usa cursor, deduplica por `entryId`, ignora respuestas obsoletas y carga mediante sentinel `IntersectionObserver` | Validación manual de scroll interno en navegador real |
-| Detail por entry | Cumple contrato | Consulta `/entries/:entryId` y renderiza user/invitation | Renderizar dirección y actividad si se consideran parte del detalle final; revisar feedback de acciones |
-| Invite | Cumple parcialmente | Formulario real, payload estricto sin `clientId`, éxito por código y conflictos `ALREADY_EXISTS`, `ALREADY_PENDING` y `DELIVERY_FAILED` resueltos sin parsear mensajes | Convertir las orientaciones de conflicto en acciones navegables si el diseño lo requiere |
-| Resend/revoke | Cumple | Usa `invitationId`, refresca summary/list/detail, muestra feedback, bloquea doble submit y exige confirmación inline antes de revoke | Validación manual del flujo contra backend desplegado |
-| Onboarding `tui_` | Cumple | Resolve/accept usan las rutas públicas V2 y el flujo compartido de set-password | Validación end-to-end en entorno desplegado |
-| URL state | Cumple | Conserva `selected`, `mode`, `search`, `status`; migra `userClientId` legacy a `entryId`, cachea páginas y busca hasta ocho cursores una selección ausente | Validación manual de deep links profundos |
-| Mobile | Cumple | La misma ruta muestra detail/invite como vista enfocada; volver conserva selección, cache, scroll y foco, incluso tras carga defensiva acotada | Validación manual responsive |
-| i18n | Cumple | Summary, filtros, filas, paneles, estados y razones de atención proceden del catálogo `pages.dashboard.usersDirectory` por locale | Validación visual de longitudes en los tres idiomas |
-| Accesibilidad | Parcial | Labels visibles, botones reales, foco CSS y `aria-current` | Revisar semántica de colección, anuncios de estados, foco tras navegación y restore |
-| Validación automatizada | Parcial | `pnpm check:types` y `dashboard-directory-contracts.test.mjs` pasan | Añadir pruebas de interacción y validar el flujo en un entorno desplegado |
+| Área                    | Estado              | Evidencia actual                                                                                                                                                       | Trabajo pendiente                                                                                       |
+| ----------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------- | ----------- | ---------- | ------------------------ |
+| Tipos V2                | Cumple              | `packages/types/tenantUsers.ts` modela summary, entries, detail, acciones y códigos canónicos                                                                          | Mantenerlos sincronizados con backend                                                                   |
+| BFF dashboard           | Cumple              | Sólo existen routes para `/summary`, `/directory`, `/entries/:entryId`, invite, resend y revoke                                                                        | Ninguna                                                                                                 |
+| Summary                 | Cumple              | Se consulta `/summary`; los KPIs no se calculan desde rows, son filtros clicables y distinguen loading/error de un valor real `0`                                      | Validación manual contra backend desplegado                                                             |
+| Directorio unificado    | Cumple              | Rows discriminadas por `kind=user                                                                                                                                      | invitation`                                                                                             | Ningún cambio de contrato |
+| Filtros                 | Cumple              | `all                                                                                                                                                                   | active                                                                                                  | inactive                  | invitations | attention` | Validación visual/manual |
+| Búsqueda                | Cumple parcialmente | Debounce de 300 ms, umbral de 2 caracteres, server-side y `AbortSignal` en primera página                                                                              | Mostrar ayuda para 1 carácter; un error de refresh hoy vacía las rows previas                           |
+| Cursor y deduplicación  | Cumple              | Acumula páginas, usa cursor, deduplica por `entryId`, ignora respuestas obsoletas y carga mediante sentinel `IntersectionObserver`                                     | Validación manual de scroll interno en navegador real                                                   |
+| Detail por entry        | Cumple contrato     | Consulta `/entries/:entryId` y renderiza user/invitation                                                                                                               | Renderizar dirección y actividad si se consideran parte del detalle final; revisar feedback de acciones |
+| Invite                  | Cumple parcialmente | Formulario real, payload estricto sin `clientId`, éxito por código y conflictos `ALREADY_EXISTS`, `ALREADY_PENDING` y `DELIVERY_FAILED` resueltos sin parsear mensajes | Convertir las orientaciones de conflicto en acciones navegables si el diseño lo requiere                |
+| Resend/revoke           | Cumple              | Usa `invitationId`, refresca summary/list/detail, muestra feedback, bloquea doble submit y exige confirmación inline antes de revoke                                   | Validación manual del flujo contra backend desplegado                                                   |
+| Onboarding `tui_`       | Cumple              | Resolve/accept usan las rutas públicas V2 y el flujo compartido de set-password                                                                                        | Validación end-to-end en entorno desplegado                                                             |
+| URL state               | Cumple              | Conserva `selected`, `mode`, `search`, `status`; migra `userClientId` legacy a `entryId`, cachea páginas y busca hasta ocho cursores una selección ausente             | Validación manual de deep links profundos                                                               |
+| Mobile                  | Cumple              | La misma ruta muestra detail/invite como vista enfocada; volver conserva selección, cache, scroll y foco, incluso tras carga defensiva acotada                         | Validación manual responsive                                                                            |
+| i18n                    | Cumple              | Summary, filtros, filas, paneles, estados y razones de atención proceden del catálogo `pages.dashboard.usersDirectory` por locale                                      | Validación visual de longitudes en los tres idiomas                                                     |
+| Accesibilidad           | Parcial             | Labels visibles, botones reales, foco CSS y `aria-current`                                                                                                             | Revisar semántica de colección, anuncios de estados, foco tras navegación y restore                     |
+| Validación automatizada | Parcial             | `pnpm check:types` y `dashboard-directory-contracts.test.mjs` pasan                                                                                                    | Añadir pruebas de interacción y validar el flujo en un entorno desplegado                               |
 
 ## Correspondencia exacta con el dominio
 

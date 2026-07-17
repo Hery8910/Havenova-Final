@@ -43,6 +43,7 @@ export const usersPageCopy = {
     endOfResultsLabel: 'End of results',
     errorTitle: 'We could not load the customer directory.',
     retryLabel: 'Try again',
+    searchMinimumLabel: 'Enter at least two characters to search.',
   } satisfies UsersDirectoryFeedbackCopy,
   detail: {
     navigationLabel: 'Customers directory',
@@ -162,11 +163,8 @@ export const usersPageCopy = {
 };
 
 export const usersStatusOptions: DirectorySelectOption[] = [
-  { value: 'all', label: 'All statuses' },
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
+  { value: 'all', label: 'All people' },
   { value: 'invitations', label: 'Invitations' },
-  { value: 'attention', label: 'Needs attention' },
 ];
 
 export type UsersPageCopy = typeof usersPageCopy & {
@@ -180,12 +178,7 @@ export type UsersPageCopy = typeof usersPageCopy & {
 export const createUsersPageCopy = (copy: UsersPageCopy) => copy;
 
 export function parseUsersStatus(value?: string | null): UsersPageStatusFilter {
-  if (
-    value === 'active' ||
-    value === 'inactive' ||
-    value === 'invitations' ||
-    value === 'attention'
-  ) {
+  if (value === 'invitations') {
     return value;
   }
 
@@ -204,11 +197,7 @@ export function parseUsersSearchState(input: {
 
 export function buildUsersSummary(
   summary: TenantUsersDirectorySummary | null,
-  labels: {
-    totalUsers: string;
-    pendingInvites: string;
-    needsAttention: string;
-  }
+  labels: { totalUsers: string; pendingInvites: string }
 ): (DirectorySummaryItem & { status: UsersPageStatusFilter })[] {
   return [
     {
@@ -223,12 +212,6 @@ export function buildUsersSummary(
       tone: 'secondary',
       status: 'invitations',
     },
-    {
-      label: labels.needsAttention,
-      value: summary?.needsAttention ?? '—',
-      tone: 'accent',
-      status: 'attention',
-    },
   ];
 }
 
@@ -237,10 +220,6 @@ export const resolveUsersPageMode = (
   selectedEntryId?: string,
   fallbackMode: UsersPageMode = 'empty'
 ): UsersPageMode => {
-  if (requestedMode === 'invite') {
-    return 'invite';
-  }
-
   if (requestedMode === 'detail') {
     return selectedEntryId ? 'detail' : 'empty';
   }

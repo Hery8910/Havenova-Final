@@ -1669,17 +1669,141 @@
       },
       "copy": {
         "intro": { "primaryActionLabel": "Kunden einladen" },
-        "filters": { "ariaLabel": "Filter des Kundenverzeichnisses", "searchLabel": "Kunden suchen", "searchPlaceholder": "Name, E-Mail oder Telefon", "selectLabel": "Status" },
-        "list": { "sectionLabel": "Verzeichnis", "title": "Kunden", "hint": "Wählen Sie einen Kunden oder eine Einladung, um Details zu prüfen.", "emptyTitle": "Noch keine Kunden.", "emptyDescription": "Laden Sie einen Kunden ein, um das Verzeichnis aufzubauen.", "noResultsTitle": "Keine Kunden entsprechen dieser Ansicht.", "noResultsDescription": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter." },
-        "feedback": { "loadingLabel": "Kundenverzeichnis wird geladen...", "refreshingLabel": "Verzeichnis wird aktualisiert...", "loadingMoreLabel": "Weitere Kunden werden geladen...", "loadMoreFallbackLabel": "Weitere Kunden laden", "endOfResultsLabel": "Ende der Ergebnisse", "errorTitle": "Das Kundenverzeichnis konnte nicht geladen werden.", "retryLabel": "Erneut versuchen" },
+        "filters": {
+          "ariaLabel": "Filter des Kundenverzeichnisses",
+          "searchLabel": "Kunden suchen",
+          "searchPlaceholder": "Name, E-Mail oder Telefon",
+          "selectLabel": "Status"
+        },
+        "list": {
+          "sectionLabel": "Verzeichnis",
+          "title": "Kunden",
+          "hint": "Wählen Sie einen Kunden oder eine Einladung, um Details zu prüfen.",
+          "emptyTitle": "Noch keine Kunden.",
+          "emptyDescription": "Kundendatensätze erscheinen hier, sobald sie verfügbar sind.",
+          "noResultsTitle": "Keine Kunden entsprechen dieser Ansicht.",
+          "noResultsDescription": "Versuchen Sie eine andere Suche oder einen anderen Verzeichnisfilter."
+        },
+        "feedback": {
+          "loadingLabel": "Kundenverzeichnis wird geladen...",
+          "refreshingLabel": "Verzeichnis wird aktualisiert...",
+          "loadingMoreLabel": "Weitere Kunden werden geladen...",
+          "loadMoreFallbackLabel": "Weitere Kunden laden",
+          "endOfResultsLabel": "Ende der Ergebnisse",
+          "errorTitle": "Das Kundenverzeichnis konnte nicht geladen werden.",
+          "retryLabel": "Erneut versuchen",
+          "searchMinimumLabel": "Geben Sie mindestens zwei Zeichen für die Suche ein."
+        },
         "detail": { "navigationLabel": "Kundenverzeichnis", "detailLabel": "Kundendetails" },
         "panels": {
-          "empty": { "eyebrow": "Bereich", "title": "Wählen Sie einen Kunden aus", "description": "Kundendetails und Einladungsaktionen werden in diesem Bereich verwaltet.", "noteLabel": "Aktuelle Nutzung", "noteText": "Wählen Sie einen Eintrag im Verzeichnis oder öffnen Sie den Einladungsablauf in der linken Spalte." },
-          "invite": { "eyebrow": "Einladen", "title": "Kunden einladen", "description": "Erstellen Sie eine sichere Einladung, ohne das Verzeichnis zu verlassen.", "emailLabel": "E-Mail", "nameLabel": "Name", "phoneLabel": "Telefon", "languageLabel": "Sprache", "languageOptions": { "de": "Deutsch", "en": "Englisch", "es": "Spanisch" }, "submitLabel": "Einladung senden", "submittingLabel": "Wird gesendet...", "returnActionLabel": "Zurück zum Verzeichnis", "invitedSuccessTitle": "Einladung gesendet.", "renewedSuccessTitle": "Abgelaufene Einladung erneuert.", "alreadyExistsError": "Dieser Kunde hat bereits ein Konto. Suchen Sie nach der E-Mail, um es zu öffnen.", "alreadyPendingError": "Es gibt bereits eine aktive Einladung. Öffnen Sie Einladungen, um sie erneut zu senden.", "deliveryFailedError": "Die Einladung wurde gespeichert, aber nicht zugestellt. Aktualisieren Sie Einladungen und senden Sie sie im Detailbereich erneut.", "errorTitle": "Diese Einladung konnte nicht gesendet werden." },
-          "detail": { "emptyEyebrow": "Details", "emptyTitle": "Wählen Sie einen Kunden", "emptyDescription": "Identität, Zugang, Einladungen und Aktivitätsdaten werden hier angezeigt.", "loadingLabel": "Kundendetails werden geladen...", "errorEyebrow": "Details", "errorTitle": "Dieser Eintrag konnte nicht geladen werden.", "emailLabel": "E-Mail", "phoneLabel": "Telefon", "createdLabel": "Erstellt", "statusLabel": "Status", "profileLabel": "Profil", "languageLabel": "Sprache", "addressLabel": "Hauptadresse", "relationshipLabel": "Beziehung", "requestsLabel": "Anfragen", "workOrdersUnavailableLabel": "Arbeitsaufträge sind noch nicht verfügbar.", "nextAppointmentLabel": "Nächster Termin", "lastCompletedServiceLabel": "Letzter abgeschlossener Service", "invitationLabel": "Einladung", "invitationExpiresLabel": "Läuft ab", "invitationLastSentLabel": "Zuletzt gesendet", "invitationSendCountLabel": "Anzahl Sendungen", "pendingProfileFallback": "Profil ausstehend", "missingValueFallback": "Nicht angegeben", "resendInvitationLabel": "Einladung erneut senden", "resendingInvitationLabel": "Einladung wird erneut gesendet...", "revokeInvitationLabel": "Einladung widerrufen", "revokingInvitationLabel": "Einladung wird widerrufen...", "revokeConfirmationTitle": "Diese Einladung widerrufen?", "revokeConfirmationDescription": "Der Einladungslink funktioniert sofort nicht mehr. Bei Bedarf können Sie später eine neue Einladung erstellen.", "revokeConfirmationConfirmLabel": "Einladung widerrufen", "revokeConfirmationCancelLabel": "Einladung behalten", "actionSuccessTitle": "Einladungsaktion abgeschlossen.", "actionErrorTitle": "Diese Einladungsaktion konnte nicht abgeschlossen werden.", "returnToDirectoryLabel": "Zurück zum Verzeichnis", "retryLabel": "Erneut versuchen", "availableLabel": "Verfügbar", "workOrdersLabel": "Arbeitsaufträge", "requestsSummaryTemplate": "{active} aktiv von insgesamt {total}", "statusLabels": { "active": "Aktiv", "inactive": "Inaktiv", "locked": "Gesperrt", "invited": "Eingeladen", "expired": "Abgelaufen" }, "invitationStatusLabels": { "pending": "Ausstehend", "expired": "Abgelaufen" }, "attentionReasons": { "INVITATION_EXPIRED": "Einladung abgelaufen", "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig", "ACCOUNT_LOCKED": "Konto gesperrt" } }
+          "empty": {
+            "eyebrow": "Bereich",
+            "title": "Wählen Sie einen Kunden aus",
+            "description": "Identität, Kontakt und Einladungsstatus werden in diesem Bereich angezeigt.",
+            "noteLabel": "Aktuelle Nutzung",
+            "noteText": "Wählen Sie einen Eintrag im Verzeichnis, um seine verfügbaren Details zu prüfen."
+          },
+          "invite": {
+            "eyebrow": "Einladen",
+            "title": "Kunden einladen",
+            "description": "Erstellen Sie eine sichere Einladung, ohne das Verzeichnis zu verlassen.",
+            "emailLabel": "E-Mail",
+            "nameLabel": "Name",
+            "phoneLabel": "Telefon",
+            "languageLabel": "Sprache",
+            "languageOptions": { "de": "Deutsch", "en": "Englisch", "es": "Spanisch" },
+            "submitLabel": "Einladung senden",
+            "submittingLabel": "Wird gesendet...",
+            "returnActionLabel": "Zurück zum Verzeichnis",
+            "invitedSuccessTitle": "Einladung gesendet.",
+            "renewedSuccessTitle": "Abgelaufene Einladung erneuert.",
+            "alreadyExistsError": "Dieser Kunde hat bereits ein Konto. Suchen Sie nach der E-Mail, um es zu öffnen.",
+            "alreadyPendingError": "Es gibt bereits eine aktive Einladung. Öffnen Sie Einladungen, um sie erneut zu senden.",
+            "deliveryFailedError": "Die Einladung wurde gespeichert, aber nicht zugestellt. Aktualisieren Sie Einladungen und senden Sie sie im Detailbereich erneut.",
+            "errorTitle": "Diese Einladung konnte nicht gesendet werden."
+          },
+          "detail": {
+            "emptyEyebrow": "Details",
+            "emptyTitle": "Wählen Sie einen Kunden",
+            "emptyDescription": "Identität, Zugang, Einladungen und Aktivitätsdaten werden hier angezeigt.",
+            "loadingLabel": "Kundendetails werden geladen...",
+            "errorEyebrow": "Details",
+            "errorTitle": "Dieser Eintrag konnte nicht geladen werden.",
+            "emailLabel": "E-Mail",
+            "phoneLabel": "Telefon",
+            "createdLabel": "Erstellt",
+            "statusLabel": "Status",
+            "profileLabel": "Profil",
+            "languageLabel": "Sprache",
+            "addressLabel": "Hauptadresse",
+            "relationshipLabel": "Beziehung",
+            "requestsLabel": "Anfragen",
+            "workOrdersUnavailableLabel": "Arbeitsaufträge sind noch nicht verfügbar.",
+            "nextAppointmentLabel": "Nächster Termin",
+            "lastCompletedServiceLabel": "Letzter abgeschlossener Service",
+            "invitationLabel": "Einladung",
+            "invitationExpiresLabel": "Läuft ab",
+            "invitationLastSentLabel": "Zuletzt gesendet",
+            "invitationSendCountLabel": "Anzahl Sendungen",
+            "pendingProfileFallback": "Profil ausstehend",
+            "missingValueFallback": "Nicht angegeben",
+            "resendInvitationLabel": "Einladung erneut senden",
+            "resendingInvitationLabel": "Einladung wird erneut gesendet...",
+            "revokeInvitationLabel": "Einladung widerrufen",
+            "revokingInvitationLabel": "Einladung wird widerrufen...",
+            "revokeConfirmationTitle": "Diese Einladung widerrufen?",
+            "revokeConfirmationDescription": "Der Einladungslink funktioniert sofort nicht mehr. Bei Bedarf können Sie später eine neue Einladung erstellen.",
+            "revokeConfirmationConfirmLabel": "Einladung widerrufen",
+            "revokeConfirmationCancelLabel": "Einladung behalten",
+            "actionSuccessTitle": "Einladungsaktion abgeschlossen.",
+            "actionErrorTitle": "Diese Einladungsaktion konnte nicht abgeschlossen werden.",
+            "returnToDirectoryLabel": "Zurück zum Verzeichnis",
+            "retryLabel": "Erneut versuchen",
+            "availableLabel": "Verfügbar",
+            "workOrdersLabel": "Arbeitsaufträge",
+            "requestsSummaryTemplate": "{active} aktiv von insgesamt {total}",
+            "statusLabels": {
+              "active": "Aktiv",
+              "inactive": "Inaktiv",
+              "locked": "Gesperrt",
+              "invited": "Eingeladen",
+              "expired": "Abgelaufen"
+            },
+            "invitationStatusLabels": { "pending": "Ausstehend", "expired": "Abgelaufen" },
+            "attentionReasons": {
+              "INVITATION_EXPIRED": "Einladung abgelaufen",
+              "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig",
+              "ACCOUNT_LOCKED": "Konto gesperrt"
+            }
+          }
         },
-        "directoryItem": { "pendingProfileFallback": "Profil ausstehend", "noRequestsFallback": "Noch keine Anfragen", "nextAppointmentTemplate": "Nächster Termin: {date}", "activeRequestsTemplate": "{count} aktive Anfrage", "totalRequestsTemplate": "{count} Anfragen insgesamt", "lastServiceTemplate": "Letzter Service: {date}", "statuses": { "active": "Aktiv", "inactive": "Inaktiv", "locked": "Gesperrt", "invited": "Eingeladen", "expired": "Abgelaufen" }, "attentionReasons": { "INVITATION_EXPIRED": "Einladung abgelaufen", "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig", "ACCOUNT_LOCKED": "Konto gesperrt" } },
-        "statusOptions": [ { "value": "all", "label": "Alle Status" }, { "value": "active", "label": "Aktiv" }, { "value": "inactive", "label": "Inaktiv" }, { "value": "invitations", "label": "Einladungen" }, { "value": "attention", "label": "Benötigt Aufmerksamkeit" } ]
+        "directoryItem": {
+          "pendingProfileFallback": "Profil ausstehend",
+          "noRequestsFallback": "Noch keine Anfragen",
+          "nextAppointmentTemplate": "Nächster Termin: {date}",
+          "activeRequestsTemplate": "{count} aktive Anfrage",
+          "totalRequestsTemplate": "{count} Anfragen insgesamt",
+          "lastServiceTemplate": "Letzter Service: {date}",
+          "statuses": {
+            "active": "Aktiv",
+            "inactive": "Inaktiv",
+            "locked": "Gesperrt",
+            "invited": "Eingeladen",
+            "expired": "Abgelaufen"
+          },
+          "attentionReasons": {
+            "INVITATION_EXPIRED": "Einladung abgelaufen",
+            "EMAIL_UNVERIFIED_STALE": "E-Mail-Bestätigung ist überfällig",
+            "ACCOUNT_LOCKED": "Konto gesperrt"
+          }
+        },
+        "statusOptions": [
+          { "value": "all", "label": "Alle Personen" },
+          { "value": "active", "label": "Aktiv" },
+          { "value": "inactive", "label": "Inaktiv" },
+          { "value": "invitations", "label": "Einladungen" },
+          { "value": "attention", "label": "Benötigt Aufmerksamkeit" }
+        ]
       }
     },
     "requests": {

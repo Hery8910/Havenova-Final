@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useRef } from 'react';
 
@@ -87,7 +87,10 @@ export function DirectoryList<TItem>({
   }, [hasNextPage, isLoadingMore, onLoadMore]);
 
   return (
-    <section className={`card card--${variant} ${styles.root}`} aria-labelledby="directory-list-title">
+    <section
+      className={`card card--${variant} ${styles.root}`}
+      aria-labelledby="directory-list-title"
+    >
       <div className={styles.header}>
         <div>
           <p className={styles.sectionLabel}>{sectionLabel}</p>
@@ -98,7 +101,11 @@ export function DirectoryList<TItem>({
         {hint ? <p className={styles.hint}>{hint}</p> : null}
       </div>
 
-      {showInitialLoading ? <p className={styles.feedback}>{loadingLabel}</p> : null}
+      {showInitialLoading ? (
+        <p className={styles.feedback} aria-live="polite">
+          {loadingLabel}
+        </p>
+      ) : null}
       {isRefreshing && items.length ? (
         <p className={styles.feedback} aria-live="polite">
           {loadingLabel}
@@ -106,7 +113,7 @@ export function DirectoryList<TItem>({
       ) : null}
 
       {!showInitialLoading && error ? (
-        <div className={styles.errorState}>
+        <div className={styles.errorState} role="alert">
           <p className={styles.errorTitle}>{errorTitle}</p>
           <p className={styles.errorText}>{error}</p>
           {onRetry ? (
@@ -130,7 +137,11 @@ export function DirectoryList<TItem>({
           <div className={styles.feedback}>
             {hasNextPage ? (
               <>
-                <div ref={loadMoreSentinelRef} className={styles.loadMoreSentinel} aria-hidden="true" />
+                <div
+                  ref={loadMoreSentinelRef}
+                  className={styles.loadMoreSentinel}
+                  aria-hidden="true"
+                />
                 {isLoadingMore ? (
                   <span aria-live="polite">{loadingMoreLabel ?? loadingLabel}</span>
                 ) : (
