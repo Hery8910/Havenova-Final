@@ -115,6 +115,26 @@ entrada, complemento como preferencia persistida de identidad y middleware como 
 sin locale. Dashboard sólo cambia ownership del portal; no cambia la coordinación Admin → Profile →
 Worker, navegación, cookies ni `havenova_lang`.
 
-Readiness final: `READY` para compatibilidad funcional y visual, ownership del portal, foco,
-navegación localizada, cookies/persistencia y compatibilidad Client/Worker. Permanece pendiente el
-gate visual manual; no bloquea la evidencia automatizada ni autoriza reutilizar el host.
+Readiness final: `READY` técnicamente para compatibilidad funcional, ownership del portal, foco,
+navegación localizada, cookies/persistencia y compatibilidad Client/Worker. El gate visual manual
+queda `BLOCKED` por acceso, por lo que la compatibilidad visual sigue pendiente de evidencia real;
+esto no autoriza reutilizar el host.
+
+## Gate visual — intento reproducible de 2026-07-17
+
+No existe framework E2E ni fixture navegable del workspace Dashboard en este repositorio. Se inició
+el Dashboard local y se solicitó `/en/people/users` con Chrome headless a `1440×900`; el layout
+server respondió `307` y la URL final fue `/en/user/login`. La captura resultante muestra el login,
+no el workspace, y se conserva temporalmente como evidencia de bloqueo con SHA-256
+`9f3dfaf47fd59a55338f7f380c21709bd4643c992feac418a25e3c6b69dbbc66`.
+
+Por tanto no se declaran comprobados selector cerrado/abierto, los tres idiomas, etiquetas largas,
+borde derecho, sidebar expandido/colapsado, scroll, cambio localizado, segundo click, Escape,
+exterior, foco, móvil/modal/backdrop, convivencia con drawer, claro/oscuro, contraste, stacking,
+clipping ni nodos huérfanos en navegador real. Las pruebas JSDOM continúan cubriendo los contratos
+observables, pero no sustituyen esas capturas. No se aplicó corrección de producción: no se observó
+un defecto del selector, sólo la ausencia de acceso autenticado.
+
+Condición de salida: una sesión Dashboard de prueba autorizada o una fixture existente que monte el
+workspace sin alterar Auth, con capturas desktop y mobile de estados abierto/cerrado, al menos un
+tema claro y uno oscuro si ambos se resuelven en esa sesión.

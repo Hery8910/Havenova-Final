@@ -22,5 +22,23 @@ El drawer continúa inline y excluido del host local de `LanguageSwitcher`; no p
 cambia su scroll lock. El host es propiedad del workspace sólo para ese selector y no debe
 confundirse con el drawer ni con un account menu Client-owned.
 
-Desktop colapsado conserva `PARTIALLY_READY` por revisión visual y foco pendientes; no recibe
-semántica modal, trap ni scroll lock en este corte.
+## Desktop colapsado — revisión acotada 2026-07-17
+
+Permanece `PARTIALLY_READY`. La composición soportada es funcional: el workspace controla el ancho,
+el botón de colapso es controlado, rutas y logout se conservan, los enlaces y grupos icon-only tienen
+nombre accesible, `title`, `aria-current`, `aria-expanded` y `aria-controls`; no interviene en el
+drawer móvil ni en Client `SideNav`.
+
+| Gap exacto                                                                           | Clase                      | Estado                                                  | Decisión                                                                       |
+| ------------------------------------------------------------------------------------ | -------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Foco visible real de enlaces y botones icon-only en claro/oscuro                     | Accesibilidad y visual     | No validado en navegador                                | Diferido: Jest sólo prueba nombre y semántica.                                 |
+| Orden de tabulación, activación con teclado y tamaños de hit-area en columna de 84px | Accesibilidad y responsive | No validado en navegador                                | Diferido: requiere la misma sesión/capturas bloqueadas para el shell.          |
+| Etiquetas largas en alemán, hover y títulos nativos sin clipping                     | Visual                     | No validado en navegador                                | Diferido: no se añaden tooltips ni se rediseña la columna sin evidencia.       |
+| Convivencia a 1100px con la transición sidebar→drawer                                | Responsive                 | Caracterizada por media query y tests, sin smoke visual | Diferido: el drawer ya es `READY`; esta deuda no cambia su ownership.          |
+| Estado expandido de la sección activa al colapsar                                    | Funcional y ownership      | Implementado y caracterizado                            | No es gap bloqueante: la sección activa permanece abierta de forma deliberada. |
+
+No hay gap de rutas, autorización, modelo `DashboardShellNav`, ownership, sidebar expandido, drawer
+móvil ni Client `SideNav`. La deuda es no bloqueante para el shell operacional actual y no bloquea la
+convergencia de Users Directory; deberá resolverse antes de promover desktop colapsado a `READY` o
+si un cambio de breakpoint, foco, labels o navegación altera esa columna. No recibe semántica modal,
+trap ni scroll lock en este corte.
