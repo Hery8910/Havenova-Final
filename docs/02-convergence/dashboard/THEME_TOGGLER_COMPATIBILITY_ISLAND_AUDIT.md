@@ -48,8 +48,10 @@ documento y persistencia global.
 
 ## Contrato funcional observado
 
-- El valor inicial de cada complemento es el tema de su entidad previa/cache, después `localStorage`
-  global (`theme`) si vale `light|dark`, y por último `light`.
+- Admin y Worker resuelven el valor inicial desde entidad previa/cache, después `localStorage` global
+  (`theme`) si vale `light|dark`, y por último `light`. Profile resuelve primero su cache scoped
+  `hv-profile:*` o su perfil vacío (`light`); el script temprano Client puede aplicar la clave global
+  antes de que Profile hidrate, pero no convierte esa clave en default del provider.
 - Dashboard y Client ejecutan antes de hidratar un script que aplica el mismo valor global al
   atributo `data-theme` de `<html>`; si no puede leer storage, aplica `light`. El layout autenticado
   Dashboard usa `suppressHydrationWarning`; el root Client no lo hace, por lo que ese árbol conserva
@@ -97,21 +99,23 @@ limpieza incidental. No hay `--op-*` en el control ni CSS operational cargado po
 
 ## Cobertura existente y gaps
 
-Las suites de `AdminProvider`, `ProfileProvider` y `WorkerProvider` verifican creación, cache y
-sincronización de sus complementos con fixtures cuyo tema es `light`; los tests de navbar sólo
-mockean ThemeToggler y verifican que las vistas lo montan con la variante esperada. Los contratos de
-contexto comprueban que Admin/Worker reutilizan el tema guardado para el default local. No existe
-una prueba dedicada del control ni una prueba de sus efectos DOM.
+La caracterización vive en `tests/jest/components/theme-toggler.test.jsx` y en las suites de
+`AdminProvider`, `ProfileProvider` y `WorkerProvider`. El control se prueba como botón binario
+nombrado, con estado `aria-pressed`, acción siguiente, foco nativo, callback, tolerancia sin provider
+y sus límites legacy. Los contexts prueban inicialización, cambio directo, `data-theme` y la clave
+global sin exigir número u orden de escrituras. En particular, Admin cambia y persiste el tema sin
+montar ThemeToggler. Los guards verifican consumidores Dashboard/Client/Worker, bootstrap Dashboard,
+ausencia de `ThemeProvider`, `system`, `matchMedia` y `--op-*` compartidos.
 
-| Prioridad   | Gap antes de migrar                                                                               |
-| ----------- | ------------------------------------------------------------------------------------------------- |
-| Obligatorio | Render real Dashboard: activo, `aria-pressed`, nombre accesible, click y callback de tema         |
-| Obligatorio | Resolución `light/dark` para cada contexto y actualización única de `data-theme`/`localStorage`   |
-| Obligatorio | Falla controlada de storage, SSR sin `window`, hydration/Fouc de Dashboard y ausencia de provider |
-| Obligatorio | Aislamiento: Client Profile/Navbar y Worker mantienen sus variantes legacy                        |
-| Deseable    | Persistencia tras reload y reconciliación cache/entidad remota                                    |
-| Deseable    | Foco, contraste, reduced motion, zoom 200 % y tooltip en ambos temas                              |
-| Diferido    | Política explícita de cambio de sistema y sincronización cross-tab; no existen hoy como contrato  |
+| Prioridad   | Gap antes de migrar                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------------ |
+| Obligatorio | Falla controlada de storage, SSR sin `window` y hydration/Fouc de Dashboard                      |
+| Obligatorio | Decidir un único owner de cada escritura de `data-theme`/`localStorage`                          |
+| Obligatorio | Client Navbar completo conserva sus variantes legacy al extraer Dashboard                        |
+| Deseable    | Persistencia tras reload y reconciliación cache/entidad remota                                   |
+| Deseable    | Definir el bootstrap guest de Profile: la cache scoped puede ser reescrita por el perfil vacío   |
+| Deseable    | Foco, contraste, reduced motion, zoom 200 % y tooltip en ambos temas                             |
+| Diferido    | Política explícita de cambio de sistema y sincronización cross-tab; no existen hoy como contrato |
 
 ## Riesgos
 
@@ -153,7 +157,10 @@ Secuencia recomendada:
 5. conservar Client y Worker legacy, y reevaluar el primitive sólo con un segundo consumidor
    operational validado.
 
-La futura migración será aceptable cuando Dashboard no renderice ThemeToggler legacy, mantenga el
-contrato funcional y accesible, no añada operational a Client/Worker y la revisión visual/hidratación
-esté comprobada. Se difieren el selector `system`, cross-tab, migración Client/Worker, limpieza de
-legacy, LanguageSwitcher, alertas, loading, Auth y Users.
+Readiness: `PARTIALLY_READY`. El contrato visible, los tres contexts y el bootstrap Dashboard están
+caracterizados, pero la composición Dashboard no debe implementarse hasta decidir el único owner de
+los efectos DOM/storage y cubrir storage fallido e hidratación. La futura migración será aceptable
+cuando Dashboard no renderice ThemeToggler legacy, mantenga el contrato funcional y accesible, no
+añada operational a Client/Worker y la revisión visual/hidratación esté comprobada. Se difieren el
+selector `system`, cross-tab, migración Client/Worker, limpieza de legacy, LanguageSwitcher, alertas,
+loading, Auth y Users.

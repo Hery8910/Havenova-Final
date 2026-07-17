@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import { WorkerProvider, useWorker } from '../../../packages/contexts/worker/WorkerContext';
 import { defaultTestClient, renderWithAppProviders } from '../utils/test-providers';
@@ -37,6 +37,19 @@ function WorkerConsumer() {
       <div data-testid="worker-source">{source}</div>
       <div data-testid="worker-is-offline">{String(isOffline)}</div>
       <div data-testid="worker-last-sync-at">{lastSyncAt ?? ''}</div>
+    </>
+  );
+}
+
+function WorkerThemeConsumer() {
+  const { worker, setTheme } = useWorker();
+
+  return (
+    <>
+      <output data-testid="worker-theme">{worker.theme}</output>
+      <button type="button" onClick={() => void setTheme('dark')}>
+        Set worker dark theme
+      </button>
     </>
   );
 }
@@ -143,18 +156,16 @@ describe('WorkerProvider', () => {
       data: { code: 'AUTH_ACCESS_TOKEN_MISSING' },
     };
 
-    mockedGetWorkerProfile
-      .mockRejectedValueOnce(unauthorizedError)
-      .mockResolvedValueOnce({
-        userClientId: 'worker_uc_1',
-        clientId: 'client_123',
-        email: 'worker.profile@example.com',
-        name: 'Worker',
-        language: 'en',
-        theme: 'light',
-        createdAt: '',
-        updatedAt: '',
-      });
+    mockedGetWorkerProfile.mockRejectedValueOnce(unauthorizedError).mockResolvedValueOnce({
+      userClientId: 'worker_uc_1',
+      clientId: 'client_123',
+      email: 'worker.profile@example.com',
+      name: 'Worker',
+      language: 'en',
+      theme: 'light',
+      createdAt: '',
+      updatedAt: '',
+    });
 
     localStorage.setItem(
       'hv-worker:client_123:worker_uc_1',
@@ -180,5 +191,23 @@ describe('WorkerProvider', () => {
       expect(refreshAuth).toHaveBeenCalledTimes(1);
     });
     expect(mockedGetWorkerProfile.mock.calls.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('starts Worker in light and persists its context-owned theme change', async () => {
+    renderWithAppProviders(
+      <WorkerProvider>
+        <WorkerThemeConsumer />
+      </WorkerProvider>
+    );
+
+    expect(await screen.findByTestId('worker-theme')).toHaveTextContent('light');
+    expect(document.documentElement).toHaveAttribute('data-theme', 'light');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Set worker dark theme' }));
+    await waitFor(() => {
+      expect(screen.getByTestId('worker-theme')).toHaveTextContent('dark');
+      expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+      expect(localStorage.getItem('theme')).toBe('dark');
+    });
   });
 });

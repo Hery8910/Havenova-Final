@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import { AdminProvider, useAdmin } from '../../../packages/contexts/admin/AdminContext';
 import { defaultTestClient, renderWithAppProviders } from '../utils/test-providers';
@@ -37,6 +37,19 @@ function AdminConsumer() {
       <div data-testid="admin-source">{source}</div>
       <div data-testid="admin-is-offline">{String(isOffline)}</div>
       <div data-testid="admin-last-sync-at">{lastSyncAt ?? ''}</div>
+    </>
+  );
+}
+
+function AdminThemeConsumer() {
+  const { admin, setTheme } = useAdmin();
+
+  return (
+    <>
+      <output data-testid="admin-theme">{admin.theme}</output>
+      <button type="button" onClick={() => void setTheme('dark')}>
+        Set dashboard dark theme
+      </button>
     </>
   );
 }
@@ -139,18 +152,16 @@ describe('AdminProvider', () => {
       data: { code: 'AUTH_ACCESS_TOKEN_MISSING' },
     };
 
-    mockedGetAdminProfile
-      .mockRejectedValueOnce(unauthorizedError)
-      .mockResolvedValueOnce({
-        userClientId: 'admin_uc_1',
-        clientId: 'client_123',
-        email: 'admin.profile@example.com',
-        name: 'Admin',
-        language: 'en',
-        theme: 'light',
-        createdAt: '',
-        updatedAt: '',
-      });
+    mockedGetAdminProfile.mockRejectedValueOnce(unauthorizedError).mockResolvedValueOnce({
+      userClientId: 'admin_uc_1',
+      clientId: 'client_123',
+      email: 'admin.profile@example.com',
+      name: 'Admin',
+      language: 'en',
+      theme: 'light',
+      createdAt: '',
+      updatedAt: '',
+    });
 
     localStorage.setItem(
       'hv-admin:client_123:admin_uc_1',
@@ -176,5 +187,44 @@ describe('AdminProvider', () => {
       expect(refreshAuth).toHaveBeenCalledTimes(1);
     });
     expect(mockedGetAdminProfile.mock.calls.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it.each([
+    ['light', 'light'],
+    ['dark', 'dark'],
+    [null, 'light'],
+    ['system', 'light'],
+  ])('resolves the Dashboard theme from stored %s as %s', async (storedTheme, expectedTheme) => {
+    if (storedTheme) {
+      localStorage.setItem('theme', storedTheme);
+    }
+
+    renderWithAppProviders(
+      <AdminProvider>
+        <AdminThemeConsumer />
+      </AdminProvider>
+    );
+
+    expect(await screen.findByTestId('admin-theme')).toHaveTextContent(expectedTheme);
+    await waitFor(() => {
+      expect(document.documentElement).toHaveAttribute('data-theme', expectedTheme);
+    });
+  });
+
+  it('owns Dashboard theme changes without mounting ThemeToggler', async () => {
+    renderWithAppProviders(
+      <AdminProvider>
+        <AdminThemeConsumer />
+      </AdminProvider>
+    );
+
+    expect(await screen.findByTestId('admin-theme')).toHaveTextContent('light');
+    fireEvent.click(screen.getByRole('button', { name: 'Set dashboard dark theme' }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('admin-theme')).toHaveTextContent('dark');
+      expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+      expect(localStorage.getItem('theme')).toBe('dark');
+    });
   });
 });

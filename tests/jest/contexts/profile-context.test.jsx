@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import { ProfileProvider, useProfile } from '../../../packages/contexts/profile/ProfileContext';
 import { defaultTestClient, renderWithAppProviders } from '../utils/test-providers';
@@ -36,6 +36,22 @@ function ProfileConsumer() {
       <div data-testid="profile-contact-email">{profile.contactEmail}</div>
       <div data-testid="profile-source">{source}</div>
       <div data-testid="profile-is-offline">{String(isOffline)}</div>
+    </>
+  );
+}
+
+function ProfileThemeConsumer() {
+  const { profile, setTheme } = useProfile();
+
+  return (
+    <>
+      <output data-testid="profile-theme">{profile.theme}</output>
+      <button
+        type="button"
+        onClick={() => void setTheme(profile.theme === 'dark' ? 'light' : 'dark')}
+      >
+        Toggle profile theme
+      </button>
     </>
   );
 }
@@ -335,7 +351,51 @@ describe('ProfileProvider', () => {
       expect(screen.getByTestId('profile-source')).toHaveTextContent('dev-fallback');
     });
     expect(screen.getByTestId('profile-user-client-id')).toHaveTextContent('dev-user');
-    expect(screen.getByTestId('profile-contact-email')).toHaveTextContent('dev.user@havenova.local');
+    expect(screen.getByTestId('profile-contact-email')).toHaveTextContent(
+      'dev.user@havenova.local'
+    );
     expect(screen.getByTestId('profile-is-offline')).toHaveTextContent('true');
+  });
+
+  it('hydrates and persists the Client profile theme without an AdminContext', async () => {
+    mockUseAuth.mockReturnValue({
+      auth: {
+        authId: 'auth_1',
+        userClientId: 'profile_uc_1',
+        clientId: defaultTestClient._id,
+        email: 'profile.session@example.com',
+        role: 'user',
+        isLogged: true,
+        isVerified: true,
+        isNewUser: false,
+      },
+      loading: false,
+      refreshAuth: jest.fn(),
+      setAuth: jest.fn(),
+    });
+    localStorage.setItem('hv-profile:client_123:profile_uc_1', JSON.stringify({ theme: 'dark' }));
+    mockedGetUserClientProfile.mockRejectedValue(new Error('Network failed'));
+
+    renderWithAppProviders(
+      <ProfileProvider>
+        <ProfileThemeConsumer />
+      </ProfileProvider>,
+      {
+        withClient: true,
+        clientOptions: { initialClient: defaultTestClient },
+      }
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('profile-theme')).toHaveTextContent('dark');
+      expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle profile theme' }));
+    await waitFor(() => {
+      expect(screen.getByTestId('profile-theme')).toHaveTextContent('light');
+      expect(document.documentElement).toHaveAttribute('data-theme', 'light');
+      expect(localStorage.getItem('theme')).toBe('light');
+    });
   });
 });
