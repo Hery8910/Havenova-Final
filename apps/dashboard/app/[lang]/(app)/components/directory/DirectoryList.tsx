@@ -88,10 +88,7 @@ export function DirectoryList<TItem>({
   }, [hasNextPage, isLoadingMore, onLoadMore]);
 
   return (
-    <section
-      className={`card card--${variant} ${styles.root}`}
-      aria-labelledby="directory-list-title"
-    >
+    <section className={styles.root} data-variant={variant} aria-labelledby="directory-list-title">
       <div className={styles.header}>
         <div>
           <p className={styles.sectionLabel}>{sectionLabel}</p>

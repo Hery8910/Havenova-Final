@@ -127,11 +127,13 @@ export function TenantUserDetailPanel({
         </div>
       </header>
 
-      <section aria-labelledby="tenant-user-identity-title">
+      <section className={styles.contentSection} aria-labelledby="tenant-user-identity-title">
         <h3 id="tenant-user-identity-title" className={styles.sectionTitle}>
           {isInvitation ? copy.proposedIdentityLabel : copy.identityLabel}
         </h3>
-        {isInvitation ? <p className={styles.sectionDescription}>{copy.proposedIdentityDescription}</p> : null}
+        {isInvitation ? (
+          <p className={styles.sectionDescription}>{copy.proposedIdentityDescription}</p>
+        ) : null}
         <dl className={styles.dataList}>
           <div className={styles.row}>
             <dt className={styles.fieldLabel}>{copy.emailLabel}</dt>
@@ -139,13 +141,15 @@ export function TenantUserDetailPanel({
           </div>
           <div className={styles.row}>
             <dt className={styles.fieldLabel}>{copy.phoneLabel}</dt>
-            <dd className={styles.fieldValue}>{detail.identity.phone || copy.missingValueFallback}</dd>
+            <dd className={styles.fieldValue}>
+              {detail.identity.phone || copy.missingValueFallback}
+            </dd>
           </div>
         </dl>
       </section>
 
       {!isInvitation ? (
-        <section aria-labelledby="tenant-user-profile-title">
+        <section className={styles.contentSection} aria-labelledby="tenant-user-profile-title">
           <h3 id="tenant-user-profile-title" className={styles.sectionTitle}>
             {copy.profileLabel}
           </h3>
@@ -160,7 +164,9 @@ export function TenantUserDetailPanel({
                 <div className={styles.row}>
                   <dt className={styles.fieldLabel}>{copy.languageLabel}</dt>
                   <dd className={styles.fieldValue}>
-                    {profile.language ? copy.languageLabels[profile.language] : copy.missingValueFallback}
+                    {profile.language
+                      ? copy.languageLabels[profile.language]
+                      : copy.missingValueFallback}
                   </dd>
                 </div>
                 <div className={styles.row}>
@@ -173,7 +179,7 @@ export function TenantUserDetailPanel({
         </section>
       ) : null}
       {invitation ? (
-        <section aria-labelledby="tenant-user-invitation-title">
+        <section className={styles.contentSection} aria-labelledby="tenant-user-invitation-title">
           <h3 id="tenant-user-invitation-title" className={styles.sectionTitle}>
             {copy.invitationLabel}
           </h3>

@@ -1,24 +1,21 @@
 .grid {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
 .card {
   width: 100%;
-  max-width: 300px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 24px;
-  border-radius: calc(var(--radius-card) - 8px);
-  border: 1px solid transparent;
-  background: color-mix(in srgb, var(--surface-panel-subtle) 78%, transparent);
-  box-shadow: 0 8px 14px -18px color-mix(in srgb, var(--shadow-page-color) 10%, transparent);
-  color: inherit;
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 1px solid var(--op-border-subtle);
+  border-radius: var(--op-radius-control);
+  background: var(--op-surface-secondary);
+  color: var(--op-text-primary);
   cursor: default;
   font: inherit;
   text-align: left;
@@ -29,38 +26,43 @@ button.card {
 }
 
 button.card:focus-visible {
-  outline: 2px solid var(--border-focus);
+  outline: 3px solid var(--op-focus);
   outline-offset: 2px;
 }
 
 .active {
-  border-color: color-mix(in srgb, var(--brand-accent) 64%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-accent) 34%, transparent);
+  border-color: var(--op-border-interactive);
+  background: var(--op-surface-selected);
 }
 
 .tone-neutral {
-  border-color: color-mix(in srgb, var(--border-subtle) 52%, transparent);
-  background: color-mix(in srgb, var(--surface-panel-subtle) 82%, transparent);
+  border-color: var(--op-border-subtle);
+  background: var(--op-surface-secondary);
 }
 
 .tone-primary {
-  border-color: color-mix(in srgb, var(--color-feedback-info-border) 46%, transparent);
-  background: color-mix(in srgb, var(--card-primary-bg1) 62%, var(--surface-panel-subtle) 38%);
+  border-color: var(--op-border-subtle);
+  background: var(--op-surface-secondary);
 }
 
 .tone-secondary {
-  border-color: color-mix(in srgb, var(--card-secondary-bg1) 52%, transparent);
-  background: color-mix(in srgb, var(--card-secondary-bg1) 58%, var(--surface-panel-subtle) 42%);
+  border-color: var(--op-border-subtle);
+  background: var(--op-surface-secondary);
 }
 
 .tone-accent {
-  border-color: color-mix(in srgb, var(--color-feedback-warning-border) 44%, transparent);
-  background: color-mix(in srgb, var(--card-accent-bg1) 60%, var(--surface-panel-subtle) 40%);
+  border-color: var(--op-border-subtle);
+  background: var(--op-surface-secondary);
+}
+
+.card.active {
+  border-color: var(--op-border-interactive);
+  background: var(--op-surface-selected);
 }
 
 .label {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -70,24 +72,15 @@ button.card:focus-visible {
 
 .value {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   font-size: clamp(1.02rem, 1.5vw, 1.2rem);
   font-weight: 800;
   flex: 0 0 auto;
   text-align: right;
 }
 
-[data-theme='dark'] .tone-primary {
-  border-color: color-mix(in srgb, var(--color-feedback-info-border) 26%, transparent);
-  background: color-mix(in srgb, var(--card-primary-bg1) 78%, var(--surface-panel-subtle) 22%);
-}
-
-[data-theme='dark'] .tone-secondary {
-  border-color: color-mix(in srgb, var(--card-secondary-bg1) 30%, transparent);
-  background: color-mix(in srgb, var(--card-secondary-bg1) 72%, var(--surface-panel-subtle) 28%);
-}
-
-[data-theme='dark'] .tone-accent {
-  border-color: color-mix(in srgb, var(--color-feedback-warning-border) 24%, transparent);
-  background: color-mix(in srgb, var(--card-accent-bg1) 68%, var(--surface-panel-subtle) 32%);
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

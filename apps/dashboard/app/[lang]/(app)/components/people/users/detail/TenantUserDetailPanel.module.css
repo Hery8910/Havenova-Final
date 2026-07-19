@@ -1,6 +1,6 @@
 .root {
   display: grid;
-  gap: 14px;
+  gap: var(--op-space-5);
   align-content: start;
 }
 
@@ -11,13 +11,20 @@
 }
 
 .identity {
-  gap: 14px;
+  gap: var(--op-space-3);
+}
+
+.contentSection {
+  display: grid;
+  gap: var(--op-space-3);
+  padding-block-start: var(--op-space-5);
+  border-top: 1px solid var(--op-border-subtle);
 }
 
 .eyebrow,
 .fieldLabel {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.76rem;
@@ -30,7 +37,7 @@
 .errorTitle,
 .sectionTitle {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
 }
 
 .title {
@@ -41,7 +48,7 @@
 .identityMain {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 16px;
+  gap: var(--op-space-3);
   align-items: start;
 }
 
@@ -56,28 +63,24 @@
 .avatarImage {
   display: block;
   object-fit: cover;
-  background: color-mix(in srgb, var(--surface-panel-subtle) 84%, transparent);
-  box-shadow: 0 10px 22px -22px color-mix(in srgb, var(--shadow-page-color) 28%, transparent);
+  background: var(--op-surface-secondary);
 }
 
 .avatarFallback {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--brand-accent) 18%, transparent), transparent 72%),
-    color-mix(in srgb, var(--surface-panel-subtle) 88%, transparent);
-  color: var(--text-primary);
+  background: var(--op-surface-secondary);
+  color: var(--op-text-primary);
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.04em;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-base) 20%, transparent);
 }
 
 .identityCopy,
 .titleBlock {
   display: grid;
-  gap: 8px;
+  gap: var(--op-space-2);
   min-width: 0;
 }
 
@@ -86,7 +89,7 @@
 .errorText,
 .sectionDescription {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--op-text-secondary);
 }
 
 .email {
@@ -100,7 +103,7 @@
 }
 
 .sectionDescription {
-  margin: 6px 0 0;
+  margin: 0;
   line-height: 1.45;
 }
 
@@ -112,7 +115,7 @@
 
 .metaValue {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   font-weight: 700;
   line-height: 1.3;
 }
@@ -120,22 +123,22 @@
 .statusRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--op-space-2);
   align-items: center;
 }
 
 .identityMeta {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: var(--op-space-3);
   margin: 0;
   padding: 12px 0 0;
-  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 10%, transparent);
+  border-top: 1px solid var(--op-border-subtle);
 }
 
 .metaItem {
   display: grid;
-  gap: 8px;
+  gap: var(--op-space-2);
   margin: 0;
   min-width: 0;
 }
@@ -143,14 +146,14 @@
 .dataList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 18px;
+  gap: var(--op-space-3) var(--op-space-5);
   margin: 0;
   padding: 0;
 }
 
 .row {
   display: grid;
-  gap: 8px;
+  gap: var(--op-space-2);
   align-items: start;
   min-width: 0;
 }
@@ -160,16 +163,25 @@
   gap: 8px;
   padding: 14px;
   border-radius: calc(var(--radius-card) - 8px);
-  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 24%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 24%,
+    transparent
+  );
 }
 
 .confirmation {
   display: grid;
   gap: 10px;
   padding: 14px;
-  border: 1px solid color-mix(in srgb, var(--color-feedback-danger-border, var(--border-subtle)) 28%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--color-feedback-danger-border, var(--border-subtle)) 28%, transparent);
   border-radius: calc(var(--radius-card) - 8px);
-  background: color-mix(in srgb, var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 20%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--color-feedback-danger-surface, var(--surface-panel-subtle)) 20%,
+    transparent
+  );
 }
 
 .mobileBackAction {

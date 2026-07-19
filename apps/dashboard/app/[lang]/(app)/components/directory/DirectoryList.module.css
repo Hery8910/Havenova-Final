@@ -3,21 +3,23 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 10px;
+  gap: var(--op-space-3);
   height: 100%;
-  padding: 14px;
+  min-height: 0;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: var(--op-space-3);
+  padding-block-end: var(--op-space-3);
+  border-bottom: 1px solid var(--op-border-subtle);
 }
 
 .sectionLabel {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.76rem;
@@ -26,13 +28,13 @@
 
 .title {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   font-size: 1rem;
 }
 
 .hint {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   font-size: 0.9rem;
 }
 
@@ -47,12 +49,12 @@
 .feedback,
 .emptyDescription,
 .errorText {
-  color: var(--text-muted);
+  color: var(--op-text-muted);
 }
 
 .emptyTitle,
 .errorTitle {
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   font-weight: 700;
 }
 
@@ -60,11 +62,10 @@
 .errorState,
 .items {
   display: grid;
-  gap: 8px;
 }
 
 .items {
-  padding-top: 4px;
+  gap: 0;
 }
 
 .loadMoreSentinel {

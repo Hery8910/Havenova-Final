@@ -1,18 +1,18 @@
 .root {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(180px, 0.7fr);
-  gap: 12px;
+  gap: var(--op-space-3);
   align-items: end;
 }
 
 .field {
   display: grid;
-  gap: 6px;
+  gap: var(--op-space-2);
   min-width: 0;
 }
 
 .label {
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -27,17 +27,24 @@
 .input,
 .select {
   width: 100%;
-  min-height: 44px;
+  min-height: 42px;
   padding: 0 14px;
-  border-radius: var(--radius-input);
-  border: 1px solid var(--input-border);
-  background: color-mix(in srgb, var(--surface-panel-subtle) 88%, transparent);
-  color: var(--input-text);
+  border-radius: var(--op-radius-control);
+  border: 1px solid var(--op-border-strong);
+  background: var(--op-workspace-surface);
+  color: var(--op-text-primary);
 }
 
 .select {
   appearance: none;
   padding-right: 42px;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 3px solid var(--op-focus);
+  outline-offset: 2px;
+  border-color: var(--op-border-interactive);
 }
 
 .selectIcon {
@@ -48,7 +55,7 @@
   height: 10px;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
-  color: var(--text-muted);
+  color: var(--op-text-muted);
   transform: translateY(-65%) rotate(45deg);
   pointer-events: none;
 }

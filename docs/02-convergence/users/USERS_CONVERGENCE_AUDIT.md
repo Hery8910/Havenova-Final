@@ -1,5 +1,30 @@
 # Auditoría de convergencia — Users v1
 
+## Users Directory structural visual convergence — 2026-07-19
+
+Este corte conserva el alcance read-only de Slice A y usa la captura vigente de Product Design
+como referencia visual y estructural, no como ampliación funcional. El diagnóstico del Dashboard
+mostraba una composición de dos cards equivalentes, summary apilado y sobredimensionado, controles
+visualmente aislados, filas con aspecto de card y un detalle sin jerarquía suficiente: el resultado
+desperdiciaba altura y diluía el directorio como superficie principal. En tablet, la proporción de
+las columnas además favorecía incorrectamente el inspector; en mobile se debía conservar el patrón
+de destinos separados existente.
+
+La rectificación usa únicamente primitives Dashboard-local: `MasterDetailPage`, summary, filtros,
+lista/row y panel read-only. Desktop pasa a priorizar directorio e inspector en proporción 3:2;
+el inspector mantiene una superficie delimitada y scroll propio, mientras el directorio queda como
+workspace continuo. El summary se compacta en dos métricas, búsqueda y selector forman una sola
+franja de controles, las filas usan separadores y selección persistente, y el detalle separa
+Identity, Profile e invitación mediante jerarquía tipográfica y divisores. Los estilos usan tokens
+operacionales scoped y conservan contraste/foco visible en light y dark.
+
+Se preservan exactamente summary read-only, búsqueda, filtros All/Invitations, cursor/load-more,
+estados inline, selección, detalle mínimo, control de respuestas obsoletas y retorno/restauración de
+foco mobile. No se introducen CTA Invite, tabs, Active/Needs attention, Requests, Activity, Notes,
+Edit, acciones lifecycle ni cambios de BFF/DTO. El contenido visible del prototipo sigue sin crear
+autoridad: Slice B/C/D, contrato de integración y MVP completo permanecen bloqueados o pendientes
+de Product Design.
+
 ## Estado, propósito y alcance
 
 ### Composición read-only de detalle — 2026-07-17

@@ -1,6 +1,5 @@
 import { DirectoryFilters, DirectoryList, DirectorySummary } from '../../../components/directory';
 import { MasterDetailPage } from '../../../components/masterDetail';
-import { PeopleOverviewBar } from '../../../components/people/shared';
 import { TenantUserDirectoryItem } from '../../../components/people/users';
 import type { UsersPageViewProps } from '../page.types';
 import styles from './UsersPageView.module.css';
@@ -51,8 +50,8 @@ export function UsersPageView({
       mobileView={mode === 'empty' ? 'navigation' : 'detail'}
       navigation={
         <div className={styles.navigation}>
-          <section className={`card card--neutral ${styles.overview}`}>
-            <PeopleOverviewBar summary={<DirectorySummary items={renderedSummaryItems} />} />
+          <section className={styles.overview} aria-label="Page overview">
+            <DirectorySummary items={renderedSummaryItems} />
             {isSummaryLoading ? (
               <p className={styles.summaryFeedback} aria-live="polite">
                 {summaryFeedback.loadingLabel}
