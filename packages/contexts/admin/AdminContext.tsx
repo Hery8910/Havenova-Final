@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useMemo,
-  ReactNode,
-} from 'react';
+import { createContext, useContext, useCallback, useMemo, ReactNode } from 'react';
 import Cookies from 'js-cookie';
 import { useGlobalAlert } from '../alert';
 import { useI18n, getI18nFallbacks } from '../i18n';
@@ -15,13 +9,10 @@ import {
   SessionComplementSource,
   useSessionComplement,
 } from '../sessionComplement/useSessionComplement';
+import { readStoredTheme } from '../sessionComplement/themeEffects';
 import { getAdminProfile, updateAdminProfile } from '@havenova/services';
 import { resolvePreferredContactEmail } from '@havenova/utils';
-import {
-  AdminRecord,
-  UpdateAdminProfilePayload,
-  ThemeMode,
-} from '@/packages/types';
+import { AdminRecord, UpdateAdminProfilePayload, ThemeMode } from '@/packages/types';
 
 interface AdminContextProps {
   admin: AdminRecord;
@@ -41,22 +32,16 @@ export const AdminContext = createContext<AdminContextProps | undefined>(undefin
 export const useOptionalAdminContext = () => useContext(AdminContext);
 
 const DEFAULT_ADMIN_AVATAR = '/shared/avatars/avatar-1.png';
-const getAdminStorageKey = (
-  clientId?: string | null,
-  userClientId?: string | null
-) => `hv-admin:${clientId || 'guest'}:${userClientId || 'guest'}`;
+const getAdminStorageKey = (clientId?: string | null, userClientId?: string | null) =>
+  `hv-admin:${clientId || 'guest'}:${userClientId || 'guest'}`;
 
-const normalizeAdminRecord = (
-  record: AdminRecord,
-  fallback?: AdminRecord | null
-): AdminRecord => ({
+const normalizeAdminRecord = (record: AdminRecord, fallback?: AdminRecord | null): AdminRecord => ({
   ...record,
   userClientId: record.userClientId || fallback?.userClientId || '',
   clientId: record.clientId || fallback?.clientId || '',
   email: resolvePreferredContactEmail(record.email, fallback?.email),
   name: record.name ?? fallback?.name ?? '',
-  profileImage:
-    record.profileImage?.trim() || fallback?.profileImage || DEFAULT_ADMIN_AVATAR,
+  profileImage: record.profileImage?.trim() || fallback?.profileImage || DEFAULT_ADMIN_AVATAR,
   language: record.language ?? fallback?.language ?? 'de',
   theme: record.theme ?? fallback?.theme ?? 'light',
 });
@@ -93,12 +78,6 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
   );
   const globalInternalErrorFallback = fallbackPopups.GLOBAL_INTERNAL_ERROR;
 
-  const getStoredTheme = (): ThemeMode | null => {
-    if (typeof window === 'undefined') return null;
-    const stored = localStorage.getItem('theme');
-    return stored === 'dark' || stored === 'light' ? stored : null;
-  };
-
   const getStoredLanguage = (): 'de' | 'en' | 'es' | null => {
     if (typeof window === 'undefined') return null;
     const stored = Cookies.get('lang');
@@ -120,7 +99,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
             address: previous?.address,
             profileImage: previous?.profileImage ?? DEFAULT_ADMIN_AVATAR,
             language: previous?.language ?? getStoredLanguage() ?? 'de',
-            theme: previous?.theme ?? getStoredTheme() ?? 'light',
+            theme: previous?.theme ?? readStoredTheme() ?? 'light',
             extra: previous?.extra,
             roles: previous?.roles,
             jobTitle: previous?.jobTitle,
@@ -155,7 +134,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       phone: '',
       address: '',
       language: previous?.language ?? getStoredLanguage() ?? 'de',
-      theme: previous?.theme ?? getStoredTheme() ?? 'light',
+      theme: previous?.theme ?? readStoredTheme() ?? 'light',
     }),
     [createLocalDefault]
   );
@@ -202,7 +181,22 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     alert: alertApi,
   });
 
-  const resolvedAdmin = admin ?? createLocalDefault(null);
+  // This fallback participates in hydration, so it must not read browser persistence.
+  // Stored complement data is applied by useSessionComplement after hydration.
+  const hydrationSafeAdmin = useMemo(
+    () =>
+      normalizeAdminRecord({
+        userClientId: auth.userClientId ?? '',
+        clientId: clientId ?? '',
+        email: resolvePreferredContactEmail(undefined, auth.email),
+        name: '',
+        profileImage: DEFAULT_ADMIN_AVATAR,
+        language: 'de',
+        theme: 'light',
+      }),
+    [auth.email, auth.userClientId, clientId]
+  );
+  const resolvedAdmin = admin ?? hydrationSafeAdmin;
 
   return (
     <AdminContext.Provider

@@ -124,6 +124,10 @@ export function SideNav({
   };
 
   useEffect(() => {
+    if (typeof window.matchMedia !== 'function') {
+      return;
+    }
+
     const mediaQuery = window.matchMedia(`(max-width: ${collapseBreakpoint}px)`);
     const applyMode = (matches: boolean) => {
       setCollapsed(matches);
@@ -220,7 +224,12 @@ export function SideNav({
     return (
       <section
         key={section.key}
-        className={['card', 'card--secondary', styles.sectionBlock, isExpanded ? styles.sectionExpanded : '']
+        className={[
+          'card',
+          'card--secondary',
+          styles.sectionBlock,
+          isExpanded ? styles.sectionExpanded : '',
+        ]
           .filter(Boolean)
           .join(' ')}
         aria-labelledby={section.label ? sectionHeadingId : undefined}

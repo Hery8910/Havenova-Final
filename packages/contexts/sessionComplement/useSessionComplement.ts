@@ -1,6 +1,14 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+import {
+  normalizeTheme,
+  readSessionStorageValue,
+  removeSessionStorageValue,
+  synchronizeDocumentTheme,
+  writeSessionStorageValue,
+} from './themeEffects';
 import type { PopupsTexts } from '../alert/alert.types';
 
 export type SessionComplementSource = 'server' | 'storage' | 'default' | 'dev-fallback';
@@ -105,22 +113,20 @@ export const isOfflineSessionComplementError = (error: unknown): boolean => {
   return false;
 };
 
-const getPopup = (
-  popups: PopupsTexts,
-  key: string,
-  fallback: PopupDescriptor
-): PopupDescriptor => {
+const getPopup = (popups: PopupsTexts, key: string, fallback: PopupDescriptor): PopupDescriptor => {
   const candidate = popups[key as keyof PopupsTexts];
-  if (candidate && typeof candidate === 'object' && 'title' in candidate && 'description' in candidate) {
+  if (
+    candidate &&
+    typeof candidate === 'object' &&
+    'title' in candidate &&
+    'description' in candidate
+  ) {
     return candidate;
   }
   return fallback;
 };
 
-export const useSessionComplement = <
-  T extends SessionComplementEntity,
-  TPatch extends object,
->({
+export const useSessionComplement = <T extends SessionComplementEntity, TPatch extends object>({
   alert,
   auth,
   createLocalDefault,
@@ -150,7 +156,7 @@ export const useSessionComplement = <
   const loadFromStorage = useCallback((): T | null => {
     if (typeof window === 'undefined') return null;
 
-    const raw = localStorage.getItem(storageKey);
+    const raw = readSessionStorageValue(storageKey);
     if (!raw) return null;
 
     try {
@@ -165,11 +171,11 @@ export const useSessionComplement = <
       if (typeof window === 'undefined') return;
 
       if (!value) {
-        localStorage.removeItem(storageKey);
+        removeSessionStorageValue(storageKey);
         return;
       }
 
-      localStorage.setItem(storageKey, JSON.stringify(value));
+      writeSessionStorageValue(storageKey, JSON.stringify(value));
     },
     [storageKey]
   );
@@ -203,10 +209,10 @@ export const useSessionComplement = <
 
   useEffect(() => {
     if (!isClientReady) return;
-    if (!entity?.theme) return;
+    const theme = normalizeTheme(entity?.theme);
+    if (!theme) return;
 
-    document.documentElement.setAttribute('data-theme', entity.theme);
-    localStorage.setItem('theme', entity.theme);
+    synchronizeDocumentTheme(theme);
   }, [entity?.theme, isClientReady]);
 
   const applyEntity = useCallback(

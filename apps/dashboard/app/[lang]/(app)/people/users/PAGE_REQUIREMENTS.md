@@ -1,229 +1,106 @@
-# People Users Directory — requisitos
+# People Users Directory — Slice A y detalle read-only
 
-## Autoridad
+## Estado y autoridad
 
-Este documento define el comportamiento esperado de `/people/users` en
-frontend. El contrato de negocio/HTTP pertenece al backend V2 y se resume en
-`USERS_DIRECTORY_BACKEND_DECISIONS.md`.
+La infraestructura read-only de Slice A está `READY`; Users Directory como experiencia completa sigue
+`PARTIALLY_READY`. Ninguno sustituye el contrato de producto: la autoridad sigue siendo Product Design Users v1;
+su contrato de integración está `PLANNED`. Este documento describe únicamente la superficie de
+lectura implementada y no habilita Invitation (B), Acceptance (C) ni Lifecycle (D).
 
-El cumplimiento actual no se infiere de este archivo. Consultar
-`USERS_DIRECTORY_GAP_ANALYSIS.md`.
+## Contrato técnico verificado
 
-## Objetivo
+El Dashboard consume same-origin únicamente:
 
-Permitir que un admin del tenant encuentre, entienda y gestione cuentas de
-cliente e invitaciones abiertas sin abandonar la superficie principal.
+```text
+GET /api/home-services/dashboard/users/summary
+GET /api/home-services/dashboard/users/directory
+GET /api/home-services/dashboard/users/entries/:entryId
+```
+
+El backend aplica sesión, client `homeServices` y rol admin. El tenant se deriva de sesión: nunca
+se acepta `clientId` desde la UI. `q` se normaliza y requiere 2-100 caracteres; `limit` es 1-50;
+el cursor es opaco y está ligado a `q/status`. Un 403, error de validación o cursor inválido se
+presenta como error, no como directorio vacío.
 
 ## Alcance
 
-Incluye:
+- summary honesto: total people y pending invitations, sin derivarlo de la página cargada;
+- búsqueda backend por los campos admitidos, con debounce y sin emitir búsquedas de un carácter;
+- filtros exclusivos `all | invitations`;
+- páginas de 25, dedupe por `entryId`, cancelación de request incompatible y protección contra
+  respuesta cursor obsoleta;
+- row y overview: identidad, email, teléfono si existe y lifecycle de una invitación;
+- composición estable de directorio a la izquierda y panel read-only a la derecha; sin selección,
+  el panel muestra un empty state;
+- para una persona, `profile.exists=false` se comunica como Profile todavía no creado; si existe,
+  idioma y dirección principal se muestran sólo cuando el endpoint los entrega;
+- para una invitación, identidad propuesta, teléfono opcional, estado pending/expired y expiración.
+  La propuesta se etiqueta explícitamente y no se presenta como Profile confirmado;
+- carga inicial, refresh, empty, no-results, error/retry, cursor/load-more y fin de resultados;
+- master-detail responsive, retorno mobile y foco lógico de la row seleccionada.
 
-- cuentas `user` activas, inactivas, bloqueadas o no verificadas;
-- invitaciones pending vigentes o expiradas;
-- summary global;
-- búsqueda y filtro server-side;
-- detail discriminado por entry;
-- invite, resend y revoke.
+## Exclusiones obligatorias
 
-No incluye:
+- ningún POST, CTA Invite, resend, revoke ni confirmación destructiva;
+- no active/inactive/locked, attention, Requests, activity, relationships, work orders, notas o
+  comunicación;
+- no total calculado desde una página parcial ni simulación de Invitations;
+- no ruta browser-direct al backend ni parámetro tenant controlado por usuario.
 
-- admins, workers o managers;
-- invitaciones accepted/revoked como rows;
-- historial de auditoría;
-- gestión operativa completa de service requests;
-- orden manual o filtros avanzados.
+## Validación
 
-## Contrato de datos obligatorio
+`tests/client-context/dashboard-directory-contracts.test.mjs` protege alcance read-only, filtros,
+stale cursor, foco y estados inline. `tenant-user-detail-panel.test.jsx` usa fixtures tipados de
+persona con Profile completo, parcial y ausente, e invitaciones pending/expired; el controlador
+cubre además una respuesta de detail obsoleta. Quedan requeridos smoke manual contra backend y CI
+remota; el estado no se eleva a `IMPLEMENTATION_READY` hasta que Product Design cierre su contrato.
 
-Frontend debe consumir exclusivamente:
+## Incidente de ownership de query — 2026-07-17
 
-```text
-GET  /api/home-services/dashboard/users/summary
-GET  /api/home-services/dashboard/users/directory
-GET  /api/home-services/dashboard/users/entries/:entryId
-POST /api/home-services/dashboard/users/invite
-POST /api/home-services/dashboard/users/invitations/:invitationId/resend
-POST /api/home-services/dashboard/users/invitations/:invitationId/revoke
-```
+La primera revisión autenticada falló: el texto de búsqueda se borraba y `Invitations` alternaba
+requests con `All`. La causa no fue el backend: el controlador copiaba `routeSearchState` hacia
+`search/status` tras cada interacción, mientras otro efecto escribía esos mismos estados a la URL.
+Los tests de fuente anteriores no ejecutaban esa competencia.
 
-No debe consumir ni mantener fallback para:
+La corrección deja `search` y `status` como autoridad local de la sesión: se inicializan desde la
+ruta y sólo se sincronizan en dirección estado local → URL. Las respuestas de una consulta abortada
+o superada ya no pueden aplicar su página. Los tests de comportamiento montan el controlador con
+timers falsos y cubren: un carácter sin request, búsqueda de dos caracteres con una única consulta,
+All/Invitations desde select y summary, y respuesta tardía ignorada.
 
-```text
-GET  /api/home-services/dashboard/users
-GET  /api/home-services/dashboard/users/:userClientId
-POST /api/home-services/dashboard/users/resend-invite
-```
+La revisión autenticada posterior del propietario, tras reiniciar el servidor y hacer recarga dura,
+cerró esta regresión: reportó valor escrito estable, peticiones esperadas de filtros y búsquedas,
+reset correcto de filtros, selección correcta del único resultado disponible y ausencia del loop.
+No se aportaron capturas ni se atribuyen estas comprobaciones a Codex. La infraestructura Slice A
+queda `READY`; la página completa permanece `PARTIALLY_READY` por el alcance de detalle pendiente.
 
-## Summary
+## Detalle read-only y composición — 2026-07-17
 
-Máximo tres KPIs globales:
+Product Design autoriza Directory + Overview, no un dump de Profile: `DOMAIN.md`, `FLOWS.md`,
+`STATES_AND_ACTIONS.md`, `PRODUCT_NOTES.md` y `HANDOFF.md` restringen el corte a identidad,
+contacto relevante, kind/lifecycle y contexto responsive. El prototipo sigue siendo evidencia menor.
+`INTEGRATION_CONTRACT.md`, `IMPLEMENTATION_PLAN.md` y `VALIDATION_CHECKLIST.md` permanecen
+`PLANNED`, por lo que esta composición no declara todo Users v1 terminado.
 
-- `Total users` → filtro `all`;
-- `Pending invites` → filtro `invitations`;
-- `Needs attention` → filtro `attention`.
+El endpoint `GET /entries/:entryId` usa el discriminador `user | invitation`, deriva tenant de la
+sesión y devuelve `404 TENANT_USER_DIRECTORY_ENTRY_NOT_FOUND` también ante una entrada ajena. Para
+un `user`, `profile.exists` proviene de la existencia real de `UserClientProfile`; locale y dirección
+principal son opcionales. Para una `invitation`, `profile` es `null` y la identidad es propuesta;
+el DTO actual no expone locale propuesto. No se amplió backend para rellenar esa ausencia.
 
-Reglas:
+La pantalla anterior no mostraba ningún campo `detail.profile`, aunque el DTO ya los exponía: el
+Profile aparentemente vacío era una omisión de mapping/presentación frontend (caso 4), no evidencia
+de que el único registro autenticado carezca de Profile. El nuevo panel separa los casos
+`exists=false`, Profile existente con campos faltantes y valores disponibles. Determinar el estado
+real de ese registro concreto requiere observar su respuesta autenticada; no se inventa aquí.
 
-- no calcular desde rows;
-- conservar búsqueda al activar un KPI;
-- no presentar un fallo/loading como valor real `0`;
-- cada KPI interactivo es un botón con estado activo accesible.
+Desktop/tablet preserva lista y detalle con scroll interno independiente. En mobile el
+`MasterDetailPage` existente muestra el detalle como destino, ofrece Back con nombre accesible y el
+controlador conserva búsqueda, filtro, cursor, selección y restaura foco a la fila. No se cambiaron
+shell, navegación, filtros, auth ni mutaciones.
 
-## Búsqueda y filtros
+## Siguiente corte
 
-- búsqueda por nombre, email o teléfono;
-- debounce aproximado de 300 ms;
-- no enviar `q` de un carácter;
-- cancelar la primera request incompatible anterior;
-- filtro único: `all | active | inactive | invitations | attention`;
-- un cambio de búsqueda/filtro descarta cursor y páginas incompatibles;
-- summary no cambia con búsqueda o filtro.
-
-## Directorio
-
-Cada row debe comunicar:
-
-1. identidad o fallback `Pending profile`;
-2. email;
-3. un estado principal;
-4. contexto operativo corto;
-5. atención sólo cuando exista una razón backend.
-
-Estado principal:
-
-- user: `active | inactive | locked`;
-- invitation: `pending | expired`.
-
-No mostrar `unverified` como badge permanente salvo que produzca
-`EMAIL_UNVERIFIED_STALE`. No generar atención por perfil, teléfono o requests
-ausentes.
-
-La única acción primaria de la row es seleccionar por `entryId`.
-
-## Carga incremental
-
-- bloques de 25 por defecto;
-- cursor opaco;
-- deduplicación por `entryId`;
-- no pedir otra página durante una carga activa;
-- distinguir initial loading, refreshing y loading more;
-- mantener rows previas durante refresh válido;
-- mostrar empty, no results, error/retry y end of results.
-
-La carga principal usa infinite scroll con `IntersectionObserver`. El botón
-`Load more` se conserva sólo como fallback accesible si el observer no está
-disponible o no se activa por el contexto de navegación.
-
-## Panel derecho
-
-Modos explícitos:
-
-### Modo `empty`
-
-- orienta a seleccionar o invitar;
-- no simula datos.
-
-### Modo `detail`
-
-- carga siempre `/entries/:entryId`;
-- renderiza por `kind`;
-- muestra identidad, acceso/invitación y relación comercial;
-- `profile` puede ser `null`;
-- `workOrders=null` significa dominio no integrado;
-- sólo ofrece acciones presentes en `availableActions`.
-
-### Modo `invite`
-
-- formulario real dentro del panel;
-- body `{ email, name, phone?, language }`;
-- nunca envía `clientId`;
-- permite volver sin perder lista, búsqueda o filtro;
-- distingue invitación creada y renovada;
-- decide conflictos por `code`, no por `message`.
-
-## Mutaciones
-
-Después de éxito:
-
-- invalidar/actualizar summary y directory;
-- refrescar detail cuando corresponda;
-- seleccionar el `entryId` devuelto si el flujo lo requiere.
-
-Casos obligatorios:
-
-- `TENANT_USER_ALREADY_EXISTS`;
-- `TENANT_USER_INVITATION_ALREADY_PENDING`;
-- `TENANT_USER_INVITATION_DELIVERY_FAILED`;
-- `TENANT_USER_INVITATION_ACCEPTED`;
-- `TENANT_USER_INVITATION_REVOKED`.
-
-Delivery failure no reintenta invite automáticamente. Resend y revoke necesitan
-estado pending, bloqueo de duplicados y feedback de éxito/error.
-
-## URL y restore
-
-Estado mínimo:
-
-```text
-selected=<entryId>
-mode=detail|invite
-search=<term>
-status=<filter>
-```
-
-La implementación final debe:
-
-- cachear páginas por búsqueda/filtro;
-- restaurar por `selectedEntryId`;
-- ubicar la row con `scrollIntoView`;
-- devolver foco lógico;
-- cargar páginas adicionales con límite defensivo si la entry no está cacheada;
-- usar `scrollTop` sólo como apoyo.
-
-## Responsive
-
-Desktop:
-
-- directorio y panel simultáneos;
-- scroll independiente;
-- selección estable.
-
-Mobile:
-
-- lista y detail se comportan como vistas distinguibles;
-- abrir detail no pierde query state;
-- volver restaura la row seleccionada, carga acumulada y foco.
-
-Apilar ambos paneles verticalmente no cumple por sí solo el cierre mobile.
-
-## Accesibilidad e i18n
-
-- un solo `h1` provisto por el shell;
-- labels visibles en filtros;
-- navegación completa por teclado;
-- foco visible;
-- estado seleccionado semántico;
-- loading/error/resultado de acciones anunciado sin ruido;
-- estado nunca comunicado sólo por color;
-- todo el copy visible, los estados y las razones de atención se resuelven por locale mediante `pages.dashboard.usersDirectory`; los componentes sólo reciben copy tipado.
-
-## Separación técnica
-
-- `page.tsx`: entrada server-first y parseo inicial;
-- controlador local: fetch, cache, URL y acciones;
-- vistas: presentacionales, sin fetch;
-- servicios: transporte y preservación de códigos;
-- tipos compartidos: contrato canónico;
-- lógica de dominio: backend, nunca duplicada en UI.
-
-## Criterios de aprobación
-
-1. sólo existe integración V2;
-2. summary, filtros y rows son coherentes con backend;
-3. user e invitation funcionan de extremo a extremo;
-4. errores de invitación se resuelven por código;
-5. lista larga y retorno mobile preservan contexto;
-6. todos los estados visuales tienen feedback accesible;
-7. copy está internacionalizado;
-8. TypeScript, contract tests y tests de interacción pasan;
-9. el flujo se valida manualmente contra backend V2 desplegado.
+No iniciar automáticamente un corte posterior. Siguen pendientes Slice B y cualquier mutación,
+validación con datos representativos autenticados, Profile/aceptación de Slice C y los contratos
+`PLANNED` de integración.

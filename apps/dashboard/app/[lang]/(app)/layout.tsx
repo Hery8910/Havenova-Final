@@ -22,6 +22,7 @@ import { AlertViewport } from '../../../../../packages/components/alert';
 import Loading from '../../../../../packages/components/loading/Loading';
 import { href, userAuthRoutes } from '../../../../../packages/utils';
 import { DashboardWorkspaceShell } from './components/shell';
+import { createDashboardThemeBootstrapScript } from './dashboardThemeBootstrap';
 
 export async function generateStaticParams() {
   return [{ lang: 'de' }, { lang: 'en' }, { lang: 'es' }];
@@ -70,24 +71,12 @@ export default async function LangLayout({
 
   return (
     <html lang={params.lang} suppressHydrationWarning>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function () {
-              try {
-                var storedTheme = localStorage.getItem('theme');
-                var theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
-                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
-                document.documentElement.setAttribute('data-theme', theme);
-              } catch (error) {
-                document.documentElement.setAttribute('lang', ${JSON.stringify(params.lang)});
-                document.documentElement.setAttribute('data-theme', 'light');
-              }
-            })();
-          `,
-        }}
-      />
       <body className={styles.body}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: createDashboardThemeBootstrapScript(params.lang),
+          }}
+        />
         <I18nProvider initialLanguage={params.lang}>
           <AlertProvider>
             <AlertViewport />

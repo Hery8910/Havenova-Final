@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { LuMoon, LuSunMedium } from 'react-icons/lu';
 import { useOptionalAdminContext } from '../../contexts/admin/AdminContext';
 import { useOptionalProfileContext } from '../../contexts/profile/ProfileContext';
@@ -32,8 +31,7 @@ const ThemeToggler = ({
   const profileContext = useOptionalProfileContext();
   const workerContext = useOptionalWorkerContext();
 
-  const setTheme =
-    adminContext?.setTheme ?? profileContext?.setTheme ?? workerContext?.setTheme;
+  const setTheme = adminContext?.setTheme ?? profileContext?.setTheme ?? workerContext?.setTheme;
   const theme =
     adminContext?.admin?.theme ??
     profileContext?.profile?.theme ??
@@ -52,11 +50,6 @@ const ThemeToggler = ({
   const resolvedAriaLabel =
     ariaLabel ?? `${buttonTitle}: ${currentThemeLabel}. Switch to ${nextThemeLabel}`;
   const shouldShowCurrentValue = display === 'icon-with-value';
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   const toggleTheme = () => {
     if (!setTheme) return;

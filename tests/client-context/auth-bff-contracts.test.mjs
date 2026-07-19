@@ -123,7 +123,10 @@ test('dashboard login auto-redirect requires server-confirmed auth rather than s
 });
 
 test('admin local defaults reuse stored theme and language to avoid hydration flash after reload', () => {
-  assert.match(adminContextSource, /const getStoredTheme = \(\): ThemeMode \| null =>/);
+  assert.match(
+    adminContextSource,
+    /import \{ readStoredTheme \} from '..\/sessionComplement\/themeEffects';/
+  );
   assert.match(
     adminContextSource,
     /const getStoredLanguage = \(\): 'de' \| 'en' \| 'es' \| null =>/
@@ -132,5 +135,8 @@ test('admin local defaults reuse stored theme and language to avoid hydration fl
     adminContextSource,
     /language: previous\?\.language \?\? getStoredLanguage\(\) \?\? 'de'/
   );
-  assert.match(adminContextSource, /theme: previous\?\.theme \?\? getStoredTheme\(\) \?\? 'light'/);
+  assert.match(
+    adminContextSource,
+    /theme: previous\?\.theme \?\? readStoredTheme\(\) \?\? 'light'/
+  );
 });

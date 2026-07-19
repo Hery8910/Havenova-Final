@@ -9,6 +9,20 @@ const workerPackage = JSON.parse(fs.readFileSync('apps/worker/package.json', 'ut
 const clientGlobalCss = fs.readFileSync('apps/client/app/global.css', 'utf8');
 const dashboardGlobalCss = fs.readFileSync('apps/dashboard/app/global.css', 'utf8');
 const workerGlobalCss = fs.readFileSync('apps/worker/app/global.css', 'utf8');
+const legacyStyles = fs.readFileSync('packages/styles/legacy.css', 'utf8');
+const operationalFoundationReadme = fs.readFileSync(
+  'packages/styles/operational/README.md',
+  'utf8'
+);
+const operationalShellStyles = fs.readFileSync('packages/styles/operational/shell.css', 'utf8');
+const dashboardWorkspaceShell = fs.readFileSync(
+  'apps/dashboard/app/[lang]/(app)/components/shell/DashboardWorkspaceShell.tsx',
+  'utf8'
+);
+const dashboardAuthLayout = fs.readFileSync(
+  'apps/dashboard/app/[lang]/(auth)/user/layout.tsx',
+  'utf8'
+);
 const authShellSource = fs.readFileSync(
   'packages/components/client/user/auth/authShell/AuthPageShell.tsx',
   'utf8'
@@ -24,11 +38,54 @@ test('root and app scripts sync shared assets before dev/build', () => {
   assert.match(workerPackage.scripts.dev, /sync-shared-assets/);
 });
 
-test('all apps import their shared base styles from the canonical packages/styles entrypoint', () => {
-  for (const cssSource of [clientGlobalCss, dashboardGlobalCss, workerGlobalCss]) {
-    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/tokens\.css';/);
-    assert.match(cssSource, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/helpers\.css';/);
+test('Client and Worker resolve only the frozen legacy baseline', () => {
+  for (const cssSource of [clientGlobalCss, workerGlobalCss]) {
+    assert.equal(cssSource.trim(), "@import '../../../packages/styles/legacy.css';");
   }
+});
+
+test('Dashboard loads legacy and scoped operational foundations without cross-importing them', () => {
+  assert.match(dashboardGlobalCss, /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/legacy\.css';/);
+  assert.match(
+    dashboardGlobalCss,
+    /@import '\.\.\/\.\.\/\.\.\/packages\/styles\/operational\/shell\.css';/
+  );
+  assert.doesNotMatch(operationalShellStyles, /@import/);
+  assert.match(operationalShellStyles, /\[data-ui-foundation='operational'\]/);
+  assert.match(
+    operationalShellStyles,
+    /\[data-theme='dark'\] \[data-ui-foundation='operational'\]/
+  );
+  assert.doesNotMatch(operationalShellStyles, /(^|\n)(:root|html|body|\*)\s*[,{]/);
+});
+
+test('only the authenticated Dashboard workspace receives the operational boundary', () => {
+  assert.match(dashboardWorkspaceShell, /data-ui-foundation="operational"/);
+  assert.doesNotMatch(dashboardAuthLayout, /data-ui-foundation="operational"/);
+  assert.doesNotMatch(dashboardWorkspaceShell, /card--|className=\{`button|app-anim-/);
+});
+
+test('legacy baseline retains each current stylesheet once and never imports operational styles', () => {
+  for (const stylesheet of [
+    'tokens',
+    'base',
+    'typography',
+    'badges',
+    'buttons',
+    'forms',
+    'cards',
+    'motion',
+    'helpers',
+  ]) {
+    assert.equal(
+      legacyStyles.split(`@import './${stylesheet}.css';`).length - 1,
+      1,
+      `${stylesheet}.css must be loaded once by the legacy baseline`
+    );
+  }
+
+  assert.match(operationalFoundationReadme, /Only the authenticated Dashboard workspace\nimports/i);
+  assert.doesNotMatch(legacyStyles, /@import '\.\/operational\//);
 });
 
 test('shared auth shell and asset sync use the shared asset namespace', () => {

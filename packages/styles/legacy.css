@@ -1,0 +1,16 @@
+/*
+ * Frozen production baseline.
+ *
+ * Every application currently resolves its global styles through this entrypoint.
+ * Keep the import order stable until an audited surface explicitly replaces a
+ * dependency. The operational foundation is intentionally separate and inactive.
+ */
+@import './tokens.css';
+@import './base.css';
+@import './typography.css';
+@import './badges.css';
+@import './buttons.css';
+@import './forms.css';
+@import './cards.css';
+@import './motion.css';
+@import './helpers.css';

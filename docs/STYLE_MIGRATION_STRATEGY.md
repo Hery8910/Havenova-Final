@@ -1,224 +1,97 @@
-# Style Migration Strategy
-
-## Purpose
-
-This document defines the controlled migration strategy for frontend styles.
-
-It exists to prevent the current global style system from being replaced by another uncontrolled global layer with the same problems:
-
-- duplicated tokens
-- duplicated helpers
-- inconsistent naming
-- legacy compatibility without ownership
-
-The goal is to migrate page by page, using audited consumption as the only valid source of truth.
-
-## Core Decision
-
-We will not create a second generic `global.css`.
-
-We used a temporary **controlled migration layer** during the refactor, but that layer has now been
-collapsed back into the canonical shared system in `packages/styles`.
-
-Important clarification:
-
-- the migration layer is **parallel**, but not **autonomous**
-- it cannot become another anonymous utility bucket
-- it only grows when a page audit proves a shared need
-- until then, page CSS stays in CSS Modules and the current global system remains the baseline
-
-Current global system:
-
-- [apps/client/app/global.css](/home/heriberto/Escritorio/Havenova/havenova/apps/client/app/global.css:1)
-- [packages/styles](/home/heriberto/Escritorio/Havenova/havenova/packages/styles:1)
-
-Current interpretation:
-
-- the shared style foundation now lives in `packages/styles`
-- app-level `global.css` entrypoints consume that shared baseline
-- the older `apps/*/app/styles/*` trees were legacy duplicates and have been removed from the active baseline
-
-Current status:
-
-- `apps/client/app/migration-styles/*` was removed from the active runtime
-- the shared style foundation now lives directly in `packages/styles`
-- page-specific exceptions remain in CSS Modules until they justify promotion
-
-## Migration Principles
-
-### 1. Audit-first
-
-No token, helper, or utility enters the migration layer unless:
-
-- a page audit identified the dependency
-- the old behavior is understood
-- the new ownership is intentional
-
-### 2. Page-scoped adoption
-
-The migration layer should be adopted first by audited pages only.
-
-It is not a free-for-all global replacement.
-
-It should also avoid introducing new “magic classes” that duplicate existing global utilities without a real ownership change.
-
-### 3. Old visual behavior can be used as reference
-
-Existing styles may be used as a visual baseline to avoid regressions.
-
-But they must not be copied blindly.
-
-Every migrated style should be classified as one of these:
-
-- final system rule
-- temporary compatibility rule
-- duplicate to remove
-
-### 4. System before patchwork
-
-The migration layer should prefer:
-
-- semantic tokens
-- canonical button/card/typography utilities
-- predictable naming
-
-It should not collect one-off fixes that belong in CSS Modules.
-
-## Removed During Consolidation
-
-- `tokens.v2.css`
-- `buttons.v2.css`
-- `cards.v2.css`
-- `typography.v2.css`
-- `base.v2.css`
-- `motion.v2.css`
-- `forms.v2.css`
-- `page-home.css`
-- `page-about.css`
-- `page-how-it-work.css`
-- `page-contact.css`
-- `index.css`
-
-These files were removed once the migrated routes converged back to the canonical shared
-`button`, `card`, semantic text/page primitives, and layout tokens in `packages/styles`.
-
-## Classification Rule For New Styles
-
-Every rule added during future cleanup must be tagged conceptually as:
-
-### Final
-
-The rule is clearly generic and should survive beyond the page.
-
-### Transitional
-
-The rule is only needed while migrating one or more pages.
-
-### Legacy bridge
-
-The rule exists only to avoid visual breakage while older consumers are still alive.
-
-## Relationship With Existing Global Styles
-
-The current shared system remains the production baseline until a replacement is validated.
-
-That means:
-
-- we do not delete large pieces of the current style system blindly
-- we only replace rules once a migrated page proves the new layer works
-- temporary transition layers must be removed once their ownership has converged back into the shared system
-
-## Page-Level Style Audit Requirements
-
-Before a page contributes to any temporary transition layer, its audit must identify:
-
-- global utility classes used
-- typography helpers used
-- button variants used
-- card/surface helpers used
-- token families used
-- duplicated visual responsibilities
-- legacy helpers still present
-- whether the style belongs in:
-  - CSS Module only
-  - page migration CSS
-  - migration system CSS
-
-## Home As First Pilot
-
-`Home` is the first page pilot for this strategy.
-
-Why:
-
-- it is already under active structural cleanup
-- it exposes real issues:
-  - legacy button usage
-  - token family drift
-  - card utility overreach
-  - mixed ownership between page feature and global helpers
-
-## Current Home Findings Already Confirmed
-
-- `button_invert` was being used by Home while belonging to an older dashboard style system
-- `ServicesSection` and `BenefitsSection` mixed `--text-*` with `--page-text-*`
-- service icon styling depended on card semantics attached directly to an image element
-
-These are exactly the kinds of cases the migration layer should absorb in a controlled way.
-
-## Current Technical Constraint
-
-Any temporary transition layer must remain valid plain CSS.
-
-That means:
-
-- no CSS Modules-only features such as `composes` inside global migration files
-- no implicit dependency on build-time module semantics
-- no helper class that only works when combined with undocumented legacy classes
-
-If a rule cannot stand on its own, it should stay:
-
-- in a page CSS Module, or
-- as a documented dependency on the existing global layer until the replacement is real
-
-## Historical Adoption Plan
-
-### Phase 1. Documentation and structure
-
-- create migration style docs
-- create migration layer file structure
-- create Home style inventory
-- keep migration files technically valid even if mostly empty at first
-
-### Phase 2. Home style pilot
-
-- identify Home style rules that are:
-  - already clean enough to remain
-  - page-local only
-  - candidates for controlled temporary extraction
-- keep typography/button/card primitives in the existing system unless ownership actually changes
-
-### Phase 3. Controlled activation
-
-- activate any temporary layer only when the owning page is ready for it
-- compare for duplication and conflicts with the current global system
-
-### Phase 4. Consolidation
-
-- after several pages are migrated, decide which temporary rules converge into the real shared system
-
-## Non-Goals
-
-This migration layer is not for:
-
-- rebranding the whole app at once
-- adding cosmetic experiments unrelated to audits
-- storing random “temporary fixes” with no owner
-
-## Success Criteria
-
-The migration is working if:
-
-- migrated pages depend less on legacy helpers
-- token usage becomes more uniform
-- duplicated global styles become visible and classifiable
-- final system rules emerge from actual page usage instead of abstraction-first guesses
+# Estrategia de migración y ownership de estilos
+
+## Propósito y estado
+
+- Propietario: frontend.
+- Última revisión: `2026-07-17`.
+- Estado: `ACTIVE` — establece límites estructurales; no activa un rediseño.
+
+Este documento evita que la futura migración del shell operativo afecte accidentalmente a la
+superficie Client. Product Design define la dirección visual futura, pero su prototipo no se copia
+ni se activa en producción por esta decisión.
+
+## Fundaciones explícitas
+
+### Baseline legacy congelado
+
+[`packages/styles/legacy.css`](../packages/styles/legacy.css) es el único entrypoint de la base
+visual actual. Importa, en el mismo orden histórico, tokens, base, tipografía, badges, botones,
+formularios, cards, motion y helpers. Client, Dashboard y Worker lo cargan desde su propio
+`app/global.css`.
+
+La base legacy preserva las clases globales y los tokens actuales. No es una fuente de nuevos
+patrones ni una prueba de que cada regla sea apropiada para el producto futuro. Toda sustitución
+requiere un slice auditado y una migración acotada de consumidores.
+
+### Foundation operacional
+
+[`packages/styles/operational/`](../packages/styles/operational/) contiene la primera foundation
+visual compartida de Dashboard y Worker. Dashboard importa `shell.css`, pero sus tokens `--op-*`
+sólo resuelven dentro de `[data-ui-foundation='operational']` en el workspace autenticado. Client,
+Worker y Dashboard Auth siguen cargando sólo legacy.
+
+No puede importar la foundation legacy ni duplicar su sistema completo. No es un bucket de
+utilidades genéricas, un lugar para CSS de página, ni un destino para el prototipo de Product
+Design. Se poblará sólo cuando un slice de producto operativo esté aprobado y su consumo esté
+auditado.
+
+## Matriz de ownership
+
+| Área                   | Owner actual                                    | Fuente de estilos activa                 | Regla de evolución                                                     |
+| ---------------------- | ----------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------- |
+| Client                 | `apps/client` (tenant-specific)                 | `apps/client/app/global.css` → legacy    | Mantener estable; migración independiente y aprobada.                  |
+| Dashboard              | `apps/dashboard` (core operativo)               | `apps/dashboard/app/global.css` → legacy | El shell se migrará por slice; no adoptar operational aún.             |
+| Worker                 | `apps/worker` (core operativo)                  | `apps/worker/app/global.css` → legacy    | No migrar visualmente hasta existir un dominio worker real y aprobado. |
+| Shared legacy styles   | `packages/styles/legacy.css` y archivos vecinos | Legacy                                   | Congelados como bridge de compatibilidad.                              |
+| Operational foundation | `packages/styles/operational/`                  | Dashboard autenticado, scoped            | Sólo tokens y reglas operativas validadas; Worker sigue inactivo.      |
+| App shell styles       | La app propietaria                              | CSS Modules del shell                    | Dashboard y Worker conservan composición, layout y responsive propios. |
+| Domain styles          | Feature propietaria                             | CSS Modules de dominio                   | No promover a global sin reutilización demostrada.                     |
+
+## Puentes de compatibilidad conocidos
+
+El frame, header, topbar móvil, overlay, drawer, controles propios del shell y la composición
+`DashboardShellNav` usan `--op-*`; ya no montan `card`, `card--*`, `button`, `button--*` ni
+helpers de animación legacy. La navegación Dashboard se implementa en su adapter app-owned y sus
+reglas viven en `operational/shell.css`, limitadas al workspace autenticado. `SideNav` sigue sin
+cambios como compatibility island para `ProfileNav` de Client. Dashboard sustituyó su consumo de
+`ThemeToggler` por `DashboardThemeControl`, una composición local del header que consume sólo tokens
+`--op-*` scoped y recibe estado/acción ya resueltos. El primitive compartido, `LanguageSwitcher`,
+`AlertViewport`/`AlertPopup` y `Loading` permanecen legacy donde todavía tienen consumidores.
+Dashboard Auth carga el mismo `global.css`, pero no contiene el boundary operacional.
+
+La auditoría de `LanguageSwitcher` confirma que Dashboard todavía depende de un primitive que mezcla
+vista, cookie, complemento opcional, pathname, router y portal a `body`. El siguiente corte no debe
+copiar su CSS ni llevar `--op-*` al primitive: primero debe establecer una composición Dashboard-local
+y un host de overlay dentro del boundary operational. Hasta entonces no se modifica ningún consumidor.
+
+La auditoría de [ThemeToggler](02-convergence/dashboard/THEME_TOGGLER_COMPATIBILITY_ISLAND_AUDIT.md)
+confirma que su renderizado compartido depende de providers de sesión, clases y tokens legacy de
+Client. Dashboard lo sustituye sólo después de caracterizar sus efectos de documento/storage y de
+separar un contrato resuelto; no se añaden tokens operational al control compartido ni se crea un
+primitive nuevo sin otro consumidor demostrado.
+
+Estos contratos son puentes temporales. No se eliminan, renombran ni se trasladan a la foundation
+operacional durante una migración de shell. Cada consumidor debe migrarse explícitamente o seguir
+en legacy hasta tener una compatibilidad validada.
+
+## Secuencia de migración
+
+1. Auditar un slice operativo aprobado y sus clases globales, tokens, estados, foco y CSS Modules.
+2. Definir la mínima regla operacional con owner y consumidores demostrados.
+3. Adoptarla sólo en el slice y mantener el bridge legacy para el resto.
+4. Validar apariencia, teclado, temas y contenido largo antes de ampliar consumidores.
+5. Retirar un bridge únicamente después de comprobar todos sus consumidores.
+
+La auditoría de [SideNav](02-convergence/dashboard/SIDENAV_COMPATIBILITY_ISLAND_AUDIT.md) confirmó
+que no es un shell Dashboard: Client Profile también la consume. Dashboard ya sustituyó sólo su
+consumo runtime por una composición de navegación operational app-owned, sin incluir Users, rutas
+placeholder, Client ni Worker. La siguiente frontera deberá ser otra compatibility island auditada,
+no una extensión del primitive compartido.
+
+## No objetivos
+
+- No rediseñar páginas ni el shell Dashboard en esta fase.
+- No activar estilos operacionales en producción.
+- No limpiar Client ni rediseñar Worker.
+- No crear un design system amplio, duplicar legacy o añadir utilidades sin owner.
+- No retirar clases, tokens o CSS Modules existentes de forma implícita.

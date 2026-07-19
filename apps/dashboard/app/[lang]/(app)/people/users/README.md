@@ -2,6 +2,11 @@
 
 ## Estado actual
 
+La evaluación vigente para la rectificación Customers es la
+[auditoría frontend Customers Directory](../../../../../../../docs/02-convergence/users/CUSTOMERS_DIRECTORY_FRONTEND_READINESS_AUDIT.md).
+Este README conserva documentación V2 histórica como evidencia; no sustituye
+Product Design ni autoriza la superficie Customers.
+
 `/people/users` es la primera superficie real del patrón `people directory`.
 
 El núcleo del dominio V2 está implementado en frontend y backend. Ya no existe

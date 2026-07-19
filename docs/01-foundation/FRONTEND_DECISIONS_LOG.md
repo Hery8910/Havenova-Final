@@ -139,3 +139,142 @@ y explícita; no se añadirá una allowlist amplia sólo para eliminar un warnin
 La consecuencia temporal es no utilizar la optimización de imágenes de Next.js en este punto.
 Revisar en la Fase 4, cuando se definan la fuente canónica, el almacenamiento y la allowlist de
 avatares. Esta no es una política final de assets.
+
+## FE-012 — La base visual legacy se congela antes de la migración operativa
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: global style ownership
+
+Las tres aplicaciones resuelven la base visual actual mediante
+`packages/styles/legacy.css`. Este entrypoint conserva el orden y las reglas existentes para no
+alterar apariencias durante la migración. La futura foundation operacional se reserva en
+`packages/styles/operational/`, sin carga de runtime ni dependencia de la base legacy.
+
+Dashboard y Worker podrán adoptar una foundation operacional compartida sólo tras un slice
+auditado. Sus shells siguen siendo responsabilidad de cada app y los estilos de dominio continúan
+en CSS Modules. Client conserva el baseline legacy hasta que su propia migración tenga autoridad y
+alcance aprobados.
+
+Revisar cuando un slice operacional aprobado necesite tokens semánticos, reglas base, tipografía,
+focus o primitivas validadas. No trasladar componentes ni copiar el prototipo de Product Design
+por anticipado.
+
+## FE-013 — La foundation operacional se activa sólo dentro del workspace Dashboard autenticado
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard shell
+
+`packages/styles/operational/shell.css` declara exclusivamente tokens `--op-*` bajo
+`[data-ui-foundation='operational']` y su variante dark bajo el contrato document-level existente
+`[data-theme='dark']`. La frontera se monta en `DashboardWorkspaceShell`; no se aplica a Auth,
+Client, Worker ni al viewport global de alertas.
+
+El shell propio deja de usar las clases globales legacy de card/button. `SideNav`, selector de
+idioma, selector de tema, alertas y loading se conservan sin cambios como compatibility islands.
+Revisar cuando una migración validada de cada isla permita sustituir legacy sin forzar una
+abstracción compartida prematura. Worker no adopta la foundation hasta disponer de un slice de
+dominio real aprobado.
+
+## FE-014 — SideNav conserva una primitive neutral; la navegación operacional pertenece a Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: navigation ownership
+
+La auditoría de SideNav confirma dos consumidores runtime: el adapter Dashboard y `ProfileNav` del
+Client. El paquete conserva temporalmente markup estructural y contratos neutrales; Dashboard es
+owner de su modelo, rutas, copy, iconos, drawer y composición responsive. No se mueve SideNav al
+Dashboard ni se introduce una variante operacional compartida.
+
+Revisar sólo tras cubrir activo, expansión, colapso y accesibilidad en ambos consumidores. Una
+migración futura será Dashboard-local y no propagará `--op-*` hacia Client Profile.
+
+## FE-015 — El estado de tema permanece por aplicación; el control operational será Dashboard-local
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: theme ownership and Dashboard shell
+
+`ThemeToggler` confirma que no existe un provider global de tema: Admin, Profile y Worker poseen
+complementos de sesión separados, y el control actual resuelve uno por prioridad mientras duplica
+las escrituras de documento y storage. La fuente de verdad funcional permanece temporalmente en el
+complemento de cada aplicación; la clave global `theme` es continuidad de arranque y no una nueva
+autoridad.
+
+Una futura sustitución Dashboard recibirá un contrato de tema ya resuelto y será una composición
+visual local del shell operational. No se trasladan sus tokens o markup al primitive compartido, ni
+se cambia Client/Worker para justificar esa composición. Antes se deben caracterizar la hidratación,
+persistencia, accesibilidad y un único owner de los efectos de documento/storage.
+
+Revisar cuando esas pruebas estén cubiertas y exista una decisión para eliminar la duplicación de
+efectos sin cambiar el contrato de las tres aplicaciones.
+
+## FE-016 — El bootstrap aplica tema antes de hidratar; el complemento lo sincroniza después
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: theme effects and Dashboard readiness
+
+El bootstrap inline Dashboard sólo aplica `lang` y el tema `light|dark` almacenado antes de que se
+hidrate el contenido. Tras hidratar, el complemento Admin/Profile/Worker de cada aplicación es el
+único owner de sincronizar `data-theme` y la clave transicional `localStorage.theme`. ThemeToggler
+queda limitado a representar el valor y llamar a `setTheme`.
+
+Las operaciones de storage son best-effort y server-safe: un fallo no invalida el estado React ni
+una mutación remota. La clave global continúa siendo continuidad de arranque, no fuente de verdad.
+No se crea un provider global, soporte de sistema ni sincronización entre pestañas.
+
+Revisar durante la composición Dashboard para validar visualmente FOUC, foco, contraste y el header
+responsive; esa revisión no se sustituye por la caracterización JSDOM.
+
+## FE-017 — El control de tema operacional pertenece al header Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+Dashboard sustituye únicamente su consumidor de `ThemeToggler` por `DashboardThemeControl`, una
+composición local que recibe `theme: light|dark`, una acción de cambio y labels completos ya
+resueltos por `DashboardShellHeader` desde Admin. El control no consulta contexts ni escribe
+`document` o storage; bootstrap y complemento Admin conservan sus ownerships de efectos.
+
+Sus estilos se limitan a tokens `--op-*` scoped del workspace. Client y Worker conservan el
+primitive legacy, y `LanguageSwitcher` no se migra en este corte. No se promueve una abstracción
+compartida hasta demostrar otro consumidor operational compatible.
+
+Revisar cuando exista una validación visual humana de temas, FOUC, foco, contraste, responsive,
+zoom y los tres idiomas; JSDOM no sustituye ese gate.
+
+## FE-018 — El futuro selector de idioma Dashboard no heredará el portal global legacy
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+La auditoría de `LanguageSwitcher` confirma que la URL localizada es la fuente efectiva del idioma
+renderizado, la cookie resuelve entradas sin locale y el complemento persiste la preferencia de
+identidad. El primitive legacy coordina esos tres elementos y porta su panel a `document.body`.
+
+Una futura composición Dashboard recibirá idioma, acción y labels ya resueltos. Su panel deberá usar
+un host de overlay local dentro de `[data-ui-foundation='operational']` para heredar tokens sin
+propagarlos a Client o Worker. Esta decisión no crea ese host, provider, hook ni router, ni autoriza
+migración visual antes de resolver fallos de persistencia y rutas/query/hash.
+
+## FE-019 — El portal de LanguageSwitcher pertenece localmente al workspace Dashboard
+
+- Status: `Accepted`
+- Documented: `2026-07-17`
+- Scope: Dashboard authenticated shell
+
+`DashboardWorkspaceShell` crea el único host `#dashboard-language-switcher-overlay-host` dentro de
+su boundary operational y lo pasa como destino explícito al `LanguageSwitcher` del header. Así el
+panel conserva portal y posicionamiento sin salir de los tokens `--op-*`; el host se desmonta con el
+shell, no modifica `document.body` y queda por debajo del drawer móvil inline.
+
+El primitive conserva `document.body` sólo como fallback compatible cuando no recibe destino, por lo
+que Client y Worker no cambian. El segundo click y Escape restauran foco al trigger; exterior y
+backdrop conservan su cierre existente. No se crea provider, manager, stack, registro ni contrato
+público para overlays. `LanguageSwitcher` es el único consumidor: reutilizar el host exige una
+auditoría independiente.

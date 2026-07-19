@@ -5,15 +5,21 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 import LanguageSwitcher from '../../../../../../../packages/components/languageSwitcher/LanguageSwitcher';
-import ThemeToggler from '../../../../../../../packages/components/themeToggler/ThemeToggler';
 import { normalizeNavbarAvatar } from '../../../../../../../packages/components/client/navbar/navbar.helpers';
 import { resolveDashboardHeaderMeta, type DashboardShellLang } from '../../dashboardShell';
 import styles from './DashboardShellHeader.module.css';
 import { useAdmin, useAuth } from '../../../../../../../packages/contexts';
 import { useLang } from '../../../../../../../packages/hooks';
+import { DashboardThemeControl } from './DashboardThemeControl';
 
-export function DashboardShellHeader() {
-  const { admin } = useAdmin();
+type DashboardShellHeaderProps = {
+  languageSwitcherPortalContainer?: HTMLElement | null;
+};
+
+export function DashboardShellHeader({
+  languageSwitcherPortalContainer,
+}: DashboardShellHeaderProps) {
+  const { admin, setTheme } = useAdmin();
   const { auth } = useAuth();
   const pathname = usePathname();
   const [hasAvatarError, setHasAvatarError] = useState(false);
@@ -96,21 +102,28 @@ export function DashboardShellHeader() {
   const themeLabels =
     lang === 'es'
       ? {
-          buttonLabel: 'Tema',
+          theme: 'Tema',
           darkMode: 'Modo oscuro',
           lightMode: 'Modo claro',
+          switchToDark: 'Cambiar a modo oscuro',
+          switchToLight: 'Cambiar a modo claro',
         }
       : lang === 'de'
         ? {
-            buttonLabel: 'Thema',
+            theme: 'Thema',
             darkMode: 'Dunkelmodus',
             lightMode: 'Hellmodus',
-        }
-      : {
-          buttonLabel: 'Theme',
-          darkMode: 'Dark mode',
-          lightMode: 'Light mode',
-        };
+            switchToDark: 'Zu Dunkelmodus wechseln',
+            switchToLight: 'Zu Hellmodus wechseln',
+          }
+        : {
+            theme: 'Theme',
+            darkMode: 'Dark mode',
+            lightMode: 'Light mode',
+            switchToDark: 'Switch to Dark mode',
+            switchToLight: 'Switch to Light mode',
+          };
+  const theme = admin?.theme === 'dark' ? 'dark' : 'light';
   const normalizedAvatarSrc = useMemo(
     () => normalizeNavbarAvatar(admin?.profileImage),
     [admin?.profileImage]
@@ -135,13 +148,15 @@ export function DashboardShellHeader() {
           triggerDisplay="icon"
           dropdownPlacement="bottom"
           labels={languageLabels}
+          portalContainer={languageSwitcherPortalContainer}
         />
 
-        <ThemeToggler
-          display="icon"
-          variant="surface"
+        <DashboardThemeControl
+          theme={theme}
           labels={themeLabels}
-          ariaLabel={themeLabels.buttonLabel}
+          onThemeChange={(nextTheme) => {
+            void setTheme(nextTheme);
+          }}
         />
 
         <div className={styles.profileSummary} aria-label={meta.profileButton}>

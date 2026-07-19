@@ -1,154 +1,128 @@
 .body {
   margin: 0;
   min-height: 100dvh;
-  background:
-    radial-gradient(
-      circle at 12% 14%,
-      color-mix(in srgb, var(--color-feedback-info-surface-strong) 88%, transparent) 0%,
-      transparent 26%
-    ),
-    radial-gradient(
-      circle at 86% 10%,
-      color-mix(in srgb, var(--color-feedback-warning-surface) 52%, transparent) 0%,
-      transparent 24%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      color-mix(in srgb, var(--color-feedback-info-surface) 34%, transparent) 0%,
-      transparent 38%
-    ),
-    var(--gradient-page);
-  background-attachment: fixed;
-  overflow: hidden;
 }
 
 .page {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1720px;
-  height: 100dvh;
-  box-sizing: border-box;
-  padding: clamp(18px, 2.2vw, 28px);
-  overflow: visible;
+  min-height: 100dvh;
+  background: var(--op-app-frame);
+  color: var(--op-text-primary);
 }
 
 .workspace {
-  position: relative;
-  height: 100%;
-  min-height: 0;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: minmax(238px, 278px) minmax(0, 1fr);
-  gap: 16px;
-  align-items: stretch;
-  overflow: visible;
 }
 
 .workspaceNavCollapsed {
   grid-template-columns: 84px minmax(0, 1fr);
 }
 
-.navColumn,
-.contentColumn {
-  position: relative;
-  z-index: 1;
+.navColumn {
   min-width: 0;
   min-height: 0;
-  overflow: visible;
+  padding: var(--op-space-5) var(--op-space-3);
+  background: var(--op-navigation-surface);
+  border-inline-end: 1px solid var(--op-border-subtle);
 }
 
-.navColumn {
-  display: flex;
-  min-height: 0;
-  padding: 24px 12px;
-  border: none;
-  box-shadow:
-    0 18px 32px -30px color-mix(in srgb, var(--shadow-page-color) 22%, transparent),
-    0 8px 16px -16px color-mix(in srgb, var(--shadow-page-color) 14%, transparent);
-}
-
-.sideNav {
+.sideNav,
+.mobileSideNav {
   height: 100%;
   min-height: 0;
 }
 
 .contentColumn {
+  min-width: 0;
+  min-height: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 16px;
-  padding: 0;
+  background: var(--op-workspace-surface);
+}
+
+.header,
+.mobileTopbar {
+  min-width: 0;
+  border-block-end: 1px solid var(--op-border-subtle);
+  background: var(--op-workspace-surface);
 }
 
 .mobileTopbar {
   display: none;
 }
 
-.mobileNavTrigger {
-  inline-size: 100%;
-  min-block-size: 56px;
-  justify-content: flex-start;
+.main {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.languageSwitcherOverlayHost {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  pointer-events: none;
+}
+
+.languageSwitcherOverlayHost > * {
+  pointer-events: auto;
+}
+
+.mobileNavTrigger,
+.mobileNavClose {
+  display: inline-flex;
   align-items: center;
-  gap: 36px;
-  padding: 12px 14px;
-  border-color: transparent;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--op-radius-control);
+  color: var(--op-text-primary);
+  background: transparent;
+  cursor: pointer;
+}
+
+.mobileNavTrigger:focus-visible,
+.mobileNavClose:focus-visible {
+  outline: 3px solid var(--op-focus);
+  outline-offset: 2px;
+}
+
+.mobileNavTrigger {
+  width: 100%;
+  min-height: 56px;
+  justify-content: flex-start;
+  gap: var(--op-space-4);
+  padding: var(--op-space-3) var(--op-space-4);
+}
+
+.mobileNavTrigger:hover,
+.mobileNavClose:hover {
+  background: var(--op-surface-interactive);
 }
 
 .mobileNavTriggerIcon {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
   font-size: 1.15rem;
-  color: var(--text-primary);
 }
 
 .mobileNavTriggerCopy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-inline-size: 0;
+  min-width: 0;
+}
+
+.mobileNavTriggerTitle,
+.mobileNavPanelTitle {
+  margin: 0;
+  color: var(--op-text-primary);
+  font-weight: 700;
 }
 
 .mobileNavTriggerTitle {
-  margin: 0;
   font-size: 0.92rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.header {
-  min-width: 0;
-  border: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.main {
-  min-width: 0;
-  min-height: 0;
-  overflow: visible;
-}
-
-.mainSurface {
-  height: 100%;
-  min-width: 0;
-  padding: clamp(18px, 2vw, 26px);
-  border-radius: calc(var(--radius-card) + 8px);
-  background-color: color-mix(in srgb, var(--surface-panel) 96%, transparent);
-  background-image: var(--gradient-card-neutral);
-  border: none;
-  box-shadow:
-    var(--shadow-card),
-    0 12px 24px -24px color-mix(in srgb, var(--shadow-page-color) 12%, transparent);
-  backdrop-filter: blur(16px) saturate(1.01);
-  overflow: auto;
-  scrollbar-width: none;
-}
-
-.mainSurface::-webkit-scrollbar {
-  display: none;
 }
 
 .mobileNavOverlay {
@@ -156,143 +130,77 @@
   inset: 0;
   z-index: 40;
   display: none;
-  padding: 0;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--shadow-page-color) 42%, transparent),
-    color-mix(in srgb, var(--shadow-page-color) 72%, transparent)
-  );
-  backdrop-filter: blur(16px);
+  background: var(--op-overlay);
+}
+
+.mobileNavBackdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
 }
 
 .mobileNavPanel {
-  inline-size: 100%;
-  min-block-size: 100dvh;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  padding: 20px 16px 16px;
+  padding: var(--op-space-5) var(--op-space-4) var(--op-space-4);
+  background: var(--op-navigation-surface);
 }
 
 .mobileNavPanelHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 14px;
+  gap: var(--op-space-3);
+  padding-block-end: var(--op-space-4);
+  border-block-end: 1px solid var(--op-border-subtle);
 }
 
 .mobileNavPanelCopy {
-  min-inline-size: 0;
+  min-width: 0;
 }
 
 .mobileNavPanelTitle {
-  margin: 0;
-  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--text-primary);
+  font-size: 1rem;
 }
 
 .mobileNavClose {
-  min-inline-size: 44px;
-  min-block-size: 44px;
-  padding: 0;
-  border-color: transparent;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
 }
 
 .mobileNavPanelBody {
   min-height: 0;
+  padding-block-start: var(--op-space-3);
   overflow: auto;
-  scrollbar-width: none;
-}
-
-.mobileNavPanelBody::-webkit-scrollbar {
-  display: none;
-}
-
-.mobileSideNav {
-  height: 100%;
 }
 
 @media (max-width: 1100px) {
-  .body {
-    overflow: visible;
-  }
-
-  .page {
-    height: auto;
-    padding: 18px;
-    overflow: visible;
-  }
-
   .workspace {
-    height: auto;
-    min-height: auto;
     display: block;
-    gap: 16px;
-    overflow: visible;
   }
 
-  .navColumn {
-    display: none;
-  }
-
-  .contentColumn {
-    display: grid;
-    gap: 16px;
-    padding: 0;
-  }
-
-  .mobileTopbar {
-    display: block;
-    border: none;
-    box-shadow: var(--shadow-sm);
-  }
-
+  .navColumn,
   .header {
     display: none;
   }
 
-  .main {
-    overflow: visible;
-  }
-
+  .mobileTopbar,
   .mobileNavOverlay {
     display: block;
-    overflow: auto;
-    scrollbar-width: none;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
-  .mobileNavOverlay {
-    padding: 18px;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
   .mobileNavPanel {
-    inline-size: min(380px, calc(100vw - 44px));
-    min-block-size: calc(100dvh - 44px);
-    border-radius: calc(var(--radius-card) + 6px);
-    box-shadow:
-      var(--shadow-card),
-      0 18px 32px -28px color-mix(in srgb, var(--shadow-page-color) 18%, transparent);
-  }
-}
-
-@media (max-width: 767px) {
-  .page {
-    padding: 12px 12px 20px;
-  }
-
-  .mainSurface {
-    min-height: auto;
-    height: auto;
-    padding: 16px;
-    overflow: visible;
+    width: min(380px, calc(100vw - 44px));
+    min-height: calc(100dvh - 44px);
+    margin: 22px;
+    border: 1px solid var(--op-border-strong);
+    border-radius: var(--op-radius-surface);
+    box-shadow: var(--op-shadow-overlay);
   }
 }

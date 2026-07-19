@@ -27,6 +27,13 @@ import {
   updateUserClientProfile,
 } from '@havenova/services';
 import { resolvePreferredContactEmail } from '@havenova/utils';
+import {
+  readSessionStorageValue,
+  readStoredTheme,
+  removeSessionStorageValue,
+  synchronizeDocumentTheme,
+  writeSessionStorageValue,
+} from '../sessionComplement/themeEffects';
 
 interface ProfileContextProps {
   profile: UserClientProfile;
@@ -61,12 +68,6 @@ const getDefaultNotificationPreferences = (): UserNotificationPreferences => ({
     },
   },
 });
-
-const getStoredTheme = (): ThemeMode | null => {
-  if (typeof window === 'undefined') return null;
-  const stored = localStorage.getItem('theme');
-  return stored === 'dark' || stored === 'light' ? stored : null;
-};
 
 const getStoredLanguage = (): AppLanguage | null => {
   if (typeof window === 'undefined') return null;
@@ -159,10 +160,8 @@ const normalizeProfile = (
     notificationPreferences: normalizeNotificationPreferences(profile?.notificationPreferences),
   });
 
-const getProfileStorageKey = (
-  clientId?: string | null,
-  userClientId?: string | null
-) => `hv-profile:${clientId || 'guest'}:${userClientId || 'guest'}`;
+const getProfileStorageKey = (clientId?: string | null, userClientId?: string | null) =>
+  `hv-profile:${clientId || 'guest'}:${userClientId || 'guest'}`;
 
 const isOfflineProfileError = (error: unknown): boolean => {
   const err = error as {
@@ -194,7 +193,8 @@ const isOfflineProfileError = (error: unknown): boolean => {
   return false;
 };
 
-const isDevFallbackProfile = (value?: Partial<UserClientProfile> | null) => value?._id === 'dev-profile';
+const isDevFallbackProfile = (value?: Partial<UserClientProfile> | null) =>
+  value?._id === 'dev-profile';
 
 const isProfileDebugEnabled = (): boolean => process.env.NODE_ENV !== 'production';
 
@@ -256,7 +256,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const loadFromStorage = useCallback((): UserClientProfile | null => {
     if (typeof window === 'undefined') return null;
 
-    const raw = localStorage.getItem(storageKey);
+    const raw = readSessionStorageValue(storageKey);
     if (!raw) return null;
 
     try {
@@ -274,11 +274,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       if (typeof window === 'undefined') return;
 
       if (!value) {
-        localStorage.removeItem(storageKey);
+        removeSessionStorageValue(storageKey);
         return;
       }
 
-      localStorage.setItem(storageKey, JSON.stringify(value));
+      writeSessionStorageValue(storageKey, JSON.stringify(value));
     },
     [storageKey]
   );
@@ -300,7 +300,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
     setProfile(nextProfile);
     saveToStorage(nextProfile);
-    setSource(storedProfile ? (isDevFallbackProfile(storedProfile) ? 'dev-fallback' : 'storage') : 'default');
+    setSource(
+      storedProfile ? (isDevFallbackProfile(storedProfile) ? 'dev-fallback' : 'storage') : 'default'
+    );
     setIsOffline(Boolean(storedProfile && isDevFallbackProfile(storedProfile)));
     setLoading(false);
   }, [isClientReady, loadFromStorage, saveToStorage, storageKey]);
@@ -314,8 +316,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     if (!isClientReady) return;
     if (!profile?.theme) return;
 
-    document.documentElement.setAttribute('data-theme', profile.theme);
-    localStorage.setItem('theme', profile.theme);
+    synchronizeDocumentTheme(profile.theme);
   }, [isClientReady, profile?.theme]);
 
   const applyProfile = useCallback(
@@ -397,7 +398,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         phone: currentProfile?.phone || '',
         profileImage: currentProfile?.profileImage || DEFAULT_AVATAR,
         language: currentProfile?.language ?? getStoredLanguage() ?? 'de',
-        theme: currentProfile?.theme ?? getStoredTheme() ?? 'light',
+        theme: currentProfile?.theme ?? readStoredTheme() ?? 'light',
       },
       {
         userClientId: authRef.current.userClientId,
@@ -572,7 +573,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         {
           profileImage: profile?.profileImage || DEFAULT_AVATAR,
           language: profile?.language ?? getStoredLanguage() ?? 'de',
-          theme: profile?.theme ?? getStoredTheme() ?? 'light',
+          theme: profile?.theme ?? readStoredTheme() ?? 'light',
         },
         {
           userClientId: auth.userClientId,

@@ -1,54 +1,56 @@
 .button {
   width: 100%;
   display: block;
-  padding: 14px;
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 12%, transparent);
-  border-radius: calc(var(--radius-card) - 8px);
-  background: color-mix(in srgb, var(--surface-panel-subtle) 78%, transparent);
-  box-shadow: 0 12px 20px -20px color-mix(in srgb, var(--shadow-page-color) 18%, transparent);
-  color: inherit;
+  padding: 13px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--op-border-subtle);
+  border-radius: 0;
+  background: transparent;
+  color: var(--op-text-primary);
   text-align: left;
   cursor: pointer;
   transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
     background-color 160ms ease,
-    transform 160ms ease;
+    box-shadow 160ms ease;
 }
 
 .button:hover {
-  background: color-mix(in srgb, var(--surface-panel-muted) 54%, transparent);
-  border-color: color-mix(in srgb, var(--border-strong) 18%, transparent);
-  box-shadow: 0 16px 24px -20px color-mix(in srgb, var(--shadow-page-color) 22%, transparent);
+  background: var(--op-surface-interactive);
 }
 
 .active {
-  border-color: color-mix(in srgb, var(--color-feedback-info-border, var(--border-strong)) 18%, transparent);
-  background: color-mix(in srgb, var(--color-feedback-info-surface) 16%, var(--surface-panel-muted) 84%);
-  box-shadow: 0 18px 28px -24px color-mix(in srgb, var(--shadow-page-color) 24%, transparent);
+  background: var(--op-surface-selected);
+  box-shadow: inset 3px 0 0 var(--op-focus);
+}
+
+.button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--op-focus);
+  outline-offset: -3px;
 }
 
 .content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 14px;
+  gap: var(--op-space-3);
 }
 
 .identity {
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .name {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--op-text-primary);
   font-weight: 700;
 }
 
 .meta {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--op-text-secondary);
 }
 
 .statusColumn {

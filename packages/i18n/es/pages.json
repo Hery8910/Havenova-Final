@@ -1669,17 +1669,152 @@
       },
       "copy": {
         "intro": { "primaryActionLabel": "Invitar cliente" },
-        "filters": { "ariaLabel": "Filtros del directorio de clientes", "searchLabel": "Buscar clientes", "searchPlaceholder": "Nombre, correo o teléfono", "selectLabel": "Estado" },
-        "list": { "sectionLabel": "Directorio", "title": "Clientes", "hint": "Selecciona un cliente o una invitación para revisar los detalles.", "emptyTitle": "Aún no hay clientes.", "emptyDescription": "Invita a un cliente para empezar a crear el directorio.", "noResultsTitle": "Ningún cliente coincide con esta vista.", "noResultsDescription": "Prueba otra búsqueda o filtro de estado." },
-        "feedback": { "loadingLabel": "Cargando el directorio de clientes...", "refreshingLabel": "Actualizando el directorio...", "loadingMoreLabel": "Cargando más clientes...", "loadMoreFallbackLabel": "Cargar más clientes", "endOfResultsLabel": "Fin de los resultados", "errorTitle": "No se pudo cargar el directorio de clientes.", "retryLabel": "Intentar de nuevo" },
-        "detail": { "navigationLabel": "Directorio de clientes", "detailLabel": "Detalle del cliente" },
-        "panels": {
-          "empty": { "eyebrow": "Panel", "title": "Selecciona un cliente para continuar", "description": "Los detalles del cliente y las acciones de invitación se gestionan en este panel.", "noteLabel": "Uso actual", "noteText": "Selecciona un registro del directorio o abre el flujo de invitación desde la columna izquierda." },
-          "invite": { "eyebrow": "Invitar", "title": "Invitar a un cliente", "description": "Crea una invitación segura para un cliente sin salir del directorio.", "emailLabel": "Correo electrónico", "nameLabel": "Nombre", "phoneLabel": "Teléfono", "languageLabel": "Idioma", "languageOptions": { "de": "Alemán", "en": "Inglés", "es": "Español" }, "submitLabel": "Enviar invitación", "submittingLabel": "Enviando...", "returnActionLabel": "Volver al directorio", "invitedSuccessTitle": "Invitación enviada.", "renewedSuccessTitle": "Invitación vencida renovada.", "alreadyExistsError": "Este cliente ya tiene una cuenta. Busca el correo para abrirla.", "alreadyPendingError": "Ya existe una invitación activa. Abre Invitaciones para reenviarla.", "deliveryFailedError": "La invitación se guardó, pero la entrega falló. Actualiza Invitaciones y reenvíala desde el panel de detalle.", "errorTitle": "No se pudo enviar esta invitación." },
-          "detail": { "emptyEyebrow": "Detalle", "emptyTitle": "Elige un cliente", "emptyDescription": "Aquí aparecerán los datos de identidad, acceso, invitaciones y actividad.", "loadingLabel": "Cargando el detalle del cliente...", "errorEyebrow": "Detalle", "errorTitle": "No se pudo cargar esta entrada.", "emailLabel": "Correo electrónico", "phoneLabel": "Teléfono", "createdLabel": "Creado", "statusLabel": "Estado", "profileLabel": "Perfil", "languageLabel": "Idioma", "addressLabel": "Dirección principal", "relationshipLabel": "Relación", "requestsLabel": "Solicitudes", "workOrdersUnavailableLabel": "Las órdenes de trabajo aún no están disponibles.", "nextAppointmentLabel": "Próxima cita", "lastCompletedServiceLabel": "Último servicio completado", "invitationLabel": "Invitación", "invitationExpiresLabel": "Vence", "invitationLastSentLabel": "Último envío", "invitationSendCountLabel": "Número de envíos", "pendingProfileFallback": "Perfil pendiente", "missingValueFallback": "No proporcionado", "resendInvitationLabel": "Reenviar invitación", "resendingInvitationLabel": "Reenviando invitación...", "revokeInvitationLabel": "Revocar invitación", "revokingInvitationLabel": "Revocando invitación...", "revokeConfirmationTitle": "¿Revocar esta invitación?", "revokeConfirmationDescription": "El enlace de invitación dejará de funcionar inmediatamente. Podrás crear una nueva invitación más tarde si es necesario.", "revokeConfirmationConfirmLabel": "Revocar invitación", "revokeConfirmationCancelLabel": "Conservar invitación", "actionSuccessTitle": "La acción de invitación se completó.", "actionErrorTitle": "No se pudo completar esta acción de invitación.", "returnToDirectoryLabel": "Volver al directorio", "retryLabel": "Intentar de nuevo", "availableLabel": "Disponible", "workOrdersLabel": "Órdenes de trabajo", "requestsSummaryTemplate": "{active} activas de {total} en total", "statusLabels": { "active": "Activo", "inactive": "Inactivo", "locked": "Bloqueado", "invited": "Invitado", "expired": "Vencido" }, "invitationStatusLabels": { "pending": "Pendiente", "expired": "Vencida" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitación vencida", "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente", "ACCOUNT_LOCKED": "Cuenta bloqueada" } }
+        "filters": {
+          "ariaLabel": "Filtros del directorio de clientes",
+          "searchLabel": "Buscar clientes",
+          "searchPlaceholder": "Nombre, correo o teléfono",
+          "selectLabel": "Estado"
         },
-        "directoryItem": { "pendingProfileFallback": "Perfil pendiente", "noRequestsFallback": "Aún no hay solicitudes", "nextAppointmentTemplate": "Próxima: {date}", "activeRequestsTemplate": "{count} solicitud activa", "totalRequestsTemplate": "{count} solicitudes en total", "lastServiceTemplate": "Último servicio: {date}", "statuses": { "active": "Activo", "inactive": "Inactivo", "locked": "Bloqueado", "invited": "Invitado", "expired": "Vencido" }, "attentionReasons": { "INVITATION_EXPIRED": "Invitación vencida", "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente", "ACCOUNT_LOCKED": "Cuenta bloqueada" } },
-        "statusOptions": [ { "value": "all", "label": "Todos los estados" }, { "value": "active", "label": "Activo" }, { "value": "inactive", "label": "Inactivo" }, { "value": "invitations", "label": "Invitaciones" }, { "value": "attention", "label": "Requieren atención" } ]
+        "list": {
+          "sectionLabel": "Directorio",
+          "title": "Clientes",
+          "hint": "Selecciona un cliente o una invitación para revisar los detalles.",
+          "emptyTitle": "Aún no hay clientes.",
+          "emptyDescription": "Los registros de clientes aparecerán aquí cuando estén disponibles.",
+          "noResultsTitle": "Ningún cliente coincide con esta vista.",
+          "noResultsDescription": "Prueba otra búsqueda o filtro del directorio."
+        },
+        "feedback": {
+          "loadingLabel": "Cargando el directorio de clientes...",
+          "refreshingLabel": "Actualizando el directorio...",
+          "loadingMoreLabel": "Cargando más clientes...",
+          "loadMoreFallbackLabel": "Cargar más clientes",
+          "endOfResultsLabel": "Fin de los resultados",
+          "errorTitle": "No se pudo cargar el directorio de clientes.",
+          "retryLabel": "Intentar de nuevo",
+          "searchMinimumLabel": "Introduce al menos dos caracteres para buscar."
+        },
+        "detail": {
+          "navigationLabel": "Directorio de clientes",
+          "detailLabel": "Detalle del cliente"
+        },
+        "panels": {
+          "empty": {
+            "eyebrow": "Panel",
+            "title": "Selecciona un cliente para continuar",
+            "description": "En este panel aparecen identidad, contacto y ciclo de vida de la invitación.",
+            "noteLabel": "Uso actual",
+            "noteText": "Selecciona un registro del directorio para revisar sus detalles disponibles."
+          },
+          "invite": {
+            "eyebrow": "Invitar",
+            "title": "Invitar a un cliente",
+            "description": "Crea una invitación segura para un cliente sin salir del directorio.",
+            "emailLabel": "Correo electrónico",
+            "nameLabel": "Nombre",
+            "phoneLabel": "Teléfono",
+            "languageLabel": "Idioma",
+            "languageOptions": { "de": "Alemán", "en": "Inglés", "es": "Español" },
+            "submitLabel": "Enviar invitación",
+            "submittingLabel": "Enviando...",
+            "returnActionLabel": "Volver al directorio",
+            "invitedSuccessTitle": "Invitación enviada.",
+            "renewedSuccessTitle": "Invitación vencida renovada.",
+            "alreadyExistsError": "Este cliente ya tiene una cuenta. Busca el correo para abrirla.",
+            "alreadyPendingError": "Ya existe una invitación activa. Abre Invitaciones para reenviarla.",
+            "deliveryFailedError": "La invitación se guardó, pero la entrega falló. Actualiza Invitaciones y reenvíala desde el panel de detalle.",
+            "errorTitle": "No se pudo enviar esta invitación."
+          },
+          "detail": {
+            "emptyEyebrow": "Detalle",
+            "emptyTitle": "Elige un cliente",
+            "emptyDescription": "Aquí aparecerán los datos de identidad, acceso, invitaciones y actividad.",
+            "loadingLabel": "Cargando el detalle del cliente...",
+            "errorEyebrow": "Detalle",
+            "errorTitle": "No se pudo cargar esta entrada.",
+            "personEyebrow": "Cliente",
+            "invitationEyebrow": "Invitación",
+            "identityLabel": "Identidad",
+            "proposedIdentityLabel": "Contacto propuesto",
+            "proposedIdentityDescription": "Estos datos fueron propuestos para esta invitación y no constituyen un perfil confirmado.",
+            "emailLabel": "Correo electrónico",
+            "phoneLabel": "Teléfono",
+            "createdLabel": "Creado",
+            "statusLabel": "Estado",
+            "profileLabel": "Perfil",
+            "languageLabel": "Idioma",
+            "addressLabel": "Dirección principal",
+            "relationshipLabel": "Relación",
+            "requestsLabel": "Solicitudes",
+            "workOrdersUnavailableLabel": "Las órdenes de trabajo aún no están disponibles.",
+            "nextAppointmentLabel": "Próxima cita",
+            "lastCompletedServiceLabel": "Último servicio completado",
+            "invitationLabel": "Invitación",
+            "invitationExpiresLabel": "Vence",
+            "invitationLastSentLabel": "Último envío",
+            "invitationSendCountLabel": "Número de envíos",
+            "pendingProfileFallback": "Perfil pendiente",
+            "missingValueFallback": "No proporcionado",
+            "profileNotCreatedDescription": "Este cliente todavía no ha creado un Perfil.",
+            "profileIncompleteDescription": "Todavía falta parte de la información del Perfil.",
+            "languageLabels": { "de": "Alemán", "en": "Inglés", "es": "Español" },
+            "resendInvitationLabel": "Reenviar invitación",
+            "resendingInvitationLabel": "Reenviando invitación...",
+            "revokeInvitationLabel": "Revocar invitación",
+            "revokingInvitationLabel": "Revocando invitación...",
+            "revokeConfirmationTitle": "¿Revocar esta invitación?",
+            "revokeConfirmationDescription": "El enlace de invitación dejará de funcionar inmediatamente. Podrás crear una nueva invitación más tarde si es necesario.",
+            "revokeConfirmationConfirmLabel": "Revocar invitación",
+            "revokeConfirmationCancelLabel": "Conservar invitación",
+            "actionSuccessTitle": "La acción de invitación se completó.",
+            "actionErrorTitle": "No se pudo completar esta acción de invitación.",
+            "returnToDirectoryLabel": "Volver al directorio",
+            "retryLabel": "Intentar de nuevo",
+            "availableLabel": "Disponible",
+            "workOrdersLabel": "Órdenes de trabajo",
+            "requestsSummaryTemplate": "{active} activas de {total} en total",
+            "statusLabels": {
+              "active": "Activo",
+              "inactive": "Inactivo",
+              "locked": "Bloqueado",
+              "invited": "Invitado",
+              "expired": "Vencido"
+            },
+            "invitationStatusLabels": { "pending": "Pendiente", "expired": "Vencida" },
+            "attentionReasons": {
+              "INVITATION_EXPIRED": "Invitación vencida",
+              "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente",
+              "ACCOUNT_LOCKED": "Cuenta bloqueada"
+            }
+          }
+        },
+        "directoryItem": {
+          "pendingProfileFallback": "Perfil pendiente",
+          "noRequestsFallback": "Aún no hay solicitudes",
+          "nextAppointmentTemplate": "Próxima: {date}",
+          "activeRequestsTemplate": "{count} solicitud activa",
+          "totalRequestsTemplate": "{count} solicitudes en total",
+          "lastServiceTemplate": "Último servicio: {date}",
+          "statuses": {
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "locked": "Bloqueado",
+            "invited": "Invitado",
+            "expired": "Vencido"
+          },
+          "attentionReasons": {
+            "INVITATION_EXPIRED": "Invitación vencida",
+            "EMAIL_UNVERIFIED_STALE": "La verificación de correo está pendiente",
+            "ACCOUNT_LOCKED": "Cuenta bloqueada"
+          }
+        },
+        "statusOptions": [
+          { "value": "all", "label": "Todas las personas" },
+          { "value": "active", "label": "Activo" },
+          { "value": "inactive", "label": "Inactivo" },
+          { "value": "invitations", "label": "Invitaciones" },
+          { "value": "attention", "label": "Requieren atención" }
+        ]
       }
     },
     "requests": {

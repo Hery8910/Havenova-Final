@@ -42,6 +42,8 @@ sin evidencia reproducible.
 | --- | --- |
 | [`FRONTEND_BASELINE_AUDIT_2026-07-16.md`](00-audit/FRONTEND_BASELINE_AUDIT_2026-07-16.md) | Commit `19bf648` |
 | [`product-audit/FRONTEND_PRODUCT_AUDIT.md`](product-audit/FRONTEND_PRODUCT_AUDIT.md) | Evidencia observada el 10 de julio de 2026 |
+| [`02-convergence/users/USERS_CONVERGENCE_AUDIT.md`](02-convergence/users/USERS_CONVERGENCE_AUDIT.md) | Convergencia Users v1, Fase 2; no autoriza implementación |
+| [`02-convergence/users/CUSTOMERS_DIRECTORY_FRONTEND_READINESS_AUDIT.md`](02-convergence/users/CUSTOMERS_DIRECTORY_FRONTEND_READINESS_AUDIT.md) | Customers Directory/Overview contra Product Design `2c43571` y backend audit `2f496fe`; no autoriza implementación |
 
 Una auditoría explica lo que se observó. No autoriza producto ni sustituye un contrato.
 

@@ -158,6 +158,44 @@ describe('Navbar views', () => {
     });
   });
 
+  it('desktop account trigger toggles, closes on Escape, and restores focus', async () => {
+    render(
+      <NavbarDesktopView
+        content={buildContent()}
+        onNavigate={jest.fn()}
+        onLogout={jest.fn().mockResolvedValue(undefined)}
+      />
+    );
+
+    const trigger = screen.getByRole('button', { name: 'Open account navigation' });
+    fireEvent.click(trigger);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(trigger);
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
+
+    fireEvent.click(trigger);
+    fireEvent.keyDown(document, { key: 'Escape' });
+    await waitFor(() => {
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(trigger).toHaveFocus();
+    });
+  });
+
+  it('closes the account panel before delegating logout, preventing normal repeated activation', async () => {
+    const onLogout = jest.fn().mockResolvedValue(undefined);
+    render(
+      <NavbarDesktopView content={buildContent()} onNavigate={jest.fn()} onLogout={onLogout} />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open account navigation' }));
+    const logout = await screen.findByRole('button', { name: 'Logout' });
+    fireEvent.click(logout);
+    fireEvent.click(logout);
+
+    expect(onLogout).toHaveBeenCalledTimes(1);
+  });
+
   it('tablet view switches between menu and account panels and closes on outside click', async () => {
     const onNavigate = jest.fn();
     const onLogout = jest.fn().mockResolvedValue(undefined);
@@ -209,10 +247,7 @@ describe('Navbar views', () => {
       'data-display',
       'icon-with-value'
     );
-    expect(screen.getByTestId('language-switcher')).toHaveAttribute(
-      'data-presentation',
-      'modal'
-    );
+    expect(screen.getByTestId('language-switcher')).toHaveAttribute('data-presentation', 'modal');
   });
 
   it('mobile view shows guest account actions when the user is not logged in', async () => {

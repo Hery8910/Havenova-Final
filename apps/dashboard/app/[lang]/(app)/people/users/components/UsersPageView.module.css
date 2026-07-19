@@ -3,18 +3,18 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 16px;
+  gap: var(--op-space-5);
   height: 100%;
 }
 
 .overview {
   display: grid;
-  padding: 16px;
+  gap: var(--op-space-2);
 }
 
 .filtersSection {
   display: grid;
-  gap: 10px;
+  gap: var(--op-space-2);
 }
 
 .directorySection {

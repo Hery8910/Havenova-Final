@@ -1,0 +1,45 @@
+.control {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--op-space-2);
+  flex: 0 0 auto;
+  padding: 0.45rem 0.625rem;
+  border: 1px solid var(--op-border-subtle);
+  border-radius: var(--op-radius-control);
+  color: var(--op-text-secondary);
+  background: var(--op-surface-secondary);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.control:hover {
+  border-color: var(--op-border-interactive);
+  color: var(--op-text-primary);
+  background: var(--op-surface-interactive);
+}
+
+.control[aria-pressed='true'] {
+  border-color: var(--op-border-interactive);
+  color: var(--op-text-primary);
+  background: var(--op-surface-selected);
+}
+
+.control:focus-visible {
+  outline: 3px solid var(--op-focus);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+.copy {
+  white-space: nowrap;
+}

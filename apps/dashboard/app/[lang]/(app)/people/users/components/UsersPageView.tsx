@@ -1,6 +1,5 @@
 import { DirectoryFilters, DirectoryList, DirectorySummary } from '../../../components/directory';
 import { MasterDetailPage } from '../../../components/masterDetail';
-import { PeopleOverviewBar } from '../../../components/people/shared';
 import { TenantUserDirectoryItem } from '../../../components/people/users';
 import type { UsersPageViewProps } from '../page.types';
 import styles from './UsersPageView.module.css';
@@ -19,7 +18,6 @@ export function UsersPageView({
   emptyTitle,
   filters,
   hasNextPage = false,
-  header,
   isDirectoryLoading = false,
   isDirectoryRefreshing = false,
   isLoadingMore = false,
@@ -29,7 +27,6 @@ export function UsersPageView({
   noResultsDescription,
   noResultsTitle,
   onLoadMore,
-  onOpenInvite,
   onRegisterEntryElement,
   onRetryDirectory,
   onRetrySummary,
@@ -41,7 +38,6 @@ export function UsersPageView({
   summaryItems,
   summaryError = false,
   summaryFeedback,
-  tenantUserLocale,
 }: UsersPageViewProps) {
   const renderedSummaryItems = summaryItems.map((item) => ({
     ...item,
@@ -54,19 +50,8 @@ export function UsersPageView({
       mobileView={mode === 'empty' ? 'navigation' : 'detail'}
       navigation={
         <div className={styles.navigation}>
-          <section className={`card card--neutral ${styles.overview}`}>
-            <PeopleOverviewBar
-              summary={<DirectorySummary items={renderedSummaryItems} />}
-              actions={
-                <button
-                  type="button"
-                  className={`button button--primary ${styles.headerButton}`}
-                  onClick={onOpenInvite}
-                >
-                  {header.primaryActionLabel}
-                </button>
-              }
-            />
+          <section className={styles.overview} aria-label="Page overview">
+            <DirectorySummary items={renderedSummaryItems} />
             {isSummaryLoading ? (
               <p className={styles.summaryFeedback} aria-live="polite">
                 {summaryFeedback.loadingLabel}
@@ -112,9 +97,13 @@ export function UsersPageView({
               retryLabel={directoryFeedback.retryLabel}
               emptyTitle={emptyTitle}
               emptyDescription={emptyDescription}
-              noResultsTitle={filters.searchValue || filters.selectValue !== 'all' ? noResultsTitle : undefined}
+              noResultsTitle={
+                filters.searchValue || filters.selectValue !== 'all' ? noResultsTitle : undefined
+              }
               noResultsDescription={
-                filters.searchValue || filters.selectValue !== 'all' ? noResultsDescription : undefined
+                filters.searchValue || filters.selectValue !== 'all'
+                  ? noResultsDescription
+                  : undefined
               }
               endOfResultsLabel={directoryFeedback.endOfResultsLabel}
               onRetry={onRetryDirectory}
@@ -130,7 +119,6 @@ export function UsersPageView({
                   ref={(element) => onRegisterEntryElement(item.entryId, element)}
                   item={item}
                   copy={directoryItemCopy}
-                  locale={tenantUserLocale}
                   isActive={selectedEntryId === item.entryId}
                   onSelect={onSelectEntry}
                 />
